@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
            BeneficiresCoulumnsSeeder::class
         ]);
         \App\Models\User::query()->create([
-          'name'=>'mahmoud',
+          'name'=>'admin',
             'password'=>bcrypt(123456),
             'email'=>'test@test.com',
             'type'=>'admin'
