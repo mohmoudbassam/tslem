@@ -27,7 +27,8 @@ class OrdersController extends Controller
     {
 
         $order = Order::query()->create($request->except('files', '_token'));
-
+        $order->owner_id=auth()->user()->id;
+        $order->save();
         $this->upload_files($order, $request);
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
@@ -38,8 +39,9 @@ class OrdersController extends Controller
 
     public function list(Request $request)
     {
-        $order = Order::query()->with('designer');
+        $order = Order::query()->whereServiceProvider(auth()->user()->id)->with('designer');
         return DataTables::of($order)
+
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
             })->make(true);

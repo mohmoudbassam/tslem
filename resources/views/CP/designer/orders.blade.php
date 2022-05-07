@@ -10,11 +10,14 @@
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">
                     <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                             خيارات <i class="mdi mdi-chevron-down"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                            <li><a class="dropdown-item font-size-18 mb-2 mt-2" href="{{route('services_providers.create_order')}}"><i class="dripicons-plus"></i>إنشاء طلب </a></li>
+                            <li><a class="dropdown-item font-size-18 mb-2 mt-2"
+                                   href="{{route('services_providers.create_order')}}"><i class="dripicons-plus"></i>إنشاء
+                                    طلب </a></li>
                         </ul>
                     </div>
                 </h4>
@@ -69,7 +72,8 @@
 
                 <div class="col-sm-12">
                     <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+                           role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
@@ -86,6 +90,9 @@
                         </th>
                         <th>
                             تاريخ الإنشاء
+                        </th>
+                        <th>
+                            الخيارات
                         </th>
 
 
@@ -137,8 +144,7 @@
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'status', name: 'status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
-
-
+                    {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],
 
@@ -149,6 +155,45 @@
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false);
         });
+
+        function accept(id) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('design_office.accept')}}',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
+            });
+        }
+
 
     </script>
 
