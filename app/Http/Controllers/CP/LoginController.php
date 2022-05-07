@@ -15,7 +15,7 @@ class LoginController extends Controller
 
             return redirect()->route('dashboard');
         }
-        return view('CP.Login');
+        return view('CP.login');
     }
 
     public function login(Request $request)
