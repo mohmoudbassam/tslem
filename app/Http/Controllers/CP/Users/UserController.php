@@ -143,4 +143,6 @@ class UserController extends Controller
         return back()->with('success', 'تمت عمليه التعديل بنجاح');
 
     }
+
+
 }

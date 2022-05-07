@@ -202,6 +202,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @include('CP.layout.js')
 @yield('scripts')
+    <script>
+        function read_message(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url : '{{route('read_message')}}',
+                data: {},
+                type: "POST",
+                processData: false,
+                contentType: false,
+                beforeSend(){
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success:function(data) {
+                    console.log($('#notifcation_count').text());
+                    KTApp.unblockPage();
+                },
+                error:function(data) {
+                    console.log(data);
+                    KTApp.unblock('#page_modal');
+                    KTApp.unblockPage();
+                },
+            });
+        }
+    </script>
 </body>
 
 </html>

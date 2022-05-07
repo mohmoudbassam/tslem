@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CP\LoginController;
+use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\Users\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
 Route::get('login', [LoginController::class, 'index'])->name('login_page');
@@ -41,7 +42,6 @@ Route::middleware('auth')->group(function () {
         Route::post('update', [UserController::class, 'update'])->name('.update');
         Route::post('delete', [UserController::class, 'delete'])->name('.delete');
 
-
     });
     Route::prefix('service-providers')->name('services_providers')->middleware('service_provider')->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
@@ -49,4 +49,9 @@ Route::middleware('auth')->group(function () {
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
     });
+
+    Route::post('read_message',[NotificationController::class, 'read_message'])->name('read_message');
+});
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });

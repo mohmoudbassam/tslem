@@ -15,4 +15,10 @@ class Order extends Model
     public function designer(){
         return $this->belongsTo(User::class,'designer_id');
     }
+    public function file(){
+        return $this->hasMany(OrderFile::class);
+    }
+    public function logs(){
+        return $this->hasMany(OrderLogs::class);
+    }
 }

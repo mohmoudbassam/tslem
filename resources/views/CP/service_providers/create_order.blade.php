@@ -35,7 +35,8 @@
             </div>
         </div>
         <div class="card-body">
-          <form id="add_edit_form" method="post" action="{{route('services_providers.save_order')}}">
+          <form id="add_edit_form" method="post" action="{{route('services_providers.save_order')}}" enctype="multipart/form-data">
+              @csrf
             <div class="row">
                 <div class="col-lg-6">
                     <div>
@@ -48,8 +49,7 @@
                     <div>
                         <div class="mb-3">
                             <label for="description" class="form-label">وصف الطلب</label>
-                            <textarea class="form-control" name="description"  placeholder="العنوان" id="description">
-                            </textarea>
+                            <textarea class="form-control" name="description"  placeholder="الوصف" id="description"></textarea>
                             <div class="col-12 text-danger" id="description_error"></div>
                         </div>
                     </div>
@@ -71,9 +71,22 @@
                             @foreach($designers as $designer)
                                 <option  value="{{$designer->id}}">{{$designer->name}}</option>
                                 @endforeach
+                            <div class="col-12 text-danger" id="designer_id_error"></div>
+
                         </select>
                     </div>
                 </div>
+                <div class="col-lg-12">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="files">المرفقات</label>
+                        <input class="form-control" type="file" name="files[]" id="files" multiple>
+                        <div class="col-12 text-danger" id="date_error"></div>
+
+                    </div>
+                </div>
+
+
             </div>
 
           </form>
@@ -92,12 +105,16 @@
 
 @section('scripts')
     <script>
+        file_input('#files');
         $('#add_edit_form').validate({
             rules: {
                 "title": {
                     required: true,
                 },
                 "date": {
+                    required: true,
+                },
+                "designer_id": {
                     required: true,
                 },
 

@@ -5,28 +5,54 @@ namespace App\Http\Controllers\CP\ServiceProviders;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
+use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class OrdersController extends Controller
 {
-    public function orders(){
+    public function orders()
+    {
         return view('CP.service_providers.orders');
     }
-    public function create_order(){
-        $data['designers']=User::query()->where('type','design_office')->get();
-        return view('CP.service_providers.create_order',$data);
+
+    public function create_order()
+    {
+        $data['designers'] = User::query()->where('type', 'design_office')->get();
+        return view('CP.service_providers.create_order', $data);
     }
-    public function save_order(Request $request){
-          Order::query()->create($request->all());
-        return redirect()->route('services_providers')->with(['success'=>'تم انشاء الطلب بنجاح']);
+
+    public function save_order(Request $request)
+    {
+
+        $order = Order::query()->create($request->except('files', '_token'));
+        $this->upload_files($order, $request);
+        save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
+        $user = User::query()->find($request->designer_id);
+
+        $user->notify(new OrderNotification('تم إنشاء الطلب  ',auth()->user()->id));
+        return redirect()->route('services_providers')->with(['success' => 'تم انشاء الطلب بنجاح']);
     }
-    public function list(Request $request){
-      $order= Order::query()->with('designer');
+
+    public function list(Request $request)
+    {
+        $order = Order::query()->with('designer');
         return DataTables::of($order)
-            ->addColumn('created_at',function($order){
-              return   $order->created_at->format('Y-m-d');
-            })
-            ->make(true);
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at->format('Y-m-d');
+            })->make(true);
+    }
+
+    public function upload_files($order, $request)
+    {
+        foreach ($request->file('files') as $file) {
+            $path = Storage::disk('public')->put('order/' . $order->id, $file);
+            $file_name = $file->getClientOriginalName();
+            $order->file()->create([
+                'path' => $path,
+                'real_name' => $file_name
+            ]);
+        }
     }
 }

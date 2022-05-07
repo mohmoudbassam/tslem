@@ -37,15 +37,7 @@
                     </ul>
                 </li>
                 @endif
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="users"></i>
-                        <span data-key="t-authentication">الطلبات</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
 
-                    </ul>
-                </li>
                 @if(auth()->user()->type=='service_provider')
                     <li>
                         <a href="{{route('services_providers')}}">
@@ -54,14 +46,7 @@
                         </a>
                     </li>
                     @endif
-
-
-
-
-
-
-
-            </ul>
+                 </ul>
 
 
         </div>
