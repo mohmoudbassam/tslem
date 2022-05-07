@@ -12,6 +12,7 @@ class Order extends Model
     protected $guarded=[];
 
 
+
     public function designer(){
         return $this->belongsTo(User::class,'designer_id');
     }
@@ -20,5 +21,11 @@ class Order extends Model
     }
     public function logs(){
         return $this->hasMany(OrderLogs::class);
+    }
+
+
+
+    public function scopewhereDesigner($query,$designer_id){
+        return $query->where('designer_id',$designer_id);
     }
 }

@@ -65,7 +65,7 @@
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="bell" class="icon-lg"></i>
                     @if(auth()->user()->unreadNotifications()->count())
-                    <span class="badge bg-danger rounded-pill">{{auth()->user()->unreadNotifications()->count()}}</span>
+                    <span class="badge bg-danger rounded-pill" id="notifcation_count">{{auth()->user()->unreadNotifications()->count()}}</span>
                         @endif
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -76,8 +76,8 @@
                                 <h6 class="m-0"> الإشعارات </h6>
                             </div>
                             @if(auth()->user()->unreadNotifications()->count())
-                            <div class="col-auto">
-                                <a href="#" class="small text-reset text-decoration-underline" id="notifcation_count"> ({{auth()->user()->unreadNotifications()->count()}}) غير مقروء </a>
+                            <div class="col-auto" id="unreade_meassage">
+                                <a href="#" class="small text-reset text-decoration-underline " > ({{auth()->user()->unreadNotifications()->count()}}) غير مقروء </a>
                             </div>
                             @endif
                         </div>

@@ -18,15 +18,26 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::query()->create([
           'name'=>'admin',
-            'password'=>bcrypt(123456),
+            'password'=>123456,
             'email'=>'test@test.com',
             'type'=>'admin'
         ]);
         \App\Models\User::query()->create([
           'name'=>'service',
-            'password'=>bcrypt(123456),
+            'password'=>123456,
             'email'=>'service@test.com',
             'type'=>'service_provider'
+        ]);
+        \App\Models\User::query()->create([
+          'name'=>'designer',
+            'password'=>123456,
+            'email'=>'designer@test.com',
+            'type'=>'design_office'
+        ]);  \App\Models\User::query()->create([
+          'name'=>'designer2',
+            'password'=>123456,
+            'email'=>'designer2@test.com',
+            'type'=>'design_office'
         ]);
     }
 }

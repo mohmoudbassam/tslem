@@ -46,6 +46,14 @@
                         </a>
                     </li>
                     @endif
+                @if(auth()->user()->type=='design_office')
+                    <li>
+                        <a href="{{route('design_office')}}">
+                            <i data-feather="users"></i>
+                            <span data-key="t-authentication">الطلبات</span>
+                        </a>
+                    </li>
+                    @endif
                  </ul>
 
 

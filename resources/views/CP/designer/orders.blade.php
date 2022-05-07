@@ -73,11 +73,13 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                           عنوان الطلب
+                            عنوان الطلب
                         </th>
-
                         <th>
-                          التاريخ
+                            مكتب التصميم
+                        </th>
+                        <th>
+                            التاريخ
                         </th>
                         <th>
                             حالة الطلب
@@ -118,7 +120,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('services_providers.list')}}',
+                    url: '{{route('design_office.list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
@@ -131,6 +133,7 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
+                    {className: 'text-center', data: 'designer.name', name: 'name'},
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'status', name: 'status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
@@ -146,7 +149,6 @@
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false);
         });
-
 
     </script>
 

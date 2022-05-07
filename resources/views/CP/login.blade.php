@@ -38,7 +38,7 @@
                                     <img src="{{url('/')}}/logo.png" alt="" height="50" width="70"> <span class="logo-txt">منصة تسليم</span>
                                 </a>
                             </div>
-                            <div class="auth-content my-auto">
+                                             <div class="auth-content my-auto">
                                 <div class="text-center">
                                     <h5 class="mb-0">أهلا وسهلا</h5>
                                     <p class="text-muted mt-2"></p>

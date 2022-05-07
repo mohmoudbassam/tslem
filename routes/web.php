@@ -4,6 +4,7 @@ use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\Users\UserController;
+use App\Http\Controllers\Designer\DesignerOrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +49,10 @@ Route::middleware('auth')->group(function () {
         Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
+    });
+    Route::prefix('design-office')->name('design_office')->middleware('design_office')->group(function () {
+        Route::get('orders', [DesignerOrderController::class, 'orders']);
+        Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
     });
 
     Route::post('read_message',[NotificationController::class, 'read_message'])->name('read_message');

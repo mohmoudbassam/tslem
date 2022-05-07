@@ -61,6 +61,12 @@ class User extends Authenticatable
             return asset('storage/profiles/profile_placeholder.jpg');
         }
     }
+    public function setPasswordAttribute($password)
+    {
+
+        $this->attributes['password'] = bcrypt($password);
+
+    }
 
     public function getUserTypeAttribute()
     {

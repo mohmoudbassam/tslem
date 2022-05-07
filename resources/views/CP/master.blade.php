@@ -224,7 +224,8 @@
                     });
                 },
                 success:function(data) {
-                    console.log($('#notifcation_count').text());
+                    $('#notifcation_count').text('')
+                    $('#unreade_meassage').text('')
                     KTApp.unblockPage();
                 },
                 error:function(data) {
