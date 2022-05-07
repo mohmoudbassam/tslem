@@ -20,7 +20,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-dd(Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1]));
+//dd(Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1]));
         if (Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1], isset($request->remember))) {
 
             return redirect()->route('dashboard');
