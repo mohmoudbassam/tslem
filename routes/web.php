@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return view("public");
 });
 
 Route::get('login', [LoginController::class, 'index'])->name('login_page');
