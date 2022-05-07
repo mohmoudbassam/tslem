@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ConstParnet;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,5 +40,11 @@ class DatabaseSeeder extends Seeder
             'email'=>'designer2@test.com',
             'type'=>'design_office'
         ]);
+
+        ConstParnet::create([
+            'name' => 'قائمة طبقات GIS للمخيمات من وزارة الحج والعمرة'
+        ]);
+
+
     }
 }

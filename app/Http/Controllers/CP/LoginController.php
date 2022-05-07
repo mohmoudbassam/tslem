@@ -20,6 +20,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         if (Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1], isset($request->remember))) {
 
             return redirect()->route('dashboard');
