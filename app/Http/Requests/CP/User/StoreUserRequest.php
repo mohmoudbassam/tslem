@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\CP\User;
 
+use App\Models\BeneficiresCoulumns;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -10,17 +11,15 @@ class StoreUserRequest extends FormRequest
 
     public function rules()
     {
-        return [
+        $secondary_rule = $this->secondary_rule();
+
+        $main_rule = [
             'name' => [
                 'required',
                 Rule::unique('users', 'name'),
             ],
-            'email' => [
-                'email',
-                Rule::unique('users', 'email'),
-            ],
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
-
             'type' => [
                 Rule::in([
                     'admin',
@@ -35,5 +34,21 @@ class StoreUserRequest extends FormRequest
             ],
 
         ];
+
+        return array_merge($secondary_rule,$main_rule);
+    }
+
+    private function secondary_rule()
+    {
+        $benef = BeneficiresCoulumns::query()->where('type', request('type'))->first();
+        $column = $benef->getAttributes();
+        unset($column['type']);
+        unset($column['id']);
+        $array = [];
+        foreach (array_filter($column) as $key => $value) {
+            $array[$key] = 'required';
+        }
+        return $array;
+
     }
 }
