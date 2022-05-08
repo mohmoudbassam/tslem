@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->text('title')->nullable();
             $table->text('description')->nullable();
             $table->date('date')->nullable();
-            $table->unsignedBigInteger('status')->nullable();
+            $table->unsignedBigInteger('status')->default(1);
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->unsignedBigInteger('designer_id')->nullable();
             $table->timestamps();

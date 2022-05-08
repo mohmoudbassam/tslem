@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('design-office')->name('design_office')->middleware('design_office')->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
+        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
     });
     Route::prefix('system-config')->group(function () {
 //        Route::get('const', [SystemConstController::class, 'index']);

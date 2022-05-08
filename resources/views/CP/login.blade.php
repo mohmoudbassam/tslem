@@ -48,7 +48,7 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label class="form-label">إسم المستخدم</label>
-                                        <input type="text" class="form-control" id="username" autocomplete="off" name="user_name" placeholder="Enter username">
+                                        <input type="text" class="form-control" id="username" autocomplete="off" name="user_name" placeholder="اسم المستخدم">
                                     </div>
                                     <div class="mb-3">
                                         <div class="d-flex align-items-start">
@@ -63,7 +63,7 @@
                                         </div>
 
                                         <div class="input-group auth-pass-inputgroup">
-                                            <input type="password"  name="password"  class="form-control" placeholder="Enter password" aria-label="Password" autocomplete="off" aria-describedby="password-addon">
+                                            <input type="password"  name="password"  class="form-control" placeholder="كلمة المرور" aria-label="Password" autocomplete="off" aria-describedby="password-addon">
                                             <button class="btn btn-light shadow-none ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                                         </div>
                                     </div>
