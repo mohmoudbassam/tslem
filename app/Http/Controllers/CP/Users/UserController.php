@@ -104,8 +104,7 @@ class UserController extends Controller
                                         </div>';
 
                 return $element;
-            })
-            ->rawColumns(['enabled', 'actions'])
+            })->rawColumns(['enabled', 'actions'])
             ->make(true);
     }
 

@@ -26,6 +26,7 @@ class DesignerOrderController extends Controller
                 $accept='<a class="dropdown-item" onclick="accept(' . $order->id . ', \'' . route('design_office.accept') . '\')" href="javascript:;">عرض الطلب </a>';
 
 
+
             })
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
