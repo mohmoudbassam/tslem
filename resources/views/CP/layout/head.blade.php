@@ -32,6 +32,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
     <style>
+        @font-face {
+            font-family: GE-Dinar;
+            src: url('{{ url('/assets/fonts/ArbFONTS-GE-Dinar-One-Medium.otf')  }}');
+        }
+
+        body {
+            font-family: GE-Dinar !important;
+        }
 
          [dir=rtl] input {
              text-align: right;
@@ -61,6 +69,7 @@
          body.loading .modal {
              display: block;
          }
+
      </style>
 </head>
 

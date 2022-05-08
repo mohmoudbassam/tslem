@@ -164,11 +164,11 @@
             </div>
             <div class="col-md-6">
                 <h1 class="text-white">حمل التطبيق مجانا</h1>
-                <div class="d-flex">
-                    <a role="button" class="me-2">
+                <div class="row">
+                    <a role="button" class="col-md-6 mt-2">
                         <img src="./assets/img/google play.png" alt="">
                     </a>
-                    <a role="button">
+                    <a role="button" class="col-md-6 mt-2">
                         <img src="./assets/img/appstore.png" alt="">
                     </a>
                 </div>

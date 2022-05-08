@@ -35,10 +35,11 @@
                         <div class="d-flex flex-column h-100">
                             <div class="mb-4 mb-md-5 text-center">
                                 <a href="index.html" class="d-block auth-logo">
-                                    <img src="{{url('/')}}/logo.png" alt="" height="50" width="70"> <span class="logo-txt">منصة تسليم</span>
+                                    <img src="{{url('/')}}/assets/img/تسليم 2.png" alt="" > <span class="logo-txt"></span>
                                 </a>
                             </div>
-                                             <div class="auth-content my-auto">
+                            <div class="auth-content my-auto">
+
                                 <div class="text-center">
                                     <h5 class="mb-0">أهلا وسهلا</h5>
                                     <p class="text-muted mt-2"></p>

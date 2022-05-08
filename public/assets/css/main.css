@@ -3,8 +3,14 @@
   --second-color: #c0946f;
 }
 
+@font-face {
+    font-family: GE-Dinar;
+    src: url('../fonts/ArbFONTS-GE-Dinar-One-Medium.otf');
+}
+
 body {
   /* background-color: var(--main-color) !important; */
+    font-family: GE-Dinar !important;
 }
 
 #myBtn {
@@ -120,6 +126,13 @@ body {
   padding-bottom: 20rem !important;
 }
 
+@media only screen and (max-width: 768px) {
+    .header-info {
+        background-size: 100%;
+        padding: 0%;
+    }
+}
+
 .header-text {
   color: var(--main-color) !important;
 }
@@ -128,7 +141,7 @@ body {
   padding-bottom: 10rem !important;
   padding-top: 10rem !important;
   position: relative;
-  top: -6rem;
+  top: -10rem;
   clip-path: ellipse(90% 73% at 50% 75%);
   background-color: white;
   z-index: 4;
