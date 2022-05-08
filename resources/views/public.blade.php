@@ -46,7 +46,7 @@
                             </li>
                         </ul>
                         <form class="d-flex">
-                            <button class="btn btn-outline-main mx-2" type="submit">التسجيل</button>
+                            <a role="button" href="{{ route('register', ['type' => 'service_provider']) }}" class="btn btn-outline-main mx-2" type="submit">التسجيل</a>
                             <a role="button" href="{{ route('login_page')  }}" class="btn btn-main" type="submit">تسجيل الدخول</a>
                         </form>
                     </div>

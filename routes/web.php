@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
+use App\Http\Controllers\CP\RegisterController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\Users\UserController;
@@ -21,10 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view("public");
-});
+})->name('public');
 
 Route::get('login', [LoginController::class, 'index'])->name('login_page');
 Route::Post('login', [LoginController::class, 'login'])->name('login');
+
+Route::get('register', [RegisterController::class, 'index'])->name('register');
 
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
