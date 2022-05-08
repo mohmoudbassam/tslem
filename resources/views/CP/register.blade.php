@@ -570,13 +570,15 @@
 <script src="{{url('/')}}/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script
     src="{{url('/')}}/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
-<script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+<script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js" ></script>
 <script src="{{url("/")}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="{{url("/")}}/assets/jquery-validation/dist/localization/messages_ar.min.js" type="text/javascript"></script>
 <script>
     @if($record->commercial_file)
 
     @endif
     $('#add_edit_form').validate({
+        lang: 'ar',
         rules: {
             "name": {
                 required: true,
@@ -585,6 +587,7 @@
             }, "password_confirmation": {
                 required: true,
             },
+
             @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)
             "{{"$rule"}}": {
                 required: true,
