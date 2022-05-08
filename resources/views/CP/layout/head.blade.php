@@ -69,7 +69,6 @@
          body.loading .modal {
              display: block;
          }
-
      </style>
 </head>
 

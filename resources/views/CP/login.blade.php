@@ -21,6 +21,24 @@
     <!-- App Css-->
     <link href="{{url('/')}}/assets/css/app-rtl.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
+    <style>
+        :root {
+            --main-color: #122b76;
+            --second-color: #c0946f;
+        }
+
+        .bg-second {
+            --bs-bg-opacity: 1;
+            background-color: rgba(192, 148, 111, var(--bs-bg-opacity)) !important;
+        }
+
+        .btn-second {
+            background-color: var(--second-color) !important;
+            color: white !important;
+            border-color: var(--second-color) !important;
+            border-radius: 0.9rem !important;
+        }
+    </style>
 </head>
 
 <body  lang="en" dir="rtl">
@@ -84,7 +102,7 @@
                                     </div>
                                     @endif
                                     <div class="mb-3">
-                                        <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">تسجيل الدخول</button>
+                                        <button class="btn btn-second w-100 waves-effect waves-light" type="submit">تسجيل الدخول</button>
                                     </div>
                                 </form>
 
@@ -106,7 +124,7 @@
             <!-- end col -->
             <div class="col-xxl-9 col-lg-8 col-md-7">
                 <div class="auth-bg pt-md-5 p-4 d-flex">
-                    <div class="bg-overlay bg-primary"></div>
+                    <div class="bg-overlay bg-second"></div>
                     <ul class="bg-bubbles">
                         <li></li>
                         <li></li>
