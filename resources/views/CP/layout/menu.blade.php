@@ -14,28 +14,45 @@
                         <span data-key="t-dashboard">الإحصائيات</span>
                     </a>
                 </li>
-                 @if(auth()->user()->isAdmin())
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="users"></i>
-                        <span data-key="t-apps">المستخدمين</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{route('users')}}">
-                                <span data-key="t-calendar">إدارة المستخدمين</span>
-                            </a>
-                        </li>
+                @if(auth()->user()->isAdmin())
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="users"></i>
+                            <span data-key="t-apps">المستخدمين</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('users')}}">
+                                    <span data-key="t-calendar">إدارة المستخدمين</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{route('users.add')}}">
-                                <span data-key="t-chat">إضافة مستخدم</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{route('users.add')}}">
+                                    <span data-key="t-chat">إضافة مستخدم</span>
+                                </a>
+                            </li>
 
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                @endif
+
+                @if(auth()->user()->isAdmin())
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="users"></i>
+                            <span data-key="t-apps">الإعدادت</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('const.index')}}">
+                                    <span data-key="t-calendar">الثوابت</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                 @endif
 
                 @if(auth()->user()->type=='service_provider')
@@ -45,7 +62,7 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
-                    @endif
+                @endif
                 @if(auth()->user()->type=='design_office')
                     <li>
                         <a href="{{route('design_office')}}">
@@ -53,8 +70,8 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
-                    @endif
-                 </ul>
+                @endif
+            </ul>
 
 
         </div>

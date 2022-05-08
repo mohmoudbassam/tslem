@@ -40,6 +40,35 @@ class CreatedBeneficiariesColumnsTable extends Migration
             $table->boolean('city')->default(0);
             $table->boolean('employee_number')->default(0);
 
+            ///files
+
+            $table->boolean('commercial_file')->default(0);//ملف السجل التجاري
+            $table->boolean('commercial_date_end')->default(0);
+            $table->boolean('rating_certificate')->default(0);///شهادة تصنيف وطني
+            $table->boolean('rating_certificate_date_end')->default(0);
+            $table->boolean('address_file')->default(0);//العنوان الوطني
+            $table->boolean('profession_license')->default(0);//مزاولة مهنة
+            $table->boolean('profession_license_date_end')->default(0);//
+            $table->boolean('business_license')->default(0);//شهادةالنشاط التاري
+            $table->boolean('business_license_end_date')->default(0);
+
+
+            $table->boolean('social_insurance_certificate')->default(0);///شهادة التأمينات الاجتماعي
+            $table->boolean('social_insurance_certificate_end_date')->default(0);///
+            ///
+            $table->boolean('certificate_of_zakat')->default(0);///شهادةالزكاة والدخل
+            $table->boolean('date_of_zakat_end_date')->default(0);
+
+            $table->boolean('saudization_certificate')->default(0);///شهادةالسعودة
+            $table->boolean('saudization_certificate_end_date')->default(0);///شهادةالسعودة
+            ///
+            $table->boolean('chamber_of_commerce_certificate')->default(0);///شهادة الغرفة التجارية
+            $table->boolean('chamber_of_commerce_certificate_end_date')->default(0);///شهادة الغرفة التجارية
+            $table->boolean('tax_registration_certificate')->default(0);///شهادة تسجيل الضريبة
+            $table->boolean('wage_protection_certificate')->default(0);///شهادة حماية الضريبة
+            $table->boolean('memorandum_of_association')->default(0);///عقد التاسيس
+
+
         });
     }
 

@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
     });
     Route::prefix('system-config')->group(function () {
-//        Route::get('const', [SystemConstController::class, 'index']);
+
         Route::prefix('const')->name('const')->group(function () {
             Route::get('', [SystemConstController::class, 'index'])->name('.index');
             Route::get('list', [SystemConstController::class, 'list'])->name('.list');
