@@ -54,7 +54,7 @@ class UserController extends Controller
             'employee_number' => request('employee_number'),
             'password' => request('password'),
         ]);
-        $this->uploadUserFiles($user,$request);
+        $this->uploadUserFiles($user, $request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }
 
@@ -165,16 +165,17 @@ class UserController extends Controller
 
     }
 
-    private function uploadUserFiles($user,$file){
-        $columns_name =get_user_column_file($user->type);
-        if(!empty($columns_name)){
-            $files=request()->all(array_keys(get_user_column_file($user->type)));
-            foreach ($files as $col_name=>$file) {
+    private function uploadUserFiles($user, $file)
+    {
+        $columns_name = get_user_column_file($user->type);
+        if (!empty($columns_name)) {
+            $files = request()->all(array_keys(get_user_column_file($user->type)));
+            foreach ($files as $col_name => $file) {
                 $file_name = $file->getClientOriginalName();
 
                 $path = Storage::disk('public')->put('user_files', $file);
 
-                $user->{$col_name}=$path;
+                $user->{$col_name} = $path;
 
             }
             $user->save();

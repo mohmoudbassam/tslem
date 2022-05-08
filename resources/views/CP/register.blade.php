@@ -98,7 +98,16 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="add_edit_form" method="post" action="{{route('users.add_edit')}}" enctype="multipart/form-data">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <ul>
+
+                        <li>{{session('success')  }}</li>
+
+                    </ul>
+                </div>
+            @endif
+            <form id="add_edit_form" method="post" action="{{route('register_action')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
 
