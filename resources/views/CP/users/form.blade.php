@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="add_edit_form" method="post" action="{{route('users.add_edit')}}">
+            <form id="add_edit_form" method="post" action="{{route('users.add_edit')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
 
@@ -242,14 +242,14 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="password">كلمة المرور</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password"  value="{{old('password')}}" name="password">
                             <div class="col-12 text-danger" id="password_error"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="password_confirmation">تأكيد كلمة المرور</label>
-                            <input type="password" class="form-control" id="password_confirmation"
+                            <input type="password" class="form-control" value="{{old('password_confirmation')}}"  id="password_confirmation"
                                    name="password_confirmation">
                             <div class="col-12 text-danger" id="password_confirmation_error"></div>
                         </div>
@@ -261,14 +261,14 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="commercial_file">السجل التحاري</label>
-                                <input type="file" class="form-control" id="commercial_file" name="commercial_file">
+                                <input type="file" class="form-control" value="{{old('commercial_file')}}" id="commercial_file" name="commercial_file">
                                 <div class="col-12 text-danger" id="commercial_file_error"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_date_end">السجل التحاري</label>
-                                <input type="date" class="form-control" id="commercial_date_end" name="commercial_date_end">
+                                <label class="form-label" for="commercial_date_end">تاريخ أنتهاء السجل التجاري</label>
+                                <input type="date" class="form-control" value="{{old('commercial_date_end')}}" id="commercial_date_end" name="commercial_date_end">
                                 <div class="col-12 text-danger" id="commercial_date_end_error"></div>
                             </div>
                         </div>

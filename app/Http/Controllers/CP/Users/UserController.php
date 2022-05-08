@@ -33,7 +33,28 @@ class UserController extends Controller
 
     public function add_edit(StoreUserRequest $request)
     {
-        User::query()->create($request->all());
+
+        $user = User::query()->create([
+            'type' => request('type'),
+            'name' => request('name'),
+            'company_name' => request('company_name'),
+            'company_type' => request('company_type'),
+            'company_owner_name' => request('company_owner_name'),
+            'commercial_record' => request('commercial_record'),
+            'website' => request('website'),
+            'responsible_name' => request('responsible_name'),
+            'id_number' => request('id_number'),
+            'id_date' => request('id_date'),
+            'source' => request('source'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'address' => request('address'),
+            'telephone' => request('telephone'),
+            'city' => request('city'),
+            'employee_number' => request('employee_number'),
+            'password' => request('password'),
+        ]);
+        $this->uploadUserFiles($user,$request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }
 
@@ -98,7 +119,7 @@ class UserController extends Controller
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                                <a class="dropdown-item" href="'.route('users.update_from',['user'=>$user->id]).'">تعديل</a>
+                                                <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
                                                 <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
                                             </div>
                                         </div>';
@@ -130,16 +151,34 @@ class UserController extends Controller
     }
 
 
-    public function update_from(Request $request,User $user)
+    public function update_from(Request $request, User $user)
     {
-        $data['user']=$user;
+        $data['user'] = $user;
         $data['record'] = BeneficiresCoulumns::query()->where('type', $user->type)->firstOrFail();
-         return view('CP.users.update_form', $data);
+        return view('CP.users.update_form', $data);
     }
+
     public function update(Request $request)
     {
         User::query()->where('id', $request->id)->first()->update($request->all());
         return back()->with('success', 'تمت عمليه التعديل بنجاح');
+
+    }
+
+    private function uploadUserFiles($user,$file){
+        $columns_name =get_user_column_file($user->type);
+        if(!empty($columns_name)){
+            $files=request()->all(array_keys(get_user_column_file($user->type)));
+            foreach ($files as $col_name=>$file) {
+                $file_name = $file->getClientOriginalName();
+
+                $path = Storage::disk('public')->put('user_files', $file);
+
+                $user->{$col_name}=$path;
+
+            }
+            $user->save();
+        }
 
     }
 

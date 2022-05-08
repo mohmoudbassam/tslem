@@ -9,7 +9,7 @@
                 <li class="menu-title" data-key="t-menu">القوائم</li>
 
                 <li>
-                    <a href="index.html">
+                    <a href="#">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">الإحصائيات</span>
                     </a>

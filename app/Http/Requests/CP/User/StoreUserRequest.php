@@ -35,18 +35,28 @@ class StoreUserRequest extends FormRequest
 
         ];
 
-        return array_merge($secondary_rule,$main_rule);
+        return array_merge($secondary_rule, $main_rule);
     }
 
     private function secondary_rule()
     {
-        $benef = BeneficiresCoulumns::query()->where('type', request('type'))->first();
+        $benef = BeneficiresCoulumns::query()->select('commercial_file',
+            'rating_certificate',
+            'address_file',
+            'profession_license',
+            'business_license',
+            'social_insurance_certificate',
+            'certificate_of_zakat',
+            'saudization_certificate',
+            'chamber_of_commerce_certificate',
+            'tax_registration_certificate',
+            'wage_protection_certificate',
+            'memorandum_of_association')
+            ->where('type', request('type'))->first();
         $column = $benef->getAttributes();
-        unset($column['type']);
-        unset($column['id']);
         $array = [];
         foreach (array_filter($column) as $key => $value) {
-            $array[$key] = 'required';
+            $array[$key] = 'required|mimes:png,jpg,jpeg,pdf';
         }
         return $array;
 
