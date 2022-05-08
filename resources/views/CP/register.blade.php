@@ -115,7 +115,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="type">نوع المستخدم</label>
                             <select class="form-select" id="type" name="type">
-                                <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
+
                                 <option @if($record->type =="service_provider") selected
                                         @endif value="service_provider">مقدم خدمة
                                 </option>
