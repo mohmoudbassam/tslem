@@ -110,7 +110,16 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="add_edit_form" method="post" action="{{route('users.add_edit')}}" enctype="multipart/form-data">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    <ul>
+
+                        <li>{{session('success')  }}</li>
+
+                    </ul>
+                </div>
+            @endif
+            <form id="add_edit_form" method="post" action="{{route('register_action')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
 
@@ -118,7 +127,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="type">نوع المستخدم</label>
                             <select class="form-select" id="type" name="type">
-                                <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
+
                                 <option @if($record->type =="service_provider") selected
                                         @endif value="service_provider">مقدم خدمة
                                 </option>
@@ -576,13 +585,15 @@
 <script src="{{url('/')}}/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script
     src="{{url('/')}}/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
-<script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+<script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js" ></script>
 <script src="{{url("/")}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="{{url("/")}}/assets/jquery-validation/dist/localization/messages_ar.min.js" type="text/javascript"></script>
 <script>
     @if($record->commercial_file)
 
     @endif
     $('#add_edit_form').validate({
+        lang: 'ar',
         rules: {
             "name": {
                 required: true,
@@ -591,6 +602,7 @@
             }, "password_confirmation": {
                 required: true,
             },
+
             @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)
             "{{"$rule"}}": {
                 required: true,

@@ -1,4 +1,3 @@
-
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -43,7 +42,8 @@
                     <form class="p-3">
                         <div class="form-group m-0">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Search Result">
+                                <input type="text" class="form-control" placeholder="Search ..."
+                                       aria-label="Search Result">
 
                                 <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
                             </div>
@@ -61,12 +61,14 @@
             </div>
 
             <div class="dropdown d-inline-block">
-                <button type="button" onclick="read_message()" class="btn header-item noti-icon position-relative" id="page-header-notifications-dropdown"
+                <button type="button" onclick="read_message()" class="btn header-item noti-icon position-relative"
+                        id="page-header-notifications-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="bell" class="icon-lg"></i>
                     @if(auth()->user()->unreadNotifications()->count())
-                    <span class="badge bg-danger rounded-pill" id="notifcation_count">{{auth()->user()->unreadNotifications()->count()}}</span>
-                        @endif
+                        <span class="badge bg-danger rounded-pill"
+                              id="notifcation_count">{{auth()->user()->unreadNotifications()->count()}}</span>
+                    @endif
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                      aria-labelledby="page-header-notifications-dropdown">
@@ -76,9 +78,10 @@
                                 <h6 class="m-0"> الإشعارات </h6>
                             </div>
                             @if(auth()->user()->unreadNotifications()->count())
-                            <div class="col-auto" id="unreade_meassage">
-                                <a href="#" class="small text-reset text-decoration-underline " > ({{auth()->user()->unreadNotifications()->count()}}) غير مقروء </a>
-                            </div>
+                                <div class="col-auto" id="unreade_meassage">
+                                    <a href="#" class="small text-reset text-decoration-underline ">
+                                        ({{auth()->user()->unreadNotifications()->count()}}) غير مقروء </a>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -86,22 +89,24 @@
                     <div data-simplebar style="max-height: 230px;">
                         @foreach (auth()->user()->notifications()->take(5)->get() as $notification)
 
-                        <a href="#!" class="text-reset notification-item">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                    <img src="{{optional($notification->Notifer)->image}}" class="rounded-circle avatar-sm" alt="user-pic">
-                                </div>
+                            <a href="#!" class="text-reset notification-item">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <img src="{{optional($notification->Notifer)->image}}"
+                                             class="rounded-circle avatar-sm" alt="user-pic">
+                                    </div>
 
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">{{optional($notification->Notifer)->name}}</h6>
-                                    <div class="font-size-13 text-muted">
-                                        <p class="mb-1">{{$notification->data['data']}}</p>
-                                        <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span>{{$notification->created_at->diffForHumans()}}</span></p>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">{{optional($notification->Notifer)->name}}</h6>
+                                        <div class="font-size-13 text-muted">
+                                            <p class="mb-1">{{$notification->data['data']}}</p>
+                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>
+                                                <span>{{$notification->created_at->diffForHumans()}}</span></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                       @endforeach
+                            </a>
+                        @endforeach
                     </div>
                     <div class="p-2 border-top d-grid">
                         <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
@@ -112,9 +117,9 @@
             </div>
 
 
-
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item bg-soft-light border-start border-end" id="page-header-user-dropdown"
+                <button type="button" class="btn header-item bg-soft-light border-start border-end"
+                        id="page-header-user-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{{auth()->user()->image}}"
                          alt="Header Avatar">
@@ -123,10 +128,12 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="{{route('edit_profile')}}"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> الملف الشخصي</a>
+                    <a class="dropdown-item" href="{{route('edit_profile')}}"><i
+                            class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> الملف الشخصي</a>
 
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{route('logout')}}"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> تسجيل الخروج</a>
+                    <a class="dropdown-item" href="{{route('logout')}}"><i
+                            class="mdi mdi-logout font-size-16 align-middle me-1"></i> تسجيل الخروج</a>
                 </div>
             </div>
 

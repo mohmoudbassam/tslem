@@ -28,6 +28,7 @@ Route::get('login', [LoginController::class, 'index'])->name('login_page');
 Route::Post('login', [LoginController::class, 'login'])->name('login');
 
 Route::get('register', [RegisterController::class, 'index'])->name('register');
+Route::post('regester_action', [RegisterController::class, 'add_edit'])->name('register_action');
 
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
