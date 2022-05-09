@@ -59,8 +59,8 @@
             <section class="header-desc w-full text-center">
 
                 <div class="header-info">
-                    <h1 class="text-white">منصة الخدمات الالكترونية <br> لمركز الخدمات الشامل</h1>
-                    <p class="text-white">منصة واحدة لجميع القطاعات العاملة في الحج <br>
+                    <h2 class="text-white">منصة الخدمات الالكترونية <br> لمركز الخدمات الشامل</h2>
+                    <p class="text-white card-subtitle">منصة واحدة لجميع القطاعات العاملة في الحج <br>
                         لتقديم خدمة مميزة لحجاج بيت الله الحرام</p>
 
                     <button class="btn btn-second" type="submit">الدخول للمنصة</button>
