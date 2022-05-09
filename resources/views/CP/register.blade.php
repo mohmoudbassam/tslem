@@ -38,6 +38,11 @@
             src: url('{{ url('/assets/fonts/ArbFONTS-GE-Dinar-One-Medium.otf')  }}');
         }
 
+        :root {
+            --main-color: #122b76;
+            --second-color: #c0946f;
+        }
+
         body {
             font-family: GE-Dinar !important;
         }
@@ -69,6 +74,17 @@
             display: block;
         }
 
+        body {
+            background-image: url("{{ url('/assets/img/back form.png') }}");
+        }
+
+        .text-second {
+            color: var(--second-color) !important;
+        }
+        .text-main {
+            color: var(--main-color) !important;
+        }
+
     </style>
 </head>
 <body class="bg-light">
@@ -76,24 +92,20 @@
 <div class="container">
     <div class="text-center my-5">
         <a href="{{ route('public') }}">
-            <img src="{{ url('/assets/img/logo.png') }}">
+            <img src="{{ url('/assets/img/logo-light.png') }}">
         </a>
     </div>
 
     <div class="card shadow">
         <div class="card-header">
-            <div class="d-flex mt-4 justify-content-between">
+            <div class="d-flex mt-4 justify-content-center">
                 <div class="">
 
-                    <h4>
+                    <h4 class="text-main">
                         تسجيل في منصة تسليم
                     </h4>
                 </div>
 
-                <div>
-                    <a role="button" href="{{ route('login_page') }}" class="btn">اذا كنت تمتلك حساب يرحى
-                        تسجيل الدخول <span class="text-success">من هنا</span></a>
-                </div>
 
             </div>
         </div>
@@ -534,8 +546,11 @@
                 @endif
             </form>
 
-            <div class="d-flex flex-wrap gap-3">
-                <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء</button>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-lg btn-primary submit_btn">سجل الان</button>
+                <br>
+                <a role="button" href="{{ route('login_page') }}" class="btn">اذا كنت تمتلك حساب يرحى
+                    تسجيل الدخول <span class="text-second">من هنا</span></a>
             </div>
 
             @if ($errors->any())
