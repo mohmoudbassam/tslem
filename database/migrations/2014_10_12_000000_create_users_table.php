@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('image')->nullable();
             $table->boolean('enabled')->default(1);
+            $table->boolean('verified')->default(0);
             $table->enum('type', ['admin',
                 'service_provider',
                 'design_office',
@@ -32,10 +33,10 @@ class CreateUsersTable extends Migration
                 'Kdana'])->nullable();
 
             /////
-            $table->enum('company_name', [
+            $table->string('company_name')->nullable();
+            $table->enum('company_type', [
                 'organization', 'office'
             ])->nullable();
-            $table->string('company_type')->nullable();
             $table->string('company_owner_name')->nullable();
             $table->string('commercial_record')->nullable();
             $table->string('website')->nullable();

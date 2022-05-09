@@ -90,7 +90,7 @@ class UserController extends Controller
     public function list(Request $request)
     {
 
-        $users = User::query()->when(request('name'), function ($q) {
+        $users = User::query()->where('verified',1)->when(request('name'), function ($q) {
             $q->where('name', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('email', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('phone', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');

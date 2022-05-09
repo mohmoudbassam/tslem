@@ -32,6 +32,11 @@
                                     <span data-key="t-chat">إضافة مستخدم</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{route('users.request')}}">
+                                    <span data-key="t-chat">طلبات المستخدمين</span>
+                                </a>
+                            </li>
 
 
                         </ul>

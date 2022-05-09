@@ -70,6 +70,7 @@ class User extends Authenticatable
 
     public function getUserTypeAttribute()
     {
+
         return [
             'admin'=>'مدير النظام',
             'service_provider' => 'مقدم خدمة',
@@ -80,5 +81,13 @@ class User extends Authenticatable
             'Delivery' => 'تسليم',
             'Kdana' => 'كدانة',
         ][$this->type];
+    }
+    public function getCoTypeAttribute()
+    {
+
+        return [
+            'organization'=>'مؤسسة',
+            'office' => 'مكتب',
+        ][$this->company_type];
     }
 }

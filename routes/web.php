@@ -7,6 +7,7 @@ use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\Designer\DesignerOrderController;
+use App\Http\Controllers\CP\Users\UserRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,7 +48,12 @@ Route::middleware('auth')->group(function () {
         Route::get('update_from/{user}', [UserController::class, 'update_from'])->name('.update_from');
         Route::post('update', [UserController::class, 'update'])->name('.update');
         Route::post('delete', [UserController::class, 'delete'])->name('.delete');
-
+        Route::prefix('request')->name('.request')->group(function () {
+             Route::get('',[UserRequestController::class,'index']);
+             Route::get('list',[UserRequestController::class,'list'])->name('.list');
+             Route::get('show',[UserRequestController::class,'show'])->name('.show');
+             Route::get('show/{user}',[UserRequestController::class,'show'])->name('.show');
+        });
     });
     Route::prefix('service-providers')->name('services_providers')->middleware('service_provider')->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
@@ -73,7 +79,7 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    Route::post('read_message',[NotificationController::class, 'read_message'])->name('read_message');
+    Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

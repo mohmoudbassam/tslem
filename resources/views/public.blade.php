@@ -36,7 +36,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">الرئيسية</a>
+                                <a class="nav-link active" @if(auth()->check()) href="{{ route('dashboard') }}" @else  href="#" @endif aria-current="page" >الرئيسية</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#about">عن المشروع</a>
@@ -46,8 +46,11 @@
                             </li>
                         </ul>
                         <form class="d-flex">
+                            @if(!auth()->check())
                             <a role="button" href="{{ route('register', ['type' => 'service_provider']) }}" class="btn btn-outline-main mx-2" type="submit">التسجيل</a>
+
                             <a role="button" href="{{ route('login_page')  }}" class="btn btn-main" type="submit">تسجيل الدخول</a>
+                            @endif
                         </form>
                     </div>
                 </div>

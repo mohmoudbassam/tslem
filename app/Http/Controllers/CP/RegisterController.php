@@ -13,14 +13,15 @@ class RegisterController extends Controller
 {
 
     public function index(Request $request) {
+        if(auth()->check()){
+            redirect()->route('dashboard');
+        }
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
-
         return view('CP.register', $data);
     }
 
     public function add_edit(StoreUserRequest $request)
     {
-
         $user = User::query()->create([
             'type' => request('type'),
             'name' => request('name'),
@@ -40,6 +41,7 @@ class RegisterController extends Controller
             'city' => request('city'),
             'employee_number' => request('employee_number'),
             'password' => request('password'),
+            'verified'=>0
         ]);
         $this->uploadUserFiles($user,$request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
