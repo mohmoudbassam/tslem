@@ -118,19 +118,40 @@ body {
 .header-info {
   background-image: url('../img/arrow_background.svg');
   background-repeat: no-repeat;
-  background-size: 35%;
-  background-position: 45%;
+  background-size: 29%;
+  background-position: 47%;
   color: white !important;
   padding: 5rem;
   padding-top: 19rem !important;
   padding-bottom: 20rem !important;
 }
 
+.header-title {
+    font-size: x-large;
+}
+
+.header-subtitle {
+    font-size: small;
+    color: #dddddd !important;
+}
+
 @media only screen and (max-width: 768px) {
     .header-info {
-        background-size: 100%;
+        background-size: 80%;
         padding: 0%;
-        background-position: center;
+        background-position: 10%;
+    }
+
+    .header-title {
+        font-size: large;
+    }
+
+    .header-subtitle {
+        font-size: x-small;
+    }
+
+    .header-info .btn-second {
+        font-size: small;
     }
 }
 
@@ -146,6 +167,12 @@ body {
   clip-path: ellipse(90% 73% at 50% 75%);
   background-color: white;
   z-index: 4;
+}
+
+@media only screen and (max-width: 768px) {
+    #about {
+        clip-path: ellipse(190% 75% at 50% 78%);
+    }
 }
 
 .header .img-thumbnail {
@@ -199,6 +226,11 @@ body {
   clip-path: ellipse(90% 73% at 50% 75%);
   background-color: white;
   z-index: 4;
+}
+@media only screen and (max-width: 768px) {
+    #info {
+        clip-path: ellipse(125% 73% at 50% 75%);
+    }
 }
 
 .second-text {
