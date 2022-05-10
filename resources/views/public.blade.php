@@ -54,12 +54,12 @@
                             </li>
                         </ul>
                         <form class="d-flex">
-                            <button class="btn btn-custom btn-main" type="submit">
+                            <a role="button" href="{{ route('login')  }}" class="btn btn-custom btn-main" type="submit">
                                 تسجيل الدخول
-                            </button>
-                            <button class="btn btn-custom btn-outline-main mx-2" type="submit">
+                            </a>
+                            <a role="button" href="{{ route('register', ['type' => 'service_provider'])  }}" class="btn btn-custom btn-outline-main mx-2" type="submit">
                                 التسجيل
-                            </button>
+                            </a>
 
                         </form>
                     </div>
