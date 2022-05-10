@@ -79,7 +79,10 @@
                             مفعل/معطل
                         </th>
                         <th>
-                            مفعل/معطل
+                           الحالة
+                        </th>
+                        <th>
+                            الخيارات
                         </th>
                         </thead>
                         <tbody>
@@ -128,6 +131,7 @@
                     {className: 'text-center', data: 'type', name: 'type'},
                     {className: 'text-center', data: 'phone', name: 'phone'},
                     {className: 'text-center', data: 'enabled', name: 'enabled'},
+                    {className: 'text-center', data: 'verified_status', name: 'verified_status'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
 
@@ -186,6 +190,82 @@
                         },
                     });
                 }
+            });
+        }
+
+
+        function accept(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('users.request.accept')}}',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'الرجاء الانتظار'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        $('#items_table').DataTable().ajax.reload(null, false);
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
+            });
+        }
+        function reject(id) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('users.request.reject_form')}}',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'الرجاء الانتظار'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        $('#items_table').DataTable().ajax.reload(null, false);
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
             });
         }
     </script>

@@ -29,6 +29,13 @@
 
         </div>
 
+        <div >
+            @if(auth()->user()->verified == 0 &&  !auth()->user()->isAdmin() )
+                <div class="alert alert-danger">
+                    لم يتم اعتماد حسابك بعد
+                </div>
+            @endif
+        </div>
         <div class="d-flex">
 
             <div class="dropdown d-inline-block d-lg-none ms-2">

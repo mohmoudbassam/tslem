@@ -2,6 +2,19 @@
 @section('title')
     المستخدمين
 @endsection
+@section('style')
+    <style>
+        .close {
+            color: #fff !important;
+            visibility: hidden !important;
+        }
+
+        .file-caption-main {
+            color: #fff !important;
+            visibility: hidden !important;
+        }
+    </style>
+@endsection
 @section('content')
 
     <div class="row">
@@ -21,9 +34,18 @@
                                         <h5 class="font-size-16 mb-1">{{$user->name}}</h5>
                                         <p class="text-muted font-size-13">{{$user->user_type}}</p>
 
-                                        <div class="d-flex flex-wrap align-items-start gap-2 gap-lg-3 text-muted font-size-13">
-                                            <div><i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->email}}</div>
-                                            <div><i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->co_type}}</div>
+                                        <div
+                                            class="d-flex flex-wrap align-items-start gap-2 gap-lg-3 text-muted font-size-13">
+                                            @if($user->email)
+                                            <div>
+                                                <i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->email}}
+                                            </div>
+                                            @endif
+                                            @if($user->co_type)
+                                            <div>
+                                                <i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->co_type}}
+                                            </div>
+                                                @endif
                                         </div>
                                     </div>
                                 </div>
@@ -33,10 +55,12 @@
 
                     <ul class="nav nav-tabs-custom card-header-tabs border-top mt-4" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link px-3 active" data-bs-toggle="tab" href="#overview" role="tab">المعلومات الإساسية</a>
+                            <a class="nav-link px-3 active" data-bs-toggle="tab" href="#overview" role="tab">المعلومات
+                                الإساسية</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab" href="#about" role="tab">المعلومات الثانوية</a>
+                            <a class="nav-link px-3" data-bs-toggle="tab" href="#about" role="tab">المعلومات
+                                الثانوية</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3" data-bs-toggle="tab" href="#post" role="tab">معلومات المكان</a>
@@ -112,167 +136,55 @@
                         <div class="card-header">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
-                                    <h5 class="card-title mb-0">Post</h5>
+                                    <h5 class="card-title mb-0">الملفات</h5>
                                 </div>
-                                <div class="flex-shrink-0">
-                                    <a href="#post">View All</a>
-                                </div>
+
                             </div>
                         </div>
                         <div class="card-body">
                             <div>
                                 <div class="row">
-                                    <div class="col-xl-4">
-                                        <div class="card p-1 mb-xl-0">
-                                            <div class="p-3">
-                                                <div class="d-flex align-items-start">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <h5 class="font-size-15 text-truncate"><a href="#" class="text-dark">Beautiful Day with Friends</a></h5>
-                                                        <p class="font-size-13 text-muted mb-0">10 Apr, 2020</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0 ms-2">
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-link text-muted font-size-16 p-1 py-0 dropdown-toggle shadow-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="bx bx-dots-horizontal-rounded"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                                            </ul>
+                                    @foreach(array_keys($col_file) as $_col_file)
+                                        <div class="col-xl-4">
+                                            <div class="card p-1 mb-xl-0">
+                                                <div class="p-3">
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="flex-grow-1 overflow-hidden">
+                                                            <h5 class="font-size-15 text-truncate"><a href="#"
+                                                                                                      class="text-dark">{{file_name_by_column($_col_file)}}</a>
+                                                            </h5>
+                                                            @if($user->{$_col_file."_end_date"})
+                                                                <p class="font-size-13 text-muted mb-0">تاريخ
+                                                                    الإنتهاء {{ $user->{$_col_file."_end_date"} }}</p>
+                                                            @endif
+
+                                                        </div>
+                                                        <div class="flex-shrink-0 ms-2">
+                                                            <div class="dropdown">
+                                                                <a class="btn btn-link text-muted font-size-16 p-1 py-0 dropdown-toggle shadow-none"
+                                                                   href="#" role="button" data-bs-toggle="dropdown"
+                                                                   aria-expanded="false">
+                                                                    <i class="bx bx-dots-horizontal-rounded"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <div class="position-relative">
+                                                    <img src="assets/images/small/img-3.jpg" alt=""
+                                                         class="img-thumbnail">
+                                                </div>
 
-                                            <div class="position-relative">
-                                                <img src="assets/images/small/img-3.jpg" alt="" class="img-thumbnail">
-                                            </div>
-
-                                            <div class="p-3">
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item me-3">
-                                                        <a href="javascript: void(0);" class="text-muted">
-                                                            <i class="bx bx-purchase-tag-alt align-middle text-muted me-1"></i> Project
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item me-3">
-                                                        <a href="javascript: void(0);" class="text-muted">
-                                                            <i class="bx bx-comment-dots align-middle text-muted me-1"></i> 12 Comments
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <p class="text-muted">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet</p>
-
-                                                <div>
-                                                    <a href="javascript: void(0);" class="text-primary">Read more <i class="mdi mdi-arrow-right"></i></a>
+                                                <div class="p-3">
+                                                    <input class="form-control fileAction" type="file"
+                                                           name="{{$_col_file}}" id="{{$_col_file}}"
+                                                           multiple>
+                                                    <div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- end col -->
-
-                                    <div class="col-xl-4">
-                                        <div class="card p-1 mb-xl-0">
-                                            <div class="p-3">
-                                                <div class="d-flex align-items-start">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <h5 class="font-size-15 text-truncate"><a href="#" class="text-dark">Drawing a sketch</a></h5>
-                                                        <p class="font-size-13 text-muted mb-0">24 Mar, 2020</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0 ms-2">
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-link text-muted font-size-16 p-1 py-0 dropdown-toggle shadow-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="bx bx-dots-horizontal-rounded"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="position-relative">
-                                                <img src="assets/images/small/img-1.jpg" alt="" class="img-thumbnail">
-                                            </div>
-
-                                            <div class="p-3">
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item me-3">
-                                                        <a href="javascript: void(0);" class="text-muted">
-                                                            <i class="bx bx-purchase-tag-alt align-middle text-muted me-1"></i> Development
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item me-3">
-                                                        <a href="javascript: void(0);" class="text-muted">
-                                                            <i class="bx bx-comment-dots align-middle text-muted me-1"></i> 08 Comments
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <p class="text-muted">At vero eos et accusamus et iusto odio dignissimos ducimus quos</p>
-
-                                                <div>
-                                                    <a href="javascript: void(0);" class="text-primary">Read more <i class="mdi mdi-arrow-right"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end card -->
-                                    </div>
-                                    <!-- end col -->
-
-                                    <div class="col-xl-4">
-                                        <div class="card p-1 mb-sm-0">
-                                            <div class="p-3">
-                                                <div class="d-flex align-items-start">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <h5 class="font-size-15 text-truncate"><a href="#" class="text-dark">Project discussion with team</a></h5>
-                                                        <p class="font-size-13 text-muted mb-0">20 Mar, 2020</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0 ms-2">
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-link text-muted font-size-16 p-1 py-0 dropdown-toggle shadow-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="bx bx-dots-horizontal-rounded"></i>
-                                                            </a>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="position-relative">
-                                                <img src="assets/images/small/img-5.jpg" alt="" class="img-thumbnail">
-                                            </div>
-
-                                            <div class="p-3">
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item me-3">
-                                                        <a href="javascript: void(0);" class="text-muted">
-                                                            <i class="bx bx-purchase-tag-alt align-middle text-muted me-1"></i> Project
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item me-3">
-                                                        <a href="javascript: void(0);" class="text-muted">
-                                                            <i class="bx bx-comment-dots align-middle text-muted me-1"></i> 08 Comments
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <p class="text-muted">Itaque earum rerum hic tenetur a sapiente delectus ut aut</p>
-
-                                                <div>
-                                                    <a href="javascript: void(0);" class="text-primary">Read more <i class="mdi mdi-arrow-right"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end card -->
-                                    </div>
-                                    <!-- end col -->
+                                    @endforeach
                                 </div>
                                 <!-- end row -->
                             </div>
@@ -401,7 +313,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr> <div class="pb-3">
+                                    <hr>
+                                    <div class="pb-3">
                                         <div class="row">
                                             <div class="col-xl-2">
                                                 <div>المدينة</div>
@@ -443,102 +356,63 @@
         <!-- end col -->
 
 
-
     </div>
 @endsection
 
-
-
 @section('scripts')
     <script>
+        @foreach(array_keys($col_file) as $_col)
+        @if($user->{$_col})
 
-
-        $.fn.dataTable.ext.errMode = 'none';
-        $(function () {
-            $('#items_table').DataTable({
-                "dom": 'tpi',
-                "searching": false,
-                "processing": true,
-                'stateSave': true,
-                "serverSide": true,
-                ajax: {
-                    url: '{{route('users.list')}}',
-                    type: 'GET',
-                    "data": function (d) {
-                        d.name = $('#name').val();
-                        d.type = $('#type').val();
-
-                    }
-                },
-                language: {
-                    "url": "{{url('/')}}/assets/datatables/Arabic.json"
-                },
-                columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
-                    {className: 'text-center', data: 'type', name: 'type'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
-                    {className: 'text-center', data: 'enabled', name: 'enabled'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
-
-
-                ],
-
-
-            });
-
+        file_input_custom('#{{$_col}}', {
+            initialPreview: '{{asset('storage/'.$user->{$_col})}}',
         });
-        $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, false);
-        });
+        @else
+        file_input_custom('#{{$_col}}');
+        @endif
 
-        function delete_user(id, url, callback = null) {
-            Swal.fire({
-                title: 'هل انت متاكد من حذف المستخدم؟',
-                text: "",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#84dc61',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'تأكيد',
-                cancelButtonText: 'لا'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: url,
-                        type: "POST",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            'id': id
-                        },
-                        beforeSend() {
-                            KTApp.blockPage({
-                                overlayColor: '#000000',
-                                type: 'v2',
-                                state: 'success',
-                                message: 'الرجاء الانتظار'
-                            });
-                        },
-                        success: function (data) {
-                            if (callback && typeof callback === "function") {
-                                callback(data);
-                            } else {
-                                if (data.success) {
-                                    $('#items_table').DataTable().ajax.reload(null, false);
-                                    showAlertMessage('success', data.message);
-                                } else {
-                                    showAlertMessage('error', 'هناك خطأ ما');
-                                }
-                                KTApp.unblockPage();
-                            }
-                        },
-                        error: function (data) {
-                            console.log(data);
-                        },
-                    });
-                }
-            });
+        @endforeach
+        function file_input_custom(selector, options) {
+            let defaults = {
+                theme: "fas",
+                showDrag: false,
+                deleteExtraData: {
+                    '_token': '{{csrf_token()}}',
+                },
+                browseClass: "btn btn-info",
+                browseLabel: "",
+                browseIcon: "<i class='la la-file'></i>",
+                removeClass: "btn btn-danger",
+                removeLabel: "delete",
+                removeIcon: "<i class='la la-trash-o'></i>",
+                showRemove: false,
+                showCancel: false,
+                showUpload: false,
+                showPreview: true,
+                msgPlaceholder: " ",
+                msgSelected: " ",
+                fileSingle: "one files",
+                filePlural: "multi files",
+                dropZoneTitle: " ",
+                msgZoomModalHeading: " ",
+                dropZoneClickTitle: '',
+                initialPreview: [],
+                initialPreviewShowDelete: false,
+                initialPreviewAsData: true,
+                initialPreviewConfig: [],
+                initialPreviewFileType: 'image',
+                overwriteInitial: true,
+                browseOnZoneClick: true,
+                maxFileCount: 6,
+            };
+            let settings = $.extend({}, defaults, options);
+            $(selector).fileinput(settings);
         }
-    </script>
 
+        $('.fileAction').on('click', function () {
+            e.preventDefault();
+            return false;
+        })
+
+    </script>
 @endsection

@@ -52,12 +52,12 @@ class CreateUsersTable extends Migration
 
 
             $table->text('commercial_file')->nullable();//ملف السجل التجاري
-            $table->text('commercial_date_end')->nullable();
+            $table->text('commercial_file_end_date')->nullable();
             $table->text('rating_certificate')->nullable();///شهادة تصنيف وطني
-            $table->text('rating_certificate_date_end')->nullable();
+            $table->text('rating_certificate_end_date')->nullable();
             $table->text('address_file')->nullable();//العنوان الوطني
             $table->text('profession_license')->nullable();//مزاولة مهنة
-            $table->text('profession_license_date_end')->nullable();//
+            $table->text('profession_license_end_date')->nullable();//
             $table->text('business_license')->nullable();//شهادةالنشاط التاري
             $table->text('business_license_end_date')->nullable();
 
@@ -76,6 +76,9 @@ class CreateUsersTable extends Migration
             $table->text('tax_registration_certificate')->nullable();///شهادة تسجيل الضريبة
             $table->text('wage_protection_certificate')->nullable();///شهادة حماية الضريبة
             $table->text('memorandum_of_association')->nullable();///عقد التاسيس
+            ///
+            ///
+            $table->text('reject_reason')->nullable();
 
 
             $table->rememberToken();

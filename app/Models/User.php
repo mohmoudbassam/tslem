@@ -17,15 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'type',
-        'enabled',
-        'phone',
-        'image'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,6 +53,7 @@ class User extends Authenticatable
             return asset('storage/profiles/profile_placeholder.jpg');
         }
     }
+
     public function setPasswordAttribute($password)
     {
 
@@ -72,7 +65,7 @@ class User extends Authenticatable
     {
 
         return [
-            'admin'=>'مدير النظام',
+            'admin' => 'مدير النظام',
             'service_provider' => 'مقدم خدمة',
             'design_office' => 'مكتب تصميم',
             'Sharer' => 'جهة مشاركة',
@@ -82,12 +75,27 @@ class User extends Authenticatable
             'Kdana' => 'كدانة',
         ][$this->type];
     }
+
     public function getCoTypeAttribute()
     {
+        if ($this->company_type) {
+            return [
+                'organization' => 'مؤسسة',
+                'office' => 'مكتب',
+            ][$this->company_type];
+        }
+        return null;
 
-        return [
-            'organization'=>'مؤسسة',
-            'office' => 'مكتب',
-        ][$this->company_type];
+    }   public function getVerifiedStatusAttribute()
+    {
+        if ($this->verified==0) {
+            return 'غير معتمد';
+        }elseif($this->verified==1){
+            return 'تم الإعتماد';
+        }elseif($this->verified==2){
+            return 'تم الرفض';
+        }
+        return null;
+
     }
 }

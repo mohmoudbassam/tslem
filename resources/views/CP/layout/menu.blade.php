@@ -6,6 +6,7 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
+                @if(auth()->user()->verified==1)
                 <li class="menu-title" data-key="t-menu">القوائم</li>
 
                 <li>
@@ -14,6 +15,8 @@
                         <span data-key="t-dashboard">الإحصائيات</span>
                     </a>
                 </li>
+                @endif
+
                 @if(auth()->user()->isAdmin())
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
@@ -60,7 +63,7 @@
                     </li>
                 @endif
 
-                @if(auth()->user()->type=='service_provider')
+                @if(auth()->user()->type=='service_provider' && auth()->user()->verified==1)
                     <li>
                         <a href="{{route('services_providers')}}">
                             <i data-feather="users"></i>
@@ -68,7 +71,7 @@
                         </a>
                     </li>
                 @endif
-                @if(auth()->user()->type=='design_office')
+                @if(auth()->user()->type=='design_office' && auth()->user()->verified==1)
                     <li>
                         <a href="{{route('design_office')}}">
                             <i data-feather="users"></i>
