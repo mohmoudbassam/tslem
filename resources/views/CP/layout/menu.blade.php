@@ -79,6 +79,14 @@
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()->type=='Delivery' && auth()->user()->verified==1)
+                    <li>
+                        <a href="{{route('delivery')}}">
+                            <i data-feather="users"></i>
+                            <span data-key="t-authentication">الطلبات</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
 
 

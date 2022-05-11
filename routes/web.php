@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
@@ -71,6 +72,12 @@ Route::middleware('auth')->group(function () {
         Route::get('add-files', [DesignerOrderController::class, 'add_files'])->name('.add_files');
 //        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 //        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
+    });
+    Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
+        Route::get('orders', [DeliveryController::class, 'orders']);
+        Route::get('', [DeliveryController::class, 'list'])->name('.list');
+        Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
+        Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
     });
     Route::prefix('system-config')->group(function () {
 
