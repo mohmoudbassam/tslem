@@ -66,11 +66,12 @@ Route::middleware('auth')->group(function () {
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
     });
-    Route::prefix('design-office')->name('design_office')->middleware('design_office')->group(function () {
+    Route::prefix('design-office')->name('design_office')->middleware(['design_office','verifiedUser'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
-        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
-        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
+        Route::get('add-files', [DesignerOrderController::class, 'add_files'])->name('.add_files');
+//        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
+//        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);

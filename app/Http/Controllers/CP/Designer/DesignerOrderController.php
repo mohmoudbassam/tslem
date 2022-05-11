@@ -20,27 +20,23 @@ class DesignerOrderController extends Controller
         $order = Order::query()->with('service_provider')->whereDesigner(auth()->user()->id)->with('designer');
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
-                $accept = '';
+                $add_file_design = '';
 
-                $accept = '<a class="dropdown-item" onclick="accept(' . $order->id . ')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
-                $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
+                $add_file_design = '<a class="dropdown-item" href="' .route('design_office.add_files'). '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
+
                 if ($order->status > 1) {
-                    $accept = '';
-                }
-                if ($order->status > 1) {
-                    $reject = '';
+                    $add_file_design = '';
                 }
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                               ' . $accept . '
-                                               ' . $reject . '
+                                               ' . $add_file_design . '
+
                                             </div>
                                         </div>';
                 return $element;
-
             })
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
@@ -87,4 +83,29 @@ class DesignerOrderController extends Controller
 
 
     }
+    public function add_files (){
+        return view('CP.designer.add_files');
+    }
 }
+
+
+//$accept = '';
+//
+//$accept = '<a class="dropdown-item" onclick="accept(' . $order->id . ')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
+//$reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
+//if ($order->status > 1) {
+//    $accept = '';
+//}
+//if ($order->status > 1) {
+//    $reject = '';
+//}
+//$element = '<div class="btn-group me-1 mt-2">
+//                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+//                                                خيارات<i class="mdi mdi-chevron-down"></i>
+//                                            </button>
+//                                            <div class="dropdown-menu" style="">
+//                                               ' . $accept . '
+//                                               ' . $reject . '
+//                                            </div>
+//                                        </div>';
+//return $element;

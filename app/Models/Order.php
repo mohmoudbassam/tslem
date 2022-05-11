@@ -11,12 +11,12 @@ class Order extends Model
 
     protected $guarded=[];
 
-    public const AWAITING_DESIGN_OFFICE_APPROVAL =1;
-    public const DESIGN_REVIEW =2;
-    public const UNDERWAY =3;
-    public const DELIVERED =4;
-    public const APPROVED =5;
-    public const PENDING =6;
+
+    public const DESIGN_REVIEW =1;
+    public const ORDER_REVIEW =2;
+    public const DELIVERED =3;
+    public const APPROVED =4;
+    public const PENDING =5;
 
     public function designer(){
         return $this->belongsTo(User::class,'designer_id');
@@ -43,12 +43,11 @@ class Order extends Model
 
     public function getOrderStatusAttribute(){
         return[
-            '1'=>'بانتظار موافقة مكتب التصميم',
-            '2'=>'مراجعة التصاميم',
-            '3'=>'قيد التنفيذ',
-            '4'=>'تم التسليم',
-            '5'=>'تم الاعتماد',
-            '6'=>'معلق'
+            '1'=>'مراجعة التصاميم',
+            '2'=>'مراجعة الطلب',
+            '3'=>'تم التسليم',
+            '4'=>'تم الاعتماد',
+            '5'=>'معلق'
         ][$this->status];
     }
 
