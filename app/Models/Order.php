@@ -34,9 +34,7 @@ class Order extends Model
     public function scopeWhereDesigner($query,$designer_id){
         return $query->where('designer_id',$designer_id);
     }
-//    public function scopeWhereDelivery($query,$delivery_id){
-//        return $query->where('designer_id',$delivery_id);
-//    }
+
     public function scopeWhereServiceProvider($query,$service_provider_id){
         return $query->where('owner_id',$service_provider_id);
     }

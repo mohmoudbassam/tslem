@@ -69,7 +69,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('design-office')->name('design_office')->middleware(['design_office','verifiedUser'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
-        Route::get('add-files', [DesignerOrderController::class, 'add_files'])->name('.add_files');
+        Route::get('add-files/{order}', [DesignerOrderController::class, 'add_files'])->name('.add_files');
+        Route::post('save_file', [DesignerOrderController::class, 'save_file'])->name('.save_file');
 //        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 //        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
@@ -96,4 +97,8 @@ Route::middleware('auth')->group(function () {
 });
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
+Route::get('test',function () {
+   dd(storage_path('files'));
 });

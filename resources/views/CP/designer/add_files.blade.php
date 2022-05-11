@@ -35,25 +35,29 @@
             </div>
         </div>
         <div class="card-body">
-            <form id="add_edit_form" method="post" action="{{route('services_providers.save_order')}}" enctype="multipart/form-data">
+            <form id="add_edit_form" method="post" action="{{route('design_office.save_file')}}"
+                  enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-12">
                         <div>
                             <div class="mb-3">
                                 <label for="title" class="form-label">الرجاء إضافة الملفات هنا </label>
-                                <input class="form-control" name="files[]" multiple type="file" placeholder="العنوان" id="files">
+                                <input class="form-control" name="files[]" multiple type="file" placeholder="العنوان"
+                                       id="files">
                                 <div class="col-12 text-danger" id="files_error"></div>
                             </div>
                         </div>
                     </div>
+
+                    <input type="hidden" name="id" value="{{$order->id}}">
 
 
                 </div>
 
             </form>
             <div class="d-flex flex-wrap gap-3">
-                <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء طلب</button>
+                <button type="button" class="btn btn-lg btn-primary submit_btn">تجهيز الطلب</button>
             </div>
         </div>
 
@@ -69,7 +73,11 @@
     <script>
 
 
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         file_input('#files');
 
         $('#add_edit_form').validate({
@@ -77,7 +85,6 @@
                 "files": {
                     required: true,
                 },
-
             },
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
@@ -95,6 +102,9 @@
             e.preventDefault();
             if (!$("#add_edit_form").valid())
                 return false;
+
+
+            postData(new FormData($('#add_edit_form').get(0)), '{{route('design_office.save_file')}}');
         });
     </script>
 

@@ -7,7 +7,7 @@
 | online  => http://unisharp.github.io/laravel-filemanager/config
 | offline => vendor/unisharp/laravel-filemanager/docs/config.md
  */
-
+//dd('files/'.request('id'));
 return [
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
      */
 
-    'allow_private_folder'     => true,
+    'allow_private_folder'     => false,
 
     // Flexible way to customize client folders accessibility
     // If you want to customize client folders, publish tag="lfm_handler"
@@ -47,7 +47,7 @@ return [
 
     'folder_categories'        => [
         'file'  => [
-            'folder_name'  => 'files',
+            'folder_name'  => get_order_folder(),
             'startup_view' => 'list',
             'max_size'     => 50000, // size in KB
             'thumb' => true,

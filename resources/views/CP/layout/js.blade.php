@@ -19,7 +19,7 @@
             showUpload: false,
             showPreview: true,
             msgPlaceholder: "اختر ملف",
-            msgSelected: "selected {n} {files}",
+            msgSelected: "تم الاختيار ",
             fileSingle: "ملف واحد",
             filePlural: "اكثر من ملف",
             dropZoneTitle: "سحب وافلات",
