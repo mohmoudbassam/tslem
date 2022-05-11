@@ -38,6 +38,37 @@
             border-color: var(--second-color) !important;
             border-radius: 0.9rem !important;
         }
+
+        .login-page-form-container { 
+            position: absolute;
+            width: 30%;
+            height: 80%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            background: white;
+            text-align: center;
+        }
+
+        @media (max-width: 1300px) {
+            .login-page-form-container { 
+                width: 50%;
+            }
+        }
+        @media (max-width: 950px) {
+            .login-page-form-container { 
+                width: 80%;
+            }
+        }
+        
+        @media (max-width: 780px) {
+            .auth-bg { 
+                display: none !important; 
+            }
+        }
+
+
     </style>
 </head>
 
@@ -47,7 +78,12 @@
 <div class="auth-page">
     <div class="container-fluid p-0">
         <div class="row g-0">
-            <div class="col-xxl-3 col-lg-4 col-md-5">
+
+            <!-- end col -->
+            <div class="col-24" style="position: relative;">
+                <div class="row login-page-form-container">
+
+                <div class="col-12">
                 <div class="auth-full-page-content d-flex p-sm-5 p-4">
                     <div class="w-100">
                         <div class="d-flex flex-column h-100">
@@ -121,8 +157,8 @@
                 </div>
                 <!-- end auth full page content -->
             </div>
-            <!-- end col -->
-            <div class="col-xxl-9 col-lg-8 col-md-7">
+
+            </div>
                 <div class="auth-bg pt-md-5 p-4 d-flex">
                     <div class="bg-overlay bg-second"></div>
                     <ul class="bg-bubbles">
