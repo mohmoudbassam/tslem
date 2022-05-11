@@ -222,7 +222,6 @@
             });
         }
 
-
     </script>
 
 @endsection

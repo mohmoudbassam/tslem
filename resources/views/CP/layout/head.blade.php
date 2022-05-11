@@ -69,7 +69,23 @@
          body.loading .modal {
              display: block;
          }
-     </style>
+
+        .modal-header {
+            --bs-bg-opacity: 1;
+            background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+        }
+
+        .modal-header h5 {
+            color: white !important;
+        }
+
+        .modal-content {
+            -webkit-box-shadow: 0 2px 8px 0 rgb(81 86 190 / 30%);
+            box-shadow: 0 2px 8px 0 rgb(81 86 190 / 30%);
+        }
+
+
+    </style>
 </head>
 
 <body lang="en" dir="rtl">
