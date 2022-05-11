@@ -56,9 +56,9 @@
                         <form class="d-flex">
 
 
-                            <a role="button" href="{{route('login_page')}}" class="btn btn-outline-main mx-2" type="submit">التسجيل</a>
+                            <a role="button" href="{{route('register')}}" class="btn btn-outline-main mx-2" type="submit">التسجيل</a>
 
-                            <a role="button" href="{{route('register')}}" class="btn btn-main" type="submit">تسجيل الدخول</a>
+                            <a role="button" href="{{route('login_page')}}" class="btn btn-main" type="submit">تسجيل الدخول</a>
 
 
                         </form>

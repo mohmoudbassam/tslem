@@ -47,7 +47,7 @@ return [
 
     'folder_categories'        => [
         'file'  => [
-            'folder_name'  => get_order_folder(),
+            'folder_name'  => 'files',
             'startup_view' => 'list',
             'max_size'     => 50000, // size in KB
             'thumb' => true,

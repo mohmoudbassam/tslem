@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'design_office'=>\App\Http\Middleware\CP\DesignerOffice::class,
         'delivery'=>\App\Http\Middleware\CP\Delivery::class,
         'verifiedUser'=>\App\Http\Middleware\CP\Verified::class,
+        'order_id_middleware'=>\App\Http\Middleware\order_id_middleware::class,
     ];
 }

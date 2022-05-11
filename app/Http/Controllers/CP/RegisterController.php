@@ -15,10 +15,14 @@ class RegisterController extends Controller
 
     public function index(Request $request)
     {
+
         if (auth()->check()) {
+
             redirect()->route('dashboard');
         }
-        $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
+
+        $data['record'] = BeneficiresCoulumns::query()->where('type','service_provider')->firstOrFail();
+
         return view('CP.register', $data);
     }
 

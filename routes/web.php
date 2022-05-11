@@ -10,6 +10,7 @@ use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Controllers\LfmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,10 +97,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::get('test',function () {
-   dd(storage_path('files'));
-});
+Route::get('test', [LfmController::class,'show']);
