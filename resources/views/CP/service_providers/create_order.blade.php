@@ -76,15 +76,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-12">
 
-                    <div class="mb-3">
-                        <label class="form-label" for="files">المرفقات</label>
-                        <input class="form-control" type="file" name="files[]" id="files" multiple>
-                        <div class="col-12 text-danger" id="date_error"></div>
-
-                    </div>
-                </div>
 
 
             </div>

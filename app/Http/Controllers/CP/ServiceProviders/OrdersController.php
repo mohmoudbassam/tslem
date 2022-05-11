@@ -30,7 +30,6 @@ class OrdersController extends Controller
         $order = Order::query()->create($request->except('files', '_token'));
         $order->owner_id=auth()->user()->id;
         $order->save();
-        $this->upload_files($order, $request);
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 
