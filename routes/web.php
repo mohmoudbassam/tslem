@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
+        Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
     });
