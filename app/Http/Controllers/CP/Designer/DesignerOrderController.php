@@ -19,12 +19,14 @@ class DesignerOrderController extends Controller
 
     public function list()
     {
+
         $order = Order::query()->with('service_provider')->whereDesigner(auth()->user()->id)->with('designer');
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 $add_file_design = '';
 
                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
+                $file_manger = '<a class="dropdown-item" href="' . url('laravel-filemanager') . "?id=$order->id" . '" href="javascript:;"><i class="fa fa-file"></i>معرض الملفات  </a>';
 
                 if ($order->status > 1) {
                     $add_file_design = '';
@@ -35,6 +37,7 @@ class DesignerOrderController extends Controller
                                             </button>
                                             <div class="dropdown-menu" style="">
                                                ' . $add_file_design . '
+                                               ' . $file_manger . '
 
                                             </div>
                                         </div>';
@@ -94,19 +97,19 @@ class DesignerOrderController extends Controller
     public function save_file(Request $request)
     {
 
-      $order = Order::query()->findOrFail($request->id);
+        $order = Order::query()->findOrFail($request->id);
 
-    save_logs($order,auth()->user()->id,'تم اضافة التصاميم من قبل مكتب التصميم');
-      $delivery=User::query()->where('type','Delivery')->first();
-        $delivery->notify(new OrderNotification('تم إنشاء الطلب',auth()->user()->id));
-        $this->upload_files($order,$request);
+        save_logs($order, auth()->user()->id, 'تم اضافة التصاميم من قبل مكتب التصميم');
+        $delivery = User::query()->where('type', 'Delivery')->first();
+        $delivery->notify(new OrderNotification('تم إنشاء الطلب', auth()->user()->id));
+        $this->upload_files($order, $request);
 
         $order->update([
-           'status'=>Order::ORDER_REVIEW
+            'status' => Order::ORDER_REVIEW
         ]);
         return response()->json([
-           'success' =>true,
-            'message' =>'تمت اضافة التصاميم بنجاح'
+            'success' => true,
+            'message' => 'تمت اضافة التصاميم بنجاح'
         ]);
 
     }
@@ -114,7 +117,8 @@ class DesignerOrderController extends Controller
     public function upload_files($order, $request)
     {
         foreach ($request->file('files') as $file) {
-            $path = Storage::disk('public')->put('order/' . $order->id, $file);
+            $path = Storage::disk('public')->put('files/' . $order->id .'/shares', $file);
+
             $file_name = $file->getClientOriginalName();
             $order->file()->create([
                 'path' => $path,

@@ -64,5 +64,5 @@ function is_pdf($extension)
     return $extension == 'pdf';
 }
 function get_order_folder(){
-    return 'files/3';
+    return 'files/'.request('id');
 }

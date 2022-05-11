@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page</title>
+    <title>تسليم</title>
 
     <link rel="stylesheet" href="{{ url('assets/css/main.css') }}" />
     <!-- CSS only -->
@@ -56,9 +56,9 @@
                         <form class="d-flex">
 
 
-                            <a role="button" href="" class="btn btn-outline-main mx-2" type="submit">التسجيل</a>
+                            <a role="button" href="{{route('login_page')}}" class="btn btn-outline-main mx-2" type="submit">التسجيل</a>
 
-                            <a role="button" href="" class="btn btn-main" type="submit">تسجيل الدخول</a>
+                            <a role="button" href="{{route('register')}}" class="btn btn-main" type="submit">تسجيل الدخول</a>
 
 
                         </form>
