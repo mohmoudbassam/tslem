@@ -14,7 +14,7 @@ class Order extends Model
 
     public const DESIGN_REVIEW =1;
     public const ORDER_REVIEW =2;
-    public const DELIVERED =3;
+    public const ORDER_APPROVED =3;
     public const APPROVED =4;
     public const PENDING =5;
 
@@ -42,7 +42,7 @@ class Order extends Model
         return[
             '1'=>'مراجعة التصاميم',
             '2'=>'مراجعة الطلب',
-            '3'=>'تم التسليم',
+            '3'=>'تم اعتماد التصاميم',
             '4'=>'تم الاعتماد',
             '5'=>'معلق'
         ][$this->status];

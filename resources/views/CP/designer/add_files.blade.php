@@ -42,7 +42,7 @@
                         <div>
                             <div class="mb-3">
                                 <label for="title" class="form-label">الرجاء إضافة الملفات هنا </label>
-                                <input class="form-control" name="files" type="file" placeholder="العنوان" id="files">
+                                <input class="form-control" name="files[]" multiple type="file" placeholder="العنوان" id="files">
                                 <div class="col-12 text-danger" id="files_error"></div>
                             </div>
                         </div>
@@ -95,8 +95,6 @@
             e.preventDefault();
             if (!$("#add_edit_form").valid())
                 return false;
-
-            postData(new FormData($('#add_edit_form').get(0)), '{{route('partners.add_edit')}}');
         });
     </script>
 
