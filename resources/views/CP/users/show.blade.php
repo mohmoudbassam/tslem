@@ -37,15 +37,15 @@
                                         <div
                                             class="d-flex flex-wrap align-items-start gap-2 gap-lg-3 text-muted font-size-13">
                                             @if($user->email)
-                                            <div>
-                                                <i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->email}}
-                                            </div>
+                                                <div>
+                                                    <i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->email}}
+                                                </div>
                                             @endif
                                             @if($user->co_type)
-                                            <div>
-                                                <i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->co_type}}
-                                            </div>
-                                                @endif
+                                                <div>
+                                                    <i class="mdi mdi-circle-medium me-1 text-success align-middle"></i>{{$user->co_type}}
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -141,6 +141,7 @@
 
                             </div>
                         </div>
+
                         <div class="card-body">
                             <div>
                                 <div class="row">
@@ -153,6 +154,7 @@
                                                             <h5 class="font-size-15 text-truncate"><a href="#"
                                                                                                       class="text-dark">{{file_name_by_column($_col_file)}}</a>
                                                             </h5>
+
                                                             @if($user->{$_col_file."_end_date"})
                                                                 <p class="font-size-13 text-muted mb-0">تاريخ
                                                                     الإنتهاء {{ $user->{$_col_file."_end_date"} }}</p>
@@ -164,24 +166,31 @@
                                                                 <a class="btn btn-link text-muted font-size-16 p-1 py-0 dropdown-toggle shadow-none"
                                                                    href="#" role="button" data-bs-toggle="dropdown"
                                                                    aria-expanded="false">
-                                                                    <i class="bx bx-dots-horizontal-rounded"></i>
+
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="position-relative">
-                                                    <img src="assets/images/small/img-3.jpg" alt=""
-                                                         class="img-thumbnail">
+                                                    @if(is_image(pathinfo($user->{$_col_file}, PATHINFO_EXTENSION)))
+                                                        <a href="{{asset('storage/'.$user->{$_col_file})}}">
+                                                            <img src="{{asset('storage/'.$user->{$_col_file})}}"
+                                                                 class="img-thumbnail">
+                                                        </a>
+                                                    @endif
+
+                                                    @if(is_pdf(pathinfo($user->{$_col_file}, PATHINFO_EXTENSION)))
+                                                        @if(is_pdf(pathinfo($user->{$_col_file}, PATHINFO_EXTENSION)))
+                                                            <a href="{{asset('storage/'.$user->{$_col_file})}}">
+                                                                <img src="{{asset('storage/'.'pdf.jfif')}}"
+                                                                     class="img-thumbnail">
+                                                            </a>
+                                                        @endif
+                                                        @endif
                                                 </div>
 
-                                                <div class="p-3">
-                                                    <input class="form-control fileAction" type="file"
-                                                           name="{{$_col_file}}" id="{{$_col_file}}"
-                                                           multiple>
-                                                    <div>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                         </div>
                                     @endforeach

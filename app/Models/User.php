@@ -76,6 +76,18 @@ class User extends Authenticatable
         ][$this->type];
     }
 
+
+
+    /////filters
+    public function scopeWhereVitrified($q){
+        return $q->where('verified',1);
+    }
+
+
+
+
+
+    /////////////////////localization
     public function getCoTypeAttribute()
     {
         if ($this->company_type) {
@@ -86,7 +98,8 @@ class User extends Authenticatable
         }
         return null;
 
-    }   public function getVerifiedStatusAttribute()
+    }
+    public function getVerifiedStatusAttribute()
     {
         if ($this->verified==0) {
             return 'غير معتمد';

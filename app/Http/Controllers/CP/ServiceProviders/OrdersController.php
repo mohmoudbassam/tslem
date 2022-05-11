@@ -19,7 +19,8 @@ class OrdersController extends Controller
 
     public function create_order()
     {
-        $data['designers'] = User::query()->where('type', 'design_office')->get();
+        $data['designers'] = User::query()->whereVitrified()->where('type', 'design_office')->get();
+
         return view('CP.service_providers.create_order', $data);
     }
 
@@ -39,17 +40,21 @@ class OrdersController extends Controller
 
     public function list(Request $request)
     {
-        $order = Order::query()->whereServiceProvider(auth()->user()->id)->with('designer');
+        $order = Order::query()->with('designer')->whereServiceProvider(auth()->user()->id)->with('designer');
         return DataTables::of($order)
-
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
-            })->make(true);
+            })->addColumn('order_status', function ($order) {
+                return $order->order_status;
+            })
+
+            ->make(true);
     }
 
     public function upload_files($order, $request)
     {
-        foreach ($request->file('files') as $file) {
+
+        foreach ((array)$request->file('files') as $file) {
             $path = Storage::disk('public')->put('order/' . $order->id, $file);
             $file_name = $file->getClientOriginalName();
             $order->file()->create([

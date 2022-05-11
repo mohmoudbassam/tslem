@@ -50,3 +50,16 @@ function file_name_by_column($col)
         'memorandum_of_association' => 'عقد التاسيس'
     ][$col];
 }
+
+function is_image($extension)
+{
+    $image_type = [
+        'png', 'jpg', 'jpeg', 'gif',
+    ];
+    return in_array($extension, $image_type);
+}
+
+function is_pdf($extension)
+{
+    return $extension == 'pdf';
+}

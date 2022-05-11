@@ -6,7 +6,7 @@ use App\Http\Controllers\CP\RegisterController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\Users\UserController;
-use App\Http\Controllers\Designer\DesignerOrderController;
+use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
         });
     });
-    Route::prefix('service-providers')->name('services_providers')->middleware('service_provider')->group(function () {
+    Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider','verifiedUser'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
         Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
         Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
+        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('system-config')->group(function () {
 

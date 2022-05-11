@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'admin'=>\App\Http\Middleware\CP\Admin::class,
         'service_provider'=>\App\Http\Middleware\CP\ServiceProviders::class,
         'design_office'=>\App\Http\Middleware\CP\DesignerOffice::class,
+        'verifiedUser'=>\App\Http\Middleware\CP\Verified::class,
     ];
 }

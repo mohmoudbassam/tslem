@@ -80,7 +80,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مكتب التصميم
+                            مقدم الخدمة
                         </th>
                         <th>
                             التاريخ
@@ -140,9 +140,9 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
-                    {className: 'text-center', data: 'designer.name', name: 'name'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'status', name: 'status'},
+                    {className: 'text-center', data: 'order_status', name: 'order_status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
@@ -180,6 +180,44 @@
                 },
                 success: function (data) {
                     if(data.success){
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
+            });
+        }
+        function reject(id) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('design_office.reject')}}',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        $('#items_table').DataTable().ajax.reload(null, false);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');

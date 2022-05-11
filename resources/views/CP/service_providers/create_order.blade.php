@@ -69,7 +69,7 @@
                         <select class="form-select" id="designer_id" name="designer_id">
                             <option  value="">اختر...</option>
                             @foreach($designers as $designer)
-                                <option  value="{{$designer->id}}">{{$designer->name}}</option>
+                                <option  value="{{$designer->id}}">{{$designer->company_name}}</option>
                                 @endforeach
                             <div class="col-12 text-danger" id="designer_id_error"></div>
 
