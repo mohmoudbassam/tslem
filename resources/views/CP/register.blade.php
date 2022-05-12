@@ -355,10 +355,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_date_end">تاريخ أنتهاء السجل التجاري</label>
-                                <input type="date" class="form-control" value="{{old('commercial_date_end')}}"
-                                       id="commercial_date_end" name="commercial_date_end">
-                                <div class="col-12 text-danger" id="commercial_date_end_error"></div>
+                                <label class="form-label" for="commercial_file_end_date">تاريخ أنتهاء السجل التجاري</label>
+                                <input type="date" class="form-control" value="{{old('commercial_file_end_date')}}"
+                                       id="commercial_end_date" name="commercial_file_end_date">
+                                <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
                             </div>
                         </div>
                     </div>
@@ -375,10 +375,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="rating_certificate_date_end">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="rating_certificate_date_end"
-                                       name="rating_certificate_date_end">
-                                <div class="col-12 text-danger" id="rating_certificate_date_end_error"></div>
+                                <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
+                                <input type="date" class="form-control" id="rating_certificate_end_date"
+                                       name="rating_certificate_end_date">
+                                <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
                             </div>
                         </div>
                     </div>
@@ -406,9 +406,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="profession_license_date_end">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="profession_license_date_end"
-                                       name="profession_license_date_end">
+                                <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
+                                <input type="date" class="form-control" id="profession_license_end_date"
+                                       name="profession_license_end_date">
                                 <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
                             </div>
                         </div>
@@ -432,7 +432,8 @@
                             </div>
                         </div>
                     </div>
-                @endif @if($record->social_insurance_certificate)
+                @endif
+                @if($record->social_insurance_certificate)
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -589,9 +590,7 @@
 <script src="{{url("/")}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="{{url("/")}}/assets/jquery-validation/dist/localization/messages_ar.min.js" type="text/javascript"></script>
 <script>
-    @if($record->commercial_file)
 
-    @endif
     $('#add_edit_form').validate({
         lang: 'ar',
         rules: {

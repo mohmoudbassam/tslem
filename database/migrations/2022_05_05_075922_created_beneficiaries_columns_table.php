@@ -43,12 +43,12 @@ class CreatedBeneficiariesColumnsTable extends Migration
             ///files
 
             $table->boolean('commercial_file')->default(0);//ملف السجل التجاري
-            $table->boolean('commercial_date_end')->default(0);
+            $table->boolean('commercial_file_end_date')->default(0);
             $table->boolean('rating_certificate')->default(0);///شهادة تصنيف وطني
-            $table->boolean('rating_certificate_date_end')->default(0);
+            $table->boolean('rating_certificate_end_date')->default(0);
             $table->boolean('address_file')->default(0);//العنوان الوطني
             $table->boolean('profession_license')->default(0);//مزاولة مهنة
-            $table->boolean('profession_license_date_end')->default(0);//
+            $table->boolean('profession_license_end_date')->default(0);//
             $table->boolean('business_license')->default(0);//شهادةالنشاط التاري
             $table->boolean('business_license_end_date')->default(0);
 

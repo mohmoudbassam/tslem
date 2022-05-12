@@ -12,6 +12,12 @@ class Order extends Model
     protected $guarded=[];
 
 
+    public const DESIGN_REVIEW =1;
+    public const ORDER_REVIEW =2;
+    public const ORDER_APPROVED =3;
+    public const APPROVED =4;
+    public const PENDING =5;
+
     public function designer(){
         return $this->belongsTo(User::class,'designer_id');
     }
@@ -25,10 +31,22 @@ class Order extends Model
         return $this->hasMany(OrderLogs::class);
     }
 
-    public function scopewhereDesigner($query,$designer_id){
+    public function scopeWhereDesigner($query,$designer_id){
         return $query->where('designer_id',$designer_id);
     }
-    public function scopewhereServiceProvider($query,$service_provider_id){
+
+    public function scopeWhereServiceProvider($query,$service_provider_id){
         return $query->where('owner_id',$service_provider_id);
     }
+
+    public function getOrderStatusAttribute(){
+        return[
+            '1'=>'مراجعة التصاميم',
+            '2'=>'مراجعة الطلب',
+            '3'=>'تم اعتماد التصاميم',
+            '4'=>'تم الاعتماد',
+            '5'=>'معلق'
+        ][$this->status];
+    }
+
 }

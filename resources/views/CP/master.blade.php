@@ -22,6 +22,30 @@
         <div class="page-content">
             <div class="container-fluid">
                 @yield('content')
+                <div class="col-12">
+                    @if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() )
+                    <div class="alert alert-danger">
+
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+
+
+
+
+                            تم رفض حسابك للأسباب التاليه:     {{auth()->user()->reject_reason}}
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb ">
+                                    <li class="breadcrumb-item"><a href="{{route('edit_profile')}}">تعديل الملف الشخصي</a></li>
+
+                                </ol>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    @endif
+                </div>
+
             </div>
 
         </div>
@@ -204,6 +228,7 @@
 @yield('scripts')
     <script>
         function read_message(){
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
