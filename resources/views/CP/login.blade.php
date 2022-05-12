@@ -20,13 +20,12 @@
     <link href="{{url('/')}}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{url('/')}}/assets/css/app-rtl.min.css" id="app-style" rel="stylesheet" type="text/css" />
-
+    <link href="{{url('/')}}/assets/css/login.css" id="app-style" rel="stylesheet" type="text/css" />
     <style>
         :root {
             --main-color: #122b76;
             --second-color: #c0946f;
         }
-
         .bg-second {
             --bs-bg-opacity: 1;
             background-color: rgba(192, 148, 111, var(--bs-bg-opacity)) !important;
@@ -89,13 +88,14 @@
                         <div class="d-flex flex-column h-100">
                             <div class="mb-4 mb-md-5 text-center">
                                 <a href="index.html" class="d-block auth-logo">
-                                    <img src="{{url('/')}}/assets/img/تسليم 2.png" alt="" > <span class="logo-txt"></span>
+                                    <img src="{{url('/')}}/assets/img/tsleem-logo.png" alt=""  width="150px"> <span class="logo-txt"></span>
                                 </a>
                             </div>
                             <div class="auth-content my-auto">
 
                                 <div class="text-center">
-                                    <h5 class="mb-0">أهلا وسهلا</h5>
+                                    <h1>تسجيل الدخول</h1>  
+                                <h5 class="mb-0">أهلا وسهلا</h5>
                                     <p class="text-muted mt-2"></p>
                                 </div>
                                 <form class="mt-4 pt-2" action="{{route('login')}}" method="post">
@@ -138,7 +138,7 @@
                                     </div>
                                     @endif
                                     <div class="mb-3">
-                                        <button class="btn btn-second w-100 waves-effect waves-light" type="submit">تسجيل الدخول</button>
+                                        <button class="btn  btn-secondary w-100 waves-effect waves-light" type="submit">تسجيل الدخول</button>
                                     </div>
                                 </form>
 
