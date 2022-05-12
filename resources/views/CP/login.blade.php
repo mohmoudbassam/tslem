@@ -88,7 +88,7 @@
                         <div class="d-flex flex-column h-100">
                             <div class="mb-4 mb-md-5 text-center">
                                 <a href="index.html" class="d-block auth-logo">
-                                    <img src="{{url('/')}}/assets/img/تسليم 2.png" alt=""  width="150px"> <span class="logo-txt"></span>
+                                    <img src="{{url('/')}}/assets/img/tsleem-logo.png" alt=""  width="150px"> <span class="logo-txt"></span>
                                 </a>
                             </div>
                             <div class="auth-content my-auto">
