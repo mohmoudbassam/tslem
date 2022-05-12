@@ -33,12 +33,12 @@
     @yield('style')
     <style>
         @font-face {
-            font-family: GE-Dinar;
-            src: url('{{ url('/assets/fonts/ArbFONTS-GE-Dinar-One-Medium.otf')  }}');
+            font-family: JannaLT;
+            src: url('{{ url('/assets/fonts/JannaLT-Regular.woff')  }}');
         }
 
         body {
-            font-family: GE-Dinar !important;
+            font-family: JannaLT !important;
         }
 
          [dir=rtl] input {
