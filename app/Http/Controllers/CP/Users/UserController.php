@@ -61,10 +61,12 @@ class UserController extends Controller
 
     public function edit_profile()
     {
+
         $data['record'] = BeneficiresCoulumns::query()->where('type',auth()->user()->type)->firstOrFail();
         $data['user'] =auth()->user();
         $col_file = get_user_column_file(auth()->user()->type);
         $data['col_file']= $col_file;
+        $data['verified']=auth()->user()->verified;
         return view('CP.users.edit_profile',$data);
 
     }
@@ -75,21 +77,21 @@ class UserController extends Controller
 
     }
 
-    public function save_profile(UpdateUserRequest $request)
-    {
-
-        auth()->user()->update([
-            'email' => request('email'),
-            'phone' => request('phone'),
-        ]);
-        if (request('password')) {
-            auth()->user()->update([
-                'password' => bcrypt(request('password'))
-            ]);
-        }
-
-        return back()->with('success', 'تمت عمليه التعديل بنجاح');
-    }
+//    public function save_profile(UpdateUserRequest $request)
+//    {
+//
+//        auth()->user()->update([
+//            'email' => request('email'),
+//            'phone' => request('phone'),
+//        ]);
+//        if (request('password')) {
+//            auth()->user()->update([
+//                'password' => bcrypt(request('password'))
+//            ]);
+//        }
+//
+//        return back()->with('success', 'تمت عمليه التعديل بنجاح');
+//    }
 
     public function list(Request $request)
     {
@@ -155,31 +157,37 @@ class UserController extends Controller
     }
 
 
-    public function update_from(Request $request, User $user)
-    {
-        $data['user'] = $user;
-        $data['record'] = BeneficiresCoulumns::query()->where('type', $user->type)->firstOrFail();
-        return view('CP.users.update_form', $data);
-    }
-
-    public function update(Request $request)
-    {
-        User::query()->where('id', $request->id)->first()->update($request->all());
-        return back()->with('success', 'تمت عمليه التعديل بنجاح');
-
-    }
+//    public function update_from(Request $request, User $user)
+//    {
+//
+//        $data['user'] = $user;
+//        $data['record'] = BeneficiresCoulumns::query()->where('type', $user->type)->firstOrFail();
+//        return view('CP.users.update_form', $data);
+//    }
+//
+//    public function update(Request $request)
+//    {
+//        User::query()->where('id', $request->id)->first()->update($request->all());
+//        return back()->with('success', 'تمت عمليه التعديل بنجاح');
+//
+//    }
 
     private function uploadUserFiles($user, $file)
     {
         $columns_name = get_user_column_file($user->type);
+
         if (!empty($columns_name)) {
             $files = request()->all(array_keys(get_user_column_file($user->type)));
             foreach ($files as $col_name => $file) {
-                $file_name = $file->getClientOriginalName();
 
-                $path = Storage::disk('public')->put('user_files', $file);
+                if($file){
+                    $file_name = $file->getClientOriginalName();
 
-                $user->{$col_name} = $path;
+                    $path = Storage::disk('public')->put('user_files', $file);
+
+                    $user->{$col_name} = $path;
+                }
+
 
             }
             $user->save();
@@ -204,7 +212,7 @@ class UserController extends Controller
             'telephone' => request('telephone'),
             'city' => request('city'),
             'employee_number' => request('employee_number'),
-            'password' => request('password'),
+           
             'verified' => 0,
             'commercial_file_end_date' => request('commercial_file_end_date'),
             'rating_certificate_end_date' => request('rating_certificate_end_date'),
@@ -220,5 +228,36 @@ class UserController extends Controller
 
     }
 
+    public function save_profile(Request $request)
+    {
+        $user =tap(auth()->user()->update([
+            'company_name' => request('company_name'),
+            'company_type' => request('company_type'),
+            'company_owner_name' => request('company_owner_name'),
+            'commercial_record' => request('commercial_record'),
+            'website' => request('website'),
+            'responsible_name' => request('responsible_name'),
+            'id_number' => request('id_number'),
+            'id_date' => Carbon::parse(request('id_date'))->format('Y-m-d'),
+            'source' => request('source'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'address' => request('address'),
+            'telephone' => request('telephone'),
+            'city' => request('city'),
+            'employee_number' => request('employee_number'),
+
+            'commercial_file_end_date' => request('commercial_file_end_date'),
+            'rating_certificate_end_date' => request('rating_certificate_end_date'),
+            'profession_license_end_date' => request('profession_license_end_date'),
+            'business_license_end_date' => request('business_license_end_date'),
+            'social_insurance_certificate_end_date' => request('social_insurance_certificate_end_date'),
+            'date_of_zakat_end_date' => request('date_of_zakat_end_date'),
+            'saudization_certificate_end_date' => request('saudization_certificate_end_date'),
+            'chamber_of_commerce_certificate_end_date' => request('chamber_of_commerce_certificate_end_date'),
+        ]));
+        $this->uploadUserFiles(auth()->user(), $request);
+        return back()->with(['success' => 'تمت عمليه التعديل بنجاح']);
+    }
 
 }

@@ -28,7 +28,7 @@ class DesignerOrderController extends Controller
                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
                 $file_manger = '<a class="dropdown-item" href="' . url('laravel-filemanager') . "?id=$order->id" . '" href="javascript:;"><i class="fa fa-file"></i>معرض الملفات  </a>';
 
-                if ($order->status > 1) {
+                if ($order->status > 2 ) {
                     $add_file_design = '';
                 }
                 $element = '<div class="btn-group me-1 mt-2">
@@ -51,43 +51,43 @@ class DesignerOrderController extends Controller
             ->make(true);
     }
 
-    public function accept(Request $request)
-    {
-
-        $order = Order::query()->findOrFail($request->id);
-        if ($order->status == 1) {
-            $order->status = Order::DESIGN_REVIEW;
-            $order->save();
-
-            save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
-
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
-            return response()->json([
-                'success' => true,
-                'message' => 'تمت اعتماد الطلب بنجاح'
-            ]);
-        }
-    }
-
-    public function reject(Request $request)
-    {
-
-        $order = Order::query()->findOrFail($request->id);
-        if ($order->status == 1) {
-            $order->status = Order::PENDING;
-            $order->save();
-
-            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
-
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
-            return response()->json([
-                'success' => true,
-                'message' => 'تمت رفض الطلب بنجاح'
-            ]);
-        }
-
-
-    }
+//    public function accept(Request $request)
+//    {
+//
+//        $order = Order::query()->findOrFail($request->id);
+//        if ($order->status == 1) {
+//            $order->status = Order::DESIGN_REVIEW;
+//            $order->save();
+//
+//            save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
+//
+//            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'تمت اعتماد الطلب بنجاح'
+//            ]);
+//        }
+//    }
+//
+//    public function reject(Request $request)
+//    {
+//
+//        $order = Order::query()->findOrFail($request->id);
+//        if ($order->status == 1) {
+//            $order->status = Order::PENDING;
+//            $order->save();
+//
+//            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
+//
+//            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'تمت رفض الطلب بنجاح'
+//            ]);
+//        }
+//
+//
+//    }
 
     public function add_files(Order $order)
     {
@@ -103,6 +103,8 @@ class DesignerOrderController extends Controller
         $delivery = User::query()->where('type', 'Delivery')->first();
         $delivery->notify(new OrderNotification('تم إنشاء الطلب', auth()->user()->id));
         $this->upload_files($order, $request);
+        $order->status = 2;
+        $order->save();
 
         $order->update([
             'status' => Order::ORDER_REVIEW
@@ -117,7 +119,7 @@ class DesignerOrderController extends Controller
     public function upload_files($order, $request)
     {
         foreach ($request->file('files') as $file) {
-            $path = Storage::disk('public')->put('files/' . $order->id .'/shares', $file);
+            $path = Storage::disk('public')->put('files/' . $order->id . '/shares', $file);
 
             $file_name = $file->getClientOriginalName();
             $order->file()->create([

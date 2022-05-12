@@ -38,7 +38,6 @@ Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
-    Route::get('update_profile', [UserController::class, 'update_profile'])->name('update_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
     Route::post('after_reject', [UserController::class, 'after_reject'])->name('after_reject');
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
@@ -97,8 +96,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+//Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
+//    \UniSharp\LaravelFilemanager\Lfm::routes();
+//});
 
-Route::get('test', [LfmController::class,'show']);
+Route::get('test',function(){
+    return view('fm');
+});

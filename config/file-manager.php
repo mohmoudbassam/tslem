@@ -52,7 +52,7 @@ return [
      *
      * null - root directory
      */
-    'leftPath' => 'directory/sub-directory',
+    'leftPath' => 'user_files',
 
     /**
      * Default path for right manager

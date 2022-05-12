@@ -20,8 +20,15 @@ class RegisterController extends Controller
 
             redirect()->route('dashboard');
         }
+              if($request->type){
+                  $type=request('type');
+              }else{
+                  $type='service_provider';
+              }
+        $data['record'] = BeneficiresCoulumns::query()->where('type',$type)->firstOrFail();
 
-        $data['record'] = BeneficiresCoulumns::query()->where('type','service_provider')->firstOrFail();
+//        $record = BeneficiresCoulumns::query()->where('type', $type)->firstOrFail();
+        $data['col_file'] = get_user_column_file($type);
 
         return view('CP.register', $data);
     }

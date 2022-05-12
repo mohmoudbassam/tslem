@@ -71,7 +71,7 @@ class DeliveryController extends Controller
 
         $order = Order::query()->findOrFail($request->id);
         if ($order->status == 2) {
-            $order->status = Order::DELIVERED;
+            $order->status = Order::DESIGN_APPROVED;
             $order->contractor_id = $request->contractor_id;
             $order->consulting_office_id = $request->consulting_office_id;
             $order->save();
@@ -94,9 +94,9 @@ class DeliveryController extends Controller
             $order->status = Order::DESIGN_REVIEW;
             $order->save();
 
-            save_logs($order, auth()->user()->id, 'تم رفض الطلب من مكتب التسليم');
-
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التسليم', auth()->user()->id));
+            save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم  من مكتب التسليم', auth()->user()->id));
+            optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم من مكتب التسليم', auth()->user()->id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت رفض الطلب بنجاح'

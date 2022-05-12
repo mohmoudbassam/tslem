@@ -41,7 +41,8 @@ class UserRequestController extends Controller
                 }
 
                 return $element;
-            })->addColumn('actions', function ($user) {
+            })
+            ->addColumn('actions', function ($user) {
                 $show = ' <a class="dropdown-item" href="' . route('users.request.show', ['user' => $user->id]) . '"> <i class="fa fa-eye">عرض</i> </a>';
                 $accept='';
                 $reject='';
@@ -61,9 +62,11 @@ class UserRequestController extends Controller
                                         </div>';
 
                 return $element;
-            })->addColumn('verified_status',function($user){
+            })
+            ->addColumn('verified_status',function($user){
                 return $user->verified_status;
-            })->rawColumns(['enabled', 'actions'])
+            })
+            ->rawColumns(['enabled', 'actions'])
             ->make(true);
     }
 

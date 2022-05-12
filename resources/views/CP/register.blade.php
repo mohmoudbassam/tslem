@@ -589,8 +589,17 @@
 <script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js" ></script>
 <script src="{{url("/")}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="{{url("/")}}/assets/jquery-validation/dist/localization/messages_ar.min.js" type="text/javascript"></script>
+<link href="{{url("/")}}/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
+<script src="{{url("/")}}/assets/bootstrap-fileinput/js/fileinput.min.js" type="text/javascript"></script>
+<script src="{{url("/")}}/assets/bootstrap-fileinput/fileinput-theme.js" type="text/javascript"></script>
+@include('CP.layout.js')
 <script>
 
+
+    @foreach(array_keys($col_file) as $_col)
+
+    file_input('#{{$_col}}');
+    @endforeach
     $('#add_edit_form').validate({
         lang: 'ar',
         rules: {

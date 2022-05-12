@@ -8,19 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">
-                    <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                            خيارات <i class="mdi mdi-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                            <li><a class="dropdown-item font-size-18 mb-2 mt-2"
-                                   href="{{route('services_providers.create_order')}}"><i class="dripicons-plus"></i>إنشاء
-                                    طلب </a></li>
-                        </ul>
-                    </div>
-                </h4>
+
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">

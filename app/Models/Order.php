@@ -14,7 +14,7 @@ class Order extends Model
 
     public const DESIGN_REVIEW =1;
     public const ORDER_REVIEW =2;
-    public const ORDER_APPROVED =3;
+    public const DESIGN_APPROVED =3;
     public const APPROVED =4;
     public const PENDING =5;
 
