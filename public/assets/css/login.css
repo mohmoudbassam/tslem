@@ -49,6 +49,7 @@ input {
 }
 
 
+
 .btn-outline-primary {
     border-color: var(--main-color) !important;
     color: var(--main-color) !important;
@@ -67,4 +68,13 @@ input {
 .btn-secondary {
     background-color: var(--second-color) !important;
     border-color: var(--second-color) !important;
+}
+
+.auth-content.my-auto{
+    margin-top: 10px !important;
+    margin-bottom: 0!important;
+}
+
+.auth-full-page-content {
+    min-height: 0px !important;
 }

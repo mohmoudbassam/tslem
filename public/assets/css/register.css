@@ -1,0 +1,26 @@
+.btn-primary {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+}
+
+
+
+.btn-outline-primary {
+    border-color: var(--main-color) !important;
+    color: var(--main-color) !important;
+}
+
+
+.btn-outline-primary:hover {
+    background-color: var(--main-color) !important;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--second-color) !important;
+}
+
+.btn-secondary {
+    background-color: var(--second-color) !important;
+    border-color: var(--second-color) !important;
+}

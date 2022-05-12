@@ -94,7 +94,8 @@
                             <div class="auth-content my-auto">
 
                                 <div class="text-center">
-                                    <h5 class="mb-0">أهلا وسهلا</h5>
+                                    <h1>تسجيل الدخول</h1>  
+                                <h5 class="mb-0">أهلا وسهلا</h5>
                                     <p class="text-muted mt-2"></p>
                                 </div>
                                 <form class="mt-4 pt-2" action="{{route('login')}}" method="post">
