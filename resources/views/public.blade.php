@@ -80,9 +80,9 @@
                             منصة واحدة لجميع القطاعات العاملة في الحج <br />
                             لتقديم خدمة مميزة لحجاج بيت الله الحرام
                         </p>
-                        <button type="button" class="btn btn-lg btn-secondary">
+                        <a  class="btn btn-lg btn-secondary" href="{{route('login_page')}}">
                             الدخول للمنصة
-                        </button>
+                        </a>
 
                         </button>
                     </div>
