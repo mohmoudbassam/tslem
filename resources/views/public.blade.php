@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>تسليم</title>
 
-    <link rel="stylesheet" href="{{ url('assets/landing/css/app.css') }}"/>
+{{--    <link rel="stylesheet" href="{{ url('assets/landing/css/app.css') }}"/>--}}
     <!-- CSS only -->
     <link rel="stylesheet" href="{{ url('assets/css/bootstrap.rtl.5.min.css') }}"/>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
@@ -55,13 +55,13 @@
                             </li>
                         </ul>
                         <form class="d-row">
-                            <button class="btn btn-lg btn-primary" type="submit">
+                            <a role="button" href="{{ route('login_page') }}" class="btn btn-lg btn-primary" type="submit">
                                 تسجيل الدخول
-                            </button>
+                            </a>
 
-                            <button class="btn btn-lg btn-outline-primary" type="submit">
+                            <a role="button" href="{{ route('register', ['type' => 'service_provider']) }}" class="btn btn-lg btn-outline-primary" type="submit">
                                 التسجيل
-                            </button>
+                            </a>
 
                         </form>
                     </div>
