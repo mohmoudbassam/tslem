@@ -138,8 +138,9 @@
                     @if(!auth()->user()->isAdmin())
                         <a class="dropdown-item" href="{{route('edit_profile')}}"><i
                                 class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> الملف الشخصي</a>
+                        <div class="dropdown-divider"></div>
                     @endif
-                    <div class="dropdown-divider"></div>
+
                     <a class="dropdown-item" href="{{route('logout')}}"><i
                             class="mdi mdi-logout font-size-16 align-middle me-1"></i> تسجيل الخروج</a>
                 </div>
