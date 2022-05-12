@@ -3,8 +3,35 @@
     --second-color: #c0946f;
 }
 
+@font-face {
+    font-family: Janna;
+    src: url(../fonts/JannaLT-Bold.ttf);
+    font-weight: bold;
+}
+
+
+@font-face {
+    font-family: Janna;
+    src: url(../fonts/JannaLT-Regular.ttf);
+    font-weight: normal;
+}
+
 body {
     /* background-color: var(--main-color) !important; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+input,
+button,
+p {
+    font-family: Janna !important;
+    font-weight: normal;
 }
 
 
@@ -14,8 +41,9 @@ body {
 }
 
 
-footer{
+footer {
     overflow: hidden;
+    padding: 20px 10px;
 }
 
 
@@ -54,6 +82,7 @@ footer{
 .page {
     overflow: hidden;
 }
+
 .page-main {
     background-image: url("../img/back.png");
     background-repeat: no-repeat;
@@ -164,16 +193,24 @@ footer{
     color: var(--main-color)
 }
 
-
-
 .navbar-collapse.collapsing,
 .navbar-collapse.collapse.show {
     display: flex;
     flex-direction: column;
-    background: var(--main-color);
+    background: white;
     border-radius: 5px;
     padding: 10px 0;
+    margin-top: 10px;
+    position: absolute;
+    height: fit-content !important;
+    width: 95% !important;
+    top: 120px;
+    z-index: 10;
+    transition: all 0s !important;
+
 }
+
+
 
 
 .navbar-collapse.collapsing ul,
@@ -186,9 +223,15 @@ footer{
 
 .navbar-collapse.collapsing ul li,
 .navbar-collapse.collapse.show ul li {
-    border-bottom: 1px solid white !important;
+    border-bottom: 2px solid var(--main-color) !important;
     width: 70%;
     text-align: center;
+}
+
+.navbar-collapse.collapsing ul li a,
+.navbar-collapse.collapse.show ul li a {
+    color: var(--main-color) !important;
+
 }
 
 
@@ -203,33 +246,52 @@ footer{
 
 }
 
-.navbar-collapse.collapsing form .btn.btn-main,
-.navbar-collapse.collapse.show form .btn.btn-main{
-    background:var(--second-color) !important;
-    width: 70%;
-    color: white !important;
-}
-
-
-
 .navbar-collapse.collapsing form .btn,
-.navbar-collapse.collapse.show form .btn{
-    margin: 5px;
+.navbar-collapse.collapse.show form .btn {
     width: 70%;
-    border: 2px solid var(--second-color) !important;
-    color: var(--second-color) !important;
+    margin: 5px 0 ;
 }
 
-
-.navbar-collapse.collapsing ul li .nav-link.active ,
+.navbar-collapse.collapsing ul li .nav-link.active,
 .navbar-collapse.collapse.show ul li .nav-link.active {
     color: var(--second-color) !important;
 }
 
 
-.navbar-collapse.collapsing ul li .nav-link:hover ,
+.navbar-collapse.collapsing ul li .nav-link:hover,
 .navbar-collapse.collapse.show ul li .nav-link:hover {
     color: var(--second-color) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+}
+
+.btn {
+    margin: auto 10px;
+}
+
+
+.btn-outline-primary {
+    border-color: var(--main-color) !important;
+    color: var(--main-color) !important;
+}
+
+
+.btn-outline-primary:hover {
+    background-color: var(--main-color) !important;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--second-color) !important;
+}
+
+.btn-secondary {
+    background-color: var(--second-color) !important;
+    border-color: var(--second-color) !important;
 }
 
 
@@ -243,10 +305,9 @@ footer{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 40px;
-
-    width: 90%;
-    height: 90%;
+    top: 120px;
+    width: 70%;
+    height: 70%;
 }
 
 
@@ -270,7 +331,7 @@ footer{
 .header-info {
     text-align: center;
     z-index: 1;
-    /* background-image: url('./assets/img/arrow_background.svg'); */
+    /* background-image: url('../img/arrow_background.svg'); */
     /* background-repeat: no-repeat; */
     /* background-size: 35%; */
     background-position: center;
@@ -291,7 +352,7 @@ footer{
     top: -6rem;
     clip-path: ellipse(90% 73% at 50% 75%);
     background-color: white;
-    z-index: 4;
+    z-index: -1;
 }
 
 .header .img-thumbnail {
@@ -382,6 +443,7 @@ footer{
         width: 90%;
         height: 90%;
         left: 50%;
+        top: 40px ;
         transform: translateX(-50%);
     }
 }
@@ -401,6 +463,20 @@ footer{
         font-size: 14px;
     }
 
+    .reponsive-justifiy-content-center {
+        display: flex;
+        justify-content: center !important;
+        width: 100%;
+    }
+
+    .reponsive-justifiy-content-center>div {
+        margin-top: 20px;
+    }
+
+}
+
+.row-full-width {
+    width: 100%;
 }
 
 .stats-card:hover {
@@ -417,5 +493,14 @@ footer{
         width: 100% !important;
         height: 100% !important;
     }
+
+    .info > .container {
+        padding-right: 0;
+    }
+
+    .info > .container {
+        padding-right: 0;
+    }
+
 
 }

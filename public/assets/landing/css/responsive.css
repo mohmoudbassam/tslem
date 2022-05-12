@@ -1,0 +1,77 @@
+@media (max-width: 1250px) {}
+
+@media (max-width: 1090px) {}
+
+@media (max-width: 991px) {
+
+}
+
+/* End Page Filters Row */
+@media (max-width: 1090px) {
+    .container {
+        padding: 0 20px
+    }
+
+    .footer {
+        padding-left: 0 !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .intro {
+        margin-top: 40px;
+    }
+    
+    .header .top {
+        margin-top: 0;
+    }
+    .header .intro .caption {
+        right: 8px;
+        width: calc(100% - 16px);
+    }
+    .header .intro .img {
+        width: 100%;
+    }
+    .header .intro img {
+        width: 100%;
+    }
+    .section.statistics .left:before {
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+    .section.statistics .right {
+        padding: 50px 30px;
+    }
+    .section.statistics .left {
+        margin-top: 0;
+        padding: 30px 30px;
+    }
+}
+
+@media (max-width: 769px) {
+    .header .intro h1 {
+        font-size: 30px;
+    }
+    .header .top .btn {
+        display: none;
+    }
+    .header .col-auto {
+        width: 100%;
+    }
+    .header .logo {
+        text-align: center;
+    }
+    .header .pmo-logo img {
+        max-width: 90%;
+    }
+    .header .pmo-logo {
+        margin-top: 57px;
+    }
+}
+
+@media (max-width: 564px) {
+
+}
+
+@media (max-width: 355px) {}
