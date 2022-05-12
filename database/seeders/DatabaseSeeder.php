@@ -40,6 +40,12 @@ class DatabaseSeeder extends Seeder
             'email'=>'designer2@test.com',
             'type'=>'design_office'
         ]);
+        \App\Models\User::query()->create([
+          'name'=>'taslem',
+            'password'=>123456,
+            'email'=>'taslem@test.com',
+            'type'=>'Delivery'
+        ]);
 
         ConstParnet::create([
             'name' => 'قائمة طبقات GIS للمخيمات من وزارة الحج والعمرة'
