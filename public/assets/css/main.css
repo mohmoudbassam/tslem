@@ -55,7 +55,7 @@ footer{
     overflow: hidden;
 }
 .page-main {
-    background-image: url("../img/back.png");
+    background-image: url("/assets/landing/images/back.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
