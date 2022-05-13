@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
     });
+<<<<<<< Updated upstream
     Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
@@ -89,6 +90,9 @@ Route::middleware('auth')->group(function () {
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
     });
     Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
+=======
+    Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
+>>>>>>> Stashed changes
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
         Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
