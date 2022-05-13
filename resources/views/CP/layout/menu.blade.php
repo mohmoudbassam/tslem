@@ -87,6 +87,14 @@
                         </a>
                     </li>
                 @endif
+                    @if(auth()->user()->type=='consulting_office' && auth()->user()->verified==1)
+                    <li>
+                        <a href="{{route('consulting_office')}}">
+                            <i data-feather="users"></i>
+                            <span data-key="t-authentication">الطلبات</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
 
 
