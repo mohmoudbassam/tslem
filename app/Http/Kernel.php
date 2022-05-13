@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'service_provider'=>\App\Http\Middleware\CP\ServiceProviders::class,
         'design_office'=>\App\Http\Middleware\CP\DesignerOffice::class,
         'delivery'=>\App\Http\Middleware\CP\Delivery::class,
+        'consulting_office'=>\App\Http\Middleware\CP\ConsultingOffice::class,
         'verifiedUser'=>\App\Http\Middleware\CP\Verified::class,
         'contractor'=>\App\Http\Middleware\CP\contractor::class,
 

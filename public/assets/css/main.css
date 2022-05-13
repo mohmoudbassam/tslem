@@ -343,7 +343,7 @@ footer {
 .header-info {
     text-align: center;
     z-index: 1;
-    /* background-image: url('./img/arrow_background.svg'); */
+    /* background-image: url('../img/arrow_background.svg'); */
     /* background-repeat: no-repeat; */
     /* background-size: 35%; */
     background-position: center;
@@ -532,6 +532,17 @@ footer {
         width: 150px!important;
     }
     .header-desc-img {
-        top: 0;
+        top: -20px;
+    }
+
+    .header-info h1{
+        font-size: 18px;
+    }
+
+    .header-info p{
+        font-size: 12px;
+    }
+    .header-info .btn{
+        font-size: 12px !important;
     }
 }

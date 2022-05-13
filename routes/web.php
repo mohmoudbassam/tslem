@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 use App\Http\Controllers\CP\Contractor\ContractorController;
+=======
+use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
+>>>>>>> 828517b5798837fff90b186e35a68cf547b39e36
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
@@ -99,11 +103,19 @@ Route::middleware('auth')->group(function () {
 
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
-        Route::get('orders', [DeliveryController::class, 'orders']);
-        Route::get('', [DeliveryController::class, 'list'])->name('.list');
-        Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
-        Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
-        Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
+        Route::get('orders', [ConsultingOfficeController::class, 'orders']);
+        Route::get('', [ConsultingOfficeController::class, 'list'])->name('.list');
+        Route::get('/{order}/reports', [ConsultingOfficeController::class, 'reports_view'])->name('.reports_view');
+        Route::get('/{order}/reports/list', [ConsultingOfficeController::class, 'reports_list'])->name('.reports_list');
+        Route::get('/reports/edit/{report}', [ConsultingOfficeController::class, 'edit_report_page'])->name('.report_edit_form');
+        Route::get('/{order}/add', [ConsultingOfficeController::class, 'add_report_page'])->name('.report_add_form');
+        Route::get('accept_form', [ConsultingOfficeController::class, 'accept_form'])->name('.accept_form');
+        Route::post('accept', [ConsultingOfficeController::class, 'accept'])->name('.accept');
+        Route::post('reject', [ConsultingOfficeController::class, 'reject'])->name('.reject');
+        Route::post('delete_report', [ConsultingOfficeController::class, 'delete_report'])->name('.delete_report');
+        Route::post('/delete_file/{attchment}', [ConsultingOfficeController::class, 'delete_file'])->name('.delete_file');
+        Route::post('edit_report', [ConsultingOfficeController::class, 'edit_report'])->name('.edit_report');
+        Route::post('add_report', [ConsultingOfficeController::class, 'add_report'])->name('.add_report');
     });
     Route::prefix('system-config')->group(function () {
 
