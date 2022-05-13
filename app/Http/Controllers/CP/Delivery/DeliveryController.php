@@ -53,8 +53,8 @@ class DeliveryController extends Controller
 
     public function accept_form(Request $request)
     {
-        $contractors = User::query()->where('type','=', 'contractor')->get();
-        $consulting_offices = User::query()->where('type', '=','consulting_office')->get();
+        $contractors = User::query()->where('type', '=', 'contractor')->get();
+        $consulting_offices = User::query()->where('type', '=', 'consulting_office')->get();
         $order = Order::query()->find($request->id);
         return response()->json([
             'success' => true,
@@ -78,6 +78,8 @@ class DeliveryController extends Controller
 
             save_logs($order, auth()->user()->id, 'تم اعتماد الطلب  من مكتب التسليم ');
 
+            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
+            optional($order->contractor)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
             optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
             return response()->json([
                 'success' => true,

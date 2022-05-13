@@ -16,6 +16,7 @@ class contractor
      */
     public function handle(Request $request, Closure $next)
     {
+
         if(auth()->user()->type=='contractor'){
             return $next($request);
         }

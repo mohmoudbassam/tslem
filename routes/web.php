@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
@@ -60,13 +61,13 @@ Route::middleware('auth')->group(function () {
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
         });
     });
-    Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider','verifiedUser'])->group(function () {
+    Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider', 'verifiedUser'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
         Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
     });
-    Route::prefix('design-office')->name('design_office')->middleware(['design_office','verifiedUser'])->group(function () {
+    Route::prefix('design-office')->name('design_office')->middleware(['design_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
         Route::get('add-files/{order}', [DesignerOrderController::class, 'add_files'])->name('.add_files');
@@ -82,14 +83,21 @@ Route::middleware('auth')->group(function () {
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
     });
 
-    Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
-        Route::get('orders', [DeliveryController::class, 'orders']);
-        Route::get('', [DeliveryController::class, 'list'])->name('.list');
-        Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
-        Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
-        Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
-    });
+    Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
+        Route::get('orders', [ContractorController::class, 'orders']);
+        Route::get('', [ContractorController::class, 'list'])->name('.list');
+        Route::get('add_report/{order}', [ContractorController::class, 'add_report_from'])->name('.add_report_form');
+        Route::post('add_report', [ContractorController::class, 'add_edit_report'])->name('.add_edit_report');
+        Route::get('show_reports/{order}', [ContractorController::class, 'show_reports'])->name('.show_reports');
+        Route::get('report_list/{order}', [ContractorController::class, 'report_list'])->name('.report_list');
+        Route::get('edit_report_form/{report}', [ContractorController::class, 'edit_report_form'])->name('.edit_report_form');
+        Route::post('update_report', [ContractorController::class, 'update_report'])->name('.update_report');
+        Route::post('delete_report', [ContractorController::class, 'delete_report'])->name('.delete_report');
+        Route::post('delete_file/{file}', [ContractorController::class, 'delete_file'])->name('.delete_file');
+        Route::get('show_comments/{report}', [ContractorController::class, 'show_comments'])->name('.show_comments');
+        Route::post('save_comment', [ContractorController::class, 'save_comment'])->name('.save_comment');
 
+    });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
@@ -116,6 +124,6 @@ Route::middleware('auth')->group(function () {
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
 
-Route::get('test',function(){
+Route::get('test', function () {
     return view('fm');
 });

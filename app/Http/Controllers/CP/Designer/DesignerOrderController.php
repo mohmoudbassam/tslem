@@ -101,7 +101,7 @@ class DesignerOrderController extends Controller
 
         save_logs($order, auth()->user()->id, 'تم اضافة التصاميم من قبل مكتب التصميم');
         $delivery = User::query()->where('type', 'Delivery')->first();
-        $delivery->notify(new OrderNotification('تم إنشاء الطلب', auth()->user()->id));
+        $delivery->notify(new OrderNotification('تم اضافة التصاميم من قبل مكتب التصميم', auth()->user()->id));
         $this->upload_files($order, $request);
         $order->status = 2;
         $order->save();
@@ -118,8 +118,8 @@ class DesignerOrderController extends Controller
 
     public function upload_files($order, $request)
     {
-        foreach ($request->file('files') as $file) {
-            $path = Storage::disk('public')->put('files/' . $order->id . '/shares', $file);
+        foreach ((array) $request->file('files') as $file) {
+            $path = Storage::disk('public')->put("orders/$order->id/designer_file"   , $file);
 
             $file_name = $file->getClientOriginalName();
             $order->file()->create([
