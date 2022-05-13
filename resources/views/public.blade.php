@@ -55,13 +55,13 @@
                             </li>
                         </ul>
                         <form class="d-row">
-                            <button class="btn btn-md btn-primary" type="submit">
+                            <a role="button" href="{{ route('login_page') }}" class="btn btn-md btn-primary" type="submit">
                                 تسجيل الدخول
-                            </button>
+                            </a>
 
-                            <button class="btn btn-md btn-outline-primary" type="submit">
+                            <a role="button" href="{{ route('register', ['type' => 'service_provider']) }}" class="btn btn-md btn-outline-primary" type="submit">
                                 التسجيل
-                            </button>
+                            </a>
 
                         </form>
                     </div>
