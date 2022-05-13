@@ -15,7 +15,7 @@ class const_parnet extends Seeder
      */
     public function run()
     {
-        ConstParnet::create([
+        ConstParnet::query()->create([
             'name' => 'قائمة طبقات GIS للمخيمات من وزارة الحج والعمرة'
         ]);
     }

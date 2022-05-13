@@ -15,8 +15,9 @@ class Order extends Model
     public const DESIGN_REVIEW =1;
     public const ORDER_REVIEW =2;
     public const DESIGN_APPROVED =3;
-    public const APPROVED =4;
-    public const PENDING =5;
+    public const DONE =4;
+    public const APPROVED =5;
+
 
     public function designer(){
         return $this->belongsTo(User::class,'designer_id');
@@ -44,8 +45,8 @@ class Order extends Model
             '1'=>'مراجعة التصاميم',
             '2'=>'مراجعة الطلب',
             '3'=>'تم اعتماد التصاميم',
-            '4'=>'تم الاعتماد',
-            '5'=>'معلق'
+            '4'=>'تم التنفيذ',
+            '5'=>'تم الإعتماد'
         ][$this->status];
     }
 

@@ -81,6 +81,20 @@ Route::middleware('auth')->group(function () {
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
     });
+    Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
+        Route::get('orders', [DeliveryController::class, 'orders']);
+        Route::get('', [DeliveryController::class, 'list'])->name('.list');
+        Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
+        Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
+        Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
+    });
+    Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
+        Route::get('orders', [DeliveryController::class, 'orders']);
+        Route::get('', [DeliveryController::class, 'list'])->name('.list');
+        Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
+        Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
+        Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
+    });
     Route::prefix('system-config')->group(function () {
 
         Route::prefix('const')->name('const')->group(function () {
