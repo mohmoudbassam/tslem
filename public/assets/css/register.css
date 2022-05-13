@@ -24,3 +24,14 @@
     background-color: var(--second-color) !important;
     border-color: var(--second-color) !important;
 }
+
+.registeration-header { 
+    position: relative;
+}
+
+.registeration-header img {
+    position: absolute;
+    width: 50px;
+    top: -15px;
+    right: -10px;
+}

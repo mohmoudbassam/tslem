@@ -100,12 +100,12 @@
     <div class="card shadow">
         <div class="card-header">
             <div class="d-flex mt-4 justify-content-center">
-                <div class="">
-
+            <div class="registeration-header">
+                    <img src="{{ url('/assets/img/triangle-registeration.png') }}" alt="">
                     <h4 class="text-main">
                         التسجيل في المنصة
                     </h4>
-                </div>
+            </div>
 
 
             </div>
