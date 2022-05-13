@@ -43,7 +43,9 @@ p {
 
 footer {
     overflow: hidden;
-    padding: 20px 10px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: center;
 }
 
 
@@ -64,7 +66,12 @@ footer {
     opacity: 0.9;
 }
 
-
+.kidana-logo-wrapper {
+    padding-left: 0!important;
+    margin-left: 0!important;
+    display: flex;
+    justify-content: left;
+}
 
 
 .header {
@@ -303,9 +310,9 @@ footer {
 .header-desc-img {
     display: inline;
     position: absolute;
-    left: 50%;
+    left: 49%;
     transform: translateX(-50%);
-    top: 120px;
+    top: 90px;
     width: 70%;
     height: 70%;
 }
@@ -323,22 +330,29 @@ footer {
 
 
 .header-info h1 {
-    font-size: 38px;
+    font-size: 34px;
 }
+
+.header-info p {
+    font-size: 18px;
+}
+
 
 
 
 .header-info {
     text-align: center;
     z-index: 1;
-    /* background-image: url('../img/arrow_background.svg'); */
+    /* background-image: url('./img/arrow_background.svg'); */
     /* background-repeat: no-repeat; */
     /* background-size: 35%; */
     background-position: center;
     color: white !important;
     padding: 5rem;
-    padding-top: 18rem !important;
+
+    padding-top: 12rem !important;
     padding-bottom: 20rem !important;
+
 }
 
 .header-text {
@@ -503,4 +517,21 @@ footer {
     }
 
 
+}
+/* .header  */
+
+@media (max-width: 991px) {
+    .kidana-logo-wrapper{
+        justify-content: center;
+        padding-bottom: 20px;
+    }
+}
+
+@media (max-width: 450px) {
+    .phone-stores-wrapper   img{
+        width: 150px!important;
+    }
+    .header-desc-img {
+        top: 0;
+    }
 }

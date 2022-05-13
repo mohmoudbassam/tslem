@@ -55,13 +55,13 @@
                             </li>
                         </ul>
                         <form class="d-row">
-                            <a role="button" href="{{ route('login_page') }}" class="btn btn-lg btn-primary" type="submit">
+                            <button class="btn btn-md btn-primary" type="submit">
                                 تسجيل الدخول
-                            </a>
+                            </button>
 
-                            <a role="button" href="{{ route('register', ['type' => 'service_provider']) }}" class="btn btn-lg btn-outline-primary" type="submit">
+                            <button class="btn btn-md btn-outline-primary" type="submit">
                                 التسجيل
-                            </a>
+                            </button>
 
                         </form>
                     </div>
@@ -80,9 +80,9 @@
                             منصة واحدة لجميع القطاعات العاملة في الحج <br />
                             لتقديم خدمة مميزة لحجاج بيت الله الحرام
                         </p>
-                        <a  class="btn btn-lg btn-secondary" href="{{route('login_page')}}">
+                        <button type="button" class="btn btn-lg btn-secondary">
                             الدخول للمنصة
-                        </a>
+                        </button>
 
                         </button>
                     </div>
@@ -193,44 +193,44 @@
     </section>
 
     <section id="info">
-        <div class="row container" style="margin-left: auto !important; margin-right: auto !important; padding-right: 0;">
-            <div class="col-md-6 my-4" data-aos="fade-left">
-                <img src="./assets/img/تسليم 2.png" />
-                <p class="header-text my-2">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-                </p>
-                <div class="d-flex mt-4">
-                    <a role="button" class="social-icon btn btn-primary">
-                        <i class="la la-facebook"></i>
-                    </a>
-                    <a role="button" class="social-icon btn btn-primary">
-                        <i class="lab la-twitter"></i>
-                    </a>
-                    <a role="button" class="social-icon btn btn-primary">
-                        <i class="la la-youtube"></i>
-                    </a>
-                    <a role="button" class="social-icon btn btn-primary">
-                        <i class="la la-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6" data-aos="fade-right">
-                <h1 class="text-white">حمل التطبيق مجانا</h1>
-                <div class="d-flex reponsive-justifiy-content-center row-full-width  justify-content-between">
-                    <a role="button" class="me-2">
-                        <img src="/assets/img/google play.png" alt="" />
-                    </a>
-                    <a role="button">
-                        <img src="/assets/img/appstore.png" alt="" />
-                    </a>
-                </div>
+        <div class="row container" style="margin: 0 auto !important;">
+        <div class="col-md-6 my-4" data-aos="fade-left">
+            <img src="./assets/img/تسليم 2.png" />
+            <p class="header-text my-2">
+                هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
+            </p>
+            <div class="d-flex mt-4">
+                <a role="button" class="social-icon btn btn-primary">
+                    <i class="la la-facebook"></i>
+                </a>
+                <a role="button" class="social-icon btn btn-primary">
+                    <i class="lab la-twitter"></i>
+                </a>
+                <a role="button" class="social-icon btn btn-primary">
+                    <i class="la la-youtube"></i>
+                </a>
+                <a role="button" class="social-icon btn btn-primary">
+                    <i class="la la-instagram"></i>
+                </a>
             </div>
         </div>
-    </section>
+        <div class="col-md-6" data-aos="fade-right">
+            <h1 class="text-white">حمل التطبيق مجانا</h1>
+            <div class="d-flex reponsive-justifiy-content-center row-full-width  justify-content-between phone-stores-wrapper">
+                <a role="button" class="me-2">
+                    <img src="./assets/img/google play.png" alt="" />
+                </a>
+                <a role="button">
+                    <img src="./assets/img/appstore.png" alt="" />
+                </a>
+            </div>
+        </div>
+</div>
+</section>
 </div>
 
-<footer class="bg-light container">
-    <div class="row ">
+<footer class="bg-light ">
+    <div class="row  container">
         <div class="col-md-6 p-0 align-self-center">
             <h6 class="second-text">جميع الحقوق محفوظة لدى تسليم © 2021</h6>
         </div>
@@ -241,7 +241,7 @@
                 </div>
                 <div class="col-md-2 col-xs-12 mt-2">
                 </div>
-                <div class="col-md-5 col-xs-12 mt-1" style="display: flex; justify-content: center;">
+                <div class="col-md-5 col-xs-12 mt-1 kidana-logo-wrapper" >
                     <img src="./assets/img/kidana-main-logo-1.png" height="50" />
                 </div>
             </div>
@@ -250,8 +250,8 @@
 </footer>
 
 <!-- JavaScript Bundle with Popper -->
-<script src="{{ url('/assets/js/bootstrap_bundle.5.min.js') }}"></script>
-<script src="{{ url('assets/js/main.js') }}"></script>
+<script src="./assets/js/bootstrap_bundle.5.min.js"></script>
+<script src="./assets/js/main.js"></script>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
