@@ -81,6 +81,16 @@ Route::middleware('auth')->group(function () {
     Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
+        Route::get('/{order}/reports', [DeliveryController::class, 'reports_view'])->name('.reports_view');
+        Route::get('/{order}/reports/list', [DeliveryController::class, 'reports_list'])->name('.reports_list');
+        Route::get('/reports/edit/{report}', [DeliveryController::class, 'edit_report_page'])->name('.report_edit_form');
+        Route::get('/{order}/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
+        Route::post('/delete_report', [DeliveryController::class, 'delete_report'])->name('.delete_report');
+        Route::post('/delete_file/{attchment}', [DeliveryController::class, 'delete_file'])->name('.delete_file');
+        Route::post('edit_report', [DeliveryController::class, 'edit_report'])->name('.edit_report');
+        Route::post('add_report', [DeliveryController::class, 'add_report'])->name('.add_report');
+        Route::get('view_contractor_report/{order_id}', [DeliveryController::class, 'view_contractor_report'])->name('.view_contractor_report');
+        Route::get('contractor_report_list/{order}', [DeliveryController::class, 'contractor_report_list'])->name('.contractor_report_list');
         Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
