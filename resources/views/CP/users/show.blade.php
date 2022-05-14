@@ -62,9 +62,11 @@
                             <a class="nav-link px-3" data-bs-toggle="tab" href="#about" role="tab">المعلومات
                                 الثانوية</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab" href="#post" role="tab">معلومات المكان</a>
-                        </li>
+                        @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office')
+                            <li class="nav-item">
+                                <a class="nav-link px-3" data-bs-toggle="tab" href="#post" role="tab">معلومات المكان</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <!-- end card body -->
@@ -187,7 +189,7 @@
                                                                      class="img-thumbnail">
                                                             </a>
                                                         @endif
-                                                        @endif
+                                                    @endif
                                                 </div>
 
 
@@ -275,90 +277,90 @@
                     <!-- end card -->
                 </div>
                 <!-- end tab pane -->
+                @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office')
+                    <div class="tab-pane" id="post" role="tabpanel">
+                        <div class="card">
 
-                <div class="tab-pane" id="post" role="tabpanel">
-                    <div class="card">
-
-                        <div class="card-body">
-                            <div>
+                            <div class="card-body">
                                 <div>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>
-                                                    <h5 class="font-size-15">العنوان</h5>
+                                    <div>
+                                        <div class="pb-3">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <div>
+                                                        <h5 class="font-size-15">العنوان</h5>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2">{{$user->address}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>الجوال</div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2">{{$user->phone}}</p>
+                                                <div class="col-xl">
+                                                    <div class="text-muted">
+                                                        <p class="mb-2">{{$user->address}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>الهاتف</div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2">{{$user->telephone}}</p>
+                                        <hr>
+                                        <div class="pb-3">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <div>الجوال</div>
+                                                </div>
+                                                <div class="col-xl">
+                                                    <div class="text-muted">
+                                                        <p class="mb-2">{{$user->phone}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>المدينة</div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2">{{$user->city}}</p>
+                                        <hr>
+                                        <div class="pb-3">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <div>الهاتف</div>
+                                                </div>
+                                                <div class="col-xl">
+                                                    <div class="text-muted">
+                                                        <p class="mb-2">{{$user->telephone}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>عدد الموظفين</div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2">{{$user->city}}</p>
+                                        <hr>
+                                        <div class="pb-3">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <div>المدينة</div>
+                                                </div>
+                                                <div class="col-xl">
+                                                    <div class="text-muted">
+                                                        <p class="mb-2">{{$user->city}}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr>
+                                        <div class="pb-3">
+                                            <div class="row">
+                                                <div class="col-xl-2">
+                                                    <div>عدد الموظفين</div>
+                                                </div>
+                                                <div class="col-xl">
+                                                    <div class="text-muted">
+                                                        <p class="mb-2">{{$user->city}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+
                                     </div>
-                                    <hr>
 
                                 </div>
-
                             </div>
-                        </div>
 
+                        </div>
+                        <!-- end card -->
                     </div>
-                    <!-- end card -->
-                </div>
-                <!-- end tab pane -->
+            @endif  <!-- end tab pane -->
             </div>
             <!-- end tab content -->
         </div>

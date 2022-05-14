@@ -157,20 +157,20 @@ class UserController extends Controller
     }
 
 
-//    public function update_from(Request $request, User $user)
-//    {
-//
-//        $data['user'] = $user;
-//        $data['record'] = BeneficiresCoulumns::query()->where('type', $user->type)->firstOrFail();
-//        return view('CP.users.update_form', $data);
-//    }
-//
-//    public function update(Request $request)
-//    {
-//        User::query()->where('id', $request->id)->first()->update($request->all());
-//        return back()->with('success', 'تمت عمليه التعديل بنجاح');
-//
-//    }
+    public function update_from(Request $request, User $user)
+    {
+
+        $data['user'] = $user;
+        $data['record'] = BeneficiresCoulumns::query()->where('type', $user->type)->firstOrFail();
+        return view('CP.users.update_form', $data);
+    }
+
+    public function update(Request $request)
+    {
+        User::query()->where('id', $request->id)->first()->update($request->all());
+        return back()->with('success', 'تمت عمليه التعديل بنجاح');
+
+    }
 
     private function uploadUserFiles($user, $file)
     {
@@ -212,7 +212,7 @@ class UserController extends Controller
             'telephone' => request('telephone'),
             'city' => request('city'),
             'employee_number' => request('employee_number'),
-           
+
             'verified' => 0,
             'commercial_file_end_date' => request('commercial_file_end_date'),
             'rating_certificate_end_date' => request('rating_certificate_end_date'),
@@ -228,7 +228,7 @@ class UserController extends Controller
 
     }
 
-    public function save_profile(Request $request)
+    public function save_profile(UpdateUserRequest $request)
     {
         $user =tap(auth()->user()->update([
             'company_name' => request('company_name'),

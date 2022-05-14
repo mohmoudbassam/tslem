@@ -17,8 +17,6 @@ class UpdateUserRequest extends FormRequest
                 'email',
                 'unique:users,email,'.auth()->user()->id
             ],
-            'password' => 'nullable|min:6|confirmed',
-            'image'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
 
         ];
     }

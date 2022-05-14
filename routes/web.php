@@ -1,10 +1,9 @@
 <?php
 
-<<<<<<< HEAD
 use App\Http\Controllers\CP\Contractor\ContractorController;
-=======
+
 use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
->>>>>>> 828517b5798837fff90b186e35a68cf547b39e36
+
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
@@ -116,6 +115,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/delete_file/{attchment}', [ConsultingOfficeController::class, 'delete_file'])->name('.delete_file');
         Route::post('edit_report', [ConsultingOfficeController::class, 'edit_report'])->name('.edit_report');
         Route::post('add_report', [ConsultingOfficeController::class, 'add_report'])->name('.add_report');
+        Route::get('view_contractor_report/{order_id}', [ConsultingOfficeController::class, 'view_contractor_report'])->name('.view_contractor_report');
+        Route::get('contractor_report_list/{order}', [ConsultingOfficeController::class, 'contractor_report_list'])->name('.contractor_report_list');
+        Route::get('show_comments/{report}', [ConsultingOfficeController::class, 'show_comments'])->name('.show_comments');
+        Route::post('save_comment', [ConsultingOfficeController::class, 'save_comment'])->name('.save_comment');
     });
     Route::prefix('system-config')->group(function () {
 

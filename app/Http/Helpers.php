@@ -46,8 +46,8 @@ function file_name_by_column($col)
         'saudization_certificate' => 'شهادةالسعودة',
         'chamber_of_commerce_certificate' => 'شهادة الغرفة التجارية',
         'tax_registration_certificate' => 'شهادة تسجيل الضريبة',
-        'wage_protection_certificate' => 'شهادة حماية الضريبة',
-        'memorandum_of_association' => 'عقد التاسيس'
+        'wage_protection_certificate' => 'شهادة حماية الأجور',
+        'memorandum_of_association' => 'شهادة عقد التأسيس '
     ][$col];
 }
 

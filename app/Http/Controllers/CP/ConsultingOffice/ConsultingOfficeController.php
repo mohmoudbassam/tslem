@@ -5,7 +5,9 @@ namespace App\Http\Controllers\CP\ConsultingOffice;
 use App\Http\Controllers\Controller;
 use App\Models\ConsultingReport;
 use App\Models\ConsultingReportAttchment;
+use App\Models\ContractorReport;
 use App\Models\Order;
+use App\Models\ReportComment;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
@@ -28,8 +30,9 @@ class ConsultingOfficeController extends Controller
                 $accept = '';
 
                 $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
-                $reports_view = '<a class="dropdown-item" href="'. route('consulting_office.reports_view', ['order' => $order->id]) .'"><i class="fa fa-check"></i>عرض التقارير </a>';
-                $reports_add = '<a class="dropdown-item" href="'. route('consulting_office.report_add_form', ['order' => $order->id]) .'"><i class="fa fa-plus"></i>انشاء التقارير </a>';
+                $reports_view = '<a class="dropdown-item" href="' . route('consulting_office.reports_view', ['order' => $order->id]) . '"><i class="fa fa-check"></i>عرض التقارير </a>';
+                $reports_add = '<a class="dropdown-item" href="' . route('consulting_office.report_add_form', ['order' => $order->id]) . '"><i class="fa fa-plus"></i>انشاء التقارير </a>';
+                $view_contractor_report = '<a class="dropdown-item" href="' . route('consulting_office.view_contractor_report', ['order_id' => $order->id]) . '"><i class="fa fa-eye"></i>عرض تقارير المقاول </a>';
                 $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
                 if ($order->status > 2) {
                     $accept = '';
@@ -44,8 +47,9 @@ class ConsultingOfficeController extends Controller
                                             <div class="dropdown-menu" style="">
                                                ' . $accept . '
                                                ' . $reject . '
-                                               ' .$reports_view . '
-                                               ' .$reports_add . '
+                                               ' . $reports_view . '
+                                               ' . $reports_add . '
+                                               ' . $view_contractor_report . '
                                             </div>
                                         </div>';
                 return $element;
@@ -59,7 +63,8 @@ class ConsultingOfficeController extends Controller
             ->make(true);
     }
 
-    public function reports_view(Order $order) {
+    public function reports_view(Order $order)
+    {
         return view('CP.consulting_office.reports_view', [
             'order' => $order
         ]);
@@ -73,7 +78,7 @@ class ConsultingOfficeController extends Controller
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) use ($order) {
                 $delete = '<a class="dropdown-item" onclick="deleteReport(' . $report->id . ')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
-                $edit = '<a class="dropdown-item" href="' . route('consulting_office.report_edit_form', ['report' => $report->id ]) . '"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
+                $edit = '<a class="dropdown-item" href="' . route('consulting_office.report_edit_form', ['report' => $report->id]) . '"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
 
                 if ($order->status >= 4) {
                     $delete = '';
@@ -103,18 +108,20 @@ class ConsultingOfficeController extends Controller
             ->make(true);
     }
 
-    public function add_report_page(Order $order) {
+    public function add_report_page(Order $order)
+    {
         return view('CP.consulting_office.report_add_form', [
             'order' => $order,
         ]);
     }
 
-    public function add_report(Request $request) {
+    public function add_report(Request $request)
+    {
         $report = ConsultingReport::create([
-          'title' => $request->title,
-          'description' => $request->description,
-          'order_id' => $request->order_id,
-          'user_id' => auth()->user()->id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'order_id' => $request->order_id,
+            'user_id' => auth()->user()->id,
         ]);
         $this->upload_files($report, $request);
 
@@ -124,7 +131,8 @@ class ConsultingOfficeController extends Controller
         ]);
     }
 
-    public function delete_report(Request $request) {
+    public function delete_report(Request $request)
+    {
         $report = ConsultingReport::query()->where('id', $request->id)->firstOrFail();
         $report->deleteOrFail();
 
@@ -134,7 +142,8 @@ class ConsultingOfficeController extends Controller
         ]);
     }
 
-    public function delete_file(ConsultingReportAttchment $attchment) {
+    public function delete_file(ConsultingReportAttchment $attchment)
+    {
         $attchment->deleteOrFail();
 
         return response()->json([
@@ -143,14 +152,16 @@ class ConsultingOfficeController extends Controller
         ]);
     }
 
-    public function edit_report_page(Request $request, ConsultingReport $report) {
+    public function edit_report_page(Request $request, ConsultingReport $report)
+    {
         $report->load('attchment');
         return view('CP.consulting_office.report_edit_form', [
             'report' => $report,
         ]);
     }
 
-    public function edit_report(Request $request) {
+    public function edit_report(Request $request)
+    {
         $report = ConsultingReport::query()->where('id', $request->id)->firstOrFail();
         $report->title = $request->title;
         $report->description = $request->description;
@@ -166,8 +177,8 @@ class ConsultingOfficeController extends Controller
 
     public function accept_form(Request $request)
     {
-        $contractors = User::query()->where('type','=', 'contractor')->get();
-        $consulting_offices = User::query()->where('type', '=','consulting_office')->get();
+        $contractors = User::query()->where('type', '=', 'contractor')->get();
+        $consulting_offices = User::query()->where('type', '=', 'consulting_office')->get();
         $order = Order::query()->find($request->id);
         return response()->json([
             'success' => true,
@@ -229,5 +240,78 @@ class ConsultingOfficeController extends Controller
                 'real_name' => $file_name
             ]);
         }
+    }
+
+    public function view_contractor_report(Request $request, $order_id)
+    {
+
+        $order = Order::query()
+            ->where('id', $order_id)
+            ->where('consulting_office_id', auth()->user()->id)
+            ->firstOrFail();
+        return view('CP.consulting_office.view_contractor_report', [
+            'order' => $order
+        ]);
+    }
+
+    public function contractor_report_list(Request $request, Order $order)
+    {
+
+        $reports = ContractorReport::query()
+            ->where('order_id', $order->id)
+            ->where('contractor_id', $order->contractor_id);
+
+
+        return DataTables::of($reports)
+            ->addColumn('actions', function ($report) {
+
+                $show_comments = '<a class="dropdown-item" href="' . route('consulting_office.show_comments', ['report' => $report->id]) . '"><i class="fa fa-eye"></i>التعليقات  </a>';
+                if ($report->order->status > 4) {
+                    $edit_report = '';
+                    $delete_report = '';
+                }
+
+                $element = '<div class="btn-group me-1 mt-2">
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                خيارات<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+
+                                               ' . $show_comments . '
+                                            </div>
+                                        </div>';
+                return $element;
+
+            })
+            ->addColumn('description', function ($report) {
+                return Str::substr($report->description, 0, 50);
+            })
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
+    }
+
+    public function show_comments(ContractorReport $report)
+    {
+
+        return view('CP.consulting_office.view_commnet', [
+            'comments' => $report->comments()->orderByDesc('created_at')->with('user')->get(),
+            'report' => $report
+        ]);
+
+    }
+
+    public function save_comment(Request $request)
+    {
+        ReportComment::query()->create([
+            'body' => $request->body,
+            'user_id' => auth()->user()->id,
+            'report_id' => $request->report_id
+        ]);
+
+        return redirect()->back()->with(['success' => 'تمت إضافة التعليق بناح']);
     }
 }

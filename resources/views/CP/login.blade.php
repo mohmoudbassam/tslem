@@ -38,7 +38,7 @@
             border-radius: 0.9rem !important;
         }
 
-        .login-page-form-container { 
+        .login-page-form-container {
             position: absolute;
             width: 30%;
             height: 80%;
@@ -51,19 +51,19 @@
         }
 
         @media (max-width: 1300px) {
-            .login-page-form-container { 
+            .login-page-form-container {
                 width: 50%;
             }
         }
         @media (max-width: 950px) {
-            .login-page-form-container { 
+            .login-page-form-container {
                 width: 80%;
             }
         }
-        
+
         @media (max-width: 780px) {
-            .auth-bg { 
-                display: none !important; 
+            .auth-bg {
+                display: none !important;
             }
         }
 
@@ -87,14 +87,14 @@
                     <div class="w-100">
                         <div class="d-flex flex-column h-100">
                             <div class="mb-4 mb-md-5 text-center">
-                                <a href="index.html" class="d-block auth-logo">
+                                <a href="{{url('/')}}" class="d-block auth-logo">
                                     <img src="{{url('/')}}/assets/img/tsleem-logo.png" alt=""  width="150px"> <span class="logo-txt"></span>
                                 </a>
                             </div>
                             <div class="auth-content my-auto">
 
                                 <div class="text-center">
-                                    <h1>تسجيل الدخول</h1>  
+                                    <h1>تسجيل الدخول</h1>
                                 <h5 class="mb-0">أهلا وسهلا</h5>
                                     <p class="text-muted mt-2"></p>
                                 </div>
@@ -109,11 +109,11 @@
                                             <div class="flex-grow-1">
                                                 <label class="form-label">كلمة المرور</label>
                                             </div>
-                                            <div class="flex-shrink-0">
-                                                <div class="">
-                                                    <a href="auth-recoverpw.html" class="text-muted">إعادة تعيين كلمة المرور ؟</a>
-                                                </div>
-                                            </div>
+{{--                                            <div class="flex-shrink-0">--}}
+{{--                                                <div class="">--}}
+{{--                                                    <a href="auth-recoverpw.html" class="text-muted">إعادة تعيين كلمة المرور ؟</a>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </div>
 
                                         <div class="input-group auth-pass-inputgroup">
@@ -134,7 +134,7 @@
                                     </div>
                                     @if(session('validationErr'))
                                     <div class="alert alert-danger" role="alert">
-                                        الرجاء ادخال اسم مستخدم وكلمة مرور بطريقة صحيحة
+                                        {{session('validationErr')}}
                                     </div>
                                     @endif
                                     <div class="mb-3">
