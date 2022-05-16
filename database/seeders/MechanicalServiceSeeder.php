@@ -15,9 +15,10 @@ class MechanicalServiceSeeder extends Seeder
      */
     public function run()
     {
+
         $mechanical=  Specialties::query()->create([
             'name_ar'=>'الميكانيكة',
-            'name_en'=>'mechanical'
+            'name_en'=>'mchanical'
         ]);
         Service::query()->create([
             'name' => 'اضافة دورات مياه ',

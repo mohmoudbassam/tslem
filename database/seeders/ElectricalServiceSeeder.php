@@ -15,6 +15,8 @@ class ElectricalServiceSeeder extends Seeder
      */
     public function run()
     {
+
+
         $electrical = Specialties::query()->create([
             'name_ar' => 'الكهربائية',
             'name_en'=>'electrical'

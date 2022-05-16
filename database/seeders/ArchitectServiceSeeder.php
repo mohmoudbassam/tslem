@@ -15,6 +15,8 @@ class ArchitectServiceSeeder extends Seeder
      */
     public function run()
     {
+
+
         $architect = Specialties::query()->create([
             'name_ar' => 'المعماري',
             'name_en'=>'architect'

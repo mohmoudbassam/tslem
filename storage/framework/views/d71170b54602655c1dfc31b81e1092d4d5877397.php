@@ -27,18 +27,15 @@
                     </div>
 
                     <ul class="nav nav-tabs-custom card-header-tabs border-top mt-4" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link px-3 active" data-bs-toggle="tab" href="#architect_tap_panel" role="tab">المعماري</a>
-                        </li>
 
+                        <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li class="nav-item">
+                                <a class="nav-link px-3 " data-bs-toggle="tab" href="#<?php echo e($_specialties->name_en); ?>"
+                                   role="tab"><?php echo e($_specialties->name_ar); ?></a>
+                            </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <li class="nav-item">
                             <a class="nav-link px-3" data-bs-toggle="tab" href="#electrical" role="tab">الكهربائية</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab" href="#construction" role="tab">الإنشائية</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab" href="#mchanical" role="tab">الميكانيكية</a>
                         </li>
                     </ul>
                 </div>
@@ -48,15 +45,17 @@
             <form method="post" action="<?php echo e(route('design_office.save_file')); ?>" id="add_edit_form"
                   enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
+
                 <div class="tab-content">
-                    <div class="tab-pane active" id="architect_tap_panel" role="tabpanel">
+                    <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="tab-pane <?php if($loop->first): ?> active <?php endif; ?>"   id="<?php echo e($_specialties->name_en); ?>" role="tabpanel">
                         <div class="card">
 
                             <div class="card-body ">
-                                <div id="architect_form_reporter">
+                                <div id="<?php echo e($_specialties->name_en); ?>_form_reporter">
 
                                     <div class="row">
-                                        <div data-repeater-list="architect">
+                                        <div data-repeater-list="<?php echo e($_specialties->name_en); ?>">
                                             <div data-repeater-item="" class="mb-2">
 
 
@@ -65,11 +64,11 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="service_id">توصيف
                                                                 الخدمة</label>
-                                                            <select class="form-select req architect_service_id"
+                                                            <select class="form-select req <?php echo e($_specialties->name_en); ?>_service_id"
                                                                     id="service_id"
                                                                     name="service_id">
                                                                 <option value="">اختر...</option>
-                                                                <?php $__currentLoopData = $specialties->where('name_en','architect')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                     <option
                                                                         value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -79,7 +78,6 @@
                                                             </select>
                                                         </div>
                                                     </div>
-
 
                                                     <div class="col-md-4">
                                                         <div class="mb-3 ">
@@ -121,7 +119,7 @@
 
 
                     </div>
-
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     <div class="tab-pane" id="electrical" role="tabpanel">
                         <div class="card">
@@ -203,175 +201,6 @@
                         </div>
                         <!-- end card -->
                     </div>
-                    <!-- end tab pane -->
-                    <div class="tab-pane" id="construction" role="tabpanel">
-                        <div class="card">
-
-                            <div class="card-body">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div id="construction_form_reporter">
-
-                                            <div class="row">
-                                                <div data-repeater-list="construction">
-                                                    <div data-repeater-item="" class="mb-2">
-
-
-                                                        <div class="row">
-                                                            <div class="col-md-2">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="designer_id">توصيف
-                                                                        الخدمة</label>
-                                                                    <select class="form-select" id="designer_id"
-                                                                            name="designer_id">
-                                                                        <option value="">اختر...</option>
-                                                                        <?php $__currentLoopData = $specialties->where('name_en','construction')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                            <option
-                                                                                value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
-                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                        <div class="col-12 text-danger"
-                                                                             id="designer_id_error"></div>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">العدد/م2</label>
-                                                                    <input type="number" name="number"
-                                                                           class="form-control"
-                                                                           placeholder="العدد">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3 ">
-                                                                    <label class="form-label"
-                                                                           for="formrow-password-input">خريطة</label>
-                                                                    <input name="file" type="file" id="file"
-                                                                           data-show-preview="false" class="kartafile"
-                                                                           multiple>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3 ">
-                                                                    <label class="form-label"
-                                                                           for="formrow-password-input">حسابات
-                                                                        إنشائية</label>
-                                                                    <input name="loads" type="file" id="loads"
-                                                                           data-show-preview="false" class="kartafile"
-                                                                           multiple>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row ">
-                                                    <div class="col-lg-5"></div>
-                                                    <div class="col">
-                                                        <div data-repeater-create=""
-                                                             class="btn font-weight-bold btn-warning">
-                                                            <i class="la la-plus"></i> إضافة
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="tab-pane" id="mchanical" role="tabpanel">
-                        <div class="card">
-
-                            <div class="card-body">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div id="mchanical_form_reporter">
-
-                                            <div class="row">
-                                                <div data-repeater-list="mechanical">
-                                                    <div data-repeater-item="" class="mb-2">
-
-
-                                                        <div class="row">
-                                                            <div class="col-md-2">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label" for="designer_id">توصيف
-                                                                        الخدمة</label>
-                                                                    <select class="form-select" id="designer_id"
-                                                                            name="designer_id">
-                                                                        <option value="">اختر...</option>
-                                                                        <?php $__currentLoopData = $specialties->where('name_en','mechanical')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                            <option
-                                                                                value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
-                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                        <div class="col-12 text-danger"
-                                                                             id="designer_id_error"></div>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <div class="mb-3">
-                                                                    <label class="form-label">العدد/م2</label>
-                                                                    <input type="number" name="number"
-                                                                           class="form-control"
-                                                                           placeholder="العدد">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3 ">
-                                                                    <label class="form-label"
-                                                                           for="formrow-password-input">خريطة</label>
-                                                                    <input name="file" type="file" id="file"
-                                                                           data-show-preview="false" class="kartafile"
-                                                                           multiple>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3 ">
-                                                                    <label class="form-label"
-                                                                           for="formrow-password-input">حسابات
-                                                                        إنشائية</label>
-                                                                    <input name="loads" type="file" id="loads"
-                                                                           data-show-preview="false" class="kartafile"
-                                                                           multiple>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row ">
-                                                    <div class="col-lg-5"></div>
-                                                    <div class="col">
-                                                        <div data-repeater-create=""
-                                                             class="btn font-weight-bold btn-warning">
-                                                            <i class="la la-plus"></i> إضافة
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
@@ -429,10 +258,11 @@
                                 var unit_name = select_name.replace('service_id', 'unit');
                                 unit_name = 'input[name="' + unit_name + '"]';
                                 var unitInput = $(unit_name);
-                                var label=unitInput.prev();
+                                var label = unitInput.prev();
                                 label.text(data.unit)
-                                 console.log(label.parent().removeClass('d-none'))
-                                label.prev('d-none').removeClass('d-none')
+
+                                label.parent('.d-none').removeClass('d-none')
+
                                 label.attr("placeholder", data.unit);
                                 KTApp.unblockPage();
                             },

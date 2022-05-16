@@ -15,6 +15,8 @@ class ConstructionServiceSeeder extends Seeder
      */
     public function run()
     {
+
+
         $construction  =  Specialties::query()->create([
             'name_ar'=>'الإنشائية',
             'name_en'=>'construction',

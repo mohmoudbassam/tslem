@@ -95,6 +95,7 @@ class DesignerOrderController extends Controller
     {
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
+
         return view('CP.designer.add_files', ['order' => $order, 'specialties' => $specialties,'services'=>$service]);
     }
 
