@@ -6,7 +6,7 @@
             theme: "fas",//gly
             showDrag: false,
             deleteExtraData: {
-                '_token': '{{csrf_token()}}',
+                '_token': '<?php echo e(csrf_token()); ?>',
             },
             // hideThumbnailContent: true,
             browseClass: "btn btn-info",
@@ -47,7 +47,7 @@
     function change_status(id, url, status = null, callback = null) {
         $.ajax({
             url: url,
-            data: {id: id, status: status, _token: '{{csrf_token()}}'},
+            data: {id: id, status: status, _token: '<?php echo e(csrf_token()); ?>'},
             type: "POST",
             beforeSend(){
                 KTApp.blockPage({
@@ -113,7 +113,7 @@
                         }
 
                     } else {
-                        showAlertMessage('error', '@lang('constants.unknown_error')');
+                        showAlertMessage('error', '<?php echo app('translator')->get('constants.unknown_error'); ?>');
                     }
                     KTApp.unblockPage();
                 }
@@ -177,24 +177,24 @@
             }
         }
         if (data.length <= 0) {
-            showAlertMessage('error', '@lang('constants.noSelectedItems')');
+            showAlertMessage('error', '<?php echo app('translator')->get('constants.noSelectedItems'); ?>');
         } else {
             Swal.fire({
-                title: data.length === 1 ? '@lang('constants.deleteItem')' : '@lang('constants.delete') ' + data.length + ' @lang('constants.items')',
-                text: "@lang('constants.sure')",
+                title: data.length === 1 ? '<?php echo app('translator')->get('constants.deleteItem'); ?>' : '<?php echo app('translator')->get('constants.delete'); ?> ' + data.length + ' <?php echo app('translator')->get('constants.items'); ?>',
+                text: "<?php echo app('translator')->get('constants.sure'); ?>",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#84dc61',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '@lang('constants.yes')',
-                cancelButtonText: '@lang('constants.no')'
+                confirmButtonText: '<?php echo app('translator')->get('constants.yes'); ?>',
+                cancelButtonText: '<?php echo app('translator')->get('constants.no'); ?>'
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
                         url: url,
                         type: "POST",
                         data: {
-                            "_token": "{{ csrf_token() }}",
+                            "_token": "<?php echo e(csrf_token()); ?>",
                             'ids': data
                         },
                         beforeSend(){
@@ -202,7 +202,7 @@
                                 overlayColor: '#000000',
                                 type: 'v2',
                                 state: 'success',
-                                message: '@lang('constants.please_wait') ...'
+                                message: '<?php echo app('translator')->get('constants.please_wait'); ?> ...'
                             });
                         },
                         success: function (data) {
@@ -213,7 +213,7 @@
                                     $('#items_table').DataTable().ajax.reload(null, false);
                                     showAlertMessage('success', data.message);
                                 } else {
-                                    showAlertMessage('error', '@lang('constants.unknown_error')');
+                                    showAlertMessage('error', '<?php echo app('translator')->get('constants.unknown_error'); ?>');
                                 }
                                 KTApp.unblockPage();
                             }
@@ -226,9 +226,9 @@
             });
         }
     }
-    @if(session('success'))
-    showAlertMessage('success', '{{session('success')}}');
-        @endif
+    <?php if(session('success')): ?>
+    showAlertMessage('success', '<?php echo e(session('success')); ?>');
+        <?php endif; ?>
     function request_file_input_attributes(){
         return {
             theme: "explorer",
@@ -307,3 +307,4 @@
     }
 </script>
 
+<?php /**PATH C:\wamp64\www\taslem\resources\views/CP/layout/js.blade.php ENDPATH**/ ?>

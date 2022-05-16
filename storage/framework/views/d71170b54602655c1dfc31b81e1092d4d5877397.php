@@ -1,8 +1,7 @@
-@extends('CP.master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     المستخدمين
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
     <div class="row">
@@ -46,9 +45,9 @@
                 <!-- end card body -->
             </div>
             <!-- end card -->
-            <form method="post" action="{{route('design_office.save_file')}}" id="add_edit_form"
+            <form method="post" action="<?php echo e(route('design_office.save_file')); ?>" id="add_edit_form"
                   enctype="multipart/form-data">
-                @csrf
+                <?php echo csrf_field(); ?>
                 <div class="tab-content">
                     <div class="tab-pane active" id="architect_tap_panel" role="tabpanel">
                         <div class="card">
@@ -70,16 +69,17 @@
                                                                     id="service_id"
                                                                     name="service_id">
                                                                 <option value="">اختر...</option>
-                                                                @foreach($specialties->where('name_en','architect')->first()->service as $service)
+                                                                <?php $__currentLoopData = $specialties->where('name_en','architect')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                     <option
-                                                                        value="{{$service->id}}">{{$service->name}}</option>
-                                                                @endforeach
+                                                                        value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 <div class="col-12 text-danger"
                                                                      id="service_id_error"></div>
 
                                                             </select>
                                                         </div>
                                                     </div>
+
 
                                                     <div class="col-md-4">
                                                         <div class="mb-3 ">
@@ -141,10 +141,10 @@
                                                             <select class="form-select" id="designer_id"
                                                                     name="designer_id">
                                                                 <option value="">اختر...</option>
-                                                                @foreach($specialties->where('name_en','electrical')->first()->service as $service)
+                                                                <?php $__currentLoopData = $specialties->where('name_en','electrical')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                     <option
-                                                                        value="{{$service->id}}">{{$service->name}}</option>
-                                                                @endforeach
+                                                                        value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 <div class="col-12 text-danger"
                                                                      id="designer_id_error"></div>
 
@@ -225,10 +225,10 @@
                                                                     <select class="form-select" id="designer_id"
                                                                             name="designer_id">
                                                                         <option value="">اختر...</option>
-                                                                        @foreach($specialties->where('name_en','construction')->first()->service as $service)
+                                                                        <?php $__currentLoopData = $specialties->where('name_en','construction')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                             <option
-                                                                                value="{{$service->id}}">{{$service->name}}</option>
-                                                                        @endforeach
+                                                                                value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                         <div class="col-12 text-danger"
                                                                              id="designer_id_error"></div>
 
@@ -309,10 +309,10 @@
                                                                     <select class="form-select" id="designer_id"
                                                                             name="designer_id">
                                                                         <option value="">اختر...</option>
-                                                                        @foreach($specialties->where('name_en','mechanical')->first()->service as $service)
+                                                                        <?php $__currentLoopData = $specialties->where('name_en','mechanical')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                             <option
-                                                                                value="{{$service->id}}">{{$service->name}}</option>
-                                                                        @endforeach
+                                                                                value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                         <div class="col-12 text-danger"
                                                                              id="designer_id_error"></div>
 
@@ -386,9 +386,9 @@
 
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
 
         $('#architect_form_reporter').repeater({
@@ -408,7 +408,7 @@
 
                     var select_service = $(this).find('.architect_service_id').on('change', function (e) {
 
-                        var url = '{{ route("design_office.get_service_by_id", ":id") }}';
+                        var url = '<?php echo e(route("design_office.get_service_by_id", ":id")); ?>';
                         url = url.replace(':id', $(this).val());
                         var select = $(this)
                         $.ajax({
@@ -431,6 +431,7 @@
                                 var unitInput = $(unit_name);
                                 var label=unitInput.prev();
                                 label.text(data.unit)
+                                 console.log(label.parent().removeClass('d-none'))
                                 label.prev('d-none').removeClass('d-none')
                                 label.attr("placeholder", data.unit);
                                 KTApp.unblockPage();
@@ -637,4 +638,6 @@
 
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/designer/add_files.blade.php ENDPATH**/ ?>

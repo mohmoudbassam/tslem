@@ -58,10 +58,13 @@
                             <a class="nav-link px-3 active" data-bs-toggle="tab" href="#overview" role="tab">المعلومات
                                 الإساسية</a>
                         </li>
+                        @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider')
+
                         <li class="nav-item">
                             <a class="nav-link px-3" data-bs-toggle="tab" href="#about" role="tab">المعلومات
                                 الثانوية</a>
                         </li>
+                        @endif
                         @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office')
                             <li class="nav-item">
                                 <a class="nav-link px-3" data-bs-toggle="tab" href="#post" role="tab">معلومات المكان</a>
@@ -79,6 +82,40 @@
 
                         <div class="card-body">
                             <div>
+                                @if($user->type =='Kdana' || $user->type =='Delivery')
+                                    <div class="pb-3">
+                                        <div class="row">
+                                            <div class="col-xl-2">
+                                                <div>
+                                                    <h5 class="font-size-15">اسم الشخص  المسؤول</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl">
+                                                <div class="text-muted">
+                                                    <p class="mb-2">{{$user->responsible_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div class="pb-3">
+                                        <div class="row">
+                                            <div class="col-xl-2">
+                                                <div>
+                                                    <h5 class="font-size-15">رقم الجوال</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl">
+                                                <div class="text-muted">
+                                                    <p class="mb-2">{{$user->phone}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @endif
+                                @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider')
                                 <div class="pb-3">
                                     <div class="row">
                                         <div class="col-xl-2">
@@ -93,6 +130,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <hr>
 
                                 <div class="py-3">
@@ -111,6 +149,7 @@
                                     </div>
                                 </div>
                                 <hr>
+
                                 <div class="py-3">
                                     <div class="row">
                                         <div class="col-xl-2">
@@ -127,13 +166,13 @@
                                     </div>
                                 </div>
                                 <hr>
-
+                                @endif
                             </div>
                         </div>
                         <!-- end card body -->
                     </div>
                     <!-- end card -->
-
+                    @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider')
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex">
@@ -202,6 +241,7 @@
                         </div>
                         <!-- end card body -->
                     </div>
+                    @endif
                     <!-- end card -->
                 </div>
                 <!-- end tab pane -->

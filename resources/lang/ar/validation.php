@@ -227,6 +227,8 @@ return [
         'trip_image_id' => 'الصورة',
         'invoice_image' => 'صورة الفاتورة',
         'complaint_id' => 'نوع الابلاغ',
-        'password'=>'كلمة المرور'
+        'password'=>'كلمة المرور',
+        'commercial_record'=>'السجل التجاري',
+        'phone'=>'الجوال'
     ],
 ];

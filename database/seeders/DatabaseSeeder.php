@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            BeneficiresCoulumnsSeeder::class
+            BeneficiresCoulumnsSeeder::class,
+            ArchitectServiceSeeder::class,
+            ElectricalServiceSeeder::class,
+            ConstructionServiceSeeder::class,
+            MechanicalServiceSeeder::class
         ]);
         \App\Models\User::query()->create([
             'name' => 'admin',
@@ -28,16 +32,16 @@ class DatabaseSeeder extends Seeder
             'password' => 123456,
             'email' => 'service@test.com',
             'type' => 'service_provider',
-            'company_name'=>'service_company',
-            'verified'=>1
+            'company_name' => 'service_company',
+            'verified' => 1
         ]);
         \App\Models\User::query()->create([
             'name' => 'designer',
             'password' => 123456,
             'email' => 'designer@test.com',
             'type' => 'design_office',
-            'company_name'=>'designer_company',
-            'verified'=>1
+            'company_name' => 'designer_company',
+            'verified' => 1
 
         ]);
         \App\Models\User::query()->create([
@@ -45,32 +49,32 @@ class DatabaseSeeder extends Seeder
             'password' => 123456,
             'email' => 'designer2@test.com',
             'type' => 'design_office',
-            'company_name'=>'designer2_company',
-            'verified'=>1
+            'company_name' => 'designer2_company',
+            'verified' => 1
         ]);
         \App\Models\User::query()->create([
             'name' => 'taslem',
             'password' => 123456,
             'email' => 'taslem@test.com',
             'type' => 'Delivery',
-            'company_name'=>'taslem_company',
-            'verified'=>1
+            'company_name' => 'taslem_company',
+            'verified' => 1
         ]);
         \App\Models\User::query()->create([
             'name' => 'contractor',
             'password' => 123456,
             'email' => 'contractor@test.com',
             'type' => 'contractor',
-            'company_name'=>'contractor_company',
-            'verified'=>1
+            'company_name' => 'contractor_company',
+            'verified' => 1
         ]);
         \App\Models\User::query()->create([
             'name' => 'consulting_office',
             'password' => 123456,
             'email' => 'consulting_office@test.com',
             'type' => 'consulting_office',
-            'company_name'=>'consulting_company',
-            'verified'=>1
+            'company_name' => 'consulting_company',
+            'verified' => 1
         ]);
 
         ConstParnet::create([

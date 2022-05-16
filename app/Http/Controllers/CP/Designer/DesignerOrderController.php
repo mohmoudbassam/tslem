@@ -4,6 +4,8 @@ namespace App\Http\Controllers\CP\Designer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Service;
+use App\Models\Specialties;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
@@ -28,7 +30,7 @@ class DesignerOrderController extends Controller
                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
                 $file_manger = '<a class="dropdown-item" href="' . url('laravel-filemanager') . "?id=$order->id" . '" href="javascript:;"><i class="fa fa-file"></i>معرض الملفات  </a>';
 
-                if ($order->status > 2 ) {
+                if ($order->status > 2) {
                     $add_file_design = '';
                 }
                 $element = '<div class="btn-group me-1 mt-2">
@@ -91,12 +93,14 @@ class DesignerOrderController extends Controller
 
     public function add_files(Order $order)
     {
-        return view('CP.designer.add_files', ['order' => $order]);
+        $specialties = Specialties::with('service')->get();
+        $service = Service::all();
+        return view('CP.designer.add_files', ['order' => $order, 'specialties' => $specialties,'services'=>$service]);
     }
 
     public function save_file(Request $request)
     {
-
+        dd($request->all());
         $order = Order::query()->findOrFail($request->id);
 
         save_logs($order, auth()->user()->id, 'تم اضافة التصاميم من قبل مكتب التصميم');
@@ -118,8 +122,8 @@ class DesignerOrderController extends Controller
 
     public function upload_files($order, $request)
     {
-        foreach ((array) $request->file('files') as $file) {
-            $path = Storage::disk('public')->put("orders/$order->id/designer_file"   , $file);
+        foreach ((array)$request->file('files') as $file) {
+            $path = Storage::disk('public')->put("orders/$order->id/designer_file", $file);
 
             $file_name = $file->getClientOriginalName();
             $order->file()->create([
@@ -127,6 +131,11 @@ class DesignerOrderController extends Controller
                 'real_name' => $file_name
             ]);
         }
+    }
+
+    public function get_service_by_id($id)
+    {
+        return response()->json(Service::query()->find($id));
     }
 }
 

@@ -17,6 +17,8 @@ class StoreUserRequest extends FormRequest
             'name' => [
                 'required',
                 Rule::unique('users', 'name'),
+                'regex:/^[a-zA-Z]+$/u',
+                'max:50'
             ],
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
@@ -31,6 +33,15 @@ class StoreUserRequest extends FormRequest
                     'Delivery',
                     'Kdana',
                 ])
+            ],
+            'commercial_record' => [
+                'sometimes',
+                'numeric'
+            ],
+            'phone' => [
+                'sometimes',
+                'numeric',
+                'digits:12'
             ],
 
         ];

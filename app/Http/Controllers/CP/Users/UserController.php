@@ -109,11 +109,11 @@ class UserController extends Controller
             })
             ->addColumn('enabled', function ($user) {
                 if ($user->enabled) {
-                    $element = '<div class="form-check form-switch form-switch-lg mb-3 align-content-lg-center" dir="rlt">';
+                    $element = '<div class="form-check form-switch form-switch-lg mb-3 d-flex justify-content-center" dir="rlt">';
                     $element .= '<input onclick="change_status(' . $user->id . ',\'' . route('users.status') . '\')" type="checkbox" class="form-check-input" id="customSwitchsizelg" checked="">';
                     $element .= '  </div>';
                 } else {
-                    $element = '<div class="form-check form-switch form-switch-lg mb-3 align-content-lg-center" dir="rlt">';
+                    $element = '<div class="form-check form-switch form-switch-lg mb-3 d-flex justify-content-center" dir="rlt">';
                     $element .= '<input onclick="change_status(' . $user->id . ',\'' . route('users.status') . '\')" type="checkbox" class="form-check-input" id="customSwitchsizelg" >';
                     $element .= '  </div>';
                 }
