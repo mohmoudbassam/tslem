@@ -158,9 +158,9 @@ class DesignerOrderController extends Controller
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
         $order->with('service.specialties');
-        $order_specialties = $order->service->groupBy('specialties.name_en');
-        $order_service = OrderService::query()->with('service.order_service_file')->where('order_id', $order->id)->get();
-        dd($order_service);
+
+        $order_specialties = OrderService::query()->with('service.specialties','order_service_file')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+
         return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'services' => $service, 'order_specialties' => $order_specialties]);
     }
 }

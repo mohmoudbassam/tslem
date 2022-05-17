@@ -14,8 +14,23 @@ class LoginController extends Controller
     {
 
         if(auth()->check()){
+            if(auth()->user()->type == 'admin'){
+                return redirect()->route('dashboard');
+            }
+            $user_type=auth()->user()->type;
 
-            return redirect()->route('dashboard');
+            if(auth()->user()->type == 'admin'){
+                return redirect()->route('dashboard');
+            }
+            if(auth()->user()->type=='service_provider'){
+
+                return redirect()->route('services_providers');
+
+            }
+            if(auth()->user()->type=='Delivery'){
+                return redirect()->route('delivery');
+            }
+            return redirect()->route($user_type);
         }
         return view('CP.login');
     }
@@ -35,8 +50,19 @@ class LoginController extends Controller
             return back()->with('validationErr','حسابك معلق حاليا الرجاء التواصل مع الإدارة');
         }
         if (Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1], isset($request->remember))) {
+            $user_type=auth()->user()->type;
+            if(auth()->user()->type == 'admin'){
+                return redirect()->route('dashboard');
+            }
+            if(auth()->user()->type=='service_provider'){
 
-            return redirect()->route('dashboard');
+                return redirect()->route('services_providers');
+
+            }
+            if(auth()->user()->type=='Delivery'){
+                return redirect()->route('delivery');
+            }
+            return redirect()->route($user_type);
         } else {
             return back()->with('validationErr','الرجاء إدخال كلمة مرور صحيحة');
         }

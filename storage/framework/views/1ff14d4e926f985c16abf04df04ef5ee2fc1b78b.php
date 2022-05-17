@@ -23,10 +23,21 @@
             <div class="container-fluid">
 
                 <?php if(\Request::route()->getName()=='dashboard'): ?>
-                     <h1>قريبا</h1>
+
+                    <div class="page-content">
+                        <div class="container-fluid text-center border p-5">
+
+                            <h1 class="text-muted">الاحصائيات تحت التطوير</h1>
+                            <div class="col-12">
+                            </div>
+
+                        </div>
+
+                    </div>
                     <?php endif; ?>
                 <?php echo $__env->yieldContent('content'); ?>
                 <div class="col-12">
+
                     <?php if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() ): ?>
                     <div class="alert alert-danger">
 

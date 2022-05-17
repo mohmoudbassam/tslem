@@ -64,13 +64,13 @@ Route::middleware('auth')->group(function () {
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
         });
     });
-    Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider', 'verifiedUser'])->group(function () {
+    Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
         Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
     });
-    Route::prefix('design-office')->name('design_office')->middleware(['design_office', 'verifiedUser'])->group(function () {
+    Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
         Route::get('add-files/{order}', [DesignerOrderController::class, 'add_files'])->name('.add_files');
@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function () {
 //        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 //        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
-    Route::prefix('delivery')->name('delivery')->middleware(['delivery', 'verifiedUser'])->group(function () {
+    Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
         Route::get('/{order}/reports', [DeliveryController::class, 'reports_view'])->name('.reports_view');

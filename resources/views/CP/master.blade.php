@@ -23,10 +23,21 @@
             <div class="container-fluid">
 
                 @if(\Request::route()->getName()=='dashboard')
-                     <h1>قريبا</h1>
+
+                    <div class="page-content">
+                        <div class="container-fluid text-center border p-5">
+
+                            <h1 class="text-muted">الاحصائيات تحت التطوير</h1>
+                            <div class="col-12">
+                            </div>
+
+                        </div>
+
+                    </div>
                     @endif
                 @yield('content')
                 <div class="col-12">
+
                     @if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() )
                     <div class="alert alert-danger">
 

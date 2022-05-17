@@ -60,7 +60,7 @@
 
                                         <?php if($_order_specialties == $_specialties->name_en): ?>
                                             <?php $__currentLoopData = $order_services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                
+
                                                 <div class="row">
                                                     <div class="row">
                                                         <div class="col-md-3">
