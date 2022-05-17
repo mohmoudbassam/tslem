@@ -20,4 +20,6 @@ class OrderService extends Model
     public function order_service_file(){
         return $this->hasMany(OrderServiceFile::class,'order_service_id');
     }
+
+
 }

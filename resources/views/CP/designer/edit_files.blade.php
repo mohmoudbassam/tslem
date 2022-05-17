@@ -61,17 +61,17 @@
 
                                         @if($_order_specialties == $_specialties->name_en)
                                             @foreach($order_services as $service)
-
-                                                <div class="row">
+                                                <div class="row" id="{{$_specialties->name_en}}_old_data">
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <div class="mb-3">
                                                                 <label class="form-label" for="service_id">توصيف
                                                                     الخدمة</label>
+
                                                                 <select
-                                                                    class="form-select req _service_id"
-                                                                    id="service_id"
-                                                                    name="service_id">
+                                                                    class="form-select req old_service_id"
+                                                                    id="{{$_specialties->name_en}}[service_id][{{ $loop->index }}]"
+                                                                    name="{{$_specialties->name_en}}[service_id][{{$loop->index }}]">
                                                                     <option value="">اختر...</option>
                                                                     @foreach($_specialties->service as $_specialties_service)
                                                                         <option value="{{$_specialties_service->id}}"
@@ -82,11 +82,13 @@
                                                                      id="_error"></div>
                                                             </div>
                                                         </div>
-                                                        @foreach($service->file_type as $files)
+
+                                                        @foreach($service->order_service_file as $file)
                                                             <div class="col-md-3">
                                                                 <div class="mb-3 ">
-                                                                    <label class="form-label">{{$files->name_ar}}</label>
-                                                                    <input name="{{$files->name_en}}" type="file"
+                                                                    <label
+                                                                        class="form-label">{{$file->file_type->name_ar}}</label>
+                                                                    <input name="{{$file->name_en}}" type="file"
                                                                            id="file"
                                                                            data-show-preview="false"
                                                                            class="kartafile req">
@@ -94,6 +96,17 @@
                                                                 </div>
                                                             </div>
                                                         @endforeach
+                                                        <div class="col-md-3 ">
+                                                            <div class="mb-3 unit_hide">
+                                                                <label
+                                                                    class="form-label">{{$service->service->unit}}</label>
+                                                                <input type="text" name="unit{{$_specialties->name_en}}[unit][{{ $loop->index }}]" id="{{$_specialties->name_en}}[unit][{{ $loop->index }}]" class="form-control req "
+                                                                       value="{{$service->unit}}"
+                                                                       placeholder="">
+                                                                <div class="col-12 text-danger"
+                                                                     id="service_id_error"></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -364,7 +377,7 @@
             show: function () {
                 var a = document.querySelectorAll('#architect_form_reporter');
                 a.forEach((e) => {
-                    //   e.datepicker({});
+
                     var fileInput = $(this).find('.kartafile');
 
                     fileInput.fileinput(request_file_input_attributes());
@@ -378,56 +391,7 @@
                 $(this).slideUp(deleteElement);
             }
         });
-        // $('#construction_form_reporter').repeater({
-        //
-        //     initEmpty: false,
-        //
-        //     defaultValues: {
-        //         'text-input': ''
-        //     },
-        //
-        //     show: function () {
-        //         var a = document.querySelectorAll('#architect_form_reporter');
-        //         a.forEach((e) => {
-        //             //   e.datepicker({});
-        //             var fileInput = $(this).find('.kartafile');
-        //
-        //             fileInput.fileinput(request_file_input_attributes());
-        //
-        //         })
-        //         $(this).slideDown();
-        //
-        //     },
-        //
-        //     hide: function (deleteElement) {
-        //         $(this).slideUp(deleteElement);
-        //     }
-        // });
-        // $('#mchanical_form_reporter').repeater({
-        //
-        //     initEmpty: false,
-        //
-        //     defaultValues: {
-        //         'text-input': ''
-        //     },
-        //
-        //     show: function () {
-        //         var a = document.querySelectorAll('#architect_form_reporter');
-        //         a.forEach((e) => {
-        //             //   e.datepicker({});
-        //             var fileInput = $(this).find('.kartafile');
-        //
-        //             fileInput.fileinput(request_file_input_attributes());
-        //
-        //         })
-        //         $(this).slideDown();
-        //
-        //     },
-        //
-        //     hide: function (deleteElement) {
-        //         $(this).slideUp(deleteElement);
-        //     }
-        // });
+
 
         $(".kartafile").fileinput({
             theme: "explorer",
@@ -531,10 +495,51 @@
                 return false;
             }
 
-
             $("#add_edit_form").submit()
 
         });
+        $('.old_service_id').bind('change', function (e) {
+
+                var url = '{{ route("design_office.get_service_by_id", ":id") }}';
+                url = url.replace(':id', $(this).val());
+                var select = $(this)
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    processData: false,
+                    contentType: false,
+                    beforeSend() {
+                        KTApp.block('#page_modal', {
+                            overlayColor: '#000000',
+                            type: 'v2',
+                            state: 'success',
+                            message: 'الرجاء الانتظار'
+                        });
+                    },
+                    success: function (data) {
+                        var select_name = select.attr('name');
+                        var unit_name = select_name.replace('service_id', 'unit');
+                        console.log(select_name,unit_name)
+                        unit_name = 'input[name="' + unit_name + '"]';
+                        var unitInput = $(unit_name);
+                        var label = unitInput.prev();
+                        label.text(data.unit)
+
+                        label.parent('.d-none').removeClass('d-none')
+
+                        label.attr("placeholder", data.unit);
+                        KTApp.unblockPage();
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        KTApp.unblock('#page_modal');
+                        KTApp.unblockPage();
+                    },
+                });
+            });
+
+
 
 
     </script>

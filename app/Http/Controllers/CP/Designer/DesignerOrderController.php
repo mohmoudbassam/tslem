@@ -14,7 +14,7 @@ use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Http\Response;
 class DesignerOrderController extends Controller
 {
     public function orders()
@@ -32,6 +32,7 @@ class DesignerOrderController extends Controller
 
                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
                 $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
+                $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الملفات </a>';
 
                 if ($order->status > 2) {
                     $add_file_design = '';
@@ -43,6 +44,7 @@ class DesignerOrderController extends Controller
                                             <div class="dropdown-menu" style="">
                                                ' . $add_file_design . '
                                                ' . $edit_files . '
+                                               ' . $view . '
 
 
                                             </div>
@@ -159,9 +161,28 @@ class DesignerOrderController extends Controller
         $service = Service::all();
         $order->with('service.specialties');
 
-        $order_specialties = OrderService::query()->with('service.specialties','order_service_file')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties', 'order_service_file.file_type')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
 
         return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'services' => $service, 'order_specialties' => $order_specialties]);
+    }
+
+    public function view_file(Order $order)
+    {
+        $order_specialties = OrderService::query()->with('service.specialties', 'order_service_file.file_type')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        return view('CP.designer.view_file', ['order' => $order, 'order_specialties' => $order_specialties]);
+
+    }
+
+    public function download($id)
+    {
+     $file= OrderServiceFile::query()->where('id',$id)->first();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => "attachment; filename=$file->path",
+        ];
+
+        return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
+
     }
 }
 
