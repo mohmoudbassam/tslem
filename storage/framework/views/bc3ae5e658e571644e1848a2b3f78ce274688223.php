@@ -86,7 +86,7 @@
                                               <span class="">
                                                    <label class="form-label" for="service_id"><?php echo e($file->file_type->name_ar); ?></label>
 
-                                                <a href="<?php echo e(route('design_office.download',['id'=>$file->id])); ?>" > <i class="fa fa-file fa-5x" style="width:200px ; height:50px"></i></a>
+                                                <a class="btn btn-secondary" href="<?php echo e(route('design_office.download',['id'=>$file->id])); ?>" > <i class="fa fa-download fa-4x" style="width:150px ; height:50px"></i></a>
                                               </span>
                                             </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
