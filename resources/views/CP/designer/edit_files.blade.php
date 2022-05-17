@@ -19,7 +19,7 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <h2 class="font-size-16">تجهيز الطلب</h2>
+                                        <h2 class="font-size-16">تعديل الطلب</h2>
 
                                     </div>
                                 </div>
@@ -45,6 +45,7 @@
                 <!-- end card body -->
             </div>
             <!-- end card -->
+
             <form method="post" action="{{route('design_office.save_file')}}" id="add_edit_form"
                   enctype="multipart/form-data">
                 @csrf
@@ -55,10 +56,53 @@
                              role="tabpanel">
                             <div class="card">
 
-                                <div class="card-body ">
+                                <div class="card-body">
+                                    @foreach($order_specialties as $_order_specialties=> $order_services)
+
+                                        @if($_order_specialties == $_specialties->name_en)
+                                            @foreach($order_services as $service)
+
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="service_id">توصيف
+                                                                    الخدمة</label>
+                                                                <select
+                                                                    class="form-select req _service_id"
+                                                                    id="service_id"
+                                                                    name="service_id">
+                                                                    <option value="">اختر...</option>
+                                                                    @foreach($_specialties->service as $_specialties_service)
+                                                                        <option value="{{$_specialties_service->id}}"
+                                                                                @if($_specialties_service->id ==$service->id) selected @endif>{{$_specialties_service->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="col-12 text-danger"
+                                                                     id="_error"></div>
+                                                            </div>
+                                                        </div>
+                                                        @foreach($service->file_type as $files)
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3 ">
+                                                                    <label class="form-label">{{$files->name_ar}}</label>
+                                                                    <input name="{{$files->name_en}}" type="file"
+                                                                           id="file"
+                                                                           data-show-preview="false"
+                                                                           class="kartafile req">
+                                                                    <div class="col-12 text-danger"></div>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    @endforeach
                                     <div id="{{$_specialties->name_en}}_form_reporter">
 
                                         <div class="row">
+
                                             <div data-repeater-list="{{$_specialties->name_en}}">
                                                 <div data-repeater-item="" class="mb-2">
 
@@ -96,10 +140,10 @@
                                                             </div>
                                                         @endforeach
                                                         <div class="col-md-3 ">
-                                                            <div class="mb-3 d-none">
-                                                                <label class="form-label">العدد/م</label>
-                                                                <input type="text" name="unit" class="form-control req"
-                                                                       placeholder="العدد">
+                                                            <div class="mb-3 unit_hide">
+                                                                <label class="form-label"></label>
+                                                                <input type="text" name="unit" class="form-control req "
+                                                                       placeholder="">
                                                                 <div class="col-12 text-danger"
                                                                      id="service_id_error"></div>
                                                             </div>
@@ -215,7 +259,7 @@
 
 
                 <div class="d-flex flex-wrap gap-3">
-                    <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء طلب</button>
+                    <button type="button" class="btn btn-lg btn-primary submit_btn">تعديل طلب</button>
                 </div>
             </form>
         </div>
@@ -229,7 +273,7 @@
 @section('scripts')
     <script>
         @foreach ($specialties->where('name_en','!=','electrical') as $_specialties)
-        $('#{{$_specialties->name_en}}_form_reporter').repeater({
+        var repeater = $('#{{$_specialties->name_en}}_form_reporter').repeater({
 
             initEmpty: true,
 
@@ -245,8 +289,7 @@
                     fileInput.fileinput(request_file_input_attributes());
 
                     var select_service = $(this).find('.{{$_specialties->name_en}}_service_id').on('change', function (e) {
-                        var unit_hide = $(this).find('.unit_hide');
-                        console.log(unit_hide)
+
                         var url = '{{ route("design_office.get_service_by_id", ":id") }}';
                         url = url.replace(':id', $(this).val());
                         var select = $(this)
@@ -293,6 +336,22 @@
                 $(this).slideUp(deleteElement);
             }
         });
+        {{--        @foreach($order_specialties as $key=>$_order_services)--}}
+
+        {{--        @if($key===$_specialties->name_en)--}}
+
+        {{--        repeater.setList([--}}
+        {{--            @foreach($_order_services as $servics)--}}
+        {{--            {--}}
+        {{--                'service_id': '{{$servics->id}}',--}}
+        {{--                'unit': '{{$servics->unit}}',--}}
+        {{--            },--}}
+        {{--            @endforeach--}}
+
+        {{--        ]);--}}
+        {{--        @endif--}}
+        {{--        @endforeach--}}
+
         @endforeach
         $('#electrical_form_reporter').repeater({
 
@@ -467,7 +526,7 @@
                 $(e).rules("add", {required: true})
             });
             if (!$("#add_edit_form").valid()) {
-                showAlertMessage('error','الرجاء ملئ جميع الحقول')
+                showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
 
                 return false;
             }

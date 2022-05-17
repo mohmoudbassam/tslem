@@ -21,6 +21,10 @@
 
         <div class="page-content">
             <div class="container-fluid">
+
+                @if(\Request::route()->getName()=='dashboard')
+                     <h1>قريبا</h1>
+                    @endif
                 @yield('content')
                 <div class="col-12">
                     @if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() )

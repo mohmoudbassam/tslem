@@ -29,8 +29,10 @@
                     <ul class="nav nav-tabs-custom card-header-tabs border-top mt-4" id="pills-tab" role="tablist">
 
                         <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                             <li class="nav-item">
-                                <a class="nav-link px-3 " data-bs-toggle="tab" href="#<?php echo e($_specialties->name_en); ?>"
+                                <a class="nav-link px-3 <?php if($loop->first): ?> active <?php endif; ?>" data-bs-toggle="tab"
+                                   href="#<?php echo e($_specialties->name_en); ?>"
                                    role="tab"><?php echo e($_specialties->name_ar); ?></a>
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -48,77 +50,81 @@
 
                 <div class="tab-content">
                     <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="tab-pane <?php if($loop->first): ?> active <?php endif; ?>"   id="<?php echo e($_specialties->name_en); ?>" role="tabpanel">
-                        <div class="card">
+                        <div class="tab-pane <?php if($loop->first): ?> active <?php endif; ?>" id="<?php echo e($_specialties->name_en); ?>"
+                             role="tabpanel">
+                            <div class="card">
 
-                            <div class="card-body ">
-                                <div id="<?php echo e($_specialties->name_en); ?>_form_reporter">
+                                <div class="card-body ">
+                                    <div id="<?php echo e($_specialties->name_en); ?>_form_reporter">
 
-                                    <div class="row">
-                                        <div data-repeater-list="<?php echo e($_specialties->name_en); ?>">
-                                            <div data-repeater-item="" class="mb-2">
+                                        <div class="row">
+                                            <div data-repeater-list="<?php echo e($_specialties->name_en); ?>">
+                                                <div data-repeater-item="" class="mb-2">
 
 
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="service_id">توصيف
-                                                                الخدمة</label>
-                                                            <select class="form-select req <?php echo e($_specialties->name_en); ?>_service_id"
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="service_id">توصيف
+                                                                    الخدمة</label>
+                                                                <select
+                                                                    class="form-select req <?php echo e($_specialties->name_en); ?>_service_id"
                                                                     id="service_id"
                                                                     name="service_id">
-                                                                <option value="">اختر...</option>
-                                                                <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                    <option
-                                                                        value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
-                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                    <option value="">اختر...</option>
+                                                                    <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                        <option
+                                                                            value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                </select>
+                                                                <div class="col-12 text-danger"
+                                                                     id="_error"></div>
+                                                            </div>
+                                                        </div>
+                                                        <?php $__currentLoopData = $service->file_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $files): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <div class="col-md-3">
+                                                                <div class="mb-3 ">
+                                                                    <label
+                                                                        class="form-label"><?php echo e($files->name_ar); ?></label>
+                                                                    <input name="<?php echo e($files->name_en); ?>" type="file"
+                                                                           id="file"
+                                                                           data-show-preview="false"
+                                                                           class="kartafile req">
+                                                                    <div class="col-12 text-danger"></div>
+                                                                </div>
+                                                            </div>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        <div class="col-md-3 ">
+                                                            <div class="mb-3 d-none">
+                                                                <label class="form-label">العدد/م</label>
+                                                                <input type="text" name="unit" class="form-control req"
+                                                                       placeholder="العدد">
                                                                 <div class="col-12 text-danger"
                                                                      id="service_id_error"></div>
-
-                                                            </select>
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-4">
-                                                        <div class="mb-3 ">
-                                                            <label class="form-label" for="formrow-password-input">الخريطة</label>
-                                                            <input name="file" type="file" id="file"
-                                                                   data-show-preview="false" class="kartafile" multiple>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 ">
-                                                        <div class="mb-3 d-none">
-                                                            <label class="form-label">العدد/م</label>
-                                                            <input type="text" name="unit" class="form-control req"
-                                                                   placeholder="العدد">
-                                                            <div class="col-12 text-danger"
-                                                                 id="service_id_error"></div>
-                                                        </div>
-                                                    </div>
                                                 </div>
-
-
                                             </div>
-                                        </div>
 
-                                        <div class="form-group row ">
-                                            <div class="col-lg-5"></div>
-                                            <div class="col">
-                                                <div data-repeater-create=""
-                                                     class="btn font-weight-bold btn-warning">
-                                                    <i class="la la-plus"></i> إضافة
+                                            <div class="form-group row ">
+                                                <div class="col-lg-5"></div>
+                                                <div class="col">
+                                                    <div data-repeater-create=""
+                                                         class="btn font-weight-bold btn-warning">
+                                                        <i class="la la-plus"></i> إضافة
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- end card body -->
                             </div>
-                            <!-- end card body -->
+
+
                         </div>
-
-
-                    </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     <div class="tab-pane" id="electrical" role="tabpanel">
@@ -140,6 +146,7 @@
                                                                     name="designer_id">
                                                                 <option value="">اختر...</option>
                                                                 <?php $__currentLoopData = $specialties->where('name_en','electrical')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                                                                     <option
                                                                         value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -203,6 +210,7 @@
                     </div>
 
                 </div>
+                <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>">
 
 
                 <div class="d-flex flex-wrap gap-3">
@@ -219,8 +227,8 @@
 
 <?php $__env->startSection('scripts'); ?>
     <script>
-
-        $('#architect_form_reporter').repeater({
+        <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        $('#<?php echo e($_specialties->name_en); ?>_form_reporter').repeater({
 
             initEmpty: true,
 
@@ -229,14 +237,15 @@
             },
 
             show: function () {
-                var a = document.querySelectorAll('#architect_form_reporter');
+                var a = document.querySelectorAll('#<?php echo e($_specialties->name_en); ?>_form_reporter');
                 a.forEach((e) => {
                     var fileInput = $(this).find('.kartafile');
 
                     fileInput.fileinput(request_file_input_attributes());
 
-                    var select_service = $(this).find('.architect_service_id').on('change', function (e) {
-
+                    var select_service = $(this).find('.<?php echo e($_specialties->name_en); ?>_service_id').on('change', function (e) {
+                        var unit_hide = $(this).find('.unit_hide');
+                        console.log(unit_hide)
                         var url = '<?php echo e(route("design_office.get_service_by_id", ":id")); ?>';
                         url = url.replace(':id', $(this).val());
                         var select = $(this)
@@ -283,9 +292,10 @@
                 $(this).slideUp(deleteElement);
             }
         });
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         $('#electrical_form_reporter').repeater({
 
-            initEmpty: false,
+            initEmpty: true,
 
             defaultValues: {
                 'text-input': ''
@@ -308,56 +318,56 @@
                 $(this).slideUp(deleteElement);
             }
         });
-        $('#construction_form_reporter').repeater({
-
-            initEmpty: false,
-
-            defaultValues: {
-                'text-input': ''
-            },
-
-            show: function () {
-                var a = document.querySelectorAll('#architect_form_reporter');
-                a.forEach((e) => {
-                    //   e.datepicker({});
-                    var fileInput = $(this).find('.kartafile');
-
-                    fileInput.fileinput(request_file_input_attributes());
-
-                })
-                $(this).slideDown();
-
-            },
-
-            hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
-            }
-        });
-        $('#mchanical_form_reporter').repeater({
-
-            initEmpty: false,
-
-            defaultValues: {
-                'text-input': ''
-            },
-
-            show: function () {
-                var a = document.querySelectorAll('#architect_form_reporter');
-                a.forEach((e) => {
-                    //   e.datepicker({});
-                    var fileInput = $(this).find('.kartafile');
-
-                    fileInput.fileinput(request_file_input_attributes());
-
-                })
-                $(this).slideDown();
-
-            },
-
-            hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
-            }
-        });
+        // $('#construction_form_reporter').repeater({
+        //
+        //     initEmpty: false,
+        //
+        //     defaultValues: {
+        //         'text-input': ''
+        //     },
+        //
+        //     show: function () {
+        //         var a = document.querySelectorAll('#architect_form_reporter');
+        //         a.forEach((e) => {
+        //             //   e.datepicker({});
+        //             var fileInput = $(this).find('.kartafile');
+        //
+        //             fileInput.fileinput(request_file_input_attributes());
+        //
+        //         })
+        //         $(this).slideDown();
+        //
+        //     },
+        //
+        //     hide: function (deleteElement) {
+        //         $(this).slideUp(deleteElement);
+        //     }
+        // });
+        // $('#mchanical_form_reporter').repeater({
+        //
+        //     initEmpty: false,
+        //
+        //     defaultValues: {
+        //         'text-input': ''
+        //     },
+        //
+        //     show: function () {
+        //         var a = document.querySelectorAll('#architect_form_reporter');
+        //         a.forEach((e) => {
+        //             //   e.datepicker({});
+        //             var fileInput = $(this).find('.kartafile');
+        //
+        //             fileInput.fileinput(request_file_input_attributes());
+        //
+        //         })
+        //         $(this).slideDown();
+        //
+        //     },
+        //
+        //     hide: function (deleteElement) {
+        //         $(this).slideUp(deleteElement);
+        //     }
+        // });
 
         $(".kartafile").fileinput({
             theme: "explorer",
@@ -438,7 +448,7 @@
             focusInvalid: true,
             errorPlacement: function (error, element) {
                 $(element).addClass("is-invalid");
-                error.appendTo('#' + $(element).attr('id') + '_error');
+                element.append('#' + $(element).attr('id') + '_error');
             },
             success: function (label, element) {
 
@@ -452,16 +462,17 @@
 
         $('.submit_btn').click(function (e) {
             e.preventDefault();
-            new FormData($('#add_edit_form').get(0))
-            // if (!$("#add_edit_form").valid())
-            //     return false;
-            //
-            //
-            // $('#add_edit_form').submit()
-            console.log($("#add_edit_form").valid())
-            if (!$("#add_edit_form").valid())
+            $('.req').each((i, e) => {
+                $(e).rules("add", {required: true})
+            });
+            if (!$("#add_edit_form").valid()) {
+                showAlertMessage('error','الرجاء ملئ جميع الحقول')
+
                 return false;
-            // postData(new FormData($('#add_edit_form').get(0)), ');
+            }
+
+
+            $("#add_edit_form").submit()
 
         });
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\ConstParnet;
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             BeneficiresCoulumnsSeeder::class,
+            ServiceFileTypeSeeder::class,
             ArchitectServiceSeeder::class,
             ElectricalServiceSeeder::class,
             ConstructionServiceSeeder::class,
@@ -27,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@test.com',
             'type' => 'admin'
         ]);
-        \App\Models\User::query()->create([
+      $service_provider=  \App\Models\User::query()->create([
             'name' => 'service',
             'password' => 123456,
             'email' => 'service@test.com',
@@ -35,7 +37,7 @@ class DatabaseSeeder extends Seeder
             'company_name' => 'service_company',
             'verified' => 1
         ]);
-        \App\Models\User::query()->create([
+        $designer=    \App\Models\User::query()->create([
             'name' => 'designer',
             'password' => 123456,
             'email' => 'designer@test.com',
@@ -77,10 +79,16 @@ class DatabaseSeeder extends Seeder
             'verified' => 1
         ]);
 
-        ConstParnet::create([
+        ConstParnet::query()->create([
             'name' => 'قائمة طبقات GIS للمخيمات من وزارة الحج والعمرة'
         ]);
 
-
+        Order::query()->create([
+           'description'=>'test test' ,
+            'title'=>'test',
+            'owner_id'=>$service_provider->id,
+            'designer_id'=>$designer->id,
+            'date'=>now()->format('Y-m-d')
+        ]);
     }
 }

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\CP\Designer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderService;
+use App\Models\OrderServiceFile;
 use App\Models\Service;
+use App\Models\ServiceFileType;
 use App\Models\Specialties;
 use App\Models\User;
 use App\Notifications\OrderNotification;
@@ -28,7 +31,7 @@ class DesignerOrderController extends Controller
                 $add_file_design = '';
 
                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
-                $file_manger = '<a class="dropdown-item" href="' . url('laravel-filemanager') . "?id=$order->id" . '" href="javascript:;"><i class="fa fa-file"></i>معرض الملفات  </a>';
+                $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
 
                 if ($order->status > 2) {
                     $add_file_design = '';
@@ -39,7 +42,8 @@ class DesignerOrderController extends Controller
                                             </button>
                                             <div class="dropdown-menu" style="">
                                                ' . $add_file_design . '
-                                               ' . $file_manger . '
+                                               ' . $edit_files . '
+
 
                                             </div>
                                         </div>';
@@ -96,47 +100,68 @@ class DesignerOrderController extends Controller
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
 
-        return view('CP.designer.add_files', ['order' => $order, 'specialties' => $specialties,'services'=>$service]);
+        return view('CP.designer.add_files', ['order' => $order, 'specialties' => $specialties, 'services' => $service]);
     }
 
     public function save_file(Request $request)
     {
-        dd($request->all());
-        $order = Order::query()->findOrFail($request->id);
+        $data = $request->except(['order_id', '_token']);
+        $order = Order::query()->find(request('order_id'));
 
-        save_logs($order, auth()->user()->id, 'تم اضافة التصاميم من قبل مكتب التصميم');
-        $delivery = User::query()->where('type', 'Delivery')->first();
-        $delivery->notify(new OrderNotification('تم اضافة التصاميم من قبل مكتب التصميم', auth()->user()->id));
-        $this->upload_files($order, $request);
-        $order->status = 2;
-        $order->save();
+        foreach ($data as $specialties => $service) {
 
-        $order->update([
-            'status' => Order::ORDER_REVIEW
-        ]);
-        return response()->json([
-            'success' => true,
-            'message' => 'تمت اضافة التصاميم بنجاح'
-        ]);
+            foreach ($service as $keys) {
+                $order_service = OrderService::query()->create([
+                    'service_id' => $keys['service_id'],
+                    'order_id' => $order->id,
+                    'unit' => $keys['unit'],
+                ]);
+                foreach ($keys as $key => $value) {
+
+                    if ($type = ServiceFileType::query()->where('name_en', $key)->first()) {
+
+                        $this->upload_files($order, $order_service, $value, $type);
+                    }
+                }
+
+
+            }
+
+        }
+
+
+        return redirect()->back()->with('success', 'تم إضافة التصاميم بنجاح');
 
     }
 
-    public function upload_files($order, $request)
+    public function upload_files($order, $order_service, $file, $type)
     {
-        foreach ((array)$request->file('files') as $file) {
-            $path = Storage::disk('public')->put("orders/$order->id/designer_file", $file);
 
-            $file_name = $file->getClientOriginalName();
-            $order->file()->create([
-                'path' => $path,
-                'real_name' => $file_name
-            ]);
-        }
+        $path = Storage::disk('public')->put("orders/$order->id/", $file);
+
+        $file_name = $file->getClientOriginalName();
+        OrderServiceFile::query()->create([
+            'path' => $path,
+            'real_name' => $file_name,
+            'order_service_id' => $order_service->id,
+            'type' => $type->id,
+        ]);
     }
 
     public function get_service_by_id($id)
     {
         return response()->json(Service::query()->find($id));
+    }
+
+    public function edit_files(Order $order)
+    {
+        $specialties = Specialties::with('service')->get();
+        $service = Service::all();
+        $order->with('service.specialties');
+        $order_specialties = $order->service->groupBy('specialties.name_en');
+        $order_service = OrderService::query()->with('service.order_service_file')->where('order_id', $order->id)->get();
+        dd($order_service);
+        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'services' => $service, 'order_specialties' => $order_specialties]);
     }
 }
 

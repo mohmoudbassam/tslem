@@ -75,6 +75,7 @@ Route::middleware('auth')->group(function () {
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
         Route::get('add-files/{order}', [DesignerOrderController::class, 'add_files'])->name('.add_files');
         Route::post('save_file', [DesignerOrderController::class, 'save_file'])->name('.save_file');
+        Route::get('edit_files/{order}', [DesignerOrderController::class, 'edit_files'])->name('.edit_files');
         Route::get('get_service_by_id/{id}', [DesignerOrderController::class, 'get_service_by_id'])->name('.get_service_by_id');
 //        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 //        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');

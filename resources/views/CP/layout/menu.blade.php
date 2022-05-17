@@ -10,9 +10,9 @@
                 <li class="menu-title" data-key="t-menu">القوائم</li>
 
                 <li>
-                    <a href="#">
+                    <a href="{{route('dashboard')}}">
                         <i data-feather="home"></i>
-                        <span data-key="t-dashboard">الإحصائيات</span>
+                        <span data-key="t-dashboard" >الإحصائيات  (قريبا)</span>
                     </a>
                 </li>
                 @endif

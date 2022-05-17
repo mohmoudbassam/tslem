@@ -1,21 +1,13 @@
-@extends('CP.master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     الطلبات
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">
-                    <div class="btn-group" role="group">
-                        <a   href="{{route('services_providers.create_order')}}" class="btn btn-primary dropdown-toggle">
-                            انشاء الطلب <i class="fa fa-clipboard-check"></i>
-                        </a>
 
-                    </div>
-                </h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -67,24 +59,27 @@
 
                 <div class="col-sm-12">
                     <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+                           role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                           عنوان الطلب
-                        </th>
-
-                        <th>
-                          التاريخ
+                            عنوان الطلب
                         </th>
                         <th>
-                          مكتب التصميم
+                            مقدم الخدمة
+                        </th>
+                        <th>
+                            التاريخ
                         </th>
                         <th>
                             حالة الطلب
                         </th>
                         <th>
                             تاريخ الإنشاء
+                        </th>
+                        <th>
+                            الخيارات
                         </th>
 
 
@@ -104,9 +99,9 @@
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
 
 
@@ -119,7 +114,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('services_providers.list')}}',
+                    url: '<?php echo e(route('design_office.list')); ?>',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
@@ -128,16 +123,15 @@
                     }
                 },
                 language: {
-                    "url": "{{url('/')}}/assets/datatables/Arabic.json"
+                    "url": "<?php echo e(url('/')); ?>/assets/datatables/Arabic.json"
                 },
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'designer.company_name', name: 'designer'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
-
-
+                    {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],
 
@@ -149,7 +143,48 @@
             $('#items_table').DataTable().ajax.reload(null, false);
         });
 
+        function accept(id) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
+            });
+        }
+
+
 
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/designer/orders.blade.php ENDPATH**/ ?>
