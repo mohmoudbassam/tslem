@@ -6,16 +6,7 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <?php if(auth()->user()->verified==1): ?>
                 <li class="menu-title" data-key="t-menu">القوائم</li>
-
-                <li>
-                    <a href="#">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">الإحصائيات</span>
-                    </a>
-                </li>
-                <?php endif; ?>
 
                 <?php if(auth()->user()->isAdmin()): ?>
                     <li>
@@ -58,12 +49,17 @@
                                     <span data-key="t-calendar">الثوابت</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="<?php echo e(route('service.index')); ?>">
+                                    <span data-key="t-calendar">الخدمات</span>
+                                </a>
+                            </li>
 
                         </ul>
                     </li>
                 <?php endif; ?>
 
-                <?php if(auth()->user()->type=='service_provider' && auth()->user()->verified==1): ?>
+                <?php if(auth()->user()->type=='service_provider' ): ?>
                     <li>
                         <a href="<?php echo e(route('services_providers')); ?>">
                             <i data-feather="users"></i>
@@ -71,7 +67,7 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if(auth()->user()->type=='design_office' && auth()->user()->verified==1): ?>
+                <?php if(auth()->user()->type=='design_office' ): ?>
                     <li>
                         <a href="<?php echo e(route('design_office')); ?>">
                             <i data-feather="users"></i>
@@ -79,7 +75,7 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if(auth()->user()->type=='Delivery' && auth()->user()->verified==1): ?>
+                <?php if(auth()->user()->type=='Delivery'): ?>
                     <li>
                         <a href="<?php echo e(route('delivery')); ?>">
                             <i data-feather="users"></i>
@@ -88,16 +84,16 @@
                     </li>
                 <?php endif; ?>
 
-                    <?php if(auth()->user()->type=='contractor' && auth()->user()->verified==1): ?>
+                <?php if(auth()->user()->type=='contractor'): ?>
                     <li>
                         <a href="<?php echo e(route('contractor')); ?>">
                             <i data-feather="users"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
-                    <?php endif; ?>
+                <?php endif; ?>
 
-                    <?php if(auth()->user()->type=='consulting_office' && auth()->user()->verified==1): ?>
+                <?php if(auth()->user()->type=='consulting_office'): ?>
                     <li>
                         <a href="<?php echo e(route('consulting_office')); ?>">
 
@@ -106,6 +102,35 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                    <?php if(auth()->user()->verified==1): ?>
+
+
+                        <li>
+                            <a href="<?php echo e(route('dashboard')); ?>">
+                                <i data-feather="home"></i>
+                                <span data-key="t-dashboard">الإحصائيات  (قريبا)</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                <?php if(!auth()->user()->isAdmin()): ?>
+                    <li>
+                        <a href="<?php echo e(route('edit_profile')); ?>">
+
+                            <i class="mdi mdi-information-off font-size-16 align-middle me-1"></i>
+                            <span data-key="t-authentication">معلوماتي</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <li>
+                    <a href="<?php echo e(route('logout')); ?>">
+
+                        <i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
+                        <span data-key="t-authentication">تسجيل الخروج</span>
+                    </a>
+                </li>
+
+
             </ul>
 
 

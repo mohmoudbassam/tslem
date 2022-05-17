@@ -9,6 +9,7 @@ use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
+use App\Http\Controllers\CP\SystemConfig\ServicesController;
 use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
@@ -144,6 +145,15 @@ Route::middleware('auth')->group(function () {
             Route::post('store', [SystemConstController::class, 'store'])->name('.store');
             Route::post('delete', [SystemConstController::class, 'delete'])->name('.delete');
             Route::post('update', [SystemConstController::class, 'update'])->name('.update');
+        });
+        Route::prefix('service')->name('service')->group(function () {
+            Route::get('', [ServicesController::class, 'index'])->name('.index');
+            Route::get('list', [ServicesController::class, 'list'])->name('.list');
+            Route::get('add', [ServicesController::class, 'add'])->name('.add');
+            Route::get('update_from/{service}', [ServicesController::class, 'update_from'])->name('.update_from');
+            Route::post('store', [ServicesController::class, 'store'])->name('.store');
+            Route::post('delete', [ServicesController::class, 'delete'])->name('.delete');
+            Route::post('update', [ServicesController::class, 'update'])->name('.update');
         });
     });
 

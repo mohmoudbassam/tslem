@@ -1,13 +1,12 @@
 <?php $__env->startSection('title'); ?>
     الملف الشخصي
-    <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-
 
 
             </div>
@@ -18,11 +17,14 @@
         <div class="card-body p-4">
 
             <div class="row">
+                <?php if(auth()->user()->virfied): ?>
                 <form id="add_edit_form" method="post" action="<?php echo e(route('after_reject')); ?>" enctype="multipart/form-data">
+                    <?php else: ?>
+                        <form id="add_edit_form" method="post" action="<?php echo e(route('save_profile')); ?>" enctype="multipart/form-data">
+                        <?php endif; ?>
                     <?php echo csrf_field(); ?>
                     <div class="row">
-
-                    <?php if($record->company_name): ?>
+                        <?php if($record->company_name): ?>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="company_name">اسم الشركة / المؤسسة</label>
@@ -129,7 +131,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="email">البريد الإلكتروني</label>
-                                    <input type="text" value="<?php echo e($user->email); ?>" class="form-control" id="email" name="email"
+                                    <input type="text" value="<?php echo e($user->email); ?>" class="form-control" id="email"
+                                           name="email"
                                            placeholder="البريد الإلكتروني">
                                     <div class="col-12 text-danger" id="email_error"></div>
                                 </div>
@@ -161,7 +164,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="telephone">الهاتف</label>
-                                    <input type="number" value="<?php echo e($user->telephone); ?>" class="form-control" id="telephone"
+                                    <input type="number" value="<?php echo e($user->telephone); ?>" class="form-control"
+                                           id="telephone"
                                            name="telephone"
                                            placeholder="الهاتف">
                                     <div class="col-12 text-danger" id="telephone_error"></div>
@@ -172,7 +176,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="city">المدينة</label>
-                                    <input type="text" value="<?php echo e($user->city); ?>" class="form-control" id="city" name="city"
+                                    <input type="text" value="<?php echo e($user->city); ?>" class="form-control" id="city"
+                                           name="city"
                                            placeholder="المدينة">
                                     <div class="col-12 text-danger" id="city_error"></div>
                                 </div>
@@ -190,220 +195,248 @@
                             </div>
                         <?php endif; ?>
 
-                    <?php if($record->commercial_file): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="commercial_file">السجل التحاري</label>
-                                    <input type="file" class="form-control" value="<?php echo e(old('commercial_file')); ?>"
-                                           id="commercial_file" name="commercial_file">
-                                    <div class="col-12 text-danger" id="commercial_file_error"></div>
+                        <?php if($record->commercial_file): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="commercial_file">السجل التحاري</label>
+                                        <input type="file" class="form-control" value="<?php echo e(old('commercial_file')); ?>"
+                                               id="commercial_file" name="commercial_file">
+                                        <div class="col-12 text-danger" id="commercial_file_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="commercial_file_end_date">تاريخ أنتهاء السجل
+                                            التجاري</label>
+                                        <input type="date" class="form-control"
+                                               value="<?php echo e($user->commercial_file_end_date); ?>"
+                                               id="commercial_end_date" name="commercial_file_end_date">
+                                        <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="commercial_file_end_date">تاريخ أنتهاء السجل التجاري</label>
-                                    <input type="date" class="form-control" value="<?php echo e(old('commercial_file_end_date')); ?>"
-                                           id="commercial_end_date" name="commercial_file_end_date">
-                                    <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
+                        <?php endif; ?>
+                        <?php if($record->rating_certificate): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي</label>
+                                        <input type="file" class="form-control" id="rating_certificate"
+                                               name="rating_certificate">
+                                        <div class="col-12 text-danger" id="rating_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="rating_certificate_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="date" class="form-control" id="rating_certificate_end_date"
+                                               name="rating_certificate_end_date"
+                                               value="<?php echo e($user->rating_certificate_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
+                                    </div>
                                 </div>
                             </div>
+                        <?php endif; ?>
+                        <?php if($record->address_file): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="address_file">العنوان الوطني</label>
+                                        <input type="file" class="form-control" id="address_file" name="address_file">
+                                        <div class="col-12 text-danger" id="address_file_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->profession_license): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="profession_license">شهادة مزاولة المهنة</label>
+                                        <input type="file" class="form-control" id="profession_license"
+                                               name="profession_license">
+                                        <div class="col-12 text-danger" id="profession_license_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="profession_license_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="date" class="form-control" id="profession_license_end_date"
+                                               name="profession_license_end_date"
+                                               value="<?php echo e($user->profession_license_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->business_license_end_date): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="business_license">رخصة نشاط تجاري</label>
+                                        <input type="file" class="form-control" id="business_license"
+                                               name="business_license">
+                                        <div class="col-12 text-danger" id="business_license_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
+                                        <input type="date" class="form-control" id="business_license_end_date"
+                                               name="business_license_end_date"
+                                               value="<?php echo e($user->business_license_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger" id="business_license_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->social_insurance_certificate): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
+                                            الإجتماعية</label>
+                                        <input type="file" class="form-control" id="social_insurance_certificate"
+                                               name="social_insurance_certificate">
+                                        <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="date" class="form-control"
+                                               id="social_insurance_certificate_end_date"
+                                               name="social_insurance_certificate_end_date"
+                                               value="<?php echo e($user->business_license_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger"
+                                             id="social_insurance_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->certificate_of_zakat): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل</label>
+                                        <input type="file" class="form-control" id="certificate_of_zakat"
+                                               name="certificate_of_zakat">
+                                        <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
+                                        <input type="date" class="form-control" id="date_of_zakat_end_date"
+                                               name="date_of_zakat_end_date"
+                                               value="<?php echo e($user->business_license_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->certificate_of_zakat): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="saudization_certificate">شهادة السعودة</label>
+                                        <input type="file" class="form-control" id="saudization_certificate"
+                                               name="saudization_certificate">
+                                        <div class="col-12 text-danger" id="saudization_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="saudization_certificate_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="date" class="form-control" id="saudization_certificate_end_date"
+                                               name="saudization_certificate_end_date"
+                                               value="<?php echo e($user->saudization_certificate_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger"
+                                             id="saudization_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->certificate_of_zakat): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
+                                            التجارية</label>
+                                        <input type="file" class="form-control" id="chamber_of_commerce_certificate"
+                                               name="chamber_of_commerce_certificate">
+                                        <div class="col-12 text-danger"
+                                             id="chamber_of_commerce_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="date" class="form-control"
+                                               id="chamber_of_commerce_certificate_end_date"
+                                               name="chamber_of_commerce_certificate_end_date"
+                                               value="<?php echo e($user->saudization_certificate_end_date); ?>"
+                                        >
+                                        <div class="col-12 text-danger"
+                                             id="chamber_of_commerce_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->tax_registration_certificate): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="tax_registration_certificate">شهادة تسجيل
+                                            الضريبة</label>
+                                        <input type="file" class="form-control" id="tax_registration_certificate"
+                                               name="tax_registration_certificate">
+                                        <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->wage_protection_certificate): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="wage_protection_certificate">شهادة حماية
+                                            الأجور</label>
+                                        <input type="file" class="form-control" id="wage_protection_certificate"
+                                               name="wage_protection_certificate">
+                                        <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if($record->memorandum_of_association): ?>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="memorandum_of_association">شهادة حماية
+                                            الأجور</label>
+                                        <input type="file" class="form-control" id="memorandum_of_association"
+                                               name="memorandum_of_association">
+                                        <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="d-flex flex-wrap gap-3">
+                            <button type="submit" class="btn btn-lg btn-primary submit_btn">تعديل</button>
                         </div>
-                    <?php endif; ?>
-                    <?php if($record->rating_certificate): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي</label>
-                                    <input type="file" class="form-control" id="rating_certificate"
-                                           name="rating_certificate">
-                                    <div class="col-12 text-danger" id="rating_certificate_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
-                                    <input type="date" class="form-control" id="rating_certificate_end_date"
-                                           name="rating_certificate_end_date">
-                                    <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->address_file): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="address_file">العنوان الوطني</label>
-                                    <input type="file" class="form-control" id="address_file" name="address_file">
-                                    <div class="col-12 text-danger" id="address_file_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->profession_license): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="profession_license">شهادة مزاولة المهنة</label>
-                                    <input type="file" class="form-control" id="profession_license"
-                                           name="profession_license">
-                                    <div class="col-12 text-danger" id="profession_license_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
-                                    <input type="date" class="form-control" id="profession_license_end_date"
-                                           name="profession_license_end_date">
-                                    <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->business_license_end_date): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="business_license">رخصة نشاط تجاري</label>
-                                    <input type="file" class="form-control" id="business_license" name="business_license">
-                                    <div class="col-12 text-danger" id="business_license_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                                    <input type="date" class="form-control" id="business_license_end_date"
-                                           name="business_license_end_date">
-                                    <div class="col-12 text-danger" id="business_license_end_date_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->social_insurance_certificate): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
-                                        الإجتماعية</label>
-                                    <input type="file" class="form-control" id="social_insurance_certificate"
-                                           name="social_insurance_certificate">
-                                    <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
-                                        الانتهاء</label>
-                                    <input type="date" class="form-control" id="social_insurance_certificate_end_date"
-                                           name="social_insurance_certificate_end_date">
-                                    <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->certificate_of_zakat): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل</label>
-                                    <input type="file" class="form-control" id="certificate_of_zakat"
-                                           name="certificate_of_zakat">
-                                    <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                                    <input type="date" class="form-control" id="date_of_zakat_end_date"
-                                           name="date_of_zakat_end_date">
-                                    <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->certificate_of_zakat): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="saudization_certificate">شهادة السعودة</label>
-                                    <input type="file" class="form-control" id="saudization_certificate"
-                                           name="saudization_certificate">
-                                    <div class="col-12 text-danger" id="saudization_certificate_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
-                                    <input type="date" class="form-control" id="saudization_certificate_end_date"
-                                           name="saudization_certificate_end_date">
-                                    <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->certificate_of_zakat): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
-                                        التجارية</label>
-                                    <input type="file" class="form-control" id="chamber_of_commerce_certificate"
-                                           name="chamber_of_commerce_certificate">
-                                    <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
-                                        الانتهاء</label>
-                                    <input type="date" class="form-control" id="chamber_of_commerce_certificate_end_date"
-                                           name="chamber_of_commerce_certificate_end_date">
-                                    <div class="col-12 text-danger"
-                                         id="chamber_of_commerce_certificate_end_date_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->tax_registration_certificate): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة</label>
-                                    <input type="file" class="form-control" id="tax_registration_certificate"
-                                           name="tax_registration_certificate">
-                                    <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->wage_protection_certificate): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور</label>
-                                    <input type="file" class="form-control" id="wage_protection_certificate"
-                                           name="wage_protection_certificate">
-                                    <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->memorandum_of_association): ?>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="memorandum_of_association">شهادة حماية الأجور</label>
-                                    <input type="file" class="form-control" id="memorandum_of_association"
-                                           name="memorandum_of_association">
-                                    <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <div class="d-flex flex-wrap gap-3">
-                        <button type="submit" class="btn btn-lg btn-primary submit_btn">تعديل  </button>
-                    </div>
                 </form>
                 <br>
                 <br>
@@ -450,9 +483,11 @@
         $('#add_edit_form').validate({
             rules: {
                 <?php $__currentLoopData = array_filter($record->makeHidden(['id','type'])->toArray()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rule=> $key): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if(!$user->{$rule}): ?>
                 "<?php echo e("$rule"); ?>": {
                     required: true,
                 },
+                <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             },
             errorElement: 'span',

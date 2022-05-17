@@ -21,8 +21,23 @@
 
         <div class="page-content">
             <div class="container-fluid">
+
+                <?php if(\Request::route()->getName()=='dashboard'): ?>
+
+                    <div class="page-content">
+                        <div class="container-fluid text-center border p-5">
+
+                            <h1 class="text-muted">الاحصائيات تحت التطوير</h1>
+                            <div class="col-12">
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <?php endif; ?>
                 <?php echo $__env->yieldContent('content'); ?>
                 <div class="col-12">
+
                     <?php if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() ): ?>
                     <div class="alert alert-danger">
 
@@ -225,6 +240,12 @@
 <script src="<?php echo e(url("/")); ?>/assets/scripts.bundle.js"></script>
 <script src="<?php echo e(url("/")); ?>/assets/libs/alertifyjs/build/alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script src="<?php echo e(url("/")); ?>/assets/libs/@simonwep/pickr/pickr.min.js"></script>
+<script src="<?php echo e(url("/")); ?>/assets/libs/@simonwep/pickr/pickr.es5.min.js"></script>
+
+<!-- datepicker js -->
+<script src="assets/libs/flatpickr/flatpickr.min.js"></script>
 <?php echo $__env->make('CP.layout.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->yieldContent('scripts'); ?>
     <script>

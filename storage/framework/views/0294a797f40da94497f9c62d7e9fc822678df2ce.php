@@ -10,7 +10,7 @@
     <meta content="Themesbrand" name="author" />
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <!-- App favicon -->
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
     <!-- plugin css -->
     <link href="<?php echo e(url('/')); ?>/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
 

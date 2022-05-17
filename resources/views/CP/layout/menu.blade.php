@@ -49,6 +49,11 @@
                                     <span data-key="t-calendar">الثوابت</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{route('service.index')}}">
+                                    <span data-key="t-calendar">الخدمات</span>
+                                </a>
+                            </li>
 
                         </ul>
                     </li>

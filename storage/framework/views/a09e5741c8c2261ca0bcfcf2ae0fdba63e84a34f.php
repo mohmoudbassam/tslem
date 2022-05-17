@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-    انشاء مستخدم
+    انشاء خدمة
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
@@ -11,8 +11,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">انشاء مستخدم</a></li>
-                        <li class="breadcrumb-item"><a href="<?php echo e(route('const.index')); ?>">الثوابت</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">انشاء خدمة</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('service.index')); ?>">الخدمات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
@@ -26,43 +26,65 @@
                 <div class="col-lg-12">
 
                     <h4>
-                        إنشاء ثابت جديد
+                        تعديل خدمة
                     </h4>
                 </div>
 
             </div>
         </div>
         <div class="card-body">
-            <form id="add_edit_form" method="post" action="<?php echo e(route('const.store')); ?>">
+            <form id="add_edit_form" method="post" action="<?php echo e(route('service.update')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="row">
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label  for="parnet_id">نوع الثابت</label>
-                            <select class="form-control" id="parnet_id" name="parnet_id">
-                                <option value="">اختر...</option>
-                                <?php $__currentLoopData = $parnets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $parnet): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($parnet->id); ?>"><?php echo e($parnet->name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
-                            <div class="col-12 text-danger" id="parnet_id_error"></div>
+                            <label class="form-label" for="name">الإسم</label>
+                            <input type="text" class="form-control" name="name" value="<?php echo e($service->name); ?>" id="name" placeholder="الإسم">
+                            <div class="col-12 text-danger" id="name_error"></div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="name">الإسم</label>
-                            <input type="text" class="form-control" name="name" value="<?php echo e(old('name')); ?>" id="name" placeholder="الإسم">
-                            <div class="col-12 text-danger" id="name_error"></div>
+                            <label class="form-label" for="unit">الوحدة</label>
+                            <input type="text" class="form-control" name="unit" value="<?php echo e($service->unit); ?>" id="unit" placeholder="الوحدة">
+                            <div class="col-12 text-danger" id="unit_error"></div>
                         </div>
                     </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label  for="parnet_id">نوع الملف</label>
+                            <select class="form-control" id="file_ids" name="file_ids" multiple>
+                                <option value="">اختر...</option>
+                                <?php $__currentLoopData = $file_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($file_type->id); ?>"><?php echo e($file_type->name_ar); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <div class="col-12 text-danger" id="file_ids_error"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label  for="parnet_id">تصنيف الملف</label>
+                            <select class="form-control" id="specialties_id" name="specialties_id">
+                                <option value="">اختر...</option>
+                                <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option <?php if($s == $service->specialties_id): ?> selected <?php endif; ?> value="<?php echo e($s->id); ?>"><?php echo e($s->name_ar); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <div class="col-12 text-danger" id="specialties_id_error"></div>
+                        </div>
+                    </div>
+
+
 
                 </div>
             </form>
 
             <div class="d-flex flex-wrap gap-3">
-                <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء</button>
+                <button type="button" class="btn btn-lg btn-primary submit_btn">تعديل</button>
             </div>
 
             <?php if($errors->any()): ?>
@@ -94,11 +116,11 @@
                 },  "parnet_id":{
                     required: true,
                 },
-
-
-
-
-
+                
+                
+                
+                
+                
             },
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
@@ -119,7 +141,6 @@
             if (!$("#add_edit_form").valid())
                 return false;
 
-
             $('#add_edit_form').submit()
 
         });
@@ -129,4 +150,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/ahmedsal/workspace/tslem/resources/views/CP/SystemConfig/const_add.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/ahmedsal/workspace/tslem/resources/views/CP/SystemConfig/services_update.blade.php ENDPATH**/ ?>
