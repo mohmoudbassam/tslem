@@ -57,28 +57,28 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label  for="parnet_id">نوع الملف</label>
-                            <select class="form-control" id="file_ids" name="file_ids" multiple>
-                                <option value="">اختر...</option>
-                                @foreach($file_types as $file_type)
-                                    <option value="{{ $file_type->id  }}">{{ $file_type->name_ar  }}</option>
-                                @endforeach
+                            <select class="form-control" id="file_ids" name="file_ids" >
+{{--                                @foreach($file_types as $type)--}}
+{{--                                    <option @if($service->file_type->contains($type->id)) selected @endif value="{{ $type->id }}">{{ $type->name_ar }}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                             <div class="col-12 text-danger" id="file_ids_error"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
+
                             <label  for="parnet_id">تصنيف الملف</label>
                             <select class="form-control" id="specialties_id" name="specialties_id">
                                 <option value="">اختر...</option>
                                 @foreach($specialties as $s)
-                                    <option @if($s == $service->specialties_id) selected @endif value="{{ $s->id  }}">{{ $s->name_ar  }}</option>
+                                    <option @if($s->id == $service->specialties_id) selected @endif value="{{ $s->id  }}">{{ $s->name_ar  }}</option>
                                 @endforeach
                             </select>
                             <div class="col-12 text-danger" id="specialties_id_error"></div>
                         </div>
                     </div>
-
+                    <input type="hidden" value="{{ $service->id }}" name="id">
 
 
                 </div>
@@ -109,14 +109,34 @@
 
 @section('scripts')
     <script>
+        $(function () {
+            const selectedFileTypes = @json($service->file_type).map(item =>  item.id);
+            $('#file_ids').select2({
+                data: @json( $file_types ) .map(item => ({id: item.id, text: item.name_ar})),
+                multiple: true,
+                placeholder: "اختر ...",
+                val: selectedFileTypes,
+            });
+
+            $('#file_ids').select2('data', selectedFileTypes);
+
+
+            console.clear();
+            console.log(selectedFileTypes);
+            $('#file_ids').val(selectedFileTypes);
+        });
 
         $('#add_edit_form').validate({
             rules: {
-                "name":{
+                "name": {
                     required: true,
-                },  "parnet_id":{
+                }, "unit": {
                     required: true,
-                },
+                }, "file_ids": {
+
+                }, "specialties_id": {
+                    required: true,
+                }
                 {{--                @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)--}}
                 {{--                "{{"$rule"}}": {--}}
                 {{--                    required: true,--}}
@@ -142,7 +162,12 @@
             if (!$("#add_edit_form").valid())
                 return false;
 
-            $('#add_edit_form').submit()
+            const formData = new FormData($('#add_edit_form').get(0));
+            formData.delete("file_ids");
+            $('#file_ids').val().forEach(id => {
+                formData.append("file_ids[]", id);
+            });
+            postData(formData, '{{route('service.update')}}');
 
         });
 

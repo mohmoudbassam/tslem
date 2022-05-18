@@ -41,7 +41,8 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="name">الإسم</label>
-                            <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name" placeholder="الإسم">
+                            <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
+                                   placeholder="الإسم">
                             <div class="col-12 text-danger" id="name_error"></div>
                         </div>
                     </div>
@@ -49,26 +50,26 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="unit">الوحدة</label>
-                            <input type="text" class="form-control" name="unit" value="{{old('name')}}" id="unit" placeholder="الوحدة">
+                            <input type="text" class="form-control" name="unit" value="{{old('name')}}" id="unit"
+                                   placeholder="الوحدة">
                             <div class="col-12 text-danger" id="unit_error"></div>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label  for="parnet_id">نوع الملف</label>
-                            <select class="form-control" id="file_ids" name="file_ids" multiple>
-                                <option value="">اختر...</option>
-                                @foreach($file_types as $file_type)
-                                    <option value="{{ $file_type->id  }}">{{ $file_type->name_ar  }}</option>
-                                @endforeach
+                            <label for="parnet_id">نوع الملف</label>
+                            <select class="form-control" id="file_ids" name="file_ids">
+{{--                                @foreach( as $file_type)--}}
+{{--                                    <option value="{{ $file_type->id  }}">{{ $file_type->name_ar  }}</option>--}}
+{{--                                @endforeach--}}
                             </select>
                             <div class="col-12 text-danger" id="file_ids_error"></div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label  for="parnet_id">تصنيف الملف</label>
+                            <label for="parnet_id">تصنيف الملف</label>
                             <select class="form-control" id="specialties_id" name="specialties_id">
                                 <option value="">اختر...</option>
                                 @foreach($specialties as $s)
@@ -78,7 +79,6 @@
                             <div class="col-12 text-danger" id="specialties_id_error"></div>
                         </div>
                     </div>
-
 
 
                 </div>
@@ -109,19 +109,30 @@
 
 @section('scripts')
     <script>
+        $(function () {
+            $('#file_ids').select2({
+                data: @json( $file_types ) .map(item => ({id: item.id, text: item.name_ar})),
+                multiple: true,
+                placeholder: "اختر ..."
+            });
+        });
 
         $('#add_edit_form').validate({
             rules: {
-                "name":{
+                "name": {
                     required: true,
-                },  "parnet_id":{
+                }, "unit": {
                     required: true,
-                },
-{{--                @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)--}}
-{{--                "{{"$rule"}}": {--}}
-{{--                    required: true,--}}
-{{--                },--}}
-{{--                @endforeach--}}
+                }, "file_ids": {
+
+                }, "specialties_id": {
+                    required: true,
+                }
+                {{--                @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)--}}
+                {{--                "{{"$rule"}}": {--}}
+                {{--                    required: true,--}}
+                {{--                },--}}
+                {{--                @endforeach--}}
             },
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
@@ -138,11 +149,19 @@
 
         $('.submit_btn').click(function (e) {
             e.preventDefault();
-
+            // console.log($('#file_ids').val());
+            // console.log($('#add_edit_form'));
+            // return ;
             if (!$("#add_edit_form").valid())
                 return false;
 
-            $('#add_edit_form').submit()
+            // $('#add_edit_form').submit()
+            const formData = new FormData($('#add_edit_form').get(0));
+            formData.delete("file_ids");
+            $('#file_ids').val().forEach(id => {
+                formData.append("file_ids[]", id);
+            });
+            postData(formData, '{{route('service.store')}}');
 
         });
 

@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('const.add')}}"><i class="dripicons-user p-2"></i>إضافة خدمة</a></h4>
+                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('service.add')}}"><i class="dripicons-user p-2"></i>إضافة خدمة</a></h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">

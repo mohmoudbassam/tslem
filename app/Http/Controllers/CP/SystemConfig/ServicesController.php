@@ -60,15 +60,18 @@ class ServicesController extends Controller
         ]);
         $service->file_type()->attach($request->file_ids);
 
-        return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
+        return response()->json([
+            'message' => 'تمت العملية بنجاح',
+            'success' => true
+        ]);
+//        return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }
 
     public function delete(Request $request)
     {
-
         Service::query()->find(request('id'))->delete();
         return response()->json([
-            'message' => 'تمت عمليه الحذف بنجاخ بنجاح',
+            'message' => 'تمت عمليه الحذف  بنجاح',
             'success' => true
         ]);
     }
@@ -76,6 +79,7 @@ class ServicesController extends Controller
 
     public function update_from(Request $request,Service $service)
     {
+        $service->load('file_type');
         $data['service']=$service;
         $data['file_types'] = ServiceFileType::all();
         $data['specialties'] = Specialties::all();
@@ -93,7 +97,10 @@ class ServicesController extends Controller
         ]);
         $service->file_type()->sync($request->file_ids);
 
-        return back()->with('success', 'تمت عمليه التعديل بنجاح');
+        return response()->json([
+            'message' => 'تمت عمليه التعديل بنجاح',
+            'success' => true
+        ]);
 
     }
 }
