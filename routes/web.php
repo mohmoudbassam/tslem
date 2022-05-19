@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function () {
         Route::get('get_service_by_id/{id}', [DesignerOrderController::class, 'get_service_by_id'])->name('.get_service_by_id');
         Route::get('view_file/{order}', [DesignerOrderController::class, 'view_file'])->name('.view_file');
         Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
-//        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
+        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 //        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {

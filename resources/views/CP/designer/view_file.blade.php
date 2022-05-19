@@ -69,6 +69,12 @@
             </div>
 
             <div class="row">
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"> <span class="bold">  رقم الطلب : </span>{{$order->id}}</p>  
+                </div>
+
+
                 <div class="col-md-6 mb-3">
                        <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>  
                 </div>
@@ -88,7 +94,10 @@
                 </div>
 
                
-              
+                <div class="offset-md-9 col-md-3 mb-3">
+                       <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
+                       <button class="btn btn-danger">ارجاع ملاحظات</button>
+                </div>
             </div>
 
         </div>
@@ -262,6 +271,36 @@
 
 @section('scripts')
     <script>
+
+        $("#accept_order").on('click', function(){
+ 
+            let url = "{{ route('design_office.accept') }}";
+            let data = {
+                "_token" : "{{ csrf_token() }}",
+                "id" : "{{$order->id}}"
+            };
+         
+            $.ajax({
+                url: url,
+                data: data,
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if(data.success){
+                        showAlertMessage('success', data.message);
+                    }else{
+                        showAlertMessage('error', data.message);
+                    }
+                    
+                },
+                error: function (data) {
+                   showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
+                },
+            });
+
+          
+        });
+
 
     </script>
 
