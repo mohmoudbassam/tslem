@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-
+use App\Models\OrderService;
+use App\Models\OrderSpecilatiesFiles;
 class DeliveryController extends Controller
 {
     public function orders()
@@ -27,35 +28,29 @@ class DeliveryController extends Controller
         $order = Order::query()->with(['service_provider', 'designer'])->where('status', '>=', '2');
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
-                $accept = '';
+                // $accept = '';
 
-                $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
-                $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
-                $reports_view = '<a class="dropdown-item" href="' . route('delivery.reports_view', ['order' => $order->id]) . '"><i class="fa fa-check"></i>عرض التقارير </a>';
-                $reports_add = '<a class="dropdown-item" href="' . route('delivery.report_add_form', ['order' => $order->id]) . '"><i class="fa fa-plus"></i>انشاء التقارير </a>';
+                // $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
+                // $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
+                // $reports_view = '<a class="dropdown-item" href="' . route('delivery.reports_view', ['order' => $order->id]) . '"><i class="fa fa-check"></i>عرض التقارير </a>';
+                // $reports_add = '<a class="dropdown-item" href="' . route('delivery.report_add_form', ['order' => $order->id]) . '"><i class="fa fa-plus"></i>انشاء التقارير </a>';
 
-                if ($order->status > 2) {
-                    $accept = '';
-                }
-                if ($order->status > 2) {
-                    $reject = '';
-                }
-                if ($order->status == 2) {
-                    $reports_view = '';
-                }
-                if ($order->status == 2) {
-                    $reports_add = '';
-                }
+                // if ($order->status > 2) {
+                //     $accept = '';
+                // }
+                // if ($order->status > 2) {
+                //     $reject = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_view = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_add = '';
+                // }
                 $element = '<div class="btn-group me-1 mt-2">
-                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                خيارات<i class="mdi mdi-chevron-down"></i>
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-                                               ' . $accept . '
-                                               ' . $reject . '
-                                               ' . $reports_view . '
-                                               ' . $reports_add . '
-                                            </div>
+                                            <a class="btn btn-info btn-sm  type="button"  href="' . route('delivery.view_file', ['order' => $order->id]) . '">
+                                                عرض التفاصيل
+                                            </a>
                                         </div>';
                 return $element;
 
@@ -75,6 +70,11 @@ class DeliveryController extends Controller
         ]);
     }
 
+    public function reports()
+    {
+        return view('CP.delivery.reports');
+    }
+
     public function reports_list(Order $order)
     {
         $reports = DeliveryReport::query()->with(['attchments'])
@@ -89,6 +89,39 @@ class DeliveryController extends Controller
                     $delete = '';
                     $edit = '';
                 }
+
+                $element = '<div class="btn-group me-1 mt-2">
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                عرض<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+                                               ' . $delete . '
+                                               ' . $edit . '
+                                            </div>
+                                        </div>';
+                return $element;
+
+            })
+            ->addColumn('description', function ($report) {
+                return Str::substr($report->description, 0, 50);
+            })
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
+    }
+
+    public function reports_list_all()
+    {
+        $reports = DeliveryReport::query()->with(['attchments'])
+            ->where('user_id', '=', auth()->user()->id);
+        return DataTables::of($reports)
+            ->addColumn('actions', function ($report){
+                $delete = '<a class="dropdown-item" onclick="deleteReport(' . $report->id . ')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
+                $edit = '<a class="dropdown-item" href="' . route('delivery.report_edit_form', ['report' => $report->id]) . '"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
+
 
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -247,5 +280,14 @@ class DeliveryController extends Controller
                 'real_name' => $file_name
             ]);
         }
+    }
+
+    public function view_file(Order $order)
+    {
+
+        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        return view('CP.delivery.view_file', ['order' => $order, 'order_specialties' => $order_specialties, 'filess' => $files]);
+
     }
 }
