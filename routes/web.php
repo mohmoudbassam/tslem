@@ -86,9 +86,9 @@ Route::middleware('auth')->group(function () {
         Route::post('edit_file_action', [DesignerOrderController::class, 'edit_file_action'])->name('.edit_file_action');
         Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 
-        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
+//        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
 
-//        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
+        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);

@@ -32,16 +32,23 @@ class DesignerOrderController extends Controller
             ->addColumn('actions', function ($order) {
                 $add_file_design = '';
 
-                $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
-                $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
+                $add_file_design = '';
+                $edit_files = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الملفات </a>';
-                $accept = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
-                $reject = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-"></i>رفض </a>';
+                $accept = '<a class="dropdown-item" onclick="accept( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
+                $reject = '<a class="dropdown-item" onclick="reject( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-times"></i>رفض </a>';
 
                 if ($order->status > 2) {
 //                    $add_file_design = '';
 //                    $edit_files = '';
                 }
+
+                if ($order->status == Order::DESIGN_APPROVED) {
+                    $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
+                    $accept = '';
+                    $reject = '';
+                }
+
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
@@ -68,7 +75,7 @@ class DesignerOrderController extends Controller
    {
 
        $order = Order::query()->findOrFail($request->id);
-       if ($order->status == 1) {
+       if ($order->status == Order::ORDER_REVIEW) {
            $order->status = Order::DESIGN_APPROVED;
            $order->save();
 
@@ -87,25 +94,36 @@ class DesignerOrderController extends Controller
         ]);
    }
 //
-//    public function reject(Request $request)
-//    {
-//
-//        $order = Order::query()->findOrFail($request->id);
-//        if ($order->status == 1) {
-//            $order->status = Order::PENDING;
-//            $order->save();
-//
-//            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
-//
-//            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
-//            return response()->json([
-//                'success' => true,
-//                'message' => 'تمت رفض الطلب بنجاح'
-//            ]);
-//        }
-//
-//
-//    }
+    public function reject(Request $request)
+    {
+
+        $order = Order::query()->findOrFail($request->id);
+        if ($order->status == Order::ORDER_REVIEW) {
+            $order->status = Order::PENDING;
+            $order->save();
+
+            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
+
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
+            return response()->json([
+                'success' => true,
+                'message' => 'تمت رفض الطلب بنجاح'
+            ]);
+        }
+
+        if ($order->status == Order::PENDING) {
+            return response()->json([
+                'success' => false,
+                'message' => 'تم رفض الطلب مسبقا'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'تم اعتماد الطلب مسبقا'
+        ]);
+
+    }
 
     public function add_files(Order $order)
     {
