@@ -87,7 +87,10 @@ Route::middleware('auth')->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
         Route::get('/{order}/reports', [DeliveryController::class, 'reports_view'])->name('.reports_view');
+        Route::get('/reports', [DeliveryController::class, 'reports'])->name('.reports');
+        
         Route::get('/{order}/reports/list', [DeliveryController::class, 'reports_list'])->name('.reports_list');
+        Route::get('/reports/list', [DeliveryController::class, 'reports_list_all'])->name('.reports_list_all');
         Route::get('/reports/edit/{report}', [DeliveryController::class, 'edit_report_page'])->name('.report_edit_form');
         Route::get('/{order}/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
         Route::post('/delete_report', [DeliveryController::class, 'delete_report'])->name('.delete_report');
@@ -99,6 +102,7 @@ Route::middleware('auth')->group(function () {
         Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
+        Route::get('view_file/{order}', [DeliveryController::class, 'view_file'])->name('.view_file');
     });
 
     Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
