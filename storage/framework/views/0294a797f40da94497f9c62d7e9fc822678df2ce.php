@@ -34,7 +34,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
-    <?php echo $__env->yieldContent('style'); ?>
+
     <style>
         @font-face {
             font-family: JannaLT;
@@ -44,13 +44,17 @@
         body {
             font-family: JannaLT !important;
         }
-
+        .container {
+            position: fixed;
+            right: 0;
+            top: 0;
+        }
          [dir=rtl] input {
              text-align: right;
          }
          .modal {
              display:    none;
-             position:   fixed;
+             position:   absolute;
              z-index:    1000;
              top:        0;
              left:       0;
@@ -90,6 +94,7 @@
 
 
     </style>
+    <?php echo $__env->yieldContent('style'); ?>
 </head>
 
 <body lang="en" dir="rtl">

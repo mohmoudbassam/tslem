@@ -1,8 +1,7 @@
-@extends('CP.master')
-@section('title')
+<?php $__env->startSection('title'); ?>
     المستخدمين
-@endsection
-@section('style')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('style'); ?>
     <style>
         .modal{
             background-color: rgba(0, 0, 0, 0.3);
@@ -14,8 +13,8 @@
         /*    po*/
         /*}*/
     </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
     <div class="row">
@@ -42,35 +41,35 @@
 
                     <ul class="nav nav-tabs-custom card-header-tabs border-top mt-4" id="pills-tab" role="tablist">
 
-                        @foreach($specialties as $_specialties)
+                        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                             <li class="nav-item">
-                                <a class="nav-link px-3 @if  ($loop->first) active @endif" data-bs-toggle="tab"
-                                   href="#{{$_specialties->name_en}}"
-                                   role="tab">{{$_specialties->name_ar}}</a>
+                                <a class="nav-link px-3 <?php if($loop->first): ?> active <?php endif; ?>" data-bs-toggle="tab"
+                                   href="#<?php echo e($_specialties->name_en); ?>"
+                                   role="tab"><?php echo e($_specialties->name_ar); ?></a>
                             </li>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                     </ul>
                 </div>
                 <!-- end card body -->
             </div>
             <!-- end card -->
-            <form method="post" action="{{route('design_office.save_file')}}" id="add_edit_form"
+            <form method="post" action="<?php echo e(route('design_office.save_file')); ?>" id="add_edit_form"
                   enctype="multipart/form-data">
-                @csrf
+                <?php echo csrf_field(); ?>
 
                 <div class="tab-content">
-                    @foreach($specialties as $_specialties)
-                        <div class="tab-pane @if  ($loop->first) active @endif" id="{{$_specialties->name_en}}"
+                    <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="tab-pane <?php if($loop->first): ?> active <?php endif; ?>" id="<?php echo e($_specialties->name_en); ?>"
                              role="tabpanel">
                             <div class="card">
 
                                 <div class="card-body ">
-                                    <div id="{{$_specialties->name_en}}_form_reporter">
+                                    <div id="<?php echo e($_specialties->name_en); ?>_form_reporter">
 
                                         <div class="row">
-                                            <div data-repeater-list="{{$_specialties->name_en}}">
+                                            <div data-repeater-list="<?php echo e($_specialties->name_en); ?>">
                                                 <div data-repeater-item="" class="mb-2">
 
 
@@ -80,14 +79,14 @@
                                                                 <label class="form-label" for="service_id">توصيف
                                                                     الخدمة</label>
                                                                 <select
-                                                                    class="form-select req {{$_specialties->name_en}}_service_id service_id_select"
+                                                                    class="form-select req <?php echo e($_specialties->name_en); ?>_service_id service_id_select"
                                                                     id="service_id"
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
-                                                                    @foreach($specialties->where('name_en',$_specialties->name_en)->first()->service as $service)
+                                                                    <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option
-                                                                            value="{{$service->id}}">{{$service->name}}</option>
-                                                                    @endforeach
+                                                                            value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 </select>
                                                                 <div class="col-12 text-danger service_id_error"
                                                                      id=""></div>
@@ -139,36 +138,36 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
+                                                           for="<?php echo e($_specialties->name_en); ?>_pdf_file">Pdf ملف </label>
                                                     <input type="file" class="form-control" value=""
-                                                           id="{{$_specialties->name_en}}_pdf_file"
-                                                           name="{{$_specialties->name_en}}_pdf_file">
+                                                           id="<?php echo e($_specialties->name_en); ?>_pdf_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_pdf_file">
                                                     <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_file_error"></div>
+                                                         id="<?php echo e($_specialties->name_en); ?>_file_error"></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_docs_file"> ملف docs</label>
+                                                           for="<?php echo e($_specialties->name_en); ?>_docs_file"> ملف docs</label>
                                                     <input type="file" class="form-control" value=""
-                                                           id="{{$_specialties->name_en}}_docs_file"
-                                                           name="{{$_specialties->name_en}}_docs_file" multiple>
+                                                           id="<?php echo e($_specialties->name_en); ?>_docs_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_docs_file" multiple>
                                                     <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_docs_file"></div>
+                                                         id="<?php echo e($_specialties->name_en); ?>_docs_file"></div>
                                                 </div>
 
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_cad_file">CAD ملف</label>
+                                                           for="<?php echo e($_specialties->name_en); ?>_cad_file">CAD ملف</label>
                                                     <input type="file" class="form-control" value=""
-                                                           id="{{$_specialties->name_en}}_cad_file"
-                                                           name="{{$_specialties->name_en}}_cad_file" multiple>
+                                                           id="<?php echo e($_specialties->name_en); ?>_cad_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_cad_file" multiple>
                                                     <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_cad_error"></div>
+                                                         id="<?php echo e($_specialties->name_en); ?>_cad_error"></div>
                                                 </div>
 
                                             </div>
@@ -181,13 +180,13 @@
                             </div>
 
                         </div>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
                 </div>
 
 
-                <input type="hidden" name="order_id" value="{{$order->id}}">
+                <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>">
 
 
                 <div class="d-flex flex-wrap gap-3">
@@ -236,12 +235,12 @@
         </div>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
-        @foreach ($specialties as $_specialties)
-        $('#{{$_specialties->name_en}}_form_reporter').repeater({
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        $('#<?php echo e($_specialties->name_en); ?>_form_reporter').repeater({
 
             initEmpty: true,
 
@@ -250,15 +249,15 @@
             },
 
             show: function () {
-                var a = document.querySelectorAll('#{{$_specialties->name_en}}_form_reporter');
+                var a = document.querySelectorAll('#<?php echo e($_specialties->name_en); ?>_form_reporter');
                 a.forEach((e) => {
                     var fileInput = $(this).find('.kartafile');
 
                     fileInput.fileinput(request_file_input_attributes());
 
-                    var select_service = $(this).find('.{{$_specialties->name_en}}_service_id').on('change', function (e) {
+                    var select_service = $(this).find('.<?php echo e($_specialties->name_en); ?>_service_id').on('change', function (e) {
 
-                        var url = '{{ route("design_office.get_service_by_id", ":id") }}';
+                        var url = '<?php echo e(route("design_office.get_service_by_id", ":id")); ?>';
                         url = url.replace(':id', $(this).val());
                         var select = $(this)
                         $.ajax({
@@ -304,20 +303,20 @@
                 $(this).slideUp(deleteElement);
             }
         });
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
-        @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_pdf_file')
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_pdf_file')
 
-        @endforeach
-        @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_docs_file')
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_docs_file')
 
-        @endforeach @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_cad_file')
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_cad_file')
 
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         $('#add_edit_form').validate({
             rules: addValidationRule(),
             errorElement: 'span',
@@ -362,7 +361,7 @@
                 theme: "fas",//gly
                 showDrag: false,
                 deleteExtraData: {
-                    '_token': '{{csrf_token()}}',
+                    '_token': '<?php echo e(csrf_token()); ?>',
                 },
                 browseClass: "btn btn-info",
                 browseLabel: "اضغط للاستعراض",
@@ -396,4 +395,6 @@
         }
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/ahmedsal/workspace/tslem/resources/views/CP/designer/add_files.blade.php ENDPATH**/ ?>
