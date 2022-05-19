@@ -27,6 +27,13 @@
         file-drop-zone clearfix {
 
         }
+
+        .details_p{
+            font-size: 20px;
+        }
+        .bold{
+            font-weight: bold;
+        }
     </style>
 @endsection
 @section('content')
@@ -49,9 +56,41 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="row mt-4">
-                <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2>
+            <div class="row">
+
+                <div class="col-md-4 mb-3 mt-4">
+                    <h2>تفاصيل الطلب</h2>
+                </div>
+                <div class="col-md-4 mb-3 mt-4">
+                    <p class="details_p">  <span class="bold">  التاريخ :</span> {{$order->created_at}}</p>  
+                </div>
+                
+                <!-- <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2> -->
             </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>  
+                </div>
+
+                
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>  
+                </div>
+
+                 <div class="col-md-6 mb-3">
+                       <p class="details_p">   <span class="bold">   التفاصيل : </span>{{$order->description}}</p>  
+                </div>
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>  
+                </div>
+
+               
+              
+            </div>
+
         </div>
         <div class="card-body">
 

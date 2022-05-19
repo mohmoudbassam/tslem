@@ -357,6 +357,7 @@
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
+
             // $('#page_modal').appendTo('body').modal('show');
             // $(".blockUI").remove();
              $("#add_edit_form").submit()
@@ -381,6 +382,11 @@
 
 
             // $("#add_edit_form").submit()
+=======
+            //$('#page_modal').appendTo('body').modal('show');
+            $(".blockUI").remove();
+             $("#add_edit_form").submit()
+>>>>>>> 00a2d53905985b7bc11389cec824da246c70c22b
 
         });
 
