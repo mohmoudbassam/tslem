@@ -12,11 +12,12 @@ class Order extends Model
     protected $guarded = [];
 
 
-    public const DESIGN_REVIEW = 1;
-    public const ORDER_REVIEW = 2;
+
+    public const ORDER_REVIEW = 1;
     public const DESIGN_APPROVED = 3;
     public const DONE = 4;
     public const APPROVED = 5;
+    public const PENDING = 2;
 
 
     public function specialties_file(){
@@ -86,9 +87,9 @@ class Order extends Model
     public function getOrderStatusAttribute()
     {
         return [
-            '1' => 'مراجعة التصاميم',
-            '2' => 'مراجعة الطلب',
-            '3' => 'تم اعتماد التصاميم',
+            '1' => 'بإنتظار موافقة مكتب التصميم',
+            '2' => 'معلق',
+            '3' => 'مراجعة التصاميم',
             '4' => 'تم التنفيذ',
             '5' => 'تم الإعتماد'
         ][$this->status];

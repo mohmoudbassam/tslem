@@ -35,6 +35,8 @@ class DesignerOrderController extends Controller
                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
                 $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الملفات </a>';
+                $accept = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
+                $reject = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-"></i>رفض </a>';
 
                 if ($order->status > 2) {
 //                    $add_file_design = '';
@@ -48,6 +50,8 @@ class DesignerOrderController extends Controller
                                                ' . $add_file_design . '
                                                ' . $edit_files . '
                                                ' . $view . '
+                                               ' . $accept . '
+                                               ' . $reject . '
      </div>
                                         </div>';
                 return $element;
