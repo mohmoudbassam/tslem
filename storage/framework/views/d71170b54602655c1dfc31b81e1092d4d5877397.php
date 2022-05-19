@@ -258,7 +258,7 @@
                 error.appendTo(element.next());
             },
             success: function (label, element) {
-                element.next().hide()
+
                 $(element).removeClass("is-invalid");
             }
         });

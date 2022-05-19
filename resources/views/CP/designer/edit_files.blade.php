@@ -79,7 +79,7 @@
                                                                 الخدمة</label>
                                                             <select
                                                                 class="form-select req"
-                                                                id="service_id"
+
                                                                 name="service[{{$_services->id}}][service_id]">
                                                                 @foreach($system_specialties_services->where('name_en',$_specialties->name_en)->first()->service as $services)
 
@@ -88,7 +88,7 @@
                                                                 @endforeach
                                                             </select>
                                                             <div class="col-12 text-danger"
-                                                                 id="_error"></div>
+                                                                 ></div>
                                                         </div>
                                                     </div>
 
@@ -96,7 +96,7 @@
                                                         <div class="mb-3 unit_hide">
                                                             <label
                                                                 class="form-label">{{$_services->service->unit}}</label>
-                                                            <input type="text" name="service[{{$_services->id}}][unit]" value="{{$_services->unit}}"
+                                                            <input type="number" min="1" name="service[{{$_services->id}}][unit]" value="{{$_services->unit}}"
                                                                    class="form-control req"
                                                                    placeholder="">
 
@@ -133,7 +133,7 @@
                                                                     الخدمة</label>
                                                                 <select
                                                                     class="form-select req"
-                                                                    id="service_id"
+
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
                                                                     @foreach($specialties->where('name_en',$_specialties->name_en)->first()->service as $service)
@@ -142,18 +142,17 @@
                                                                             value="{{$service->id}}">{{$service->name}}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <div class="col-12 text-danger"
-                                                                     id="_error"></div>
+                                                                <div class="col-12 text-danger" ></div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3 ">
                                                             <div class="mb-3 unit_hide">
                                                                 <label class="form-label">عدد</label>
-                                                                <input type="text" name="unit" class="form-control req"
+                                                                <input type="number" min="1"  name="unit" class="form-control req"
                                                                        placeholder="">
                                                                 <div class="col-12 text-danger"
-                                                                     id="service_id_error"></div>
+                                                                    ></div>
                                                             </div>
                                                         </div>
                                                     </div>

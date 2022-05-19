@@ -78,7 +78,7 @@
                                                                 الخدمة</label>
                                                             <select
                                                                 class="form-select req"
-                                                                id="service_id"
+
                                                                 name="service[<?php echo e($_services->id); ?>][service_id]">
                                                                 <?php $__currentLoopData = $system_specialties_services->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
@@ -87,7 +87,7 @@
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             </select>
                                                             <div class="col-12 text-danger"
-                                                                 id="_error"></div>
+                                                                 ></div>
                                                         </div>
                                                     </div>
 
@@ -95,7 +95,7 @@
                                                         <div class="mb-3 unit_hide">
                                                             <label
                                                                 class="form-label"><?php echo e($_services->service->unit); ?></label>
-                                                            <input type="text" name="service[<?php echo e($_services->id); ?>][unit]" value="<?php echo e($_services->unit); ?>"
+                                                            <input type="number" min="1" name="service[<?php echo e($_services->id); ?>][unit]" value="<?php echo e($_services->unit); ?>"
                                                                    class="form-control req"
                                                                    placeholder="">
 
@@ -132,7 +132,7 @@
                                                                     الخدمة</label>
                                                                 <select
                                                                     class="form-select req"
-                                                                    id="service_id"
+
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
                                                                     <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -141,18 +141,17 @@
                                                                             value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 </select>
-                                                                <div class="col-12 text-danger"
-                                                                     id="_error"></div>
+                                                                <div class="col-12 text-danger" ></div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3 ">
                                                             <div class="mb-3 unit_hide">
                                                                 <label class="form-label">عدد</label>
-                                                                <input type="text" name="unit" class="form-control req"
+                                                                <input type="number" min="1"  name="unit" class="form-control req"
                                                                        placeholder="">
                                                                 <div class="col-12 text-danger"
-                                                                     id="service_id_error"></div>
+                                                                    ></div>
                                                             </div>
                                                         </div>
                                                     </div>

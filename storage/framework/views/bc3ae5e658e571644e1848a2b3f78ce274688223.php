@@ -93,11 +93,12 @@
                        <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span><?php echo e($order->designer->name); ?></p>  
                 </div>
 
-               
+                <?php if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE): ?>
                 <div class="offset-md-9 col-md-3 mb-3">
                        <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
                        <button class="btn btn-danger">ارجاع ملاحظات</button>
                 </div>
+                <?php endif; ?>
             </div>
 
         </div>

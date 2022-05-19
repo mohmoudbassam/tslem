@@ -33,7 +33,7 @@ class DesignerOrderController extends Controller
                 $add_file_design = '';
 
                 $add_file_design = '';
-                $edit_files = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
+                $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الملفات </a>';
                 $accept = '<a class="dropdown-item" onclick="accept( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
                 $reject = '<a class="dropdown-item" onclick="reject( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-times"></i>رفض </a>';
