@@ -83,7 +83,7 @@
                                                                     الخدمة</label>
                                                                 <select
                                                                     class="form-select req {{$_specialties->name_en}}_service_id service_id_select"
-                                                                    id="service_id"
+
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
                                                                     @foreach($specialties->where('name_en',$_specialties->name_en)->first()->service as $service)
@@ -91,17 +91,17 @@
                                                                             value="{{$service->id}}">{{$service->name}}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <div class="col-12 text-danger service_id_error"
-                                                                     id=""></div>
+                                                                <div class="col-12 text-danger"
+                                                                     ></div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3 ">
                                                             <div class="mb-3 d-none">
                                                                 <label class="form-label">العدد/م</label>
-                                                                <input type="text" name="unit" class="form-control req"
+                                                                <input type="number" min="1"  name="unit" class="form-control req"
                                                                        placeholder="العدد">
                                                                 <div class="col-12 text-danger"
-                                                                     id="service_id_error"></div>
+                                                                     ></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -259,7 +259,7 @@
                 error.appendTo(element.next());
             },
             success: function (label, element) {
-
+                element.next().hide()
                 $(element).removeClass("is-invalid");
             }
         });

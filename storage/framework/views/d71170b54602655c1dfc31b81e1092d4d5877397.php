@@ -82,7 +82,7 @@
                                                                     الخدمة</label>
                                                                 <select
                                                                     class="form-select req <?php echo e($_specialties->name_en); ?>_service_id service_id_select"
-                                                                    id="service_id"
+
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
                                                                     <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -90,17 +90,17 @@
                                                                             value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 </select>
-                                                                <div class="col-12 text-danger service_id_error"
-                                                                     id=""></div>
+                                                                <div class="col-12 text-danger"
+                                                                     ></div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3 ">
                                                             <div class="mb-3 d-none">
                                                                 <label class="form-label">العدد/م</label>
-                                                                <input type="text" name="unit" class="form-control req"
+                                                                <input type="number" min="1"  name="unit" class="form-control req"
                                                                        placeholder="العدد">
                                                                 <div class="col-12 text-danger"
-                                                                     id="service_id_error"></div>
+                                                                     ></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -258,7 +258,7 @@
                 error.appendTo(element.next());
             },
             success: function (label, element) {
-
+                element.next().hide()
                 $(element).removeClass("is-invalid");
             }
         });
