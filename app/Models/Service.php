@@ -13,10 +13,6 @@ class Service extends Model
 
     protected $guarded = [];
 
-    public function file_type()
-    {
-        return $this->belongsToMany(ServiceFileType::class, 'service_file', 'service_id', 'file_id');
-    }
 
     public function specialties(){
         return $this->belongsTo(Specialties::class, 'specialties_id');

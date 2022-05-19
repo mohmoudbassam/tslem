@@ -1,6 +1,13 @@
 <?php $__env->startSection('title'); ?>
     المستخدمين
 <?php $__env->stopSection(); ?>
+<?php $__env->startSection('style'); ?>
+    <style>
+        .input-icon {
+            float: left;
+        }
+    </style>
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
@@ -37,27 +44,32 @@
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+                            <li class="nav-item">
+                                <a class="nav-link px-3 " data-bs-toggle="tab"
+                                   href="#general_file_panel"
+                                   role="tab">ملف الموقع العام</a>
+                            </li>
+
                     </ul>
                 </div>
                 <!-- end card body -->
             </div>
             <!-- end card -->
 
-            <form method="post" action="<?php echo e(route('design_office.save_file')); ?>" id="add_edit_form"
+            <form method="post" action="<?php echo e(route('design_office.edit_file_action')); ?>" id="add_edit_form"
                   enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="tab-content">
+
                     <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                         <div class="tab-pane <?php if($loop->first): ?> active <?php endif; ?>" id="<?php echo e($_specialties->name_en); ?>"
                              role="tabpanel">
                             <div class="card">
-
-
                                 <div class="card-body">
                                     <?php if(isset($order_specialties[$_specialties->name_en])): ?>
-
                                         <?php $__currentLoopData = $order_specialties[$_specialties->name_en]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_services): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                                             <div class="row">
                                                 <div class="row">
                                                     <div class="col-md-3">
@@ -67,13 +79,12 @@
                                                             <select
                                                                 class="form-select req"
                                                                 id="service_id"
-                                                                name="service_id">
+                                                                name="service[<?php echo e($_services->id); ?>][service_id]">
+                                                                <?php $__currentLoopData = $system_specialties_services->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                                                <?php $__currentLoopData = $system_specialties_services->where('name_en','architect')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                     <option value="<?php echo e($services->id); ?>"
-                                                                            <?php if($services->id == $_services->id): ?> selected <?php endif; ?>><?php echo e($services->name); ?></option>
+                                                                            <?php if($services->id == $_services->service_id): ?> selected <?php endif; ?>><?php echo e($services->name); ?></option>
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                                                             </select>
                                                             <div class="col-12 text-danger"
                                                                  id="_error"></div>
@@ -84,15 +95,25 @@
                                                         <div class="mb-3 unit_hide">
                                                             <label
                                                                 class="form-label"><?php echo e($_services->service->unit); ?></label>
-                                                            <input type="text" name="unit" value="<?php echo e($_services->unit); ?>"
+                                                            <input type="text" name="service[<?php echo e($_services->id); ?>][unit]" value="<?php echo e($_services->unit); ?>"
                                                                    class="form-control req"
                                                                    placeholder="">
+
                                                             <div class="col-12 text-danger"
                                                                  id="service_id_error"></div>
                                                         </div>
                                                     </div>
-                                                </div>
 
+                                                    <div class="col-md-3 " style="margin-top:1.8rem;">
+                                                        <div class="mb-3">
+
+                                                            <a class="btn btn-danger"
+                                                               href="<?php echo e(route('design_office.delete_service',['service'=>$_services])); ?>"><i
+                                                                    class="fa fa-trash-alt"></i></a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php endif; ?>
@@ -100,7 +121,7 @@
 
                                         <div class="row">
 
-                                            <div data-repeater-list="<?php echo e($_specialties); ?>">
+                                            <div data-repeater-list="<?php echo e($_specialties->name_en); ?>">
                                                 <div data-repeater-item="" class="mb-2">
 
 
@@ -115,6 +136,7 @@
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
                                                                     <?php $__currentLoopData = $specialties->where('name_en',$_specialties->name_en)->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                                                                         <option
                                                                             value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -150,84 +172,258 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row mt-5">
+
+                                    <?php $__currentLoopData = $filess->where('specialties.name_en',$_specialties->name_en); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $files): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($files->type ==1): ?>
+                                            <div class="col-md-offset-3 col-md-2">
+                                                <div class="panel panel-default bootcards-file">
+
+                                                    <div class="list-group">
+                                                        <div class="list-group-item">
+                                                            <a href="#">
+                                                                <i class="fa fa-file-pdf fa-4x"></i>
+                                                            </a>
+                                                            <h5 class="list-group-item-heading">
+                                                                <a href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                    <?php echo e($files->real_name); ?>
+
+                                                                </a>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="list-group-item">
+                                                            ملف pdf
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-footer">
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-success"
+                                                                   href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                    <i class="fa fa-arrow-down"></i>
+                                                                    تنزيل
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if($files->type ==2): ?>
+                                            <div class="col-md-offset-3 col-md-2">
+                                                <div class="panel panel-default bootcards-file">
+
+                                                    <div class="list-group">
+                                                        <div class="list-group-item">
+                                                            <a href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                <i class="fa fa-file-pdf fa-4x"></i>
+                                                            </a>
+                                                            <h5 class="list-group-item-heading">
+                                                                <a href="#">
+                                                                    <?php echo e($files->real_name); ?>
+
+                                                                </a>
+                                                            </h5>
+
+                                                        </div>
+                                                        <div class="list-group-item">
+                                                            ملف cad
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-footer">
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-success"
+                                                                   href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                    <i class="fa fa-arrow-down"></i>
+                                                                    تنزيل
+                                                                </a>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if($files->type ==3): ?>
+                                            <div class="col-md-offset-3 col-md-2">
+                                                <div class="panel panel-default bootcards-file">
+
+                                                    <div class="list-group">
+                                                        <div class="list-group-item">
+                                                            <a href="#">
+                                                                <i class="fa fa-file-pdf fa-4x"></i>
+                                                            </a>
+                                                            <h5 class="list-group-item-heading">
+                                                                <a href="#">
+                                                                    <?php echo e($files->real_name); ?>
+
+                                                                </a>
+                                                            </h5>
+
+                                                        </div>
+                                                        <div class="list-group-item">
+                                                            ملف docs
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-footer">
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-success"
+                                                                   href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                    <i class="fa fa-arrow-down"></i>
+                                                                    تنزيل
+                                                                </a>
+                                                            </div>
+
+
+                                                        </div>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">الملفات</h5>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div>
+                                        <div class="row">
+
+
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="<?php echo e($_specialties->name_en); ?>_pdf_file">Pdf ملف </label>
+                                                    <input type="file"
+                                                           class="form-control <?php echo e($_specialties->name_en); ?>_pdf_file"
+                                                           id="<?php echo e($_specialties->name_en); ?>_pdf_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_pdf_file">
+                                                    <div class="col-12 text-danger"
+                                                         id="<?php echo e($_specialties->name_en); ?>_pdf_file"></div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="<?php echo e($_specialties->name_en); ?>_docs_file"> ملف docs</label>
+                                                    <input type="file" class="form-control" value=""
+                                                           id="<?php echo e($_specialties->name_en); ?>_docs_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_docs_file" multiple>
+                                                    <div class="col-12 text-danger"
+                                                         id="<?php echo e($_specialties->name_en); ?>_docs_file"></div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="<?php echo e($_specialties->name_en); ?>_cad_file">CAD ملف</label>
+                                                    <input type="file" class="form-control" value=""
+                                                           id="<?php echo e($_specialties->name_en); ?>_cad_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_cad_file" multiple>
+                                                    <div class="col-12 text-danger"
+                                                         id="<?php echo e($_specialties->name_en); ?>_cad_error"></div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- end row -->
+                                    </div>
+                                </div>
                                 <!-- end card body -->
                             </div>
-
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </div>
+                        <div class="tab-pane " id="general_file_panel"
+                             role="tabpanel">
+                            <?php if($general_file): ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-offset-3 col-md-2">
+                                        <div class="panel panel-default bootcards-file">
 
-                <div class="row mb-6">
-                    <div class="col-md-offset-3 col-md-2">
-                        <div class="panel panel-default bootcards-file">
+                                            <div class="list-group">
+                                                <div class="list-group-item">
+                                                    <a href="#">
+                                                        <i class="fa fa-file-pdf fa-4x"></i>
+                                                    </a>
+                                                    <h5 class="list-group-item-heading">
+                                                        <a href="#">
+                                                            <?php echo e($general_file->real_name); ?>
 
-                            <div class="list-group">
-                                <div class="list-group-item">
-                                    <a href="#">
-                                        <i class="fa fa-file fa-4x"></i>
-                                    </a>
-                                    <h5 class="list-group-item-heading">
-                                        <a href="#">
-                                            file name
-                                        </a>
-                                    </h5>
+                                                        </a>
+                                                    </h5>
 
+                                                </div>
+                                                <div class="list-group-item">
+                                                   الملف العام
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="btn-group btn-group-justified">
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-success"
+                                                           href="<?php echo e(route('design_office.download',['id'=>$general_file->id])); ?>">
+                                                            <i class="fa fa-arrow-down"></i>
+                                                            تنزيل
+                                                        </a>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="list-group-item">
-                                </div>
+
                             </div>
-                            <div class="panel-footer">
-                                <div class="btn-group btn-group-justified">
-                                    <div class="btn-group">
-                                        <button class="btn btn-success">
-                                            <i class="fa fa-arrow-down"></i>
-                                            Download
-                                        </button>
+                            <?php endif; ?>
+                           <div class="card-body">
+                            <div>
+                                <div class="row">
+
+
+                                    <div class="row">
+                                        <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                                            <div class="row">
+                                                <label class="col-12" for="reject_reason">ملف الموقع العام</label>
+                                                <div class="col-12">
+                                                    <input type="file" class="form-control" value=""
+                                                           id="general_file"
+                                                           name="general_file">
+                                                </div>
+                                                <div class="col-12 text-danger" id="reject_reason_error"></div>
+                                            </div>
+                                        </div>
+
                                     </div>
 
 
                                 </div>
+                                <!-- end row -->
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-offset-3 col-md-2">
-                        <div class="panel panel-default bootcards-file">
 
-                            <div class="list-group">
-                                <div class="list-group-item">
-                                    <a href="#">
-                                        <i class="fa fa-file fa-4x"></i>
-                                    </a>
-                                    <h5 class="list-group-item-heading">
-                                        <a href="#">
-                                            file name
-                                        </a>
-                                    </h5>
-
-                                </div>
-                                <div class="list-group-item">
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="btn-group btn-group-justified">
-                                    <div class="btn-group">
-                                        <button class="btn btn-success">
-                                            <i class="fa fa-arrow-down"></i>
-                                            Download
-                                        </button>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-danger">
-                                            <i class="fa fa-trash-alt"></i>
-                                            delete
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
                         </div>
-                    </div>
                 </div>
+
 
                 <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>">
                 <br>
@@ -302,49 +498,81 @@
 
                 })
                 $(this).slideDown();
+
             },
 
             hide: function (deleteElement) {
                 $(this).slideUp(deleteElement);
             }
         });
-        
-
-        
-        
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-
-        
-        
-        
-
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
 
-
+        $('#add_edit_form').validate({
+            rules: {},
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            errorPlacement: function (error, element) {
+                error.appendTo(element.next());
+            },
+            success: function (label, element) {
+                console.log(element);
+                $(element).removeClass("is-invalid");
+            }
+        });
 
         $('.submit_btn').click(function (e) {
-            e.preventDefault();
             $('.req').each((i, e) => {
                 $(e).rules("add", {required: true})
             });
+            e.preventDefault();
+
             if (!$("#add_edit_form").valid()) {
                 showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
 
                 return false;
             }
+            $.ajax({
+                url : '<?php echo e(route('design_office.edit_file_action')); ?>',
+                data : new FormData($('#add_edit_form').get(0)),
+                type: "POST",
+                processData: false,
+                contentType: false,
+                beforeSend(){
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'الرجاء الانتظار..........'
+                    });
+                },
+                success:function(data) {
+                    if (data.success) {
+                        $('#page_modal').modal('hide');
 
-            $("#add_edit_form").submit()
+                        showAlertMessage('success', data.message);
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, "1500")
+                    } else {
+                        $('#page_modal').modal('hide');
+                        if (data.message) {
+                            showAlertMessage('error', data.message);
+                        } else {
+                            showAlertMessage('error', 'حدث خطأ في النظام');
+                        }
+                    }
+                    KTApp.unblockPage();
+                },
+                error:function(data) {
+                    console.log(data);
+                    KTApp.unblock('#page_modal');
+                    KTApp.unblockPage();
+                },
+            });
+        //    $("#add_edit_form").submit()
 
         });
         $('.old_service_id').bind('change', function (e) {
@@ -442,6 +670,17 @@
             let settings = $.extend({}, defaults, options);
             $(selector).fileinput(settings);
         }
+        file_input_cu('#general_file')
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_pdf_file')
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_docs_file')
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_cad_file')
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+        file_input_cu('#general_file')
     </script>
 
     </script>
