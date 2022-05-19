@@ -4,12 +4,14 @@
 @endsection
 @section('style')
     <style>
-        .modal{
+        .modal {
             background-color: rgba(0, 0, 0, 0.3);
         }
-        .modal-backdrop{
+
+        .modal-backdrop {
             position: relative;
         }
+
         /*.blockOverlay{*/
         /*    po*/
         /*}*/
@@ -140,11 +142,12 @@
                                                 <div class="mb-3">
                                                     <label class="form-label"
                                                            for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
-                                                    <input type="file" class="form-control" value=""
+                                                    <input type="file"
+                                                           class="form-control {{$_specialties->name_en}}_pdf_file"
                                                            id="{{$_specialties->name_en}}_pdf_file"
                                                            name="{{$_specialties->name_en}}_pdf_file">
                                                     <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_file_error"></div>
+                                                         id="{{$_specialties->name_en}}_pdf_file"></div>
                                                 </div>
 
                                             </div>
@@ -200,7 +203,7 @@
     </div>
     <div class="modal  bd-example-modal-lg" id="page_modal"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" >
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
 
                 <div class="modal-header">
@@ -208,16 +211,17 @@
                         id="exampleModalLongTitle"></h5>
 
                 </div>
-                <form action="" method="post" id="test" enctype="multipart/form-data">
+                <form action="" method="post" id="general_file_from" enctype="multipart/form-data">
 
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-lg-12 col-md-6 col-sm-12">
                                 <div class="row">
-                                    <label class="col-12" for="reject_reason">الرجاء ادخال سبب الرفض</label>
+                                    <label class="col-12" for="reject_reason">الرجاء ارفاق ملف الموقع العام</label>
                                     <div class="col-12">
-                                        <textarea class="form-control" name="reject_reason" id="reject_reason"
-                                                  rows="3"></textarea>
+                                        <input type="file" class="form-control" value=""
+                                               id="general_file"
+                                               name="general_file">
                                     </div>
                                     <div class="col-12 text-danger" id="reject_reason_error"></div>
                                 </div>
@@ -228,8 +232,10 @@
                     <input type="hidden" name="id" value="">
                     <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
-                        <button type="button" class="btn btn-primary submit_btn">ارسال</button>
+                        <button type="button" class="btn btn-secondary btn_general_file_submit" data-bs-dismiss="modal">
+                            الغاء
+                        </button>
+                        <button type="button" class="btn btn-primary general_file_submit">ارسال</button>
                     </div>
                 </form>
             </div>
@@ -240,6 +246,23 @@
 
 @section('scripts')
     <script>
+        $('#general_file_from').validate({
+            rules: {
+                "general_file": {
+                    required:true
+                }
+            },
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            errorPlacement: function (error, element) {
+                error.appendTo(element.next());
+            },
+            success: function (label, element) {
+
+                $(element).removeClass("is-invalid");
+            }
+        });
         @foreach ($specialties as $_specialties)
         $('#{{$_specialties->name_en}}_form_reporter').repeater({
 
@@ -305,7 +328,7 @@
             }
         });
         @endforeach
-
+        file_input_cu('#general_file')
 
         @foreach($specialties as $_specialties)
         file_input_cu('#{{$_specialties->name_en}}_pdf_file')
@@ -327,6 +350,7 @@
                 error.appendTo(element.next());
             },
             success: function (label, element) {
+                console.log(element);
                 $(element).removeClass("is-invalid");
             }
         });
@@ -341,7 +365,6 @@
                 $(e).rules("add", {required: true})
             });
 
-
             if (!$("#add_edit_form").valid()) {
                 showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
 
@@ -351,10 +374,55 @@
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
-            //$('#page_modal').appendTo('body').modal('show');
-            $(".blockUI").remove();
-             $("#add_edit_form").submit()
 
+            $('#page_modal').appendTo('body').modal('show');
+            $(".blockUI").remove();
+            // $("#add_edit_form").submit()
+
+        });
+        $('.general_file_submit').click(function (e) {
+            e.preventDefault();
+            if (!  $('#general_file_from').valid()) {
+                showAlertMessage('error', 'الرجاء إرفاق الملف العام')
+                return false;
+            }
+
+
+            $.ajax({
+                url : '{{route('design_office.save_file')}}',
+                data : new FormData($('#add_edit_form').append($('#general_file')).get(0)),
+                type: "POST",
+                processData: false,
+                contentType: false,
+                beforeSend(){
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success:function(data) {
+                    if (data.success) {
+                        $('#page_modal').modal('hide');
+
+                      window.location='{{route('design_office')}}'
+                    } else {
+                        $('#page_modal').modal('hide');
+                        if (data.message) {
+                            showAlertMessage('error', data.message);
+                        } else {
+                            showAlertMessage('error', 'حدث خطأ في النظام');
+                        }
+                    }
+                    KTApp.unblockPage();
+                },
+                error:function(data) {
+                    console.log(data);
+                    KTApp.unblock('#page_modal');
+                    KTApp.unblockPage();
+                },
+            });
         });
 
         function file_input_cu(selector, options) {
@@ -394,6 +462,13 @@
             let settings = $.extend({}, defaults, options);
             $(selector).fileinput(settings);
         }
+
+
+
+
+        @foreach($specialties as $_specialties)
+
+        @endforeach
     </script>
 
 @endsection

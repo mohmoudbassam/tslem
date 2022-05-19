@@ -286,7 +286,7 @@
         }
     </script>
 
-
+<?php (session()->forget('success')); ?>
 </body>
 
 </html>
