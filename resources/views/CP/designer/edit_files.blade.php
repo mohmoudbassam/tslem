@@ -47,18 +47,14 @@
             <form method="post" action="{{route('design_office.save_file')}}" id="add_edit_form"
                   enctype="multipart/form-data">
                 @csrf
-
                 <div class="tab-content">
                     @foreach($specialties as $_specialties)
 
                         <div class="tab-pane @if  ($loop->first) active @endif" id="{{$_specialties->name_en}}"
                              role="tabpanel">
                             <div class="card">
-
-
                                 <div class="card-body">
                                     @if(isset($order_specialties[$_specialties->name_en]))
-
                                         @foreach($order_specialties[$_specialties->name_en] as $_services)
                                             <div class="row">
                                                 <div class="row">
@@ -82,8 +78,7 @@
                                                         </div>
                                                     </div>
 
-
-                                                    <div class="col-md-3 ">
+                                                    <div class="col-md-3">
                                                         <div class="mb-3 unit_hide">
                                                             <label
                                                                 class="form-label">{{$_services->service->unit}}</label>
@@ -95,12 +90,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                         @endforeach
                                     @endif
-
                                     <div id="{{$_specialties->name_en}}_form_reporter">
 
                                         <div class="row">
@@ -155,30 +147,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end card body -->
                             </div>
-                            <div class="card-body">
-                                <div>
-                                    <div class="row">
-
-
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="{{$_specialties->name_en}}_file"></label>
-                                                <input type="file" class="form-control" value=""
-                                                       id="{{$_specialties->name_en}}_file"
-                                                       name="{{$_specialties->name_en}}_file[]" multiple>
-                                                <div class="col-12 text-danger"
-                                                     id="{{$_specialties->name_en}}_file_error"></div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <!-- end row -->
-                                </div>
-                            </div>
-
                         </div>
                     @endforeach
                 </div>
@@ -264,9 +233,6 @@
                 </div>
             </form>
         </div>
-        <!-- end col -->
-
-
     </div>
 
 @endsection
@@ -337,24 +303,7 @@
                 $(this).slideUp(deleteElement);
             }
         });
-        {{--        @foreach($order_specialties as $key=>$_order_services)--}}
 
-        {{--        @if($key===$_specialties->name_en)--}}
-        {{--          @if($loop->index == 1)--}}
-
-
-        {{--            @endif--}}
-        {{--        repeater.setList([--}}
-        {{--                @foreach($_order_services as $servics)--}}
-        {{--            {--}}
-        {{--                'service_id': '{{$servics->id}}',--}}
-        {{--                'unit': '{{$servics->unit}}',--}}
-        {{--            },--}}
-        {{--            @endforeach--}}
-
-        {{--        ]);--}}
-        {{--        @endif--}}
-        {{--        @endforeach--}}
 
         @endforeach
 

@@ -46,7 +46,6 @@
             <form method="post" action="<?php echo e(route('design_office.save_file')); ?>" id="add_edit_form"
                   enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
-
                 <div class="tab-content">
                     <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
@@ -81,8 +80,7 @@
                                                         </div>
                                                     </div>
 
-
-                                                    <div class="col-md-3 ">
+                                                    <div class="col-md-3">
                                                         <div class="mb-3 unit_hide">
                                                             <label
                                                                 class="form-label"><?php echo e($_services->service->unit); ?></label>
@@ -95,11 +93,9 @@
                                                     </div>
                                                 </div>
 
-
                                             </div>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php endif; ?>
-
                                     <div id="<?php echo e($_specialties->name_en); ?>_form_reporter">
 
                                         <div class="row">
@@ -155,27 +151,6 @@
                                     </div>
                                 </div>
                                 <!-- end card body -->
-                            </div>
-                            <div class="card-body">
-                                <div>
-                                    <div class="row">
-
-
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="<?php echo e($_specialties->name_en); ?>_file"></label>
-                                                <input type="file" class="form-control" value=""
-                                                       id="<?php echo e($_specialties->name_en); ?>_file"
-                                                       name="<?php echo e($_specialties->name_en); ?>_file[]" multiple>
-                                                <div class="col-12 text-danger"
-                                                     id="<?php echo e($_specialties->name_en); ?>_file_error"></div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <!-- end row -->
-                                </div>
                             </div>
 
                         </div>
@@ -263,9 +238,6 @@
                 </div>
             </form>
         </div>
-        <!-- end col -->
-
-
     </div>
 
 <?php $__env->stopSection(); ?>

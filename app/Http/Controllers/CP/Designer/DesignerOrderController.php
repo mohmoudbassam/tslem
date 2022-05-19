@@ -109,9 +109,11 @@ class DesignerOrderController extends Controller
 
     public function save_file(Request $request)
     {
-           if($this->validate_file($request)){
-               return redirect()->back()->with('error', 'الرجاء إضافة جميع الملفات المطلوبة');
-           };
+
+        $file_validation = $this->validate_file($request);
+        if (!$file_validation['success']) {
+            return response()->json($file_validation);
+        };
         $order = Order::query()->find(request('order_id'));
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
         $data = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
@@ -136,39 +138,44 @@ class DesignerOrderController extends Controller
             $specialties_obj = Specialties::query()->where('name_en', $specialties)->first();
 
             if ($specialties_obj) {
-                if(request($specialties . '_pdf_file')){
-                    $this->upload_files($order, $specialties_obj, request($specialties . '_pdf_file'),1);
+                if (request($specialties . '_pdf_file')) {
+                    $this->upload_files($order, $specialties_obj, request($specialties . '_pdf_file'), 1);
                 }
-                if(request($specialties . '_cad_file')){
-                    $this->upload_files($order, $specialties_obj, request($specialties . '_cad_file',),2);
+                if (request($specialties . '_cad_file')) {
+                    $this->upload_files($order, $specialties_obj, request($specialties . '_cad_file',), 2);
                 }
-                if(request($specialties . '_docs_file')){
-                    $this->upload_files($order, $specialties_obj, request($specialties . '_docs_file'),3);
+                if (request($specialties . '_docs_file')) {
+                    $this->upload_files($order, $specialties_obj, request($specialties . '_docs_file'), 3);
                 }
 
             }
 
 
         }
+        session()->put('success','تمت اضافة التصاميم بنجاح');
+        $order->status=3;
+        $order->save();
 
-        return redirect()->route('design_office')->with('success', 'تم إضافة التصاميم بنجاح');
+        return response()->json([
+           'success'=>true,
+           'message'=>'تمت اضافة التصاميم بنجاح'
+        ]);
 
     }
 
-    public function upload_files($order, $specialties, $file,$type)
+    public function upload_files($order, $specialties, $file, $type)
     {
 
 
-            $path = Storage::disk('public')->put("orders/$order->id", $file);
-            $file_name = $file->getClientOriginalName();
-            OrderSpecilatiesFiles::query()->create([
-                'path' => $path,
-                'real_name' => $file_name,
-                'specialties_id' => $specialties->id,
-                'order_id' => $order->id,
-                'type'=>$type
-            ]);
-
+        $path = Storage::disk('public')->put("orders/$order->id", $file);
+        $file_name = $file->getClientOriginalName();
+        OrderSpecilatiesFiles::query()->create([
+            'path' => $path,
+            'real_name' => $file_name,
+            'specialties_id' => $specialties->id,
+            'order_id' => $order->id,
+            'type' => $type
+        ]);
 
 
     }
@@ -184,19 +191,19 @@ class DesignerOrderController extends Controller
         $service = Service::all();
         $order->with('service.specialties');
 
-        $order_specialties = OrderService::query()->with('service.specialties.service' )->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $system_specialties_services = Specialties::query()->with('service')->get();
-        $order_designer_files=OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
+        $order_designer_files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
 
-        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'system_specialties_services' => $system_specialties_services, 'order_specialties' => $order_specialties,'order_files'=>$order_designer_files]);
+        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'system_specialties_services' => $system_specialties_services, 'order_specialties' => $order_specialties, 'order_files' => $order_designer_files]);
     }
 
     public function view_file(Order $order)
     {
 
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
-        $files=OrderSpecilatiesFiles::query()->where('order_id',$order->id)->get();
-         return view('CP.designer.view_file', ['order' => $order,'order_specialties'=>$order_specialties,'filess'=>$files]);
+        $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        return view('CP.designer.view_file', ['order' => $order, 'order_specialties' => $order_specialties, 'filess' => $files]);
 
     }
 
@@ -213,7 +220,8 @@ class DesignerOrderController extends Controller
 
     }
 
-    private function validate_file($request){
+    private function validate_file($request)
+    {
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
         $specialties = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
             if (in_array($key, $specialties_names)) {
@@ -221,14 +229,20 @@ class DesignerOrderController extends Controller
             }
             return null;
         })->filter()->keys();
-        foreach ($specialties as $key => $_specialties){
+        foreach ($specialties as $key => $_specialties) {
 
-            if(!(request($_specialties.'_pdf_file')&&request($_specialties.'_cad_file'))){
-                return true;
+            if (!(request($_specialties . '_pdf_file') && request($_specialties . '_cad_file'))) {
+              $name=  Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
+                return [
+                    'success' => false,
+                    'message' =>" الرجاء إدخال جميع ملفات $name"
+                ];
             }
 
         }
-        return false;
+        return [
+            'success' => true
+        ];
     }
 }
 

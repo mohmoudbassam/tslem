@@ -142,7 +142,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label"
                                                            for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
-                                                    <input type="file" class="form-control {{$_specialties->name_en}}_pdf_file"
+                                                    <input type="file"
+                                                           class="form-control {{$_specialties->name_en}}_pdf_file"
                                                            id="{{$_specialties->name_en}}_pdf_file"
                                                            name="{{$_specialties->name_en}}_pdf_file">
                                                     <div class="col-12 text-danger"
@@ -234,7 +235,7 @@
                         <button type="button" class="btn btn-secondary btn_general_file_submit" data-bs-dismiss="modal">
                             الغاء
                         </button>
-                        <button type="button" class="btn btn-primary submit_btn">ارسال</button>
+                        <button type="button" class="btn btn-primary general_file_submit">ارسال</button>
                     </div>
                 </form>
             </div>
@@ -245,7 +246,23 @@
 
 @section('scripts')
     <script>
+        $('#general_file_from').validate({
+            rules: {
+                "general_file": {
+                    required:true
+                }
+            },
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            errorPlacement: function (error, element) {
+                error.appendTo(element.next());
+            },
+            success: function (label, element) {
 
+                $(element).removeClass("is-invalid");
+            }
+        });
         @foreach ($specialties as $_specialties)
         $('#{{$_specialties->name_en}}_form_reporter').repeater({
 
@@ -358,36 +375,54 @@
                 return false;
             }
 
-            // $('#page_modal').appendTo('body').modal('show');
-            // $(".blockUI").remove();
-             $("#add_edit_form").submit()
+            $('#page_modal').appendTo('body').modal('show');
+            $(".blockUI").remove();
+            // $("#add_edit_form").submit()
 
         });
-        $('.btn_general_file_submit').click(function (e) {
+        $('.general_file_submit').click(function (e) {
             e.preventDefault();
-
-            if (!$("#add_edit_form").valid()) {
-
-                return false;
-            }
-
-            if ($('#add_edit_form').find(':input').length <= 39) {
-                showAlertMessage('error', 'الرجاء تعبئة الطلب')
+            if (!  $('#general_file_from').valid()) {
+                showAlertMessage('error', 'الرجاء إرفاق الملف العام')
                 return false;
             }
 
 
-            // $('#page_modal').appendTo('body').modal('show');
-            // $(".blockUI").remove();
+            $.ajax({
+                url : '{{route('design_office.save_file')}}',
+                data : new FormData($('#add_edit_form').append($('#general_file')).get(0)),
+                type: "POST",
+                processData: false,
+                contentType: false,
+                beforeSend(){
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success:function(data) {
+                    if (data.success) {
+                        $('#page_modal').modal('hide');
 
-
-            // $("#add_edit_form").submit()
-=======
-            //$('#page_modal').appendTo('body').modal('show');
-            $(".blockUI").remove();
-             $("#add_edit_form").submit()
->>>>>>> 00a2d53905985b7bc11389cec824da246c70c22b
-
+                      window.location='{{route('design_office')}}'
+                    } else {
+                        $('#page_modal').modal('hide');
+                        if (data.message) {
+                            showAlertMessage('error', data.message);
+                        } else {
+                            showAlertMessage('error', 'حدث خطأ في النظام');
+                        }
+                    }
+                    KTApp.unblockPage();
+                },
+                error:function(data) {
+                    console.log(data);
+                    KTApp.unblock('#page_modal');
+                    KTApp.unblockPage();
+                },
+            });
         });
 
         function file_input_cu(selector, options) {

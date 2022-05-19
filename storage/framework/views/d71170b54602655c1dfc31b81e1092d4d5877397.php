@@ -141,7 +141,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label"
                                                            for="<?php echo e($_specialties->name_en); ?>_pdf_file">Pdf ملف </label>
-                                                    <input type="file" class="form-control <?php echo e($_specialties->name_en); ?>_pdf_file"
+                                                    <input type="file"
+                                                           class="form-control <?php echo e($_specialties->name_en); ?>_pdf_file"
                                                            id="<?php echo e($_specialties->name_en); ?>_pdf_file"
                                                            name="<?php echo e($_specialties->name_en); ?>_pdf_file">
                                                     <div class="col-12 text-danger"
@@ -233,7 +234,7 @@
                         <button type="button" class="btn btn-secondary btn_general_file_submit" data-bs-dismiss="modal">
                             الغاء
                         </button>
-                        <button type="button" class="btn btn-primary submit_btn">ارسال</button>
+                        <button type="button" class="btn btn-primary general_file_submit">ارسال</button>
                     </div>
                 </form>
             </div>
@@ -244,7 +245,23 @@
 
 <?php $__env->startSection('scripts'); ?>
     <script>
+        $('#general_file_from').validate({
+            rules: {
+                "general_file": {
+                    required:true
+                }
+            },
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            errorPlacement: function (error, element) {
+                error.appendTo(element.next());
+            },
+            success: function (label, element) {
 
+                $(element).removeClass("is-invalid");
+            }
+        });
         <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         $('#<?php echo e($_specialties->name_en); ?>_form_reporter').repeater({
 
@@ -356,31 +373,55 @@
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
-            // $('#page_modal').appendTo('body').modal('show');
-            // $(".blockUI").remove();
-             $("#add_edit_form").submit()
 
-        });
-        $('.btn_general_file_submit').click(function (e) {
-            e.preventDefault();
-
-            if (!$("#add_edit_form").valid()) {
-
-                return false;
-            }
-
-            if ($('#add_edit_form').find(':input').length <= 39) {
-                showAlertMessage('error', 'الرجاء تعبئة الطلب')
-                return false;
-            }
-
-
-            // $('#page_modal').appendTo('body').modal('show');
-            // $(".blockUI").remove();
-
-
+            $('#page_modal').appendTo('body').modal('show');
+            $(".blockUI").remove();
             // $("#add_edit_form").submit()
 
+        });
+        $('.general_file_submit').click(function (e) {
+            e.preventDefault();
+            if (!  $('#general_file_from').valid()) {
+                showAlertMessage('error', 'الرجاء إرفاق الملف العام')
+                return false;
+            }
+
+
+            $.ajax({
+                url : '<?php echo e(route('design_office.save_file')); ?>',
+                data : new FormData($('#add_edit_form').append($('#general_file')).get(0)),
+                type: "POST",
+                processData: false,
+                contentType: false,
+                beforeSend(){
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'مكتب تصميم'
+                    });
+                },
+                success:function(data) {
+                    if (data.success) {
+                        $('#page_modal').modal('hide');
+
+                      window.location='<?php echo e(route('design_office')); ?>'
+                    } else {
+                        $('#page_modal').modal('hide');
+                        if (data.message) {
+                            showAlertMessage('error', data.message);
+                        } else {
+                            showAlertMessage('error', 'حدث خطأ في النظام');
+                        }
+                    }
+                    KTApp.unblockPage();
+                },
+                error:function(data) {
+                    console.log(data);
+                    KTApp.unblock('#page_modal');
+                    KTApp.unblockPage();
+                },
+            });
         });
 
         function file_input_cu(selector, options) {
