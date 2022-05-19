@@ -94,9 +94,7 @@
         </div>
     </div>
 
-    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
-         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    </div>
+
 
 <?php $__env->stopSection(); ?>
 

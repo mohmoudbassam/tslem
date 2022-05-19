@@ -1,6 +1,19 @@
 <?php $__env->startSection('title'); ?>
     المستخدمين
 <?php $__env->stopSection(); ?>
+<?php $__env->startSection('style'); ?>
+    <style>
+        .modal{
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .modal-backdrop{
+            position: relative;
+        }
+        /*.blockOverlay{*/
+        /*    po*/
+        /*}*/
+    </style>
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
@@ -181,43 +194,45 @@
                 </div>
             </form>
         </div>
-        <div class="modal  bd-example-modal-lg" id="page_modal"
-             role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title"
-                            id="exampleModalLongTitle"></h5>
 
-                    </div>
-                    <form action="" method="post" id="test" enctype="multipart/form-data">
+    </div>
+    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
+         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
 
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-lg-12 col-md-6 col-sm-12">
-                                    <div class="row">
-                                        <label class="col-12" for="reject_reason">الرجاء ادخال سبب الرفض</label>
-                                        <div class="col-12">
-                                            <textarea class="form-control" name="reject_reason" id="reject_reason" rows="3"></textarea>
-                                        </div>
-                                        <div class="col-12 text-danger" id="reject_reason_error"></div>
-                                    </div>
-                                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="exampleModalLongTitle"></h5>
 
-                            </div>
-                        </div>
-                        <input type="hidden" name="id" value="">
-                        <div class="modal-footer">
-
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
-                            <button type="button" class="btn btn-primary submit_btn">ارسال</button>
-                        </div>
-                    </form>
                 </div>
+                <form action="" method="post" id="test" enctype="multipart/form-data">
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                                <div class="row">
+                                    <label class="col-12" for="reject_reason">الرجاء ادخال سبب الرفض</label>
+                                    <div class="col-12">
+                                        <textarea class="form-control" name="reject_reason" id="reject_reason"
+                                                  rows="3"></textarea>
+                                    </div>
+                                    <div class="col-12 text-danger" id="reject_reason_error"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="">
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                        <button type="button" class="btn btn-primary submit_btn">ارسال</button>
+                    </div>
+                </form>
             </div>
         </div>
-
     </div>
 
 <?php $__env->stopSection(); ?>
@@ -335,7 +350,7 @@
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
-               $('#page_modal').modal('show', {backdrop: 'static', keyboard: false})
+            $('#page_modal').appendTo('body').modal('show');
             // $("#add_edit_form").submit()
 
         });
