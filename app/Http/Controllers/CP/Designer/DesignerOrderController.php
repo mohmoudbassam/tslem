@@ -60,23 +60,28 @@ class DesignerOrderController extends Controller
             ->make(true);
     }
 
-//    public function accept(Request $request)
-//    {
-//
-//        $order = Order::query()->findOrFail($request->id);
-//        if ($order->status == 1) {
-//            $order->status = Order::DESIGN_REVIEW;
-//            $order->save();
-//
-//            save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
-//
-//            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
-//            return response()->json([
-//                'success' => true,
-//                'message' => 'تمت اعتماد الطلب بنجاح'
-//            ]);
-//        }
-//    }
+   public function accept(Request $request)
+   {
+
+       $order = Order::query()->findOrFail($request->id);
+       if ($order->status == 1) {
+           $order->status = Order::DESIGN_APPROVED;
+           $order->save();
+
+           save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
+
+           optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
+           return response()->json([
+               'success' => true,
+               'message' => 'تمت اعتماد الطلب بنجاح'
+           ]);
+       }
+
+       return response()->json([
+               'success' => false,
+               'message' => 'تم اعتماد الطلب مسبقا'
+        ]);
+   }
 //
 //    public function reject(Request $request)
 //    {
