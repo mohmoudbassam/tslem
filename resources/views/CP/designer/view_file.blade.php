@@ -58,6 +58,7 @@
             <div class="row">
 
                 @foreach($order_specialties as $_specialties)
+
                     <div class="card">
                         <div class="card-header">
 
@@ -81,16 +82,7 @@
                                             </div>
                                         </div>
 
-                                        @foreach($service->order_service_file as $file)
 
-                                            <div class="col-md-3" >
-                                              <span class="">
-                                                   <label class="form-label" for="service_id">{{$file->file_type->name_ar}}</label>
-
-                                                <a class="btn btn-secondary" href="{{route('design_office.download',['id'=>$file->id])}}" > <i class="fa fa-download fa-4x" style="width:150px ; height:50px"></i></a>
-                                              </span>
-                                            </div>
-                                        @endforeach
                                         <div class="col-md-3 ">
                                             <div class="mb-3 unit_hide">
                                                 <label
@@ -102,10 +94,122 @@
                                                      id="service_id_error"></div>
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
-                                <hr>
+                                @if(!$loop->last)
+                                    <hr>
+                                @endif
                             @endforeach
+                            <div class="row mt-5">
+                                @foreach($filess->where('specialties.name_en',$_specialties[0]->service->specialties->name_en) as $files)
+
+                                    @if($files->type ==1)
+                                        <div class="col-md-offset-3 col-md-2">
+                                            <div class="panel panel-default bootcards-file">
+
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <a href="#">
+                                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                                        </a>
+                                                        <h5 class="list-group-item-heading">
+                                                            <a href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                {{$files->real_name}}
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-success" href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                                تنزيل
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                        @if($files->type ==2)
+                                        <div class="col-md-offset-3 col-md-2">
+                                            <div class="panel panel-default bootcards-file">
+
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <a href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                                        </a>
+                                                        <h5 class="list-group-item-heading">
+                                                            <a href="#">
+                                                                {{$files->real_name}}
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-success" href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                                تنزيل
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                        @if($files->type ==3)
+                                        <div class="col-md-offset-3 col-md-2">
+                                            <div class="panel panel-default bootcards-file">
+
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <a href="#">
+                                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                                        </a>
+                                                        <h5 class="list-group-item-heading">
+                                                            <a href="#">
+                                                                {{$files->real_name}}
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-success" href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                <i class="fa fa-arrow-down" ></i>
+                                                                تنزيل
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+
+
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -119,23 +223,7 @@
 
 @section('scripts')
     <script>
-        @foreach ($order_specialties as $_specialties)
-        @foreach ($_specialties as $service)
-        @foreach($service->order_service_file as $file)
-        $("#file_{{$file->id}}").fileinput({
-            theme: "fa",
-            uploadUrl: "/file-upload-batch/2",
-            initialPreview: ['{{$file->path}}'],
-            minImageWidth: 20,
-            minImageHeight: 20,
-            maxImageWidth: 70,
-            maxImageHeight: 70,
-            hideThumbnailContent: true // hide image, pdf, text or other content in the thumbnail preview,
 
-        });
-        @endforeach
-        @endforeach
-        @endforeach
     </script>
 
 @endsection

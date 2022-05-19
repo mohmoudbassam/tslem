@@ -57,6 +57,7 @@
             <div class="row">
 
                 <?php $__currentLoopData = $order_specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
                     <div class="card">
                         <div class="card-header">
 
@@ -80,16 +81,7 @@
                                             </div>
                                         </div>
 
-                                        <?php $__currentLoopData = $service->order_service_file; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                            <div class="col-md-3" >
-                                              <span class="">
-                                                   <label class="form-label" for="service_id"><?php echo e($file->file_type->name_ar); ?></label>
-
-                                                <a class="btn btn-secondary" href="<?php echo e(route('design_office.download',['id'=>$file->id])); ?>" > <i class="fa fa-download fa-4x" style="width:150px ; height:50px"></i></a>
-                                              </span>
-                                            </div>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <div class="col-md-3 ">
                                             <div class="mb-3 unit_hide">
                                                 <label
@@ -101,10 +93,125 @@
                                                      id="service_id_error"></div>
                                             </div>
                                         </div>
+
+
                                     </div>
                                 </div>
-                                <hr>
+                                <?php if(!$loop->last): ?>
+                                    <hr>
+                                <?php endif; ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <div class="row mt-5">
+                                <?php $__currentLoopData = $filess->where('specialties.name_en',$_specialties[0]->service->specialties->name_en); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $files): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                    <?php if($files->type ==1): ?>
+                                        <div class="col-md-offset-3 col-md-2">
+                                            <div class="panel panel-default bootcards-file">
+
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <a href="#">
+                                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                                        </a>
+                                                        <h5 class="list-group-item-heading">
+                                                            <a href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                <?php echo e($files->real_name); ?>
+
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-success" href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                                تنزيل
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                        <?php if($files->type ==2): ?>
+                                        <div class="col-md-offset-3 col-md-2">
+                                            <div class="panel panel-default bootcards-file">
+
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <a href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                                        </a>
+                                                        <h5 class="list-group-item-heading">
+                                                            <a href="#">
+                                                                <?php echo e($files->real_name); ?>
+
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-success" href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                                تنزيل
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                        <?php if($files->type ==3): ?>
+                                        <div class="col-md-offset-3 col-md-2">
+                                            <div class="panel panel-default bootcards-file">
+
+                                                <div class="list-group">
+                                                    <div class="list-group-item">
+                                                        <a href="#">
+                                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                                        </a>
+                                                        <h5 class="list-group-item-heading">
+                                                            <a href="#">
+                                                                <?php echo e($files->real_name); ?>
+
+                                                            </a>
+                                                        </h5>
+
+                                                    </div>
+                                                    <div class="list-group-item">
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-success" href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                <i class="fa fa-arrow-down" ></i>
+                                                                تنزيل
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -118,23 +225,7 @@
 
 <?php $__env->startSection('scripts'); ?>
     <script>
-        <?php $__currentLoopData = $order_specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <?php $__currentLoopData = $_specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <?php $__currentLoopData = $service->order_service_file; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        $("#file_<?php echo e($file->id); ?>").fileinput({
-            theme: "fa",
-            uploadUrl: "/file-upload-batch/2",
-            initialPreview: ['<?php echo e($file->path); ?>'],
-            minImageWidth: 20,
-            minImageHeight: 20,
-            maxImageWidth: 70,
-            maxImageHeight: 70,
-            hideThumbnailContent: true // hide image, pdf, text or other content in the thumbnail preview,
 
-        });
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </script>
 
 <?php $__env->stopSection(); ?>

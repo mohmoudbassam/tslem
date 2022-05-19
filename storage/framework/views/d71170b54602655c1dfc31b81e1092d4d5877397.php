@@ -28,7 +28,7 @@
 
                     <ul class="nav nav-tabs-custom card-header-tabs border-top mt-4" id="pills-tab" role="tablist">
 
-                        <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                             <li class="nav-item">
                                 <a class="nav-link px-3 <?php if($loop->first): ?> active <?php endif; ?>" data-bs-toggle="tab"
@@ -36,9 +36,7 @@
                                    role="tab"><?php echo e($_specialties->name_ar); ?></a>
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab" href="#electrical" role="tab">الكهربائية</a>
-                        </li>
+
                     </ul>
                 </div>
                 <!-- end card body -->
@@ -49,7 +47,7 @@
                 <?php echo csrf_field(); ?>
 
                 <div class="tab-content">
-                    <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="tab-pane <?php if($loop->first): ?> active <?php endif; ?>" id="<?php echo e($_specialties->name_en); ?>"
                              role="tabpanel">
                             <div class="card">
@@ -68,7 +66,7 @@
                                                                 <label class="form-label" for="service_id">توصيف
                                                                     الخدمة</label>
                                                                 <select
-                                                                    class="form-select req <?php echo e($_specialties->name_en); ?>_service_id"
+                                                                    class="form-select req <?php echo e($_specialties->name_en); ?>_service_id service_id_select"
                                                                     id="service_id"
                                                                     name="service_id">
                                                                     <option value="">اختر...</option>
@@ -77,23 +75,10 @@
                                                                             value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                                 </select>
-                                                                <div class="col-12 text-danger"
-                                                                     id="_error"></div>
+                                                                <div class="col-12 text-danger service_id_error"
+                                                                     id=""></div>
                                                             </div>
                                                         </div>
-                                                        <?php $__currentLoopData = $service->file_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $files): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <div class="col-md-3">
-                                                                <div class="mb-3 ">
-                                                                    <label
-                                                                        class="form-label"><?php echo e($files->name_ar); ?></label>
-                                                                    <input name="<?php echo e($files->name_en); ?>" type="file"
-                                                                           id="file"
-                                                                           data-show-preview="false"
-                                                                           class="kartafile req">
-                                                                    <div class="col-12 text-danger"></div>
-                                                                </div>
-                                                            </div>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                         <div class="col-md-3 ">
                                                             <div class="mb-3 d-none">
                                                                 <label class="form-label">العدد/م</label>
@@ -122,94 +107,72 @@
                                 </div>
                                 <!-- end card body -->
                             </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">الملفات</h5>
+                                        </div>
 
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div>
+                                        <div class="row">
+
+
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="<?php echo e($_specialties->name_en); ?>_pdf_file">Pdf ملف </label>
+                                                    <input type="file" class="form-control" value=""
+                                                           id="<?php echo e($_specialties->name_en); ?>_pdf_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_pdf_file">
+                                                    <div class="col-12 text-danger"
+                                                         id="<?php echo e($_specialties->name_en); ?>_file_error"></div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="<?php echo e($_specialties->name_en); ?>_docs_file"> ملف docs</label>
+                                                    <input type="file" class="form-control" value=""
+                                                           id="<?php echo e($_specialties->name_en); ?>_docs_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_docs_file" multiple>
+                                                    <div class="col-12 text-danger"
+                                                         id="<?php echo e($_specialties->name_en); ?>_docs_file"></div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label"
+                                                           for="<?php echo e($_specialties->name_en); ?>_cad_file">CAD ملف</label>
+                                                    <input type="file" class="form-control" value=""
+                                                           id="<?php echo e($_specialties->name_en); ?>_cad_file"
+                                                           name="<?php echo e($_specialties->name_en); ?>_cad_file" multiple>
+                                                    <div class="col-12 text-danger"
+                                                         id="<?php echo e($_specialties->name_en); ?>_cad_error"></div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- end row -->
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
 
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                    <div class="tab-pane" id="electrical" role="tabpanel">
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="electrical_form_reporter">
-
-                                    <div class="row">
-                                        <div data-repeater-list="electrical">
-                                            <div data-repeater-item="" class="mb-2">
-
-
-                                                <div class="row">
-                                                    <div class="col-md-2">
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="designer_id">توصيف
-                                                                الخدمة</label>
-                                                            <select class="form-select" id="designer_id"
-                                                                    name="designer_id">
-                                                                <option value="">اختر...</option>
-                                                                <?php $__currentLoopData = $specialties->where('name_en','electrical')->first()->service; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-                                                                    <option
-                                                                        value="<?php echo e($service->id); ?>"><?php echo e($service->name); ?></option>
-                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                <div class="col-12 text-danger"
-                                                                     id="designer_id_error"></div>
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">العدد</label>
-                                                            <input type="number" name="number" class="form-control"
-                                                                   placeholder="العدد">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">كيلو/واط</label>
-                                                            <input type="number" name="km" class="form-control"
-                                                                   placeholder="كيلو/واط">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="mb-3 ">
-                                                            <label class="form-label"
-                                                                   for="formrow-password-input">خريطة</label>
-                                                            <input name="file" type="file" id="file"
-                                                                   data-show-preview="false" class="kartafile" multiple>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="mb-3 ">
-                                                            <label class="form-label" for="formrow-password-input">جدول
-                                                                احمال</label>
-                                                            <input name="loads" type="file" id="loads"
-                                                                   data-show-preview="false" class="kartafile" multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row ">
-                                            <div class="col-lg-5"></div>
-                                            <div class="col">
-                                                <div data-repeater-create=""
-                                                     class="btn font-weight-bold btn-warning">
-                                                    <i class="la la-plus"></i> إضافة
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end card body -->
-                        </div>
-                        <!-- end card -->
-                    </div>
 
                 </div>
+
+
                 <input type="hidden" name="order_id" value="<?php echo e($order->id); ?>">
 
 
@@ -218,8 +181,42 @@
                 </div>
             </form>
         </div>
-        <!-- end col -->
+        <div class="modal  bd-example-modal-lg" id="page_modal"
+             role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
 
+                    <div class="modal-header">
+                        <h5 class="modal-title"
+                            id="exampleModalLongTitle"></h5>
+
+                    </div>
+                    <form action="" method="post" id="test" enctype="multipart/form-data">
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                                    <div class="row">
+                                        <label class="col-12" for="reject_reason">الرجاء ادخال سبب الرفض</label>
+                                        <div class="col-12">
+                                            <textarea class="form-control" name="reject_reason" id="reject_reason" rows="3"></textarea>
+                                        </div>
+                                        <div class="col-12 text-danger" id="reject_reason_error"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="">
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                            <button type="button" class="btn btn-primary submit_btn">ارسال</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -227,7 +224,7 @@
 
 <?php $__env->startSection('scripts'); ?>
     <script>
-        <?php $__currentLoopData = $specialties->where('name_en','!=','electrical'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         $('#<?php echo e($_specialties->name_en); ?>_form_reporter').repeater({
 
             initEmpty: true,
@@ -244,8 +241,7 @@
                     fileInput.fileinput(request_file_input_attributes());
 
                     var select_service = $(this).find('.<?php echo e($_specialties->name_en); ?>_service_id').on('change', function (e) {
-                        var unit_hide = $(this).find('.unit_hide');
-                        console.log(unit_hide)
+
                         var url = '<?php echo e(route("design_office.get_service_by_id", ":id")); ?>';
                         url = url.replace(':id', $(this).val());
                         var select = $(this)
@@ -293,165 +289,28 @@
             }
         });
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        $('#electrical_form_reporter').repeater({
 
-            initEmpty: true,
 
-            defaultValues: {
-                'text-input': ''
-            },
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_pdf_file')
 
-            show: function () {
-                var a = document.querySelectorAll('#architect_form_reporter');
-                a.forEach((e) => {
-                    //   e.datepicker({});
-                    var fileInput = $(this).find('.kartafile');
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_docs_file')
 
-                    fileInput.fileinput(request_file_input_attributes());
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        file_input_cu('#<?php echo e($_specialties->name_en); ?>_cad_file')
 
-                })
-                $(this).slideDown();
-
-            },
-
-            hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
-            }
-        });
-        // $('#construction_form_reporter').repeater({
-        //
-        //     initEmpty: false,
-        //
-        //     defaultValues: {
-        //         'text-input': ''
-        //     },
-        //
-        //     show: function () {
-        //         var a = document.querySelectorAll('#architect_form_reporter');
-        //         a.forEach((e) => {
-        //             //   e.datepicker({});
-        //             var fileInput = $(this).find('.kartafile');
-        //
-        //             fileInput.fileinput(request_file_input_attributes());
-        //
-        //         })
-        //         $(this).slideDown();
-        //
-        //     },
-        //
-        //     hide: function (deleteElement) {
-        //         $(this).slideUp(deleteElement);
-        //     }
-        // });
-        // $('#mchanical_form_reporter').repeater({
-        //
-        //     initEmpty: false,
-        //
-        //     defaultValues: {
-        //         'text-input': ''
-        //     },
-        //
-        //     show: function () {
-        //         var a = document.querySelectorAll('#architect_form_reporter');
-        //         a.forEach((e) => {
-        //             //   e.datepicker({});
-        //             var fileInput = $(this).find('.kartafile');
-        //
-        //             fileInput.fileinput(request_file_input_attributes());
-        //
-        //         })
-        //         $(this).slideDown();
-        //
-        //     },
-        //
-        //     hide: function (deleteElement) {
-        //         $(this).slideUp(deleteElement);
-        //     }
-        // });
-
-        $(".kartafile").fileinput({
-            theme: "explorer",
-            uploadUrl: "/file-upload-batch/2",
-            minFileCount: 2,
-            maxFileCount: 5,
-            maxFileSize: 10000,
-            removeFromPreviewOnError: true,
-            overwriteInitial: false,
-            previewFileIcon: '<i class="fas fa-file"></i>',
-            initialPreview: [],
-            initialPreviewAsData: true, // defaults markup
-            initialPreviewConfig: [],
-            showRemove: false,
-            showCancel: false,
-            showUpload: false,
-            showPreview: true,
-            browseLabel: "اضغط للاستعراض",
-            msgPlaceholder: "اختر ملف",
-            msgSelected: "تم الاختيار ",
-            fileSingle: "ملف واحد",
-            filePlural: "اكثر من ملف",
-            dropZoneTitle: "سحب وافلات",
-            msgZoomModalHeading: "معلومات الملف",
-            dropZoneClickTitle: '<br> اضغط للاستعراض',
-
-            uploadExtraData: {
-                img_key: "1000",
-                img_keywords: "happy, nature"
-            },
-            preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
-            previewFileIconSettings: { // configure your icon file extensions
-                'doc': '<i class="fas fa-file-word text-primary"></i>',
-                'xls': '<i class="fas fa-file-excel text-success"></i>',
-                'ppt': '<i class="fas fa-file-powerpoint text-danger"></i>',
-                'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
-                'zip': '<i class="fas fa-file-archive text-muted"></i>',
-                'htm': '<i class="fas fa-file-code text-info"></i>',
-                'txt': '<i class="fas fa-file-text text-info"></i>',
-                'mov': '<i class="fas fa-file-video text-warning"></i>',
-                'mp3': '<i class="fas fa-file-audio text-warning"></i>',
-                'jpg': '<i class="fas fa-file-image text-danger"></i>',
-                'gif': '<i class="fas fa-file-image text-muted"></i>',
-                'png': '<i class="fas fa-file-image text-primary"></i>'
-            },
-            previewFileExtSettings: { // configure the logic for determining icon file extensions
-                'doc': function (ext) {
-                    return ext.match(/(doc|docx)$/i);
-                },
-                'xls': function (ext) {
-                    return ext.match(/(xls|xlsx)$/i);
-                },
-                'ppt': function (ext) {
-                    return ext.match(/(ppt|pptx)$/i);
-                },
-                'zip': function (ext) {
-                    return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
-                },
-                'htm': function (ext) {
-                    return ext.match(/(htm|html)$/i);
-                },
-                'txt': function (ext) {
-                    return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
-                },
-                'mov': function (ext) {
-                    return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
-                },
-                'mp3': function (ext) {
-                    return ext.match(/(mp3|wav)$/i);
-                }
-            }
-        });
-
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         $('#add_edit_form').validate({
             rules: addValidationRule(),
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
             focusInvalid: true,
             errorPlacement: function (error, element) {
-                $(element).addClass("is-invalid");
-                element.append('#' + $(element).attr('id') + '_error');
+                error.appendTo(element.next());
             },
             success: function (label, element) {
-
                 $(element).removeClass("is-invalid");
             }
         });
@@ -465,18 +324,59 @@
             $('.req').each((i, e) => {
                 $(e).rules("add", {required: true})
             });
+
+
             if (!$("#add_edit_form").valid()) {
-                showAlertMessage('error','الرجاء ملئ جميع الحقول')
+                showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
 
                 return false;
             }
-
-
-            $("#add_edit_form").submit()
+            if ($('#add_edit_form').find(':input').length <= 39) {
+                showAlertMessage('error', 'الرجاء تعبئة الطلب')
+                return false;
+            }
+               $('#page_modal').modal('show', {backdrop: 'static', keyboard: false})
+            // $("#add_edit_form").submit()
 
         });
 
-
+        function file_input_cu(selector, options) {
+            let defaults = {
+                theme: "fas",//gly
+                showDrag: false,
+                deleteExtraData: {
+                    '_token': '<?php echo e(csrf_token()); ?>',
+                },
+                browseClass: "btn btn-info",
+                browseLabel: "اضغط للاستعراض",
+                browseIcon: "<i class='la la-file'></i>",
+                removeClass: "btn btn-danger",
+                removeLabel: "delete",
+                removeIcon: "<i class='fa fa-trash-o'></i>",
+                showRemove: false,
+                showCancel: false,
+                showUpload: false,
+                showPreview: true,
+                msgPlaceholder: "اختر ملف",
+                msgSelected: "تم الاختيار ",
+                fileSingle: "ملف واحد",
+                filePlural: "اكثر من ملف",
+                dropZoneTitle: "سحب وافلات",
+                msgZoomModalHeading: "معلومات الملف",
+                dropZoneClickTitle: '<br> اضغط للاستعراض',
+                initialPreview: [],
+                initialPreviewShowDelete: options,
+                initialPreviewAsData: true,
+                initialPreviewConfig: [],
+                initialPreviewFileType: 'image',
+                overwriteInitial: true,
+                browseOnZoneClick: true,
+                captionClass: true,
+                maxFileCount: 3,
+            };
+            let settings = $.extend({}, defaults, options);
+            $(selector).fileinput(settings);
+        }
     </script>
 
 <?php $__env->stopSection(); ?>

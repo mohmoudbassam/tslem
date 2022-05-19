@@ -35,6 +35,7 @@
             browseOnZoneClick: true,
             captionClass:true,
             maxFileCount: 6,
+            allowedFileExtensions: ["jpg", "png", "gif"],
             slugCallback: function(filename) {
                 console.log(filename);
                 return filename.replace('(', '_');

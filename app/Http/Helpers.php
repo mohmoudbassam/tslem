@@ -63,6 +63,45 @@ function is_pdf($extension)
 {
     return $extension == 'pdf';
 }
-function get_order_folder(){
-    return 'files/5';
+
+
+ function get_file_icon($ext)
+{
+    switch($ext){
+        case 'pdf':
+           return  $type='fa fa-file-pdf';
+            break;
+        case 'docx':
+        case 'doc':
+
+        return  $type='fa-file-word';
+            break;
+        case 'xls':
+            return  $type='fa-file-excel';
+        case 'xlsx':
+          return  $type='fa-file-excel';
+            break;
+        case 'mp3':
+        case 'ogg':
+        case 'wav':
+            $type='audio';
+            break;
+        case 'mp4':
+        case 'mov':
+            $type='video';
+            break;
+        case 'zip':
+        case '7z':
+        case 'rar':
+            $type='archive';
+            break;
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+            $type='image';
+            break;
+        default:
+            $type='alt';
+    }
+
 }

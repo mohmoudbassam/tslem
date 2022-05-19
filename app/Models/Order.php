@@ -18,6 +18,11 @@ class Order extends Model
     public const DONE = 4;
     public const APPROVED = 5;
 
+
+    public function specialties_file(){
+        return $this->hasMany(OrderSpecilatiesFiles::class,'order_id');
+    }
+
     public function service(){
       return  $this->belongsToMany(Service::class,'order_service','order_id','service_id')
          ->withPivot('service_id', 'order_id','unit');

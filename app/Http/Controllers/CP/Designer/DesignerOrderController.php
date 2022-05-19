@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderServiceFile;
+use App\Models\OrderSpecilatiesFiles;
 use App\Models\Service;
 use App\Models\ServiceFileType;
 use App\Models\Specialties;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Response;
+
 class DesignerOrderController extends Controller
 {
     public function orders()
@@ -107,47 +109,66 @@ class DesignerOrderController extends Controller
 
     public function save_file(Request $request)
     {
-        $data = $request->except(['order_id', '_token']);
+
         $order = Order::query()->find(request('order_id'));
+        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
+        $data = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
+            if (in_array($key, $specialties_names)) {
+                return $item;
+            }
+            return null;
+        })->filter();
 
-        foreach ($data as $specialties => $service) {
+        foreach ($data as $specialties => $services) {
 
-            foreach ($service as $keys) {
-                $order_service = OrderService::query()->create([
-                    'service_id' => $keys['service_id'],
+            foreach ($services as $service) {
+
+                OrderService::query()->create([
+                    'service_id' => $service['service_id'],
                     'order_id' => $order->id,
-                    'unit' => $keys['unit'],
+                    'unit' => $service['unit'],
                 ]);
-                foreach ($keys as $key => $value) {
-
-                    if ($type = ServiceFileType::query()->where('name_en', $key)->first()) {
-
-                        $this->upload_files($order, $order_service, $value, $type);
-                    }
-                }
-
 
             }
 
+            $specialties_obj = Specialties::query()->where('name_en', $specialties)->first();
+
+            if ($specialties_obj) {
+                if(request($specialties . '_pdf_file')){
+                    $this->upload_files($order, $specialties_obj, request($specialties . '_pdf_file'),1);
+                }
+                if(request($specialties . '_cad_file')){
+                    $this->upload_files($order, $specialties_obj, request($specialties . '_cad_file',),2);
+                }
+                if(request($specialties . '_docs_file')){
+                    $this->upload_files($order, $specialties_obj, request($specialties . '_docs_file'),3);
+                }
+
+            }
+
+
         }
 
-
-        return redirect()->back()->with('success', 'تم إضافة التصاميم بنجاح');
+        return redirect()->route('design_office')->with('success', 'تم إضافة التصاميم بنجاح');
 
     }
 
-    public function upload_files($order, $order_service, $file, $type)
+    public function upload_files($order, $specialties, $file,$type)
     {
 
-        $path = Storage::disk('public')->put("orders/$order->id/", $file);
 
-        $file_name = $file->getClientOriginalName();
-        OrderServiceFile::query()->create([
-            'path' => $path,
-            'real_name' => $file_name,
-            'order_service_id' => $order_service->id,
-            'type' => $type->id,
-        ]);
+            $path = Storage::disk('public')->put("orders/$order->id", $file);
+            $file_name = $file->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => $specialties->id,
+                'order_id' => $order->id,
+                'type'=>$type
+            ]);
+
+
+
     }
 
     public function get_service_by_id($id)
@@ -161,21 +182,26 @@ class DesignerOrderController extends Controller
         $service = Service::all();
         $order->with('service.specialties');
 
-        $order_specialties = OrderService::query()->with('service.specialties', 'order_service_file.file_type')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties.service' )->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $system_specialties_services = Specialties::query()->with('service')->get();
+        $order_designer_files=OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
 
-        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'services' => $service, 'order_specialties' => $order_specialties]);
+        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'system_specialties_services' => $system_specialties_services, 'order_specialties' => $order_specialties,'order_files'=>$order_designer_files]);
     }
 
     public function view_file(Order $order)
     {
-        $order_specialties = OrderService::query()->with('service.specialties', 'order_service_file.file_type')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
-        return view('CP.designer.view_file', ['order' => $order, 'order_specialties' => $order_specialties]);
+
+        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $files=OrderSpecilatiesFiles::query()->where('order_id',$order->id)->get();
+         return view('CP.designer.view_file', ['order' => $order,'order_specialties'=>$order_specialties,'filess'=>$files]);
 
     }
 
     public function download($id)
     {
-     $file= OrderServiceFile::query()->where('id',$id)->first();
+        $file = OrderSpecilatiesFiles::query()->where('id', $id)->first();
+
         $headers = [
             'Content-Type' => 'application/json',
             'Content-Disposition' => "attachment; filename=$file->path",
