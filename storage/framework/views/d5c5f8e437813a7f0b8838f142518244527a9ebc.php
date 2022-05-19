@@ -230,6 +230,9 @@
     <?php if(session('success')): ?>
     showAlertMessage('success', '<?php echo e(session('success')); ?>');
         <?php endif; ?>
+        <?php if(session('error')): ?>
+    showAlertMessage('error', '<?php echo e(session('error')); ?>');
+        <?php endif; ?>
     function request_file_input_attributes(){
         return {
             theme: "explorer",

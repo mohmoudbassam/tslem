@@ -109,7 +109,9 @@ class DesignerOrderController extends Controller
 
     public function save_file(Request $request)
     {
-
+           if($this->validate_file($request)){
+               return redirect()->back()->with('error', 'الرجاء إضافة جميع الملفات المطلوبة');
+           };
         $order = Order::query()->find(request('order_id'));
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
         $data = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
@@ -209,6 +211,24 @@ class DesignerOrderController extends Controller
 
         return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
 
+    }
+
+    private function validate_file($request){
+        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
+        $specialties = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
+            if (in_array($key, $specialties_names)) {
+                return $item;
+            }
+            return null;
+        })->filter()->keys();
+        foreach ($specialties as $key => $_specialties){
+
+            if(!(request($_specialties.'_pdf_file')&&request($_specialties.'_cad_file'))){
+                return true;
+            }
+
+        }
+        return false;
     }
 }
 

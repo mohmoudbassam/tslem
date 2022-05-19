@@ -230,6 +230,9 @@
     @if(session('success'))
     showAlertMessage('success', '{{session('success')}}');
         @endif
+        @if(session('error'))
+    showAlertMessage('error', '{{session('error')}}');
+        @endif
     function request_file_input_attributes(){
         return {
             theme: "explorer",
