@@ -351,9 +351,9 @@
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
-            $('#page_modal').appendTo('body').modal('show');
+            //$('#page_modal').appendTo('body').modal('show');
             $(".blockUI").remove();
-            // $("#add_edit_form").submit()
+             $("#add_edit_form").submit()
 
         });
 
