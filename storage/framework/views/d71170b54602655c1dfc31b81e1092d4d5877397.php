@@ -398,7 +398,7 @@
                         overlayColor: '#000000',
                         type: 'v2',
                         state: 'success',
-                        message: 'مكتب تصميم'
+                        message: 'الرجاء الانتظار..........'
                     });
                 },
                 success:function(data) {
@@ -465,9 +465,6 @@
 
 
 
-        <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_specialties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </script>
 
 <?php $__env->stopSection(); ?>

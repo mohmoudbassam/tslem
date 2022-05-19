@@ -399,7 +399,7 @@
                         overlayColor: '#000000',
                         type: 'v2',
                         state: 'success',
-                        message: 'مكتب تصميم'
+                        message: 'الرجاء الانتظار..........'
                     });
                 },
                 success:function(data) {
@@ -466,9 +466,6 @@
 
 
 
-        @foreach($specialties as $_specialties)
-
-        @endforeach
     </script>
 
 @endsection

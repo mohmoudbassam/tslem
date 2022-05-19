@@ -32,13 +32,23 @@ class DesignerOrderController extends Controller
             ->addColumn('actions', function ($order) {
                 $add_file_design = '';
 
-                $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
-                $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
+                $add_file_design = '';
+                $edit_files = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الملفات </a>';
+                $accept = '<a class="dropdown-item" onclick="accept( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
+                $reject = '<a class="dropdown-item" onclick="reject( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-times"></i>رفض </a>';
 
                 if ($order->status > 2) {
-                    $add_file_design = '';
+//                    $add_file_design = '';
+//                    $edit_files = '';
                 }
+
+                if ($order->status == Order::DESIGN_APPROVED) {
+                    $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
+                    $accept = '';
+                    $reject = '';
+                }
+
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
@@ -47,9 +57,9 @@ class DesignerOrderController extends Controller
                                                ' . $add_file_design . '
                                                ' . $edit_files . '
                                                ' . $view . '
-
-
-                                            </div>
+                                               ' . $accept . '
+                                               ' . $reject . '
+     </div>
                                         </div>';
                 return $element;
             })
@@ -65,7 +75,7 @@ class DesignerOrderController extends Controller
    {
 
        $order = Order::query()->findOrFail($request->id);
-       if ($order->status == 1) {
+       if ($order->status == Order::ORDER_REVIEW) {
            $order->status = Order::DESIGN_APPROVED;
            $order->save();
 
@@ -84,25 +94,36 @@ class DesignerOrderController extends Controller
         ]);
    }
 //
-//    public function reject(Request $request)
-//    {
-//
-//        $order = Order::query()->findOrFail($request->id);
-//        if ($order->status == 1) {
-//            $order->status = Order::PENDING;
-//            $order->save();
-//
-//            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
-//
-//            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
-//            return response()->json([
-//                'success' => true,
-//                'message' => 'تمت رفض الطلب بنجاح'
-//            ]);
-//        }
-//
-//
-//    }
+    public function reject(Request $request)
+    {
+
+        $order = Order::query()->findOrFail($request->id);
+        if ($order->status == Order::ORDER_REVIEW) {
+            $order->status = Order::PENDING;
+            $order->save();
+
+            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
+
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
+            return response()->json([
+                'success' => true,
+                'message' => 'تمت رفض الطلب بنجاح'
+            ]);
+        }
+
+        if ($order->status == Order::PENDING) {
+            return response()->json([
+                'success' => false,
+                'message' => 'تم رفض الطلب مسبقا'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'تم اعتماد الطلب مسبقا'
+        ]);
+
+    }
 
     public function add_files(Order $order)
     {
@@ -156,14 +177,26 @@ class DesignerOrderController extends Controller
             }
 
 
+
         }
-        session()->put('success','تمت اضافة التصاميم بنجاح');
-        $order->status=3;
+        if (request('general_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('general_file'));
+            $file_name = request('general_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 5
+            ]);
+        }
+        session()->put('success', 'تمت اضافة التصاميم بنجاح');
+        $order->status = 3;
         $order->save();
 
         return response()->json([
-           'success'=>true,
-           'message'=>'تمت اضافة التصاميم بنجاح'
+            'success' => true,
+            'message' => 'تمت اضافة التصاميم بنجاح'
         ]);
 
     }
@@ -171,16 +204,18 @@ class DesignerOrderController extends Controller
     public function upload_files($order, $specialties, $file, $type)
     {
 
+        if ($file) {
 
-        $path = Storage::disk('public')->put("orders/$order->id", $file);
-        $file_name = $file->getClientOriginalName();
-        OrderSpecilatiesFiles::query()->create([
-            'path' => $path,
-            'real_name' => $file_name,
-            'specialties_id' => $specialties->id,
-            'order_id' => $order->id,
-            'type' => $type
-        ]);
+            $path = Storage::disk('public')->put("orders/$order->id", $file);
+            $file_name = $file->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => $specialties->id,
+                'order_id' => $order->id,
+                'type' => $type
+            ]);
+        }
 
 
     }
@@ -192,6 +227,7 @@ class DesignerOrderController extends Controller
 
     public function edit_files(Order $order)
     {
+
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
         $order->with('service.specialties');
@@ -199,8 +235,15 @@ class DesignerOrderController extends Controller
         $order_specialties = OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $system_specialties_services = Specialties::query()->with('service')->get();
         $order_designer_files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
-
-        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties, 'system_specialties_services' => $system_specialties_services, 'order_specialties' => $order_specialties, 'order_files' => $order_designer_files]);
+        $files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get();
+        $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
+        return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties,
+            'system_specialties_services' => $system_specialties_services,
+            'order_specialties' => $order_specialties,
+            'order_files' => $order_designer_files,
+            'filess' => $files,
+            'general_file' => $general_file
+        ]);
     }
 
     public function view_file(Order $order)
@@ -225,6 +268,105 @@ class DesignerOrderController extends Controller
 
     }
 
+    public function delete_service(OrderService $service)
+    {
+        $service->delete();
+        return redirect()->back();
+    }
+
+    public function delete_file(OrderSpecilatiesFiles $file)
+    {
+        $file->delete();
+        return redirect()->back();
+    }
+
+    public function edit_file_action(Request $request)
+    {
+
+        $order = Order::query()->where('id', $request->order_id)->first();
+
+        $file_validation = $this->validate_update_file($request, $order);
+        if (!$file_validation['success']) {
+            return response()->json($file_validation);
+        };
+        $this->validate_update_file($request, $order);
+        OrderService::query()->where('order_id', $order->id)->delete();
+
+        foreach ((array)$request->service as $service) {
+
+            OrderService::query()->create([
+                'service_id' => $service['service_id'],
+                'unit' => $service['unit'],
+                'order_id' => $order->id
+            ]);
+        }
+        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
+        $data = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
+            if (in_array($key, $specialties_names)) {
+                return $item;
+            }
+            return null;
+        })->filter();
+
+        foreach ($data as $specialties => $services) {
+
+            foreach ($services as $service) {
+
+                OrderService::query()->create([
+                    'service_id' => $service['service_id'],
+                    'order_id' => $order->id,
+                    'unit' => $service['unit'],
+                ]);
+
+            }
+            $specialties_obj = Specialties::query()->where('name_en', $specialties)->first();
+
+        }
+
+        foreach (Specialties::all() as $specialties) {
+
+            if (request($specialties->name_en . '_pdf_file')) {
+                OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
+                    $q->where('name_en', $specialties);
+                })->where('order_id', $order->id)->where('type', 1)->delete();
+                $this->upload_files($order, $specialties, request($specialties->name_en . '_pdf_file'), 1);
+            }
+            if (request($specialties->name_en . '_cad_file')) {
+                OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
+                    $q->where('name_en', $specialties);
+                })->where('order_id', $order->id)->where('type', 2)->delete();
+                $this->upload_files($order, $specialties, request($specialties->name_en . '_cad_file',), 2);
+            }
+            if (request($specialties->name_en . '_docs_file')) {
+                OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
+                    $q->where('name_en', $specialties);
+                })->where('order_id', $order->id)->where('type', 3)->delete();
+                $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
+            }
+        }
+        if(request('general_file')){
+            $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
+            if($general_file){
+                $general_file->delete();
+            }
+
+            $path = Storage::disk('public')->put("orders/$order->id", request('general_file'));
+            $file_name = request('general_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 5
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تمت اضافة التعديل  بنجاح'
+        ]);
+    }
+
     private function validate_file($request)
     {
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
@@ -237,11 +379,52 @@ class DesignerOrderController extends Controller
         foreach ($specialties as $key => $_specialties) {
 
             if (!(request($_specialties . '_pdf_file') && request($_specialties . '_cad_file'))) {
-              $name=  Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
+                $name = Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
                 return [
                     'success' => false,
-                    'message' =>" الرجاء إدخال جميع ملفات $name"
+                    'message' => " الرجاء إدخال جميع ملفات $name"
                 ];
+            }
+
+        }
+        return [
+            'success' => true
+        ];
+    }
+
+    public function validate_update_file(Request $request, $order)
+    {
+        $specialties_names = Specialties::all()->pluck('name_ar', 'name_en')->toArray();
+
+        $order_specialties = OrderSpecilatiesFiles::query()->with('specialties')
+            ->where('order_id', $order->id)
+            ->get()->pluck('specialties.name_en')->unique();
+        $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
+        if (!($general_file || request('general_file'))) {
+            return [
+                'success' => false,
+                'message' => "الرجاء إرفاق ملف الموقع العام "
+            ];
+        }
+
+        foreach ($order_specialties as $order_special) {
+            $file_count = OrderSpecilatiesFiles::query()
+                ->whereHas('specialties', function ($q) use ($order_special) {
+                    $q->where('name_en', $order_special);
+                })
+                ->where('order_id', $order->id)
+                ->whereIn('type', [1, 2])->count();
+
+            if ($file_count < 2) {
+
+                if (!(request($order_special . '_pdf_file') || request($order_special . '_cad_file'))) {
+                    $name = $specialties_names[$order_special];
+                    return [
+                        'success' => false,
+                        'message' => " الرجاء إدخال جميع ملفات $name"
+                    ];
+                }
+
             }
 
         }

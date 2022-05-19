@@ -80,8 +80,15 @@ Route::middleware('auth')->group(function () {
         Route::get('get_service_by_id/{id}', [DesignerOrderController::class, 'get_service_by_id'])->name('.get_service_by_id');
         Route::get('view_file/{order}', [DesignerOrderController::class, 'view_file'])->name('.view_file');
         Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
+
+        Route::get('delete_service/{service}', [DesignerOrderController::class, 'delete_service'])->name('.delete_service');
+        Route::get('delete_file/{file}', [DesignerOrderController::class, 'delete_file'])->name('.delete_file');
+        Route::post('edit_file_action', [DesignerOrderController::class, 'edit_file_action'])->name('.edit_file_action');
         Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
-//        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
+
+//        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
+
+        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
