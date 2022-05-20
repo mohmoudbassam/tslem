@@ -120,4 +120,9 @@ class User extends Authenticatable
         return null;
 
     }
+
+    public function designer_order_rejected(){
+        return $this->belongsTo(DesignerRejected::class,'id','designer_id')
+            ->where('type','design_office');
+    }
 }

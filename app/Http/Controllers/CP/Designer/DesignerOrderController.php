@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CP\Designer;
 
 use App\Http\Controllers\Controller;
+use App\Models\DesignerRejected;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderServiceFile;
@@ -88,7 +89,11 @@ class DesignerOrderController extends Controller
             $order->status = Order::PENDING;
             save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
             optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
-            $order->designer_id=null;
+            $order->designer_id = null;
+            DesignerRejected::query()->create([
+              'order_id'=>$order->id,
+                'designer_id'=>auth()->user()->id
+                ]);
             $order->save();
         }
         return redirect()->route('design_office')->with(['success' => 'تمت رفض الطلب بناح ']);

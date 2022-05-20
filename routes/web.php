@@ -68,6 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
         Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
+        Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
+        Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
     });

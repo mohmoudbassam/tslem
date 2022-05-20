@@ -28,12 +28,12 @@ class OrdersController extends Controller
     {
 
         $order = Order::query()->create($request->except('files', '_token'));
-        $order->owner_id=auth()->user()->id;
+        $order->owner_id = auth()->user()->id;
         $order->save();
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 
-        $user->notify(new OrderNotification('تم إنشاء الطلب  ',auth()->user()->id));
+        $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
         return redirect()->route('services_providers')->with(['success' => 'تم انشاء الطلب بنجاح']);
     }
 
@@ -45,11 +45,11 @@ class OrdersController extends Controller
                 return $order->created_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
                 return $order->order_status;
-            })   ->addColumn('actions', function ($order) {
+            })->addColumn('actions', function ($order) {
 
-                $add_designer='';
+                $add_designer = '';
                 if ($order->designer_id == null) {
-                    $add_designer = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة مكتب تصميم </a>';
+                    $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة مكتب تصميم </a>';
                 }
 
 
@@ -65,7 +65,6 @@ class OrdersController extends Controller
                               </div>';
                 return $element;
             })->rawColumns(['actions'])
-
             ->make(true);
     }
 
@@ -80,5 +79,29 @@ class OrdersController extends Controller
                 'real_name' => $file_name
             ]);
         }
+    }
+
+    public function edit_order(Order $order)
+    {
+        $data['designers'] = User::query()->whereDoesntHave('designer_order_rejected',function($q)use($order){
+            $q->where('order_id',$order->id);
+        })
+            ->whereVitrified()->where('type', 'design_office')->get();
+        $data['order'] = $order;
+
+        return view('CP.service_providers.edit_order', $data);
+    }
+    public function update_order(Request $request)
+    {
+        $order = tap(Order::query()->where('id',$request->order_id)->first())
+            ->update($request->except('files', '_token','order_id'));
+
+        save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
+        $user = User::query()->find($request->designer_id);
+
+        $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
+        return redirect()->route('services_providers')->with(['success' => 'تم تعديل الطلب بنجاح']);
+
+
     }
 }
