@@ -65,22 +65,19 @@ class ContractorController extends Controller
     
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) use ($order){
-                $add_report = '';
+                // $add_report = '';
 
-                $add_report = '<a class="dropdown-item"  href="' . route('contractor.add_report_form', ['order' => $order->id]) . '" ><i class="fa fa-plus"></i>إضافة تقرير  </a>';
-                $show_comments = '<a class="dropdown-item" href="' . route('contractor.show_comments', ['report' => $report->id]) . '"><i class="fa fa-eye"></i>عرض الملاحظات  </a>';
-                if ($order->status > 4) {
-                    $accept = '';
-                }
+                // $add_report = '<a class="dropdown-item"  href="' . route('contractor.add_report_form', ['order' => $order->id]) . '" ><i class="fa fa-plus"></i>إضافة تقرير  </a>';
+                // $show_comments = '<a class="dropdown-item" href="' . route('contractor.show_comments', ['report' => $report->id]) . '"><i class="fa fa-eye"></i>عرض الملاحظات  </a>';
+                // if ($order->status > 4) {
+                //     $accept = '';
+                // }
 
                 $element = '<div class="btn-group me-1 mt-2">
-                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                خيارات<i class="mdi mdi-chevron-down"></i>
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-                                               ' . $add_report . '
-                                               ' . $show_comments . '
-                                            </div>
+                                            <a class="btn btn-info btn-sm" href="' . route('contractor.show_comments', ['report' => $report->id]) . '">
+                                               عرض الملاحظات
+                                            </a>
+                                           
                                         </div>';
             return $element;
 

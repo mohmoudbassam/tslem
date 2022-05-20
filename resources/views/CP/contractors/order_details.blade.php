@@ -298,6 +298,11 @@ file-drop-zone clearfix {}
 
                                 <div class="card">
                                     <div class="card-header">
+                                    <div class="row"><div class="col-lg-2 offset-10">
+                                    <a class="btn btn btn-primary" href="{{route('contractor.add_report_form', ['order' => $order->id])}}">إنشاء تقرير</a>
+                                    </div></div>
+
+                                    
                                         <div class="row mt-4">
                                             <div class="col-lg-12">
 

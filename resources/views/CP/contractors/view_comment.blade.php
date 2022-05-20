@@ -134,6 +134,14 @@ body {
     font-size: 15px;
     margin-right: 10px;
 }
+
+.details_p {
+    font-size: 20px;
+}
+
+.bold {
+    font-weight: bold;
+}
 </style>
 @endsection
 @section('content')
@@ -159,56 +167,83 @@ body {
 <div class="card">
     <div class="card-body">
 
+        <h2 class = "mb-5">تفاصيل التقرير</h2>
+
         <div class="row">
-            <section class="content-item" id="comments">
-                   
-                        <form method="post"  id="save_comment"  style="padding-right:20px;">
-                            @csrf
 
-                          
-                                <div class="row">
+            <div class="col-md-6 mb-3">
+                <p class="details_p"> <span class="bold"> رقم التقرير : </span>{{$report->id}}</p>
+            </div>
 
-                                    <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                        <textarea class="form-control v" name="body" id="body"
-                                            placeholder="َإضافة تعليق"></textarea>
-                                    </div>
-                                </div>
-                            
-                            <input type="hidden" name="report_id" value="{{$report->id}}" id="report_id">
-                            <button type="submit" class="btn btn-primary pull-right submit_btn">إضافة تعليق</button>
-                        </form>
+            <div class="col-md-6 mb-3">
+                <p class="details_p"> <span class="bold"> عنوان التقرير : </span>{{$report->title}}</p>
+            </div>
 
-        
-                   
 
+            <div class="col-md-6 mb-3">
+                <p class="details_p"> <span class="bold"> وصف التقرير : </span>{{$report->description}}</p>
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+                <p class="details_p"> <span class="bold">  تاريخ الإنشاء : </span>{{$report->created_at}}</p>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <section class="content-item" id="comments" style="padding-right:20px;">
+
+                <form method="post" id="save_comment">
+                    @csrf
                     <div class="row">
-
-                        <div class="col-sm-8">
-
-                            <h3>{{$report->comments->count()}} التعليقات</h3>
-
-                            @foreach($comments as $comment)
-                            <div class="media">
-                                <a class="pull-left" href="#"><img class="media-object" src="{{$comment->user->image}}"
-                                        alt=""></a>
-                                <div class="media-body">
-                                    <h4 class="media-heading">{{$comment->user->company_name}}</h4>
-                                    <p>{{$comment->body}}</p>
-                                    <ul class="list-unstyled list-inline media-detail pull-left">
-                                        <li><i></i>
-                                            @if(!is_null($comment->created_at))
-                                            {{$comment->created_at->format('Y-m-d')}}
-                                            @endif
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                            @endforeach
-
-
+                        <div class="form-group col-xs-10 col-sm-9 col-lg-10">
+                            <textarea class="form-control v" name="body" id="body"
+                                placeholder="َإضافة تعليق"></textarea>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-lg-2" style="padding-top:53px;">
+                            <button type="submit" class="btn btn-primary submit_btn">إضافة تعليق</button>
                         </div>
                     </div>
+
+                    <input type="hidden" name="report_id" value="{{$report->id}}" id="report_id">
+                </form>
+
+
+                <div class="row">
+
+                    <div class="col-sm-8">
+
+                        <h3>{{$report->comments->count()}} تعليق</h3>
+
+                        @foreach($comments as $comment)
+                        <div class="media">
+                            <a class="pull-left" href="#"><img class="media-object" src="{{$comment->user->image}}"
+                                    alt=""></a>
+                            <div class="media-body">
+
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <p class="media-heading" style="font-size:18px;">
+                                            {{$comment->user->company_name}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        @if(!is_null($comment->created_at))
+                                        {{$comment->created_at->format('Y-m-d')}}
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <h5>{{$comment->body}}</h5>
+                            </div>
+                        </div>
+                        @endforeach
+
+
+                    </div>
+                </div>
             </section>
         </div>
     </div>
@@ -227,34 +262,34 @@ body {
 
 @section('scripts')
 <script>
-    $('#save_comment').validate({
-        rules: {
-            "body": {
-                required: true,
-            }
-        },
-        errorElement: 'span',
-        errorClass: 'help-block help-block-error',
-        focusInvalid: true,
-        errorPlacement: function(error, element) {
-            $(element).addClass("is-invalid");
-            error.appendTo('#' + $(element).attr('id') + '_error');
-        },
-        success: function(label, element) {
-
-            $(element).removeClass("is-invalid");
+$('#save_comment').validate({
+    rules: {
+        "body": {
+            required: true,
         }
-    });
+    },
+    errorElement: 'span',
+    errorClass: 'help-block help-block-error',
+    focusInvalid: true,
+    errorPlacement: function(error, element) {
+        $(element).addClass("is-invalid");
+        error.appendTo('#' + $(element).attr('id') + '_error');
+    },
+    success: function(label, element) {
 
-    $('.submit_btn').click(function(e) {
-        e.preventDefault();
+        $(element).removeClass("is-invalid");
+    }
+});
 
-        if (!$("#save_comment").valid())
-            return false;
+$('.submit_btn').click(function(e) {
+    e.preventDefault();
 
-        postData(new FormData($('#save_comment').get(0)), "{{route('contractor.save_comment')}}");
-        location.reload();
-    });
+    if (!$("#save_comment").valid())
+        return false;
+
+    postData(new FormData($('#save_comment').get(0)), "{{route('contractor.save_comment')}}");
+    location.reload();
+});
 </script>
 
 @endsection
