@@ -45,7 +45,26 @@ class OrdersController extends Controller
                 return $order->created_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
                 return $order->order_status;
-            })
+            })   ->addColumn('actions', function ($order) {
+
+                $add_designer='';
+                if ($order->designer_id == null) {
+                    $add_designer = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة مكتب تصميم </a>';
+                }
+
+
+                $element = '<div class="btn-group me-1 mt-2">
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                خيارات<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+
+                                               ' . $add_designer . '
+
+                                                </div>
+                              </div>';
+                return $element;
+            })->rawColumns(['actions'])
 
             ->make(true);
     }

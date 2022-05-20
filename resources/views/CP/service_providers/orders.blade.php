@@ -86,6 +86,9 @@
                         <th>
                             تاريخ الإنشاء
                         </th>
+                        <th>
+                           الخيارات
+                        </th>
 
 
                         </thead>
@@ -136,6 +139,7 @@
                     {className: 'text-center', data: 'designer.company_name', name: 'designer'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center', data: 'actions', name: 'actions'},
 
 
 
