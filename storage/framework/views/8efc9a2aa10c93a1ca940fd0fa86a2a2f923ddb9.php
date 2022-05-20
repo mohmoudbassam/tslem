@@ -35,12 +35,9 @@
 
                         </ul>
                     </li>
-                <?php endif; ?>
-
-                <?php if(auth()->user()->isAdmin()): ?>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
-                            <i data-feather="users"></i>
+                            <i data-feather="settings"></i>
                             <span data-key="t-apps">الإعدادت</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -62,7 +59,7 @@
                 <?php if(auth()->user()->type=='service_provider' ): ?>
                     <li>
                         <a href="<?php echo e(route('services_providers')); ?>">
-                            <i data-feather="users"></i>
+                            <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
@@ -70,7 +67,7 @@
                 <?php if(auth()->user()->type=='design_office' ): ?>
                     <li>
                         <a href="<?php echo e(route('design_office')); ?>">
-                            <i data-feather="users"></i>
+                            <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
@@ -78,16 +75,38 @@
                 <?php if(auth()->user()->type=='Delivery'): ?>
                     <li>
                         <a href="<?php echo e(route('delivery')); ?>">
-                            <i data-feather="users"></i>
+                            <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="layers"></i>
+                            <span data-key="t-apps">الزيارات الميدانية</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="<?php echo e(route('delivery.reports')); ?>">
+                                    <span data-key="t-calendar">إدارة الزيارات الميدانية</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo e(route('delivery.report_add_form')); ?>">
+                                    <span data-key="t-chat">إضافة تقرير زيارة</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                 
                 <?php endif; ?>
 
                 <?php if(auth()->user()->type=='contractor'): ?>
                     <li>
                         <a href="<?php echo e(route('contractor')); ?>">
-                            <i data-feather="users"></i>
+                            <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
@@ -97,17 +116,39 @@
                     <li>
                         <a href="<?php echo e(route('consulting_office')); ?>">
 
-                            <i data-feather="users"></i>
+                            <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="layers"></i>
+                            <span data-key="t-apps">تقارير الإشراف </span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="<?php echo e(route('consulting_office.reports')); ?>">
+                                    <span data-key="t-calendar">إدارة تقارير الإشراف  </span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo e(route('consulting_office.report_add_form')); ?>">
+                                    <span data-key="t-chat">إضافة تقرير إشراف</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                 <?php endif; ?>
                     <?php if(auth()->user()->verified==1): ?>
 
 
                         <li>
                             <a href="<?php echo e(route('dashboard')); ?>">
-                                <i data-feather="home"></i>
+                                <i data-feather="pie-chart"></i>
                                 <span data-key="t-dashboard">الإحصائيات  (قريبا)</span>
                             </a>
                         </li>
@@ -117,7 +158,7 @@
                     <li>
                         <a href="<?php echo e(route('edit_profile')); ?>">
 
-                            <i class="mdi mdi-information-off font-size-16 align-middle me-1"></i>
+                            <i data-feather="info"></i>
                             <span data-key="t-authentication">معلوماتي</span>
                         </a>
                     </li>

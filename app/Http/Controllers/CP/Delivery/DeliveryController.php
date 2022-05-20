@@ -26,6 +26,7 @@ class DeliveryController extends Controller
     public function list()
     {
         $order = Order::query()->with(['service_provider', 'designer'])->where('status', '>=', '2');
+//        dd($order->get());
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -231,34 +232,50 @@ class DeliveryController extends Controller
         ]);
     }
 
+    public function reject_form(Request $request)
+    {
+        $order = Order::query()->findOrFail($request->id);
+        return response()->json([
+            'success' => true,
+            'page' => view('CP.delivery.reject_form', [
+                'order' => $order,
+            ])->render()
+        ]);
+    }
+
     public function accept(Request $request)
     {
-
         $order = Order::query()->findOrFail($request->id);
-        if ($order->status == 2) {
+        if ($order->status == Order::DESIGN_REVIEW) {
             $order->status = Order::DESIGN_APPROVED;
-            $order->contractor_id = $request->contractor_id;
-            $order->consulting_office_id = $request->consulting_office_id;
             $order->save();
 
             save_logs($order, auth()->user()->id, 'تم اعتماد الطلب  من مكتب التسليم ');
 
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
-            optional($order->contractor)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
+            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', auth()->user()->id));
+            optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', auth()->user()->id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت اعتماد الطلب بنجاح'
             ]);
         }
+        return response()->json([
+            'success' => false,
+            'message' => 'تمت اعتماد الطلب مسبقا'
+        ]);
     }
 
     public function reject(Request $request)
     {
 
         $order = Order::query()->findOrFail($request->id);
-        if ($order->status == 2) {
-            $order->status = Order::DESIGN_REVIEW;
+        if ($order->status == Order::DESIGN_REVIEW) {
+            $order->status = Order::DESIGNER_REVIEW;
+            $order->deliverRejectReson()->create([
+                'order_id' => $order->id,
+                'user_id' => auth()->user()->id,
+                'note' => $request->note,
+            ]);
             $order->save();
 
             save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
@@ -269,7 +286,10 @@ class DeliveryController extends Controller
                 'message' => 'تمت رفض الطلب بنجاح'
             ]);
         }
-
+        return response()->json([
+            'success' => false,
+            'message' => 'تمت رفض الطلب مسبقا'
+        ]);
 
     }
 

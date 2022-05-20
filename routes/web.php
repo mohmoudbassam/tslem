@@ -95,7 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
         Route::get('/{order}/reports', [DeliveryController::class, 'reports_view'])->name('.reports_view');
         Route::get('/reports', [DeliveryController::class, 'reports'])->name('.reports');
-        
+
         Route::get('/{order}/reports/list', [DeliveryController::class, 'reports_list'])->name('.reports_list');
         Route::get('/reports/list', [DeliveryController::class, 'reports_list_all'])->name('.reports_list_all');
         Route::get('/reports/edit/{report}', [DeliveryController::class, 'edit_report_page'])->name('.report_edit_form');
@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
         Route::get('view_contractor_report/{order_id}', [DeliveryController::class, 'view_contractor_report'])->name('.view_contractor_report');
         Route::get('contractor_report_list/{order}', [DeliveryController::class, 'contractor_report_list'])->name('.contractor_report_list');
         Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
+        Route::get('reject_form', [DeliveryController::class, 'reject_form'])->name('.reject_form');
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
         Route::get('view_file/{order}', [DeliveryController::class, 'view_file'])->name('.view_file');
@@ -152,7 +153,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name('.reports_all_list');
         Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name('.reports_view_details');
         Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])->name('.contractor_list');
-        
+
     });
     Route::prefix('system-config')->group(function () {
 
