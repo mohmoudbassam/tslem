@@ -74,7 +74,7 @@ class Order extends Model
     }
 
     public function deliverRejectReson() {
-        return $this->hasOne(DeliverRejectReson::class, 'order_id');
+        return $this->hasMany(DeliverRejectReson::class, 'order_id');
     }
 
     public function scopeWhereDesigner($query, $designer_id)

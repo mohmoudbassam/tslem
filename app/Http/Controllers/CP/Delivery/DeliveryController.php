@@ -25,7 +25,7 @@ class DeliveryController extends Controller
 
     public function list()
     {
-        $order = Order::query()->with(['service_provider', 'designer'])->where('status', '>=', '2');
+        $order = Order::query()->with(['service_provider', 'designer'])->select("orders.*")->where('status', '>=', '3');
 //        dd($order->get());
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
@@ -267,10 +267,9 @@ class DeliveryController extends Controller
 
     public function reject(Request $request)
     {
-
         $order = Order::query()->findOrFail($request->id);
         if ($order->status == Order::DESIGN_REVIEW) {
-            $order->status = Order::DESIGNER_REVIEW;
+            $order->delivery_notes = 1;
             $order->deliverRejectReson()->create([
                 'order_id' => $order->id,
                 'user_id' => auth()->user()->id,
@@ -290,7 +289,6 @@ class DeliveryController extends Controller
             'success' => false,
             'message' => 'تمت رفض الطلب مسبقا'
         ]);
-
     }
 
     public function upload_files($report, $request)

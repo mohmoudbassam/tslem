@@ -93,7 +93,7 @@
                        <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
                 </div>
 
-                @if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE && $order->status == 3)
+                @if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE && $order->status == \App\Models\Order::DESIGN_REVIEW && $order->delivery_notes == 0)
                 <div class="offset-md-9 col-md-3 mb-3">
                        <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
                        <button onclick="showModal('{{ route('delivery.reject_form', ['id' => $order->id]) }}', {{ $order->id }})" class="btn btn-danger" id="reject_order">ارجاع ملاحظات</button>

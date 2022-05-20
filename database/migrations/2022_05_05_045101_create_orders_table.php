@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('status')->default(1);
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->unsignedBigInteger('designer_id')->nullable();
+            $table->boolean("delivery_notes")->default(0);
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('SET NULL');
