@@ -62,43 +62,42 @@
                     <h2>تفاصيل الطلب</h2>
                 </div>
                 <div class="col-md-4 mb-3 mt-4">
-                    <p class="details_p">  <span class="bold">  التاريخ :</span> {{$order->created_at}}</p>  
+                    <p class="details_p">  <span class="bold">  التاريخ :</span> {{$order->created_at}}</p>
                 </div>
-                
+
                 <!-- <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2> -->
             </div>
 
             <div class="row">
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold">  رقم الطلب : </span>{{$order->id}}</p>  
+                       <p class="details_p"> <span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
                 </div>
 
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>  
+                       <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>
                 </div>
 
-                
+
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>  
+                       <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>
                 </div>
 
                  <div class="col-md-6 mb-3">
-                       <p class="details_p">   <span class="bold">   التفاصيل : </span>{{$order->description}}</p>  
+                       <p class="details_p">   <span class="bold">   التفاصيل : </span>{{$order->description}}</p>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>  
+                       <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
                 </div>
 
-                @if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE)
+
                 <div class="offset-md-9 col-md-3 mb-3">
                        <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
                        <button class="btn btn-danger">ارجاع ملاحظات</button>
                 </div>
-                @endif
             </div>
 
         </div>
@@ -274,13 +273,13 @@
     <script>
 
         $("#accept_order").on('click', function(){
- 
+
             let url = "{{ route('design_office.accept') }}";
             let data = {
                 "_token" : "{{ csrf_token() }}",
                 "id" : "{{$order->id}}"
             };
-         
+
             $.ajax({
                 url: url,
                 data: data,
@@ -292,14 +291,14 @@
                     }else{
                         showAlertMessage('error', data.message);
                     }
-                    
+
                 },
                 error: function (data) {
                    showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
                 },
             });
 
-          
+
         });
 
 

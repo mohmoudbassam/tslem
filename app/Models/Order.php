@@ -13,11 +13,11 @@ class Order extends Model
 
 
 
-    public const ORDER_REVIEW = 1;
-    public const DESIGN_APPROVED = 3;
-    public const DONE = 4;
-    public const APPROVED = 5;
+    public const DESIGNER_REVIEW = 1;
     public const PENDING = 2;
+    public const DESIGN_REVIEW = 3;
+    public const DESIGN_APPROVED =4;
+
 
 
     public function specialties_file(){
@@ -90,8 +90,8 @@ class Order extends Model
             '1' => 'بإنتظار موافقة مكتب التصميم',
             '2' => 'معلق',
             '3' => 'مراجعة التصاميم',
-            '4' => 'تم التنفيذ',
-            '5' => 'تم الإعتماد'
+            '4' => 'معتمد التصماميم'
+
         ][$this->status];
     }
 

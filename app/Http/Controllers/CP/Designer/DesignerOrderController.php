@@ -35,28 +35,25 @@ class DesignerOrderController extends Controller
                 $add_file_design = '';
                 $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الملفات </a>';
-                $accept = '<a class="dropdown-item" onclick="accept( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
-                $reject = '<a class="dropdown-item" onclick="reject( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-times"></i>رفض </a>';
 
-                if ($order->status > 2) {
-//                    $add_file_design = '';
-//                    $edit_files = '';
+                if ($order->status == Order::ORDER_REVIEW) {
+                    $accept = '<a class="dropdown-item" onclick="accept( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-check"></i>موافقة </a>';
+                    $reject = '<a class="dropdown-item" onclick="reject( ' . $order->id . ' )" href="javascript:;"><i class="fa fa-times"></i>رفض </a>';
                 }
 
-                if ($order->status == Order::DESIGN_APPROVED) {
-                    $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
-                    $accept = '';
-                    $reject = '';
-                }
+
+//                if ($order->status == Order::DESIGN_APPROVED) {
+//                    $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
+//                    $accept = '';
+//                    $reject = '';
+//                }
 
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                               ' . $add_file_design . '
-                                               ' . $edit_files . '
-                                               ' . $view . '
+
                                                ' . $accept . '
                                                ' . $reject . '
      </div>
@@ -71,28 +68,29 @@ class DesignerOrderController extends Controller
             ->make(true);
     }
 
-   public function accept(Request $request)
-   {
+    public function accept(Request $request)
+    {
 
-       $order = Order::query()->findOrFail($request->id);
-       if ($order->status == Order::ORDER_REVIEW) {
-           $order->status = Order::DESIGN_APPROVED;
-           $order->save();
+        $order = Order::query()->findOrFail($request->id);
+        if ($order->status == Order::ORDER_REVIEW) {
+            $order->status = Order::DESIGN_APPROVED;
+            $order->save();
 
-           save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
+            save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
 
-           optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
-           return response()->json([
-               'success' => true,
-               'message' => 'تمت اعتماد الطلب بنجاح'
-           ]);
-       }
+            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
+            return response()->json([
+                'success' => true,
+                'message' => 'تمت اعتماد الطلب بنجاح'
+            ]);
+        }
 
-       return response()->json([
-               'success' => false,
-               'message' => 'تم اعتماد الطلب مسبقا'
+        return response()->json([
+            'success' => false,
+            'message' => 'تم اعتماد الطلب مسبقا'
         ]);
-   }
+    }
+
 //
     public function reject(Request $request)
     {
@@ -175,7 +173,6 @@ class DesignerOrderController extends Controller
                 }
 
             }
-
 
 
         }
@@ -344,9 +341,9 @@ class DesignerOrderController extends Controller
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
             }
         }
-        if(request('general_file')){
+        if (request('general_file')) {
             $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
-            if($general_file){
+            if ($general_file) {
                 $general_file->delete();
             }
 
