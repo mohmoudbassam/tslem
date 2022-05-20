@@ -1,6 +1,6 @@
 @extends('CP.master')
 @section('title')
-    الزيارات الميدانية
+    تقارير الإشراف
 @endsection
 @section('content')
 
@@ -14,8 +14,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">عرض  الزيارات الميدانية</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('delivery.reports') }}">الزيارات الميدانية</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">عرض التقارير</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('consulting_office.reports') }}"> تقارير الإشراف</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
@@ -23,15 +23,8 @@
             </div>
         </div>
     </div>
-
-
-    <div class="row mb-3"><div class="col-sm-12">
-        <a href="{{route('delivery.report_add_form')}}" class = "btn btn-primary">إنشاء تقرير</a>
-    </div></div>
-   
-
     <div class="card">
-  
+
         <div class="card-body">
 
             <div class="row">
@@ -43,10 +36,10 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان  الزيارة 
+                            عنوان التقرير
                         </th>
                         <th>
-                            وصف الزيارة
+                            وصف التقرير
                         </th>
                         <th>
                             تاريخ الإنشاء
@@ -87,7 +80,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('delivery.reports_list_all')}}',
+                    url: '{{route('consulting_office.reports_all_list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
@@ -122,7 +115,7 @@
                 }
             });
             $.ajax({
-                url: '{{route('delivery.delete_report')}}?id=' + id,
+                url: '{{route('consulting_office.delete_report')}}?id=' + id,
                 data: {
                     id: id
                 },

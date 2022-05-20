@@ -37,6 +37,9 @@
             <form id="add_edit_form" method="post" action="{{route('delivery.add_report')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
+
+                   
+
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="title">عنوان التقرير</label>
@@ -61,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" value="{{ $order->id }}" name="order_id">
+               
             </form>
 
             <div class="d-flex flex-wrap gap-3">
