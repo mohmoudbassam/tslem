@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
+use App\Models\OrderService;
+use App\Models\OrderSpecilatiesFiles;
 
 class ConsultingOfficeController extends Controller
 {
@@ -41,7 +43,7 @@ class ConsultingOfficeController extends Controller
                 //     $reject = '';
                 // }
                 $element = '<div class="btn-group me-1 mt-2">
-                                            <a class="btn btn-info btn-sm" href="' . route('consulting_office.reports_view', ['order' => $order->id]) . '">
+                                            <a class="btn btn-info btn-sm" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
                                                 عرض التفاصيل
                                             </a>
                                         </div>';
@@ -55,13 +57,52 @@ class ConsultingOfficeController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
+    public function contractor_list(Order $order)
+    {
+        $order = Order::query()->with(['service_provider', 'designer', 'contractor'])
+            ->whereContractor(auth()->user()->id)
+            ->where('id',$order->id)
+            ->where('status', '>=', '3');
 
+        return DataTables::of($order)
+            ->addColumn('actions', function ($order) {
+                
+
+                $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-info btn-sm" href="#">
+                                               عرض التفاصيل
+                                            </a>
+                                           
+                                        </div>';
+                return $element;
+
+            })
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
+    }
+
+    
     public function reports_view(Order $order)
     {
         return view('CP.consulting_office.reports_view', [
             'order' => $order
         ]);
     }
+    public function reports_view_details(Order $order)
+    {
+        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        return view('CP.consulting_office.reports_view_details', [
+            'order' => $order,
+            'order_specialties' => $order_specialties,
+            'filess' => $files
+        ]);
+    }
+    
 
     public function reports()
     {

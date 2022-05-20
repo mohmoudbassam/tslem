@@ -150,6 +150,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/reports', [ConsultingOfficeController::class, 'reports'])->name('.reports');
         Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name('.reports_all_list');
+        Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name('.reports_view_details');
+        Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])->name('.contractor_list');
         
     });
     Route::prefix('system-config')->group(function () {
