@@ -84,18 +84,15 @@ Route::middleware('auth')->group(function () {
         Route::get('delete_service/{service}', [DesignerOrderController::class, 'delete_service'])->name('.delete_service');
         Route::get('delete_file/{file}', [DesignerOrderController::class, 'delete_file'])->name('.delete_file');
         Route::post('edit_file_action', [DesignerOrderController::class, 'edit_file_action'])->name('.edit_file_action');
-        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
-
-//        Route::post('accept', [DesignerOrderController::class, 'accept'])->name('.accept');
-
-        Route::post('reject', [DesignerOrderController::class, 'reject'])->name('.reject');
+        Route::get('accept/{order}', [DesignerOrderController::class, 'accept'])->name('.accept');
+        Route::get('reject/{order}', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
         Route::get('/{order}/reports', [DeliveryController::class, 'reports_view'])->name('.reports_view');
         Route::get('/reports', [DeliveryController::class, 'reports'])->name('.reports');
-        
+
         Route::get('/{order}/reports/list', [DeliveryController::class, 'reports_list'])->name('.reports_list');
         Route::get('/reports/list', [DeliveryController::class, 'reports_list_all'])->name('.reports_list_all');
         Route::get('/reports/edit/{report}', [DeliveryController::class, 'edit_report_page'])->name('.report_edit_form');
@@ -152,7 +149,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name('.reports_all_list');
         Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name('.reports_view_details');
         Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])->name('.contractor_list');
-        
+
     });
     Route::prefix('system-config')->group(function () {
 

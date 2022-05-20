@@ -27,10 +27,11 @@
 
         }
 
-        .details_p{
+        .details_p {
             font-size: 20px;
         }
-        .bold{
+
+        .bold {
             font-weight: bold;
         }
     </style>
@@ -61,42 +62,47 @@
                     <h2>تفاصيل الطلب</h2>
                 </div>
                 <div class="col-md-4 mb-3 mt-4">
-                    <p class="details_p">  <span class="bold">  التاريخ :</span> <?php echo e($order->created_at); ?></p>
+                    <p class="details_p"><span class="bold">  التاريخ :</span> <?php echo e($order->created_at); ?></p>
                 </div>
 
-                <!-- <h2> مقدم الخدمة :<?php echo e($order->service_provider->name); ?></h2> -->
+            <!-- <h2> مقدم الخدمة :<?php echo e($order->service_provider->name); ?></h2> -->
             </div>
 
             <div class="row">
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold">  رقم الطلب : </span><?php echo e($order->id); ?></p>
+                    <p class="details_p"><span class="bold">  رقم الطلب : </span><?php echo e($order->id); ?></p>
                 </div>
 
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold">  العنوان : </span><?php echo e($order->title); ?></p>
+                    <p class="details_p"><span class="bold">  العنوان : </span><?php echo e($order->title); ?></p>
                 </div>
-
 
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> <?php echo e($order->service_provider->name); ?></p>
-                </div>
+                    <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> <?php echo e($order->service_provider->name); ?>
 
-                 <div class="col-md-6 mb-3">
-                       <p class="details_p">   <span class="bold">   التفاصيل : </span><?php echo e($order->description); ?></p>
+                    </p>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span><?php echo e($order->designer->name); ?></p>
+                    <p class="details_p"><span class="bold">   التفاصيل : </span><?php echo e($order->description); ?></p>
                 </div>
 
-
-                <div class="offset-md-9 col-md-3 mb-3">
-                       <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
-                       <button class="btn btn-danger">ارجاع ملاحظات</button>
+                <div class="col-md-6 mb-3">
+                    <p class="details_p"><span class="bold"> اسم مكتب التصميم :  </span><?php echo e($order->designer->name); ?></p>
                 </div>
+
+                <?php if($order->status == \App\Models\Order::PENDING): ?>
+                    <div class="offset-md-9 col-md-3 mb-3">
+                        <a class="btn btn-primary" href="<?php echo e(route('design_office.accept',['order'=>$order->id])); ?>">اعتماد
+                            الطلب</a>
+                        <a class="btn btn-danger" href="<?php echo e(route('design_office.reject',['order'=>$order->id])); ?>">
+                            رفض الطلب
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
 
         </div>
@@ -175,7 +181,8 @@
                                                 <div class="panel-footer">
                                                     <div class="btn-group btn-group-justified">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-success" href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                            <a class="btn btn-success"
+                                                               href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
                                                                 <i class="fa fa-arrow-down"></i>
                                                                 تنزيل
                                                             </a>
@@ -187,7 +194,7 @@
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                        <?php if($files->type ==2): ?>
+                                    <?php if($files->type ==2): ?>
                                         <div class="col-md-offset-3 col-md-2">
                                             <div class="panel panel-default bootcards-file">
 
@@ -210,7 +217,8 @@
                                                 <div class="panel-footer">
                                                     <div class="btn-group btn-group-justified">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-success" href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                            <a class="btn btn-success"
+                                                               href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
                                                                 <i class="fa fa-arrow-down"></i>
                                                                 تنزيل
                                                             </a>
@@ -221,7 +229,7 @@
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                        <?php if($files->type ==3): ?>
+                                    <?php if($files->type ==3): ?>
                                         <div class="col-md-offset-3 col-md-2">
                                             <div class="panel panel-default bootcards-file">
 
@@ -244,8 +252,9 @@
                                                 <div class="panel-footer">
                                                     <div class="btn-group btn-group-justified">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-success" href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
-                                                                <i class="fa fa-arrow-down" ></i>
+                                                            <a class="btn btn-success"
+                                                               href="<?php echo e(route('design_office.download',['id'=>$files->id])); ?>">
+                                                                <i class="fa fa-arrow-down"></i>
                                                                 تنزيل
                                                             </a>
                                                         </div>
@@ -271,42 +280,7 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startSection('scripts'); ?>
-    <script>
 
-        $("#accept_order").on('click', function(){
-
-            let url = "<?php echo e(route('design_office.accept')); ?>";
-            let data = {
-                "_token" : "<?php echo e(csrf_token()); ?>",
-                "id" : "<?php echo e($order->id); ?>"
-            };
-
-            $.ajax({
-                url: url,
-                data: data,
-                type: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    if(data.success){
-                        showAlertMessage('success', data.message);
-                    }else{
-                        showAlertMessage('error', data.message);
-                    }
-
-                },
-                error: function (data) {
-                   showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
-                },
-            });
-
-
-        });
-
-
-    </script>
-
-<?php $__env->stopSection(); ?>
 
 
 <?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/designer/view_file.blade.php ENDPATH**/ ?>

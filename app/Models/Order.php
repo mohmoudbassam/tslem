@@ -12,9 +12,8 @@ class Order extends Model
     protected $guarded = [];
 
 
-
-    public const DESIGNER_REVIEW = 1;
-    public const PENDING = 2;
+    public const PENDING = 1;
+    public const REQUEST_BEGIN_CREATED  = 2;
     public const DESIGN_REVIEW = 3;
     public const DESIGN_APPROVED =4;
 
@@ -87,8 +86,8 @@ class Order extends Model
     public function getOrderStatusAttribute()
     {
         return [
-            '1' => 'بإنتظار موافقة مكتب التصميم',
-            '2' => 'معلق',
+            '1' => 'معلق',
+            '2' => 'قيد انشاء الطلب',
             '3' => 'مراجعة التصاميم',
             '4' => 'معتمد التصماميم'
 
