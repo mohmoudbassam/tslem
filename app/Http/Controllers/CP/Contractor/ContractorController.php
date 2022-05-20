@@ -68,7 +68,7 @@ class ContractorController extends Controller
                 $add_report = '';
 
                 $add_report = '<a class="dropdown-item"  href="' . route('contractor.add_report_form', ['order' => $order->id]) . '" ><i class="fa fa-plus"></i>إضافة تقرير  </a>';
-                $show_reports = '<a class="dropdown-item" href="' . route('contractor.show_reports', ['order' => $order->id]) . '"><i class="fa fa-eye"></i>عرض التقارير  </a>';
+                $show_comments = '<a class="dropdown-item" href="' . route('contractor.show_comments', ['report' => $report->id]) . '"><i class="fa fa-eye"></i>عرض الملاحظات  </a>';
                 if ($order->status > 4) {
                     $accept = '';
                 }
@@ -79,7 +79,7 @@ class ContractorController extends Controller
                                             </button>
                                             <div class="dropdown-menu" style="">
                                                ' . $add_report . '
-                                               ' . $show_reports . '
+                                               ' . $show_comments . '
                                             </div>
                                         </div>';
             return $element;
@@ -259,7 +259,12 @@ class ContractorController extends Controller
             'report_id' => $request->report_id
         ]);
 
-        return redirect()->back()->with(['success' => 'تمت إضافة التعليق بناح']);
+        return response()->json([
+            'success' => true,
+            'message' => 'تم إضافة التعليق بنجاح'
+        ]);
+
+        //return redirect()->back()->with(['success' => 'تمت إضافة التعليق بناح']);
     }
 
 
