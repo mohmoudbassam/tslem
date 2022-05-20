@@ -73,6 +73,10 @@ class Order extends Model
         return $this->hasMany(ContractorReport::class,'order_id');
     }
 
+    public function deliverRejectReson() {
+        return $this->hasMany(DeliverRejectReson::class, 'order_id');
+    }
+
     public function scopeWhereDesigner($query, $designer_id)
     {
         return $query->where('designer_id', $designer_id);

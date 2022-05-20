@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('view_contractor_report/{order_id}', [DeliveryController::class, 'view_contractor_report'])->name('.view_contractor_report');
         Route::get('contractor_report_list/{order}', [DeliveryController::class, 'contractor_report_list'])->name('.contractor_report_list');
         Route::get('accept_form', [DeliveryController::class, 'accept_form'])->name('.accept_form');
+        Route::get('reject_form', [DeliveryController::class, 'reject_form'])->name('.reject_form');
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
         Route::get('view_file/{order}', [DeliveryController::class, 'view_file'])->name('.view_file');
