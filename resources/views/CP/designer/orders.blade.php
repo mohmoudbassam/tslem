@@ -144,83 +144,83 @@
             $('#items_table').DataTable().ajax.reload(null, false);
         });
 
-        function accept(id) {
+        {{--function accept(id) {--}}
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{route('design_office.accept')}}',
-                data: {
-                    id: id
-                },
-                type: "POST",
+        {{--    $.ajaxSetup({--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{{route('design_office.accept')}}',--}}
+        {{--        data: {--}}
+        {{--            id: id--}}
+        {{--        },--}}
+        {{--        type: "POST",--}}
 
-                beforeSend() {
-                    KTApp.block('#page_modal', {
-                        overlayColor: '#000000',
-                        type: 'v2',
-                        state: 'success',
-                        message: 'مكتب تصميم'
-                    });
-                },
-                success: function (data) {
-                    if(data.success){
-                        showAlertMessage('success', data.message);
-                        $('#items_table').DataTable().ajax.reload(null, false);
-                    }else {
-                        showAlertMessage('error', 'حدث خطأ في النظام');
-                    }
+        {{--        beforeSend() {--}}
+        {{--            KTApp.block('#page_modal', {--}}
+        {{--                overlayColor: '#000000',--}}
+        {{--                type: 'v2',--}}
+        {{--                state: 'success',--}}
+        {{--                message: 'مكتب تصميم'--}}
+        {{--            });--}}
+        {{--        },--}}
+        {{--        success: function (data) {--}}
+        {{--            if(data.success){--}}
+        {{--                showAlertMessage('success', data.message);--}}
+        {{--                $('#items_table').DataTable().ajax.reload(null, false);--}}
+        {{--            }else {--}}
+        {{--                showAlertMessage('error', 'حدث خطأ في النظام');--}}
+        {{--            }--}}
 
-                    KTApp.unblockPage();
-                },
-                error: function (data) {
-                    showAlertMessage('error', 'حدث خطأ في النظام');
-                    KTApp.unblockPage();
-                },
-            });
-        }
+        {{--            KTApp.unblockPage();--}}
+        {{--        },--}}
+        {{--        error: function (data) {--}}
+        {{--            showAlertMessage('error', 'حدث خطأ في النظام');--}}
+        {{--            KTApp.unblockPage();--}}
+        {{--        },--}}
+        {{--    });--}}
+        {{--}--}}
 
-        function reject(id) {
+        {{--function reject(id) {--}}
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: '{{ route('design_office.reject') }}',
-                data: {
-                    id: id
-                },
-                type: "POST",
+        {{--    $.ajaxSetup({--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route('design_office.reject') }}',--}}
+        {{--        data: {--}}
+        {{--            id: id--}}
+        {{--        },--}}
+        {{--        type: "POST",--}}
 
-                beforeSend() {
-                    KTApp.block('#page_modal', {
-                        overlayColor: '#000000',
-                        type: 'v2',
-                        state: 'success',
-                        message: 'مكتب تصميم'
-                    });
-                },
-                success: function (data) {
-                    if(data.success){
-                        showAlertMessage('success', data.message);
-                        $('#items_table').DataTable().ajax.reload(null, false);
-                    }else {
-                        showAlertMessage('error', 'حدث خطأ في النظام');
-                    }
+        {{--        beforeSend() {--}}
+        {{--            KTApp.block('#page_modal', {--}}
+        {{--                overlayColor: '#000000',--}}
+        {{--                type: 'v2',--}}
+        {{--                state: 'success',--}}
+        {{--                message: 'مكتب تصميم'--}}
+        {{--            });--}}
+        {{--        },--}}
+        {{--        success: function (data) {--}}
+        {{--            if(data.success){--}}
+        {{--                showAlertMessage('success', data.message);--}}
+        {{--                $('#items_table').DataTable().ajax.reload(null, false);--}}
+        {{--            }else {--}}
+        {{--                showAlertMessage('error', 'حدث خطأ في النظام');--}}
+        {{--            }--}}
 
-                    KTApp.unblockPage();
-                },
-                error: function (data) {
-                    showAlertMessage('error', 'حدث خطأ في النظام');
-                    KTApp.unblockPage();
-                },
-            });
-        }
+        {{--            KTApp.unblockPage();--}}
+        {{--        },--}}
+        {{--        error: function (data) {--}}
+        {{--            showAlertMessage('error', 'حدث خطأ في النظام');--}}
+        {{--            KTApp.unblockPage();--}}
+        {{--        },--}}
+        {{--    });--}}
+        {{--}--}}
 
 
 
