@@ -290,7 +290,7 @@ class ConsultingOfficeController extends Controller
 
         $order = Order::query()->findOrFail($request->id);
         if ($order->status == 2) {
-            $order->status = Order::DESIGN_APPROVED;
+            $order->status = Order::COMPLETED;
             $order->save();
 
             save_logs($order, auth()->user()->id, 'تم اتمام الطلب  من المكتب الاستشاري ');

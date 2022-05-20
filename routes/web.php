@@ -128,6 +128,10 @@ Route::middleware('auth')->group(function () {
         Route::get('show_comments/{report}', [ContractorController::class, 'show_comments'])->name('.show_comments');
         Route::post('save_comment', [ContractorController::class, 'save_comment'])->name('.save_comment');
 
+        Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
+        Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
+        
+
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);

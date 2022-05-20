@@ -16,6 +16,8 @@ class Order extends Model
     public const REQUEST_BEGIN_CREATED  = 2;
     public const DESIGN_REVIEW = 3;
     public const DESIGN_APPROVED =4;
+    public const PROCESSING =5;
+    public const COMPLETED =6;
 
 
 

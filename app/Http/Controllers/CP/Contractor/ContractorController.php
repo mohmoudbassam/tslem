@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-
+use App\Models\OrderService;
+use App\Models\OrderSpecilatiesFiles;
 class ContractorController extends Controller
 {
     public function orders()
@@ -30,6 +31,40 @@ class ContractorController extends Controller
 
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
+                // $add_report = '';
+
+                // $add_report = '<a class="dropdown-item"  href="' . route('contractor.add_report_form', ['order' => $order->id]) . '" ><i class="fa fa-plus"></i>إضافة تقرير  </a>';
+                // $show_reports = '<a class="dropdown-item" href="' . route('contractor.show_reports', ['order' => $order->id]) . '"><i class="fa fa-eye"></i>عرض التقارير  </a>';
+                // if ($order->status > 4) {
+                //     $accept = '';
+                // }
+
+                $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-info btn-sm" href="' . route('contractor.order_details', ['order' => $order->id]) . '" >
+                                              عرض التفاصيل
+                                            </a>
+                                           
+                                        </div>';
+                return $element;
+
+            })
+            ->addColumn('created_at', function ($order) {
+                return $order->created_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
+    }
+
+    public function list_orders(Order $order)
+    {
+
+        $reports = ContractorReport::query()
+            ->where('contractor_id', '=', auth()->user()->id)
+            ->where('order_id', $order->id);
+    
+        return DataTables::of($reports)
+            ->addColumn('actions', function ($report) use ($order){
                 $add_report = '';
 
                 $add_report = '<a class="dropdown-item"  href="' . route('contractor.add_report_form', ['order' => $order->id]) . '" ><i class="fa fa-plus"></i>إضافة تقرير  </a>';
@@ -47,16 +82,18 @@ class ContractorController extends Controller
                                                ' . $show_reports . '
                                             </div>
                                         </div>';
-                return $element;
+            return $element;
 
+                                    
             })
             ->addColumn('created_at', function ($order) {
-                return $order->created_at->format('Y-m-d');
+                return (!is_null($order->created_at)) ? $order->created_at->format('Y-m-d') : '';
             })->addColumn('order_status', function ($order) {
                 return $order->order_status;
             })->rawColumns(['actions'])
             ->make(true);
     }
+    
 
     public function add_report_from(Order $order)
     {
@@ -65,6 +102,17 @@ class ContractorController extends Controller
         }
         return view('CP.contractors.add_report', ['order' => $order]);
     }
+
+    public function order_details(Order $order){
+        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        return view('CP.contractors.order_details', [
+            'order' => $order,
+            'order_specialties' => $order_specialties,
+            'filess' => $files
+        ]);
+    }
+    
 
     public function add_edit_report(Request $request)
     {
