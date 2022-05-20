@@ -37,6 +37,21 @@
             <form id="add_edit_form" method="post" action="{{route('delivery.add_report')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="title">الطلب</label>
+                            <select name="order_id" id="order_id" class="form-control">
+                                @if(!empty($orders))
+                                @foreach($orders as $order)
+                                <option value="{{$order->id}}">{{$order->title}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                            <div class="col-12 text-danger" id="order_id_error"></div>
+                        </div>
+                    </div>
+
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="title">عنوان التقرير</label>
@@ -61,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" value="{{ $order->id }}" name="order_id">
+               
             </form>
 
             <div class="d-flex flex-wrap gap-3">

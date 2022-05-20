@@ -148,8 +148,11 @@ class DeliveryController extends Controller
 
     public function add_report_page(Order $order)
     {
+        $order_ids = DeliveryReport::where('user_id', '=', auth()->user()->id)
+        ->pluck('order_id');
+        $orders = Order::select('id','title')->whereIn('id',$order_ids)->get();
         return view('CP.delivery.report_add_form', [
-            'order' => $order,
+            'orders' => $orders,
         ]);
     }
 

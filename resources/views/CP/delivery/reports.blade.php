@@ -23,8 +23,15 @@
             </div>
         </div>
     </div>
-    <div class="card">
 
+
+    <div class="row mb-3"><div class="col-sm-12">
+        <a href="{{route('delivery.report_add_form')}}" class = "btn btn-primary">إنشاء تقرير</a>
+    </div></div>
+   
+
+    <div class="card">
+  
         <div class="card-body">
 
             <div class="row">

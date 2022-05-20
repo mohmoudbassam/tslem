@@ -96,11 +96,10 @@
                             </li>
 
                             <li>
-                                <a href="{{route('delivery.reports')}}">
+                                <a href="{{route('delivery.report_add_form')}}">
                                     <span data-key="t-chat">إضافة تقرير زيارة</span>
                                 </a>
                             </li>
-
 
                         </ul>
                     </li>
