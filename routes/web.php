@@ -135,7 +135,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{order}/reports', [ConsultingOfficeController::class, 'reports_view'])->name('.reports_view');
         Route::get('/{order}/reports/list', [ConsultingOfficeController::class, 'reports_list'])->name('.reports_list');
         Route::get('/reports/edit/{report}', [ConsultingOfficeController::class, 'edit_report_page'])->name('.report_edit_form');
-        Route::get('/{order}/add', [ConsultingOfficeController::class, 'add_report_page'])->name('.report_add_form');
+        Route::get('add-report', [ConsultingOfficeController::class, 'add_report_page'])->name('.report_add_form');
         Route::get('accept_form', [ConsultingOfficeController::class, 'accept_form'])->name('.accept_form');
         Route::post('accept', [ConsultingOfficeController::class, 'accept'])->name('.accept');
         Route::post('reject', [ConsultingOfficeController::class, 'reject'])->name('.reject');
@@ -147,6 +147,10 @@ Route::middleware('auth')->group(function () {
         Route::get('contractor_report_list/{order}', [ConsultingOfficeController::class, 'contractor_report_list'])->name('.contractor_report_list');
         Route::get('show_comments/{report}', [ConsultingOfficeController::class, 'show_comments'])->name('.show_comments');
         Route::post('save_comment', [ConsultingOfficeController::class, 'save_comment'])->name('.save_comment');
+
+        Route::get('/reports', [ConsultingOfficeController::class, 'reports'])->name('.reports');
+        Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name('.reports_all_list');
+        
     });
     Route::prefix('system-config')->group(function () {
 

@@ -38,19 +38,7 @@
                 @csrf
                 <div class="row">
 
-                    <div class="col-md-12">
-                        <div class="mb-3">
-                            <label for="title">الطلب</label>
-                            <select name="order_id" id="order_id" class="form-control">
-                                @if(!empty($orders))
-                                @foreach($orders as $order)
-                                <option value="{{$order->id}}">{{$order->title}}</option>
-                                @endforeach
-                                @endif
-                            </select>
-                            <div class="col-12 text-danger" id="order_id_error"></div>
-                        </div>
-                    </div>
+                   
 
                     <div class="col-md-12">
                         <div class="mb-3">
