@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'consulting_office'=>\App\Http\Middleware\CP\ConsultingOffice::class,
         'verifiedUser'=>\App\Http\Middleware\CP\Verified::class,
         'contractor'=>\App\Http\Middleware\CP\contractor::class,
+        'sharer'=>\App\Http\Middleware\CP\Sharer::class,
 
     ];
 }

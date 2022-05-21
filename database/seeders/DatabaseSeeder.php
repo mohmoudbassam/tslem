@@ -77,6 +77,38 @@ class DatabaseSeeder extends Seeder
             'company_name' => 'consulting_company',
             'verified' => 1
         ]);
+        \App\Models\User::query()->create([
+            'name' => 'gov',
+            'password' => 123456,
+            'email' => 'gov@test.com',
+            'type' => 'Sharer',
+            'company_name' => 'Sharer Company',
+            'verified' => 1
+        ]);
+\App\Models\User::query()->create([
+            'name' => 'gov1',
+            'password' => 123456,
+            'email' => 'gov1@test.com',
+            'type' => 'Sharer',
+            'company_name' => 'Sharer1 Company',
+            'verified' => 1
+        ]);
+\App\Models\User::query()->create([
+            'name' => 'gov2',
+            'password' => 123456,
+            'email' => 'gov2@test.com',
+            'type' => 'Sharer',
+            'company_name' => 'Sharer2 Company',
+            'verified' => 1
+        ]);
+\App\Models\User::query()->create([
+            'name' => 'gov3',
+            'password' => 123456,
+            'email' => 'gov3@test.com',
+            'type' => 'Sharer',
+            'company_name' => 'Sharer3 Company',
+            'verified' => 1
+        ]);
 
         ConstParnet::query()->create([
             'name' => 'قائمة طبقات GIS للمخيمات من وزارة الحج والعمرة'

@@ -1,4 +1,4 @@
-@extends('CP.master')
+@extends('CP.sharer_layout')
 @section('title')
     الطلبات
 @endsection
@@ -55,90 +55,51 @@
         </div>
     </div>
     <div class="card">
-
         <div class="card-header">
-            <ul class="nav nav-tabs-custom  border-bottom mb-4" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link px-3 active " data-bs-toggle="tab"
-                       href="#details"
-                       role="tab">تفاصيل الطلب</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3 " data-bs-toggle="tab"
-                       href="#notes"
-                       role="tab">ملاحظات الجهة الاستشارية</a>
-                </li>
-            </ul>
+            <div class="row">
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="details"
-                     role="tabpanel">
-                    <div class="row">
-
-                        <div class="col-md-4 mb-3 mt-4">
-                            <h2>تفاصيل الطلب</h2>
-                        </div>
-                        <div class="col-md-4 mb-3 mt-4">
-                            <p class="details_p">  <span class="bold">  التاريخ :</span> {{$order->created_at}}</p>
-                        </div>
-
-                    <!-- <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2> -->
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-md-6 mb-3">
-                            <p class="details_p"> <span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
-                        </div>
-
-
-                        <div class="col-md-6 mb-3">
-                            <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>
-                        </div>
-
-
-
-                        <div class="col-md-6 mb-3">
-                            <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <p class="details_p">   <span class="bold">   التفاصيل : </span>{{$order->description}}</p>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
-                        </div>
-
-                        @if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE && $order->status == \App\Models\Order::DESIGN_REVIEW && $order->delivery_notes == 0)
-                            <div class="offset-md-9 col-md-3 mb-3">
-                                @if($order->allow_deliver == 1)
-                                    <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
-                                @endif
-                                <button onclick="showModal('{{ route('delivery.reject_form', ['id' => $order->id]) }}', {{ $order->id }})" class="btn btn-danger" id="reject_order">ارجاع ملاحظات</button>
-                            </div>
-                        @endif
-                    </div>
+                <div class="col-md-4 mb-3 mt-4">
+                    <h2>تفاصيل الطلب</h2>
+                </div>
+                <div class="col-md-4 mb-3 mt-4">
+                    <p class="details_p">  <span class="bold">  التاريخ :</span> {{$order->created_at}}</p>
                 </div>
 
-                <div class="tab-pane " id="notes"
-                     role="tabpanel">
-
-                    <div class="row">
-                        @foreach($rejects as $reject)
-                            <div class="col-md-3 card">
-                                <div class="card-header">{{ $reject->orderSharer->users->name }}</div>
-                                <div class="card-body">
-                                    <p>{{ $reject->note }}</p>
-                                    <button class="btn btn-primary" onclick="copyNote('{{ $reject->note }}')"><i class="fa fa-check"></i> تحويل الى المصمم</button>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                </div>
+                <!-- <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2> -->
             </div>
 
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"> <span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>
+                </div>
+
+
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>
+                </div>
+
+                 <div class="col-md-6 mb-3">
+                       <p class="details_p">   <span class="bold">   التفاصيل : </span>{{$order->description}}</p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                       <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
+                </div>
+
+                @if(auth()->user()->type == \App\Models\User::SHARER_TYPE )
+                <div class="offset-md-9 col-md-3 mb-3">
+                       <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
+                       <button onclick="showModal('{{ route('Sharer.reject_form', ['id' => $order->id]) }}', {{ $order->id }})" class="btn btn-danger" id="reject_order">ارجاع ملاحظات</button>
+                </div>
+                @endif
+            </div>
 
         </div>
         <div class="card-body">
@@ -315,12 +276,12 @@
     <script>
 
         function reject () {
-            showModal('{{ route('delivery.reject_form') }}', null, {{ $order->id }});
+            showModal('{{ route('Sharer.reject_form') }}', null, {{ $order->id }});
         }
 
         $("#accept_order").on('click', function(){
 
-            let url = "{{ route('delivery.accept') }}";
+            let url = "{{ route('Sharer.accept') }}";
             let data = {
                 "_token" : "{{ csrf_token() }}",
                 "id" : "{{$order->id}}"
@@ -376,29 +337,7 @@
 
         {{--});--}}
 
-        function copyNote(note) {
-            $.ajax({
-                url: '{{ route('delivery.copy_note') }}',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    order_id: {{ $order->id }},
-                    note
-                },
-                type: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    if(data.success){
-                        showAlertMessage('success', data.message);
-                    }else{
-                        showAlertMessage('error', data.message);
-                    }
 
-                },
-                error: function (data) {
-                   showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
-                },
-            });
-        }
     </script>
 
 @endsection

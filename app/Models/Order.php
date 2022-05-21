@@ -79,6 +79,32 @@ class Order extends Model
         return $this->hasMany(DeliverRejectReson::class, 'order_id');
     }
 
+    public function orderSharer() {
+        return $this->hasMany(OrderSharer::class, 'order_id');
+    }
+
+    public function orderSharerAccepts() {
+        return $this->hasManyThrough(
+            OrderSharerAccept::class,
+            OrderSharer::class,
+            'order_id', // Foreign key on the environments table...
+            'order_sharer_id', // Foreign key on the deployments table...
+            'id', // Local key on the projects table...
+            'id' // Local key on the environments table...
+        );
+    }
+
+    public function orderSharerRejects() {
+        return $this->hasManyThrough(
+            OrderSharerReject::class,
+            OrderSharer::class,
+            'order_id', // Foreign key on the environments table...
+            'order_sharer_id', // Foreign key on the deployments table...
+            'id', // Local key on the projects table...
+            'id' // Local key on the environments table...
+        );
+    }
+
     public function scopeWhereDesigner($query, $designer_id)
     {
         return $query->where('designer_id', $designer_id);
