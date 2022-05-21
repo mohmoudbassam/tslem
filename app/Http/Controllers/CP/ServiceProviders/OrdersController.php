@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CP\ServiceProviders;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderSharer;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
@@ -30,6 +31,12 @@ class OrdersController extends Controller
         $order = Order::query()->create($request->except('files', '_token'));
         $order->owner_id = auth()->user()->id;
         $order->save();
+
+        $sharers = User::query()->where("type", User::SHARER_TYPE)->pluck('id');
+        $order->orderSharer()->saveMany($sharers->map(function ($item) {
+            return new OrderSharer(["user_id" => $item]);
+        }));
+
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 

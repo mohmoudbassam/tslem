@@ -1,19 +1,15 @@
-<?php $__env->startSection('title'); ?>
+@extends('CP.sharer_layout')
+@section('title')
     الطلبات
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection('content'); ?>
+@endsection
+@section('content')
 
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">
-                    <div class="btn-group" role="group">
-                        <a   href="<?php echo e(route('services_providers.create_order')); ?>" class="btn btn-primary dropdown-toggle">
-                            انشاء الطلب <i class="fa fa-clipboard-check"></i>
-                        </a>
 
-                    </div>
                 </h4>
 
                 <div class="page-title-right">
@@ -66,18 +62,18 @@
 
                 <div class="col-sm-12">
                     <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+                           role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                           عنوان الطلب
-                        </th>
-
-                        <th>
-                          التاريخ
+                            عنوان الطلب
                         </th>
                         <th>
-                          مكتب التصميم
+                            مقدم الخدمة
+                        </th>
+                        <th>
+                            التاريخ
                         </th>
                         <th>
                             حالة الطلب
@@ -86,7 +82,7 @@
                             تاريخ الإنشاء
                         </th>
                         <th>
-                           الخيارات
+                            الخيارات
                         </th>
 
 
@@ -106,9 +102,9 @@
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
 
-<?php $__env->stopSection(); ?>
+@endsection
 
-<?php $__env->startSection('scripts'); ?>
+@section('scripts')
     <script>
 
 
@@ -121,7 +117,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '<?php echo e(route('services_providers.list')); ?>',
+                    url: '{{route('Sharer.list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
@@ -130,17 +126,15 @@
                     }
                 },
                 language: {
-                    "url": "<?php echo e(url('/')); ?>/assets/datatables/Arabic.json"
+                    "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'service_provider.company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'designer.company_name', name: 'designer'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
-
-
 
                 ],
 
@@ -152,9 +146,82 @@
             $('#items_table').DataTable().ajax.reload(null, false);
         });
 
+        function accept(id) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('Sharer.accept')}}',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'جاري الانتظار'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
+            });
+        }
+        function reject(id) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{route('Sharer.reject')}}',
+                data: {
+                    id: id
+                },
+                type: "POST",
+
+                beforeSend() {
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'جاري الانتظار'
+                    });
+                },
+                success: function (data) {
+                    if(data.success){
+                        $('#items_table').DataTable().ajax.reload(null, false);
+                        showAlertMessage('success', data.message);
+                    }else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+
+                    KTApp.unblockPage();
+                },
+                error: function (data) {
+                    showAlertMessage('error', 'حدث خطأ في النظام');
+                    KTApp.unblockPage();
+                },
+            });
+        }
 
     </script>
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/ahmedsal/workspace/tslem/resources/views/CP/service_providers/orders.blade.php ENDPATH**/ ?>
+@endsection

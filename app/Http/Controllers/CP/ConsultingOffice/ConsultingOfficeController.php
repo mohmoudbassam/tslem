@@ -285,6 +285,24 @@ class ConsultingOfficeController extends Controller
         }
     }
 
+    public function complete(Request $request)
+    {
+
+        $order = Order::query()->findOrFail($request->id);
+        if ($order->status == 2) {
+            $order->status = Order::COMPLETED;
+            $order->save();
+
+            save_logs($order, auth()->user()->id, 'تم اتمام الطلب  من المكتب الاستشاري ');
+
+            optional($order->service_provider)->notify(new OrderNotification('تم اتمام الطلب  من المكتب الاستشاري', $order->consulting_office_id));
+            return response()->json([
+                'success' => true,
+                'message' => 'تمت اتمام الطلب بنجاح'
+            ]);
+        }
+    }
+
     public function reject(Request $request)
     {
 

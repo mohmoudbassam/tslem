@@ -305,10 +305,29 @@ class DeliveryController extends Controller
 
     public function view_file(Order $order)
     {
-
+        $rejects = $order->orderSharerRejects()->with('orderSharer')->get();
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
-        return view('CP.delivery.view_file', ['order' => $order, 'order_specialties' => $order_specialties, 'filess' => $files]);
+        return view('CP.delivery.view_file', [
+            'order' => $order,
+            'order_specialties' => $order_specialties,
+            'filess' => $files,
+            'rejects' => $rejects
+        ]);
 
+    }
+
+    public function copy_note(Request $request) {
+        $order = Order::query()->where('id', $request->order_id)->firstOrFail();
+        $order->deliverRejectReson()->create([
+            'order_id' => $order->id,
+            'user_id' => auth()->user()->id,
+            'note' => $request->note,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => "تم التحويل بنجاح"
+        ]);
     }
 }

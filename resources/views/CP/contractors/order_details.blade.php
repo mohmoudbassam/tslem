@@ -121,10 +121,6 @@ file-drop-zone clearfix {}
                                             </span>{{$order->designer->name}}</p>
                                     </div>
 
-                                    <div class="offset-md-9 col-md-3 mb-3">
-                                        <button class="btn btn-success" id="complete_order">اتمام الطلب</button>
-                                    </div>
-
                                 </div>
 
                                 <div class="row">
@@ -302,6 +298,11 @@ file-drop-zone clearfix {}
 
                                 <div class="card">
                                     <div class="card-header">
+                                    <div class="row"><div class="col-lg-2 offset-10">
+                                    <a class="btn btn btn-primary" href="{{route('contractor.add_report_form', ['order' => $order->id])}}">إنشاء تقرير</a>
+                                    </div></div>
+
+                                    
                                         <div class="row mt-4">
                                             <div class="col-lg-12">
 
@@ -349,19 +350,10 @@ file-drop-zone clearfix {}
                                                     role="grid" aria-describedby="DataTables_Table_0_info">
                                                     <thead>
                                                         <th>
-                                                            عنوان الطلب
+                                                            عنوان التقرير
                                                         </th>
                                                         <th>
-                                                            مقدم الخدمة
-                                                        </th>
-                                                        <th>
-                                                            مكتب التصميم
-                                                        </th>
-                                                        <th>
-                                                            التاريخ
-                                                        </th>
-                                                        <th>
-                                                            حالة الطلب
+                                                           الوصف
                                                         </th>
                                                         <th>
                                                             تاريخ الإنشاء
@@ -411,35 +403,6 @@ file-drop-zone clearfix {}
 
 @section('scripts')
 <script>
-    $("#complete_order").on('click', function() {
-
-        let url = "{{ route('consulting_office.complete') }}";
-        let data = {
-            "_token": "{{ csrf_token() }}",
-            "id": "{{$order->id}}"
-        };
-
-        $.ajax({
-            url: url,
-            data: data,
-            type: "POST",
-            dataType: 'json',
-            success: function(data) {
-                if (data.success) {
-                    showAlertMessage('success', data.message);
-                } else {
-                    showAlertMessage('error', data.message);
-                }
-
-            },
-            error: function(data) {
-                showAlertMessage('error', 'حدث خطأ في اتمام الطلب');
-            },
-        });
-
-
-    });
-
 
     $.fn.dataTable.ext.errMode = 'none';
     $(function() {
@@ -450,7 +413,7 @@ file-drop-zone clearfix {}
             'stateSave': true,
             "serverSide": true,
             ajax: {
-                url: "{{route('consulting_office.contractor_list', ['order' => $order->id])}}",
+                url: "{{route('contractor.list_orders', ['order' => $order->id])}}",
                 type: 'GET',
                 "data": function(d) {
                     d.name = $('#name').val();
@@ -468,23 +431,8 @@ file-drop-zone clearfix {}
                 },
                 {
                     className: 'text-center',
-                    data: 'service_provider.company_name',
-                    name: 'company_name'
-                },
-                {
-                    className: 'text-center',
-                    data: 'designer.company_name',
-                    name: 'company_name'
-                },
-                {
-                    className: 'text-center',
-                    data: 'date',
-                    name: 'date'
-                },
-                {
-                    className: 'text-center',
-                    data: 'order_status',
-                    name: 'order_status'
+                    data: 'description',
+                    name: 'description'
                 },
                 {
                     className: 'text-center',

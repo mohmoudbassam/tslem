@@ -9,6 +9,7 @@ use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
+use App\Http\Controllers\CP\Sharer\SharerController;
 use App\Http\Controllers\CP\SystemConfig\ServicesController;
 use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\Users\UserController;
@@ -110,8 +111,8 @@ Route::middleware('auth')->group(function () {
         Route::post('accept', [DeliveryController::class, 'accept'])->name('.accept');
         Route::post('reject', [DeliveryController::class, 'reject'])->name('.reject');
         Route::get('view_file/{order}', [DeliveryController::class, 'view_file'])->name('.view_file');
-
         Route::get('/reports/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
+        Route::post('copy_note', [DeliveryController::class, 'copy_note'])->name('.copy_note');
     });
 
     Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
@@ -128,6 +129,9 @@ Route::middleware('auth')->group(function () {
         Route::get('show_comments/{report}', [ContractorController::class, 'show_comments'])->name('.show_comments');
         Route::post('save_comment', [ContractorController::class, 'save_comment'])->name('.save_comment');
 
+        Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
+        Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
+        Route::get('download/{id}', [ContractorController::class, 'download'])->name('.download');
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
@@ -152,8 +156,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name('.reports_all_list');
         Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name('.reports_view_details');
         Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])->name('.contractor_list');
+        Route::post('complete', [ConsultingOfficeController::class, 'complete'])->name('.complete');
 
     });
+
+    Route::prefix('Sharer')->name('Sharer')->middleware(['sharer'])->group(function () {
+        Route::get('orders', [SharerController::class, 'orders']);
+        Route::get('', [SharerController::class, 'list'])->name('.list');
+        Route::get('reject_form', [SharerController::class, 'reject_form'])->name('.reject_form');
+        Route::post('accept', [SharerController::class, 'accept'])->name('.accept');
+        Route::post('reject', [SharerController::class, 'reject'])->name('.reject');
+        Route::get('view_file/{order}', [SharerController::class, 'view_file'])->name('.view_file');
+    });
+
     Route::prefix('system-config')->group(function () {
 
         Route::prefix('const')->name('const')->group(function () {
