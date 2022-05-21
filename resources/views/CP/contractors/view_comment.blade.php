@@ -191,6 +191,51 @@ body {
 
 
         </div>
+        <hr>
+        <div class="row">
+            @if(!empty($report->files))
+                <h2 class = "mt-5">المرفقات</h2>
+               
+            @foreach($report->files as $file)
+            <div class="col-md-offset-3 col-md-2">
+                                                    <div class="panel panel-default bootcards-file">
+
+                                                        <div class="list-group">
+                                                            <div class="list-group-item">
+                                                                <a href="#">
+                                                                    <i class="fa fa-file-pdf fa-4x"></i>
+                                                                </a>
+                                                                <h5 class="list-group-item-heading">
+                                                                    <a
+                                                                        href="{{route('contractor.download',['id'=>$file->id])}}">
+                                                                        {{$file->real_name}}
+                                                                    </a>
+                                                                </h5>
+
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <br>
+                                                        <div class="panel-footer">
+                                                            <div class="btn-group btn-group-justified">
+                                                                <div class="btn-group">
+                                                                    <a class="btn btn-success"
+                                                                        href="{{route('contractor.download',['id'=>$file->id])}}">
+                                                                        <i class="fa fa-arrow-down"></i>
+                                                                        تنزيل
+                                                                    </a>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+            @endforeach
+            @endif
+        </div>      
+        
+        <hr>
 
 
         <div class="row">

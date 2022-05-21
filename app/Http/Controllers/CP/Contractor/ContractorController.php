@@ -15,6 +15,8 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use App\Models\OrderService;
 use App\Models\OrderSpecilatiesFiles;
+use Illuminate\Http\Response;
+
 class ContractorController extends Controller
 {
     public function orders()
@@ -262,6 +264,20 @@ class ContractorController extends Controller
         ]);
 
         //return redirect()->back()->with(['success' => 'تمت إضافة التعليق بناح']);
+    }
+
+
+    public function download($id)
+    {
+        $file = ContractorReportFile::query()->where('id', $id)->first();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => "attachment; filename=$file->path",
+        ];
+
+        return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
+
     }
 
 

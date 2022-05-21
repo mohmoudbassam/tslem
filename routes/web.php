@@ -131,8 +131,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
         Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
-
-
+        Route::get('download/{id}', [ContractorController::class, 'download'])->name('.download');
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
