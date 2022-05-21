@@ -28,20 +28,24 @@ class DesignerOrderController extends Controller
     public function list()
     {
 
-        $order = Order::query()->with('service_provider')->whereDesigner(auth()->user()->id)->with('designer');
+        $order = Order::query()->with('service_provider')
+            ->orderByDesc('created_at')
+            ->whereDesigner(auth()->user()->id)
+            ->with('designer');
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 $add_file_design = '';
 
                 $add_file_design = '';
-                $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
+                $edit_files = '';
                 $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الطلب </a>';
 
                 if ($order->status == Order::REQUEST_BEGIN_CREATED) {
                     $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
                 }
 
-                if ($order->status == Order::REQUEST_BEGIN_CREATED) {
+
+                if ($order->delivery_notes ) {
                     $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 }
 
@@ -54,6 +58,7 @@ class DesignerOrderController extends Controller
 
                                                ' . $view . '
                                                ' . $add_file_design . '
+                                               ' . $edit_files . '
 
                                                 </div>
                               </div>';
@@ -61,9 +66,11 @@ class DesignerOrderController extends Controller
             })
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
-            })->addColumn('order_status', function ($order) {
+            })
+            ->addColumn('order_status', function ($order) {
                 return $order->order_status;
-            })->rawColumns(['actions'])
+            })
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
@@ -109,6 +116,7 @@ class DesignerOrderController extends Controller
 
     public function save_file(Request $request)
     {
+
 
         $file_validation = $this->validate_file($request);
         if (!$file_validation['success']) {
@@ -210,6 +218,8 @@ class DesignerOrderController extends Controller
         $order_designer_files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get();
         $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
+        $order->delivery_notes=0;
+        $order->save();
         return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties,
             'system_specialties_services' => $system_specialties_services,
             'order_specialties' => $order_specialties,
@@ -342,6 +352,12 @@ class DesignerOrderController extends Controller
 
     private function validate_file($request)
     {
+        if (!(request('general_file'))) {
+            return [
+                'success' => false,
+                'message' => "الرجاء إرفاق ملف الموقع العام "
+            ];
+        }
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
         $specialties = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
             if (in_array($key, $specialties_names)) {

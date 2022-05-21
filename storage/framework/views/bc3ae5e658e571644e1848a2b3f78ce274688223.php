@@ -272,6 +272,47 @@
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="bold">ملف الموقع العام</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-md-offset-3 col-md-2">
+                            <div class="panel panel-default bootcards-file">
+
+                                <div class="list-group">
+                                    <div class="list-group-item">
+                                        <a href="<?php echo e(route('design_office.download',['id'=>$files->where('type',5)->first()->id])); ?>">
+                                            <i class="fa fa-file-pdf fa-4x"></i>
+                                        </a>
+                                        <h5 class="list-group-item-heading">
+                                            <a href="#">
+                                                <?php echo e($files->where('type',5)->first()->real_name); ?>
+
+                                            </a>
+                                        </h5>
+
+                                    </div>
+                                    <div class="list-group-item">
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="btn-group btn-group-justified">
+                                        <div class="btn-group">
+                                            <a class="btn btn-success"
+                                               href="<?php echo e(route('design_office.download',['id'=>$files->where('type',5)->first()->id])); ?>">
+                                                <i class="fa fa-arrow-down"></i>
+                                                تنزيل
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

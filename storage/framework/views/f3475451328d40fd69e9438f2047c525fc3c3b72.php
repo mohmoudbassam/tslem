@@ -130,7 +130,7 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
-                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'company_name', name: 'service_provider.company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
