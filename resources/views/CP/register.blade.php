@@ -596,6 +596,9 @@
 @include('CP.layout.js')
 <script>
 
+    jQuery.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^\w+$/i.test(value);
+    }, "يرجى ادخال حروف  أو أرقام او علامة _ ");
 
     @foreach(array_keys($col_file) as $_col)
 
@@ -606,6 +609,7 @@
         rules: {
             "name": {
                 required: true,
+                alphanumeric: true
             }, "password": {
                 required: true,
             }, "password_confirmation": {
