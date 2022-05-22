@@ -627,7 +627,7 @@
 
     @foreach(array_keys($col_file) as $_col)
 
-    file_input('#{{$_col}}');
+    file_input_register('#{{$_col}}');
     @endforeach
     $('#add_edit_form').validate({
         lang: 'ar',
