@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
-
+use Hash;
 class UserController extends Controller
 {
     public function index()
@@ -84,9 +84,16 @@ class UserController extends Controller
 
     public function change_password(Request $request){
 
+       
         $request->validate([
             'password' => 'required|min:6|confirmed'
         ]);
+
+        $user = User::findOrFail($request->id);
+        $user->update([
+            'password' =>Hash::make($request->password)
+        ]);
+
         return back()->with('success', 'تم تعديل كلمة المرور بنجاح');
 
     }
