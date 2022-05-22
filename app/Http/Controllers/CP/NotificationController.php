@@ -12,4 +12,11 @@ class NotificationController extends Controller
            $notifcation->markAsRead();
        }
     }
+
+    public function notifications(){
+
+        return view('CP.notifications');
+        
+     }
+    
 }
