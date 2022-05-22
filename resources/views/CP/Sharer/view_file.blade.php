@@ -105,7 +105,6 @@
                                 class="btn btn-danger" id="reject_order">ارجاع ملاحظات
                             </button>
                         @endif
-
                     </div>
                 @endif
             </div>
