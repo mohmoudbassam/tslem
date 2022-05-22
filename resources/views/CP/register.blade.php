@@ -35,7 +35,7 @@
 
 
     <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
-
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300&family=Tajawal:wght@200;400&display=swap" rel="stylesheet">
 
     <style>
         @font-face {
@@ -96,7 +96,7 @@
 
 
         .fontArial{
-            font-family:Arial;
+            font-family:Tajawal;
         }
 
 
@@ -166,7 +166,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="name">اسم المستخدم</label>
-                            <input style = "font-family:Arial;"type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
+                            <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
                                    placeholder="اسم المستخدم">
                             <div class="col-12 text-danger" id="name_error"></div>
                         </div>
@@ -258,7 +258,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="id_date">التاريخ</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" value="{{old('id_date')}}" id="id_date"
+                                <input  type="text" class="form-control datepicker" value="{{old('id_date')}}" id="id_date"
                                        name="id_date"
                                        placeholder="التاريخ">
                                 <div class="col-12 text-danger" id="id_date_error"></div>
@@ -371,7 +371,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="commercial_file_end_date">تاريخ أنتهاء السجل التجاري</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" value="{{old('commercial_file_end_date')}}"
+                                <input  type="text" class="form-control datepicker" value="{{old('commercial_file_end_date')}}"
                                        id="commercial_end_date" name="commercial_file_end_date">
                                 <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
                             </div>
@@ -391,7 +391,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="rating_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="rating_certificate_end_date"
                                        name="rating_certificate_end_date">
                                 <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
                             </div>
@@ -422,7 +422,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="profession_license_end_date"
+                                <input  type="text" class="form-control datepicker" id="profession_license_end_date"
                                        name="profession_license_end_date">
                                 <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
                             </div>
@@ -441,7 +441,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="business_license_end_date"
+                                <input  type="text" class="form-control datepicker" id="business_license_end_date"
                                        name="business_license_end_date">
                                 <div class="col-12 text-danger" id="business_license_end_date_error"></div>
                             </div>
@@ -463,7 +463,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
                                     الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="social_insurance_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="social_insurance_certificate_end_date"
                                        name="social_insurance_certificate_end_date">
                                 <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
                             </div>
@@ -483,7 +483,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="date_of_zakat_end_date"
+                                <input  type="text" class="form-control datepicker" id="date_of_zakat_end_date"
                                        name="date_of_zakat_end_date">
                                 <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
                             </div>
@@ -503,7 +503,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="saudization_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="saudization_certificate_end_date"
                                        name="saudization_certificate_end_date">
                                 <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
                             </div>
@@ -525,7 +525,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
                                     الانتهاء</label>
-                                <input style = "font-family:Arial;" type="text" class="form-control datepicker" id="chamber_of_commerce_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="chamber_of_commerce_certificate_end_date"
                                        name="chamber_of_commerce_certificate_end_date">
                                 <div class="col-12 text-danger"
                                      id="chamber_of_commerce_certificate_end_date_error"></div>
