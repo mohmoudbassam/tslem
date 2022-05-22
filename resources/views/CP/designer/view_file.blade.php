@@ -96,7 +96,7 @@
 
                 @if($order->status == \App\Models\Order::PENDING)
                     <div class="offset-md-9 col-md-3 mb-3">
-                        <a class="btn btn-primary" href="{{route('design_office.accept',['order'=>$order->id])}}">اعتماد
+                        <a class="btn btn-primary" href="{{route('design_office.accept',['order'=>$order->id])}}">قبول
                             الطلب</a>
                         <a class="btn btn-danger" href="{{route('design_office.reject',['order'=>$order->id])}}">
                             رفض الطلب
@@ -269,46 +269,47 @@
                         </div>
                     </div>
                 @endforeach
+{{--                @if($files->where('type',5)->exists())--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h4 class="bold">ملف الموقع العام</h4>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body">--}}
+{{--                            <div class="col-md-offset-3 col-md-2">--}}
+{{--                                <div class="panel panel-default bootcards-file">--}}
 
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="bold">ملف الموقع العام</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-md-offset-3 col-md-2">
-                            <div class="panel panel-default bootcards-file">
+{{--                                    <div class="list-group">--}}
+{{--                                        <div class="list-group-item">--}}
+{{--                                            <a href="{{route('design_office.download',['id'=>$files->where('type',5)->first()->id])}}">--}}
+{{--                                                <i class="fa fa-file-pdf fa-4x"></i>--}}
+{{--                                            </a>--}}
+{{--                                            <h5 class="list-group-item-heading">--}}
+{{--                                                <a href="#">--}}
+{{--                                                    {{$files->where('type',5)->first()->real_name}}--}}
+{{--                                                </a>--}}
+{{--                                            </h5>--}}
 
-                                <div class="list-group">
-                                    <div class="list-group-item">
-                                        <a href="{{route('design_office.download',['id'=>$files->where('type',5)->first()->id])}}">
-                                            <i class="fa fa-file-pdf fa-4x"></i>
-                                        </a>
-                                        <h5 class="list-group-item-heading">
-                                            <a href="#">
-                                                {{$files->where('type',5)->first()->real_name}}
-                                            </a>
-                                        </h5>
+{{--                                        </div>--}}
+{{--                                        <div class="list-group-item">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="panel-footer">--}}
+{{--                                        <div class="btn-group btn-group-justified">--}}
+{{--                                            <div class="btn-group">--}}
+{{--                                                <a class="btn btn-success"--}}
+{{--                                                   href="{{route('design_office.download',['id'=>$files->where('type',5)->first()->id])}}">--}}
+{{--                                                    <i class="fa fa-arrow-down"></i>--}}
+{{--                                                    تنزيل--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
 
-                                    </div>
-                                    <div class="list-group-item">
-                                    </div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="btn-group btn-group-justified">
-                                        <div class="btn-group">
-                                            <a class="btn btn-success"
-                                               href="{{route('design_office.download',['id'=>$files->where('type',5)->first()->id])}}">
-                                                <i class="fa fa-arrow-down"></i>
-                                                تنزيل
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
             </div>
         </div>
 

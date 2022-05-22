@@ -14,7 +14,9 @@
                         <div class="row">
                             <label class="col-12" for="note">سبب الرفض</label>
                             <div class="col-12">
-                                <textarea class="form-control" name="note" id="note" rows="10"></textarea>
+                                <textarea class="form-control" name="note" id="note" rows="10">@foreach($order_starer_last_notes as $notes){{optional($notes->lastnote)->note}}&#13;&#10;&#13;&#10;@endforeach</textarea>
+
+
                             </div>
                             <div class="col-12 text-danger" id="note_error"></div>
                         </div>
@@ -56,9 +58,7 @@
 
         if (!$("#add_edit_form").valid())
             return false;
-
-
-        postData(new FormData($('#add_edit_form').get(0)), '{{route('delivery.reject')}}');
+        $('#add_edit_form').submit()
 
     });
 </script>

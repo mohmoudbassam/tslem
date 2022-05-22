@@ -17,6 +17,7 @@ class CreateOrderSharersTable extends Migration
             $table->id();
             $table->foreignId("order_id")->references("id")->on("orders")->cascadeOnDelete();
             $table->foreignId("user_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->integer("status")->default(0);
             $table->timestamps();
         });
     }

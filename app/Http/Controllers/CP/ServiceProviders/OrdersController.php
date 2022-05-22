@@ -90,9 +90,7 @@ class OrdersController extends Controller
 
     public function edit_order(Order $order)
     {
-        $data['designers'] = User::query()->whereDoesntHave('designer_order_rejected',function($q)use($order){
-            $q->where('order_id',$order->id);
-        })
+        $data['designers'] = User::query()
             ->whereVitrified()->where('type', 'design_office')->get();
         $data['order'] = $order;
 

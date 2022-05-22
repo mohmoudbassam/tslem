@@ -13,7 +13,12 @@ class OrderSharerReject extends Model
 
     protected $guarded = [];
 
-    public function orderSharer() {
+
+
+    public function orderSharer()
+    {
         return $this->belongsTo(OrderSharer::class)->with('users');
     }
+
+
 }
