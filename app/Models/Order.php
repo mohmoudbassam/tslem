@@ -130,4 +130,13 @@ class Order extends Model
         return $this->hasOne(DeliverRejectReson::class)->orderByDesc('created_at')->take(1);
     }
 
+    public function consulting_or_constroctor(){
+        return $this->hasMany(ConsultingOrders::class, 'order_id');
+    }
+
+    public function is_accepted($user){
+
+        return $this->consulting_or_constroctor->where('user_id',$user->id)->count();
+    }
+
 }

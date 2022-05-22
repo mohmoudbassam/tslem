@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
     Route::post('after_reject', [UserController::class, 'after_reject'])->name('after_reject');
     Route::get('notifications', [NotificationController::class, 'notifications'])->name('notifications');
-    
+
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::get('add', [UserController::class, 'add'])->name('.add');
@@ -78,6 +78,8 @@ Route::middleware('auth')->group(function () {
         Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
+        Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
+        Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
@@ -137,6 +139,9 @@ Route::middleware('auth')->group(function () {
         Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
         Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
         Route::get('download/{id}', [ContractorController::class, 'download'])->name('.download');
+        Route::get('accept_order/{order}', [ContractorController::class, 'accept_order'])->name('.accept_order');
+        Route::get('reject_order/{order}', [ContractorController::class, 'reject_order'])->name('.reject_order');
+
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
@@ -162,6 +167,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name('.reports_view_details');
         Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])->name('.contractor_list');
         Route::post('complete', [ConsultingOfficeController::class, 'complete'])->name('.complete');
+        Route::get('accept_order/{order}', [ConsultingOfficeController::class, 'accept_order'])->name('.accept_order');
+        Route::get('reject_order/{order}', [ConsultingOfficeController::class, 'reject_order'])->name('.reject_order');
 
     });
 
