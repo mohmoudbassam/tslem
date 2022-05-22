@@ -17,7 +17,7 @@ use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
-
+use App\Http\Controllers\PDFController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -200,3 +200,5 @@ Route::middleware('auth')->group(function () {
 Route::get('test', function () {
     return view('fm');
 });
+
+Route::get('generate', [PDFController::class, 'generate']);

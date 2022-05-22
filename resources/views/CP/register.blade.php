@@ -151,9 +151,9 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="name">الإسم</label>
+                            <label class="form-label" for="name">اسم المستخدم</label>
                             <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
-                                   placeholder="الإسم">
+                                   placeholder="اسم المستخدم">
                             <div class="col-12 text-danger" id="name_error"></div>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_file">السجل التحاري</label>
+                                <label class="form-label" for="commercial_file">السجل التحاري (PDF)</label>
                                 <input type="file" class="form-control" value="{{old('commercial_file')}}"
                                        id="commercial_file" name="commercial_file">
                                 <div class="col-12 text-danger" id="commercial_file_error"></div>
@@ -368,7 +368,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي</label>
+                                <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي (PDF)</label>
                                 <input type="file" class="form-control" id="rating_certificate"
                                        name="rating_certificate">
                                 <div class="col-12 text-danger" id="rating_certificate_error"></div>
@@ -388,7 +388,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="address_file">العنوان الوطني</label>
+                                <label class="form-label" for="address_file">العنوان الوطني (PDF)</label>
                                 <input type="file" class="form-control" id="address_file" name="address_file">
                                 <div class="col-12 text-danger" id="address_file_error"></div>
                             </div>
@@ -399,7 +399,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="profession_license">شهادة مزاولة المهنة</label>
+                                <label class="form-label" for="profession_license">شهادة مزاولة المهنة (PDF)</label>
                                 <input type="file" class="form-control" id="profession_license"
                                        name="profession_license">
                                 <div class="col-12 text-danger" id="profession_license_error"></div>
@@ -419,7 +419,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="business_license">رخصة نشاط تجاري</label>
+                                <label class="form-label" for="business_license">رخصة نشاط تجاري (PDF)</label>
                                 <input type="file" class="form-control" id="business_license" name="business_license">
                                 <div class="col-12 text-danger" id="business_license_error"></div>
                             </div>
@@ -439,7 +439,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
-                                    الإجتماعية</label>
+                                    الإجتماعية (PDF)</label>
                                 <input type="file" class="form-control" id="social_insurance_certificate"
                                        name="social_insurance_certificate">
                                 <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
@@ -460,7 +460,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل</label>
+                                <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>
                                 <input type="file" class="form-control" id="certificate_of_zakat"
                                        name="certificate_of_zakat">
                                 <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
@@ -480,7 +480,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="saudization_certificate">شهادة السعودة</label>
+                                <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
                                 <input type="file" class="form-control" id="saudization_certificate"
                                        name="saudization_certificate">
                                 <div class="col-12 text-danger" id="saudization_certificate_error"></div>
@@ -501,7 +501,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
-                                    التجارية</label>
+                                    التجارية (PDF)</label>
                                 <input type="file" class="form-control" id="chamber_of_commerce_certificate"
                                        name="chamber_of_commerce_certificate">
                                 <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
@@ -523,7 +523,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة</label>
+                                <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة (PDF)</label>
                                 <input type="file" class="form-control" id="tax_registration_certificate"
                                        name="tax_registration_certificate">
                                 <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
@@ -535,7 +535,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور</label>
+                                <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
                                 <input type="file" class="form-control" id="wage_protection_certificate"
                                        name="wage_protection_certificate">
                                 <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
@@ -547,7 +547,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="memorandum_of_association">شهادة عقد التأسيس</label>
+                                <label class="form-label" for="memorandum_of_association">شهادة عقد التأسيس (PDF)</label>
                                 <input type="file" class="form-control" id="memorandum_of_association"
                                        name="memorandum_of_association">
                                 <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
