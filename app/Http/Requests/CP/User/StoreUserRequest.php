@@ -17,7 +17,7 @@ class StoreUserRequest extends FormRequest
             'name' => [
                 'required',
                 Rule::unique('users', 'name'),
-                'regex:/^[a-zA-Z]+$/u',
+               // 'regex:/^[a-zA-Z]+$/u',
                 'max:50'
             ],
             'email' => 'required|email|unique:users,email',
