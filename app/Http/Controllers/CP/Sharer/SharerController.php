@@ -19,7 +19,7 @@ class SharerController extends Controller
 {
     public function orders()
     {
-        return view('CP.sharer.orders');
+        return view('CP.Sharer.orders');
     }
 
     public function list()
@@ -50,7 +50,7 @@ class SharerController extends Controller
         $order = Order::query()->findOrFail($request->id);
         return response()->json([
             'success' => true,
-            'page' => view('CP.sharer.reject_form', [
+            'page' => view('CP.Sharer.reject_form', [
                 'order' => $order,
             ])->render()
         ]);
@@ -110,7 +110,7 @@ class SharerController extends Controller
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $order_sharer = OrderSharer::query()->where('order_id', $order->id)->where('user_id', auth()->user()->id)->first();
 
-        return view('CP.sharer.view_file', ['order' => $order,
+        return view('CP.Sharer.view_file', ['order' => $order,
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'order_sharer' => $order_sharer
