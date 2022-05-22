@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
     Route::post('after_reject', [UserController::class, 'after_reject'])->name('after_reject');
+    Route::get('notifications', [NotificationController::class, 'notifications'])->name('notifications');
+    
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::get('add', [UserController::class, 'add'])->name('.add');
