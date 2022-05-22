@@ -54,6 +54,9 @@ Route::middleware('auth')->group(function () {
         Route::post('status', [UserController::class, 'status'])->name('.status');
         Route::post('add_edit', [UserController::class, 'add_edit'])->name('.add_edit');
         Route::get('update_from/{user}', [UserController::class, 'update_from'])->name('.update_from');
+        Route::get('change_password/{user}', [UserController::class, 'change_password_form'])->name('.change_password_form');
+        Route::post('change_password', [UserController::class, 'change_password'])->name('.change_password');
+
         Route::post('update', [UserController::class, 'update'])->name('.update');
         Route::post('delete', [UserController::class, 'delete'])->name('.delete');
         Route::prefix('request')->name('.request')->group(function () {
