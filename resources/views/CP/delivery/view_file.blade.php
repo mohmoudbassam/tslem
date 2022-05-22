@@ -117,10 +117,12 @@
                                 @if($order->allow_deliver == 1)
                                     <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
                                 @endif
-                                <button
-                                    onclick="showModal('{{ route('delivery.reject_form', ['id' => $order->id]) }}', {{ $order->id }})"
-                                    class="btn btn-danger" id="reject_order">ارجاع ملاحظات
-                                </button>
+                                @if($order->lastDesignerNote()->where('status',0)->count()==0)
+                                    <button
+                                        onclick="showModal('{{ route('delivery.reject_form', ['id' => $order->id]) }}', {{ $order->id }})"
+                                        class="btn btn-danger" id="reject_order">ارجاع ملاحظات
+                                    </button>
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -300,8 +302,8 @@
                             <div class="col-md-3 card">
                                 <div class="card-header d-flex
                                     @if($order_sharer->status == 1)
-                                       bg-success
-                                @elseif($order_sharer->status == 2)
+                                    bg-success
+@elseif($order_sharer->status == 2)
                                     bg-danger
                               @elseif($order_sharer->status ==0)
                                     bg-secondary
@@ -415,6 +417,9 @@
                 success: function (data) {
                     if (data.success) {
                         showAlertMessage('success', data.message);
+                        setTimeout(function () {
+                            window.location.reload()
+                        }, 500);
                     } else {
                         showAlertMessage('error', data.message);
                     }

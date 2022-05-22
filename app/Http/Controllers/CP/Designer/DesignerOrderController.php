@@ -7,6 +7,7 @@ use App\Models\DesignerRejected;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderServiceFile;
+use App\Models\OrderSharer;
 use App\Models\OrderSpecilatiesFiles;
 use App\Models\Service;
 use App\Models\ServiceFileType;
@@ -45,7 +46,7 @@ class DesignerOrderController extends Controller
                 }
 
 
-                if ($order->delivery_notes ) {
+                if ($order->lastDesignerNote()->where('status',0)->count()) {
                     $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
                 }
 
@@ -98,9 +99,9 @@ class DesignerOrderController extends Controller
             optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
             $order->designer_id = null;
             DesignerRejected::query()->create([
-              'order_id'=>$order->id,
-                'designer_id'=>auth()->user()->id
-                ]);
+                'order_id' => $order->id,
+                'designer_id' => auth()->user()->id
+            ]);
             $order->save();
         }
         return redirect()->route('design_office')->with(['success' => 'تمت رفض الطلب بناح ']);
@@ -218,7 +219,7 @@ class DesignerOrderController extends Controller
         $order_designer_files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get();
         $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
-        $order->delivery_notes=0;
+        $order->delivery_notes = 0;
         $order->save();
         return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties,
             'system_specialties_services' => $system_specialties_services,
@@ -234,7 +235,17 @@ class DesignerOrderController extends Controller
 
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
-        return view('CP.designer.view_file', ['order' => $order, 'order_specialties' => $order_specialties, 'filess' => $files]);
+        $last_note = $order->lastDesignerNote()->where('status',0)->first();
+        $tex = null;
+        if ($last_note) {
+            $tex = array_filter(preg_split("/\r\n|\n|\r\s+/", $last_note->note));
+        }
+
+        return view('CP.designer.view_file', ['order' => $order,
+            'order_specialties' => $order_specialties,
+            'filess' => $files,
+            'last_note' => $tex
+        ]);
 
     }
 
@@ -266,8 +277,8 @@ class DesignerOrderController extends Controller
     public function edit_file_action(Request $request)
     {
 
-        $order = Order::query()->where('id', $request->order_id)->first();
 
+        $order = Order::query()->where('id', $request->order_id)->first();
         $file_validation = $this->validate_update_file($request, $order);
         if (!$file_validation['success']) {
             return response()->json($file_validation);
@@ -343,6 +354,12 @@ class DesignerOrderController extends Controller
                 'type' => 5
             ]);
         }
+        $order->lastDesignerNote()->update([
+            'status'=>1
+        ]);
+        $order->orderSharer()->where('status',OrderSharer::REJECT)->update([
+           'status'=> OrderSharer::PENDING
+        ]);
 
         return response()->json([
             'success' => true,

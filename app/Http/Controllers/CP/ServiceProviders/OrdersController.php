@@ -55,8 +55,12 @@ class OrdersController extends Controller
             })->addColumn('actions', function ($order) {
 
                 $add_designer = '';
+                $add_contractor_and_consulting_office = '';
                 if ($order->designer_id == null) {
                     $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة مكتب تصميم </a>';
+                }
+                if($order->status==Order::DESIGN_APPROVED && $order->contractor_id==null && $order->consulting_office_id==null){
+                    $add_contractor_and_consulting_office='<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة استشاري ومقاول</a>';
                 }
 
 

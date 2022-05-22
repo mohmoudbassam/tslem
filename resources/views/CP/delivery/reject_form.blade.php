@@ -14,7 +14,9 @@
                         <div class="row">
                             <label class="col-12" for="note">سبب الرفض</label>
                             <div class="col-12">
-                                <textarea class="form-control" name="note" id="note" rows="10">@foreach($order_starer_last_notes as $notes){{optional($notes->lastnote)->note}}&#13;&#10;&#13;&#10;@endforeach</textarea>
+                                <textarea class="form-control" name="note" id="note"
+                                          rows="10">@foreach($order_starer_last_notes as $notes){{optional($notes->lastnote)->note}}
+                                    &#13;&#10;&#13;&#10;@endforeach</textarea>
 
 
                             </div>
@@ -58,7 +60,35 @@
 
         if (!$("#add_edit_form").valid())
             return false;
-        $('#add_edit_form').submit()
 
+
+        let url = "{{ route('delivery.copy_note') }}";
+        let data = {
+            "_token": "{{ csrf_token() }}",
+            "id": "{{$order->id}}",
+            "note": $('#note').val()
+
+        };
+
+        $.ajax({
+            url: url,
+            data: data,
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    showAlertMessage('success', data.message);
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 500);
+                } else {
+                    showAlertMessage('error', data.message);
+                }
+
+            },
+            error: function (data) {
+                showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
+            },
+        });
     });
 </script>

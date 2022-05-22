@@ -126,4 +126,8 @@ class Order extends Model
         ][$this->status];
     }
 
+    public function lastDesignerNote(){
+        return $this->hasOne(DeliverRejectReson::class)->orderByDesc('created_at')->take(1);
+    }
+
 }

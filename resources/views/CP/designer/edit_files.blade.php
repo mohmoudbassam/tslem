@@ -435,6 +435,7 @@
 @endsection
 
 @section('scripts')
+@section('scripts')
     <script>
 
         @foreach ($specialties as $_specialties)
@@ -550,7 +551,7 @@
 
                         showAlertMessage('success', data.message);
                         setTimeout(() => {
-                            window.location.reload();
+                            window.location='{{route('design_office')}}';
                         }, "1500")
                     } else {
                         $('#page_modal').modal('hide');
