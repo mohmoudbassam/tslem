@@ -46,7 +46,7 @@ class OrdersController extends Controller
 
     public function list(Request $request)
     {
-        $order = Order::query()->with('designer')->whereServiceProvider(auth()->user()->id)->with('designer');
+        $order = Order::query()->orderByDesc('created_at')->with('designer')->whereServiceProvider(auth()->user()->id)->with('designer');
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
@@ -59,8 +59,9 @@ class OrdersController extends Controller
                 if ($order->designer_id == null) {
                     $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة مكتب تصميم </a>';
                 }
-                if($order->status==Order::DESIGN_APPROVED && $order->contractor_id==null && $order->consulting_office_id==null){
-                    $add_contractor_and_consulting_office='<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة استشاري ومقاول</a>';
+
+                if ($order->status == Order::DESIGN_APPROVED && $order->contractor_id == null && $order->consulting_office_id == null) {
+                    $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus"></i>إضافة استشاري ومقاول</a>';
                 }
 
 
@@ -71,6 +72,7 @@ class OrdersController extends Controller
                                             <div class="dropdown-menu" style="">
 
                                                ' . $add_designer . '
+                                               ' . $add_contractor_and_consulting_office . '
 
                                                 </div>
                               </div>';
@@ -100,10 +102,11 @@ class OrdersController extends Controller
 
         return view('CP.service_providers.edit_order', $data);
     }
+
     public function update_order(Request $request)
     {
-        $order = tap(Order::query()->where('id',$request->order_id)->first())
-            ->update($request->except('files', '_token','order_id'));
+        $order = tap(Order::query()->where('id', $request->order_id)->first())
+            ->update($request->except('files', '_token', 'order_id'));
 
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
@@ -112,5 +115,38 @@ class OrdersController extends Controller
         return redirect()->route('services_providers')->with(['success' => 'تم تعديل الطلب بنجاح']);
 
 
+    }
+
+    public function add_constructor_form(Order $order)
+    {
+        $contractors = User::query()->where('type', '=', 'contractor')->get();
+        $consulting_offices = User::query()->where('type', '=', 'consulting_office')->get();
+        return response()->json([
+            'success' => true,
+            'page' => view('CP.service_providers.chice_constractor', [
+                'order' => $order,
+                'contractors' => $contractors,
+                'consulting_offices' => $consulting_offices,
+            ])->render()
+        ]);
+
+    }
+
+    public function choice_constructor_action(Request $request)
+    {
+
+        $order = Order::query()->findOrFail($request->id);
+        $order->update([
+            'contractor_id' => $request->contractor_id,
+            'consulting_office_id' => $request->consulting_office_id
+        ]);
+        save_logs($order, auth()->user()->id, "تم اخيار المكتب الاستشاري ومكتب المقاولات");
+
+        optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب  ', auth()->user()->id));
+        optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب   ', auth()->user()->id));
+        return response()->json([
+            'success' => true,
+            'message' => 'تم الاختيار بنجاح'
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CP\Contractor;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConsultingOrders;
 use App\Models\ContractorReport;
 use App\Models\ContractorReportFile;
 use App\Models\Order;
@@ -40,13 +41,32 @@ class ContractorController extends Controller
                 // if ($order->status > 4) {
                 //     $accept = '';
                 // }
+                $view_details = ' <a class="dropdown-item" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
+                    عرض التفاصيل
+                </a>';
+                if (!$order->is_accepted(auth()->user())) {
+                    $accept_order = ' <a class="dropdown-item" href="' . route('contractor.accept_order', ['order' => $order->id]) . '">
+                   قبول الطلب
+                </a>';
+                    $reject_order = ' <a class="dropdown-item" href="' . route('contractor.reject_order', ['order' => $order->id]) . '">
+                  رفض الطلب
+                </a>';
+                }
+
+
 
                 $element = '<div class="btn-group me-1 mt-2">
-                                            <a class="btn btn-info btn-sm" href="' . route('contractor.order_details', ['order' => $order->id]) . '" >
-                                              عرض التفاصيل
-                                            </a>
-                                           
-                                        </div>';
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    خيارات<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+
+                                               ' . $accept_order . '
+                                               ' . $view_details . '
+                                               ' . $reject_order . '
+
+                                               </div>
+                              </div>';
                 return $element;
 
             })
@@ -64,7 +84,7 @@ class ContractorController extends Controller
         $reports = ContractorReport::query()
             ->where('contractor_id', '=', auth()->user()->id)
             ->where('order_id', $order->id);
-    
+
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) use ($order){
                 // $add_report = '';
@@ -79,11 +99,11 @@ class ContractorController extends Controller
                                             <a class="btn btn-info btn-sm" href="' . route('contractor.show_comments', ['report' => $report->id]) . '">
                                                عرض الملاحظات
                                             </a>
-                                           
+
                                         </div>';
             return $element;
 
-                                    
+
             })
             ->addColumn('created_at', function ($order) {
                 return (!is_null($order->created_at)) ? $order->created_at->format('Y-m-d') : '';
@@ -92,7 +112,7 @@ class ContractorController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
-    
+
 
     public function add_report_from(Order $order)
     {
@@ -111,7 +131,7 @@ class ContractorController extends Controller
             'filess' => $files
         ]);
     }
-    
+
 
     public function add_edit_report(Request $request)
     {
@@ -278,6 +298,23 @@ class ContractorController extends Controller
 
         return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
 
+    }
+    public function accept_order(Order $order)
+    {
+        ConsultingOrders::create([
+            'order_id' => $order->id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->back()->with(['success' => 'تم قبول الطلب بنجاح']);
+    }
+
+    public function reject_order(Order $order)
+    {
+        $order->contractor_id = null;
+        $order->save();
+
+        return redirect()->back()->with(['success' => 'تم رفض الطلب بنجاح']);
     }
 
 

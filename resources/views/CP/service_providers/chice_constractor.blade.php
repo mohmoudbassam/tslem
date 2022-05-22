@@ -6,7 +6,7 @@
                 id="exampleModalLongTitle">اعتماد الطلب</h5>
 
         </div>
-        <form action="'{{route('delivery.accept')}}'" method="post" id="add_edit_form" enctype="multipart/form-data">
+        <form action="'{{route('services_providers.choice_constructor_action')}}'" method="post" id="add_edit_form" enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
                 <div class="row">
@@ -81,7 +81,7 @@
             return false;
 
 
-        postData(new FormData($('#add_edit_form').get(0)), '{{route('delivery.accept')}}');
+        postData(new FormData($('#add_edit_form').get(0)), '{{route('services_providers.choice_constructor_action')}}');
 
     });
 </script>
