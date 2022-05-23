@@ -62,11 +62,13 @@
                        href="#details"
                        role="tab">تفاصيل الطلب</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-3 " data-bs-toggle="tab"
-                       href="#notes"
-                       role="tab">ملاحظات الجهات المشاركة</a>
-                </li>
+                <?php if($order->status >= \App\Models\Order::DESIGN_REVIEW): ?>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 " data-bs-toggle="tab"
+                           href="#notes"
+                           role="tab">ملاحظات الجهات المشاركة</a>
+                    </li>
+                <?php endif; ?>
             </ul>
 
 
@@ -102,7 +104,7 @@
 
                         <div class="col-md-6 mb-3">
                             <p class="details_p"><span
-                                    class="bold">اسم مقدم الخدمة :</span> <?php echo e($order->service_provider->name); ?>
+                                    class="bold">اسم مقدم الخدمة :</span> <?php echo e($order->service_provider->company_name); ?>
 
                             </p>
                         </div>
@@ -113,7 +115,7 @@
 
                         <div class="col-md-6 mb-3">
                             <p class="details_p"><span
-                                    class="bold"> اسم مكتب التصميم :  </span><?php echo e($order->designer->name); ?></p>
+                                    class="bold"> اسم مكتب التصميم :  </span><?php echo e($order->designer->company_name); ?></p>
                         </div>
 
                         <?php if($order->status == \App\Models\Order::PENDING): ?>

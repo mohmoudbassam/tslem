@@ -64,8 +64,11 @@ class OrdersController extends Controller
                     $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus"></i>إضافة استشاري ومقاول</a>';
                 }
 
+                if(empty($add_designer)&&empty($add_contractor_and_consulting_office)){
+                    $element='';
+                }else{
 
-                $element = '<div class="btn-group me-1 mt-2">
+                    $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
@@ -76,6 +79,8 @@ class OrdersController extends Controller
 
                                                 </div>
                               </div>';
+                }
+
                 return $element;
             })->rawColumns(['actions'])
             ->make(true);

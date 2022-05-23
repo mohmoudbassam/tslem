@@ -204,6 +204,17 @@
                                                                 </a>
                                                             </div>
                                                         </div>
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-danger"
+                                                                   href="{{route('design_office.delete_file',['file'=>$files->id])}}">
+                                                                    <i class="fa fa-trash-alt"></i>
+                                                                    حذف
+                                                                </a>
+                                                            </div>
+
+
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -240,6 +251,17 @@
                                                             </div>
 
                                                         </div>
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-danger"
+                                                                   href="{{route('design_office.delete_file',['file'=>$files->id])}}">
+                                                                    <i class="fa fa-trash-alt"></i>
+                                                                    حذف
+                                                                </a>
+                                                            </div>
+
+
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -272,6 +294,17 @@
                                                                    href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                     <i class="fa fa-arrow-down"></i>
                                                                     تنزيل
+                                                                </a>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-danger"
+                                                                   href="{{route('design_office.delete_file',['file'=>$files->id])}}">
+                                                                    <i class="fa fa-trash-alt"></i>
+                                                                    حذف
                                                                 </a>
                                                             </div>
 
@@ -380,6 +413,15 @@
                                                             تنزيل
                                                         </a>
                                                     </div>
+                                                </div>
+                                                <div class="btn-group btn-group-justified">
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-danger"
+                                                           href="{{route('design_office.delete_file',['file'=>$general_file->id])}}">
+                                                            <i class="fa fa-trash-alt"></i>
+                                                            حذف
+                                                        </a>
+                                                    </div>
 
 
                                                 </div>
@@ -434,7 +476,6 @@
 
 @endsection
 
-@section('scripts')
 @section('scripts')
     <script>
 

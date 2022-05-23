@@ -320,21 +320,31 @@ class DesignerOrderController extends Controller
         foreach (Specialties::all() as $specialties) {
 
             if (request($specialties->name_en . '_pdf_file')) {
-                OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
-                    $q->where('name_en', $specialties);
-                })->where('order_id', $order->id)->where('type', 1)->delete();
+              $order_pdf_file=  OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
+
+                    $q->where('name_en', $specialties->name_en);
+                })->where('order_id', $order->id)->first();
+              if($order_pdf_file)
+                  $order_pdf_file->delete();
+
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_pdf_file'), 1);
             }
             if (request($specialties->name_en . '_cad_file')) {
-                OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
+                $order_pdf_file=   OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
                     $q->where('name_en', $specialties);
-                })->where('order_id', $order->id)->where('type', 2)->delete();
+                })->where('order_id', $order->id)->where('type', 2)->first();
+                if($order_pdf_file)
+                    $order_pdf_file->delete();
+
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_cad_file',), 2);
             }
             if (request($specialties->name_en . '_docs_file')) {
-                OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
+                $order_pdf_file=  OrderSpecilatiesFiles::query()->whereHas('specialties', function ($q) use ($specialties) {
                     $q->where('name_en', $specialties);
+
                 })->where('order_id', $order->id)->where('type', 3)->delete();
+                if($order_pdf_file)
+                    $order_pdf_file->delete();
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
             }
         }

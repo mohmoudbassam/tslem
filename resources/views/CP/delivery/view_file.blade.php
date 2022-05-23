@@ -100,7 +100,7 @@
 
                         <div class="col-md-6 mb-3">
                             <p class="details_p"><span
-                                    class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>
+                                    class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->company_name}}</p>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -109,7 +109,7 @@
 
                         <div class="col-md-6 mb-3">
                             <p class="details_p"><span
-                                    class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
+                                    class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
                         </div>
 
                         @if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE && $order->status == \App\Models\Order::DESIGN_REVIEW && $order->delivery_notes == 0)
@@ -362,6 +362,9 @@
                 success: function (data) {
                     if (data.success) {
                         showAlertMessage('success', data.message);
+                        setTimeout(function () {
+                             window.location.reload();
+                        },500)
                     } else {
                         showAlertMessage('error', data.message);
                     }

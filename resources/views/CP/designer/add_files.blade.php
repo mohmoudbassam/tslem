@@ -28,9 +28,7 @@
                         <div class="col-sm order-2 order-sm-1">
                             <div class="d-flex align-items-start mt-3 mt-sm-0">
                                 <div class="flex-shrink-0">
-                                    <div class="avatar-xl me-3">
-                                        <img src="" alt="" class="img-fluid rounded-circle d-block">
-                                    </div>
+
                                 </div>
                                 <div>
                                     <div>
@@ -152,7 +150,7 @@
                                                     <label class="form-label"
                                                            for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
                                                     <input type="file"
-                                                           class="form-control {{$_specialties->name_en}}_pdf_file"
+                                                           class="form-control {{$_specialties->name_en}}_pdf_file pdf_file"
                                                            id="{{$_specialties->name_en}}_pdf_file"
                                                            name="{{$_specialties->name_en}}_pdf_file">
                                                     <div class="col-12 text-danger"
@@ -353,14 +351,14 @@
         file_input_cu('#general_file')
 
         @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_pdf_file')
+        file_input_cu('#{{$_specialties->name_en}}_pdf_file',{},['pdf'])
 
         @endforeach
         @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_docs_file')
+        file_input_cu('#{{$_specialties->name_en}}_docs_file',{},[])
 
         @endforeach @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_cad_file')
+        file_input_cu('#{{$_specialties->name_en}}_cad_file',['dwg'])
 
         @endforeach
         $('#add_edit_form').validate({
@@ -387,6 +385,7 @@
                 $(e).rules("add", {required: true})
             });
 
+              console.log($("#add_edit_form").valid())
             if (!$("#add_edit_form").valid()) {
                 showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
 
@@ -440,7 +439,7 @@
         });
 
 
-        function file_input_cu(selector, options) {
+        function file_input_cu(selector, options,type) {
             let defaults = {
                 theme: "fas",//gly
                 showDrag: false,
@@ -456,7 +455,7 @@
                 showRemove: false,
                 showCancel: false,
                 showUpload: false,
-                showPreview: true,
+                showPreview: false,
                 msgPlaceholder: "اختر ملف",
                 msgSelected: "تم الاختيار ",
                 fileSingle: "ملف واحد",
@@ -472,6 +471,7 @@
                 overwriteInitial: true,
                 browseOnZoneClick: true,
                 captionClass: true,
+                allowedFileExtensions: type,
                 maxFileCount: 3,
             };
             let settings = $.extend({}, defaults, options);
