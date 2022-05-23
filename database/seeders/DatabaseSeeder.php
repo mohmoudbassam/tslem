@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'password' => 123456,
             'email' => 'test@test.com',
-            'type' => 'admin'
+            'type' => 'admin',
+            'email_verified_at' => now()
         ]);
       $service_provider=  \App\Models\User::query()->create([
             'name' => 'service',
@@ -34,7 +35,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'service@test.com',
             'type' => 'service_provider',
             'company_name' => 'service_company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
         $designer=    \App\Models\User::query()->create([
             'name' => 'designer',
@@ -42,7 +44,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'designer@test.com',
             'type' => 'design_office',
             'company_name' => 'designer_company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
 
         ]);
         \App\Models\User::query()->create([
@@ -51,7 +54,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'designer2@test.com',
             'type' => 'design_office',
             'company_name' => 'designer2_company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
         \App\Models\User::query()->create([
             'name' => 'taslem',
@@ -59,7 +63,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'taslem@test.com',
             'type' => 'Delivery',
             'company_name' => 'taslem_company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
         \App\Models\User::query()->create([
             'name' => 'contractor',
@@ -67,7 +72,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'contractor@test.com',
             'type' => 'contractor',
             'company_name' => 'contractor_company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
         \App\Models\User::query()->create([
             'name' => 'consulting_office',
@@ -75,7 +81,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'consulting_office@test.com',
             'type' => 'consulting_office',
             'company_name' => 'consulting_company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
         \App\Models\User::query()->create([
             'name' => 'gov',
@@ -83,7 +90,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'gov@test.com',
             'type' => 'Sharer',
             'company_name' => 'Sharer Company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
 \App\Models\User::query()->create([
             'name' => 'gov1',
@@ -91,7 +99,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'gov1@test.com',
             'type' => 'Sharer',
             'company_name' => 'Sharer1 Company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
 \App\Models\User::query()->create([
             'name' => 'gov2',
@@ -99,7 +108,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'gov2@test.com',
             'type' => 'Sharer',
             'company_name' => 'Sharer2 Company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
 \App\Models\User::query()->create([
             'name' => 'gov3',
@@ -107,7 +117,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'gov3@test.com',
             'type' => 'Sharer',
             'company_name' => 'Sharer3 Company',
-            'verified' => 1
+            'verified' => 1,
+            'email_verified_at' => now()
         ]);
 
         ConstParnet::query()->create([
