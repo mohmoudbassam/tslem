@@ -19,7 +19,7 @@
 
             <div class="row">
 
-                <alert class = "alert alert-danger">يرجى زيارة بريدك الالكتروني واتباع الخطوات لتفعيل حسابك</alert>
+                <alert class = "alert alert-danger" style = "font-size:20px;">يرجى زيارة بريدك الالكتروني واتباع الخطوات لتفعيل حسابك</alert>
 
 
             </div>
