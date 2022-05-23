@@ -367,7 +367,7 @@ class DesignerOrderController extends Controller
         $order->lastDesignerNote()->update([
             'status'=>1
         ]);
-        $order->orderSharer()->where('status',OrderSharer::REJECT)->update([
+        $order->orderSharer()->update([
            'status'=> OrderSharer::PENDING
         ]);
 
