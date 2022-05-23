@@ -71,6 +71,7 @@ class Kernel extends HttpKernel
         'verifiedUser'=>\App\Http\Middleware\CP\Verified::class,
         'contractor'=>\App\Http\Middleware\CP\contractor::class,
         'sharer'=>\App\Http\Middleware\CP\Sharer::class,
+        'is-verified' => \App\Http\Middleware\IsVerified::class,
 
     ];
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
+use App\Http\Controllers\CP\VerificationController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\Sharer\SharerController;
 use App\Http\Controllers\CP\SystemConfig\ServicesController;
@@ -41,7 +42,14 @@ Route::post('regester_action', [RegisterController::class, 'add_edit'])->name('r
 
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::any('verify', [VerificationController::class, 'verify'])->name('verify');
+    Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
+});
+ 
+
+
+Route::middleware(['auth','is-verified'])->group(function () {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
