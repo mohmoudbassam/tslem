@@ -228,10 +228,10 @@ Route::get('test', function () {
 Route::get('generate', [PDFController::class, 'generate']);
 Route::get('test-email',function () {
     Mail::send('mail', [], function($message) {
-        $message->to('abc@gmail.com', 'Tutorials Point')->subject
+        $message->to('mohmoud14567@gmail', 'Tutorials Point')->subject
         ('Laravel Testing Mail with Attachment');
         $message->attach('C:\laravel-master\laravel\public\uploads\image.png');
         $message->attach('C:\laravel-master\laravel\public\uploads\test.txt');
-        $message->from('xyz@gmail.com','Virat Gandhi');
+
     });
 });
