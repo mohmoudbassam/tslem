@@ -123,7 +123,6 @@
                                 </div>
                                 <div class="widget__item-content">
                                     <h3 class="widget__item-title">خدمة مميزة</h3>
-                                    <h4 class="widget__item-text">نص تجريبي للتصميم يتم استبداله لاحقاً نص تجريبي للتصميم يتم استبداله لاحقاً</h4>
                                 </div>
                             </div>
                             <div class="widget__item-serve">
@@ -140,7 +139,7 @@
                                 </div>
                                 <div class="widget__item-content">
                                     <h3 class="widget__item-title">بيانات آمنة</h3>
-                                    <h4 class="widget__item-text">نص تجريبي للتصميم يتم استبداله لاحقاً نص تجريبي للتصميم يتم استبداله لاحقاً</h4>
+
                                 </div>
                             </div>
                             <div class="widget__item-serve">
@@ -157,7 +156,7 @@
                                 </div>
                                 <div class="widget__item-content">
                                     <h3 class="widget__item-title">متابعة مستمرة</h3>
-                                    <h4 class="widget__item-text">نص تجريبي للتصميم يتم استبداله لاحقاً نص تجريبي للتصميم يتم استبداله لاحقاً</h4>
+
                                 </div>
                             </div>
                         </div>

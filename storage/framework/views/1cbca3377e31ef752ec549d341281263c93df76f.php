@@ -50,7 +50,7 @@
                     <div class="menu-container mx-auto menu-nav">
                         <ul class="main-menu">
                             <li class="menu_item"><a class="menu_link active" data-scroll="section-home">الرئيسية</a></li>
-                            <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المشروع</a></li>
+                            <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
                         </ul>
@@ -106,7 +106,7 @@
                     <div class="row">
                         <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
                             <div class="section-title mb-3">
-                                <h2 class="font-bold bg bg-start">عن المشروع</h2>
+                                <h2 class="font-bold bg bg-start">عن المركز</h2>
                             </div>
                             <h4 class="mb-4">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</h4>
                             <div class="widget__item-serve">
@@ -178,7 +178,7 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('/').'/Mechanical.pdf'); ?>" target="_blank"  class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الاعمال الميكانيكية( نهائي)</h4>
+                                <h4 class="widget__item-title">دليل الاعمال الميكانيكية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -186,7 +186,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات  - (النهائي)</h4>
+                                <h4 class="widget__item-title">الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات </h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -194,7 +194,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل الأعمال المعمارية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل   الأعمال المعمارية (نهائي)</h4>
+                                <h4 class="widget__item-title">دليل   الأعمال المعمارية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -202,7 +202,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل الأعمال الانشائية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل   الأعمال   الانشائية(نهائي)</h4>
+                                <h4 class="widget__item-title">دليل   الأعمال   الانشائية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -210,7 +210,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى( نهائي)</h4>
+                                <h4 class="widget__item-title">دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -218,7 +218,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى ( نهائي)</h4>
+                                <h4 class="widget__item-title">دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى </h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -226,7 +226,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق (نهائي)</h4>
+                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -234,7 +234,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل الأعمال الكهربائية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الأعمال الكهربائية ( نهائي) _ V1 3</h4>
+                                <h4 class="widget__item-title">دليل الأعمال الكهربائية V1 3</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -250,7 +250,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل اعمال تغذية المياة و الصرف الصحي.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اعمال تغذية المياة و الصرف الصحي( نهائي)</h4>
+                                <h4 class="widget__item-title">دليل اعمال تغذية المياة و الصرف الصحي</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
