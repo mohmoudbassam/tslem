@@ -43,13 +43,16 @@ Route::post('regester_action', [RegisterController::class, 'add_edit'])->name('r
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::any('verify', [VerificationController::class, 'verify'])->name('verify');
+    Route::get('verify', [VerificationController::class, 'verify'])->name('verify');
     Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
+    Route::get('upload_files', [VerificationController::class, 'upload_files'])->name('upload_files');
+    Route::post('upload_files', [VerificationController::class, 'save_upload_files'])->name('upload_files_action');
+    
 });
  
 
 
-Route::middleware(['auth','is-verified'])->group(function () {
+Route::middleware(['auth','is-verified','is-file-uploaded'])->group(function () {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');

@@ -11,7 +11,7 @@ class StoreUserRequest extends FormRequest
 
     public function rules()
     {
-        $secondary_rule = $this->secondary_rule();
+        //$secondary_rule = $this->secondary_rule();
 
         $main_rule = [
             'name' => [
@@ -45,6 +45,8 @@ class StoreUserRequest extends FormRequest
             ],
 
         ];
+
+        return $main_rule;
 
         return array_merge($secondary_rule, $main_rule);
     }

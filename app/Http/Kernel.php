@@ -72,6 +72,8 @@ class Kernel extends HttpKernel
         'contractor'=>\App\Http\Middleware\CP\contractor::class,
         'sharer'=>\App\Http\Middleware\CP\Sharer::class,
         'is-verified' => \App\Http\Middleware\IsVerified::class,
+        'is-file-uploaded' => \App\Http\Middleware\IsFileUploaded::class,
+        
 
     ];
 }

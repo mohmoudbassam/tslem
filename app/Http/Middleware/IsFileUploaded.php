@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsVerified
+class IsFileUploaded
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class IsVerified
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {   
-        if($request->user()->email_verified_at === NULL && $request->user()->type != 'admin'){
-            return redirect()->route('verify');
+    {
+        if($request->user()->is_file_uploaded == false && $request->user()->type != 'admin'){
+            return redirect()->route('upload_files');
         }
         return $next($request);
     }

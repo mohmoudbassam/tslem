@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'chamber_of_commerce_certificate_end_date' => request('chamber_of_commerce_certificate_end_date'),
 
         ]);
-        $this->uploadUserFiles($user, $request);
+        //$this->uploadUserFiles($user, $request);
         return back()->with(['success' => 'تمت عمليه التسجيل بنجاح']);
     }
 
