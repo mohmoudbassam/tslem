@@ -230,7 +230,7 @@ Route::get('test-email',function () {
 
     Mail::send('mail', ['name','Ripon Uddin Arman'], function($message) {
 
-        $message->to('mohmoud14567@gmail.com', 'Tutorials Point')->subject('Laravel Testing Mail with Attachment');
+        $message->to('taslem_email@tsleem.com.sa', 'Tutorials Point')->subject('Laravel Testing Mail with Attachment');
 
     });
 });
