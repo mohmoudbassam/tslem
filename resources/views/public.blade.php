@@ -50,7 +50,7 @@
                     <div class="menu-container mx-auto menu-nav">
                         <ul class="main-menu">
                             <li class="menu_item"><a class="menu_link active" data-scroll="section-home">الرئيسية</a></li>
-                            <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المشروع</a></li>
+                            <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
                         </ul>
@@ -106,7 +106,7 @@
                     <div class="row">
                         <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
                             <div class="section-title mb-3">
-                                <h2 class="font-bold bg bg-start">عن المشروع</h2>
+                                <h2 class="font-bold bg bg-start">عن المركز</h2>
                             </div>
                             <h4 class="mb-4">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</h4>
                             <div class="widget__item-serve">
