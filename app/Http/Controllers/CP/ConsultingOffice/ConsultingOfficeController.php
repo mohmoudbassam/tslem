@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CP\ConsultingOffice;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConsultingOrders;
 use App\Models\ConsultingReport;
 use App\Models\ConsultingReportAttchment;
 use App\Models\ContractorReport;
@@ -26,7 +27,7 @@ class ConsultingOfficeController extends Controller
 
     public function list()
     {
-        $order = Order::query()->with(['service_provider', 'designer'])->where('status', '>=', '3');
+        $order = Order::query()->with(['service_provider', 'designer'])->where('consulting_office_id', auth()->user()->id);
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -42,11 +43,34 @@ class ConsultingOfficeController extends Controller
                 // if ($order->status > 2) {
                 //     $reject = '';
                 // }
+                $view_details = ' <a class="dropdown-item" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
+                    عرض التفاصيل
+                </a>';
+                $accept_order = '';
+                $reject_order = '';
+
+                if (!$order->is_accepted(auth()->user())) {
+                    $accept_order = ' <a class="dropdown-item" href="' . route('consulting_office.accept_order', ['order' => $order->id]) . '">
+                   قبول الطلب
+                </a>';
+                    $reject_order = ' <a class="dropdown-item" href="' . route('consulting_office.reject_order', ['order' => $order->id]) . '">
+                  رفض الطلب
+                </a>';
+                }
+
                 $element = '<div class="btn-group me-1 mt-2">
-                                            <a class="btn btn-info btn-sm" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
-                                                عرض التفاصيل
-                                            </a>
-                                        </div>';
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    خيارات<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+
+                                               ' . $accept_order . '
+                                               ' . $view_details . '
+                                               ' . $reject_order . '
+
+                                               </div>
+                              </div>';
+
                 return $element;
 
             })
@@ -57,22 +81,23 @@ class ConsultingOfficeController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
+
     public function contractor_list(Order $order)
     {
         $order = Order::query()->with(['service_provider', 'designer', 'contractor'])
             ->whereContractor(auth()->user()->id)
-            ->where('id',$order->id)
+            ->where('id', $order->id)
             ->where('status', '>=', '3');
 
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
-                
+
 
                 $element = '<div class="btn-group me-1 mt-2">
                                             <a class="btn btn-info btn-sm" href="#">
                                                عرض التفاصيل
                                             </a>
-                                           
+
                                         </div>';
                 return $element;
 
@@ -85,13 +110,14 @@ class ConsultingOfficeController extends Controller
             ->make(true);
     }
 
-    
+
     public function reports_view(Order $order)
     {
         return view('CP.consulting_office.reports_view', [
             'order' => $order
         ]);
     }
+
     public function reports_view_details(Order $order)
     {
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
@@ -102,7 +128,7 @@ class ConsultingOfficeController extends Controller
             'filess' => $files
         ]);
     }
-    
+
 
     public function reports()
     {
@@ -146,6 +172,7 @@ class ConsultingOfficeController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
+
     public function reports_all_list(Order $order)
     {
         $reports = ConsultingReport::query()->with(['attchment'])
@@ -177,13 +204,13 @@ class ConsultingOfficeController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
-    
+
 
     public function add_report_page(Order $order)
     {
         $order_ids = ConsultingReport::where('user_id', '=', auth()->user()->id)
-        ->pluck('order_id');
-        $orders = Order::select('id','title')->whereIn('id',$order_ids)->get();
+            ->pluck('order_id');
+        $orders = Order::select('id', 'title')->whereIn('id', $order_ids)->get();
         return view('CP.consulting_office.report_add_form', [
             'orders' => $orders,
         ]);
@@ -406,5 +433,23 @@ class ConsultingOfficeController extends Controller
         ]);
 
         return redirect()->back()->with(['success' => 'تمت إضافة التعليق بناح']);
+    }
+
+    public function accept_order(Order $order)
+    {
+        ConsultingOrders::create([
+            'order_id' => $order->id,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->back()->with(['success' => 'تم قبول الطلب بنجاح']);
+    }
+
+    public function reject_order(Order $order)
+    {
+        $order->consulting_office_id = null;
+        $order->save();
+
+        return redirect()->back()->with(['success' => 'تم رفض الطلب بنجاح']);
     }
 }

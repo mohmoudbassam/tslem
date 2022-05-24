@@ -121,9 +121,22 @@ class Order extends Model
             '1' => 'معلق',
             '2' => 'قيد انشاء الطلب',
             '3' => 'مراجعة التصاميم',
-            '4' => 'معتمد التصماميم'
+            '4' => 'معتمد التصاميم'
 
         ][$this->status];
+    }
+
+    public function lastDesignerNote(){
+        return $this->hasOne(DeliverRejectReson::class)->orderByDesc('created_at')->take(1);
+    }
+
+    public function consulting_or_constroctor(){
+        return $this->hasMany(ConsultingOrders::class, 'order_id');
+    }
+
+    public function is_accepted($user){
+
+        return $this->consulting_or_constroctor->where('user_id',$user->id)->count();
     }
 
 }

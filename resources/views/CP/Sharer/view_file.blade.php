@@ -28,10 +28,11 @@
 
         }
 
-        .details_p{
+        .details_p {
             font-size: 20px;
         }
-        .bold{
+
+        .bold {
             font-weight: bold;
         }
     </style>
@@ -62,42 +63,49 @@
                     <h2>تفاصيل الطلب</h2>
                 </div>
                 <div class="col-md-4 mb-3 mt-4">
-                    <p class="details_p">  <span class="bold">  التاريخ :</span> {{$order->created_at}}</p>
+                    <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at}}</p>
                 </div>
 
-                <!-- <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2> -->
+            <!-- <h2> مقدم الخدمة :{{$order->service_provider->name}}</h2> -->
             </div>
 
             <div class="row">
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
+                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
                 </div>
 
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold">  العنوان : </span>{{$order->title}}</p>
+                    <p class="details_p"><span class="bold">  العنوان : </span>{{$order->title}}</p>
                 </div>
-
 
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}</p>
-                </div>
-
-                 <div class="col-md-6 mb-3">
-                       <p class="details_p">   <span class="bold">   التفاصيل : </span>{{$order->description}}</p>
+                    <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->name}}
+                    </p>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                       <p class="details_p"> <span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
+                    <p class="details_p"><span class="bold">   التفاصيل : </span>{{$order->description}}</p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <p class="details_p"><span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
                 </div>
 
                 @if(auth()->user()->type == \App\Models\User::SHARER_TYPE )
-                <div class="offset-md-9 col-md-3 mb-3">
-                       <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
-                       <button onclick="showModal('{{ route('Sharer.reject_form', ['id' => $order->id]) }}', {{ $order->id }})" class="btn btn-danger" id="reject_order">ارجاع ملاحظات</button>
-                </div>
+                    <div class="offset-md-9 col-md-3 mb-3">
+                        @if($order_sharer->status ==0)
+                            <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
+                        @endif
+                        @if($order_sharer->status ==0)
+                            <button
+                                onclick="showModal('{{ route('Sharer.reject_form', ['id' => $order->id]) }}', {{ $order->id }})"
+                                class="btn btn-danger" id="reject_order">ارجاع ملاحظات
+                            </button>
+                        @endif
+                    </div>
                 @endif
             </div>
 
@@ -176,7 +184,8 @@
                                                 <div class="panel-footer">
                                                     <div class="btn-group btn-group-justified">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-success" href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                            <a class="btn btn-success"
+                                                               href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                 <i class="fa fa-arrow-down"></i>
                                                                 تنزيل
                                                             </a>
@@ -188,7 +197,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                        @if($files->type ==2)
+                                    @if($files->type ==2)
                                         <div class="col-md-offset-3 col-md-2">
                                             <div class="panel panel-default bootcards-file">
 
@@ -210,7 +219,8 @@
                                                 <div class="panel-footer">
                                                     <div class="btn-group btn-group-justified">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-success" href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                            <a class="btn btn-success"
+                                                               href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                 <i class="fa fa-arrow-down"></i>
                                                                 تنزيل
                                                             </a>
@@ -221,7 +231,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                        @if($files->type ==3)
+                                    @if($files->type ==3)
                                         <div class="col-md-offset-3 col-md-2">
                                             <div class="panel panel-default bootcards-file">
 
@@ -243,8 +253,9 @@
                                                 <div class="panel-footer">
                                                     <div class="btn-group btn-group-justified">
                                                         <div class="btn-group">
-                                                            <a class="btn btn-success" href="{{route('design_office.download',['id'=>$files->id])}}">
-                                                                <i class="fa fa-arrow-down" ></i>
+                                                            <a class="btn btn-success"
+                                                               href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                <i class="fa fa-arrow-down"></i>
                                                                 تنزيل
                                                             </a>
                                                         </div>
@@ -267,7 +278,7 @@
 
     </div>
     <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
-        role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
 
 @endsection
@@ -275,16 +286,16 @@
 @section('scripts')
     <script>
 
-        function reject () {
+        function reject() {
             showModal('{{ route('Sharer.reject_form') }}', null, {{ $order->id }});
         }
 
-        $("#accept_order").on('click', function(){
+        $("#accept_order").on('click', function () {
 
             let url = "{{ route('Sharer.accept') }}";
             let data = {
-                "_token" : "{{ csrf_token() }}",
-                "id" : "{{$order->id}}"
+                "_token": "{{ csrf_token() }}",
+                "id": "{{$order->id}}"
             };
 
             $.ajax({
@@ -293,15 +304,18 @@
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-                    if(data.success){
+                    if (data.success) {
                         showAlertMessage('success', data.message);
-                    }else{
+                        setTimeout(function(){
+                            window.location.reload()
+                        },500);
+                    } else {
                         showAlertMessage('error', data.message);
                     }
 
                 },
                 error: function (data) {
-                   showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
+                    showAlertMessage('error', 'حدث خطأ في اعتماد الطلب');
                 },
             });
 

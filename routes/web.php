@@ -8,6 +8,7 @@ use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
+use App\Http\Controllers\CP\VerificationController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\Sharer\SharerController;
 use App\Http\Controllers\CP\SystemConfig\ServicesController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
-
+use App\Http\Controllers\PDFController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,11 +42,20 @@ Route::post('regester_action', [RegisterController::class, 'add_edit'])->name('r
 
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::any('verify', [VerificationController::class, 'verify'])->name('verify');
+    Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
+});
+ 
+
+
+Route::middleware(['auth','is-verified'])->group(function () {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
     Route::post('after_reject', [UserController::class, 'after_reject'])->name('after_reject');
+    Route::get('notifications', [NotificationController::class, 'notifications'])->name('notifications');
+
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::get('add', [UserController::class, 'add'])->name('.add');
@@ -54,6 +64,9 @@ Route::middleware('auth')->group(function () {
         Route::post('status', [UserController::class, 'status'])->name('.status');
         Route::post('add_edit', [UserController::class, 'add_edit'])->name('.add_edit');
         Route::get('update_from/{user}', [UserController::class, 'update_from'])->name('.update_from');
+        Route::get('change_password/{user}', [UserController::class, 'change_password_form'])->name('.change_password_form');
+        Route::post('change_password', [UserController::class, 'change_password'])->name('.change_password');
+
         Route::post('update', [UserController::class, 'update'])->name('.update');
         Route::post('delete', [UserController::class, 'delete'])->name('.delete');
         Route::prefix('request')->name('.request')->group(function () {
@@ -73,6 +86,8 @@ Route::middleware('auth')->group(function () {
         Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
         Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
+        Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
+        Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
@@ -132,6 +147,9 @@ Route::middleware('auth')->group(function () {
         Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
         Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
         Route::get('download/{id}', [ContractorController::class, 'download'])->name('.download');
+        Route::get('accept_order/{order}', [ContractorController::class, 'accept_order'])->name('.accept_order');
+        Route::get('reject_order/{order}', [ContractorController::class, 'reject_order'])->name('.reject_order');
+
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
@@ -157,6 +175,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name('.reports_view_details');
         Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])->name('.contractor_list');
         Route::post('complete', [ConsultingOfficeController::class, 'complete'])->name('.complete');
+        Route::get('accept_order/{order}', [ConsultingOfficeController::class, 'accept_order'])->name('.accept_order');
+        Route::get('reject_order/{order}', [ConsultingOfficeController::class, 'reject_order'])->name('.reject_order');
 
     });
 
@@ -200,3 +220,5 @@ Route::middleware('auth')->group(function () {
 Route::get('test', function () {
     return view('fm');
 });
+
+Route::get('generate', [PDFController::class, 'generate']);

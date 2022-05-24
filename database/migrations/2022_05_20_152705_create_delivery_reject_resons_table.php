@@ -18,6 +18,7 @@ class CreateDeliveryRejectResonsTable extends Migration
             $table->foreignId("order_id")->references("id")->on("orders")->cascadeOnDelete();
             $table->text("note")->nullable();
             $table->foreignId("user_id")->references("id")->on("users");
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

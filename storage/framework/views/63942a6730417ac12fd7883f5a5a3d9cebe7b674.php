@@ -116,7 +116,7 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                        <a class="btn btn-sm btn-link font-size-14 text-center" href="<?php echo e(route('notifications')); ?>">
                             <i class="mdi mdi-arrow-right-circle me-1"></i> <span>إستعراض المزيد</span>
                         </a>
                     </div>

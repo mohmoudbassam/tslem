@@ -33,6 +33,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
+
+    <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300&family=Tajawal:wght@200;400&display=swap" rel="stylesheet">
+
     <style>
         @font-face {
             font-family: GE-Dinar;
@@ -86,6 +90,16 @@
             color: var(--main-color) !important;
         }
 
+        .file-preview {
+            display: none;
+        }
+
+
+        .fontArial{
+            font-family:Tajawal;
+        }
+
+
     </style>
 </head>
 <body class="bg-light">
@@ -135,7 +149,7 @@
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
                                     تصميم
                                 </option>
-                                <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option>
+                                <!-- <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option> -->
                                 <option @if($record->type =="consulting_office") selected
                                         @endif  value="consulting_office">مكتب استشاري
                                 </option>
@@ -151,9 +165,9 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="name">الإسم</label>
+                            <label class="form-label" for="name">اسم المستخدم</label>
                             <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
-                                   placeholder="الإسم">
+                                   placeholder="اسم المستخدم">
                             <div class="col-12 text-danger" id="name_error"></div>
                         </div>
                     </div>
@@ -200,7 +214,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
-                                <input type="text" class="form-control" value="{{old('commercial_record')}}"
+                                <input type="number" class="form-control" value="{{old('commercial_record')}}"
                                        id="commercial_record" name="commercial_record"
                                        placeholder="رقم السجل التجاري">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
@@ -244,7 +258,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="id_date">التاريخ</label>
-                                <input type="date" class="form-control" value="{{old('id_date')}}" id="id_date"
+                                <input  type="text" class="form-control datepicker" value="{{old('id_date')}}" id="id_date"
                                        name="id_date"
                                        placeholder="التاريخ">
                                 <div class="col-12 text-danger" id="id_date_error"></div>
@@ -265,7 +279,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="email">البريد الإلكتروني</label>
-                                <input type="text" value="{{old('email')}}" class="form-control" id="email" name="email"
+                                <input type="email" value="{{old('email')}}" class="form-control" id="email" name="email"
                                        placeholder="البريد الإلكتروني">
                                 <div class="col-12 text-danger" id="email_error"></div>
                             </div>
@@ -275,8 +289,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="phone">رقم الجوال</label>
-                                <input type="number" value="{{old('phone')}}" class="form-control" id="phone"
-                                       name="phone"
+                                <input type="number" value="{{old('phone')}}" class="form-control" id="phone" 
+                                       name="phone" minlength="12" maxlength="12"
                                        placeholder="رقم الجوال">
                                 <div class="col-12 text-danger" id="phone_error"></div>
                             </div>
@@ -348,16 +362,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_file">السجل التحاري</label>
-                                <input type="file" class="form-control" value="{{old('commercial_file')}}"
-                                       id="commercial_file" name="commercial_file">
+                                <label class="form-label" for="commercial_file">السجل التحاري (PDF)</label>
+                                <input type="file" class="form-control" value="{{old('commercial_file')}}" id = "commercial_file"
+                                     name="commercial_file">
                                 <div class="col-12 text-danger" id="commercial_file_error"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="commercial_file_end_date">تاريخ أنتهاء السجل التجاري</label>
-                                <input type="date" class="form-control" value="{{old('commercial_file_end_date')}}"
+                                <input  type="text" class="form-control datepicker" value="{{old('commercial_file_end_date')}}"
                                        id="commercial_end_date" name="commercial_file_end_date">
                                 <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
                             </div>
@@ -368,8 +382,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي</label>
-                                <input type="file" class="form-control" id="rating_certificate"
+                                <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي (PDF)</label>
+                                <input type="file" class="form-control" id= "rating_certificate"
                                        name="rating_certificate">
                                 <div class="col-12 text-danger" id="rating_certificate_error"></div>
                             </div>
@@ -377,7 +391,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="rating_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="rating_certificate_end_date"
                                        name="rating_certificate_end_date">
                                 <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
                             </div>
@@ -388,8 +402,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="address_file">العنوان الوطني</label>
-                                <input type="file" class="form-control" id="address_file" name="address_file">
+                                <label class="form-label" for="address_file">العنوان الوطني (PDF)</label>
+                                <input type="file" class="form-control"  name="address_file" id="address_file">
                                 <div class="col-12 text-danger" id="address_file_error"></div>
                             </div>
                         </div>
@@ -399,8 +413,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="profession_license">شهادة مزاولة المهنة</label>
-                                <input type="file" class="form-control" id="profession_license"
+                                <label class="form-label" for="profession_license">شهادة مزاولة المهنة (PDF)</label>
+                                <input type="file" class="form-control" id= "profession_license"
                                        name="profession_license">
                                 <div class="col-12 text-danger" id="profession_license_error"></div>
                             </div>
@@ -408,7 +422,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="profession_license_end_date"
+                                <input  type="text" class="form-control datepicker" id="profession_license_end_date"
                                        name="profession_license_end_date">
                                 <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
                             </div>
@@ -419,15 +433,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="business_license">رخصة نشاط تجاري</label>
-                                <input type="file" class="form-control" id="business_license" name="business_license">
+                                <label class="form-label" for="business_license">رخصة نشاط تجاري (PDF)</label>
+                                <input type="file" class="form-control" name="business_license" id="business_license">
                                 <div class="col-12 text-danger" id="business_license_error"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="business_license_end_date"
+                                <input  type="text" class="form-control datepicker" id="business_license_end_date"
                                        name="business_license_end_date">
                                 <div class="col-12 text-danger" id="business_license_end_date_error"></div>
                             </div>
@@ -439,8 +453,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
-                                    الإجتماعية</label>
-                                <input type="file" class="form-control" id="social_insurance_certificate"
+                                    الإجتماعية (PDF)</label>
+                                <input type="file" class="form-control" id = "social_insurance_certificate"
                                        name="social_insurance_certificate">
                                 <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
                             </div>
@@ -449,7 +463,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
                                     الانتهاء</label>
-                                <input type="date" class="form-control" id="social_insurance_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="social_insurance_certificate_end_date"
                                        name="social_insurance_certificate_end_date">
                                 <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
                             </div>
@@ -460,8 +474,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل</label>
-                                <input type="file" class="form-control" id="certificate_of_zakat"
+                                <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>
+                                <input type="file" class="form-control" id ="certificate_of_zakat"
                                        name="certificate_of_zakat">
                                 <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
                             </div>
@@ -469,7 +483,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="date_of_zakat_end_date"
+                                <input  type="text" class="form-control datepicker" id="date_of_zakat_end_date"
                                        name="date_of_zakat_end_date">
                                 <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
                             </div>
@@ -480,8 +494,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="saudization_certificate">شهادة السعودة</label>
-                                <input type="file" class="form-control" id="saudization_certificate"
+                                <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
+                                <input type="file" class="form-control" id ="saudization_certificate"
                                        name="saudization_certificate">
                                 <div class="col-12 text-danger" id="saudization_certificate_error"></div>
                             </div>
@@ -489,7 +503,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
-                                <input type="date" class="form-control" id="saudization_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="saudization_certificate_end_date"
                                        name="saudization_certificate_end_date">
                                 <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
                             </div>
@@ -501,8 +515,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
-                                    التجارية</label>
-                                <input type="file" class="form-control" id="chamber_of_commerce_certificate"
+                                    التجارية (PDF)</label>
+                                <input type="file" class="form-control"  id ="chamber_of_commerce_certificate"
                                        name="chamber_of_commerce_certificate">
                                 <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
                             </div>
@@ -511,7 +525,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
                                     الانتهاء</label>
-                                <input type="date" class="form-control" id="chamber_of_commerce_certificate_end_date"
+                                <input  type="text" class="form-control datepicker" id="chamber_of_commerce_certificate_end_date"
                                        name="chamber_of_commerce_certificate_end_date">
                                 <div class="col-12 text-danger"
                                      id="chamber_of_commerce_certificate_end_date_error"></div>
@@ -523,8 +537,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة</label>
-                                <input type="file" class="form-control" id="tax_registration_certificate"
+                                <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة (PDF)</label>
+                                <input type="file" class="form-control" id ="tax_registration_certificate"
                                        name="tax_registration_certificate">
                                 <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
                             </div>
@@ -535,8 +549,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور</label>
-                                <input type="file" class="form-control" id="wage_protection_certificate"
+                                <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
+                                <input type="file" class="form-control" id ="wage_protection_certificate"
                                        name="wage_protection_certificate">
                                 <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
                             </div>
@@ -547,8 +561,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="memorandum_of_association">شهادة عقد التأسيس</label>
-                                <input type="file" class="form-control" id="memorandum_of_association"
+                                <label class="form-label" for="memorandum_of_association">شهادة عقد التأسيس (PDF)</label>
+                                <input type="file" class="form-control" id= "memorandum_of_association"
                                        name="memorandum_of_association">
                                 <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
                             </div>
@@ -593,19 +607,34 @@
 <link href="{{url("/")}}/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/js/fileinput.min.js" type="text/javascript"></script>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/fileinput-theme.js" type="text/javascript"></script>
+<script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+
 @include('CP.layout.js')
+
+
+
 <script>
 
 
+    $('input[type=text]').addClass('fontArial');
+    $('input[type=number]').addClass('fontArial');
+    $('input[type=email]').addClass('fontArial');
+
+
+    jQuery.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^\w+$/i.test(value);
+    }, "يرجى ادخال حروف  أو أرقام او علامة _ ");
+
     @foreach(array_keys($col_file) as $_col)
 
-    file_input('#{{$_col}}');
+    file_input_register('#{{$_col}}');
     @endforeach
     $('#add_edit_form').validate({
         lang: 'ar',
         rules: {
             "name": {
                 required: true,
+                alphanumeric: true
             }, "password": {
                 required: true,
             }, "password_confirmation": {
@@ -646,6 +675,8 @@
     $('#type').change(function (e) {
         window.location = '{{route('register')}}?type=' + $(this).val()
     });
+
+    flatpickr(".datepicker",{defaultDate:new Date});
 </script>
 
 </body>

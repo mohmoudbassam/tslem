@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
-
+use Hash;
 class UserController extends Controller
 {
     public function index()
@@ -77,6 +77,27 @@ class UserController extends Controller
 
     }
 
+    public function change_password_form(User $user){
+        return view('CP.users.change_password', ['user' => $user]);
+
+    }
+
+    public function change_password(Request $request){
+
+       
+        $request->validate([
+            'password' => 'required|min:6|confirmed'
+        ]);
+
+        $user = User::findOrFail($request->id);
+        $user->update([
+            'password' =>Hash::make($request->password)
+        ]);
+
+        return back()->with('success', 'تم تعديل كلمة المرور بنجاح');
+
+    }
+
 //    public function save_profile(UpdateUserRequest $request)
 //    {
 //
@@ -126,6 +147,7 @@ class UserController extends Controller
                                             </button>
                                             <div class="dropdown-menu" style="">
                                                 <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
+                                                <a class="dropdown-item" href="' . route('users.change_password_form', ['user' => $user->id]) . '">تغيير كلمة المرور</a>
                                                 <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
                                             </div>
                                         </div>';

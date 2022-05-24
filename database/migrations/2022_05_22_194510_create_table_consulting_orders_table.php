@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderSharersTable extends Migration
+class CreateTableConsultingOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateOrderSharersTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_sharers', function (Blueprint $table) {
+        Schema::create('consulting_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("order_id")->references("id")->on("orders")->cascadeOnDelete();
             $table->foreignId("user_id")->references("id")->on("users")->cascadeOnDelete();
-            $table->integer("status")->default(0);
+            $table->foreignId("order_id")->references("id")->on("orders")->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateOrderSharersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_sharers');
+        Schema::dropIfExists('table_consulting_orders');
     }
 }

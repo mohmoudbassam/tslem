@@ -58,7 +58,44 @@
             return false;
 
 
-        postData(new FormData($('#add_edit_form').get(0)), '{{route('Sharer.reject')}}');
 
+        $.ajax({
+            url: '{{route('Sharer.reject')}}',
+            data: new FormData($('#add_edit_form').get(0)),
+            type: "POST",
+            processData: false,
+            contentType: false,
+            beforeSend() {
+                KTApp.block('#page_modal', {
+                    overlayColor: '#000000',
+                    type: 'v2',
+                    state: 'success',
+                    message: 'الرجاء الإنتظار'
+                });
+            },
+            success: function (data) {
+                if (data.success) {
+                    $('#page_modal').modal('hide');
+
+                    showAlertMessage('success', data.message);
+
+                    setTimeout(function(){
+                        window.location.reload()
+                    },500);
+                } else {
+                    if (data.message) {
+
+                    } else {
+                        showAlertMessage('error', 'حدث خطأ في النظام');
+                    }
+                }
+                KTApp.unblockPage();
+            },
+            error: function (data) {
+                console.log(data);
+                KTApp.unblock('#page_modal');
+                KTApp.unblockPage();
+            },
+        });
     });
 </script>

@@ -28,9 +28,7 @@
                         <div class="col-sm order-2 order-sm-1">
                             <div class="d-flex align-items-start mt-3 mt-sm-0">
                                 <div class="flex-shrink-0">
-                                    <div class="avatar-xl me-3">
-                                        <img src="" alt="" class="img-fluid rounded-circle d-block">
-                                    </div>
+
                                 </div>
                                 <div>
                                     <div>
@@ -52,6 +50,11 @@
                                    role="tab">{{$_specialties->name_ar}}</a>
                             </li>
                         @endforeach
+                            <li class="nav-item">
+                                <a class="nav-link px-3 " data-bs-toggle="tab"
+                                   href="#general_file_panel"
+                                   role="tab">ملف الموقع العام</a>
+                            </li>
 
                     </ul>
                 </div>
@@ -104,6 +107,10 @@
                                                                      ></div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-4" style="margin-top:1.8rem;">
+                                                            <a href="javascript:;" data-repeater-delete="" class="btn btn-danger ">
+                                                                <i class="fa fa-trash-alt"></i></a>
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -143,7 +150,7 @@
                                                     <label class="form-label"
                                                            for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
                                                     <input type="file"
-                                                           class="form-control {{$_specialties->name_en}}_pdf_file"
+                                                           class="form-control {{$_specialties->name_en}}_pdf_file pdf_file"
                                                            id="{{$_specialties->name_en}}_pdf_file"
                                                            name="{{$_specialties->name_en}}_pdf_file">
                                                     <div class="col-12 text-danger"
@@ -185,7 +192,36 @@
 
                         </div>
                     @endforeach
+                        <div class="tab-pane " id="general_file_panel"
+                             role="tabpanel">
 
+                            <div class="card-body">
+                                <div>
+                                    <div class="row">
+
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                                                <div class="row">
+                                                    <label class="col-12" for="reject_reason">ملف الموقع العام</label>
+                                                    <div class="col-12">
+                                                        <input type="file" class="form-control"
+                                                               id="general_file"
+                                                               name="general_file">
+                                                    </div>
+                                                    <div class="col-12 text-danger"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <!-- end row -->
+                                </div>
+                            </div>
+
+                        </div>
 
                 </div>
 
@@ -201,68 +237,52 @@
 
 
     </div>
-    <div class="modal  bd-example-modal-lg" id="page_modal"
-         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
+{{--    <div class="modal  bd-example-modal-lg" id="page_modal"--}}
+{{--         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--        <div class="modal-dialog modal-dialog-centered modal-lg">--}}
+{{--            <div class="modal-content">--}}
 
-                <div class="modal-header">
-                    <h5 class="modal-title"
-                        id="exampleModalLongTitle"></h5>
+{{--                <div class="modal-header">--}}
+{{--                    <h5 class="modal-title"--}}
+{{--                        id="exampleModalLongTitle"></h5>--}}
 
-                </div>
-                <form action="" method="post" id="general_file_from" enctype="multipart/form-data">
+{{--                </div>--}}
+{{--                <form action="" method="post" id="general_file_from" enctype="multipart/form-data">--}}
 
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="form-group col-lg-12 col-md-6 col-sm-12">
-                                <div class="row">
-                                    <label class="col-12" for="reject_reason">الرجاء ارفاق ملف الموقع العام</label>
-                                    <div class="col-12">
-                                        <input type="file" class="form-control" value=""
-                                               id="general_file"
-                                               name="general_file">
-                                    </div>
-                                    <div class="col-12 text-danger" id="reject_reason_error"></div>
-                                </div>
-                            </div>
+{{--                    <div class="modal-body">--}}
+{{--                        <div class="row">--}}
+{{--                            <div class="form-group col-lg-12 col-md-6 col-sm-12">--}}
+{{--                                <div class="row">--}}
+{{--                                    <label class="col-12" for="reject_reason">الرجاء ارفاق ملف الموقع العام</label>--}}
+{{--                                    <div class="col-12">--}}
+{{--                                        <input type="file" class="form-control" value=""--}}
+{{--                                               id="general_file"--}}
+{{--                                               name="general_file">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-12 text-danger" id="reject_reason_error"></div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                        </div>
-                    </div>
-                    <input type="hidden" name="id" value="">
-                    <div class="modal-footer">
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <input type="hidden" name="id" value="">--}}
+{{--                    <div class="modal-footer">--}}
 
-                        <button type="button" class="btn btn-secondary btn_general_file_submit" data-bs-dismiss="modal">
-                            الغاء
-                        </button>
-                        <button type="button" class="btn btn-primary general_file_submit">ارسال</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+{{--                        <button type="button" class="btn btn-secondary btn_general_file_submit" data-bs-dismiss="modal">--}}
+{{--                            الغاء--}}
+{{--                        </button>--}}
+{{--                        <button type="button" class="btn btn-primary general_file_submit">ارسال</button>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 @endsection
 
 @section('scripts')
     <script>
-        $('#general_file_from').validate({
-            rules: {
-                "general_file": {
-                    required:true
-                }
-            },
-            errorElement: 'span',
-            errorClass: 'help-block help-block-error',
-            focusInvalid: true,
-            errorPlacement: function (error, element) {
-                error.appendTo(element.next());
-            },
-            success: function (label, element) {
 
-                $(element).removeClass("is-invalid");
-            }
-        });
         @foreach ($specialties as $_specialties)
         $('#{{$_specialties->name_en}}_form_reporter').repeater({
 
@@ -331,14 +351,14 @@
         file_input_cu('#general_file')
 
         @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_pdf_file')
+        file_input_cu('#{{$_specialties->name_en}}_pdf_file',{},['pdf'])
 
         @endforeach
         @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_docs_file')
+        file_input_cu('#{{$_specialties->name_en}}_docs_file',{},[])
 
         @endforeach @foreach($specialties as $_specialties)
-        file_input_cu('#{{$_specialties->name_en}}_cad_file')
+        file_input_cu('#{{$_specialties->name_en}}_cad_file',['dwg'])
 
         @endforeach
         $('#add_edit_form').validate({
@@ -365,32 +385,20 @@
                 $(e).rules("add", {required: true})
             });
 
+              console.log($("#add_edit_form").valid())
             if (!$("#add_edit_form").valid()) {
                 showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
 
                 return false;
             }
-            if ($('#add_edit_form').find(':input').length <= 39) {
+
+            if ($('#add_edit_form').find(':input').length <= 42) {
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
-
-            $('#page_modal').appendTo('body').modal('show');
-            $(".blockUI").remove();
-            // $("#add_edit_form").submit()
-
-        });
-        $('.general_file_submit').click(function (e) {
-            e.preventDefault();
-            if (!  $('#general_file_from').valid()) {
-                showAlertMessage('error', 'الرجاء إرفاق الملف العام')
-                return false;
-            }
-
-
             $.ajax({
                 url : '{{route('design_office.save_file')}}',
-                data : new FormData($('#add_edit_form').append($('#general_file')).get(0)),
+                data : new FormData($('#add_edit_form').get(0)),
                 type: "POST",
                 processData: false,
                 contentType: false,
@@ -406,7 +414,7 @@
                     if (data.success) {
                         $('#page_modal').modal('hide');
 
-                      window.location='{{route('design_office')}}'
+                        window.location='{{route('design_office')}}'
                     } else {
                         $('#page_modal').modal('hide');
                         if (data.message) {
@@ -423,9 +431,15 @@
                     KTApp.unblockPage();
                 },
             });
+
+            $('#page_modal').appendTo('body').modal('show');
+            $(".blockUI").remove();
+            // $("#add_edit_form").submit()
+
         });
 
-        function file_input_cu(selector, options) {
+
+        function file_input_cu(selector, options,type) {
             let defaults = {
                 theme: "fas",//gly
                 showDrag: false,
@@ -441,7 +455,7 @@
                 showRemove: false,
                 showCancel: false,
                 showUpload: false,
-                showPreview: true,
+                showPreview: false,
                 msgPlaceholder: "اختر ملف",
                 msgSelected: "تم الاختيار ",
                 fileSingle: "ملف واحد",
@@ -457,6 +471,7 @@
                 overwriteInitial: true,
                 browseOnZoneClick: true,
                 captionClass: true,
+                allowedFileExtensions: type,
                 maxFileCount: 3,
             };
             let settings = $.extend({}, defaults, options);

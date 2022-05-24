@@ -8,6 +8,8 @@ use App\Models\ConsultingReportAttchment;
 use App\Models\DeliveryReport;
 use App\Models\DeliveryReportAttchment;
 use App\Models\Order;
+use App\Models\OrderSharer;
+use App\Models\OrderSharerReject;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
@@ -16,6 +18,7 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use App\Models\OrderService;
 use App\Models\OrderSpecilatiesFiles;
+
 class DeliveryController extends Controller
 {
     public function orders()
@@ -119,7 +122,7 @@ class DeliveryController extends Controller
         $reports = DeliveryReport::query()->with(['attchments'])
             ->where('user_id', '=', auth()->user()->id);
         return DataTables::of($reports)
-            ->addColumn('actions', function ($report){
+            ->addColumn('actions', function ($report) {
                 $delete = '<a class="dropdown-item" onclick="deleteReport(' . $report->id . ')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
                 $edit = '<a class="dropdown-item" href="' . route('delivery.report_edit_form', ['report' => $report->id]) . '"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
 
@@ -150,8 +153,8 @@ class DeliveryController extends Controller
     public function add_report_page(Order $order)
     {
         $order_ids = DeliveryReport::where('user_id', '=', auth()->user()->id)
-        ->pluck('order_id');
-        $orders = Order::select('id','title')->whereIn('id',$order_ids)->get();
+            ->pluck('order_id');
+        $orders = Order::select('id', 'title')->whereIn('id', $order_ids)->get();
         return view('CP.delivery.report_add_form', [
             'orders' => $orders,
         ]);
@@ -235,10 +238,15 @@ class DeliveryController extends Controller
     public function reject_form(Request $request)
     {
         $order = Order::query()->findOrFail($request->id);
+        $order_starer_last_notes = OrderSharer::query()
+            ->where('status', OrderSharer::REJECT)->where('order_id', $request->id)
+           ->get();
+
         return response()->json([
             'success' => true,
             'page' => view('CP.delivery.reject_form', [
                 'order' => $order,
+                'order_starer_last_notes' => $order_starer_last_notes
             ])->render()
         ]);
     }
@@ -305,24 +313,32 @@ class DeliveryController extends Controller
 
     public function view_file(Order $order)
     {
+
         $rejects = $order->orderSharerRejects()->with('orderSharer')->get();
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
+
         return view('CP.delivery.view_file', [
             'order' => $order,
             'order_specialties' => $order_specialties,
             'filess' => $files,
-            'rejects' => $rejects
+            'rejects' => $rejects,
+            'order_sharers' => $order_sharers
         ]);
 
     }
 
-    public function copy_note(Request $request) {
-        $order = Order::query()->where('id', $request->order_id)->firstOrFail();
+    public function copy_note(Request $request)
+    {
+
+        $order = Order::query()->where('id', $request->id)->firstOrFail();
+
         $order->deliverRejectReson()->create([
             'order_id' => $order->id,
             'user_id' => auth()->user()->id,
             'note' => $request->note,
+
         ]);
 
         return response()->json([
