@@ -15,7 +15,18 @@ class OrdersController extends Controller
 {
     public function orders()
     {
-        return view('CP.service_providers.orders');
+
+        $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
+            $q->where('owner_id', auth()->user()->id);
+        })->get();
+        $data['consulting'] = User::query()->whereHas('consulting_orders', function ($q) {
+            $q->where('owner_id', auth()->user()->id);
+        })->get();
+        $data['contractors'] = User::query()->whereHas('contractors_orders', function ($q) {
+            $q->where('owner_id', auth()->user()->id);
+        })->get();
+
+        return view('CP.service_providers.orders', $data);
     }
 
     public function create_order()
@@ -46,7 +57,15 @@ class OrdersController extends Controller
 
     public function list(Request $request)
     {
-        $order = Order::query()->orderByDesc('created_at')->with('designer')->whereServiceProvider(auth()->user()->id)->with('designer');
+
+        $order = Order::query()
+            ->whereOrderId($request->order_id)
+            ->whereDesignerId($request->designer_id)
+            ->whereConsultingId($request->consulting_id)
+            ->orderByDesc('created_at')
+            ->with('designer')
+            ->whereServiceProvider(auth()->user()->id)
+            ->with(['designer', 'contractor', 'consulting']);
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
@@ -64,9 +83,9 @@ class OrdersController extends Controller
                     $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus"></i>إضافة استشاري ومقاول</a>';
                 }
 
-                if(empty($add_designer)&&empty($add_contractor_and_consulting_office)){
-                    $element='';
-                }else{
+                if (empty($add_designer) && empty($add_contractor_and_consulting_office)) {
+                    $element = '';
+                } else {
 
                     $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

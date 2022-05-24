@@ -177,7 +177,7 @@
                 <div class="swiper-container swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('/').'/Mechanical.pdf'}}" target="_blank"  class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل الاعمال الميكانيكية( نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -185,7 +185,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات  - (النهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -193,7 +193,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل الأعمال المعمارية.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل   الأعمال المعمارية (نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -201,7 +201,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل الأعمال الانشائية.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل   الأعمال   الانشائية(نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -209,7 +209,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى( نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -217,7 +217,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى ( نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -225,7 +225,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق (نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -233,7 +233,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل الأعمال الكهربائية.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل الأعمال الكهربائية ( نهائي) _ V1 3</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -241,7 +241,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي تنفيذ اعمال الوقاية والحماية من الحريق.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي تنفيذ اعمال الوقاية والحماية من الحريق</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -249,7 +249,7 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="" download class="widget__item-downlaod text-center">
+                            <a href="{{url('دليل اعمال تغذية المياة و الصرف الصحي.pdf/')}}" target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل اعمال تغذية المياة و الصرف الصحي( نهائي)</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>

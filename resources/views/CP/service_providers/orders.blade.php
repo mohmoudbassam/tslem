@@ -10,7 +10,7 @@
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">
                     <div class="btn-group" role="group">
-                        <a   href="{{route('services_providers.create_order')}}" class="btn btn-primary dropdown-toggle">
+                        <a href="{{route('services_providers.create_order')}}" class="btn btn-primary dropdown-toggle">
                             انشاء الطلب <i class="fa fa-clipboard-check"></i>
                         </a>
 
@@ -33,25 +33,39 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد او الهاتف">
+                        <div class="col-lg-2">
+                            <label for="order_id">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
-                            <select class="form-control" id="type" name="type">
+                        <div class="col-lg-2">
+                            <label for="type">مكتب التصميم</label>
+                            <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
-                                <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مقدم خدمة</option>
-                                <option value="design_office">مكتب تصميم</option>
-                                <option value="Sharer">جهة مشاركة</option>
-                                <option value="consulting_office">مكتب استشاري</option>
-                                <option value="contractor">مقاول</option>
-                                <option value="Delivery">تسليم</option>
-                                <option value="Kdana">كدانة</option>
+                                @foreach($designers as $designer)
+                                    <option value="{{$designer->id}}">{{$designer->company_name}}</option>
+                                @endforeach
+
                             </select>
                         </div>
+                        <div class="col-lg-2">
+                            <label for="type">المكتب الإستشاري</label>
+                            <select class="form-control" id="consulting_id" name="consulting_id">
+                                <option value="">اختر...</option>
+                                @foreach($consulting as $_consulting)
+                                    <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
+                                @endforeach
 
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="type">المقاول </label>
+                            <select class="form-control" id="consulting_id" name="consulting_id">
+                                <option value="">اختر...</option>
+                                @foreach($contractors as $_contractor)
+                                    <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-primary search_btn">بحث</button>
                         </div>
@@ -67,27 +81,34 @@
 
                 <div class="col-sm-12">
                     <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+                           role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                           عنوان الطلب
+                            عنوان الطلب
                         </th>
 
                         <th>
-                          التاريخ
+                            التاريخ
                         </th>
                         <th>
-                          مكتب التصميم
+                            مكتب التصميم
                         </th>
                         <th>
                             حالة الطلب
                         </th>
                         <th>
+                            المقاول
+                        </th>
+                        <th>
+                            المكتب الإستشاري
+                        </th>
+                        <th>
                             تاريخ الإنشاء
                         </th>
                         <th>
-                           الخيارات
+                            الخيارات
                         </th>
 
 
@@ -125,8 +146,9 @@
                     url: '{{route('services_providers.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.name = $('#name').val();
-                        d.type = $('#type').val();
+                        d.order_id = $('#order_id').val();
+                        d.designer_id = $('#designer_id').val();
+                        d.consulting_id = $('#consulting_id').val();
 
                     }
                 },
@@ -134,13 +156,14 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'title', name: 'title'},
-                    {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'designer.company_name', name: 'designer'},
-                    {className: 'text-center', data: 'order_status', name: 'order_status'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
-
+                    {className: 'text-right', data: 'title', name: 'title'},
+                    {className: 'text-right', data: 'date', name: 'date'},
+                    {className: 'text-right', data: 'designer.company_name', name: 'designer'},
+                    {className: 'text-right', data: 'order_status', name: 'order_status'},
+                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor'},
+                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting'},
+                    {className: 'text-right', data: 'created_at', name: 'created_at'},
+                    {className: 'text-right', data: 'actions', name: 'actions'},
 
 
                 ],

@@ -13,21 +13,22 @@ class Order extends Model
 
 
     public const PENDING = 1;
-    public const REQUEST_BEGIN_CREATED  = 2;
+    public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
-    public const DESIGN_APPROVED =4;
-    public const PROCESSING =5;
-    public const COMPLETED =6;
+    public const DESIGN_APPROVED = 4;
+    public const PROCESSING = 5;
+    public const COMPLETED = 6;
 
 
-
-    public function specialties_file(){
-        return $this->hasMany(OrderSpecilatiesFiles::class,'order_id');
+    public function specialties_file()
+    {
+        return $this->hasMany(OrderSpecilatiesFiles::class, 'order_id');
     }
 
-    public function service(){
-      return  $this->belongsToMany(Service::class,'order_service','order_id','service_id')
-         ->withPivot('service_id', 'order_id','unit');
+    public function service()
+    {
+        return $this->belongsToMany(Service::class, 'order_service', 'order_id', 'service_id')
+            ->withPivot('service_id', 'order_id', 'unit');
     }
 
     public function designer()
@@ -44,6 +45,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'contractor_id');
     }
+
     public function consulting()
     {
         return $this->belongsTo(User::class, 'consulting_office_id');
@@ -59,6 +61,7 @@ class Order extends Model
         return $q->where('contractor_id', $contractor_id);
     }
 
+
     public function file()
     {
         return $this->hasMany(OrderFile::class);
@@ -72,18 +75,21 @@ class Order extends Model
 
     public function contractorReport()
     {
-        return $this->hasMany(ContractorReport::class,'order_id');
+        return $this->hasMany(ContractorReport::class, 'order_id');
     }
 
-    public function deliverRejectReson() {
+    public function deliverRejectReson()
+    {
         return $this->hasMany(DeliverRejectReson::class, 'order_id');
     }
 
-    public function orderSharer() {
+    public function orderSharer()
+    {
         return $this->hasMany(OrderSharer::class, 'order_id');
     }
 
-    public function orderSharerAccepts() {
+    public function orderSharerAccepts()
+    {
         return $this->hasManyThrough(
             OrderSharerAccept::class,
             OrderSharer::class,
@@ -94,7 +100,8 @@ class Order extends Model
         );
     }
 
-    public function orderSharerRejects() {
+    public function orderSharerRejects()
+    {
         return $this->hasManyThrough(
             OrderSharerReject::class,
             OrderSharer::class,
@@ -126,17 +133,47 @@ class Order extends Model
         ][$this->status];
     }
 
-    public function lastDesignerNote(){
+    public function lastDesignerNote()
+    {
         return $this->hasOne(DeliverRejectReson::class)->orderByDesc('created_at')->take(1);
     }
 
-    public function consulting_or_constroctor(){
+    public function consulting_or_constroctor()
+    {
         return $this->hasMany(ConsultingOrders::class, 'order_id');
     }
 
-    public function is_accepted($user){
+    public function is_accepted($user)
+    {
 
-        return $this->consulting_or_constroctor->where('user_id',$user->id)->count();
+        return $this->consulting_or_constroctor->where('user_id', $user->id)->count();
     }
+
+    //////////////////
+    /// filters     //
+    /// //////////////
+
+
+    public function scopeWhereOrderId($q, $order_id)
+    {
+
+        return $q->when($order_id,function ($q) use ($order_id) {
+            $q->where('id', $order_id);
+        });
+    }
+    public function scopeWhereDesignerId($q, $designer_id)
+    {
+
+        return $q->when($designer_id,function ($q) use ($designer_id) {
+            $q->where('designer_id', $designer_id);
+        });
+    }    public function scopeWhereConsultingId($q, $consulting_id)
+    {
+
+        return $q->when($consulting_id,function ($q) use ($consulting_id) {
+            $q->where('consulting_office_id', $consulting_id);
+        });
+    }
+
 
 }
