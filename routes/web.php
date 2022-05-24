@@ -52,8 +52,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-Route::middleware(['auth','is-verified','is-file-uploaded'])->group(function () {
+//,'is-verified'
+Route::middleware(['auth','is-file-uploaded'])->group(function () {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
