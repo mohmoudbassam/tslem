@@ -16,6 +16,7 @@ use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\Users\UserRequestController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
 use App\Http\Controllers\PDFController;
@@ -47,9 +48,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
     Route::get('upload_files', [VerificationController::class, 'upload_files'])->name('upload_files');
     Route::post('upload_files', [VerificationController::class, 'save_upload_files'])->name('upload_files_action');
-    
+
 });
- 
+
 
 
 Route::middleware(['auth','is-verified','is-file-uploaded'])->group(function () {
@@ -225,3 +226,12 @@ Route::get('test', function () {
 });
 
 Route::get('generate', [PDFController::class, 'generate']);
+Route::get('test-email',function () {
+    Mail::send('mail', [], function($message) {
+        $message->to('abc@gmail.com', 'Tutorials Point')->subject
+        ('Laravel Testing Mail with Attachment');
+        $message->attach('C:\laravel-master\laravel\public\uploads\image.png');
+        $message->attach('C:\laravel-master\laravel\public\uploads\test.txt');
+        $message->from('xyz@gmail.com','Virat Gandhi');
+    });
+});
