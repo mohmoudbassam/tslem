@@ -32,7 +32,7 @@
             <div class="row mt-4">
                 <div class="col-lg-12">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
                         <div class="col-lg-2">
                             <label for="order_id">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
@@ -59,15 +59,18 @@
                         </div>
                         <div class="col-lg-2">
                             <label for="type">المقاول </label>
-                            <select class="form-control" id="consulting_id" name="consulting_id">
+                            <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
-                                    <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
+                                    <option value="{{$_contractor->id}}">{{$_contractor->company_name}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                        </div>
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
                     </form>
                 </div>
@@ -149,6 +152,7 @@
                         d.order_id = $('#order_id').val();
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
+                        d.contractor_id = $('#contractor_id').val();
 
                     }
                 },
@@ -173,6 +177,10 @@
 
         });
         $('.search_btn').click(function (ev) {
+            $('#items_table').DataTable().ajax.reload(null, false);
+        });
+        $('.reset_btn').click(function (ev) {
+            $("#form_data").trigger('reset');
             $('#items_table').DataTable().ajax.reload(null, false);
         });
 

@@ -157,21 +157,32 @@ class Order extends Model
     public function scopeWhereOrderId($q, $order_id)
     {
 
-        return $q->when($order_id,function ($q) use ($order_id) {
+        return $q->when($order_id, function ($q) use ($order_id) {
             $q->where('id', $order_id);
         });
     }
+
     public function scopeWhereDesignerId($q, $designer_id)
     {
 
-        return $q->when($designer_id,function ($q) use ($designer_id) {
+        return $q->when($designer_id, function ($q) use ($designer_id) {
             $q->where('designer_id', $designer_id);
         });
-    }    public function scopeWhereConsultingId($q, $consulting_id)
+    }
+
+    public function scopeWhereConsultingId($q, $consulting_id)
     {
 
-        return $q->when($consulting_id,function ($q) use ($consulting_id) {
+        return $q->when($consulting_id, function ($q) use ($consulting_id) {
             $q->where('consulting_office_id', $consulting_id);
+        });
+    }
+
+    public function scopeWhereContractorId($q, $contractor_id)
+    {
+
+        return $q->when($contractor_id, function ($q) use ($contractor_id) {
+            $q->where('contractor_id', $contractor_id);
         });
     }
 

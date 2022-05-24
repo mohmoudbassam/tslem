@@ -47,7 +47,7 @@ function file_name_by_column($col)
         'chamber_of_commerce_certificate' => 'شهادة الغرفة التجارية',
         'tax_registration_certificate' => 'شهادة تسجيل الضريبة',
         'wage_protection_certificate' => 'شهادة حماية الأجور',
-        'memorandum_of_association' => 'شهادة عقد التأسيس '
+        'memorandum_of_association' => ' عقد التأسيس '
     ][$col];
 }
 

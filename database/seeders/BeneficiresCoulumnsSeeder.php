@@ -31,7 +31,6 @@ class BeneficiresCoulumnsSeeder extends Seeder
         BeneficiresCoulumns::query()->create([
             'type' => 'service_provider',
             'company_name' => '1',
-
             'company_owner_name' => '1',
             'commercial_record' => '1',
             'website' => '1',
@@ -43,11 +42,8 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'phone' => '1',
             'commercial_file' => '1',
             'commercial_file_end_date' => '1',
-
             'address_file' => '1',
-
             'memorandum_of_association' => '1',
-
         ]);
         BeneficiresCoulumns::query()->create([
             'type' => 'design_office',

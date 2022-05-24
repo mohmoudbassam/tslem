@@ -62,6 +62,7 @@ class OrdersController extends Controller
             ->whereOrderId($request->order_id)
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
+            ->whereContractorId($request->contractor_id)
             ->orderByDesc('created_at')
             ->with('designer')
             ->whereServiceProvider(auth()->user()->id)

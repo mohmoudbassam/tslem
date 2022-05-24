@@ -144,7 +144,7 @@ class User extends Authenticatable
     }
     public function contractors_orders()
     {
-        return $this->hasMany(Order::class, 'consulting_office_id')->where('type', 'contractors_orders');
+        return $this->hasMany(Order::class, 'contractor_id')->where('type', 'contractor');
     }
 
 }

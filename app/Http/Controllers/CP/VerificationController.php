@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Mail; 
+use Mail;
 use App\Models\EmailVerification;
 use App\Mail\VerifyUserEmail;
 use App\Http\Requests\CP\User\UploadFilesRequest;
@@ -22,22 +22,22 @@ class VerificationController extends Controller{
         }
 
         $token = Str::random(64);
-        
+
         $verification = EmailVerification::where('user_id', auth()->user()->id)->first();
         if(is_null($verification)){
 
             EmailVerification::create([
-                'user_id' => auth()->user()->id, 
+                'user_id' => auth()->user()->id,
                 'token' => $token
           ]);
-          
+
           Mail::to(auth()->user()->email)->send(new VerifyUserEmail($token));
 
 
         }
             return view('CP.verify');
-       
-        
+
+
     }
 
 
@@ -67,9 +67,10 @@ class VerificationController extends Controller{
 
         $type = (is_null(auth()->user()->type)) ? 'service_provider' : auth()->user()->type;
         $record = \App\Models\BeneficiresCoulumns::query()->where('type', $type)->first();
-        $col_file = get_user_column_file($type); 
+
+        $col_file = get_user_column_file($type);
         if(empty($col_file)){
-            auth()->user()->update(['is_file_uploaded' => true]);  
+            auth()->user()->update(['is_file_uploaded' => true]);
             return redirect()->route('dashboard');
         }
         return view('CP.upload_files', compact('type','record','col_file'));
@@ -110,6 +111,6 @@ class VerificationController extends Controller{
         }
 
     }
-    
+
 
 }

@@ -221,17 +221,17 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->website)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="website">الموقع</label>
-                                <input type="text" class="form-control" value="{{old('website')}}" id="website"
-                                       name="website"
-                                       placeholder="الموقع">
-                                <div class="col-12 text-danger" id="website_error"></div>
-                            </div>
-                        </div>
-                    @endif
+{{--                    @if($record->website)--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <label class="form-label" for="website">الموقع</label>--}}
+{{--                                <input type="text" class="form-control" value="{{old('website')}}" id="website"--}}
+{{--                                       name="website"--}}
+{{--                                       placeholder="الموقع">--}}
+{{--                                <div class="col-12 text-danger" id="website_error"></div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
                     @if($record->responsible_name)
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -289,7 +289,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="phone">رقم الجوال</label>
-                                <input type="number" value="{{old('phone')}}" class="form-control" id="phone" 
+                                <input type="number" value="{{old('phone')}}" class="form-control" id="phone"
                                        name="phone" minlength="12" maxlength="12"
                                        placeholder="رقم الجوال">
                                 <div class="col-12 text-danger" id="phone_error"></div>
@@ -358,9 +358,9 @@
                     </div>
                 </div>
 
-             
-                
-              
+
+
+
             </form>
 
             <div class="text-center mt-4">
@@ -417,7 +417,7 @@
         return this.optional(element) || /^\w+$/i.test(value);
     }, "يرجى ادخال حروف  أو أرقام او علامة _ ");
 
-   
+
     $('#add_edit_form').validate({
         lang: 'ar',
         rules: {
