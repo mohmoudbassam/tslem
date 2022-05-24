@@ -17,8 +17,8 @@ class UserRequestController extends Controller
 
     public function list()
     {
-
-        $users = User::query()->where('is_file_uploaded', 1)->where('email_verified_at', '!=' ,null)->whereIn('verified', [0, 2])->when(request('name'), function ($q) {
+        //->where('email_verified_at', '!=' ,null)
+        $users = User::query()->where('is_file_uploaded', 1)->whereIn('verified', [0, 2])->when(request('name'), function ($q) {
             $q->where('name', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('email', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('phone', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
