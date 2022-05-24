@@ -227,7 +227,10 @@ Route::get('test', function () {
 
 Route::get('generate', [PDFController::class, 'generate']);
 Route::get('test-email',function () {
+
     Mail::send('mail', ['name','Ripon Uddin Arman'], function($message) {
+
         $message->to('mohmoud14567@gmail.com', 'Tutorials Point')->subject('Laravel Testing Mail with Attachment');
+
     });
 });
