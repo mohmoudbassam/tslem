@@ -86,14 +86,11 @@ class User extends Authenticatable
     }
 
 
-
     /////filters
-    public function scopeWhereVitrified($q){
-        return $q->where('verified',1);
+    public function scopeWhereVitrified($q)
+    {
+        return $q->where('verified', 1);
     }
-
-
-
 
 
     /////////////////////localization
@@ -108,21 +105,46 @@ class User extends Authenticatable
         return null;
 
     }
+
     public function getVerifiedStatusAttribute()
     {
-        if ($this->verified==0) {
+        if ($this->verified == 0) {
             return 'غير معتمد';
-        }elseif($this->verified==1){
+        } elseif ($this->verified == 1) {
             return 'تم الإعتماد';
-        }elseif($this->verified==2){
+        } elseif ($this->verified == 2) {
             return 'تم الرفض';
         }
         return null;
 
     }
 
-    public function designer_order_rejected(){
-        return $this->belongsTo(DesignerRejected::class,'id','designer_id')
-            ->where('type','design_office');
+    public function designer_order_rejected()
+    {
+        return $this->belongsTo(DesignerRejected::class, 'id', 'designer_id')
+            ->where('type', 'design_office');
     }
+
+    public function scopeWhereDesigner($query)
+    {
+        return $query->where('type', 'design_office');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'owner_id');
+    }
+    public function designer_orders()
+    {
+        return $this->hasMany(Order::class, 'designer_id')->where('type', 'design_office');
+    }
+    public function consulting_orders()
+    {
+        return $this->hasMany(Order::class, 'consulting_office_id')->where('type', 'consulting_office');
+    }
+    public function contractors_orders()
+    {
+        return $this->hasMany(Order::class, 'consulting_office_id')->where('type', 'contractors_orders');
+    }
+
 }
