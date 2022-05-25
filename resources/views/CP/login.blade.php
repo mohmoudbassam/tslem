@@ -94,9 +94,7 @@
                             <div class="auth-content my-auto">
 
                                 <div class="text-center">
-                                    <h1>تسجيل الدخول</h1>
-                                <h5 class="mb-0">أهلا وسهلا</h5>
-                                    <p class="text-muted mt-2"></p>
+                                    <h2>تسجيل الدخول</h2>
                                 </div>
                                 <form class="mt-4 pt-2" action="{{route('login')}}" method="post">
                                     @csrf
@@ -124,7 +122,7 @@
                                     <div class="row mb-4">
                                         <div class="col">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember-check">
+                                                <input class="form-check-input" checked="true" type="checkbox" id="remember-check">
                                                 <label class="form-check-label" for="remember-check">
                                                     تذكرني
                                                 </label>
@@ -138,7 +136,7 @@
                                     </div>
                                     @endif
                                     <div class="mb-3">
-                                        <button class="btn  btn-secondary w-100 waves-effect waves-light" type="submit">تسجيل الدخول</button>
+                                        <button class="btn btn-lg btn-secondary w-100 waves-effect waves-light" type="submit">دخول</button>
                                     </div>
                                 </form>
 
@@ -150,7 +148,7 @@
 {{--                                </div>--}}
                             </div>
                             <div class="mt-4 mt-md-5 text-center">
-                                <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> منصة تسليم </p>
+                                <p class="mb-0">© {{ \Alkoumi\LaravelHijriDate\Hijri::Date('Y') }} منصة تسليم </p>
                             </div>
                         </div>
                     </div>
