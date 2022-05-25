@@ -7,7 +7,7 @@ use App\Models\BeneficiresCoulumns;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreUserRequest extends BaseRequest
+class StoreUserRequest extends FormRequest
 {
 
     public function rules()

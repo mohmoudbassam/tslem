@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->boolean('enabled')->default(1);
             $table->boolean('verified')->default(0);
+            $table->string('designer_type')->nullable();
             $table->enum('type', ['admin',
                 'service_provider',
                 'design_office',

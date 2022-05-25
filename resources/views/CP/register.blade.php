@@ -123,6 +123,7 @@
             @endif
             <form id="add_edit_form" method="post" action="{{route('register_action')}}" enctype="multipart/form-data">
                 @csrf
+
                 <div class="row">
 
                     <div class="col-md-6">
@@ -147,7 +148,24 @@
                             </select>
                         </div>
                     </div>
+                    @if($has_designer_type)
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="designer_type">التخصص<span class="text-danger required-mark">*</span></label>
+                            <select class="form-select" id="designer_type" name="designer_type">
 
+                                <option @if($designer_type =="designer") selected
+                                        @endif value="designer">مكتب تصميم
+                                </option>
+                                <option @if($designer_type =="consulting") selected @endif value="consulting">اشراف
+                                </option>
+                                <option @if($designer_type =="fire") selected
+                                        @endif  value="fire">الحماية والوقاية من الحريق
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    @endif
                     @if($record->company_name)
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -266,7 +284,7 @@
                             <div class="mb-3">
                                 <label class="form-label" for="phone">رقم الجوال<span class="text-danger required-mark">*</span></label>
                                 <input type="text" onkeypress="return /[0-9]/i.test(event.key)" value="{{old('phone')}}" class="form-control" id="phone"
-                                       name="phone" minlength="12" maxlength="12"
+                                       name="phone" minlength="10" maxlength="10"
                                        placeholder="رقم الجوال">
                                 <div class="col-12 text-danger" id="phone_error"></div>
                             </div>
@@ -343,6 +361,8 @@
                         </div>
                     @endif
                    </div>
+
+
               </form>
 
             <div class="text-center mt-4">
@@ -430,8 +450,11 @@
         $('#add_edit_form').submit()
     });
     $('#type').change(function (e) {
-        window.location = '{{route('register')}}?type=' + $(this).val()
+        window.location = '{{route('register')}}/' + $(this).val()
     });
+    {{--$('#designer_type').change(function (e) {--}}
+    {{--    window.location = '{{route('register')}}/' + '{{request('type')}}' +'/'+'{{request('designer_type')}}'+$(this).val()--}}
+    {{--});--}}
     flatpickr(".datepicker",{defaultDate: (old_date == '') ? new Date : old_date});
 </script>
 

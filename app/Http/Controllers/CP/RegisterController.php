@@ -13,23 +13,35 @@ use Illuminate\Support\Facades\Storage;
 class RegisterController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request, $type = null, $designer_type = null)
     {
 
         if (auth()->check()) {
 
             redirect()->route('dashboard');
         }
+
         if ($request->type) {
             $type = request('type');
         } else {
             $type = 'service_provider';
         }
+
         $data['record'] = BeneficiresCoulumns::query()->where('type', $type)->firstOrFail();
-//         if($type=='design_office'){
-//             dd('er')
-//         }
-//        $record = BeneficiresCoulumns::query()->where('type', $type)->firstOrFail();
+
+        if ($type == 'design_office') {
+
+            $designer_type_ar = ['designer', 'consulting', 'fire'];
+             if(is_null($designer_type)) $designer_type='designer';
+
+            if (!in_array($designer_type, $designer_type_ar)) abort(404);
+
+            $data['has_designer_type'] = true;
+            $data['designer_type'] = $designer_type;
+        } else {
+            $data['has_designer_type'] = false;
+        }
+
         $data['col_file'] = get_user_column_file($type);
 
         return view('CP.register', $data);
@@ -37,9 +49,14 @@ class RegisterController extends Controller
 
     public function add_edit(StoreUserRequest $request)
     {
+        if(request('type')=='design_office' && request('designer_type')=='consulting'){
+
+            $request->type='consulting_office';
+        }
 
         $user = User::query()->create([
-            'type' => request('type'),
+            'designer_type' => $request->designer_type,
+            'type' => $request->type,
             'name' => request('name'),
             'company_name' => request('company_name'),
             'company_type' => request('company_type'),
