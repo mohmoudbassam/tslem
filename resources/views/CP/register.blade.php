@@ -407,7 +407,7 @@
 
 <script>
 
-
+    let old_date = "{{old('id_date')}}";
     $('input[type=text]').addClass('fontArial');
     $('input[type=number]').addClass('fontArial');
     $('input[type=email]').addClass('fontArial');
@@ -465,7 +465,7 @@
         window.location = '{{route('register')}}?type=' + $(this).val()
     });
 
-    flatpickr(".datepicker",{defaultDate:new Date});
+    flatpickr(".datepicker",{defaultDate: (old_date == '') ? new Date : old_date});
 </script>
 
 </body>

@@ -44,7 +44,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="commercial_file_end_date">تاريخ انتهاء السجل التجاري</label>
-                            <input type="text" class="form-control datepicker"
+                            <input type="text" class="form-control commercial_file_end_date"
                                 value="{{old('commercial_file_end_date')}}" id="commercial_end_date"
                                 name="commercial_file_end_date">
                             <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
@@ -64,7 +64,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control datepicker" id="rating_certificate_end_date"
+                            <input type="text" class="form-control rating_certificate_end_date" id="rating_certificate_end_date"
                                 name="rating_certificate_end_date">
                             <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
                         </div>
@@ -94,7 +94,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control datepicker" id="profession_license_end_date"
+                            <input type="text" class="form-control profession_license_end_date" id="profession_license_end_date"
                                 name="profession_license_end_date">
                             <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
                         </div>
@@ -113,7 +113,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control datepicker" id="business_license_end_date"
+                            <input type="text" class="form-control business_license_end_date" id="business_license_end_date"
                                 name="business_license_end_date">
                             <div class="col-12 text-danger" id="business_license_end_date_error"></div>
                         </div>
@@ -135,7 +135,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
                                 الانتهاء</label>
-                            <input type="text" class="form-control datepicker"
+                            <input type="text" class="form-control social_insurance_certificate_end_date"
                                 id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">
                             <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
                         </div>
@@ -155,7 +155,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control datepicker" id="date_of_zakat_end_date"
+                            <input type="text" class="form-control date_of_zakat_end_date" id="date_of_zakat_end_date"
                                 name="date_of_zakat_end_date">
                             <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
                         </div>
@@ -175,7 +175,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control datepicker" id="saudization_certificate_end_date"
+                            <input type="text" class="form-control saudization_certificate_end_date" id="saudization_certificate_end_date"
                                 name="saudization_certificate_end_date">
                             <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
                         </div>
@@ -197,7 +197,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
                                 الانتهاء</label>
-                            <input type="text" class="form-control datepicker"
+                            <input type="text" class="form-control chamber_of_commerce_certificate_end_date"
                                 id="chamber_of_commerce_certificate_end_date"
                                 name="chamber_of_commerce_certificate_end_date">
                             <div class="col-12 text-danger" id="chamber_of_commerce_certificate_end_date_error"></div>
@@ -265,6 +265,18 @@
     <script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
     @section('scripts')
     <script>
+
+
+    let commercial_file_end_date = "{{old('commercial_file_end_date')}}";
+    let rating_certificate_end_date = "{{old('rating_certificate_end_date')}}";
+    let profession_license_end_date = "{{old('profession_license_end_date')}}";
+    let business_license_end_date = "{{old('business_license_end_date')}}";
+    let social_insurance_certificate_end_date = "{{old('social_insurance_certificate_end_date')}}";
+    let date_of_zakat_end_date = "{{old('date_of_zakat_end_date')}}";
+    let saudization_certificate_end_date = "{{old('saudization_certificate_end_date')}}";
+    let chamber_of_commerce_certificate_end_date = "{{old('chamber_of_commerce_certificate_end_date')}}";
+
+
     @foreach(array_keys(get_user_column_file($type)) as $_col)
     file_input_register('#{{$_col}}');
     @endforeach
@@ -311,6 +323,16 @@
 
     });
 
-    flatpickr(".datepicker",{defaultDate:new Date});
+
+    flatpickr(".commercial_file_end_date",{defaultDate: (commercial_file_end_date == '') ? new Date : commercial_file_end_date});
+    flatpickr(".rating_certificate_end_date",{defaultDate: (rating_certificate_end_date == '') ? new Date : rating_certificate_end_date});
+    flatpickr(".profession_license_end_date",{defaultDate: (profession_license_end_date == '') ? new Date : profession_license_end_date});
+    flatpickr(".business_license_end_date",{defaultDate: (business_license_end_date == '') ? new Date : business_license_end_date});
+    flatpickr(".social_insurance_certificate_end_date",{defaultDate: (social_insurance_certificate_end_date == '') ? new Date : social_insurance_certificate_end_date});
+    flatpickr(".date_of_zakat_end_date",{defaultDate: (date_of_zakat_end_date == '') ? new Date : date_of_zakat_end_date});
+    flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '') ? new Date : saudization_certificate_end_date});
+    flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') ? new Date : chamber_of_commerce_certificate_end_date});
+
+    
     </script>
     @endsection
