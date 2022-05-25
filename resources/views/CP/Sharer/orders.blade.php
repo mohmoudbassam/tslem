@@ -34,7 +34,7 @@
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مقدم خدمة</option>
+                                <option value="service_provider">مركز ، مؤسسة ، شركة (مطوف)</option>
                                 <option value="design_office">مكتب تصميم</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>
@@ -67,7 +67,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مقدم الخدمة
+                            مركز ، مؤسسة ، شركة (مطوف)
                         </th>
                         <th>
                             التاريخ

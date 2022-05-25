@@ -49,7 +49,6 @@ class AuthController extends Controller
     {
 
         $User = new UserResource(auth('users')->user());
-
         return api(true, 200,null)
             ->add('user', $User)
             ->get();

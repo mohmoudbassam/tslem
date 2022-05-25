@@ -105,7 +105,7 @@
 
                         <div class="col-md-6 mb-3">
                             <p class="details_p"><span
-                                    class="bold">اسم مقدم الخدمة :</span> {{$order->service_provider->company_name}}
+                                    class="bold">مركز ، مؤسسة ، شركة (مطوف) :</span> {{$order->service_provider->company_name}}
                             </p>
                         </div>
 
