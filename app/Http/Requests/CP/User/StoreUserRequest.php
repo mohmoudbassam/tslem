@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\CP\User;
 
+use App\Http\Requests\BaseRequest;
 use App\Models\BeneficiresCoulumns;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreUserRequest extends FormRequest
+class StoreUserRequest extends BaseRequest
 {
 
     public function rules()
@@ -17,12 +18,12 @@ class StoreUserRequest extends FormRequest
             'name' => [
                 'required',
                 Rule::unique('users', 'name'),
-               // 'regex:/^[a-zA-Z]+$/u',
                 'max:50'
             ],
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'type' => [
+                'required',
                 Rule::in([
                     'admin',
                     'service_provider',
@@ -41,7 +42,7 @@ class StoreUserRequest extends FormRequest
             'phone' => [
                 'sometimes',
                 'numeric',
-                'digits:12'
+                'digits:10'
             ],
 
         ];

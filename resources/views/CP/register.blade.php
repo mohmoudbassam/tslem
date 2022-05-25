@@ -144,7 +144,7 @@
                             <select class="form-select" id="type" name="type">
 
                                 <option @if($record->type =="service_provider") selected
-                                        @endif value="service_provider">مقدم خدمة
+                                        @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)
                                 </option>
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
                                     تصميم
@@ -158,9 +158,7 @@
                                 <option @if($record->type =="Delivery") selected @endif value="Delivery">تسليم</option>
                                 <option @if($record->type =="Kdana") selected @endif value="Kdana">كدانة</option>
                             </select>
-
                         </div>
-
                     </div>
 
                     <div class="col-md-6">
@@ -328,6 +326,26 @@
                             </div>
                         </div>
                     @endif
+
+                   <div class="row form-group">
+                       <div class="col-md-6">
+                           <div class="mb-3">
+                               <label class="form-label" for="password">كلمة المرور</label>
+                               <input type="password" class="form-control" id="password" value="{{old('password')}}"
+                                      name="password">
+                               <div class="col-12 text-danger" id="password_error"></div>
+                           </div>
+                       </div>
+                       <div class="col-md-6">
+                           <div class="mb-3">
+                               <label class="form-label" for="password_confirmation">تأكيد كلمة المرور</label>
+                               <input type="password" class="form-control" value="{{old('password_confirmation')}}"
+                                      id="password_confirmation"
+                                      name="password_confirmation">
+                               <div class="col-12 text-danger" id="password_confirmation_error"></div>
+                           </div>
+                       </div>
+                   </div>
                     @if($record->employee_number)
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -339,24 +357,8 @@
                             </div>
                         </div>
                     @endif
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="password">كلمة المرور</label>
-                            <input type="password" class="form-control" id="password" value="{{old('password')}}"
-                                   name="password">
-                            <div class="col-12 text-danger" id="password_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="password_confirmation">تأكيد كلمة المرور</label>
-                            <input type="password" class="form-control" value="{{old('password_confirmation')}}"
-                                   id="password_confirmation"
-                                   name="password_confirmation">
-                            <div class="col-12 text-danger" id="password_confirmation_error"></div>
-                        </div>
-                    </div>
-                </div>
+                   </div>
+
 
 
 

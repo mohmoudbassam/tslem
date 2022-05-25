@@ -43,7 +43,7 @@
                             <label class="form-label" for="type">نوع الشركة</label>
                             <select class="form-select" id="type" disabled name="type">
                                 <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
-                                <option  @if($record->type =="service_provider") selected @endif value="service_provider">مقدم خدمة</option>
+                                <option  @if($record->type =="service_provider") selected @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)</option>
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب تصميم</option>
                                 <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option>
                                 <option  @if($record->type =="consulting_office") selected @endif  value="consulting_office">مكتب استشاري</option>

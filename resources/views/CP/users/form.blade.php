@@ -44,7 +44,7 @@
                             <select class="form-select" id="type" name="type">
                                 <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
                                 <option @if($record->type =="service_provider") selected
-                                        @endif value="service_provider">مقدم خدمة
+                                        @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)
                                 </option>
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
                                     تصميم

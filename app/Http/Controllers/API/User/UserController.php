@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CP\User\StoreUserRequest;
 use App\Models\BeneficiresCoulumns;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
 
-    public function postSaveUser(StoreUserRequest $request)
+    public function postRegister(StoreUserRequest $request)
     {
 
         $user = User::query()->create([
@@ -45,7 +45,7 @@ class UserController extends Controller
 
         ]);
         //$this->uploadUserFiles($user, $request);
-        
+
         return api(true, 200,'تم التسجيل بنجاح')
             ->get();
     }

@@ -33,7 +33,7 @@
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">مقدم الخدمة</label>
+                            <label for="type">مركز، مؤسسة، شركة (مطوف)</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
@@ -78,9 +78,7 @@
                             <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
 
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
-                        </div>
+                       
                     </form>
                 </div>
 
@@ -101,7 +99,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مقدم الخدمة
+                            مركز، مؤسسة، شركة (مطوف)
                         </th>
                         <th>
                             التاريخ
