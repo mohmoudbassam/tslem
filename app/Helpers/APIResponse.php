@@ -23,7 +23,7 @@ class APIResponse
         $status = ['status' => [
             'success' => $this->success,
             'code' => $this->code,
-            'message' => $this->message,
+            'message' => $this->message
         ]];
         if ($this->response) {
             $this->response = $status + $this->response;

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\APIUserAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -73,7 +74,8 @@ class Kernel extends HttpKernel
         'sharer'=>\App\Http\Middleware\CP\Sharer::class,
         'is-verified' => \App\Http\Middleware\IsVerified::class,
         'is-file-uploaded' => \App\Http\Middleware\IsFileUploaded::class,
-        
+        'APIUserAuth' => APIUserAuth::class,
+
 
     ];
 }
