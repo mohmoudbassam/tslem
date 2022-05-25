@@ -358,12 +358,7 @@
                         </div>
                     @endif
                    </div>
-
-
-
-
-
-            </form>
+              </form>
 
             <div class="text-center mt-4">
                 <button type="button" class="btn btn-lg btn-primary submit_btn">سجل الان</button>
