@@ -214,7 +214,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
-                                <input type="number" class="form-control" value="{{old('commercial_record')}}"
+                                <input type="text" class="form-control" value="{{old('commercial_record')}}"
                                        id="commercial_record" name="commercial_record"
                                        placeholder="رقم السجل التجاري">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
@@ -289,7 +289,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="phone">رقم الجوال</label>
-                                <input type="number" value="{{old('phone')}}" class="form-control" id="phone"
+                                <input type="text" value="{{old('phone')}}" class="form-control" id="phone"
                                        name="phone" minlength="12" maxlength="12"
                                        placeholder="رقم الجوال">
                                 <div class="col-12 text-danger" id="phone_error"></div>
@@ -311,7 +311,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="telephone">الهاتف</label>
-                                <input type="number" value="{{old('telephone')}}" class="form-control" id="telephone"
+                                <input type="text" value="{{old('telephone')}}" class="form-control" id="telephone"
                                        name="telephone"
                                        placeholder="الهاتف">
                                 <div class="col-12 text-danger" id="telephone_error"></div>
@@ -332,7 +332,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="employee_number">عدد الموظفين</label>
-                                <input type="number" class="form-control" value="{{old('employee_number')}}"
+                                <input type="text" class="form-control" value="{{old('employee_number')}}"
                                        id="employee_number" name="employee_number"
                                        placeholder="عدد الموظفين">
                                 <div class="col-12 text-danger" id="employee_number_error"></div>
