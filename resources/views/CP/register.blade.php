@@ -221,17 +221,17 @@
                             </div>
                         </div>
                     @endif
-{{--                    @if($record->website)--}}
-{{--                        <div class="col-md-6">--}}
-{{--                            <div class="mb-3">--}}
-{{--                                <label class="form-label" for="website">الموقع</label>--}}
-{{--                                <input type="text" class="form-control" value="{{old('website')}}" id="website"--}}
-{{--                                       name="website"--}}
-{{--                                       placeholder="الموقع">--}}
-{{--                                <div class="col-12 text-danger" id="website_error"></div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
+                    @if($record->website)
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="website">الموقع</label>
+                                <input type="text" class="form-control" value="{{old('website')}}" id="website"
+                                       name="website"
+                                       placeholder="الموقع">
+                                <div class="col-12 text-danger" id="website_error"></div>
+                            </div>
+                        </div>
+                    @endif
                     @if($record->responsible_name)
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -328,7 +328,7 @@
                             </div>
                         </div>
                     @endif
-                    <!-- @if($record->employee_number)
+                    @if($record->employee_number)
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="employee_number">عدد الموظفين</label>
@@ -338,7 +338,7 @@
                                 <div class="col-12 text-danger" id="employee_number_error"></div>
                             </div>
                         </div>
-                    @endif -->
+                    @endif
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="password">كلمة المرور</label>
@@ -407,7 +407,7 @@
 
 <script>
 
-
+    let old_date = "{{old('id_date')}}";
     $('input[type=text]').addClass('fontArial');
     $('input[type=number]').addClass('fontArial');
     $('input[type=email]').addClass('fontArial');
@@ -465,7 +465,7 @@
         window.location = '{{route('register')}}?type=' + $(this).val()
     });
 
-    flatpickr(".datepicker",{defaultDate:new Date});
+    flatpickr(".datepicker",{defaultDate: (old_date == '') ? new Date : old_date});
 </script>
 
 </body>
