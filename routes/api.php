@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'postLogin']);
 
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware('APIUserAuth')->group(function () {
         Route::get('me', [AuthController::class, 'getMe']);
         Route::post('logout', [AuthController::class, 'postLogout']);
     });
@@ -33,5 +33,8 @@ Route::prefix('auth')->group(function () {
 Route::prefix('user')->group(function () {
     Route::post('save', [UserController::class, 'postRegister']);
 });
+
+
+
 
 

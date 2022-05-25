@@ -4,8 +4,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Auth;
+
 class AuthController extends Controller
 {
 
@@ -15,18 +16,18 @@ class AuthController extends Controller
         if (!$user) {
             return api(false, 400, 'الرجاء إدخال كلمة مرور صحيحة')->get();
         }
-    
+
         if ($user->enabled == 0) {
-    
+
             return api(false, 400, 'حسابك معلق حاليا الرجاء التواصل مع الإدارة')->get();
         }
-    
+
         if (!Hash::check($request['password'], $user->password)) {
 
             return api(false, 400, 'الرجاء إدخال كلمة مرور صحيحة')->get();
         }
-    
-    
+
+
         $user = User::query()->where('name', $request->username)->first();
         $token = $user->createToken('Token Name')->accessToken;
         $user->access_token = $token->token;
