@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Resources\Centers\CenterProfileCollection;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,8 +19,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::post('test/login', function (Request $request) {
+    $user = User::query()->where('name', $request['user_name'])->first();
+    if (!$user) {
+        return api(false, 400, 'الرجاء إدخال كلمة مرور صحيحة')->get();
+    }
+
+    if ($user->enabled == 0) {
+
+        return api(false, 400, 'حسابك معلق حاليا الرجاء التواصل مع الإدارة')->get();
+    }
+
+    if (!Hash::check($request['password'], $user->password)) {
+
+        return api(false, 400, 'الرجاء إدخال كلمة مرور صحيحة')->get();
+    }
+
+
+    $user = User::query()->where('name', request('user_name'))->first();
+    $token = $user->createToken('Token Name')->accessToken;
+    $user->access_token = 'Bearer ' . $token->token;
+    $token->save();
+    return api(true, 200, __('api.success_login'))
+        ->add('user', new UserResource($user))
+        ->get();
+
 });
 
 

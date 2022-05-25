@@ -4,7 +4,7 @@ use App\Models\BeneficiresCoulumns;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use App\Helpers\APIResponse;
 function save_logs($order, $user_id, $data)
 {
     $order->logs()->create([
@@ -104,4 +104,19 @@ function is_pdf($extension)
             $type='alt';
     }
 
+}
+function api($success, $code, $message, $items = null, $errors = null)
+{
+    return new APIResponse($success, $code, $message);
+}
+
+function api_exception(Exception $e)
+{
+    return api(false, $e->getCode(), $e->getMessage())
+        ->add('error', [
+            'line' => $e->getLine(),
+            'message' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'trace' => $e->getTrace(),
+        ])->get();
 }
