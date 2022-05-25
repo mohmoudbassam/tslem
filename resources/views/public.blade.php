@@ -26,8 +26,8 @@
     <meta name="keywords" content="" />
     <meta name="author" content="" />
     <meta name="copyright" content=" " />
-    <link rel="stylesheet" href="assets/css/plugin.min.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/plugin.min.css?v={{ config('app.asset_ver') }}" />
+    <link rel="stylesheet" href="assets/css/main.css?v={{ config('app.asset_ver') }}" />
 </head>
 <body>
 <!-- start:: Page -->
