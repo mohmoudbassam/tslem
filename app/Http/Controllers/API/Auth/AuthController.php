@@ -28,10 +28,11 @@ class AuthController extends Controller
         }
 
 
-        $user = User::query()->where('name', $request->username)->first();
-        $token = $user->createToken('Token Name')->accessToken;
-        $user->access_token = $token->token;
+        $tokenResult = $user->createToken('users', ['users']);
+        $token = $tokenResult->token;
         $token->save();
+        $user->access_token = 'Bearer ' . $tokenResult->accessToken;
+
         return api(true, 200,'تم تسجيل الدخول بنجاح')
             ->add('user', new UserResource($user))
             ->get();
@@ -46,7 +47,8 @@ class AuthController extends Controller
 
     public function getMe(Request $q)
     {
-        $User = new UserResource(Auth::user());
+
+        $User = new UserResource(auth('users')->user());
 
         return api(true, 200,null)
             ->add('user', $User)

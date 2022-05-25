@@ -34,7 +34,6 @@ class AuthServiceProvider extends ServiceProvider
             'users' => 'users',
         ]);
 
-      
 
     }
 }
