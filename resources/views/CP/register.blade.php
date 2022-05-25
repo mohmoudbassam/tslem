@@ -135,7 +135,7 @@
                                         @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)
                                 </option>
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
-                                    تصميم
+                                    هندسي
                                 </option>
                                 <!-- <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option> -->
 
@@ -153,7 +153,7 @@
                             <select class="form-select" id="designer_type" name="designer_type">
 
                                 <option @if($designer_type =="designer") selected
-                                        @endif value="designer">مكتب هندسي
+                                        @endif value="designer">مكتب تصميم
                                 </option>
                                 <option @if($designer_type =="consulting") selected @endif value="consulting">اشراف
                                 </option>
