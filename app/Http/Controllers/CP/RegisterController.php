@@ -26,9 +26,9 @@ class RegisterController extends Controller
             $type = 'service_provider';
         }
         $data['record'] = BeneficiresCoulumns::query()->where('type', $type)->firstOrFail();
-         if($type=='design_office'){
-             dd('er')
-         }
+//         if($type=='design_office'){
+//             dd('er')
+//         }
 //        $record = BeneficiresCoulumns::query()->where('type', $type)->firstOrFail();
         $data['col_file'] = get_user_column_file($type);
 
