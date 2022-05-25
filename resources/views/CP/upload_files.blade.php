@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->business_license_end_date)
+                @if($record->business_license)
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -162,7 +162,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->certificate_of_zakat)
+                @if($record->saudization_certificate)
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -182,7 +182,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->certificate_of_zakat)
+                @if($record->chamber_of_commerce_certificate)
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
