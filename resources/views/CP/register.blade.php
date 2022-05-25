@@ -217,7 +217,7 @@
                                 <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
                                 <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control" value="{{old('commercial_record')}}"
                                        id="commercial_record" name="commercial_record"
-                                       placeholder="xxxxxxxxxx">
+                                       placeholder="05xxxxxxxx">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
                             </div>
                         </div>
