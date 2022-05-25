@@ -24,28 +24,35 @@
             <div class="row mt-4">
                 <div class="col-lg-12">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد او الهاتف">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
+                        <div class="col-lg-2">
+                            <label for="order_id">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
-                            <select class="form-control" id="type" name="type">
+                        <div class="col-lg-2">
+                            <label for="type">مقدم الخدمة</label>
+                            <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
-                                <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مقدم خدمة</option>
-                                <option value="design_office">مكتب تصميم</option>
-                                <option value="Sharer">جهة مشاركة</option>
-                                <option value="consulting_office">مكتب استشاري</option>
-                                <option value="contractor">مقاول</option>
-                                <option value="Delivery">تسليم</option>
-                                <option value="Kdana">كدانة</option>
+                                <?php $__currentLoopData = $services_providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services_provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($services_provider->id); ?>"><?php echo e($services_provider->company_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                             </select>
                         </div>
+                        <div class="col-lg-1">
+                            <label for="">من </label>
+                            <input type="text" class="form-control datepicker" id="from_date" placeholder="">
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="">الى </label>
+                            <input type="text" class="form-control datepicker" id="to_date" placeholder="">
+                        </div>
 
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                        </div>
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
                     </form>
                 </div>
@@ -117,9 +124,11 @@
                     url: '<?php echo e(route('design_office.list')); ?>',
                     type: 'GET',
                     "data": function (d) {
-                        d.name = $('#name').val();
+                        d.order_id = $('#order_id').val();
+                        d.service_provider_id = $('#service_provider_id').val();
                         d.type = $('#type').val();
-
+                        d.from_date = $('#from_date').val();
+                        d.to_date = $('#to_date').val();
                     }
                 },
                 language: {
@@ -130,7 +139,7 @@
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],
@@ -142,6 +151,11 @@
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false);
         });
+        $('.reset_btn').click(function (ev) {
+            $("#form_data").trigger('reset');
+            $('#items_table').DataTable().ajax.reload(null, false);
+        });
+        flatpickr(".datepicker");
 
         
 

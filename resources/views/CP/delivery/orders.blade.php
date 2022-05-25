@@ -28,23 +28,54 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد او الهاتف">
+                        <div class="col-lg-2">
+                            <label for="order_id">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
-                            <select class="form-control" id="type" name="type">
+                        <div class="col-lg-2">
+                            <label for="type">مقدم الخدمة</label>
+                            <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
-                                <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مقدم خدمة</option>
-                                <option value="design_office">مكتب تصميم</option>
-                                <option value="Sharer">جهة مشاركة</option>
-                                <option value="consulting_office">مكتب استشاري</option>
-                                <option value="contractor">مقاول</option>
-                                <option value="Delivery">تسليم</option>
-                                <option value="Kdana">كدانة</option>
+                                @foreach($services_providers as $services_provider)
+                                    <option value="{{$services_provider->id}}">{{$services_provider->company_name}}</option>
+                                @endforeach
                             </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="type">مكتب التصميم</label>
+                            <select class="form-control" id="designer_id" name="designer_id">
+                                <option value="">اختر...</option>
+                                @foreach($designers as $designer)
+                                    <option value="{{$designer->id}}">{{$designer->company_name}}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="type">المكتب الإستشاري</label>
+                            <select class="form-control" id="consulting_id" name="consulting_id">
+                                <option value="">اختر...</option>
+                                @foreach($consulting as $_consulting)
+                                    <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="type">المقاول </label>
+                            <select class="form-control" id="contractor_id" name="contractor_id">
+                                <option value="">اختر...</option>
+                                @foreach($contractors as $_contractor)
+                                    <option value="{{$_contractor->id}}">{{$_contractor->company_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                        </div>
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
 
                         <div class="col-sm-auto">
@@ -120,9 +151,11 @@
                     url: '{{route('delivery.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.name = $('#name').val();
+                        d.order_id = $('#order_id').val();
+                        d.service_provider_id = $('#service_provider_id').val();
                         d.type = $('#type').val();
-
+                        d.from_date = $('#from_date').val();
+                        d.to_date = $('#to_date').val();
                     }
                 },
                 language: {

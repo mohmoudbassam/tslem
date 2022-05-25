@@ -23,12 +23,23 @@ class DeliveryController extends Controller
 {
     public function orders()
     {
-        return view('CP.delivery.orders');
+        $data['designers'] = User::query()->where('type', 'design_office')->get();
+        $data['consulting'] = User::query()->where('type', 'consulting_office')->get();
+        $data['contractors'] = User::query()->where('type', 'contractor')->get();
+        $data['services_providers'] = User::query()->where('type', 'service_provider')->get();
+        return view('CP.delivery.orders',$data);
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $order = Order::query()->with(['service_provider', 'designer'])->select("orders.*")->where('status', '>=', '3');
+        $order = Order::query()->with(['service_provider', 'designer'])
+            ->select("orders.*")
+            ->whereOrderId($request->order_id)
+            ->whereDesignerId($request->designer_id)
+            ->whereConsultingId($request->consulting_id)
+            ->whereContractorId($request->contractor_id)
+            ->whereDate($request->from_date, $request->to_date)
+            ->where('status', '>=', '3');
 //        dd($order->get());
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
@@ -240,7 +251,7 @@ class DeliveryController extends Controller
         $order = Order::query()->findOrFail($request->id);
         $order_starer_last_notes = OrderSharer::query()
             ->where('status', OrderSharer::REJECT)->where('order_id', $request->id)
-           ->get();
+            ->get();
 
         return response()->json([
             'success' => true,

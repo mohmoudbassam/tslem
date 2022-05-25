@@ -132,7 +132,7 @@ class User extends Authenticatable
 
     public function orders()
     {
-        return $this->hasMany(Order::class, 'owner_id');
+        return $this->hasMany(Order::class, 'owner_id')->where('type', 'service_provider');
     }
     public function designer_orders()
     {
@@ -146,5 +146,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class, 'contractor_id')->where('type', 'contractor');
     }
+
 
 }

@@ -26,6 +26,7 @@ class OrdersController extends Controller
             $q->where('owner_id', auth()->user()->id);
         })->get();
 
+
         return view('CP.service_providers.orders', $data);
     }
 
@@ -63,6 +64,7 @@ class OrdersController extends Controller
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
             ->whereContractorId($request->contractor_id)
+            ->whereDate($request->from_date,$request->to_date)
             ->orderByDesc('created_at')
             ->with('designer')
             ->whereServiceProvider(auth()->user()->id)
@@ -70,9 +72,11 @@ class OrdersController extends Controller
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
-            })->addColumn('order_status', function ($order) {
+            })
+            ->addColumn('order_status', function ($order) {
                 return $order->order_status;
-            })->addColumn('actions', function ($order) {
+            })
+            ->addColumn('actions', function ($order) {
 
                 $add_designer = '';
                 $add_contractor_and_consulting_office = '';
@@ -102,7 +106,8 @@ class OrdersController extends Controller
                 }
 
                 return $element;
-            })->rawColumns(['actions'])
+            })
+            ->rawColumns(['actions'])
             ->make(true);
     }
 

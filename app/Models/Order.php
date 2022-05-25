@@ -185,6 +185,20 @@ class Order extends Model
             $q->where('contractor_id', $contractor_id);
         });
     }
+    public function scopeWhereDate($q, $from_date ,$to_date)
+    {
+
+        return $q->when($from_date&&$to_date, function ($q) use ($from_date,$to_date) {
+            $q->whereBetween('date',[$from_date,$to_date]);
+        });
+    }
+    public function scopeWhereServiceProviderId($q, $service_provider_id)
+    {
+
+        return $q->when($service_provider_id, function ($q) use ($service_provider_id) {
+            $q->where('owner_id', $service_provider_id);
+        });
+    }
 
 
 }

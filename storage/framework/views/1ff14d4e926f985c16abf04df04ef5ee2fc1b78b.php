@@ -247,6 +247,7 @@
 <!-- datepicker js -->
 <script src="assets/libs/flatpickr/flatpickr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src = "<?php echo e(url('/assets/libs/flatpickr/flatpickr.min.js')); ?>" type="text/javascript"></script>
 
 <?php echo $__env->make('CP.layout.js', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php echo $__env->yieldContent('scripts'); ?>

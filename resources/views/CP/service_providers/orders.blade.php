@@ -66,6 +66,14 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col-lg-1">
+                            <label for="">من </label>
+                            <input type="text" class="form-control datepicker" id="from_date" placeholder="">
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="">الى </label>
+                            <input type="text" class="form-control datepicker" id="to_date" placeholder="">
+                        </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
                             <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
                         </div>
@@ -153,6 +161,8 @@
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
+                        d.from_date = $('#from_date').val();
+                        d.to_date = $('#to_date').val();
 
                     }
                 },
@@ -166,10 +176,8 @@
                     {className: 'text-right', data: 'order_status', name: 'order_status'},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor'},
                     {className: 'text-right', data: 'consulting.company_name', name: 'consulting'},
-                    {className: 'text-right', data: 'created_at', name: 'created_at'},
+                    {className: 'text-right', data: 'date', name: 'date'},
                     {className: 'text-right', data: 'actions', name: 'actions'},
-
-
                 ],
 
 
@@ -183,7 +191,7 @@
             $("#form_data").trigger('reset');
             $('#items_table').DataTable().ajax.reload(null, false);
         });
-
+        flatpickr(".datepicker");
 
     </script>
 

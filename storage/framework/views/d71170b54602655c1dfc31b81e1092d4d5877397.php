@@ -390,8 +390,8 @@
 
                 return false;
             }
-
-            if ($('#add_edit_form').find(':input').length <= 42) {
+           console.log($('#add_edit_form').find(':input').length)
+            if ($('#add_edit_form').find(':input').length <= 29) {
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
