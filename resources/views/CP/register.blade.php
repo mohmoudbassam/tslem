@@ -195,20 +195,29 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="company_owner_name">اسم صاحب الشركة<span class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{old('company_owner_name')}}"
-                                       id="company_owner_name"
-                                       name="company_owner_name" placeholder="اسم صاحب الشركة">
+
+                                <select class="form-select" id="company_owner_name" name="company_owner_name">
+                                    <option value="">اختر...</option>
+                                    <option @if(old('company_owner_name')=='organization') selected
+                                            @endif value="organization">صاحب مركز
+                                    </option>
+                                    <option @if(old('company_owner_name')=='office') selected @endif value="office">مؤسسة
+                                    </option>
+                                    <option @if(old('company_owner_name')=='company') selected @endif value="office">شركة
+                                    </option>
+                                </select>
                                 <div class="col-12 text-danger" id="company_owner_name_error"></div>
+                              
                             </div>
                         </div>
                     @endif
                     @if($record->commercial_record)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_record"> رقم السجل التجاري<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
                                 <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control" value="{{old('commercial_record')}}"
                                        id="commercial_record" name="commercial_record"
-                                       placeholder="رقم السجل التجاري">
+                                       placeholder="xxxxxxxxxx">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
                             </div>
                         </div>
@@ -227,10 +236,10 @@
                     @if($record->responsible_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="responsible_name">اسم الشخص المسؤول<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="responsible_name">اسم المفوض<span class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('responsible_name')}}"
                                        id="responsible_name" name="responsible_name"
-                                       placeholder="اسم الشخص المسؤول">
+                                       placeholder="اسم المفوض">
                                 <div class="col-12 text-danger" id="responsible_name_error"></div>
                             </div>
                         </div>
@@ -241,13 +250,13 @@
                                 <label class="form-label" for="id_number">رقم الهوية<span class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('id_number')}}" id="id_number"
                                        name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
-                                       placeholder="رقم الهوية">
+                                       placeholder="xxxxxxxxxx">
                                 <div class="col-12 text-danger" id="id_number_error"></div>
                             </div>
                         </div>
                     @endif
                     @if($record->id_date && request('type') !='design_office')
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="id_date">التاريخ<span class="text-danger required-mark">*</span></label>
                                 <input  type="text" class="form-control datepicker" value="{{old('id_date')}}" id="id_date"
@@ -255,17 +264,17 @@
                                        placeholder="التاريخ">
                                 <div class="col-12 text-danger" id="id_date_error"></div>
                             </div>
-                        </div>
+                        </div> -->
                     @endif
                     @if($record->source && request('type') !='design_office')
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="source">المصدر<span class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('source')}}" id="source"
                                        name="source" placeholder="المصدر">
                                 <div class="col-12 text-danger" id="id_date_error"></div>
                             </div>
-                        </div>
+                        </div> -->
                     @endif
                     @if($record->email)
                         <div class="col-md-6">
@@ -424,9 +433,21 @@
             }, "password_confirmation": {
                 required: true,
             },
+           
             @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)
             "{{"$rule"}}": {
                 required: true,
+            },
+            
+            "id_number" : {
+                minlength: 10,
+                maxlength:10,
+                required: true
+            },
+            "commercial_record" : {
+                minlength: 10,
+                maxlength:10,
+                required: false
             },
             @endforeach
         },

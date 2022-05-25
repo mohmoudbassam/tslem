@@ -86,7 +86,7 @@ class RegisterController extends Controller
 
         ]);
         //$this->uploadUserFiles($user, $request);
-        return back()->with(['success' => 'تمت عمليه التسجيل بنجاح']);
+        return redirect()->route('login_page')->with(['success' => 'تمت عمليه التسجيل بنجاح']);
     }
 
     private function uploadUserFiles($user, $file)
