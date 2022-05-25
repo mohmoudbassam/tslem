@@ -228,7 +228,7 @@
 <footer class="bg-light">
     <div class="container row" style="margin-left: auto !important; margin-right: auto !important">
         <div class="col-md-6 p-0 align-self-center">
-            <h6 class="second-text">جميع الحقوق محفوظة لدى تسليم © 2021</h6>
+            <h6 class="second-text">جميع الحقوق محفوظة لدى تسليم © {{ \Alkoumi\LaravelHijriDate\Hijri::Date('Y') }}</h6>
         </div>
         <div class="col-md-6 d-flex justify-content-between pt-2">
             <img src="./assets/img/logo1.png" />

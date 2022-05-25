@@ -1126,3 +1126,7 @@ button {
   }
 }
 /*# sourceMappingURL=main.css.map */
+
+.swiper-action i {
+  font-size: 44px !important;
+}
