@@ -47,7 +47,7 @@
                                         @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)
                                 </option>
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
-                                    تصميم
+                                    هندسي
                                 </option>
                                 <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option>
                                 <option @if($record->type =="consulting_office") selected

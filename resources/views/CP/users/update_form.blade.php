@@ -44,7 +44,7 @@
                             <select class="form-select" id="type" disabled name="type">
                                 <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
                                 <option  @if($record->type =="service_provider") selected @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)</option>
-                                <option @if($record->type =="design_office") selected @endif value="design_office">مكتب تصميم</option>
+                                <option @if($record->type =="design_office") selected @endif value="design_office">مكتب هندسي</option>
                                 <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option>
                                 <option  @if($record->type =="consulting_office") selected @endif  value="consulting_office">مكتب استشاري</option>
                                 <option @if($record->type =="contractor") selected @endif  value="contractor">مقاول</option>
@@ -75,7 +75,7 @@
                     @if($record->company_type)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="company_type">نوع الشركة</label>
+                                <label class="form-label" for="company_type">نوع المكتب</label>
                                 <select class="form-select"  id="company_type" name="company_type">
                                     <option  value="">اختر...</option>
                                     <option @if($user->company_type=='organization') selected @endif value="organization">مؤسسة</option>
@@ -87,7 +87,7 @@
                     @if($record->company_owner_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="company_owner_name">اسم صاحب الشركة</label>
+                                <label class="form-label" for="company_owner_name">اسم صاحب المكتب</label>
                                 <input type="text" class="form-control" value="{{$user->company_owner_name}}" id="company_owner_name"
                                        name="company_owner_name" placeholder="اسم صاحب الشركة">
                                 <div class="col-12 text-danger" id="company_owner_name_error"></div>
@@ -104,26 +104,26 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->website)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="website">الموقع</label>
-                                <input type="text" class="form-control" value="{{$user->website}}" id="website" name="website"
-                                       placeholder="الموقع">
-                                <div class="col-12 text-danger" id="website_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                    @if($record->responsible_name)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="responsible_name">اسم الشخص المسؤول</label>
-                                <input type="text" class="form-control" value="{{$user->responsible_name}}" id="responsible_name" name="responsible_name"
-                                       placeholder="اسم الشخص المسؤول">
-                                <div class="col-12 text-danger" id="responsible_name_error"></div>
-                            </div>
-                        </div>
-                    @endif
+{{--                    @if($record->website)--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <label class="form-label" for="website">الموقع</label>--}}
+{{--                                <input type="text" class="form-control" value="{{$user->website}}" id="website" name="website"--}}
+{{--                                       placeholder="الموقع">--}}
+{{--                                <div class="col-12 text-danger" id="website_error"></div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+{{--                    @if($record->responsible_name)--}}
+{{--                        <div class="col-md-6">--}}
+{{--                            <div class="mb-3">--}}
+{{--                                <label class="form-label" for="responsible_name">اسم الشخص المسؤول</label>--}}
+{{--                                <input type="text" class="form-control" value="{{$user->responsible_name}}" id="responsible_name" name="responsible_name"--}}
+{{--                                       placeholder="اسم الشخص المسؤول">--}}
+{{--                                <div class="col-12 text-danger" id="responsible_name_error"></div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
                     @if($record->id_number)
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -144,7 +144,8 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->source)
+
+                    @if($record->source )
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="source">المصدر</label>

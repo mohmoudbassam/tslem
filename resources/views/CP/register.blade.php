@@ -197,7 +197,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->website)
+                    @if($record->website && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="website">الموقع<span class="text-danger required-mark">*</span></label>
@@ -230,7 +230,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->id_date)
+                    @if($record->id_date && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="id_date">التاريخ<span class="text-danger required-mark">*</span></label>
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->source)
+                    @if($record->source && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="source">المصدر<span class="text-danger required-mark">*</span></label>
@@ -272,7 +272,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->address)
+                    @if($record->address && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="address">العنوان الوطني<span class="text-danger required-mark">*</span></label>
@@ -331,7 +331,7 @@
                            </div>
                        </div>
                    </div>
-                    @if($record->employee_number)
+                    @if($record->employee_number && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="employee_number">عدد الموظفين<span class="text-danger required-mark">*</span></label>
