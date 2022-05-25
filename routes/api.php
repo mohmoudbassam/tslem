@@ -3,6 +3,7 @@
 use App\Http\Resources\Centers\CenterProfileCollection;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\User\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,10 @@ Route::prefix('auth')->group(function () {
         Route::get('me', [AuthController::class, 'getMe']);
         Route::post('logout', [AuthController::class, 'postLogout']);
     });
+});
+
+Route::prefix('user')->group(function () {
+    Route::post('save', [UserController::class, 'postRegister']);
 });
 
 
