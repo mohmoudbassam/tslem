@@ -18,5 +18,4 @@ class NotificationController extends Controller
         return view('CP.notifications');
         
      }
-    
 }
