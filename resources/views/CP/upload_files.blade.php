@@ -234,7 +234,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="memorandum_of_association">شهادة عقد التأسيس (PDF)</label>
+                            <label class="form-label" for="memorandum_of_association"> عقد التأسيس (PDF)</label>
                             <input type="file" class="form-control" id="memorandum_of_association"
                                 name="memorandum_of_association">
                             <div class="col-12 text-danger" id="memorandum_of_association_error"></div>

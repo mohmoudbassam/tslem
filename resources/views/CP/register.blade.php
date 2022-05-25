@@ -328,7 +328,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->employee_number)
+                    <!-- @if($record->employee_number)
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="employee_number">عدد الموظفين</label>
@@ -338,7 +338,7 @@
                                 <div class="col-12 text-danger" id="employee_number_error"></div>
                             </div>
                         </div>
-                    @endif
+                    @endif -->
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="password">كلمة المرور</label>
