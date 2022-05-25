@@ -39,7 +39,7 @@ Route::post('test/login', function (Request $request) {
 
 
     $user = User::query()->where('name', request('user_name'))->first();
-    $token = $user->createToken('Token Name')->accessToken;
+    $token = $user->createToken('Token Name',['centers'])->accessToken;
     $user->access_token = 'Bearer ' . $token->token;
     $token->save();
     return api(true, 200, __('api.success_login'))
