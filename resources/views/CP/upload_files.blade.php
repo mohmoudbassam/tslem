@@ -120,68 +120,68 @@
                     </div>
                 </div>
                 @endif
-{{--                @if($record->social_insurance_certificate)--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="social_insurance_certificate">رخصة التأمينات--}}
-{{--                                الإجتماعية (PDF)</label>--}}
-{{--                            <input type="file" class="form-control" id="social_insurance_certificate"--}}
-{{--                                name="social_insurance_certificate">--}}
-{{--                            <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="social_insurance_certificate_end_date">تاريخ--}}
-{{--                                الانتهاء</label>--}}
-{{--                            <input type="text" class="form-control datepicker"--}}
-{{--                                id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">--}}
-{{--                            <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                @endif--}}
-{{--                @if($record->certificate_of_zakat)--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>--}}
-{{--                            <input type="file" class="form-control" id="certificate_of_zakat"--}}
-{{--                                name="certificate_of_zakat">--}}
-{{--                            <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>--}}
-{{--                            <input type="text" class="form-control datepicker" id="date_of_zakat_end_date"--}}
-{{--                                name="date_of_zakat_end_date">--}}
-{{--                            <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                @endif--}}
-{{--                @if($record->certificate_of_zakat)--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>--}}
-{{--                            <input type="file" class="form-control" id="saudization_certificate"--}}
-{{--                                name="saudization_certificate">--}}
-{{--                            <div class="col-12 text-danger" id="saudization_certificate_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>--}}
-{{--                            <input type="text" class="form-control datepicker" id="saudization_certificate_end_date"--}}
-{{--                                name="saudization_certificate_end_date">--}}
-{{--                            <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                @endif--}}
+                @if($record->social_insurance_certificate)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
+                                الإجتماعية (PDF)</label>
+                            <input type="file" class="form-control" id="social_insurance_certificate"
+                                name="social_insurance_certificate">
+                            <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
+                                الانتهاء</label>
+                            <input type="text" class="form-control datepicker"
+                                id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">
+                            <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($record->certificate_of_zakat)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>
+                            <input type="file" class="form-control" id="certificate_of_zakat"
+                                name="certificate_of_zakat">
+                            <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
+                            <input type="text" class="form-control datepicker" id="date_of_zakat_end_date"
+                                name="date_of_zakat_end_date">
+                            <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($record->certificate_of_zakat)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
+                            <input type="file" class="form-control" id="saudization_certificate"
+                                name="saudization_certificate">
+                            <div class="col-12 text-danger" id="saudization_certificate_error"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
+                            <input type="text" class="form-control datepicker" id="saudization_certificate_end_date"
+                                name="saudization_certificate_end_date">
+                            <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @if($record->certificate_of_zakat)
                 <div class="row">
                     <div class="col-md-6">
@@ -205,31 +205,31 @@
                     </div>
                 </div>
                 @endif
-{{--                @if($record->tax_registration_certificate)--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة--}}
-{{--                                (PDF)</label>--}}
-{{--                            <input type="file" class="form-control" id="tax_registration_certificate"--}}
-{{--                                name="tax_registration_certificate">--}}
-{{--                            <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                @endif--}}
-{{--                @if($record->wage_protection_certificate)--}}
-{{--                <div class="row">--}}
-{{--                    <div class="col-md-6">--}}
-{{--                        <div class="mb-3">--}}
-{{--                            <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>--}}
-{{--                            <input type="file" class="form-control" id="wage_protection_certificate"--}}
-{{--                                name="wage_protection_certificate">--}}
-{{--                            <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                @endif--}}
+                @if($record->tax_registration_certificate)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة
+                                (PDF)</label>
+                            <input type="file" class="form-control" id="tax_registration_certificate"
+                                name="tax_registration_certificate">
+                            <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($record->wage_protection_certificate)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
+                            <input type="file" class="form-control" id="wage_protection_certificate"
+                                name="wage_protection_certificate">
+                            <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 @if($record->memorandum_of_association)
                 <div class="row">
                     <div class="col-md-6">
