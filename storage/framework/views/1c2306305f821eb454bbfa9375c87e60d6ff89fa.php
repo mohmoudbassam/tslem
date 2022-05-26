@@ -77,7 +77,7 @@
 <div class="auth-page">
     <div class="container-fluid p-0">
         <div class="row g-0">
-        
+
             <!-- end col -->
             <div class="col-24" style="position: relative;">
                 <div class="row login-page-form-container">
@@ -153,7 +153,7 @@
 
                             </div>
                             <div class="mt-4 mt-md-5 text-center">
-                                <p class="mb-0">© <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?> منصة تسليم </p>
+                                <p class="mb-0">© <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?> البوابة الرقمية تسليم </p>
                             </div>
                         </div>
                     </div>

@@ -90,7 +90,14 @@ class VerificationController extends Controller{
             'chamber_of_commerce_certificate_end_date' => request('chamber_of_commerce_certificate_end_date'),
             'is_file_uploaded' => 1
         ]);
+
         $this->uploadUserFiles(auth()->user(), $request);
+        if(auth()->user()->type == 'contractor'){
+            $path = Storage::disk('public')->put('user_files', $request->cv_file);
+            auth()->user()->update([
+               'cv_file' => $path
+            ]);
+        }
         return back()->with(['success' => 'تم رفع الملفات بنجاح']);
     }
 

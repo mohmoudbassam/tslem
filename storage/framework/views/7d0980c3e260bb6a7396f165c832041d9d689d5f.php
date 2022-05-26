@@ -30,7 +30,7 @@
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">مقدم الخدمة</label>
+                            <label for="type">مركز ، مؤسسة ، شركة (مطوف)</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $services_providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services_provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -74,7 +74,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مقدم الخدمة
+                            مركز ، مؤسسة ، شركة (مطوف)
                         </th>
                         <th>
                             التاريخ

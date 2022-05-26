@@ -170,7 +170,7 @@ class OrdersController extends Controller
             'contractor_id' => $request->contractor_id,
             'consulting_office_id' => $request->consulting_office_id
         ]);
-        save_logs($order, auth()->user()->id, "تم اخيار المكتب الاستشاري ومكتب المقاولات");
+        save_logs($order, auth()->user()->id, "تم اخيار المشرف ومكتب المقاولات");
 
         optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب  ', auth()->user()->id));
         optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب   ', auth()->user()->id));

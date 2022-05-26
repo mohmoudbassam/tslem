@@ -15,7 +15,8 @@ function save_logs($order, $user_id, $data)
 
 function get_user_column_file($type)
 {
-    $benef = BeneficiresCoulumns::query()->select('commercial_file',
+    $benef = BeneficiresCoulumns::query()->select(
+        'commercial_file',
         'rating_certificate',
         'address_file',
         'profession_license',
@@ -26,7 +27,12 @@ function get_user_column_file($type)
         'chamber_of_commerce_certificate',
         'tax_registration_certificate',
         'wage_protection_certificate',
-        'memorandum_of_association')
+        'memorandum_of_association',
+        'company_owner_id_photo',
+        'commissioner_id_photo',
+        'commissioner_photo',
+        
+        )
         ->where('type', $type)->first();
     $column = $benef->getAttributes();
     return array_filter($column);

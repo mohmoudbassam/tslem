@@ -65,14 +65,13 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="designer_id">مكتب التصميم</label>
+                        <label class="form-label" for="designer_id">المكتب الهندسي</label>
                         <select class="form-select" id="designer_id" name="designer_id">
                             <option  value="">اختر...</option>
                             @foreach($designers as $designer)
                                 <option  value="{{$designer->id}}">{{$designer->company_name}}</option>
                                 @endforeach
                             <div class="col-12 text-danger" id="designer_id_error"></div>
-
                         </select>
                     </div>
                 </div>

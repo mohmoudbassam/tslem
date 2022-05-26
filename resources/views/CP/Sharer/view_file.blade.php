@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <p class="details_p"><span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->name}}</p>
+                    <p class="details_p"><span class="bold"> اسم المكتب الهندسي :  </span>{{$order->designer->name}}</p>
                 </div>
 
                 @if(auth()->user()->type == \App\Models\User::SHARER_TYPE )

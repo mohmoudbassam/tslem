@@ -156,7 +156,6 @@
                                 </div>
                                 <div class="widget__item-content">
                                     <h3 class="widget__item-title">متابعة مستمرة</h3>
-
                                 </div>
                             </div>
                         </div>
