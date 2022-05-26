@@ -242,10 +242,23 @@
                     </div>
                 </div>
                 @endif
+                    @if($record->type == 'contractor')
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="cv_file">الاعمال السابقة (PDF)</label>
+                                    <input type="file" class="form-control" id="cv_file"
+                                           name="cv_file">
+                                    <div class="col-12 text-danger" id="cv_file_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                 <div class="mt-4">
                     <button type="button" class="btn btn-lg btn-primary submit_btn">رفع الملفات</button>
                 </div>
+            </div>
         </form>
 
         @if ($errors->any())
@@ -259,6 +272,7 @@
             @endif
 
     </div>
+
 
 
     @endsection
@@ -281,6 +295,9 @@
     file_input_register('#{{$_col}}');
     @endforeach
 
+    @if($record->type == 'contractor')
+    file_input_register('#cv_file');
+    @endif
     $('#add_edit_form').validate({
         lang: 'ar',
         rules: {
@@ -292,6 +309,12 @@
             }, "password_confirmation": {
                 required: true,
             },
+            @if($record->type == 'contractor')
+            "cv_file": {
+                required: true,
+            },
+                @endif
+
 
             @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)
             "{{"$rule"}}": {
@@ -333,6 +356,6 @@
     flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '') ? new Date : saudization_certificate_end_date});
     flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') ? new Date : chamber_of_commerce_certificate_end_date});
 
-    
+
     </script>
     @endsection

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\CP;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CP\User\StoreUserRequest;
 use App\Models\BeneficiresCoulumns;
+use App\Models\ContractorSpecialties;
+use App\Models\ContractorSpecialtiesPivot;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,7 +43,7 @@ class RegisterController extends Controller
         } else {
             $data['has_designer_type'] = false;
         }
-
+        $data['contractor_types']=ContractorSpecialties::all();
         $data['col_file'] = get_user_column_file($type);
 
         return view('CP.register', $data);
@@ -85,6 +87,15 @@ class RegisterController extends Controller
             'chamber_of_commerce_certificate_end_date' => request('chamber_of_commerce_certificate_end_date'),
 
         ]);
+        //dd(request('contractor_type'),is_array(request('contractor_type')),!empty(request('contractor_type')));
+        if(request('contractor_type') && is_array(request('contractor_type')) && !empty(request('contractor_type'))){
+            foreach($request->contractor_type as $type){
+                ContractorSpecialtiesPivot::query()->create([
+                       'user_id'=>$user->id,
+                       'specialties_id'=>$type
+                ]);
+            }
+        }
         //$this->uploadUserFiles($user, $request);
         return redirect()->route('login_page')->with(['success' => 'تمت عمليه التسجيل بنجاح']);
     }

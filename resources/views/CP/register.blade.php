@@ -32,7 +32,7 @@
     <link href="{{url("/")}}/assets/libs/alertifyjs/build/css/themes/default.min.css" rel="stylesheet" type="text/css"/>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
-
+    <link href="{{url("/")}}/assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300&family=Tajawal:wght@200;400&display=swap"
@@ -166,25 +166,40 @@
                                         class="text-danger required-mark">*</span></label>
                                 <select class="form-select" id="designer_type" name="designer_type">
 
-                                    <option @if($designer_type =="designer") selected
-                                            @endif value="designer">مكتب تصميم
+                                    <option
+                                             value="designer">مكتب تصميم
                                     </option>
-                                    <option @if($designer_type =="consulting") selected @endif value="consulting">اشراف
+                                    <option   value="consulting">اشراف
                                     </option>
-                                    <option @if($designer_type =="fire") selected
-                                            @endif  value="fire">الحماية والوقاية من الحريق
+                                    <option
+                                             value="fire">الحماية والوقاية من الحريق
                                     </option>
                                 </select>
                             </div>
                         </div>
                     @endif
+
+
+                    @if($record->type=='contractor')
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="contractor_type">التخصصات<span
+                                        class="text-danger required-mark">*</span></label>
+                                <select class="form-control" multiple id="contractor_type" name="contractor_type[]">
+                                    @foreach($contractor_types as $type)
+                                    <option   value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endif
                     @if($record->company_name)
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="company_name">اسم الشركة / المؤسسة<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" id="company_name"
-                                       value="{{old('company_name')}}" name="company_name"
+                                       value="{{old('company_name')}}"  name="company_name"
                                        placeholder="اسم الشركة / المؤسسة">
                                 <div class="col-12 text-danger" id="company_name_error"></div>
                             </div>
@@ -452,11 +467,15 @@
 <script src="{{url("/")}}/assets/bootstrap-fileinput/js/fileinput.min.js" type="text/javascript"></script>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/fileinput-theme.js" type="text/javascript"></script>
 <script src="{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+<script src="{{url('/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}" type="text/javascript"></script>
 
 @include('CP.layout.js')
 
 
 <script>
+    $(function(){
+        new Choices("#contractor_type", {removeItemButton: !0})
+    });
     let old_date = "{{old('id_date')}}";
     $('input[type=text]').addClass('fontArial');
     $('input[type=number]').addClass('fontArial');
@@ -517,6 +536,9 @@
     {{--    window.location = '{{route('register')}}/' + '{{request('type')}}' +'/'+'{{request('designer_type')}}'+$(this).val()--}}
     {{--});--}}
     flatpickr(".datepicker", {defaultDate: (old_date == '') ? new Date : old_date});
+
+
+
 </script>
 
 </body>

@@ -49,7 +49,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
     Route::get('upload_files', [VerificationController::class, 'upload_files'])->name('upload_files');
     Route::post('upload_files', [VerificationController::class, 'save_upload_files'])->name('upload_files_action');
-
 });
 
 

@@ -77,6 +77,7 @@ class CreateUsersTable extends Migration
             $table->text('tax_registration_certificate')->nullable();///شهادة تسجيل الضريبة
             $table->text('wage_protection_certificate')->nullable();///شهادة حماية الضريبة
             $table->text('memorandum_of_association')->nullable();///عقد التاسيس
+            $table->text('cv_file')->nullable();///الاعمال السابقة للمقاول
             ///
             ///
             $table->text('reject_reason')->nullable();

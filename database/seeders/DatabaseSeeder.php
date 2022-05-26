@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ArchitectServiceSeeder::class,
             ElectricalServiceSeeder::class,
             ConstructionServiceSeeder::class,
-            MechanicalServiceSeeder::class
+            MechanicalServiceSeeder::class,
+            ContractorSpecialtiesSeeder::class,
         ]);
         \App\Models\User::query()->create([
             'name' => 'admin',
