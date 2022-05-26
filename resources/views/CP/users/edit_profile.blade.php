@@ -521,6 +521,17 @@
                 @endif
                 @endforeach
             },
+
+            "id_number": {
+                minlength: 10,
+                maxlength: 10,
+                required: true
+            },
+            "commercial_record": {
+                minlength: 10,
+                maxlength: 10,
+                required: false
+            },
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
             focusInvalid: true,
