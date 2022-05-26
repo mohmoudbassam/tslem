@@ -3,7 +3,12 @@
     الملف الشخصي
 @endsection
 @section('content')
-
+<link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
+<style>
+.file-preview {
+    display: none;
+}
+</style>
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -111,7 +116,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label" for="id_date">التاريخ</label>
-                                    <input type="date" class="form-control" value="{{$user->id_date}}" id="id_date"
+                                    <input type="date" class="form-control id_date" value="{{$user->id_date}}" id="id_date"
                                            name="id_date"
                                            placeholder="التاريخ">
                                     <div class="col-12 text-danger" id="id_date_error"></div>
@@ -208,9 +213,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label" for="commercial_file_end_date">تاريخ أنتهاء السجل
+                                        <label class="form-label" for="commercial_file_end_date">تاريخ انتهاء السجل
                                             التجاري</label>
-                                        <input type="date" class="form-control"
+                                        <input type="date" class="form-control commercial_file_end_date"
                                                value="{{$user->commercial_file_end_date}}"
                                                id="commercial_end_date" name="commercial_file_end_date">
                                         <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
@@ -232,7 +237,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="rating_certificate_end_date">تاريخ
                                             الانتهاء</label>
-                                        <input type="date" class="form-control" id="rating_certificate_end_date"
+                                        <input type="date" class="form-control rating_certificate_end_date" id="rating_certificate_end_date"
                                                name="rating_certificate_end_date"
                                                value="{{$user->rating_certificate_end_date}}"
                                         >
@@ -266,7 +271,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="profession_license_end_date">تاريخ
                                             الانتهاء</label>
-                                        <input type="date" class="form-control" id="profession_license_end_date"
+                                        <input type="date" class="form-control profession_license_end_date" id="profession_license_end_date"
                                                name="profession_license_end_date"
                                                value="{{$user->profession_license_end_date}}"
                                         >
@@ -288,7 +293,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                                        <input type="date" class="form-control" id="business_license_end_date"
+                                        <input type="date" class="form-control business_license_end_date" id="business_license_end_date"
                                                name="business_license_end_date"
                                                value="{{$user->business_license_end_date}}"
                                         >
@@ -312,7 +317,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
                                             الانتهاء</label>
-                                        <input type="date" class="form-control"
+                                        <input type="date" class="form-control social_insurance_certificate_end_date"
                                                id="social_insurance_certificate_end_date"
                                                name="social_insurance_certificate_end_date"
                                                value="{{$user->business_license_end_date}}"
@@ -336,7 +341,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                                        <input type="date" class="form-control" id="date_of_zakat_end_date"
+                                        <input type="date" class="form-control date_of_zakat_end_date" id="date_of_zakat_end_date"
                                                name="date_of_zakat_end_date"
                                                value="{{$user->business_license_end_date}}"
                                         >
@@ -359,7 +364,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="saudization_certificate_end_date">تاريخ
                                             الانتهاء</label>
-                                        <input type="date" class="form-control" id="saudization_certificate_end_date"
+                                        <input type="date" class="form-control saudization_certificate_end_date" id="saudization_certificate_end_date"
                                                name="saudization_certificate_end_date"
                                                value="{{$user->saudization_certificate_end_date}}"
                                         >
@@ -385,7 +390,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
                                             الانتهاء</label>
-                                        <input type="date" class="form-control"
+                                        <input type="date" class="form-control chamber_of_commerce_certificate_end_date"
                                                id="chamber_of_commerce_certificate_end_date"
                                                name="chamber_of_commerce_certificate_end_date"
                                                value="{{$user->saudization_certificate_end_date}}"
@@ -435,6 +440,45 @@
                                 </div>
                             </div>
                         @endif
+
+                        @if($record->company_owner_id_photo)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="company_owner_id_photo"> صورة هوية صاحب الشركة  (PDF)</label>
+                            <input type="file" class="form-control" id="company_owner_id_photo"
+                                name="company_owner_id_photo">
+                            <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if($record->commissioner_id_photo)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="commissioner_id_photo"> صورة هوية  المفوض (PDF)</label>
+                            <input type="file" class="form-control" id="commissioner_id_photo"
+                                name="commissioner_id_photo">
+                            <div class="col-12 text-danger" id="commissioner_id_photo_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if($record->commissioner_photo)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="commissioner_photo"> صورة التفويض (PDF)</label>
+                            <input type="file" class="form-control" id="commissioner_photo"
+                                name="commissioner_photo">
+                            <div class="col-12 text-danger" id="commissioner_photo_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
                         <div class="d-flex flex-wrap gap-3">
                             <button type="submit" class="btn btn-lg btn-primary submit_btn">تعديل</button>
                         </div>
@@ -467,6 +511,18 @@
 @section('scripts')
 
     <script>
+    let id_date = "{{old('id_date')}}";
+    let commercial_file_end_date = "{{old('commercial_file_end_date')}}";
+    let business_license_end_date = "{{old('business_license_end_date')}}";
+
+    
+    let rating_certificate_end_date = "{{old('rating_certificate_end_date')}}";
+    let profession_license_end_date = "{{old('profession_license_end_date')}}";
+    
+    let social_insurance_certificate_end_date = "{{old('social_insurance_certificate_end_date')}}";
+    let date_of_zakat_end_date = "{{old('date_of_zakat_end_date')}}";
+    let saudization_certificate_end_date = "{{old('saudization_certificate_end_date')}}";
+    let chamber_of_commerce_certificate_end_date = "{{old('chamber_of_commerce_certificate_end_date')}}";
 
         @foreach(array_keys($col_file) as $_col)
         @if($user->{$_col})
@@ -514,5 +570,16 @@
             $('#add_edit_form').submit()
 
         });
+        
+        flatpickr(".id_date",{defaultDate: (id_date == '') ? new Date : id_date});
+        flatpickr(".commercial_file_end_date",{defaultDate: (commercial_file_end_date == '') ? new Date : commercial_file_end_date});
+        flatpickr(".rating_certificate_end_date",{defaultDate: (rating_certificate_end_date == '') ? new Date : rating_certificate_end_date});
+        flatpickr(".profession_license_end_date",{defaultDate: (profession_license_end_date == '') ? new Date : profession_license_end_date});
+        flatpickr(".business_license_end_date",{defaultDate: (business_license_end_date == '') ? new Date : business_license_end_date});
+        flatpickr(".social_insurance_certificate_end_date",{defaultDate: (social_insurance_certificate_end_date == '') ? new Date : social_insurance_certificate_end_date});
+        flatpickr(".date_of_zakat_end_date",{defaultDate: (date_of_zakat_end_date == '') ? new Date : date_of_zakat_end_date});
+        flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '') ? new Date : saudization_certificate_end_date});
+        flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') ? new Date : chamber_of_commerce_certificate_end_date});
+
     </script>
 @endsection
