@@ -4,12 +4,9 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href="#" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24">
-                                </span>
-                    <span class="logo-lg">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>
-                                </span>
+
+                                <span class="logo-txt ">البوابة الرقمية تسليم</span>
+
                 </a>
 
                 <a href="#" class="logo logo-light">
@@ -17,7 +14,7 @@
                                     <img src="assets/images/logo-sm.svg" alt="" height="24">
                                 </span>
                     <span class="logo-lg">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>
+                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">البوابة الرقمية تسليم</span>
                                 </span>
                 </a>
             </div>
@@ -116,7 +113,7 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                     <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                        <a class="btn btn-sm btn-link font-size-14 text-center" href="<?php echo e(route('notifications')); ?>">
                             <i class="mdi mdi-arrow-right-circle me-1"></i> <span>إستعراض المزيد</span>
                         </a>
                     </div>

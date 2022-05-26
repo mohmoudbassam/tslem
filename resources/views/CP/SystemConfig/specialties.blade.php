@@ -1,6 +1,6 @@
 @extends('CP.master')
 @section('title')
-    الخدمات
+    التخصصات
 @endsection
 @section('content')
 
@@ -8,11 +8,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('service.add')}}"><i class="dripicons-user p-2"></i>إضافة خدمة</a></h4>
+                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('specialties.add')}}"><i class="dripicons-user p-2"></i>إضافة تخصص</a></h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">إدارة الخدمات</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">إدارة التخصصات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
@@ -29,15 +29,6 @@
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="specificSizeInputName">الاسم </label>
                             <input type="text" class="form-control" id="name" placeholder="الاسم">
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">التخصص </label>
-                            <select name="specialties_id" id="specialties_id" class="form-control">
-                                <option value="">اختر ...</option>
-                                @foreach($specialties as $s)
-                                    <option @if($s->id == request()->specialties_id) selected @endif value="{{ $s->id }}">{{ $s->name_ar }}</option>
-                                @endforeach
-                            </select>
                         </div>
 {{--                        <div class="col-lg-4">--}}
 {{--                            <label class="visually-hidden" for="type"></label>--}}
@@ -67,9 +58,6 @@
                            id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
-                        <th>
-                            اسم الخدمة
-                        </th>
                         <th>
                             اسم التخصص
                         </th>
@@ -106,11 +94,11 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('service.list')}}',
+                    url: '{{route('specialties.list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
-                        d.specialties_id = $('#specialties_id').val();
+                        d.parnet_id = $('#type').val();
 
                     }
                 },
@@ -118,8 +106,7 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'specialties.name_ar', name: 'specialties.name_ar'},
+                    {className: 'text-center', data: 'name_ar', name: 'name_ar'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
                 ],
 

@@ -11,6 +11,8 @@ class Specialties extends Model
 
     protected $table = 'specialties';
 
+    protected $guarded = [];
+
     public function service(){
         return $this->hasMany(Service::class,'specialties_id');
     }
