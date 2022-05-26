@@ -35,23 +35,28 @@
 
 
     <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300&family=Tajawal:wght@200;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300&family=Tajawal:wght@200;400&display=swap"
+          rel="stylesheet">
 
     <style>
         @font-face {
             font-family: GE-Dinar;
             src: url('{{ url('/assets/fonts/ArbFONTS-GE-Dinar-One-Medium.otf')  }}');
         }
+
         :root {
             --main-color: #122b76;
             --second-color: #c0946f;
         }
+
         body {
             font-family: GE-Dinar !important;
         }
+
         [dir=rtl] input {
             text-align: right;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -62,30 +67,37 @@
             width: 100%;
             background: rgba(255, 255, 255, .8) url('http://i.stack.imgur.com/FhHRx.gif') 50% 50% no-repeat;
         }
+
         /* When the body has the loading class, we turn
            the scrollbar off with overflow:hidden */
         body.loading .modal {
             overflow: hidden;
         }
+
         /* Anytime the body has the loading class, our
            modal element will be visible */
         body.loading .modal {
             display: block;
         }
+
         body {
             background-image: url("{{ url('/assets/img/back form.png') }}");
         }
+
         .text-second {
             color: var(--second-color) !important;
         }
+
         .text-main {
             color: var(--main-color) !important;
         }
+
         .file-preview {
             display: none;
         }
-        .fontArial{
-            font-family:Tajawal;
+
+        .fontArial {
+            font-family: Tajawal;
         }
     </style>
 </head>
@@ -101,12 +113,12 @@
     <div class="card shadow">
         <div class="card-header">
             <div class="d-flex mt-4 justify-content-center">
-            <div class="registeration-header">
+                <div class="registeration-header">
                     <img src="{{ url('/assets/img/triangle-registeration.png') }}" alt="">
                     <h4 class="text-main">
                         التسجيل في المنصة
                     </h4>
-            </div>
+                </div>
 
 
             </div>
@@ -128,7 +140,8 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="type">نوع المستخدم<span class="text-danger required-mark">*</span></label>
+                            <label class="form-label" for="type">نوع المستخدم<span
+                                    class="text-danger required-mark">*</span></label>
                             <select class="form-select" id="type" name="type">
 
                                 <option @if($record->type =="service_provider") selected
@@ -137,7 +150,7 @@
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
                                     هندسي
                                 </option>
-                                <!-- <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option> -->
+                            <!-- <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option> -->
 
                                 <option @if($record->type =="contractor") selected @endif  value="contractor">مقاول
                                 </option>
@@ -147,27 +160,29 @@
                         </div>
                     </div>
                     @if($has_designer_type)
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="designer_type">التخصص<span class="text-danger required-mark">*</span></label>
-                            <select class="form-select" id="designer_type" name="designer_type">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="designer_type">التخصص<span
+                                        class="text-danger required-mark">*</span></label>
+                                <select class="form-select" id="designer_type" name="designer_type">
 
-                                <option @if($designer_type =="designer") selected
-                                        @endif value="designer">مكتب تصميم
-                                </option>
-                                <option @if($designer_type =="consulting") selected @endif value="consulting">اشراف
-                                </option>
-                                <option @if($designer_type =="fire") selected
-                                        @endif  value="fire">الحماية والوقاية من الحريق
-                                </option>
-                            </select>
+                                    <option @if($designer_type =="designer") selected
+                                            @endif value="designer">مكتب تصميم
+                                    </option>
+                                    <option @if($designer_type =="consulting") selected @endif value="consulting">اشراف
+                                    </option>
+                                    <option @if($designer_type =="fire") selected
+                                            @endif  value="fire">الحماية والوقاية من الحريق
+                                    </option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
                     @endif
                     @if($record->company_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="company_name">اسم الشركة / المؤسسة<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="company_name">اسم الشركة / المؤسسة<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" id="company_name"
                                        value="{{old('company_name')}}" name="company_name"
                                        placeholder="اسم الشركة / المؤسسة">
@@ -178,7 +193,8 @@
                     @if($record->company_type)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="company_type">نوع الشركة<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="company_type">نوع الشركة<span
+                                        class="text-danger required-mark">*</span></label>
                                 <select class="form-select" id="company_type" name="company_type">
                                     <option value="">اختر...</option>
                                     <option @if(old('company_type')=='organization') selected
@@ -194,18 +210,22 @@
                     @if($record->company_owner_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="company_owner_name">اسم الرئيس<span class="text-danger required-mark">*</span></label>
+
+                                <label class="form-label" for="company_owner_name">اسم الرئيس<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('company_owner_name')}}"
                                        id="company_owner_name"
                                        name="company_owner_name" placeholder="اسم صاحب الشركة">
-                                <div class="col-12 text-danger" id="company_owner_name_error"></div>
+
+
                             </div>
                         </div>
                     @endif
                     @if($record->id_number)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="id_number">رقم هوية الرئيس<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="id_number">رقم هوية الرئيس<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('id_number')}}" id="id_number"
                                        name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
                                        placeholder="رقم الهوية">
@@ -216,10 +236,11 @@
                     @if($record->commercial_record)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_record"> رقم السجل التجاري<span class="text-danger required-mark">*</span></label>
-                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control" value="{{old('commercial_record')}}"
+                                <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
+                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
+                                       value="{{old('commercial_record')}}"
                                        id="commercial_record" name="commercial_record"
-                                       placeholder="رقم السجل التجاري">
+                                       placeholder="05xxxxxxxx">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
                             </div>
                         </div>
@@ -227,7 +248,8 @@
                     @if($record->website && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="website">الموقع<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="website">الموقع<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('website')}}" id="website"
                                        name="website"
                                        placeholder="الموقع">
@@ -238,17 +260,36 @@
                     @if($record->responsible_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="responsible_name">اسم الشخص المفوض<span class="text-danger required-mark">*</span></label>
+
+                                <label class="form-label" for="responsible_name">اسم الشخص المفوض<span
+                                        class="text-danger required-mark">*</span></label>
+
+
                                 <input type="text" class="form-control" value="{{old('responsible_name')}}"
                                        id="responsible_name" name="responsible_name"
-                                       placeholder="اسم الشخص المسؤول">
+                                       placeholder="اسم المفوض">
                                 <div class="col-12 text-danger" id="responsible_name_error"></div>
                             </div>
                         </div>
                     @endif
 
-                    @if($record->id_date && request('type') !='design_office')
+
+
+                    @if($record->id_number)
                         <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="id_number">رقم الهوية<span
+                                        class="text-danger required-mark">*</span></label>
+                                <input type="text" class="form-control" value="{{old('id_number')}}" id="id_number"
+                                       name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
+                                       placeholder="xxxxxxxxxx">
+                                <div class="col-12 text-danger" id="id_number_error"></div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($record->id_date && request('type') !='design_office')
+                    <!-- <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="id_date">التاريخ<span class="text-danger required-mark">*</span></label>
                                 <input  type="text" class="form-control datepicker" value="{{old('id_date')}}" id="id_date"
@@ -256,23 +297,25 @@
                                        placeholder="التاريخ">
                                 <div class="col-12 text-danger" id="id_date_error"></div>
                             </div>
-                        </div>
+                        </div> -->
                     @endif
                     @if($record->source && request('type') !='design_office')
-                        <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="source">المصدر<span class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('source')}}" id="source"
                                        name="source" placeholder="المصدر">
                                 <div class="col-12 text-danger" id="id_date_error"></div>
                             </div>
-                        </div>
+                        </div> -->
                     @endif
                     @if($record->email)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="email">  البريد الإلكتروني للمفوض<span class="text-danger required-mark">*</span></label>
-                                <input type="email" value="{{old('email')}}" class="form-control" id="email" name="email"
+                                <label class="form-label" for="email"> البريد الإلكتروني للمفوض<span
+                                        class="text-danger required-mark">*</span></label>
+                                <input type="email" value="{{old('email')}}" class="form-control" id="email"
+                                       name="email"
                                        placeholder="البريد الإلكتروني">
                                 <div class="col-12 text-danger" id="email_error"></div>
                             </div>
@@ -282,7 +325,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="phone">رقم الجوال<span class="text-danger required-mark">*</span></label>
-                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" value="{{old('phone')}}" class="form-control" id="phone"
+                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" value="{{old('phone')}}"
+                                       class="form-control" id="phone"
                                        name="phone" minlength="10" maxlength="10"
                                        placeholder="رقم الجوال">
                                 <div class="col-12 text-danger" id="phone_error"></div>
@@ -292,7 +336,8 @@
                     @if($record->address && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="address">العنوان الوطني<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="address">العنوان الوطني<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('address')}}" id="address"
                                        name="address"
                                        placeholder="العنوان الوطني">
@@ -314,7 +359,8 @@
                     @if($record->city)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="city">المدينة<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="city">المدينة<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" value="{{old('city')}}" class="form-control" id="city" name="city"
                                        placeholder="المدينة">
                                 <div class="col-12 text-danger" id="city_error"></div>
@@ -323,35 +369,39 @@
                     @endif
                     <div class="col-md-12">
                         <div class="mb-3">
-                            <label class="form-label" for="name">اسم المستخدم<span class="text-danger required-mark">*</span></label>
+                            <label class="form-label" for="name">اسم المستخدم<span
+                                    class="text-danger required-mark">*</span></label>
                             <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
                                    placeholder="اسم المستخدم">
                             <div class="col-12 text-danger" id="name_error"></div>
                         </div>
                     </div>
-                   <div class="row form-group">
-                       <div class="col-md-6">
-                           <div class="mb-3">
-                               <label class="form-label" for="password">كلمة المرور<span class="text-danger required-mark">*</span></label>
-                               <input type="password" class="form-control" id="password" value="{{old('password')}}"
-                                      name="password">
-                               <div class="col-12 text-danger" id="password_error"></div>
-                           </div>
-                       </div>
-                       <div class="col-md-6">
-                           <div class="mb-3">
-                               <label class="form-label" for="password_confirmation">تأكيد كلمة المرور<span class="text-danger required-mark">*</span></label>
-                               <input type="password" class="form-control" value="{{old('password_confirmation')}}"
-                                      id="password_confirmation"
-                                      name="password_confirmation">
-                               <div class="col-12 text-danger" id="password_confirmation_error"></div>
-                           </div>
-                       </div>
-                   </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="password">كلمة المرور<span
+                                        class="text-danger required-mark">*</span></label>
+                                <input type="password" class="form-control" id="password" value="{{old('password')}}"
+                                       name="password">
+                                <div class="col-12 text-danger" id="password_error"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="password_confirmation">تأكيد كلمة المرور<span
+                                        class="text-danger required-mark">*</span></label>
+                                <input type="password" class="form-control" value="{{old('password_confirmation')}}"
+                                       id="password_confirmation"
+                                       name="password_confirmation">
+                                <div class="col-12 text-danger" id="password_confirmation_error"></div>
+                            </div>
+                        </div>
+                    </div>
                     @if($record->employee_number && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="employee_number">عدد الموظفين<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="employee_number">عدد الموظفين<span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('employee_number')}}"
                                        id="employee_number" name="employee_number"
                                        placeholder="عدد الموظفين">
@@ -359,10 +409,10 @@
                             </div>
                         </div>
                     @endif
-                   </div>
+                </div>
 
 
-              </form>
+            </form>
 
             <div class="text-center mt-4">
                 <button type="button" class="btn btn-lg btn-primary submit_btn mb-3">سجل الان</button>
@@ -394,16 +444,16 @@
 <script src="{{url('/')}}/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script
     src="{{url('/')}}/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
-<script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js" ></script>
+<script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 <script src="{{url("/")}}/assets/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="{{url("/")}}/assets/jquery-validation/dist/localization/messages_ar.min.js" type="text/javascript"></script>
+<script src="{{url("/")}}/assets/jquery-validation/dist/localization/messages_ar.min.js"
+        type="text/javascript"></script>
 <link href="{{url("/")}}/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/js/fileinput.min.js" type="text/javascript"></script>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/fileinput-theme.js" type="text/javascript"></script>
-<script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+<script src="{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
 
 @include('CP.layout.js')
-
 
 
 <script>
@@ -411,7 +461,7 @@
     $('input[type=text]').addClass('fontArial');
     $('input[type=number]').addClass('fontArial');
     $('input[type=email]').addClass('fontArial');
-    jQuery.validator.addMethod("alphanumeric", function(value, element) {
+    jQuery.validator.addMethod("alphanumeric", function (value, element) {
         return this.optional(element) || /^\w+$/i.test(value);
     }, "يرجى ادخال حروف  أو أرقام او علامة _ ");
     $('#add_edit_form').validate({
@@ -425,9 +475,21 @@
             }, "password_confirmation": {
                 required: true,
             },
+
             @foreach(array_filter($record->makeHidden(['id','type'])->toArray()) as $rule=> $key)
             "{{"$rule"}}": {
                 required: true,
+            },
+
+            "id_number": {
+                minlength: 10,
+                maxlength: 10,
+                required: true
+            },
+            "commercial_record": {
+                minlength: 10,
+                maxlength: 10,
+                required: false
             },
             @endforeach
         },
@@ -454,7 +516,7 @@
     {{--$('#designer_type').change(function (e) {--}}
     {{--    window.location = '{{route('register')}}/' + '{{request('type')}}' +'/'+'{{request('designer_type')}}'+$(this).val()--}}
     {{--});--}}
-    flatpickr(".datepicker",{defaultDate: (old_date == '') ? new Date : old_date});
+    flatpickr(".datepicker", {defaultDate: (old_date == '') ? new Date : old_date});
 </script>
 
 </body>

@@ -77,7 +77,7 @@
 <div class="auth-page">
     <div class="container-fluid p-0">
         <div class="row g-0">
-
+        
             <!-- end col -->
             <div class="col-24" style="position: relative;">
                 <div class="row login-page-form-container">
@@ -91,6 +91,10 @@
                                     <img src="{{url('/')}}/assets/img/tsleem-logo.png" alt=""  width="150px"> <span class="logo-txt"></span>
                                 </a>
                             </div>
+
+                            @if(session('success'))
+                                <div class="alert alert-success">{{session('success')}}</div>
+                            @endif
                             <div class="auth-content my-auto">
 
                                 <div class="text-center">
