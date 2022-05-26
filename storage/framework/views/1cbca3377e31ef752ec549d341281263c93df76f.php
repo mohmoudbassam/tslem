@@ -26,8 +26,8 @@
     <meta name="keywords" content="" />
     <meta name="author" content="" />
     <meta name="copyright" content=" " />
-    <link rel="stylesheet" href="assets/css/plugin.min.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/plugin.min.css?v=<?php echo e(config('app.asset_ver')); ?>" />
+    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo e(config('app.asset_ver')); ?>" />
 </head>
 <body>
 <!-- start:: Page -->
@@ -233,7 +233,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="<?php echo e(url('دليل الأعمال الكهربائية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الأعمال الكهربائية V1 3</h4>
+                                <h4 class="widget__item-title">دليل الأعمال الكهربائية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
@@ -274,7 +274,6 @@
                         <div class="row justify-content-between">
                             <div class="col-lg-3 mb-4 mb-lg-0">
                                 <div class="logo mb-lg-4 mb-2"><img src="assets/images/logo-dark.png" alt="" /></div>
-                                <h6 class="mb-3">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة</h6>
                                 <ul class="social-media">
                                     <li>
                                         <a href=""> <i class="fa-brands fa-youtube"></i></a>
@@ -307,10 +306,11 @@
                     <div class="col-lg-10 mx-auto">
                         <div class="row align-items-center">
                             <div class="col-lg-6 mb-3 mb-lg-0">
-                                <p class="text-center text-lg-end text">جميع الحقوق محفوظة لدى تسليم © 2021</p>
+                                <p class="text-center text-lg-end text">جميع الحقوق محفوظة لدى تسليم © <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?></p>
                             </div>
                             <div class="col-lg-6">
-                                <div class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand"><img src="assets/images/brandmark.png" alt="" /><img src="assets/images/kidana.png" alt="" /></div>
+                                <div class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand">
+                                    <img src="assets/images/kidana.png" alt="" /></div>
                             </div>
                         </div>
                     </div>

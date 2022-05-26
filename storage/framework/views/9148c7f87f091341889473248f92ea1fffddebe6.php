@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                1443 © جميع الحقوق محفوظة.
+            <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?> © جميع الحقوق محفوظة.
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">

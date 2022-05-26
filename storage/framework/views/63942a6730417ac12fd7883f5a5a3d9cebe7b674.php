@@ -4,12 +4,9 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href="#" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24">
-                                </span>
-                    <span class="logo-lg">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>
-                                </span>
+
+                                <span class="logo-txt ">البوابة الرقمية تسليم</span>
+
                 </a>
 
                 <a href="#" class="logo logo-light">
@@ -17,7 +14,7 @@
                                     <img src="assets/images/logo-sm.svg" alt="" height="24">
                                 </span>
                     <span class="logo-lg">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>
+                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">البوابة الرقمية تسليم</span>
                                 </span>
                 </a>
             </div>

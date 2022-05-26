@@ -194,11 +194,22 @@
                     @if($record->company_owner_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="company_owner_name">اسم صاحب الشركة<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="company_owner_name">اسم الرئيس<span class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('company_owner_name')}}"
                                        id="company_owner_name"
                                        name="company_owner_name" placeholder="اسم صاحب الشركة">
                                 <div class="col-12 text-danger" id="company_owner_name_error"></div>
+                            </div>
+                        </div>
+                    @endif
+                    @if($record->id_number)
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="id_number">رقم هوية الرئيس<span class="text-danger required-mark">*</span></label>
+                                <input type="text" class="form-control" value="{{old('id_number')}}" id="id_number"
+                                       name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
+                                       placeholder="رقم الهوية">
+                                <div class="col-12 text-danger" id="id_number_error"></div>
                             </div>
                         </div>
                     @endif
@@ -227,7 +238,7 @@
                     @if($record->responsible_name)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="responsible_name">اسم الشخص المسؤول<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="responsible_name">اسم الشخص المفوض<span class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('responsible_name')}}"
                                        id="responsible_name" name="responsible_name"
                                        placeholder="اسم الشخص المسؤول">
@@ -235,17 +246,7 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->id_number)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="id_number">رقم الهوية<span class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{old('id_number')}}" id="id_number"
-                                       name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
-                                       placeholder="رقم الهوية">
-                                <div class="col-12 text-danger" id="id_number_error"></div>
-                            </div>
-                        </div>
-                    @endif
+
                     @if($record->id_date && request('type') !='design_office')
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -270,7 +271,7 @@
                     @if($record->email)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="email">البريد الإلكتروني<span class="text-danger required-mark">*</span></label>
+                                <label class="form-label" for="email">  البريد الإلكتروني للمفوض<span class="text-danger required-mark">*</span></label>
                                 <input type="email" value="{{old('email')}}" class="form-control" id="email" name="email"
                                        placeholder="البريد الإلكتروني">
                                 <div class="col-12 text-danger" id="email_error"></div>
