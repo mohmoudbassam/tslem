@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
-                            <label class="col-12" for="reject_reason">اختر مكتب استشاري</label>
+                            <label class="col-12" for="reject_reason">اختر المشرف</label>
                             <div class="col-12">
                                 <select class="form-control" name="consulting_office_id" id="consulting_office_id">
                                     <option value="">اختر ...</option>

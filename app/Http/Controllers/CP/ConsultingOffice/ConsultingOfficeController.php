@@ -320,9 +320,9 @@ class ConsultingOfficeController extends Controller
             $order->status = Order::COMPLETED;
             $order->save();
 
-            save_logs($order, auth()->user()->id, 'تم اتمام الطلب  من المكتب الاستشاري ');
+            save_logs($order, auth()->user()->id, 'تم اتمام الطلب  من المشرف');
 
-            optional($order->service_provider)->notify(new OrderNotification('تم اتمام الطلب  من المكتب الاستشاري', $order->consulting_office_id));
+            optional($order->service_provider)->notify(new OrderNotification('تم اتمام الطلب  من المشرف', $order->consulting_office_id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت اتمام الطلب بنجاح'

@@ -33,6 +33,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="<?php echo e(url('/assets/libs/flatpickr/flatpickr.min.css')); ?>"/>
 
 
     <style>
@@ -52,19 +53,7 @@
          [dir=rtl] input {
              text-align: right;
          }
-         .modal {
-             display:    none;
-             position:   absolute;
-             z-index:    1000;
-             top:        0;
-             left:       0;
-             height:     100%;
-             width:      100%;
-             background: rgba( 255, 255, 255, .8 )
-             url('http://i.stack.imgur.com/FhHRx.gif')
-             50% 50%
-             no-repeat;
-         }
+
 
          /* When the body has the loading class, we turn
             the scrollbar off with overflow:hidden */

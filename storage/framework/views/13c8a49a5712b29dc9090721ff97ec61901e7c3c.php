@@ -45,6 +45,50 @@
         $(selector).fileinput(settings);
     }
 
+    function file_input_register(selector, options) {
+        let defaults  = {
+            theme: "fas",//gly
+            showDrag: false,
+            deleteExtraData: {
+                '_token': '<?php echo e(csrf_token()); ?>',
+            },
+            // hideThumbnailContent: true,
+            browseClass: "btn btn-info",
+            browseLabel: "اضغط للاستعراض",
+            browseIcon: "<i class='la la-file'></i>",
+            removeClass: "btn btn-danger",
+            removeLabel: "delete",
+            removeIcon: "<i class='la la-trash-o'></i>",
+            showRemove: false,
+            showCancel: false,
+            showUpload: false,
+            showPreview: true,
+            msgPlaceholder: "اختر ملف",
+            msgSelected: "تم الاختيار ",
+            fileSingle: "ملف واحد",
+            filePlural: "اكثر من ملف",
+            dropZoneTitle: "سحب وافلات",
+            msgZoomModalHeading: "معلومات الملف",
+            dropZoneClickTitle: '<br> اضغط للاستعراض',
+            initialPreview: [],
+            initialPreviewShowDelete: options,
+            initialPreviewAsData: true,
+            initialPreviewConfig: [],
+            initialPreviewFileType: 'image',
+            overwriteInitial: true,
+            browseOnZoneClick: true,
+            captionClass:true,
+            maxFileCount: 6,
+            allowedFileExtensions: ["pdf"],
+            slugCallback: function(filename) {
+                console.log(filename);
+                return filename.replace('(', '_');
+            }
+        };
+        let settings = $.extend( {}, defaults, options );
+        $(selector).fileinput(settings);
+    }
+
     function change_status(id, url, status = null, callback = null) {
         $.ajax({
             url: url,

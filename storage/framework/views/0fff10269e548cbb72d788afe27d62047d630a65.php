@@ -64,14 +64,13 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="designer_id">مكتب التصميم</label>
+                        <label class="form-label" for="designer_id">المكتب الهندسي</label>
                         <select class="form-select" id="designer_id" name="designer_id">
                             <option  value="">اختر...</option>
                             <?php $__currentLoopData = $designers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $designer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option  value="<?php echo e($designer->id); ?>"><?php echo e($designer->company_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <div class="col-12 text-danger" id="designer_id_error"></div>
-
                         </select>
                     </div>
                 </div>

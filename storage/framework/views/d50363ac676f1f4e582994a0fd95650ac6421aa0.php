@@ -91,12 +91,14 @@
                                     <img src="<?php echo e(url('/')); ?>/assets/img/tsleem-logo.png" alt=""  width="150px"> <span class="logo-txt"></span>
                                 </a>
                             </div>
+
+                            <?php if(session('success')): ?>
+                                <div class="alert alert-success"><?php echo e(session('success')); ?></div>
+                            <?php endif; ?>
                             <div class="auth-content my-auto">
 
                                 <div class="text-center">
-                                    <h1>تسجيل الدخول</h1>
-                                <h5 class="mb-0">أهلا وسهلا</h5>
-                                    <p class="text-muted mt-2"></p>
+                                    <h2>تسجيل الدخول</h2>
                                 </div>
                                 <form class="mt-4 pt-2" action="<?php echo e(route('login')); ?>" method="post">
                                     <?php echo csrf_field(); ?>
@@ -124,7 +126,7 @@
                                     <div class="row mb-4">
                                         <div class="col">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember-check">
+                                                <input class="form-check-input" checked="true" type="checkbox" id="remember-check">
                                                 <label class="form-check-label" for="remember-check">
                                                     تذكرني
                                                 </label>
@@ -139,7 +141,7 @@
                                     </div>
                                     <?php endif; ?>
                                     <div class="mb-3">
-                                        <button class="btn  btn-secondary w-100 waves-effect waves-light" type="submit">تسجيل الدخول</button>
+                                        <button class="btn btn-lg btn-secondary w-100 waves-effect waves-light" type="submit">دخول</button>
                                     </div>
                                 </form>
 
@@ -151,7 +153,7 @@
 
                             </div>
                             <div class="mt-4 mt-md-5 text-center">
-                                <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> منصة تسليم </p>
+                                <p class="mb-0">© <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?> البوابة الرقمية تسليم </p>
                             </div>
                         </div>
                     </div>

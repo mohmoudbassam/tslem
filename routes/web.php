@@ -8,6 +8,7 @@ use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
+use App\Http\Controllers\CP\SystemConfig\SpecialtiesController;
 use App\Http\Controllers\CP\VerificationController;
 use App\Http\Controllers\CP\ServiceProviders\OrdersController;
 use App\Http\Controllers\CP\Sharer\SharerController;
@@ -212,6 +213,15 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('store', [ServicesController::class, 'store'])->name('.store');
             Route::post('delete', [ServicesController::class, 'delete'])->name('.delete');
             Route::post('update', [ServicesController::class, 'update'])->name('.update');
+        });
+        Route::prefix('specialties')->name('specialties')->group(function () {
+            Route::get('', [SpecialtiesController::class, 'index'])->name('.index');
+            Route::get('list', [SpecialtiesController::class, 'list'])->name('.list');
+            Route::get('add', [SpecialtiesController::class, 'add'])->name('.add');
+            Route::get('update_from/{specialties}', [SpecialtiesController::class, 'update_from'])->name('.update_from');
+            Route::post('store', [SpecialtiesController::class, 'store'])->name('.store');
+            Route::post('delete', [SpecialtiesController::class, 'delete'])->name('.delete');
+            Route::post('update', [SpecialtiesController::class, 'update'])->name('.update');
         });
     });
 

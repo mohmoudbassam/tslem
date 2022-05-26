@@ -51,6 +51,11 @@
                                     <span data-key="t-calendar">الخدمات</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{route('specialties.index')}}">
+                                    <span data-key="t-calendar">التخصصات</span>
+                                </a>
+                            </li>
 
                         </ul>
                     </li>
@@ -100,7 +105,7 @@
 
                         </ul>
                     </li>
-                 
+
                 @endif
 
                 @if(auth()->user()->type=='contractor')
