@@ -116,7 +116,7 @@
                 <div class="registeration-header">
                     <img src="{{ url('/assets/img/triangle-registeration.png') }}" alt="">
                     <h4 class="text-main">
-                        التسجيل في المنصة
+                        التسجيل في البوابة
                     </h4>
                 </div>
 
@@ -215,7 +215,7 @@
                                         class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{old('company_owner_name')}}"
                                        id="company_owner_name"
-                                       name="company_owner_name" placeholder="اسم صاحب الشركة">
+                                       name="company_owner_name" placeholder="اسم الرئيس">
 
 
                             </div>

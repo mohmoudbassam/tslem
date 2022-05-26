@@ -306,7 +306,7 @@
                     <div class="col-lg-10 mx-auto">
                         <div class="row align-items-center">
                             <div class="col-lg-6 mb-3 mb-lg-0">
-                                <p class="text-center text-lg-end text">جميع الحقوق محفوظة لدى تسليم © {{ \Alkoumi\LaravelHijriDate\Hijri::Date('Y') }}</p>
+                                <p class="text-center text-lg-end text">جميع الحقوق محفوظة  لدى البوابة الرقمية تسليم © {{ \Alkoumi\LaravelHijriDate\Hijri::Date('Y') }}</p>
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand">
