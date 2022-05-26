@@ -67,6 +67,22 @@
             }
         }
 
+        .alert-danger{
+            color: #e9ecef;
+            background-color: #db1c19;
+            border-color: #e21a13;
+            font-size: 16px;
+            font-family: Janna !important;
+        }
+        .alert-success{
+            font-size: 16px;
+            font-family: Janna !important;
+            color: #e9ecef;
+            background-color: #126a47;
+            border-color: #126a47;
+            
+        }
+
 
     </style>
 </head>
@@ -91,7 +107,6 @@
                                     <img src="{{url('/')}}/assets/img/tsleem-logo.png" alt=""  width="150px"> <span class="logo-txt"></span>
                                 </a>
                             </div>
-
                             @if(session('success'))
                                 <div class="alert alert-success">{{session('success')}}</div>
                             @endif

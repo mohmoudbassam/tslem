@@ -99,6 +99,26 @@
         .fontArial {
             font-family: Tajawal;
         }
+        .alert-danger{
+            color: #e9ecef;
+            background-color: #db1c19;
+            border-color: #e21a13;
+            font-size: 16px;
+            font-family: Tajawal !important;
+        }
+
+        .alert-danger ul{ 
+            font-family: Tajawal !important;
+        }
+
+        .alert-success{
+            font-size: 16px;
+            font-family: Tajawal !important;
+            color: #e9ecef;
+            background-color: #126a47;
+            border-color: #126a47;
+            
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -123,7 +143,7 @@
 
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body"> 
             @if (session('success'))
                 <div class="alert alert-success">
                     <ul>
