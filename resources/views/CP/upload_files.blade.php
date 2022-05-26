@@ -243,7 +243,7 @@
                     </div>
                 </div>
                 @endif
-                    @if($record->type == 'contractor')
+                    @if($record->cv_file && $record->type == 'contractor')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">

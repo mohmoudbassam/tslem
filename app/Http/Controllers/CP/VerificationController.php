@@ -92,12 +92,12 @@ class VerificationController extends Controller{
         ]);
 
         $this->uploadUserFiles(auth()->user(), $request);
-        if(auth()->user()->type == 'contractor'){
-            $path = Storage::disk('public')->put('user_files', $request->cv_file);
-            auth()->user()->update([
-               'cv_file' => $path
-            ]);
-        }
+        // if(auth()->user()->type == 'contractor'){
+        //     $path = Storage::disk('public')->put('user_files', $request->cv_file);
+        //     auth()->user()->update([
+        //        'cv_file' => $path
+        //     ]);
+        // }
         return back()->with(['success' => 'تم رفع الملفات بنجاح']);
     }
 
@@ -106,12 +106,14 @@ class VerificationController extends Controller{
         $columns_name = get_user_column_file($user->type);
         if (!empty($columns_name)) {
             $files = request()->all(array_keys(get_user_column_file($user->type)));
+            
             foreach ($files as $col_name => $file) {
-                $file_name = $file->getClientOriginalName();
 
-                $path = Storage::disk('public')->put('user_files', $file);
-
-                $user->{$col_name} = $path;
+                if(!is_null($file)){
+                    $file_name = $file->getClientOriginalName();
+                    $path = Storage::disk('public')->put('user_files', $file);
+                    $user->{$col_name} = $path;
+                }
 
             }
             $user->save();

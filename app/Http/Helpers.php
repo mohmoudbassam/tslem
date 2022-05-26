@@ -31,6 +31,7 @@ function get_user_column_file($type)
         'company_owner_id_photo',
         'commissioner_id_photo',
         'commissioner_photo',
+        'cv_file'
         
         )
         ->where('type', $type)->first();
