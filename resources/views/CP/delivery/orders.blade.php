@@ -42,7 +42,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">مكتب التصميم</label>
+                            <label for="type">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
@@ -52,7 +52,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">المكتب الإستشاري</label>
+                            <label for="type">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 @foreach($consulting as $_consulting)
@@ -78,7 +78,7 @@
                             <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
 
-                       
+
                     </form>
                 </div>
 

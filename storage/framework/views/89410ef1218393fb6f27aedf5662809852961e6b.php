@@ -37,7 +37,7 @@
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">مكتب التصميم</label>
+                            <label for="type">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $designers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $designer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">المكتب الإستشاري</label>
+                            <label for="type">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $consulting; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_consulting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
