@@ -243,6 +243,47 @@
                 </div>
                 @endif
 
+
+                @if($record->company_owner_id_photo)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="company_owner_id_photo"> صورة هوية صاحب الشركة  (PDF)</label>
+                            <input type="file" class="form-control" id="company_owner_id_photo"
+                                name="company_owner_id_photo">
+                            <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if($record->commissioner_id_photo)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="commissioner_id_photo"> صورة هوية  المفوض (PDF)</label>
+                            <input type="file" class="form-control" id="commissioner_id_photo"
+                                name="commissioner_id_photo">
+                            <div class="col-12 text-danger" id="commissioner_id_photo_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if($record->commissioner_photo)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="commissioner_photo"> صورة التفويض (PDF)</label>
+                            <input type="file" class="form-control" id="commissioner_photo"
+                                name="commissioner_photo">
+                            <div class="col-12 text-danger" id="commissioner_photo_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
                 <div class="mt-4">
                     <button type="button" class="btn btn-lg btn-primary submit_btn">رفع الملفات</button>
                 </div>
