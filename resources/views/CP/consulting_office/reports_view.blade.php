@@ -31,7 +31,7 @@
 {{--                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">--}}
 {{--                        <div class="col-lg-4">--}}
 {{--                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>--}}
-{{--                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد او الهاتف">--}}
+{{--                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">--}}
 {{--                        </div>--}}
 {{--                        <div class="col-lg-4">--}}
 {{--                            <label class="visually-hidden" for="type"></label>--}}

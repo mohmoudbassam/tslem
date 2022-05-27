@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>الرئيسية</title>
+    <title>بوابة تسليم الرقمية - مركز ريادي متكامل</title>
     <meta property="og:type" content="" />
     <meta property="og:title" content="" />
     <meta property="og:description" content=" " />
@@ -52,7 +52,22 @@
                             <li class="menu_item"><a class="menu_link active" data-scroll="section-home">الرئيسية</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
+                            <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">تأهيل مزودي الخدمات</a>
+                                <ul class="main-menu-sub">
+                                    <li><a>شركات ومكاتب</a></li>
+                                    <li><a>مقاولين</a></li>
+                                </ul>
+                            </li>
                             <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
+                            <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الخدمات الألكترونية</a>
+                                <ul class="main-menu-sub">
+                                    <li><a>تسليم مخيمات</a></li>
+                                    <li><a>استلام مخيمات</a></li>
+                                    <li><a>اضافات خاصة</a></li>
+                                    <li><a>متابعة طلب</a></li>
+                                    <li><a>النماذج</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                     <div class="menu-container ms-lg-auto menu-nav my-2 my-lg-0 px-4 px-lg-0">

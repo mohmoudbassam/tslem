@@ -40,22 +40,6 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="type">نوع الشركة</label>
-                            <select class="form-select" id="type" disabled name="type">
-                                <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
-                                <option  @if($record->type =="service_provider") selected @endif value="service_provider">مركز، مؤسسة، شركة (مطوف)</option>
-                                <option @if($record->type =="design_office") selected @endif value="design_office">مكتب هندسي</option>
-                                <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option>
-                                <option  @if($record->type =="consulting_office") selected @endif  value="consulting_office">مكتب استشاري</option>
-                                <option @if($record->type =="contractor") selected @endif  value="contractor">مقاول</option>
-                                <option @if($record->type =="Delivery") selected @endif value="Delivery">تسليم</option>
-                                <option  @if($record->type =="Kdana") selected @endif value="Kdana">كدانة</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="mb-3">
                             <label class="form-label" for="name">الإسم</label>
                             <input type="text" disabled class="form-control" name="name" value="{{$user->name}}" id="name" placeholder="الإسم">
                             <div class="col-12 text-danger" id="name_error"></div>
@@ -74,32 +58,15 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->company_type)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="company_type">نوع الشركة<span
-                                        class="text-danger required-mark">*</span></label>
-                                <select class="form-select" id="company_type" name="company_type">
-                                    <option value="">اختر...</option>
-                                    <option @if($user->company_type=='organization') selected
-                                                @endif value="organization">مؤسسة
-                                    </option>
-                                    <option @if($user->company_type=='office') selected @endif value="office">مكتب
-                                    </option>
-                                </select>
-                                <div class="col-12 text-danger" id="company_type_error"></div>
-                            </div>
-                        </div>
-                    @endif
                     @if($record->company_owner_name)
                         <div class="col-md-6">
                             <div class="mb-3">
 
-                                <label class="form-label" for="company_owner_name">اسم الرئيس<span
+                                <label class="form-label" for="company_owner_name">اسم المالك<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{$user->company_owner_name}}"
                                        id="company_owner_name"
-                                       name="company_owner_name" placeholder="اسم الرئيس">
+                                       name="company_owner_name" placeholder="اسم المالك">
 
 
                             </div>
@@ -112,21 +79,8 @@
                                 <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
                                        value="{{$user->commercial_record}}"
                                        id="commercial_record" name="commercial_record"
-                                       placeholder="05xxxxxxxx">
+                                       placeholder="xxxxxxxxx">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @if($record->website)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="website">الموقع<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{$user->website}}" id="website"
-                                       name="website"
-                                       placeholder="الموقع">
-                                <div class="col-12 text-danger" id="website_error"></div>
                             </div>
                         </div>
                     @endif
@@ -150,7 +104,7 @@
 @if($record->id_number)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="id_number">رقم هوية الرئيس<span
+                                <label class="form-label" for="id_number">رقم هوية المالك<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="{{$user->id_number}}" id="id_number"
                                        name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
@@ -162,7 +116,7 @@
                     @if($record->email)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="email"> البريد الإلكتروني للمفوض<span
+                                <label class="form-label" for="email"> البريد الإلكتروني<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="email" value="{{$user->email}}" class="form-control" id="email"
                                        name="email"
@@ -195,41 +149,20 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->telephone)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="telephone">الهاتف<span class="text-danger required-mark">*</span></label>
-                                <input type="text" value="{{$user->telephone}}" class="form-control" id="telephone"
-                                       name="telephone"
-                                       placeholder="الهاتف">
-                                <div class="col-12 text-danger" id="telephone_error"></div>
-                            </div>
-                        </div>
-                    @endif
                     @if($record->city)
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="city">المدينة<span
                                         class="text-danger required-mark">*</span></label>
-                                <input type="text" value="{{$user->city}}" class="form-control" id="city" name="city"
-                                       placeholder="المدينة">
+                                <select class="form-control" id="city" name="city">
+                                    @foreach(citiesList() as $cityItem)
+                                        <option value="{{ $cityItem }}" @if($cityItem == $user->city) selected @endif>{{ $cityItem }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="col-12 text-danger" id="city_error"></div>
                             </div>
                         </div>
                     @endif
-                    @if($record->employee_number)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="employee_number">عدد الموظفين<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{$user->employee_number}}"
-                                       id="employee_number" name="employee_number"
-                                       placeholder="عدد الموظفين">
-                                <div class="col-12 text-danger" id="employee_number_error"></div>
-                            </div>
-                        </div>
-                    @endif
-
               <input type="hidden" name="id" value="{{$user->id}}">
 
                 </div>

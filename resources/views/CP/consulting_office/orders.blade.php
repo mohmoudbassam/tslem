@@ -30,20 +30,18 @@
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد او الهاتف">
+                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
                         </div>
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="type"></label>
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مركز، مؤسسة، شركة (مطوف)</option>
+                                <option value="service_provider">مؤسسة، شركة (مطوف)</option>
                                 <option value="design_office">مكتب تصميم</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>
                                 <option value="contractor">مقاول</option>
-                                <option value="Delivery">تسليم</option>
-                                <option value="Kdana">كدانة</option>
                             </select>
                         </div>
 
@@ -70,7 +68,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مركز، مؤسسة، شركة (مطوف)
+                            مؤسسة، شركة (مطوف)
                         </th>
                         <th>
                             التاريخ
