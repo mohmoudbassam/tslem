@@ -8,6 +8,8 @@
 .file-preview {
     display: none;
 }
+
+
 </style>
 <div class="row">
     <alert class="alert alert-danger" style="font-size:20px;">استكمل رفع الملفات لاعتماد تسجيلك والاطلاع عليه</alert>
@@ -28,7 +30,6 @@
         <form id="add_edit_form" method="post" action="{{route('upload_files_action')}}" enctype="multipart/form-data">
             @csrf
             <div class="row">
-
 
 
                 @if($record->commercial_file)
@@ -242,7 +243,7 @@
                     </div>
                 </div>
                 @endif
-                    @if($record->type == 'contractor')
+                    @if($record->cv_file && $record->type == 'contractor')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">

@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
 
 
-    <style>
+        <style>
         @font-face {
             font-family: JannaLT;
             src: url('{{ url('/assets/fonts/JannaLT-Regular.woff')  }}');
@@ -82,8 +82,24 @@
             box-shadow: 0 2px 8px 0 rgb(81 86 190 / 30%);
         }
 
+        .alert-danger{
+            color: #e9ecef;
+            background-color: #db1c19;
+            border-color: #e21a13;
+            font-size: 16px;
+            font-family: JannaLT !important;
+        }
+        .alert-success{
+            font-size: 16px;
+            font-family: JannaLT !important;
+            color: #e9ecef;
+            background-color: #126a47;
+            border-color: #126a47;
+            
+        }
 
     </style>
+    
     @yield('style')
 </head>
 
