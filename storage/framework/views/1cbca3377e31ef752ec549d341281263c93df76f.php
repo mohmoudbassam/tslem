@@ -153,24 +153,14 @@
                 </div>
                 <div class="header-mobile__toolbar me-auto d-lg-none fa-lg"><i class="fa-light fa-bars"></i></div>
             </div>
-            <div class="ticker-wrapper-h" style="background:#cbb0a2 ; color:#c3b0b0">
-                <div class="heading " style="background-color: #0b5ed7 " >الشريط الاخباري </div>
-
-                <ul class="news-ticker-h">
-                    <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_news): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li style="color: white !important"><a href=""><?php echo e($_news->news); ?></a></li>
-                        <li style="color: white !important"><a href="">||</a></li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
-                </ul>
-            </div>
 
         </div>
 
 
-
     </header>
+
 
     <section class="section section-home" id="section-home">
         <div class="container">
@@ -261,12 +251,26 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </section>
     <!-- end:: section -->
     <!-- start:: section -->
     <section class="section section-guidelines" id="section-guidelines">
         <div class="container">
+            <div class="ticker-wrapper-h " style="background:#cbb0a2 ; color:#c3b0b0">
+                <div class="heading " style="background-color: #0b5ed7 " >الشريط الاخباري </div>
+
+                <ul class="news-ticker-h">
+                    <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_news): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li style="color: white !important"><a href=""><?php echo e($_news->news); ?></a></li>
+                        <li style="color: white !important"><a href="">||</a></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+                </ul>
+            </div>
             <div class="position-relative">
                 <div class="swiper-container swiper">
                     <div class="swiper-wrapper">

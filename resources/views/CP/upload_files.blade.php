@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->social_insurance_certificate)
+                @if($record->social_insurance_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -163,7 +163,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->saudization_certificate)
+                @if($record->saudization_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -183,7 +183,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->chamber_of_commerce_certificate)
+                @if($record->chamber_of_commerce_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -206,7 +206,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->tax_registration_certificate)
+                @if($record->tax_registration_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -219,7 +219,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->wage_protection_certificate)
+                @if($record->wage_protection_certificate  && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -231,7 +231,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->memorandum_of_association)
+                @if($record->memorandum_of_association && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -270,7 +270,7 @@
                 </div>
                 @endif
 
-                @if($record->commissioner_id_photo)
+                @if($record->commissioner_id_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -283,7 +283,7 @@
                 </div>
                 @endif
 
-                @if($record->commissioner_photo)
+                @if($record->commissioner_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
@@ -389,14 +389,14 @@
     });
 
 
-    flatpickr(".commercial_file_end_date",{defaultDate: (commercial_file_end_date == '') ? new Date : commercial_file_end_date});
-    flatpickr(".rating_certificate_end_date",{defaultDate: (rating_certificate_end_date == '') ? new Date : rating_certificate_end_date});
-    flatpickr(".profession_license_end_date",{defaultDate: (profession_license_end_date == '') ? new Date : profession_license_end_date});
-    flatpickr(".business_license_end_date",{defaultDate: (business_license_end_date == '') ? new Date : business_license_end_date});
-    flatpickr(".social_insurance_certificate_end_date",{defaultDate: (social_insurance_certificate_end_date == '') ? new Date : social_insurance_certificate_end_date});
-    flatpickr(".date_of_zakat_end_date",{defaultDate: (date_of_zakat_end_date == '') ? new Date : date_of_zakat_end_date});
-    flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '') ? new Date : saudization_certificate_end_date});
-    flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') ? new Date : chamber_of_commerce_certificate_end_date});
+    flatpickr(".commercial_file_end_date",{defaultDate: (commercial_file_end_date == '') });
+    flatpickr(".rating_certificate_end_date",{defaultDate: (rating_certificate_end_date == '') });
+    flatpickr(".profession_license_end_date",{defaultDate: (profession_license_end_date == '')});
+    flatpickr(".business_license_end_date",{defaultDate: (business_license_end_date == '')});
+    flatpickr(".social_insurance_certificate_end_date",{defaultDate: (social_insurance_certificate_end_date == '') });
+    flatpickr(".date_of_zakat_end_date",{defaultDate: (date_of_zakat_end_date == '') });
+    flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '')});
+    flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') });
 
 
     </script>

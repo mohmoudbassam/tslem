@@ -16,7 +16,7 @@ class NewsController extends Controller
 {
     public function index()
     {
-        return view('CP.News.index');
+        return view('CP.news.index');
     }
 
     public function list()
@@ -53,7 +53,7 @@ class NewsController extends Controller
         }
 
         return response()->json([
-            'page' => view('CP.News.form', $data)->render(),
+            'page' => view('CP.news.form', $data)->render(),
             'success' => true
         ]);
     }

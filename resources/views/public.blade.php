@@ -153,24 +153,23 @@
                 </div>
                 <div class="header-mobile__toolbar me-auto d-lg-none fa-lg"><i class="fa-light fa-bars"></i></div>
             </div>
-            <div class="ticker-wrapper-h" style="background:#cbb0a2 ; color:#c3b0b0">
+            <div class="ticker-wrapper-h " style="background:#cbb0a2 ; color:#c3b0b0">
                 <div class="heading " style="background-color: #0b5ed7 " >الشريط الاخباري </div>
 
                 <ul class="news-ticker-h">
                     @foreach($news as $_news)
                         <li style="color: white !important"><a href="">{{$_news->news}}</a></li>
                         <li style="color: white !important"><a href="">||</a></li>
-                        @endforeach
+                    @endforeach
 
 
                 </ul>
             </div>
-
-        </div>
-
+         </div>
 
 
     </header>
+
 
     <section class="section section-home" id="section-home">
         <div class="container">
