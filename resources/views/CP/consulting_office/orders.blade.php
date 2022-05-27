@@ -28,18 +28,13 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-<<<<<<< HEAD
+
                         <div class="col-lg-2">
                             <label for="order_id">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
-=======
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
->>>>>>> b76c9d4b8bdc1465c229cd0e332d07bddceac7d7
+
+
                         </div>
-
-
                         <div class="col-lg-2">
                             <label for="type">المقاول </label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
