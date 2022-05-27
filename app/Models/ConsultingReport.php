@@ -14,4 +14,12 @@ class ConsultingReport extends Model
     public function attchment(){
         return $this->hasMany(ConsultingReportAttchment::class, 'report_id');
     }
+
+    public function scopeWhereDate($q, $from_date ,$to_date)
+    {
+
+        return $q->when($from_date&&$to_date, function ($q) use ($from_date,$to_date) {
+            $q->whereBetween('created_at',[$from_date,$to_date]);
+        });
+    }
 }

@@ -24,7 +24,43 @@
         </div>
     </div>
     <div class="card">
+        <div class="card-header">
+            <div class="row mt-4">
+                <div class="col-lg-12">
 
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+
+                        <div class="col-lg-2">
+                            <label for="order_id">رقم التقرير </label>
+                            <input type="text" class="form-control" id="report_id" placeholder="رقم التقرير">
+
+
+                        </div>
+
+                        <div class="col-lg-1">
+                            <label for="">من </label>
+                            <input type="text" class="form-control datepicker" id="from_date" placeholder="">
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="">الى </label>
+                            <input type="text" class="form-control datepicker" id="to_date" placeholder="">
+                        </div>
+
+
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                        </div>
+                        <div class="col-sm-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
         <div class="card-body">
 
             <div class="row">
@@ -35,6 +71,9 @@
                            role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
+                        <th>
+                            رقم التقرير
+                        </th>
                         <th>
                             عنوان التقرير
                         </th>
@@ -69,7 +108,7 @@
 
 @section('scripts')
     <script>
-
+        flatpickr(".datepicker");
 
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
@@ -83,15 +122,16 @@
                     url: '{{route('consulting_office.reports_all_list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.name = $('#name').val();
-                        d.type = $('#type').val();
-
+                        d.report_id = $('#report_id').val();
+                        d.from_date = $('#from_date').val();
+                        d.to_date = $('#to_date').val();
                     }
                 },
                 language: {
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
+                    {className: 'text-center', data: 'id', name: 'id'},
                     {className: 'text-center', data: 'title', name: 'title'},
                     {className: 'text-center', data: 'description', name: 'description'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},

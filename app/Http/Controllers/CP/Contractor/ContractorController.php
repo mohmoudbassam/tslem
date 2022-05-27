@@ -61,6 +61,8 @@ class ContractorController extends Controller
                 $view_details = ' <a class="dropdown-item" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
                     عرض التفاصيل
                 </a>';
+                $accept_order = '';
+                $reject_order = '';
                 if (!$order->is_accepted(auth()->user())) {
                     $accept_order = ' <a class="dropdown-item" href="' . route('contractor.accept_order', ['order' => $order->id]) . '">
                    قبول الطلب

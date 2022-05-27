@@ -50,6 +50,10 @@
                                 <a href="<?php echo e(route('service.index')); ?>">
                                     <span data-key="t-calendar">الخدمات</span>
                                 </a>
+                            </li>  <li>
+                                <a href="<?php echo e(route('news')); ?>">
+                                    <span data-key="t-calendar">الاخبار</span>
+                                </a>
                             </li>
                             <li>
                                 <a href="<?php echo e(route('specialties.index')); ?>">
