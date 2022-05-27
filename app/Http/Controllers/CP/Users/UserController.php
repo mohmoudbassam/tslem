@@ -28,7 +28,7 @@ class UserController extends Controller
     {
 
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
-
+        $data['type'] =  $request->type;
         return view('CP.users.form', $data);
     }
 
