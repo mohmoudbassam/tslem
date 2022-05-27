@@ -23,7 +23,6 @@ class NewsController extends Controller
     {
         $news = News::query();
 
-//        dd($order->get());
         return DataTables::of($news)
             ->addColumn('actions', function ($news) {
 

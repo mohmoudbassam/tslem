@@ -36,12 +36,13 @@
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $services_providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services_provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($services_provider->id); ?>"><?php echo e($services_provider->company_name); ?></option>
+                                    <option
+                                        value="<?php echo e($services_provider->id); ?>"><?php echo e($services_provider->company_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">مكتب التصميم</label>
+                            <label for="type">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $designers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $designer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -51,7 +52,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">المكتب الإستشاري</label>
+                            <label for="type">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $consulting; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_consulting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -69,15 +70,23 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
+                        <div class="col-lg-1">
+                            <label for="">من </label>
+                            <input type="text" class="form-control datepicker" id="from_date" placeholder="">
+                        </div>
+                        <div class="col-lg-1">
+                            <label for="">الى </label>
+                            <input type="text" class="form-control datepicker" id="to_date" placeholder="">
+                        </div>
 
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث
+                            </button>
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء
+                            </button>
                         </div>
-
-                       
                     </form>
                 </div>
 
@@ -99,6 +108,9 @@
                         </th>
                         <th>
                             مركز، مؤسسة، شركة (مطوف)
+                        </th>
+                        <th>
+                            المكتب الهندسي
                         </th>
                         <th>
                             التاريخ
@@ -135,7 +147,7 @@
 <?php $__env->startSection('scripts'); ?>
     <script>
 
-
+        flatpickr(".datepicker");
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
@@ -153,6 +165,9 @@
                         d.type = $('#type').val();
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
+                        d.designer_id = $('#designer_id').val();
+                        d.consulting_id = $('#consulting_id').val();
+                        d.contractor_id = $('#contractor_id').val();
                     }
                 },
                 language: {
@@ -160,7 +175,8 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
-                    {className: 'text-center', data: 'company_name', name: 'service_provider.company_name'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'designer.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
@@ -199,9 +215,9 @@
                     });
                 },
                 success: function (data) {
-                    if(data.success){
+                    if (data.success) {
                         showAlertMessage('success', data.message);
-                    }else {
+                    } else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
                     }
 
@@ -213,6 +229,7 @@
                 },
             });
         }
+
         function reject(id) {
 
             $.ajaxSetup({
@@ -236,10 +253,10 @@
                     });
                 },
                 success: function (data) {
-                    if(data.success){
+                    if (data.success) {
                         $('#items_table').DataTable().ajax.reload(null, false);
                         showAlertMessage('success', data.message);
-                    }else {
+                    } else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
                     }
 

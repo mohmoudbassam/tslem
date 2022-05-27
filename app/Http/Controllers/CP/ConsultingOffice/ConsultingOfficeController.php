@@ -22,12 +22,26 @@ class ConsultingOfficeController extends Controller
 {
     public function orders()
     {
-        return view('CP.consulting_office.orders');
+
+        $data['contractors'] = User::query()->whereHas('contractors_orders', function ($q) {
+            $q->where('consulting_office_id', auth()->user()->id);
+        })->get();
+        $data['service_providers'] = User::query()->whereHas('orders', function ($q) {
+            $q->where('consulting_office_id', auth()->user()->id);
+        })->get();
+        $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
+            $q->where('consulting_office_id', auth()->user()->id);
+        })->get();
+
+        return view('CP.consulting_office.orders',$data);
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $order = Order::query()->with(['service_provider', 'designer'])->where('consulting_office_id', auth()->user()->id);
+        $order = Order::query()->with(['service_provider', 'designer'])
+            ->whereOrderId($request->order_id)
+            ->whereDate($request->from_date, $request->to_date)
+            ->where('consulting_office_id', auth()->user()->id);
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -138,6 +152,7 @@ class ConsultingOfficeController extends Controller
     public function reports_list(Order $order)
     {
         $reports = ConsultingReport::query()->with(['attchment'])
+
             ->where('user_id', '=', auth()->user()->id)
             ->where('order_id', $order->id);
         return DataTables::of($reports)

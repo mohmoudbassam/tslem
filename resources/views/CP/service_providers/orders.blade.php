@@ -54,7 +54,6 @@
                                 @foreach($consulting as $_consulting)
                                     <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
                                 @endforeach
-
                             </select>
                         </div>
                         <div class="col-lg-2">

@@ -96,7 +96,7 @@
                             <a href="#!" class="text-reset notification-item">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
-                                        <img src="<?php echo e(optional($notification->Notifer)->image); ?>"
+                                        <img src="<?php echo e(asset('storage/profiles/profile_placeholder.jpg')); ?>"
                                              class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
 

@@ -22,10 +22,13 @@ class SharerController extends Controller
         return view('CP.Sharer.orders');
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        $order = Order::query()->with(['service_provider', 'designer'])->select("orders.*")->where('status', '>=', '3');
-//        dd($order->get());
+        $order = Order::query()->with(['service_provider', 'designer'])->select("orders.*")
+            ->whereOrderId($request->order_id)
+            ->whereDate($request->from_date,$request->to_date)
+            ->where('status', '>=', '3');
+
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
 

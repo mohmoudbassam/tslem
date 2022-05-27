@@ -22,14 +22,31 @@ class ContractorController extends Controller
 {
     public function orders()
     {
-        return view('CP.contractors.orders');
+        $data['consulting'] = User::query()->whereHas('contractors_orders', function ($q) {
+            $q->where('contractor_id', auth()->user()->id);
+        })->get();
+        $data['service_providers'] = User::query()->whereHas('orders', function ($q) {
+            $q->where('contractor_id', auth()->user()->id);
+        })->get();
+        $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
+            $q->where('contractor_id', auth()->user()->id);
+        })->get();
+        return view('CP.contractors.orders',$data);
     }
 
-    public function list()
+    public function list(Request $request)
     {
 
         $order = Order::query()->with(['service_provider', 'designer', 'contractor'])
+            ->whereOrderId($request->order_id)
+            ->whereDesignerId($request->designer_id)
+            ->whereConsultingId($request->consulting_id)
+            ->whereContractorId($request->contractor_id)
+            ->whereServiceProviderId($request->service_provider_id)
+            ->whereDate($request->from_date,$request->to_date)
+            ->orderByDesc('created_at')
             ->whereContractor(auth()->user()->id)
+
             ->where('status', '>=', '3');
 
         return DataTables::of($order)
