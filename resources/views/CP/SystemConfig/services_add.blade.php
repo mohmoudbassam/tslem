@@ -58,17 +58,6 @@
 
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="parnet_id">نوع الملف</label>
-                            <select class="form-control" id="file_ids" name="file_ids">
-{{--                                @foreach( as $file_type)--}}
-{{--                                    <option value="{{ $file_type->id  }}">{{ $file_type->name_ar  }}</option>--}}
-{{--                                @endforeach--}}
-                            </select>
-                            <div class="col-12 text-danger" id="file_ids_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
                             <label for="parnet_id">تصنيف الملف</label>
                             <select class="form-control" id="specialties_id" name="specialties_id">
                                 <option value="">اختر...</option>
@@ -109,13 +98,6 @@
 
 @section('scripts')
     <script>
-        $(function () {
-            $('#file_ids').select2({
-                data: @json( $file_types ) .map(item => ({id: item.id, text: item.name_ar})),
-                multiple: true,
-                placeholder: "اختر ..."
-            });
-        });
 
         $('#add_edit_form').validate({
             rules: {
@@ -123,8 +105,6 @@
                     required: true,
                 }, "unit": {
                     required: true,
-                }, "file_ids": {
-
                 }, "specialties_id": {
                     required: true,
                 }
@@ -157,10 +137,7 @@
 
             // $('#add_edit_form').submit()
             const formData = new FormData($('#add_edit_form').get(0));
-            formData.delete("file_ids");
-            $('#file_ids').val().forEach(id => {
-                formData.append("file_ids[]", id);
-            });
+
             postData(formData, '{{route('service.store')}}');
 
         });

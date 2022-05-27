@@ -1,33 +1,101 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>الرئيسية</title>
-    <meta property="og:type" content="" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content=" " />
-    <meta property="og:image" content="" />
-    <meta property="og:image:width" content="" />
-    <meta property="og:image:height" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content=" " />
-    <meta property="og:ttl" content="" />
-    <meta name="twitter:card" content="" />
-    <meta name="twitter:domain" content="" />
-    <meta name="twitter:site" content="" />
-    <meta name="twitter:creator" content="" />
-    <meta name="twitter:image:src" content="" />
-    <meta name="twitter:description" content="" />
-    <meta name="twitter:title" content=" " />
-    <meta name="twitter:url" content="" />
-    <meta name="description" content="  " />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-    <meta name="copyright" content=" " />
-    <link rel="stylesheet" href="assets/css/plugin.min.css?v=<?php echo e(config('app.asset_ver')); ?>" />
-    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo e(config('app.asset_ver')); ?>" />
+    <meta property="og:type" content=""/>
+    <meta property="og:title" content=""/>
+    <meta property="og:description" content=" "/>
+    <meta property="og:image" content=""/>
+    <meta property="og:image:width" content=""/>
+    <meta property="og:image:height" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=" "/>
+    <meta property="og:ttl" content=""/>
+    <meta name="twitter:card" content=""/>
+    <meta name="twitter:domain" content=""/>
+    <meta name="twitter:site" content=""/>
+    <meta name="twitter:creator" content=""/>
+    <meta name="twitter:image:src" content=""/>
+    <meta name="twitter:description" content=""/>
+    <meta name="twitter:title" content=" "/>
+    <meta name="twitter:url" content=""/>
+    <meta name="description" content="  "/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
+    <meta name="copyright" content=" "/>
+    <link rel="stylesheet" href="assets/css/plugin.min.css?v=<?php echo e(config('app.asset_ver')); ?>"/>
+    <link rel="stylesheet" href="assets/css/main.css?v=<?php echo e(config('app.asset_ver')); ?>"/>
+        <style>
+
+            .ticker-wrapper-h{
+                display: flex;
+                position: relative;
+                overflow: hidden;
+
+            }
+
+            .ticker-wrapper-h .heading{
+                background-color: #04de4a;
+                color: #fff;
+                padding: 5px 10px;
+                flex: 0 0 auto;
+                z-index: 1000;
+            }
+            .ticker-wrapper-h .heading:after{
+                content: "";
+                position: absolute;
+                top: 0;
+                border-left: 20px solid #19283b;
+                border-top: 17px solid transparent;
+                border-bottom: 15px solid transparent;
+            }
+
+
+            .news-ticker-h{
+                display: flex;
+                margin:0;
+                padding: 0;
+                padding-left: 90%;
+                z-index: 999;
+
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+                animation-name: tic-h;
+                animation-duration: 30s;
+
+            }
+            .news-ticker-h:hover {
+                animation-play-state: paused;
+            }
+
+            .news-ticker-h li{
+                display: flex;
+                width: 100%;
+                align-items: center;
+                white-space: nowrap;
+                padding-left: 20px;
+            }
+
+            .news-ticker-h li a{
+                color: #212529;
+                font-weight: bold;
+            }
+
+            @keyframes  tic-h {
+                0% {
+                    -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
+                    visibility: visible;
+                }
+                100% {
+                    -webkit-transform: translate3d(-100%, 0, 0);
+                    transform: translate3d(-100%, 0, 0);
+                }
+            }
+        </style>
 </head>
 <body>
 <!-- start:: Page -->
@@ -36,29 +104,34 @@
     <!-- start:: Header -->
     <header class="main-header">
         <div class="container">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-3">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/images/logo-dark.png" alt="" /></a>
+                    <a href="index.html"><img src="assets/images/logo-dark.png" alt=""/></a>
                 </div>
                 <div class="menu--mobile mx-lg-auto">
-                    <div class="menu-container d-flex align-items-center justify-content-between d-lg-none px-3 border-bottom py-2 mb-3">
+                    <div
+                        class="menu-container d-flex align-items-center justify-content-between d-lg-none px-3 border-bottom py-2 mb-3">
                         <div class="logo">
-                            <a href="index.html"><img src="assets/images/logo-dark.png" alt="" /></a>
+                            <a href="index.html"><img src="assets/images/logo-dark.png" alt=""/></a>
                         </div>
                         <div class="btn-close-header-mobile justify-content-end"><i class="fa-light fa-xmark"></i></div>
                     </div>
                     <div class="menu-container mx-auto menu-nav">
                         <ul class="main-menu">
-                            <li class="menu_item"><a class="menu_link active" data-scroll="section-home">الرئيسية</a></li>
+                            <li class="menu_item"><a class="menu_link active" data-scroll="section-home">الرئيسية</a>
+                            </li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
-                            <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
+                            <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل
+                                    واللوائح</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
                         </ul>
                     </div>
                     <div class="menu-container ms-lg-auto menu-nav my-2 my-lg-0 px-4 px-lg-0">
                         <ul class="main-menu d-flex align-items-center">
-                            <li class="menu_item"><a class="btn btn-primary bg" href="<?php echo e(route('login_page')); ?>">تسجيل الدخول</a></li>
-                            <li class="menu_item me-2 me-lg-0"><a class="btn btn-outline-white me-lg-2" href="<?php echo e(route('register')); ?>">تسجيل</a></li>
+                            <li class="menu_item"><a class="btn btn-primary bg" href="<?php echo e(route('login_page')); ?>">تسجيل
+                                    الدخول</a></li>
+                            <li class="menu_item me-2 me-lg-0"><a class="btn btn-outline-white me-lg-2"
+                                                                  href="<?php echo e(route('register')); ?>">تسجيل</a></li>
                         </ul>
                     </div>
                     <div class="menu-container col-auto px-4 px-lg-0">
@@ -80,22 +153,41 @@
                 </div>
                 <div class="header-mobile__toolbar me-auto d-lg-none fa-lg"><i class="fa-light fa-bars"></i></div>
             </div>
+            <div class="ticker-wrapper-h" style="background:#cbb0a2 ; color:#c3b0b0">
+                <div class="heading " style="background-color: #0b5ed7 " >الشريط الاخباري </div>
+
+                <ul class="news-ticker-h">
+                    <?php $__currentLoopData = $news; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_news): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li style="color: white !important"><a href=""><?php echo e($_news->news); ?></a></li>
+                        <li style="color: white !important"><a href="">||</a></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+                </ul>
+            </div>
+
         </div>
+
+
+
     </header>
-    <!-- end:: Header -->
-    <!-- start:: section -->
+
     <section class="section section-home" id="section-home">
         <div class="container">
+
             <div class="row align-items-center">
                 <div class="col-lg-4 col-xl-3 mb-4 mx-auto">
                     <div class="home-content">
                         <h2 class="wow fadeInUp font-bold text-white mb-lg-3" data-wow-delay="0.2s">بوابة</h2>
-                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #C0946F">تسليم الرقمية</h3>
+                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #C0946F">تسليم
+                            الرقمية</h3>
                         <h3 class="wow fadeInUp font-bold text-white" data-wow-delay="0.4s">مركز ريــادي متكامل</h3>
                     </div>
                 </div>
             </div>
+
         </div>
+
     </section>
     <!-- end:: section -->
     <!-- start:: section -->
@@ -108,10 +200,12 @@
                             <div class="section-title mb-3">
                                 <h2 class="font-bold bg bg-start">عن المركز</h2>
                             </div>
-                            <h4 class="mb-4">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</h4>
+                            <h4 class="mb-4">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل
+                                الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</h4>
                             <div class="widget__item-serve">
                                 <div class="widget__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374" viewBox="0 0 21.371 21.374">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374"
+                                         viewBox="0 0 21.371 21.374">
                                         <path
                                             id="Path_4513"
                                             data-name="Path 4513"
@@ -127,7 +221,8 @@
                             </div>
                             <div class="widget__item-serve">
                                 <div class="widget__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374" viewBox="0 0 21.371 21.374">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374"
+                                         viewBox="0 0 21.371 21.374">
                                         <path
                                             id="Path_4513"
                                             data-name="Path 4513"
@@ -144,7 +239,8 @@
                             </div>
                             <div class="widget__item-serve">
                                 <div class="widget__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374" viewBox="0 0 21.371 21.374">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374"
+                                         viewBox="0 0 21.371 21.374">
                                         <path
                                             id="Path_4513"
                                             data-name="Path 4513"
@@ -160,7 +256,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="image-about"><img src="assets/images/image-about.png" alt="" /></div>
+                            <div class="image-about"><img src="assets/images/image-about.png" alt=""/></div>
                         </div>
                     </div>
                 </div>
@@ -175,7 +271,8 @@
                 <div class="swiper-container swiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('/').'/Mechanical.pdf'); ?>" target="_blank"  class="widget__item-downlaod text-center">
+                            <a href="<?php echo e(url('/').'/Mechanical.pdf'); ?>" target="_blank"
+                               class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل الاعمال الميكانيكية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -183,55 +280,66 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات </h4>
+                            <a href="<?php echo e(url('الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات.pdf/')); ?>"
+                               target="_blank" class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام
+                                    وتسليم المخيمات </h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل الأعمال المعمارية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل   الأعمال المعمارية</h4>
+                            <a href="<?php echo e(url('دليل الأعمال المعمارية.pdf/')); ?>" target="_blank"
+                               class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">دليل الأعمال المعمارية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل الأعمال الانشائية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل   الأعمال   الانشائية</h4>
+                            <a href="<?php echo e(url('دليل الأعمال الانشائية.pdf/')); ?>" target="_blank"
+                               class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">دليل الأعمال الانشائية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى</h4>
+                            <a href="<?php echo e(url('دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى.pdf/')); ?>"
+                               target="_blank" class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات
+                                    للمخيمات بمنى</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى </h4>
+                            <a href="<?php echo e(url('دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى.pdf/')); ?>"
+                               target="_blank" class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال
+                                    الإضافات للمخيمات بمنى </h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق</h4>
+                            <a href="<?php echo e(url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق.pdf/')); ?>"
+                               target="_blank" class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و
+                                    الشركات الهندسية للوقاية والحماية من الحريق</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل الأعمال الكهربائية.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
+                            <a href="<?php echo e(url('دليل الأعمال الكهربائية.pdf/')); ?>" target="_blank"
+                               class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل الأعمال الكهربائية</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -239,15 +347,18 @@
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي تنفيذ اعمال الوقاية والحماية من الحريق.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي تنفيذ اعمال الوقاية والحماية من الحريق</h4>
+                            <a href="<?php echo e(url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي تنفيذ اعمال الوقاية والحماية من الحريق.pdf/')); ?>"
+                               target="_blank" class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي
+                                    تنفيذ اعمال الوقاية والحماية من الحريق</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
                                 </div>
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="<?php echo e(url('دليل اعمال تغذية المياة و الصرف الصحي.pdf/')); ?>" target="_blank" class="widget__item-downlaod text-center">
+                            <a href="<?php echo e(url('دليل اعمال تغذية المياة و الصرف الصحي.pdf/')); ?>" target="_blank"
+                               class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">دليل اعمال تغذية المياة و الصرف الصحي</h4>
                                 <div class="widget__item-icon">
                                     <i class="fa-light fa-download"></i>
@@ -272,7 +383,7 @@
                     <div class="col-lg-10 mx-auto">
                         <div class="row justify-content-between">
                             <div class="col-lg-3 mb-4 mb-lg-0">
-                                <div class="logo mb-lg-4 mb-2"><img src="assets/images/logo-dark.png" alt="" /></div>
+                                <div class="logo mb-lg-4 mb-2"><img src="assets/images/logo-dark.png" alt=""/></div>
                                 <ul class="social-media">
                                     <li>
                                         <a href=""> <i class="fa-brands fa-youtube"></i></a>
@@ -291,7 +402,8 @@
                             <div class="col-lg-4">
                                 <h3 class="mb-4 mt-1 mt-lg-0 bg bg-start">حمل التطبيق مجاناً</h3>
                                 <div class="d-flex img-app">
-                                    <a class="ms-2" href=""><img src="assets/images/google-play.png" alt="" /></a><a href=""><img src="assets/images/app-store.png" alt="" /></a>
+                                    <a class="ms-2" href=""><img src="assets/images/google-play.png" alt=""/></a><a
+                                        href=""><img src="assets/images/app-store.png" alt=""/></a>
                                 </div>
                             </div>
                         </div>
@@ -305,11 +417,13 @@
                     <div class="col-lg-10 mx-auto">
                         <div class="row align-items-center">
                             <div class="col-lg-6 mb-3 mb-lg-0">
-                                <p class="text-center text-lg-end text">جميع الحقوق محفوظة  لدى البوابة الرقمية تسليم © <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?></p>
+                                <p class="text-center text-lg-end text">جميع الحقوق محفوظة لدى البوابة الرقمية تسليم
+                                    © <?php echo e(\Alkoumi\LaravelHijriDate\Hijri::Date('Y')); ?></p>
                             </div>
                             <div class="col-lg-6">
-                                <div class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand">
-                                    <img src="assets/images/kidana.png" alt="" /></div>
+                                <div
+                                    class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand">
+                                    <img src="assets/images/kidana.png" alt=""/></div>
                             </div>
                         </div>
                     </div>
@@ -322,6 +436,15 @@
 <!-- end:: Page -->
 <script src="assets/js/script.min.js"></script>
 <script src="assets/js/function.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link href="jquery.simpleTicker.css" rel="stylesheet">
+<script type="text/javascript">
+
+        $(function () {
+            $('#js-news').ticker();
+        });
+</script>
+
 </body>
 </html>
 <?php /**PATH C:\wamp64\www\taslem\resources\views/public.blade.php ENDPATH**/ ?>

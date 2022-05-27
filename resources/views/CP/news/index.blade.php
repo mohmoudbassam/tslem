@@ -1,0 +1,170 @@
+@extends('CP.master')
+@section('title')
+    الطلبات
+@endsection
+@section('content')
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">
+                    <div class="btn-group" role="group">
+                        <a href="javascript: void(0);" onclick="showModal('{{route('news.form')}}')"   class="btn btn-primary dropdown-toggle">
+                            انشاء خبر <i class="fa fa-clipboard-check"></i>
+                        </a>
+
+                    </div>
+                </h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">الأخبار</a></li>
+                        <li class="breadcrumb-item active">الرئيسية</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="row mt-4">
+                <div class="col-lg-12">
+
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+                           role="grid"
+                           aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                        <th>
+                           الخبر
+                        </th> <th>
+                           تاريخ الإنشاء
+                        </th>
+                        <th>
+                            الخيارات
+                        </th>
+
+
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
+         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    </div>
+
+@endsection
+
+@section('scripts')
+    <script>
+
+
+        $.fn.dataTable.ext.errMode = 'none';
+        $(function () {
+            $('#items_table').DataTable({
+                "dom": 'tpi',
+                "searching": false,
+                "processing": true,
+                'stateSave': true,
+                "serverSide": true,
+                ajax: {
+                    url: '{{route('news.list')}}',
+                    type: 'GET',
+                    "data": function (d) {
+                        d.name = $('#name').val();
+                        d.type = $('#type').val();
+
+                    }
+                },
+                language: {
+                    "url": "{{url('/')}}/assets/datatables/Arabic.json"
+                },
+                columns: [
+                    {className: 'text-center', data: 'news', name: 'news'},
+                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+
+                    {className: 'text-center', data: 'actions', name: 'actions'},
+
+                ],
+
+
+            });
+
+        });
+        $('.search_btn').click(function (ev) {
+            $('#items_table').DataTable().ajax.reload(null, false);
+        });
+
+    function delete_news(id, url, callback = null) {
+        Swal.fire({
+            title: 'هل انت متاكد من حذف الخبر؟',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#84dc61',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'تأكيد',
+            cancelButtonText: 'لا'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'id': id
+                    },
+                    beforeSend() {
+                        KTApp.blockPage({
+                            overlayColor: '#000000',
+                            type: 'v2',
+                            state: 'success',
+                            message: 'الرجاء الانتظار'
+                        });
+                    },
+                    success: function (data) {
+                        if (callback && typeof callback === "function") {
+                            callback(data);
+                        } else {
+                            if (data.success) {
+                                $('#items_table').DataTable().ajax.reload(null, false);
+                                showAlertMessage('success', data.message);
+                            } else {
+                                showAlertMessage('error', 'هناك خطأ ما');
+                            }
+                            KTApp.unblockPage();
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                });
+            }
+        });
+    }
+
+
+    </script>
+
+@endsection

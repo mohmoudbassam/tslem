@@ -33,7 +33,7 @@ class SpecialtiesController extends Controller
                                             <div class="dropdown-menu" style="">
                                                 <a class="dropdown-item" href="'.route('specialties.update_from',['specialties'=>$service->id]).'">تعديل</a>
                                                 <a class="dropdown-item" href="#" onclick="delete_const(' . $service->id . ', \'' . route('specialties.delete') . '\')" >حذف</a>
-                                                <a class="dropdown-item" href="' . route("service.index", [ 'specialties' => $service->id ]) . '">عرض الخدمات</a>
+                                                <a class="dropdown-item" href="' . route("service.index", [ 'specialties_id' => $service->id ]) . '">عرض الخدمات</a>
                                             </div>
                                         </div>';
 

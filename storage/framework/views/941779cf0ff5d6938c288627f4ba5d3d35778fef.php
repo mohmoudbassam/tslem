@@ -30,6 +30,15 @@
                             <label class="visually-hidden" for="specificSizeInputName">الاسم </label>
                             <input type="text" class="form-control" id="name" placeholder="الاسم">
                         </div>
+                        <div class="col-lg-4">
+                            <label class="visually-hidden" for="specificSizeInputName">التخصص </label>
+                            <select name="specialties_id" id="specialties_id" class="form-control">
+                                <option value="">اختر ...</option>
+                                <?php $__currentLoopData = $specialties; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $s): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option <?php if($s->id == request()->specialties_id): ?> selected <?php endif; ?> value="<?php echo e($s->id); ?>"><?php echo e($s->name_ar); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
 
 
 
@@ -60,6 +69,9 @@
                         <thead>
                         <th>
                             اسم الخدمة
+                        </th>
+                        <th>
+                            اسم التخصص
                         </th>
                         <th>
                             اجراءات
@@ -98,7 +110,7 @@
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
-                        d.parnet_id = $('#type').val();
+                        d.specialties_id = $('#specialties_id').val();
 
                     }
                 },
@@ -107,6 +119,7 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'name', name: 'name'},
+                    {className: 'text-center', data: 'specialties.name_ar', name: 'specialties.name_ar'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
                 ],
 
