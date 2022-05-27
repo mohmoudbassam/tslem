@@ -39,6 +39,7 @@
                                     <option value="Sharer">جهة مشاركة</option>
                                     <option value="consulting_office">مكتب استشاري</option>
                                     <option value="contractor">مقاول</option>
+                                    <option value="raft_company">شركة طوافة</option>
                                 </select>
                             </div>
                             <div class="col-12 text-danger" id="type_error"></div>

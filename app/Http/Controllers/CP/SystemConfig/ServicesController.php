@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CP\SystemConfig;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
-use App\Models\ServiceFileType;
+
 use App\Models\Specialties;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -47,7 +47,7 @@ class ServicesController extends Controller
 
     public function add() {
         return view("CP.SystemConfig.services_add", [
-            'file_types' => ServiceFileType::all(),
+
             'specialties' => Specialties::all(),
         ]);
     }
@@ -60,7 +60,7 @@ class ServicesController extends Controller
             'input' => 1,
             'specialties_id' => $request->specialties_id,
         ]);
-        $service->file_type()->attach($request->file_ids);
+
 
         return response()->json([
             'message' => 'تمت العملية بنجاح',
@@ -81,9 +81,9 @@ class ServicesController extends Controller
 
     public function update_from(Request $request,Service $service)
     {
-        $service->load('file_type');
+
         $data['service']=$service;
-        $data['file_types'] = ServiceFileType::all();
+
         $data['specialties'] = Specialties::all();
 
         return view('CP.SystemConfig.services_update', $data);
@@ -97,7 +97,7 @@ class ServicesController extends Controller
             'input' => 1,
             'specialties_id' => $request->specialties_id,
         ]);
-        $service->file_type()->sync($request->file_ids);
+
 
         return response()->json([
             'message' => 'تمت عمليه التعديل بنجاح',

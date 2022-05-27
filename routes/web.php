@@ -6,6 +6,7 @@ use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
 
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
+use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
 use App\Http\Controllers\CP\RegisterController;
 use App\Http\Controllers\CP\SystemConfig\SpecialtiesController;
@@ -34,7 +35,8 @@ use App\Http\Controllers\PDFController;
 */
 
 Route::get('/', function () {
-    return view("public");
+  $data['news']=  \App\Models\News::query()->get();
+    return view("public",$data);
 })->name('public');
 
 Route::get('login', [LoginController::class, 'index'])->name('login_page');
@@ -222,6 +224,13 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('store', [SpecialtiesController::class, 'store'])->name('.store');
             Route::post('delete', [SpecialtiesController::class, 'delete'])->name('.delete');
             Route::post('update', [SpecialtiesController::class, 'update'])->name('.update');
+        });
+        Route::prefix('news')->name('news')->group(function () {
+            Route::get('', [NewsController::class, 'index']);
+            Route::get('list', [NewsController::class, 'list'])->name('.list');
+            Route::get('form/{news?}', [NewsController::class, 'form'])->name('.form');
+            Route::post('form/{news?}', [NewsController::class, 'add_edit'])->name('.add_edit');
+            Route::post('delete', [NewsController::class, 'delete'])->name('.delete');
         });
     });
 
