@@ -137,18 +137,6 @@
                             </div>
                         </div>
                     @endif
-                    @if($record->address)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="address">العنوان الوطني<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{$user->address}}" id="address"
-                                       name="address"
-                                       placeholder="العنوان الوطني">
-                                <div class="col-12 text-danger" id="address_error"></div>
-                            </div>
-                        </div>
-                    @endif
                     @if($record->city)
                         <div class="col-md-6">
                             <div class="mb-3">
