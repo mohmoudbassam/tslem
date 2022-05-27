@@ -62,6 +62,10 @@
                                 </option>
                                 <option @if($record->type =="Delivery") selected @endif value="Delivery">تسليم</option>
                                 <option @if($record->type =="Kdana") selected @endif value="Kdana">كدانة</option>
+
+                                <option @if($record->type =="raft_company") selected
+                                        @endif value="raft_company">   شركة طوافة
+                                </option>
                             </select>
 
                         </div>

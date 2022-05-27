@@ -41,6 +41,7 @@
                                     <option value="contractor">مقاول</option>
                                     <option value="Delivery">تسليم</option>
                                     <option value="Kdana">كدانة</option>
+                                    <option value="raft_company">شركة طوافة</option>
                                 </select>
                             </div>
                             <div class="col-12 text-danger" id="type_error"></div>
