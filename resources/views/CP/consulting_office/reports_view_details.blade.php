@@ -310,7 +310,7 @@ file-drop-zone clearfix {}
                                                         <label class="visually-hidden" for="specificSizeInputName">الاسم
                                                             او البريد</label>
                                                         <input type="text" class="form-control" id="name"
-                                                            placeholder="الاسم او البريد او الهاتف">
+                                                            placeholder="الاسم او البريد">
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <label class="visually-hidden" for="type"></label>
@@ -322,8 +322,6 @@ file-drop-zone clearfix {}
                                                             <option value="Sharer">جهة مشاركة</option>
                                                             <option value="consulting_office">مكتب استشاري</option>
                                                             <option value="contractor">مقاول</option>
-                                                            <option value="Delivery">تسليم</option>
-                                                            <option value="Kdana">كدانة</option>
                                                         </select>
                                                     </div>
 

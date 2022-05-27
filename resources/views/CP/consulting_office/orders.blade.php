@@ -28,9 +28,15 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+<<<<<<< HEAD
                         <div class="col-lg-2">
                             <label for="order_id">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
+=======
+                        <div class="col-lg-4">
+                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
+                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
+>>>>>>> b76c9d4b8bdc1465c229cd0e332d07bddceac7d7
                         </div>
 
 
@@ -57,9 +63,11 @@
                             <label for="type"> المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
+
                                 @foreach($designers as $designer)
                                     <option value="{{$designer->id}}">{{$designer->company_name}}</option>
                                 @endforeach
+
                             </select>
                         </div>
 
@@ -101,7 +109,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مركز، مؤسسة، شركة (مطوف)
+                            مؤسسة، شركة (مطوف)
                         </th>
                         <th>
                             التاريخ
