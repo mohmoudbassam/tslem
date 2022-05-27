@@ -296,6 +296,45 @@
                 </div>
                 @endif
 
+                
+                @if($record->hajj_service_license)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="hajj_service_license"> ترخيص خدمة حجاج (PDF)</label>
+                            <input type="file" class="form-control" id="hajj_service_license"
+                                name="hajj_service_license">
+                            <div class="col-12 text-danger" id="hajj_service_license_error"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="hajj_service_license_end_date">تاريخ
+                                الانتهاء</label>
+                            <input type="text" class="form-control hajj_service_license_end_date"
+                                id="hajj_service_license_end_date"
+                                name="hajj_service_license_end_date">
+                            <div class="col-12 text-danger" id="hajj_service_license_end_date_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                @if($record->personalization_record)
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="personalization_record"> محضر التخصيص  (PDF)</label>
+                            <input type="file" class="form-control" id="personalization_record"
+                                name="personalization_record">
+                            <div class="col-12 text-danger" id="personalization_record_error"></div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
 
                 <div class="mt-4">
                     <button type="button" class="btn btn-lg btn-primary submit_btn">رفع الملفات</button>
@@ -331,8 +370,9 @@
     let date_of_zakat_end_date = "{{old('date_of_zakat_end_date')}}";
     let saudization_certificate_end_date = "{{old('saudization_certificate_end_date')}}";
     let chamber_of_commerce_certificate_end_date = "{{old('chamber_of_commerce_certificate_end_date')}}";
+    let hajj_service_license_end_date = "{{old('hajj_service_license_end_date')}}";
 
-
+    
     @foreach(array_keys(get_user_column_file($type)) as $_col)
     file_input_register('#{{$_col}}');
     @endforeach
@@ -397,7 +437,8 @@
     flatpickr(".date_of_zakat_end_date",{defaultDate: (date_of_zakat_end_date == '') });
     flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '')});
     flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') });
-
+    flatpickr(".hajj_service_license_end_date",{defaultDate: (hajj_service_license_end_date == '') });
+    
 
     </script>
     @endsection

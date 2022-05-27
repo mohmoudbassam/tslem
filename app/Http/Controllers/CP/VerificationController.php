@@ -88,6 +88,7 @@ class VerificationController extends Controller{
             'date_of_zakat_end_date' => request('date_of_zakat_end_date'),
             'saudization_certificate_end_date' => request('saudization_certificate_end_date'),
             'chamber_of_commerce_certificate_end_date' => request('chamber_of_commerce_certificate_end_date'),
+            'hajj_service_license_end_date' => request('hajj_service_license_end_date'),
             'is_file_uploaded' => 1
         ]);
 
