@@ -85,22 +85,6 @@
                         </div>
                     @endif
 
-
-                    @if($record->responsible_name)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-
-                                <label class="form-label" for="responsible_name">اسم الشخص المفوض<span
-                                        class="text-danger required-mark">*</span></label>
-
-
-                                <input type="text" class="form-control" value="{{$user->responsible_name}}"
-                                       id="responsible_name" name="responsible_name"
-                                       placeholder="اسم المفوض">
-                                <div class="col-12 text-danger" id="responsible_name_error"></div>
-                            </div>
-                        </div>
-                    @endif
 @if($record->id_number)
                         <div class="col-md-6">
                             <div class="mb-3">
