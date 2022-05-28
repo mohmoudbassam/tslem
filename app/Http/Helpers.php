@@ -62,7 +62,8 @@ function file_name_by_column($col)
         'commissioner_id_photo'=>'صورة هوية المفوض',
         'cv_file'=>'الاعمال السابقة',
         'commissioner_photo'=>'',
-        'hajj_service_license'=>'ترخيص خدمة الحج'
+        'hajj_service_license'=>'ترخيص خدمة الحج',
+        'personalization_record'=>'سجل التخصيص'
     ][$col];
 }
 
