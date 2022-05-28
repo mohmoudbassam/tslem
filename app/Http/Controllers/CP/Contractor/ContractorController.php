@@ -45,9 +45,7 @@ class ContractorController extends Controller
             ->whereServiceProviderId($request->service_provider_id)
             ->whereDate($request->from_date,$request->to_date)
             ->orderByDesc('created_at')
-            ->whereContractor(auth()->user()->id)
-
-            ->where('status', '>=', '3');
+            ->whereContractor(auth()->user()->id);
 
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
@@ -58,6 +56,8 @@ class ContractorController extends Controller
                 // if ($order->status > 4) {
                 //     $accept = '';
                 // }
+                $accept_order='';
+                $reject_order='';
                 $view_details = ' <a class="dropdown-item" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
                     عرض التفاصيل
                 </a>';
