@@ -252,11 +252,25 @@
                     @if($record->commercial_record)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
+                                <label class="form-label" for="commercial_record"> رقم السجل التجاري <span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control"
                                        value="{{old('commercial_record')}}"
                                        id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($record->license_number)
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="license_number"> رقم  الترخيص <span
+                                        class="text-danger required-mark">*</span></label>
+                                <input type="text" class="form-control"
+                                       value="{{old('license_number')}}"
+                                       id="license_number" placeholder="xxxxxxxxx" name="license_number">
+                                <div class="col-12 text-danger" id="license_number_error"></div>
                             </div>
                         </div>
                     @endif
