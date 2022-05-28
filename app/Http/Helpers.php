@@ -33,8 +33,9 @@ function get_user_column_file($type)
         'commissioner_photo',
         'cv_file',
         'hajj_service_license',
-        'personalization_record'
-        
+        'personalization_record',
+        'company_owner_id_photo'
+
         )
         ->where('type', $type)->first();
     $column = $benef->getAttributes();
@@ -56,7 +57,11 @@ function file_name_by_column($col)
         'chamber_of_commerce_certificate' => 'شهادة الغرفة التجارية',
         'tax_registration_certificate' => 'شهادة تسجيل الضريبة',
         'wage_protection_certificate' => 'شهادة حماية الأجور',
-        'memorandum_of_association' => ' عقد التأسيس '
+        'memorandum_of_association' => ' عقد التأسيس ',
+        'company_owner_id_photo'=>'صورة هوية الرئيس',
+        'commissioner_id_photo'=>'صورة هوية المفوض',
+        'cv_file'=>'الاعمال السابقة',
+        'commissioner_photo'=>''
     ][$col];
 }
 

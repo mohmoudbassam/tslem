@@ -75,10 +75,10 @@ class User extends Authenticatable
 
         return [
             'admin' => 'مدير النظام',
-            'service_provider' => 'مقدم خدمة',
-            'design_office' => 'مكتب تصميم',
+            'service_provider' => 'مؤسسة ، شركة (مطوف)',
+            'design_office' => 'مكتب هندسي',
             'Sharer' => 'جهة مشاركة',
-            'consulting_office' => 'مكتب استشاري',
+            'consulting_office' => 'مشرف',
             'contractor' => 'مقاول',
             'Delivery' => 'تسليم',
             'Kdana' => 'كدانة',
