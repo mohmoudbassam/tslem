@@ -107,7 +107,7 @@
             font-family: Tajawal !important;
         }
 
-        .alert-danger ul{ 
+        .alert-danger ul{
             font-family: Tajawal !important;
         }
 
@@ -117,7 +117,7 @@
             color: #e9ecef;
             background-color: #126a47;
             border-color: #126a47;
-            
+
         }
     </style>
 </head>
@@ -143,7 +143,7 @@
 
             </div>
         </div>
-        <div class="card-body"> 
+        <div class="card-body">
             @if (session('success'))
                 <div class="alert alert-success">
                     <ul>
@@ -180,9 +180,9 @@
                     @if($has_designer_type)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="designer_type">التخصص<span
+                                <label class="form-label" for="designer_multiple_type">التخصص<span
                                         class="text-danger required-mark">*</span></label>
-                                <select class="form-select" id="designer_type" name="designer_type">
+                                <select class="form-select" multiple id="designer_multiple_type" name="designer_multiple_type[]">
 
                                     <option
                                              value="designer">مكتب تصميم
@@ -201,9 +201,9 @@
                     @if($record->type=='contractor')
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="contractor_type">التخصصات<span
+                                <label class="form-label" for="designer_type">التخصصات<span
                                         class="text-danger required-mark">*</span></label>
-                                <select class="form-control" multiple id="contractor_type" name="contractor_type[]">
+                                <select class="form-control"  id="designer_type" name="designer_type">
                                     @foreach($contractor_types as $type)
                                     <option   value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
@@ -415,7 +415,7 @@
 
 <script>
     $(function(){
-        new Choices("#contractor_type", {removeItemButton: !0})
+        new Choices("#designer_multiple_type", {removeItemButton: !0})
     });
     let old_date = "{{old('id_date')}}";
     $('input[type=text]').addClass('fontArial');

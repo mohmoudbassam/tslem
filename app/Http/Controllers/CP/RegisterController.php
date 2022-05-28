@@ -7,6 +7,7 @@ use App\Http\Requests\CP\User\StoreUserRequest;
 use App\Models\BeneficiresCoulumns;
 use App\Models\ContractorSpecialties;
 use App\Models\ContractorSpecialtiesPivot;
+use App\Models\DesignerType;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -51,10 +52,6 @@ class RegisterController extends Controller
 
     public function add_edit(StoreUserRequest $request)
     {
-        if(request('type')=='design_office' && request('designer_type')=='consulting'){
-
-            $request->type='consulting_office';
-        }
 
         $user = User::query()->create([
             'designer_type' => $request->designer_type,
@@ -88,13 +85,17 @@ class RegisterController extends Controller
 
         ]);
         //dd(request('contractor_type'),is_array(request('contractor_type')),!empty(request('contractor_type')));
-        if(request('contractor_type') && is_array(request('contractor_type')) && !empty(request('contractor_type'))){
-            foreach($request->contractor_type as $type){
-                ContractorSpecialtiesPivot::query()->create([
-                       'user_id'=>$user->id,
-                       'specialties_id'=>$type
+        if( is_array(request('designer_multiple_type')) && !empty(request('designer_multiple_type'))){
+            foreach($request->designer_multiple_type as $type){
+                DesignerType::query()->create([
+                       'type'=>$type,
+                       'user_id'=>$user->id
                 ]);
             }
+        }
+        if(request('type')=='design_office'){
+
+            $request->type='consulting_office';
         }
         //$this->uploadUserFiles($user, $request);
         return redirect()->route('login_page')->with(['success' => 'تمت عمليه التسجيل بنجاح']);
