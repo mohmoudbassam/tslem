@@ -12,7 +12,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">تعديل تقرير</a></li>
-                        <li class="breadcrumb-item"><a href="<?php echo e(route('consulting_office')); ?>">المستخدمين</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('consulting_office')); ?>">الطلبات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>

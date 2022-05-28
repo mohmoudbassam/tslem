@@ -32,11 +32,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="<?php echo e(url("/")); ?>/assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="<?php echo e(url('/assets/libs/flatpickr/flatpickr.min.css')); ?>"/>
 
 
-    <style>
+        <style>
         @font-face {
             font-family: JannaLT;
             src: url('<?php echo e(url('/assets/fonts/JannaLT-Regular.woff')); ?>');
@@ -81,8 +82,24 @@
             box-shadow: 0 2px 8px 0 rgb(81 86 190 / 30%);
         }
 
+        .alert-danger{
+            color: #e9ecef;
+            background-color: #db1c19;
+            border-color: #e21a13;
+            font-size: 16px;
+            font-family: JannaLT !important;
+        }
+        .alert-success{
+            font-size: 16px;
+            font-family: JannaLT !important;
+            color: #e9ecef;
+            background-color: #126a47;
+            border-color: #126a47;
+            
+        }
 
     </style>
+    
     <?php echo $__env->yieldContent('style'); ?>
 </head>
 

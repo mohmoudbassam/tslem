@@ -35,6 +35,23 @@
         <div class="card-body">
             <form id="add_edit_form" method="post" action="<?php echo e(route('consulting_office.add_report')); ?>" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
+
+                <div class="col-md-12">
+                        <div class="mb-3">
+                            <label for="title">الطلب</label>
+                            <select name="order_id" id="order_id" class="form-control">
+                                <option value="">اختر الطلب</option>
+                                <?php if(!empty($orders)): ?>
+                                <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($order->id); ?>"><?php echo e($order->title); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </select>
+                            <div class="col-12 text-danger" id="order_id_error"></div>
+                        </div>
+                    </div>
+
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-3">
@@ -60,7 +77,6 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" value="<?php echo e($order->id); ?>" name="order_id">
             </form>
 
             <div class="d-flex flex-wrap gap-3">

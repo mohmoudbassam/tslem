@@ -189,10 +189,15 @@ class ConsultingOfficeController extends Controller
             ->make(true);
     }
 
-    public function reports_all_list(Order $order)
+    public function reports_all_list(Request $request, Order $order)
     {
         $reports = ConsultingReport::query()->with(['attchment'])
-            ->where('user_id', '=', auth()->user()->id);
+            ->where('user_id', '=', auth()->user()->id)
+            ->when($request->report_id, function ($q) use($request) {
+                $q->where('id', $request->report_id);
+            })
+            ->whereDate($request->from_date, $request->to_date);
+
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) {
                 $delete = '<a class="dropdown-item" onclick="deleteReport(' . $report->id . ')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
@@ -227,6 +232,11 @@ class ConsultingOfficeController extends Controller
         $order_ids = ConsultingReport::where('user_id', '=', auth()->user()->id)
             ->pluck('order_id');
         $orders = Order::select('id', 'title')->whereIn('id', $order_ids)->get();
+
+//        $orders = Order::select('id', 'title')
+//            ->where('consulting_office_id', auth()->user()->id)
+//            ->where('status', '>=', '3')
+//            ->get();
         return view('CP.consulting_office.report_add_form', [
             'orders' => $orders,
         ]);
