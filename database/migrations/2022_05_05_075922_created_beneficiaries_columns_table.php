@@ -39,6 +39,7 @@ class CreatedBeneficiariesColumnsTable extends Migration
             $table->boolean('telephone')->default(0);
             $table->boolean('city')->default(0);
             $table->boolean('employee_number')->default(0);
+            $table->boolean('license_number')->default(0);///رقم الترخيص
 
             ///files
 
@@ -67,6 +68,7 @@ class CreatedBeneficiariesColumnsTable extends Migration
             $table->boolean('tax_registration_certificate')->default(0);///شهادة تسجيل الضريبة
             $table->boolean('wage_protection_certificate')->default(0);///شهادة حماية الضريبة
             $table->boolean('memorandum_of_association')->default(0);///عقد التاسيس
+
 
 
         });

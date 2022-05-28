@@ -39,6 +39,7 @@ class CreateUsersTable extends Migration
                 'organization', 'office'
             ])->nullable();
             $table->string('company_owner_name')->nullable();
+            $table->string('license_number')->nullable();
             $table->string('commercial_record')->nullable();
             $table->string('website')->nullable();
             $table->string('responsible_name')->nullable();

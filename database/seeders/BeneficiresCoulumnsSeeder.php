@@ -34,6 +34,7 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'company_owner_name' => '1',
             'commercial_record' => '1',
             'website' => '1',
+            'license_number' => '1',
             'responsible_name' => '1',
             'id_number' => '1',
             'id_date' => '1',
@@ -45,6 +46,7 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'address_file' => '0',
             'personalization_record' => '1',
             'hajj_service_license' => '1',
+
 
 
         ]);

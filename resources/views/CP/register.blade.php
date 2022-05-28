@@ -143,6 +143,7 @@
 
             </div>
         </div>
+
         <div class="card-body">
             @if (session('success'))
                 <div class="alert alert-success">
@@ -232,8 +233,7 @@
                                 <input type="text" class="form-control" value="{{old('company_owner_name')}}"
                                        id="company_owner_name"
                                        name="company_owner_name" placeholder="اسم المالك">
-
-
+                                <div class="col-12 text-danger" id="company_owner_name_error"></div>
                             </div>
                         </div>
                     @endif
@@ -253,7 +253,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
-                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
+                                <input type="text" class="form-control"
                                        value="{{old('commercial_record')}}"
                                        id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
@@ -318,6 +318,17 @@
                                        name="phone" minlength="10" maxlength="10"
                                        placeholder="رقم الجوال">
                                 <div class="col-12 text-danger" id="phone_error"></div>
+                            </div>
+                        </div>
+                    @endif @if($record->license_number)
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="license_number">رقم الترخيص<span class="text-danger required-mark">*</span></label>
+                                <input type="text"  value="{{old('license_number')}}"
+                                       class="form-control" id="license_number"
+                                       name="license_number"
+                                       placeholder="رقم الترخيص">
+                                <div class="col-12 text-danger" id="license_number_error"></div>
                             </div>
                         </div>
                     @endif
@@ -417,6 +428,7 @@
     $(function(){
         new Choices("#designer_multiple_type", {removeItemButton: !0})
     });
+
     let old_date = "{{old('id_date')}}";
     $('input[type=text]').addClass('fontArial');
     $('input[type=number]').addClass('fontArial');
@@ -445,11 +457,6 @@
                 minlength: 10,
                 maxlength: 10,
                 required: true
-            },
-            "commercial_record": {
-                minlength: 10,
-                maxlength: 10,
-                required: false
             },
             @endforeach
         },

@@ -17,6 +17,7 @@ class AddSomeFieldsToBeneficiariesColumnsTable extends Migration
             $table->boolean('company_owner_id_photo')->nullable()->default(1);
             $table->boolean('commissioner_id_photo')->nullable()->default(1);
             $table->boolean('commissioner_photo')->nullable()->default(1);
+
         });
     }
 
