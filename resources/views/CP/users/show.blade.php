@@ -13,6 +13,11 @@
             color: #fff !important;
             visibility: hidden !important;
         }
+        .center-block {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 @endsection
 @section('content')
@@ -58,7 +63,7 @@
                             <a class="nav-link px-3 active" data-bs-toggle="tab" href="#overview" role="tab">المعلومات
                                 الإساسية</a>
                         </li>
-                        @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider')
+                        @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider' || $user->type=='contractor')
 
                         <li class="nav-item">
                             <a class="nav-link px-3" data-bs-toggle="tab" href="#about" role="tab">المعلومات
@@ -115,7 +120,7 @@
                                     </div>
 
                                     @endif
-                                @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider')
+                                @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider'|| $user->type=='contractor' )
                                 <div class="pb-3">
                                     <div class="row">
                                         <div class="col-xl-2">
@@ -155,7 +160,7 @@
                         <!-- end card body -->
                     </div>
                     <!-- end card -->
-                    @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider')
+                    @if($user->type == 'design_office' || $user->type == 'consulting_office' || $user->type == 'design_office' || $user->type=='service_provider'|| $user->type=='contractor')
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex">
@@ -170,7 +175,7 @@
                             <div>
                                 <div class="row">
                                     @foreach(array_keys($col_file) as $_col_file)
-                                        <div class="col-xl-4">
+                                        <div class="col-xl-3">
                                             <div class="card p-1 mb-xl-0">
                                                 <div class="p-3">
                                                     <div class="d-flex align-items-start">
@@ -196,9 +201,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="position-relative">
+                                                <div class="position-relative ">
                                                     @if(is_image(pathinfo($user->{$_col_file}, PATHINFO_EXTENSION)))
-                                                        <a href="{{asset('storage/'.$user->{$_col_file})}}">
+                                                        <a href="{{asset('storage/'.$user->{$_col_file})}}" class="align-self-xxl-end">
                                                             <img src="{{asset('storage/'.$user->{$_col_file})}}"
                                                                  class="img-thumbnail">
                                                         </a>
@@ -206,9 +211,9 @@
 
                                                     @if(is_pdf(pathinfo($user->{$_col_file}, PATHINFO_EXTENSION)))
                                                         @if(is_pdf(pathinfo($user->{$_col_file}, PATHINFO_EXTENSION)))
-                                                            <a href="{{asset('storage/'.$user->{$_col_file})}}">
-                                                                <img src="{{asset('storage/'.'pdf.jfif')}}"
-                                                                     class="img-thumbnail">
+                                                            <a href="{{asset('storage/'.$user->{$_col_file})}}"  >
+                                                                <img src="{{asset('storage/'.'pdf.jfif')}}" style="width: 30%;"
+                                                                     class="center-block" >
                                                             </a>
                                                         @endif
                                                     @endif
