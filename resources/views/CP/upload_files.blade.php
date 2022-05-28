@@ -143,26 +143,7 @@
                     </div>
                 </div>
                 @endif
-                @if($record->certificate_of_zakat)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>
-                            <input type="file" class="form-control" id="certificate_of_zakat"
-                                name="certificate_of_zakat">
-                            <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control date_of_zakat_end_date" id="date_of_zakat_end_date"
-                                name="date_of_zakat_end_date">
-                            <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
+
                 @if($record->saudization_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                 <div class="row">
                     <div class="col-md-6">
@@ -296,7 +277,7 @@
                 </div>
                 @endif
 
-                
+
                 @if($record->hajj_service_license)
                 <div class="row">
                     <div class="col-md-6">
@@ -372,7 +353,7 @@
     let chamber_of_commerce_certificate_end_date = "{{old('chamber_of_commerce_certificate_end_date')}}";
     let hajj_service_license_end_date = "{{old('hajj_service_license_end_date')}}";
 
-    
+
     @foreach(array_keys(get_user_column_file($type)) as $_col)
     file_input_register('#{{$_col}}');
     @endforeach
@@ -438,7 +419,7 @@
     flatpickr(".saudization_certificate_end_date",{defaultDate: (saudization_certificate_end_date == '')});
     flatpickr(".chamber_of_commerce_certificate_end_date",{defaultDate: (chamber_of_commerce_certificate_end_date == '') });
     flatpickr(".hajj_service_license_end_date",{defaultDate: (hajj_service_license_end_date == '') });
-    
+
 
     </script>
     @endsection

@@ -35,9 +35,8 @@ function get_user_column_file($type)
         'hajj_service_license',
         'personalization_record',
         'company_owner_id_photo'
+        )->where('type', $type)->first();
 
-        )
-        ->where('type', $type)->first();
     $column = $benef->getAttributes();
     return array_filter($column);
 
@@ -58,12 +57,12 @@ function file_name_by_column($col)
         'tax_registration_certificate' => 'شهادة تسجيل الضريبة',
         'wage_protection_certificate' => 'شهادة حماية الأجور',
         'memorandum_of_association' => ' عقد التأسيس ',
-        'company_owner_id_photo'=>'صورة هوية الرئيس',
+        'company_owner_id_photo'=>'صورة هوية المالك',
         'commissioner_id_photo'=>'صورة هوية المفوض',
         'cv_file'=>'الاعمال السابقة',
-        'commissioner_photo'=>'',
+        'commissioner_photo'=>'خطاب التفويض',
         'hajj_service_license'=>'ترخيص خدمة الحج',
-        'personalization_record'=>'سجل التخصيص'
+        'personalization_record'=>'محضر التخصيص',
     ][$col];
 }
 
@@ -211,6 +210,8 @@ function is_pdf($extension)
     }
 
 }
+
+
 function api($success, $code, $message, $items = null, $errors = null)
 {
     return new APIResponse($success, $code, $message);

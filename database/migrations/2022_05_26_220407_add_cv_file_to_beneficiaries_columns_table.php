@@ -14,7 +14,7 @@ class AddCvFileToBeneficiariesColumnsTable extends Migration
     public function up()
     {
         Schema::table('beneficiaries_columns', function (Blueprint $table) {
-            $table->boolean('cv_file')->nullable()->default(1);
+            $table->boolean('cv_file')->nullable()->default(0);
         });
     }
 
