@@ -236,7 +236,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
     });
 
     Route::prefix('raft_company')->name('raft_company')->middleware(['raft_company'])->group(function () {
-        Route::get('/', [RaftCompanyController::class, 'index'])->name('.index');
+        Route::get('/', [RaftCompanyController::class, 'index']);
        
     });
 
