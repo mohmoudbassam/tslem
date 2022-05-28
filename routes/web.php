@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\CP\RaftCompany\RaftCompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -233,6 +234,12 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('delete', [NewsController::class, 'delete'])->name('.delete');
         });
     });
+
+    Route::prefix('raft_company')->name('raft_company')->middleware(['raft_company'])->group(function () {
+        Route::get('/', [RaftCompanyController::class, 'index'])->name('.index');
+       
+    });
+
 
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
