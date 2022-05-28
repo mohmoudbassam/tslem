@@ -264,7 +264,7 @@
 
 
                     @if($record->id_number)
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="id_number">رقم الهوية<span
                                         class="text-danger required-mark">*</span></label>
@@ -273,7 +273,7 @@
                                        placeholder="xxxxxxxxxx">
                                 <div class="col-12 text-danger" id="id_number_error"></div>
                             </div>
-                        </div>
+                        </div> -->
                     @endif
 
                     @if($record->id_date && request('type') !='design_office')
