@@ -178,24 +178,7 @@
                         </div>
                     </div>
                     @if($has_designer_type)
-
-                    <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="contractor_type">التخصصات<span
-                                        class="text-danger required-mark">*</span></label>
-                                <select class="form-control" multiple id="contractor_type" name="contractor_type[]">
-                                    @foreach($contractor_types as $type)
-                                    <option   value="{{$type->id}}">{{$type->name}}</option>
-                                        @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        
-                    @endif
-
-
-                    @if($record->type=='contractor')
-                    <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="designer_type">التخصص<span
                                         class="text-danger required-mark">*</span></label>
@@ -209,6 +192,21 @@
                                     <option
                                              value="fire">الحماية والوقاية من الحريق
                                     </option>
+                                </select>
+                            </div>
+                        </div>
+                    @endif
+
+
+                    @if($record->type=='contractor')
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="contractor_type">التخصصات<span
+                                        class="text-danger required-mark">*</span></label>
+                                <select class="form-control" multiple id="contractor_type" name="contractor_type[]">
+                                    @foreach($contractor_types as $type)
+                                    <option   value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
                                 </select>
                             </div>
                         </div>
