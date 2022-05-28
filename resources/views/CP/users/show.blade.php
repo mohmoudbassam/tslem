@@ -175,7 +175,7 @@
                             <div>
                                 <div class="row">
                                     @foreach(array_keys($col_file) as $_col_file)
-                                        <div class="col-xl-2">
+                                        <div class="col-xl-3">
                                             <div class="card p-1 mb-xl-0">
                                                 <div class="p-3">
                                                     <div class="d-flex align-items-start">
