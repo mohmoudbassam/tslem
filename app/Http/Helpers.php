@@ -61,7 +61,8 @@ function file_name_by_column($col)
         'company_owner_id_photo'=>'صورة هوية الرئيس',
         'commissioner_id_photo'=>'صورة هوية المفوض',
         'cv_file'=>'الاعمال السابقة',
-        'commissioner_photo'=>''
+        'commissioner_photo'=>'',
+        'hajj_service_license'=>'ترخيص خدمة الحج'
     ][$col];
 }
 
