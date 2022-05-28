@@ -40,6 +40,8 @@
                                     <option value="consulting_office">مكتب استشاري</option>
                                     <option value="contractor">مقاول</option>
                                     <option value="raft_company">شركة طوافة</option>
+                                    <option value="Delivery">تسليم</option>
+                                    <option value="Kdana">كدانة</option>
                                 </select>
                             </div>
                             <div class="col-12 text-danger" id="type_error"></div>
