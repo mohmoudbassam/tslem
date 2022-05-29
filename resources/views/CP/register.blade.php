@@ -285,7 +285,7 @@
                                 <div class="col-12 text-danger" id="phone_error"></div>
                             </div>
                         </div>
-                    @endif @if($record->license_number)
+                    @endif @if(request('type') == 'service_provider')
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="license_number">رقم الترخيص<span class="text-danger required-mark">*</span></label>
