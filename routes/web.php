@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\CP\RaftCompany\RaftCompanyController;
+use App\Http\Controllers\CP\RaftCenter\RaftCenterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -243,6 +244,10 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
         Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
         
+    });
+
+    Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
+        Route::get('/', [RaftCenterController::class, 'index']);
     });
 
 
