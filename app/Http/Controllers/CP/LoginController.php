@@ -12,7 +12,6 @@ class LoginController extends Controller
 {
     public function index()
     {
-
         if(auth()->check()){
             if(auth()->user()->type == 'admin'){
                 return redirect()->route('dashboard');
@@ -55,9 +54,10 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
             if(auth()->user()->type=='service_provider'){
-
+                if ( !auth()->user()->verify ) {
+                    return redirect()->route('verify');
+                }
                 return redirect()->route('services_providers');
-
             }
             if(auth()->user()->type=='Delivery'){
                 return redirect()->route('delivery');

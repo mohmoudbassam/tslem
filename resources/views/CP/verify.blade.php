@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12">
             <div class="alert alert-danger" style = "font-size:20px;">
-                يرجى زيارة بريدك الالكتروني واتباع الخطوات لتفعيل حسابك
+                حسابك غير مفعل حتى الان بإنتظار اعتماد عضويتك ⏳
             </div>
         </div>
     </div>
