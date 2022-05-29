@@ -189,7 +189,7 @@
                         <div class="swiper-slide">
                             <div
                                class="widget__item-downlaod text-center">
-                               <img src="{{ asset('assets/images/1.png') }}" alt="">
+                               <img src="{{ asset('assets/images/mina-qr.png') }}" alt="">
                                 <h4 class="widget__item-title qr">QR موقع مشعر منى</h4>
                             </div>
                         </div>
