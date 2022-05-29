@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>الرئيسية</title>
+    <title>بوابة تسليم الرقمية مركز ريادي متكامل</title>
     <meta property="og:type" content=""/>
     <meta property="og:title" content=""/>
     <meta property="og:description" content=" "/>
@@ -26,76 +26,8 @@
     <meta name="keywords" content=""/>
     <meta name="author" content=""/>
     <meta name="copyright" content=" "/>
-    <link rel="stylesheet" href="assets/css/plugin.min.css?v={{ config('app.asset_ver') }}"/>
-    <link rel="stylesheet" href="assets/css/main.css?v={{ config('app.asset_ver') }}"/>
-        <style>
-
-            .ticker-wrapper-h{
-                display: flex;
-                position: relative;
-                overflow: hidden;
-
-            }
-
-            .ticker-wrapper-h .heading{
-                background-color: #04de4a;
-                color: #fff;
-                padding: 5px 10px;
-                flex: 0 0 auto;
-                z-index: 1000;
-            }
-            .ticker-wrapper-h .heading:after{
-                content: "";
-                position: absolute;
-                top: 0;
-                border-left: 20px solid #19283b;
-                border-top: 17px solid transparent;
-                border-bottom: 15px solid transparent;
-            }
-
-
-            .news-ticker-h{
-                display: flex;
-                margin:0;
-                padding: 0;
-                padding-left: 90%;
-                z-index: 999;
-
-                animation-iteration-count: infinite;
-                animation-timing-function: linear;
-                animation-name: tic-h;
-                animation-duration: 30s;
-
-            }
-            .news-ticker-h:hover {
-                animation-play-state: paused;
-            }
-
-            .news-ticker-h li{
-                display: flex;
-                width: 100%;
-                align-items: center;
-                white-space: nowrap;
-                padding-left: 20px;
-            }
-
-            .news-ticker-h li a{
-                color: #212529;
-                font-weight: bold;
-            }
-
-            @keyframes tic-h {
-                0% {
-                    -webkit-transform: translate3d(0, 0, 0);
-                    transform: translate3d(0, 0, 0);
-                    visibility: visible;
-                }
-                100% {
-                    -webkit-transform: translate3d(-100%, 0, 0);
-                    transform: translate3d(-100%, 0, 0);
-                }
-            }
-        </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/plugin.min.css?v='.config('app.asset_ver')) }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v='.config('app.asset_ver')) }}"/>
 </head>
 <body>
 <!-- start:: Page -->
@@ -104,15 +36,15 @@
     <!-- start:: Header -->
     <header class="main-header">
         <div class="container">
-            <div class="d-flex align-items-center mb-3">
+            <div class="d-flex align-items-center header-top">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/images/logo-dark.png" alt=""/></a>
+                    <a href="{{ url('/') }}"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></a>
                 </div>
                 <div class="menu--mobile mx-lg-auto">
                     <div
                         class="menu-container d-flex align-items-center justify-content-between d-lg-none px-3 border-bottom py-2 mb-3">
                         <div class="logo">
-                            <a href="index.html"><img src="assets/images/logo-dark.png" alt=""/></a>
+                            <a href="{{ url('/') }}"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></a>
                         </div>
                         <div class="btn-close-header-mobile justify-content-end"><i class="fa-light fa-xmark"></i></div>
                     </div>
@@ -122,14 +54,14 @@
                             </li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
-                            <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">تأهيل مزودي الخدمات</a>
+                            <li class="menu_item"><a class="menu_link">تأهيل مزودي الخدمات</a>
                                 <ul class="main-menu-sub">
                                     <li><a>شركات ومكاتب</a></li>
                                     <li><a>مقاولين</a></li>
                                 </ul>
                             </li>
                             <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
-                            <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الخدمات الألكترونية</a>
+                            <li class="menu_item"><a class="menu_link">الخدمات الألكترونية</a>
                                 <ul class="main-menu-sub">
                                     <li><a>تسليم مخيمات</a></li>
                                     <li><a>استلام مخيمات</a></li>
@@ -169,14 +101,11 @@
             </div>
             <div class="ticker-wrapper-h " style="background:#cbb0a2 ; color:#c3b0b0">
                 <div class="heading " style="background-color: #0b5ed7 " >الشريط الاخباري </div>
-
                 <ul class="news-ticker-h">
                     @foreach($news as $_news)
                         <li style="color: white !important"><a href="">{{$_news->news}}</a></li>
                         <li style="color: white !important"><a href="">||</a></li>
                     @endforeach
-
-
                 </ul>
             </div>
          </div>
@@ -191,9 +120,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-4 col-xl-3 mb-4 mx-auto">
                     <div class="home-content">
-                        <h2 class="wow fadeInUp font-bold text-white mb-lg-3" data-wow-delay="0.2s">بوابة</h2>
-                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #C0946F">تسليم
-                            الرقمية</h3>
+                        <h2 class="wow fadeInUp font-bold text-white mb-lg-3" data-wow-delay="0.2s">البوابة الرقمية</h2>
+                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #C0946F">تسليم</h3>
                         <h3 class="wow fadeInUp font-bold text-white" data-wow-delay="0.4s">مركز ريــادي متكامل</h3>
                     </div>
                 </div>
@@ -213,63 +141,22 @@
                             <div class="section-title mb-3">
                                 <h2 class="font-bold bg bg-start">عن المركز</h2>
                             </div>
-                            <h4 class="mb-4">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل
-                                الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</h4>
-                            <div class="widget__item-serve">
-                                <div class="widget__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374"
-                                         viewBox="0 0 21.371 21.374">
-                                        <path
-                                            id="Path_4513"
-                                            data-name="Path 4513"
-                                            d="M57.361,389.732a2.276,2.276,0,0,0-2.214-.593l-.565.151-2.555.685-13.669,3.663a2.268,2.268,0,0,0-1.653,1.767,2.06,2.06,0,0,0-.044.431,2.394,2.394,0,0,0,.714,1.677.677.677,0,0,0,.134.1l7.157,4.191a1.721,1.721,0,0,1,.615.613l4.092,6.919a2.182,2.182,0,0,0,1.708,1.09c.05,0,.1,0,.149,0a2.391,2.391,0,0,0,.6-.079,2.275,2.275,0,0,0,1.62-1.622l1.78-6.647.685-2.555,2.032-7.584A2.271,2.271,0,0,0,57.361,389.732Z"
-                                            transform="translate(58.033 410.434) rotate(180)"
-                                            fill="#b4815a"
-                                        ></path>
-                                    </svg>
+                            <div class="section-about-desc">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل
+                                الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</div>
+                            <div class="widget__item-serve-list row">
+                                <div class="col-6 widget__item-serve">
+                                خدمة مميزة
                                 </div>
-                                <div class="widget__item-content">
-                                    <h3 class="widget__item-title">خدمة مميزة</h3>
+                                <div class="col-6 widget__item-serve">
+                                بيانات آمنة
+                                </div>
+                                <div class="col-6 widget__item-serve">
+                                متابعة مستمرة
+                                </div>
+                                <div class="col-6 widget__item-serve">
+                                سهولة الخدمات
                                 </div>
                             </div>
-                            <div class="widget__item-serve">
-                                <div class="widget__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374"
-                                         viewBox="0 0 21.371 21.374">
-                                        <path
-                                            id="Path_4513"
-                                            data-name="Path 4513"
-                                            d="M57.361,389.732a2.276,2.276,0,0,0-2.214-.593l-.565.151-2.555.685-13.669,3.663a2.268,2.268,0,0,0-1.653,1.767,2.06,2.06,0,0,0-.044.431,2.394,2.394,0,0,0,.714,1.677.677.677,0,0,0,.134.1l7.157,4.191a1.721,1.721,0,0,1,.615.613l4.092,6.919a2.182,2.182,0,0,0,1.708,1.09c.05,0,.1,0,.149,0a2.391,2.391,0,0,0,.6-.079,2.275,2.275,0,0,0,1.62-1.622l1.78-6.647.685-2.555,2.032-7.584A2.271,2.271,0,0,0,57.361,389.732Z"
-                                            transform="translate(58.033 410.434) rotate(180)"
-                                            fill="#b4815a"
-                                        ></path>
-                                    </svg>
-                                </div>
-                                <div class="widget__item-content">
-                                    <h3 class="widget__item-title">بيانات آمنة</h3>
-
-                                </div>
-                            </div>
-                            <div class="widget__item-serve">
-                                <div class="widget__item-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="21.371" height="21.374"
-                                         viewBox="0 0 21.371 21.374">
-                                        <path
-                                            id="Path_4513"
-                                            data-name="Path 4513"
-                                            d="M57.361,389.732a2.276,2.276,0,0,0-2.214-.593l-.565.151-2.555.685-13.669,3.663a2.268,2.268,0,0,0-1.653,1.767,2.06,2.06,0,0,0-.044.431,2.394,2.394,0,0,0,.714,1.677.677.677,0,0,0,.134.1l7.157,4.191a1.721,1.721,0,0,1,.615.613l4.092,6.919a2.182,2.182,0,0,0,1.708,1.09c.05,0,.1,0,.149,0a2.391,2.391,0,0,0,.6-.079,2.275,2.275,0,0,0,1.62-1.622l1.78-6.647.685-2.555,2.032-7.584A2.271,2.271,0,0,0,57.361,389.732Z"
-                                            transform="translate(58.033 410.434) rotate(180)"
-                                            fill="#b4815a"
-                                        ></path>
-                                    </svg>
-                                </div>
-                                <div class="widget__item-content">
-                                    <h3 class="widget__item-title">متابعة مستمرة</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="image-about"><img src="assets/images/image-about.png" alt=""/></div>
                         </div>
                     </div>
                 </div>
@@ -281,108 +168,41 @@
     <section class="section section-guidelines" id="section-guidelines">
         <div class="container">
             <div class="position-relative">
-                <div class="swiper-container swiper">
-                    <div class="swiper-wrapper">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-6">
                         <div class="swiper-slide">
-                            <a href="{{url('/').'/Mechanical.pdf'}}" target="_blank"
+                            <a href="{{url('/').'/guide/mina'}}" target="_blank"
                                class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الاعمال الميكانيكية</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام وتسليم المخيمات.pdf/')}}"
-                               target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">الاجراءآت و النماذج المستخدمة المتعلقة بأعمال استلام
-                                    وتسليم المخيمات </h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل الأعمال المعمارية.pdf/')}}" target="_blank"
-                               class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الأعمال المعمارية</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل الأعمال الانشائية.pdf/')}}" target="_blank"
-                               class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الأعمال الانشائية</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات للمخيمات بمنى.pdf/')}}"
-                               target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اجراءآت و تأهيل المقاولين للعمل في أعمال الإضافات
-                                    للمخيمات بمنى</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال الإضافات للمخيمات بمنى.pdf/')}}"
-                               target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اجراءآت تأهيل المكاتب و الشركات الهندسية لأعمال
-                                    الإضافات للمخيمات بمنى </h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و الشركات الهندسية للوقاية والحماية من الحريق.pdf/')}}"
-                               target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل المكاتب و
-                                    الشركات الهندسية للوقاية والحماية من الحريق</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل الأعمال الكهربائية.pdf/')}}" target="_blank"
-                               class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل الأعمال الكهربائية</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي تنفيذ اعمال الوقاية والحماية من الحريق.pdf/')}}"
-                               target="_blank" class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل أعمال الحماية من الحريق - اجراءآت تأهيل مقاولي
-                                    تنفيذ اعمال الوقاية والحماية من الحريق</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="{{url('دليل اعمال تغذية المياة و الصرف الصحي.pdf/')}}" target="_blank"
-                               class="widget__item-downlaod text-center">
-                                <h4 class="widget__item-title">دليل اعمال تغذية المياة و الصرف الصحي</h4>
-                                <div class="widget__item-icon">
-                                    <i class="fa-light fa-download"></i>
-                                </div>
+                                <h4 class="widget__item-title">ادلة مشعر منى</h4>
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="swiper-action">
-                    <div class="swiper-prev"><i class="fa-light fa-arrow-right-long"></i></div>
-                    <div class="swiper-next"><i class="fa-light fa-arrow-left-long"></i></div>
+                    <div class="col-lg-3 col-6">
+                        <div class="swiper-slide">
+                            <a href="{{url('/').'/guide/arafat'}}"
+                               target="_blank" class="widget__item-downlaod text-center">
+                                <h4 class="widget__item-title">ادلة مشعر عرفات</h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="swiper-slide">
+                            <div
+                               class="widget__item-downlaod text-center">
+                               <img src="{{ asset('assets/images/mina-qr.png') }}" alt="">
+                                <h4 class="widget__item-title qr">QR موقع مشعر منى</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <div class="swiper-slide">
+                            <div
+                               class="widget__item-downlaod text-center">
+                                <img src="{{ asset('assets/images/2.png') }}" alt="">
+                                <h4 class="widget__item-title qr">QR موقع مشعر عرفات</h4>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -392,11 +212,11 @@
     <footer class="main-footer">
         <div class="footer-top">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 mx-auto">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
                         <div class="row justify-content-between">
-                            <div class="col-lg-3 mb-4 mb-lg-0">
-                                <div class="logo mb-lg-4 mb-2"><img src="assets/images/logo-dark.png" alt=""/></div>
+                            <div class="col-lg-4 mb-4 mb-lg-0">
+                                <div class="logo mb-lg-4 mb-2"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></div>
                                 <ul class="social-media">
                                     <li>
                                         <a href=""> <i class="fa-brands fa-youtube"></i></a>
@@ -413,10 +233,23 @@
                                 </ul>
                             </div>
                             <div class="col-lg-4">
-                                <h3 class="mb-4 mt-1 mt-lg-0 bg bg-start">حمل التطبيق مجاناً</h3>
-                                <div class="d-flex img-app">
-                                    <a class="ms-2" href=""><img src="assets/images/google-play.png" alt=""/></a><a
-                                        href=""><img src="assets/images/app-store.png" alt=""/></a>
+                                <div class="footer-top-links">
+                                    <div class="footer-top-title">مواقع صديقة</div>
+                                    <ul class="links">
+                                        <li><a href="https://kidana.com.sa" target="_blank">مواقع شركة كدانة</a></li>
+                                        <li><a href="https://www.haj.gov.sa"  target="_blank">موقع وزارة الحج</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="footer-top-links">
+                                    <div class="footer-top-title">روابط سريعة</div>
+                                    <ul class="links">
+                                        <li><a href="#">الخدمات الإلكترونية</a></li>
+                                        <li><a href="#">تاهيل مزودي الخدمة</a></li>
+                                        <li><a href="#">الدلائل والنماذج</a></li>
+                                        <li><a href="{{ route('login_page') }}">تسجيل الدخول</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -426,17 +259,17 @@
         </div>
         <div class="footer-bottom">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-10 mx-auto">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
                         <div class="row align-items-center">
                             <div class="col-lg-6 mb-3 mb-lg-0">
                                 <p class="text-center text-lg-end text">جميع الحقوق محفوظة لدى البوابة الرقمية تسليم
                                     © {{ \Alkoumi\LaravelHijriDate\Hijri::Date('Y') }}</p>
                             </div>
                             <div class="col-lg-6">
-                                <div
+                                <a href="https://kidana.com.sa" target="_blank"
                                     class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand">
-                                    <img src="assets/images/kidana.png" alt=""/></div>
+                                    <img src="{{ asset('assets/images/footer-kidana-logo.png') }}" alt=""/></a>
                             </div>
                         </div>
                     </div>
@@ -447,8 +280,8 @@
     <!-- end:: footer -->
 </div>
 <!-- end:: Page -->
-<script src="assets/js/script.min.js"></script>
-<script src="assets/js/function.js"></script>
+<script src="{{ asset('assets/js/script.min.js') }}"></script>
+<script src="{{ asset('assets/js/function.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link href="jquery.simpleTicker.css" rel="stylesheet">
 <script type="text/javascript">

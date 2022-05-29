@@ -112,6 +112,16 @@
 
                 @endif
 
+                @if(auth()->user()->type=='raft_company')
+                    <li>
+                        <a href="{{route('raft_company')}}">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">المراكز</span>
+                        </a>
+                    </li>
+                @endif
+
+
                 @if(auth()->user()->type=='contractor')
                     <li>
                         <a href="{{route('contractor')}}">

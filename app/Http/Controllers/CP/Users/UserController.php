@@ -55,6 +55,13 @@ class UserController extends Controller
             'employee_number' => request('employee_number'),
             'password' => request('password'),
         ]);
+
+        if($user->type == 'raft_company'){
+            $user->update([
+                'is_file_uploaded' => 1,
+                'verified' => 1
+            ]);
+        }
         $this->uploadUserFiles($user, $request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }

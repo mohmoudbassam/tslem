@@ -33,6 +33,7 @@ class StoreUserRequest extends FormRequest
                     'contractor',
                     'Delivery',
                     'Kdana',
+                    'raft_company'
                 ])
             ],
             'commercial_record' => [

@@ -75,6 +75,9 @@ class Kernel extends HttpKernel
         'is-verified' => \App\Http\Middleware\IsVerified::class,
         'is-file-uploaded' => \App\Http\Middleware\IsFileUploaded::class,
         'APIUserAuth' => APIUserAuth::class,
+        'raft_company'=>\App\Http\Middleware\CP\RaftCompany::class,
+        'raft_center'=>\App\Http\Middleware\CP\RaftCenter::class,
+        
 
 
     ];

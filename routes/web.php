@@ -3,7 +3,7 @@
 use App\Http\Controllers\CP\Contractor\ContractorController;
 
 use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
-
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\CP\RaftCompany\RaftCompanyController;
+use App\Http\Controllers\CP\RaftCenter\RaftCenterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +36,9 @@ use App\Http\Controllers\PDFController;
 |
 */
 
-Route::get('/', function () {
-  $data['news']=  \App\Models\News::query()->get();
-    return view("public",$data);
-})->name('public');
+
+Route::get('/', [SiteController::class, 'getHome'])->name('public');
+Route::get('guide/{guideType}', [SiteController::class, 'getGuide'])->name('guide');
 
 Route::get('login', [LoginController::class, 'index'])->name('login_page');
 Route::Post('login', [LoginController::class, 'login'])->name('login');
@@ -86,12 +87,16 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
         });
     });
+
     Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
-        Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
-        Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
-        Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
-        Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
+        Route::middleware(["is-verified"])
+        ->group(function () {
+            Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
+            Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
+            Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
+            Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
+        });
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
         Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
@@ -136,7 +141,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('/reports/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
         Route::post('copy_note', [DeliveryController::class, 'copy_note'])->name('.copy_note');
     });
-
     Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
         Route::get('orders', [ContractorController::class, 'orders']);
         Route::get('', [ContractorController::class, 'list'])->name('.list');
@@ -186,7 +190,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('reject_order/{order}', [ConsultingOfficeController::class, 'reject_order'])->name('.reject_order');
 
     });
-
     Route::prefix('Sharer')->name('Sharer')->middleware(['sharer'])->group(function () {
         Route::get('orders', [SharerController::class, 'orders']);
         Route::get('', [SharerController::class, 'list'])->name('.list');
@@ -195,9 +198,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::post('reject', [SharerController::class, 'reject'])->name('.reject');
         Route::get('view_file/{order}', [SharerController::class, 'view_file'])->name('.view_file');
     });
-
     Route::prefix('system-config')->group(function () {
-
         Route::prefix('const')->name('const')->group(function () {
             Route::get('', [SystemConstController::class, 'index'])->name('.index');
             Route::get('list', [SystemConstController::class, 'list'])->name('.list');
@@ -233,6 +234,18 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('delete', [NewsController::class, 'delete'])->name('.delete');
         });
     });
+    Route::prefix('raft_company')->name('raft_company')->middleware(['raft_company'])->group(function () {
+        Route::get('', [RaftCompanyController::class, 'index']);
+        Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
+        Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
+        Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
+        
+    });
+
+    Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
+        Route::get('', [RaftCenterController::class, 'index']);
+    });
+
 
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
@@ -246,11 +259,8 @@ Route::get('test', function () {
 
 Route::get('generate', [PDFController::class, 'generate']);
 Route::get('test-email', function () {
-
     Mail::send('mail', ['name', 'Ripon Uddin Arman'], function ($message) {
-
         $message->to('test@tsleem.com.sa', 'Tutorials Point')->subject('Laravel Testing Mail with Attachment');
-
     });
 });
 

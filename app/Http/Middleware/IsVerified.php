@@ -15,8 +15,11 @@ class IsVerified
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {   
-        if($request->user()->email_verified_at === NULL && $request->user()->type != 'admin'){
+    {
+//        if($request->user()->email_verified_at === NULL && $request->user()->type != 'admin'){
+//            return redirect()->route('verify');
+//        }
+        if(!$request->user()->verified && $request->user()->type != 'admin'){
             return redirect()->route('verify');
         }
         return $next($request);
