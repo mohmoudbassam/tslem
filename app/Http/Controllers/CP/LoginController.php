@@ -73,6 +73,14 @@ class LoginController extends Controller
     }
     public function dashboard(Request $request)
     {
-        return view('CP.master');
+        $all_user = User::count();
+        $not_verified = User::where('verified',0)->count();
+        $verified = User::where('verified',1)->count();
+        $service_providers = User::where('type','service_provider')->count() + User::where('type','raft_center')->count() ;
+        $contractors= User::where('type','contractor')->count();
+        $design_offices = User::where('type','design_office')->count();
+
+        
+        return view('CP.master', compact('all_user','not_verified','verified','service_providers','contractors','design_offices'));
     }
 }
