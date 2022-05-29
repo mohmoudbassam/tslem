@@ -484,9 +484,6 @@
     {{--    window.location = '{{route('register')}}/' + '{{request('type')}}' +'/'+'{{request('designer_type')}}'+$(this).val()--}}
     {{--});--}}
     flatpickr(".datepicker", {defaultDate: (old_date == '') ? new Date : old_date});
-
-
-
 </script>
 
 </body>

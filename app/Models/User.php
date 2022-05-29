@@ -82,6 +82,7 @@ class User extends Authenticatable
             'contractor' => 'مقاول',
             'Delivery' => 'تسليم',
             'Kdana' => 'كدانة',
+            'raft_company'=>'شركة طوافة'
         ][$this->type];
     }
 

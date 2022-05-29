@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-<<<<<<< HEAD
+
                         <div class="col-lg-2">
                             <label for="order_id">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
@@ -33,23 +33,6 @@
                         <div class="col-lg-1">
                             <label for="">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
-=======
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
-                        </div>
-                        <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
-                            <select class="form-control" id="type" name="type">
-                                <option value="">اختر...</option>
-                                <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مركز ، مؤسسة ، شركة (مطوف)</option>
-                                <option value="design_office">مكتب تصميم</option>
-                                <option value="Sharer">جهة مشاركة</option>
-                                <option value="consulting_office">مكتب استشاري</option>
-                                <option value="contractor">مقاول</option>
-                            </select>
->>>>>>> b76c9d4b8bdc1465c229cd0e332d07bddceac7d7
                         </div>
                         <div class="col-lg-1">
                             <label for="">الى </label>
