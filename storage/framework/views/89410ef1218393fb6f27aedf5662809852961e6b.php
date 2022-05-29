@@ -1,10 +1,12 @@
+
 <?php $__env->startSection('title'); ?>
     الطلبات
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
-    <div class="row">
+    <?php if(auth()->user()->verified): ?>
+        <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">
@@ -26,6 +28,7 @@
             </div>
         </div>
     </div>
+    <?php endif; ?>
     <div class="card">
         <div class="card-header">
             <div class="row mt-4">
@@ -53,7 +56,6 @@
                                 <?php $__currentLoopData = $consulting; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_consulting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($_consulting->id); ?>"><?php echo e($_consulting->company_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                             </select>
                         </div>
                         <div class="col-lg-2">

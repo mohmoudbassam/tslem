@@ -67,7 +67,7 @@
 
                 @if(auth()->user()->type=='service_provider' )
                     <li>
-                        <a href="{{route('services_providers')}}">
+                        <a href="{{route('services_providers.orders')}}">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
@@ -75,7 +75,7 @@
                 @endif
                 @if(auth()->user()->type=='design_office' )
                     <li>
-                        <a href="{{route('design_office')}}">
+                        <a href="{{route('design_office.orders')}}">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
@@ -162,13 +162,13 @@
                     </li>
 
                 @endif
-                    @if(auth()->user()->verified==1)
+                    @if(auth()->user()->isAdmin())
 
 
                         <li>
-                            <a href="{{route('dashboard')}}">
+                            <a href="{{route('users.dashboard')}}">
                                 <i data-feather="pie-chart"></i>
-                                <span data-key="t-dashboard">الإحصائيات  (قريبا)</span>
+                                <span data-key="t-dashboard">الإحصائيات </span>
                             </a>
                         </li>
                     @endif

@@ -43,32 +43,15 @@
                             </div>
                         </div>
                     <?php endif; ?>
-                    <?php if($record->company_type): ?>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="company_type">نوع الشركة<span
-                                        class="text-danger required-mark">*</span></label>
-                                <select class="form-select" id="company_type" name="company_type">
-                                    <option value="">اختر...</option>
-                                    <option <?php if($user->company_type=='organization'): ?> selected
-                                                <?php endif; ?> value="organization">مؤسسة
-                                    </option>
-                                    <option <?php if($user->company_type=='office'): ?> selected <?php endif; ?> value="office">مكتب
-                                    </option>
-                                </select>
-                                <div class="col-12 text-danger" id="company_type_error"></div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
                     <?php if($record->company_owner_name): ?>
                         <div class="col-md-6">
                             <div class="mb-3">
 
-                                <label class="form-label" for="company_owner_name">اسم الرئيس<span
+                                <label class="form-label" for="company_owner_name">اسم المالك<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="<?php echo e($user->company_owner_name); ?>"
                                        id="company_owner_name"
-                                       name="company_owner_name" placeholder="اسم الرئيس">
+                                       name="company_owner_name" placeholder="اسم المالك">
 
 
                             </div>
@@ -77,7 +60,7 @@
                     <?php if($record->id_number): ?>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="id_number">رقم هوية الرئيس<span
+                                <label class="form-label" for="id_number">رقم هوية المالك<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control" value="<?php echo e($user->id_number); ?>" id="id_number"
                                        name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
@@ -92,46 +75,16 @@
                                 <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
                                 <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
                                        value="<?php echo e($user->commercial_record); ?>"
-                                       id="commercial_record" name="commercial_record"
-                                       placeholder="05xxxxxxxx">
+                                       id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
                                 <div class="col-12 text-danger" id="commercial_record_error"></div>
                             </div>
                         </div>
                     <?php endif; ?>
-
-                    <?php if($record->website && request('type') !='design_office'): ?>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="website">الموقع<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="<?php echo e($user->website); ?>" id="website"
-                                       name="website"
-                                       placeholder="الموقع">
-                                <div class="col-12 text-danger" id="website_error"></div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->responsible_name): ?>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-
-                                <label class="form-label" for="responsible_name">اسم الشخص المفوض<span
-                                        class="text-danger required-mark">*</span></label>
-
-
-                                <input type="text" class="form-control" value="<?php echo e($user->responsible_name); ?>"
-                                       id="responsible_name" name="responsible_name"
-                                       placeholder="اسم المفوض">
-                                <div class="col-12 text-danger" id="responsible_name_error"></div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
                  
                     <?php if($record->email): ?>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="email"> البريد الإلكتروني للمفوض<span
+                                <label class="form-label" for="email"> البريد الإلكتروني<span
                                         class="text-danger required-mark">*</span></label>
                                 <input type="email" value="<?php echo e($user->email); ?>" class="form-control" id="email"
                                        name="email"
@@ -153,18 +106,6 @@
                             </div>
                         </div>
                     <?php endif; ?>
-                    <?php if($record->address && request('type') !='design_office'): ?>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="address">العنوان الوطني<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="<?php echo e($user->address); ?>" id="address"
-                                       name="address"
-                                       placeholder="العنوان الوطني">
-                                <div class="col-12 text-danger" id="address_error"></div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
                     <?php if($record->telephone): ?>
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -181,21 +122,12 @@
                             <div class="mb-3">
                                 <label class="form-label" for="city">المدينة<span
                                         class="text-danger required-mark">*</span></label>
-                                <input type="text" value="<?php echo e($user->city); ?>" class="form-control" id="city" name="city"
-                                       placeholder="المدينة">
+                                <select class="form-control" id="city" name="city">
+                                    <?php $__currentLoopData = citiesList(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cityItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($cityItem); ?>" <?php if($cityItem == $user->city): ?> selected <?php endif; ?>><?php echo e($cityItem); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
                                 <div class="col-12 text-danger" id="city_error"></div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($record->employee_number && request('type') !='design_office'): ?>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="employee_number">عدد الموظفين<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="<?php echo e($user->employee_number); ?>"
-                                       id="employee_number" name="employee_number"
-                                       placeholder="عدد الموظفين">
-                                <div class="col-12 text-danger" id="employee_number_error"></div>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -429,7 +361,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="company_owner_id_photo"> صورة هوية صاحب الشركة  (PDF)</label>
+                        <label class="form-label" for="company_owner_id_photo"> صورة هوية  المالك (PDF)</label>
                             <input type="file" class="form-control" id="company_owner_id_photo"
                                 name="company_owner_id_photo">
                             <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>

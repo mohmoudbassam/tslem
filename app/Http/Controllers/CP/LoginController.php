@@ -14,12 +14,12 @@ class LoginController extends Controller
     {
         if(auth()->check()){
             if(auth()->user()->type == 'admin'){
-                return redirect()->route('dashboard');
+                return redirect()->route('users.dashboard');
             }
             $user_type=auth()->user()->type;
 
             if(auth()->user()->type == 'admin'){
-                return redirect()->route('dashboard');
+                return redirect()->route('users.dashboard');
             }
             if(auth()->user()->type=='service_provider'){
 
@@ -51,14 +51,18 @@ class LoginController extends Controller
         if (Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1], isset($request->remember))) {
             $user_type=auth()->user()->type;
             if(auth()->user()->type == 'admin'){
-                return redirect()->route('dashboard');
+                return redirect()->route('users.dashboard');
             }
             if(auth()->user()->type=='service_provider'){
-                return redirect()->route('services_providers');
+                return redirect()->route('services_providers.orders');
             }
             if(auth()->user()->type=='Delivery'){
                 return redirect()->route('delivery');
             }
+            if(auth()->user()->type=='design_office'){
+                return redirect()->route('design_office.orders');
+            }
+
             return redirect()->route($user_type);
         } else {
             return back()->with('validationErr','الرجاء إدخال كلمة مرور صحيحة');

@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
 //,'is-verified'
 Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
-    Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
+
     Route::get('edit_profile', [UserController::class, 'edit_profile'])->name('edit_profile');
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
     Route::post('after_reject', [UserController::class, 'after_reject'])->name('after_reject');
@@ -78,7 +78,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('update_from/{user}', [UserController::class, 'update_from'])->name('.update_from');
         Route::get('change_password/{user}', [UserController::class, 'change_password_form'])->name('.change_password_form');
         Route::post('change_password', [UserController::class, 'change_password'])->name('.change_password');
-
+        Route::get('dashboard', [LoginController::class, 'dashboard'])->name('.dashboard');
         Route::post('update', [UserController::class, 'update'])->name('.update');
         Route::post('delete', [UserController::class, 'delete'])->name('.delete');
         Route::prefix('request')->name('.request')->group(function () {
@@ -89,11 +89,12 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('accept', [UserRequestController::class, 'accept'])->name('.accept');
             Route::get('reject_form', [UserRequestController::class, 'reject_form'])->name('.reject_form');
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
+
         });
     });
 
     Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider'])->group(function () {
-        Route::get('orders', [OrdersController::class, 'orders']);
+        Route::get('orders', [OrdersController::class, 'orders'])->name('.orders');
         Route::middleware(["is-verified"])
         ->group(function () {
             Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
@@ -106,7 +107,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
-        Route::get('orders', [DesignerOrderController::class, 'orders']);
+        Route::get('orders', [DesignerOrderController::class, 'orders'])->name('.orders');
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
         Route::get('add-files/{order}', [DesignerOrderController::class, 'add_files'])->name('.add_files');
         Route::post('save_file', [DesignerOrderController::class, 'save_file'])->name('.save_file');
