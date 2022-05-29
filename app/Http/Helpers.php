@@ -36,6 +36,8 @@ function get_user_column_file($type)
         'personalization_record',
         'company_owner_id_photo',
         'nomination_letter',
+        'center_sketch',
+        'gis_sketch',
 
         )->where('type', $type)->first();
 

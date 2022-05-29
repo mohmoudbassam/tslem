@@ -239,7 +239,10 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('raft_company')->name('raft_company')->middleware(['raft_company'])->group(function () {
         Route::get('/', [RaftCompanyController::class, 'index']);
-
+        Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
+        Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
+        Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
+        
     });
 
 
