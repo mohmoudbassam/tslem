@@ -86,6 +86,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
         });
     });
+
     Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders']);
         Route::middleware(["is-verified"])
@@ -99,6 +100,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
         Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
+
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
