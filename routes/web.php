@@ -3,7 +3,7 @@
 use App\Http\Controllers\CP\Contractor\ContractorController;
 
 use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
-
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
@@ -35,10 +35,9 @@ use App\Http\Controllers\CP\RaftCompany\RaftCompanyController;
 |
 */
 
-Route::get('/', function () {
-  $data['news']=  \App\Models\News::query()->get();
-    return view("public",$data);
-})->name('public');
+
+Route::get('/', [SiteController::class, 'getHome'])->name('public');
+Route::get('guide/{guideType}', [SiteController::class, 'getGuide'])->name('guide');
 
 Route::get('login', [LoginController::class, 'index'])->name('login_page');
 Route::Post('login', [LoginController::class, 'login'])->name('login');

@@ -26,8 +26,8 @@
     <meta name="keywords" content=""/>
     <meta name="author" content=""/>
     <meta name="copyright" content=" "/>
-    <link rel="stylesheet" href="assets/css/plugin.min.css?v={{ config('app.asset_ver') }}"/>
-    <link rel="stylesheet" href="assets/css/main.css?v={{ config('app.asset_ver') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/plugin.min.css?v='.config('app.asset_ver')) }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v='.config('app.asset_ver')) }}"/>
 </head>
 <body>
 <!-- start:: Page -->
@@ -38,13 +38,13 @@
         <div class="container">
             <div class="d-flex align-items-center header-top">
                 <div class="logo">
-                    <a href="index.html"><img src="assets/images/logo-dark.png" alt=""/></a>
+                    <a href="{{ url('/') }}"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></a>
                 </div>
                 <div class="menu--mobile mx-lg-auto">
                     <div
                         class="menu-container d-flex align-items-center justify-content-between d-lg-none px-3 border-bottom py-2 mb-3">
                         <div class="logo">
-                            <a href="index.html"><img src="assets/images/logo-dark.png" alt=""/></a>
+                            <a href="{{ url('/') }}"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></a>
                         </div>
                         <div class="btn-close-header-mobile justify-content-end"><i class="fa-light fa-xmark"></i></div>
                     </div>
@@ -172,7 +172,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-6">
                         <div class="swiper-slide">
-                            <a href="{{url('/').'/mina-guide'}}" target="_blank"
+                            <a href="{{url('/').'/guide/mina'}}" target="_blank"
                                class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">ادلة مشعر منى</h4>
                             </a>
@@ -180,7 +180,7 @@
                     </div>
                     <div class="col-lg-3 col-6">
                         <div class="swiper-slide">
-                            <a href="{{url('/').'/arafat-guide'}}"
+                            <a href="{{url('/').'/guide/arafat'}}"
                                target="_blank" class="widget__item-downlaod text-center">
                                 <h4 class="widget__item-title">ادلة مشعر عرفات</h4>
                             </a>
@@ -217,7 +217,7 @@
                     <div class="col-lg-10">
                         <div class="row justify-content-between">
                             <div class="col-lg-4 mb-4 mb-lg-0">
-                                <div class="logo mb-lg-4 mb-2"><img src="assets/images/logo-dark.png" alt=""/></div>
+                                <div class="logo mb-lg-4 mb-2"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></div>
                                 <ul class="social-media">
                                     <li>
                                         <a href=""> <i class="fa-brands fa-youtube"></i></a>
@@ -270,7 +270,7 @@
                             <div class="col-lg-6">
                                 <a href="https://kidana.com.sa" target="_blank"
                                     class="d-flex align-items-center justify-content-center justify-content-lg-end image-brand">
-                                    <img src="assets/images/footer-kidana-logo.png" alt=""/></a>
+                                    <img src="{{ asset('assets/images/footer-kidana-logo.png') }}" alt=""/></a>
                             </div>
                         </div>
                     </div>
@@ -281,8 +281,8 @@
     <!-- end:: footer -->
 </div>
 <!-- end:: Page -->
-<script src="assets/js/script.min.js"></script>
-<script src="assets/js/function.js"></script>
+<script src="{{ asset('assets/js/script.min.js') }}"></script>
+<script src="{{ asset('assets/js/function.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link href="jquery.simpleTicker.css" rel="stylesheet">
 <script type="text/javascript">
