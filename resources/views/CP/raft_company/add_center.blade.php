@@ -200,7 +200,8 @@
         <div class="d-flex flex-wrap gap-3">
             <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء</button>
         </div>
-
+            <br>
+            
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>

@@ -21,6 +21,10 @@ class RaftCompanyController extends Controller{
     }
     public function save_center(Request $request) {
 
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+        ]);
+        
         $user = User::create([
             'type' => 'raft_center',
             'parent_id' => auth()->user()->id,
