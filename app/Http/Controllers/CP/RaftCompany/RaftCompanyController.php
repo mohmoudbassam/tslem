@@ -24,6 +24,7 @@ class RaftCompanyController extends Controller{
         $request->validate([
             'email' => 'required|email|unique:users,email',
             'name' => 'required|string|unique:users,name',
+            'phone' => 'required|numeric|unique:users,phone',
         ]);
 
         $user = User::create([
