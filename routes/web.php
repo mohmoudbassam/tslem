@@ -100,7 +100,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
         Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
-
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders']);
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
@@ -141,7 +140,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('/reports/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
         Route::post('copy_note', [DeliveryController::class, 'copy_note'])->name('.copy_note');
     });
-
     Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
         Route::get('orders', [ContractorController::class, 'orders']);
         Route::get('', [ContractorController::class, 'list'])->name('.list');
@@ -191,7 +189,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('reject_order/{order}', [ConsultingOfficeController::class, 'reject_order'])->name('.reject_order');
 
     });
-
     Route::prefix('Sharer')->name('Sharer')->middleware(['sharer'])->group(function () {
         Route::get('orders', [SharerController::class, 'orders']);
         Route::get('', [SharerController::class, 'list'])->name('.list');
@@ -200,9 +197,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::post('reject', [SharerController::class, 'reject'])->name('.reject');
         Route::get('view_file/{order}', [SharerController::class, 'view_file'])->name('.view_file');
     });
-
     Route::prefix('system-config')->group(function () {
-
         Route::prefix('const')->name('const')->group(function () {
             Route::get('', [SystemConstController::class, 'index'])->name('.index');
             Route::get('list', [SystemConstController::class, 'list'])->name('.list');
@@ -238,7 +233,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('delete', [NewsController::class, 'delete'])->name('.delete');
         });
     });
-
     Route::prefix('raft_company')->name('raft_company')->middleware(['raft_company'])->group(function () {
         Route::get('/', [RaftCompanyController::class, 'index']);
 
@@ -257,11 +251,8 @@ Route::get('test', function () {
 
 Route::get('generate', [PDFController::class, 'generate']);
 Route::get('test-email', function () {
-
     Mail::send('mail', ['name', 'Ripon Uddin Arman'], function ($message) {
-
         $message->to('test@tsleem.com.sa', 'Tutorials Point')->subject('Laravel Testing Mail with Attachment');
-
     });
 });
 
