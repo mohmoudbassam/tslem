@@ -13,7 +13,7 @@
             browseLabel: "اضغط للاستعراض",
             browseIcon: "<i class='la la-file'></i>",
             removeClass: "btn btn-danger",
-            removeLabel: "delete",
+            removeLabel: "حذف",
             removeIcon: "<i class='la la-trash-o'></i>",
             showRemove: false,
             showCancel: false,
@@ -35,9 +35,8 @@
             browseOnZoneClick: true,
             captionClass:true,
             maxFileCount: 6,
-            allowedFileExtensions: ["jpg", "png", "gif"],
+            allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
             slugCallback: function(filename) {
-                console.log(filename);
                 return filename.replace('(', '_');
             }
         };

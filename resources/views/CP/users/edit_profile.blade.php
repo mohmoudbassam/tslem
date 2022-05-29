@@ -9,403 +9,375 @@
     display: none;
 }
 </style>
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-
-
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="card-body p-4">
-
             <div class="row">
-                @if(auth()->user()->virfied)
-                <form id="add_edit_form" method="post" action="{{route('after_reject')}}" enctype="multipart/form-data">
-                    @else
-                        <form id="add_edit_form" method="post" action="{{route('save_profile')}}" enctype="multipart/form-data">
-                        @endif
+                <form id="add_edit_form" method="post" action="{{ auth()->user()->virfied ? route('after_reject'): route('save_profile')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-
-                    @if($record->company_name)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="company_name">اسم الشركة / المؤسسة<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" id="company_name"
-                                       value="{{$user->company_name}}"  name="company_name"
-                                       placeholder="اسم الشركة / المؤسسة">
-                                <div class="col-12 text-danger" id="company_name_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                    @if($record->company_owner_name)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-
-                                <label class="form-label" for="company_owner_name">اسم المالك<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{$user->company_owner_name}}"
-                                       id="company_owner_name"
-                                       name="company_owner_name" placeholder="اسم المالك">
-
-
-                            </div>
-                        </div>
-                    @endif
-                    @if($record->id_number)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="id_number">رقم هوية المالك<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{$user->id_number}}" id="id_number"
-                                       name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
-                                       placeholder="رقم الهوية">
-                                <div class="col-12 text-danger" id="id_number_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                    @if($record->commercial_record)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
-                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
-                                       value="{{$user->commercial_record}}"
-                                       id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
-                                <div class="col-12 text-danger" id="commercial_record_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                 
-                    @if($record->email)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="email"> البريد الإلكتروني<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="email" value="{{$user->email}}" class="form-control" id="email"
-                                       name="email"
-                                       placeholder="البريد الإلكتروني">
-                                <div class="col-12 text-danger" id="email_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                      
-                    @if($record->phone)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="phone">رقم الجوال<span class="text-danger required-mark">*</span></label>
-                                <input type="text" onkeypress="return /[0-9]/i.test(event.key)" value="{{$user->phone}}"
-                                       class="form-control" id="phone"
-                                       name="phone" minlength="10" maxlength="10"
-                                       placeholder="رقم الجوال">
-                                <div class="col-12 text-danger" id="phone_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                    @if($record->telephone)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="telephone">الهاتف<span class="text-danger required-mark">*</span></label>
-                                <input type="text" value="{{$user->telephone}}" class="form-control" id="telephone"
-                                       name="telephone"
-                                       placeholder="الهاتف">
-                                <div class="col-12 text-danger" id="telephone_error"></div>
-                            </div>
-                        </div>
-                    @endif
-                    @if($record->city)
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="city">المدينة<span
-                                        class="text-danger required-mark">*</span></label>
-                                <select class="form-control" id="city" name="city">
-                                    @foreach(citiesList() as $cityItem)
-                                        <option value="{{ $cityItem }}" @if($cityItem == $user->city) selected @endif>{{ $cityItem }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="col-12 text-danger" id="city_error"></div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @if($record->commercial_file)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commercial_file">السجل التحاري (PDF)</label>
-                            <input type="file" class="form-control" 
-                                id="commercial_file" name="commercial_file">
-                            <div class="col-12 text-danger" id="commercial_file_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commercial_file_end_date">تاريخ انتهاء السجل التجاري</label>
-                            <input type="text" class="form-control flatpickr"
-                                value="{{$user->commercial_file_end_date}}" id="commercial_end_date"
-                                name="commercial_file_end_date">
-                            <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->rating_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي (PDF)</label>
-                            <input type="file" class="form-control" id="rating_certificate" name="rating_certificate">
-                            <div class="col-12 text-danger" id="rating_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" id="rating_certificate_end_date"
-                                name="rating_certificate_end_date"  value="{{$user->rating_certificate_end_date}}">
-                            <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->address_file)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="address_file">العنوان الوطني (PDF)</label>
-                            <input type="file" class="form-control" name="address_file" id="address_file">
-                            <div class="col-12 text-danger" id="address_file_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->profession_license)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="profession_license">شهادة مزاولة المهنة (PDF)</label>
-                            <input type="file" class="form-control" id="profession_license" name="profession_license">
-                            <div class="col-12 text-danger" id="profession_license_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" id="profession_license_end_date"
-                                name="profession_license_end_date" value="{{$user->profession_license_end_date}}">
-                            <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->business_license)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="business_license">رخصة نشاط تجاري (PDF)</label>
-                            <input type="file" class="form-control" name="business_license" id="business_license">
-                            <div class="col-12 text-danger" id="business_license_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" id="business_license_end_date"
-                                name="business_license_end_date" value="{{$user->business_license_end_date}}">
-                            <div class="col-12 text-danger" id="business_license_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->social_insurance_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
-                                الإجتماعية (PDF)</label>
-                            <input type="file" class="form-control" id="social_insurance_certificate"
-                                name="social_insurance_certificate">
-                            <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
-                                الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" value="{{$user->social_insurance_certificate_end_date}}"
-                                id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">
-                            <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->certificate_of_zakat)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>
-                            <input type="file" class="form-control" id="certificate_of_zakat"
-                                name="certificate_of_zakat">
-                            <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" id="date_of_zakat_end_date"
-                                name="date_of_zakat_end_date" value="{{$user->date_of_zakat_end_date}}">
-                            <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->saudization_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
-                            <input type="file" class="form-control" id="saudization_certificate"
-                                name="saudization_certificate">
-                            <div class="col-12 text-danger" id="saudization_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" id="saudization_certificate_end_date"
-                                name="saudization_certificate_end_date" value="{{$user->saudization_certificate_end_date}}">
-                            <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->chamber_of_commerce_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
-                                التجارية (PDF)</label>
-                            <input type="file" class="form-control" id="chamber_of_commerce_certificate"
-                                name="chamber_of_commerce_certificate">
-                            <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
-                                الانتهاء</label>
-                            <input type="text" class="form-control flatpickr" value="{{$user->chamber_of_commerce_certificate_end_date}}"
-                                id="chamber_of_commerce_certificate_end_date"
-                                name="chamber_of_commerce_certificate_end_date">
-                            <div class="col-12 text-danger" id="chamber_of_commerce_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->tax_registration_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة
-                                (PDF)</label>
-                            <input type="file" class="form-control" id="tax_registration_certificate"
-                                name="tax_registration_certificate">
-                            <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->wage_protection_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
-                            <input type="file" class="form-control" id="wage_protection_certificate"
-                                name="wage_protection_certificate">
-                            <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->memorandum_of_association)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="memorandum_of_association"> عقد التأسيس (PDF)</label>
-                            <input type="file" class="form-control" id="memorandum_of_association"
-                                name="memorandum_of_association">
-                            <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                    @if($record->type == 'contractor')
-                        <div class="row">
+                        @if($record->company_name)
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label class="form-label" for="cv_file">الاعمال السابقة (PDF)</label>
-                                    <input type="file" class="form-control" id="cv_file"
-                                           name="cv_file">
-                                    <div class="col-12 text-danger" id="cv_file_error"></div>
+                                    <label class="form-label" for="company_name">اسم الشركة / المؤسسة<span
+                                            class="text-danger required-mark">*</span></label>
+                                    <input type="text" class="form-control" id="company_name"
+                                           value="{{$user->company_name}}"  name="company_name"
+                                           placeholder="اسم الشركة / المؤسسة">
+                                    <div class="col-12 text-danger" id="company_name_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->company_owner_name)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+
+                                    <label class="form-label" for="company_owner_name">اسم المالك<span
+                                            class="text-danger required-mark">*</span></label>
+                                    <input type="text" class="form-control" value="{{$user->company_owner_name}}"
+                                           id="company_owner_name"
+                                           name="company_owner_name" placeholder="اسم المالك">
+
+
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->id_number)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="id_number">رقم هوية المالك<span
+                                            class="text-danger required-mark">*</span></label>
+                                    <input type="text" class="form-control" value="{{$user->id_number}}" id="id_number"
+                                           name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
+                                           placeholder="رقم الهوية">
+                                    <div class="col-12 text-danger" id="id_number_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->commercial_record)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
+                                    <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
+                                           value="{{$user->commercial_record}}"
+                                           id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
+                                    <div class="col-12 text-danger" id="commercial_record_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->email)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="email"> البريد الإلكتروني<span
+                                            class="text-danger required-mark">*</span></label>
+                                    <input type="email" value="{{$user->email}}" class="form-control" id="email"
+                                           name="email"
+                                           placeholder="البريد الإلكتروني">
+                                    <div class="col-12 text-danger" id="email_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->phone)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="phone">رقم الجوال<span class="text-danger required-mark">*</span></label>
+                                    <input type="text" onkeypress="return /[0-9]/i.test(event.key)" value="{{$user->phone}}"
+                                           class="form-control" id="phone"
+                                           name="phone" minlength="10" maxlength="10"
+                                           placeholder="رقم الجوال">
+                                    <div class="col-12 text-danger" id="phone_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->telephone)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="telephone">الهاتف<span class="text-danger required-mark">*</span></label>
+                                    <input type="text" value="{{$user->telephone}}" class="form-control" id="telephone"
+                                           name="telephone"
+                                           placeholder="الهاتف">
+                                    <div class="col-12 text-danger" id="telephone_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->city)
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="city">المدينة<span
+                                            class="text-danger required-mark">*</span></label>
+                                    <select class="form-control" id="city" name="city">
+                                        @foreach(citiesList() as $cityItem)
+                                            <option value="{{ $cityItem }}" @if($cityItem == $user->city) selected @endif>{{ $cityItem }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="col-12 text-danger" id="city_error"></div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->commercial_file)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="commercial_file">السجل التحاري (PDF)</label>
+                                    <input type="file" class="form-control"
+                                        id="commercial_file" name="commercial_file">
+                                    <div class="col-12 text-danger" id="commercial_file_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="commercial_file_end_date">تاريخ انتهاء السجل التجاري</label>
+                                    <input type="text" class="form-control flatpickr"
+                                        value="{{$user->commercial_file_end_date}}" id="commercial_end_date"
+                                        name="commercial_file_end_date">
+                                    <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
                                 </div>
                             </div>
                         </div>
-                    @endif
-
-
-                @if($record->company_owner_id_photo)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                        <label class="form-label" for="company_owner_id_photo"> صورة هوية  المالك (PDF)</label>
-                            <input type="file" class="form-control" id="company_owner_id_photo"
-                                name="company_owner_id_photo">
-                            <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>
+                        @endif
+                        @if($record->rating_certificate)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي (PDF)</label>
+                                    <input type="file" class="form-control" id="rating_certificate" name="rating_certificate">
+                                    <div class="col-12 text-danger" id="rating_certificate_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" id="rating_certificate_end_date"
+                                        name="rating_certificate_end_date"  value="{{$user->rating_certificate_end_date}}">
+                                    <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($record->commissioner_id_photo)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commissioner_id_photo"> صورة هوية  المفوض (PDF)</label>
-                            <input type="file" class="form-control" id="commissioner_id_photo"
-                                name="commissioner_id_photo">
-                            <div class="col-12 text-danger" id="commissioner_id_photo_error"></div>
+                        @endif
+                        @if($record->address_file)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="address_file">العنوان الوطني (PDF)</label>
+                                    <input type="file" class="form-control" name="address_file" id="address_file">
+                                    <div class="col-12 text-danger" id="address_file_error"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($record->commissioner_photo) 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commissioner_photo"> صورة التفويض (PDF)</label>
-                            <input type="file" class="form-control" id="commissioner_photo"
-                                name="commissioner_photo">
-                            <div class="col-12 text-danger" id="commissioner_photo_error"></div>
+                        @endif
+                        @if($record->profession_license)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="profession_license">شهادة مزاولة المهنة (PDF)</label>
+                                    <input type="file" class="form-control" id="profession_license" name="profession_license">
+                                    <div class="col-12 text-danger" id="profession_license_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" id="profession_license_end_date"
+                                        name="profession_license_end_date" value="{{$user->profession_license_end_date}}">
+                                    <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                @endif
-                
+                        @endif
+                        @if($record->business_license)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="business_license">رخصة نشاط تجاري (PDF)</label>
+                                    <input type="file" class="form-control" name="business_license" id="business_license">
+                                    <div class="col-12 text-danger" id="business_license_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" id="business_license_end_date"
+                                        name="business_license_end_date" value="{{$user->business_license_end_date}}">
+                                    <div class="col-12 text-danger" id="business_license_end_date_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->social_insurance_certificate)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
+                                        الإجتماعية (PDF)</label>
+                                    <input type="file" class="form-control" id="social_insurance_certificate"
+                                        name="social_insurance_certificate">
+                                    <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
+                                        الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" value="{{$user->social_insurance_certificate_end_date}}"
+                                        id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">
+                                    <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->certificate_of_zakat)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="certificate_of_zakat">رخصة الزكاة والدخل (PDF)</label>
+                                    <input type="file" class="form-control" id="certificate_of_zakat"
+                                        name="certificate_of_zakat">
+                                    <div class="col-12 text-danger" id="certificate_of_zakat_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="date_of_zakat_end_date">تاريخ الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" id="date_of_zakat_end_date"
+                                        name="date_of_zakat_end_date" value="{{$user->date_of_zakat_end_date}}">
+                                    <div class="col-12 text-danger" id="date_of_zakat_end_date_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->saudization_certificate)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
+                                    <input type="file" class="form-control" id="saudization_certificate"
+                                        name="saudization_certificate">
+                                    <div class="col-12 text-danger" id="saudization_certificate_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" id="saudization_certificate_end_date"
+                                        name="saudization_certificate_end_date" value="{{$user->saudization_certificate_end_date}}">
+                                    <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->chamber_of_commerce_certificate)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
+                                        التجارية (PDF)</label>
+                                    <input type="file" class="form-control" id="chamber_of_commerce_certificate"
+                                        name="chamber_of_commerce_certificate">
+                                    <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
+                                        الانتهاء</label>
+                                    <input type="text" class="form-control flatpickr" value="{{$user->chamber_of_commerce_certificate_end_date}}"
+                                        id="chamber_of_commerce_certificate_end_date"
+                                        name="chamber_of_commerce_certificate_end_date">
+                                    <div class="col-12 text-danger" id="chamber_of_commerce_certificate_end_date_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->tax_registration_certificate)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة
+                                        (PDF)</label>
+                                    <input type="file" class="form-control" id="tax_registration_certificate"
+                                        name="tax_registration_certificate">
+                                    <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->wage_protection_certificate)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
+                                    <input type="file" class="form-control" id="wage_protection_certificate"
+                                        name="wage_protection_certificate">
+                                    <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->memorandum_of_association)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="memorandum_of_association"> عقد التأسيس (PDF)</label>
+                                    <input type="file" class="form-control" id="memorandum_of_association"
+                                        name="memorandum_of_association">
+                                    <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->type == 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="cv_file">الاعمال السابقة (PDF)</label>
+                                        <input type="file" class="form-control" id="cv_file"
+                                               name="cv_file">
+                                        <div class="col-12 text-danger" id="cv_file_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->company_owner_id_photo)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                <label class="form-label" for="company_owner_id_photo"> صورة هوية  المالك (PDF)</label>
+                                    <input type="file" class="form-control" id="company_owner_id_photo"
+                                        name="company_owner_id_photo">
+                                    <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->commissioner_id_photo)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="commissioner_id_photo"> صورة هوية  المفوض (PDF)</label>
+                                    <input type="file" class="form-control" id="commissioner_id_photo"
+                                        name="commissioner_id_photo">
+                                    <div class="col-12 text-danger" id="commissioner_id_photo_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @if($record->commissioner_photo)
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="commissioner_photo"> صورة التفويض (PDF)</label>
+                                    <input type="file" class="form-control" id="commissioner_photo"
+                                        name="commissioner_photo">
+                                    <div class="col-12 text-danger" id="commissioner_photo_error"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="d-flex flex-wrap gap-3">
                             <button type="submit" class="btn btn-lg btn-primary submit_btn">تعديل</button>
                         </div>
+                    </div>
                 </form>
-                <br>
-                <br>
-
             </div>
-
-
         </div>
         @if ($errors->any())
             @foreach ($errors->all() as $error)
@@ -428,18 +400,16 @@
 @section('scripts')
 
     <script>
-  
+
 
         @foreach(array_keys($col_file) as $_col)
-        @if($user->{$_col})
-
-        file_input('#{{$_col}}', {
-            initialPreview: '{{asset('storage/'.$user->{$_col})}}',
-        });
-        @else
-        file_input('#{{$_col}}');
-        @endif
-
+            @if($user->{$_col})
+                file_input('#{{$_col}}', {
+                    initialPreview: '{{ asset('storage/'.$user->{$_col}) }}',
+                });
+            @else
+                file_input('#{{$_col}}');
+            @endif
         @endforeach
 
 
@@ -483,14 +453,10 @@
             if (!$("#add_edit_form").valid())
                 return false;
 
-
             $('#add_edit_form').submit()
 
         });
-        
-        
-        flatpickr(".flatpickr");
-       
 
+        flatpickr(".flatpickr");
     </script>
 @endsection

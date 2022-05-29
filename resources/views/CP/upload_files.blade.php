@@ -31,7 +31,6 @@
             @csrf
             <div class="row">
 
-
                 @if($record->commercial_file)
                 <div class="row">
                     <div class="col-md-6">
