@@ -10,7 +10,7 @@
                 <!-- card body -->
                 <div class="card-body">
                     <div class="row align-items-center">
-                        <div class="col-6">
+                        <div class="col-12">
                             <span class="h3">عدد المسجلين</span>
                             <h4 class="mb-3 mt-3">
                                 <span class="counter-value" data-target="{{$number_of_user}}"></span>مستخدم
