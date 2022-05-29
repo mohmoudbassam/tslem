@@ -112,6 +112,16 @@
 
                 <?php endif; ?>
 
+                <?php if(auth()->user()->type=='raft_company'): ?>
+                    <li>
+                        <a href="<?php echo e(route('raft_company')); ?>">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">المراكز</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+
                 <?php if(auth()->user()->type=='contractor'): ?>
                     <li>
                         <a href="<?php echo e(route('contractor')); ?>">
