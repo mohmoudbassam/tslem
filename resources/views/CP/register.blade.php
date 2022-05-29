@@ -252,7 +252,8 @@
                     @if($record->commercial_record)
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label" for="commercial_record"> رقم السجل التجاري</label>
+                                <label class="form-label" for="commercial_record"> رقم السجل التجاري <span
+                                        class="text-danger required-mark">*</span></label>
                                 <input type="text" class="form-control"
                                        value="{{old('commercial_record')}}"
                                        id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
@@ -260,43 +261,7 @@
                             </div>
                         </div>
                     @endif
-
-
-
-                    @if($record->id_number)
-                        <!-- <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="id_number">رقم الهوية<span
-                                        class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{old('id_number')}}" id="id_number"
-                                       name="id_number" onkeypress="return /[0-9]/i.test(event.key)" maxlength="10"
-                                       placeholder="xxxxxxxxxx">
-                                <div class="col-12 text-danger" id="id_number_error"></div>
-                            </div>
-                        </div> -->
-                    @endif
-
-                    @if($record->id_date && request('type') !='design_office')
-                    <!-- <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="id_date">التاريخ<span class="text-danger required-mark">*</span></label>
-                                <input  type="text" class="form-control datepicker" value="{{old('id_date')}}" id="id_date"
-                                       name="id_date"
-                                       placeholder="التاريخ">
-                                <div class="col-12 text-danger" id="id_date_error"></div>
-                            </div>
-                        </div> -->
-                    @endif
-                    @if($record->source && request('type') !='design_office')
-                    <!-- <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="source">المصدر<span class="text-danger required-mark">*</span></label>
-                                <input type="text" class="form-control" value="{{old('source')}}" id="source"
-                                       name="source" placeholder="المصدر">
-                                <div class="col-12 text-danger" id="id_date_error"></div>
-                            </div>
-                        </div> -->
-                    @endif
+                   
                     @if($record->email)
                         <div class="col-md-6">
                             <div class="mb-3">

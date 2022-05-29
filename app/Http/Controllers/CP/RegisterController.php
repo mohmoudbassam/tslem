@@ -82,6 +82,7 @@ class RegisterController extends Controller
             'date_of_zakat_end_date' => request('date_of_zakat_end_date'),
             'saudization_certificate_end_date' => request('saudization_certificate_end_date'),
             'chamber_of_commerce_certificate_end_date' => request('chamber_of_commerce_certificate_end_date'),
+            'license_number' => request('license_number'),
 
         ]);
         //dd(request('contractor_type'),is_array(request('contractor_type')),!empty(request('contractor_type')));
