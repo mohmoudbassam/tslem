@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
 class OrdersController extends Controller
@@ -33,15 +34,18 @@ class OrdersController extends Controller
     public function create_order()
     {
         $data['designers'] = User::query()->whereVitrified()->where('type', 'design_office')->get();
-
         return view('CP.service_providers.create_order', $data);
     }
 
     public function save_order(Request $request)
     {
-
-        $order = Order::query()->create($request->except('files', '_token'));
-        $order->owner_id = auth()->user()->id;
+        $order = Order::query()->create([
+            "title" => Str::random(15),
+            "description" => Str::random(15),
+            "date" => date("Y-m-d"),
+            "owner_id" => auth()->user()->id,
+            "designer_id" => $request->designer_id
+        ]);
         $order->save();
 
         $sharers = User::query()->where("type", User::SHARER_TYPE)->pluck('id');
