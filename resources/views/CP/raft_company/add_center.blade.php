@@ -228,7 +228,7 @@
 <script>
 
     @foreach(array_keys(get_user_column_file($type)) as $_col)  
-    file_input_register('#{{$_col}}');
+    file_input_all('#{{$_col}}');
     @endforeach
 
 
