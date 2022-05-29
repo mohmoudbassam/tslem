@@ -49,8 +49,12 @@ Route::post('regester_action', [RegisterController::class, 'add_edit'])->name('r
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('verify', [VerificationController::class, 'verify'])->name('verify');
-    Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
+    Route::get('verify', [VerificationController::class, 'verify'])
+        ->middleware(["is-unverified"])
+        ->name('verify');
+    Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])
+        ->middleware(["is-unverified"])
+        ->name('user.verify');
     Route::get('upload_files', [VerificationController::class, 'upload_files'])->name('upload_files');
     Route::post('upload_files', [VerificationController::class, 'save_upload_files'])->name('upload_files_action');
 });
@@ -239,7 +243,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
         Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
         Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
-        
+
     });
 
     Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
