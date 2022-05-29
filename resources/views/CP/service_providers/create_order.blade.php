@@ -93,7 +93,6 @@
     </div>
 
 @endsection
-
 @section('scripts')
     <script>
         file_input('#files');
