@@ -107,7 +107,7 @@ class VerificationController extends Controller{
         $columns_name = get_user_column_file($user->type);
         if (!empty($columns_name)) {
             $files = request()->all(array_keys(get_user_column_file($user->type)));
-            
+
             foreach ($files as $col_name => $file) {
 
                 if(!is_null($file)){

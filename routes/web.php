@@ -49,8 +49,12 @@ Route::post('regester_action', [RegisterController::class, 'add_edit'])->name('r
 Route::any('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('verify', [VerificationController::class, 'verify'])->name('verify');
-    Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])->name('user.verify');
+    Route::get('verify', [VerificationController::class, 'verify'])
+        ->middleware(["is-unverified"])
+        ->name('verify');
+    Route::get('account/verify/{token}', [VerificationController::class, 'verify_account'])
+        ->middleware(["is-unverified"])
+        ->name('user.verify');
     Route::get('upload_files', [VerificationController::class, 'upload_files'])->name('upload_files');
     Route::post('upload_files', [VerificationController::class, 'save_upload_files'])->name('upload_files_action');
 });
@@ -141,26 +145,28 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('/reports/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
         Route::post('copy_note', [DeliveryController::class, 'copy_note'])->name('.copy_note');
     });
-    Route::prefix('contractor')->name('contractor')->middleware(['contractor', 'verifiedUser'])->group(function () {
+    Route::prefix('contractor')->name('contractor')->middleware(['contractor'])->group(function () {
         Route::get('orders', [ContractorController::class, 'orders']);
-        Route::get('', [ContractorController::class, 'list'])->name('.list');
-        Route::get('add_report/{order}', [ContractorController::class, 'add_report_from'])->name('.add_report_form');
-        Route::post('add_report', [ContractorController::class, 'add_edit_report'])->name('.add_edit_report');
-        Route::get('show_reports/{order}', [ContractorController::class, 'show_reports'])->name('.show_reports');
-        Route::get('report_list/{order}', [ContractorController::class, 'report_list'])->name('.report_list');
-        Route::get('edit_report_form/{report}', [ContractorController::class, 'edit_report_form'])->name('.edit_report_form');
-        Route::post('update_report', [ContractorController::class, 'update_report'])->name('.update_report');
-        Route::post('delete_report', [ContractorController::class, 'delete_report'])->name('.delete_report');
-        Route::post('delete_file/{file}', [ContractorController::class, 'delete_file'])->name('.delete_file');
-        Route::get('show_comments/{report}', [ContractorController::class, 'show_comments'])->name('.show_comments');
-        Route::post('save_comment', [ContractorController::class, 'save_comment'])->name('.save_comment');
+        Route::middleware(["verifiedUser"])
+            ->group(function () {
+                Route::get('', [ContractorController::class, 'list'])->name('.list');
+                Route::get('add_report/{order}', [ContractorController::class, 'add_report_from'])->name('.add_report_form');
+                Route::post('add_report', [ContractorController::class, 'add_edit_report'])->name('.add_edit_report');
+                Route::get('show_reports/{order}', [ContractorController::class, 'show_reports'])->name('.show_reports');
+                Route::get('report_list/{order}', [ContractorController::class, 'report_list'])->name('.report_list');
+                Route::get('edit_report_form/{report}', [ContractorController::class, 'edit_report_form'])->name('.edit_report_form');
+                Route::post('update_report', [ContractorController::class, 'update_report'])->name('.update_report');
+                Route::post('delete_report', [ContractorController::class, 'delete_report'])->name('.delete_report');
+                Route::post('delete_file/{file}', [ContractorController::class, 'delete_file'])->name('.delete_file');
+                Route::get('show_comments/{report}', [ContractorController::class, 'show_comments'])->name('.show_comments');
+                Route::post('save_comment', [ContractorController::class, 'save_comment'])->name('.save_comment');
 
-        Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
-        Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
-        Route::get('download/{id}', [ContractorController::class, 'download'])->name('.download');
-        Route::get('accept_order/{order}', [ContractorController::class, 'accept_order'])->name('.accept_order');
-        Route::get('reject_order/{order}', [ContractorController::class, 'reject_order'])->name('.reject_order');
-
+                Route::get('order-details/{order}', [ContractorController::class, 'order_details'])->name('.order_details');
+                Route::get('/{order}/list', [ContractorController::class, 'list_orders'])->name('.list_orders');
+                Route::get('download/{id}', [ContractorController::class, 'download'])->name('.download');
+                Route::get('accept_order/{order}', [ContractorController::class, 'accept_order'])->name('.accept_order');
+                Route::get('reject_order/{order}', [ContractorController::class, 'reject_order'])->name('.reject_order');
+            });
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
@@ -239,7 +245,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
         Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
         Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
-        
+
     });
 
     Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {

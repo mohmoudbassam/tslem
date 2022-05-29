@@ -73,11 +73,12 @@ class Kernel extends HttpKernel
         'contractor'=>\App\Http\Middleware\CP\contractor::class,
         'sharer'=>\App\Http\Middleware\CP\Sharer::class,
         'is-verified' => \App\Http\Middleware\IsVerified::class,
+        'is-unverified' => \App\Http\Middleware\UnverifiedMiddelware::class,
         'is-file-uploaded' => \App\Http\Middleware\IsFileUploaded::class,
         'APIUserAuth' => APIUserAuth::class,
         'raft_company'=>\App\Http\Middleware\CP\RaftCompany::class,
         'raft_center'=>\App\Http\Middleware\CP\RaftCenter::class,
-        
+
 
 
     ];

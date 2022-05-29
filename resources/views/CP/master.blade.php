@@ -22,6 +22,152 @@
         <div class="page-content">
             <div class="container-fluid">
 
+<<<<<<< HEAD
+=======
+                @if(\Request::route()->getName()=='dashboard')
+
+                <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18">الإحصائيات</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">الرئيسية</a></li>
+                                            <li class="breadcrumb-item active">الإحصائيات</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-xl-2 col-md-6">
+                                <!-- card -->
+                                <div class="card card-h-100">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-12">
+                                                <br>
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate">عدد المسجلين</span>
+                                                <h4 class="mb-3">
+                                                   <span class="counter-value" data-target="{{$all_user}}">{{$all_user}}</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-h-100">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-12">
+                                                <br>
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate">عدد المستخدمين الغير معتمدين</span>
+                                                <h4 class="mb-3">
+                                                   <span class="counter-value" data-target="{{$not_verified}}">{{$not_verified}}</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+
+
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-h-100">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-12">
+                                                <br>
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate">عدد المستخدمين المعتمدين</span>
+                                                <h4 class="mb-3">
+                                                   <span class="counter-value" data-target="{{$verified}}">{{$verified}}</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+                            
+
+
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-h-100">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-12">
+                                                <br>
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate">عدد مراكز الخدمة</span>
+                                                <h4 class="mb-3">
+                                                   <span class="counter-value" data-target="{{$service_providers}}">{{$service_providers}}</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+                            
+
+
+                            <div class="col-xl-2 col-md-6">
+                                <!-- card -->
+                                <div class="card card-h-100">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-12">
+                                                <br>
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate">عدد المقاولين </span>
+                                                <h4 class="mb-3">
+                                                   <span class="counter-value" data-target="{{$contractors}}">{{$contractors}}</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+
+
+                            <div class="col-xl-3 col-md-6">
+                                <!-- card -->
+                                <div class="card card-h-100">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-12">
+                                                <br>
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate">عدد المكاتب </span>
+                                                <h4 class="mb-3">
+                                                   <span class="counter-value" data-target="{{$design_offices}}">{{$design_offices}}</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card body -->
+                                </div><!-- end card -->
+                            </div><!-- end col -->
+        
+                          
+
+
+                         
+
+
+                        </div><!-- end row-->
+
+                    @endif
+>>>>>>> dd491a6ee446dfc587a843be704aa869478e7c9f
                 @yield('content')
                 <div class="col-12">
 
