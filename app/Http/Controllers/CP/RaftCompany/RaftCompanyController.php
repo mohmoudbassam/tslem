@@ -23,8 +23,9 @@ class RaftCompanyController extends Controller{
 
         $request->validate([
             'email' => 'required|email|unique:users,email',
+            'name' => 'required|string|unique:users,name',
         ]);
-        
+
         $user = User::create([
             'type' => 'raft_center',
             'parent_id' => auth()->user()->id,
