@@ -80,7 +80,7 @@ class LoginController extends Controller
         $data['number_of_user']=User::query()->count();
         $data['number_of_user_under_approve']=User::query()->where('verified',0)->count();
         $data['number_of_approve_user']=User::query()->where('verified',1)->count();
-        $data['number_of_service_providers']=User::query()->where('verified',1)->count();
+        $data['number_of_service_providers']=User::query()->where('type','service_provider')->count();
         $data['number_of_contractors']=User::query()->where('type','contractor')->count();
         $data['number_of_consulting_office']=User::query()->where('type','consulting_office')->count();
         return view('CP.dashboard',$data);
