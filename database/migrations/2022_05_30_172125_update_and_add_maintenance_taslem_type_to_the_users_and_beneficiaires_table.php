@@ -14,7 +14,7 @@ class UpdateAndAddMaintenanceTaslemTypeToTheUsersAndBeneficiairesTable extends M
     public function up()
     {
         \DB::statement("ALTER TABLE users MODIFY COLUMN type ENUM('admin','service_provider','design_office', 'Sharer','consulting_office', 'contractor', 'Delivery', 'Kdana', 'raft_company', 'raft_center','taslem_maintenance');");
-        \DB::statement("ALTER TABLE beneficiaries_columns MODIFY COLUMN type ENUM('admin','service_provider','design_office', 'Sharer','consulting_office', 'contractor', 'Delivery', 'Kdana', 'raft_company', 'raft_center,taslem_maintenance');");
+        \DB::statement("ALTER TABLE beneficiaries_columns MODIFY COLUMN type ENUM('admin','service_provider','design_office', 'Sharer','consulting_office', 'contractor', 'Delivery', 'Kdana', 'raft_company', 'raft_center','taslem_maintenance');");
 
     }
 
