@@ -96,9 +96,9 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed'
         ]);
 
-        $user = User::findOrFail($request->id);
+        $user = User::query()->findOrFail($request->id);
         $user->update([
-            'password' =>Hash::make($request->password)
+            'password' =>$request->password
         ]);
 
         return back()->with('success', 'تم تعديل كلمة المرور بنجاح');
