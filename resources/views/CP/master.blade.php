@@ -97,13 +97,18 @@
 <script src="{{url("/")}}/assets/libs/@simonwep/pickr/pickr.es5.min.js"></script>
 
 <!-- datepicker js -->
-<script src="assets/libs/flatpickr/flatpickr.min.js"></script>
+<script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+
 
 @include('CP.layout.js')
 @yield('scripts')
     <script>
+        $(function () {
+            feather.replace();
+        });
         function read_message(){
 
             $.ajaxSetup({
