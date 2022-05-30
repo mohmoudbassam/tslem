@@ -414,7 +414,7 @@
                     if (data.success) {
                         $('#page_modal').modal('hide');
 
-                        window.location='{{route('design_office')}}'
+                        window.location='{{route('design_office.orders')}}'
                     } else {
                         $('#page_modal').modal('hide');
                         if (data.message) {
