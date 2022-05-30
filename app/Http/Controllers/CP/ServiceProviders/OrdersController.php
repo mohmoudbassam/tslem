@@ -57,7 +57,7 @@ class OrdersController extends Controller
         $user = User::query()->find($request->designer_id);
 
         $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
-        return redirect()->route('services_providers')->with(['success' => 'تم انشاء الطلب بنجاح']);
+        return redirect()->route('services_providers.orders')->with(['success' => 'تم انشاء الطلب بنجاح']);
     }
 
     public function list(Request $request)
@@ -146,7 +146,7 @@ class OrdersController extends Controller
         $user = User::query()->find($request->designer_id);
 
         $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
-        return redirect()->route('services_providers')->with(['success' => 'تم تعديل الطلب بنجاح']);
+        return redirect()->route('services_providers.orders')->with(['success' => 'تم تعديل الطلب بنجاح']);
 
 
     }
