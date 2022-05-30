@@ -22,6 +22,11 @@ class BeneficiresCoulumnsSeeder extends Seeder
 
         ]);
         BeneficiresCoulumns::query()->create([
+            'type' => 'taslem_maintenance',
+            'email' => '1',
+            'phone' => '1',
+        ]);
+        BeneficiresCoulumns::query()->create([
             'type' => 'Delivery',
             'responsible_name' => '1',
             'email' => '1',

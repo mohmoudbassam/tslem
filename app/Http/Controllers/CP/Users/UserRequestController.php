@@ -17,6 +17,7 @@ class UserRequestController extends Controller
 
     public function list()
     {
+
         //->where('email_verified_at', '!=' ,null)
         $users = User::query()->where('is_file_uploaded', 1)->whereIn('verified', [0, 2])->when(request('name'), function ($q) {
             $q->where('name', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
@@ -27,6 +28,7 @@ class UserRequestController extends Controller
         })->where('type', '!=', 'admin');
         return DataTables::of($users)
             ->addColumn('type', function ($user) {
+
                 return $user->user_type;
             })
             ->addColumn('enabled', function ($user) {
