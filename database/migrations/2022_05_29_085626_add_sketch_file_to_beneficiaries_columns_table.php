@@ -16,6 +16,9 @@ class AddSketchFileToBeneficiariesColumnsTable extends Migration
         Schema::table('beneficiaries_columns', function (Blueprint $table) {
             $table->boolean('center_sketch')->nullable()->default(0);
             $table->boolean('gis_sketch')->nullable()->default(0);
+
+
+
         });
     }
 

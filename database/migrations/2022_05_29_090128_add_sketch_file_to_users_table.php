@@ -16,6 +16,7 @@ class AddSketchFileToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('center_sketch')->nullable()->after('sharer_type');
             $table->string('gis_sketch')->nullable()->after('sharer_type');
+
         });
     }
 
@@ -29,6 +30,7 @@ class AddSketchFileToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('center_sketch');
             $table->dropColumn('gis_sketch');
+
         });
     }
 }
