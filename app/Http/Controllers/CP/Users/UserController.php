@@ -21,14 +21,16 @@ class UserController extends Controller
 
     public function add()
     {
+
         return view('CP.users.select_form');
     }
 
     public function get_form(Request $request, $id = null)
     {
-
+        dd($request->all());
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
         $data['type'] =  $request->type;
+
         return view('CP.users.form', $data);
     }
 

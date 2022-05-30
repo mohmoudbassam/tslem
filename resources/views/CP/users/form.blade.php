@@ -58,6 +58,8 @@
                             <option @if($record->type =="contractor") selected @endif value="contractor">مقاول</option>
                             <option @if($record->type =="raft_company") selected @endif value="raft_company">شركة طوافة
                             </option>
+                            <option @if($record->type =="taslem_maintenance") selected @endif value="taslem_maintenance">صيانة تسليم
+                            </option>
                             <option @if($record->type =="Delivery") selected @endif value="Delivery">تسليم</option>
                             <option @if($record->type =="Kdana") selected @endif value="Kdana">كدانة</option>
                         </select>

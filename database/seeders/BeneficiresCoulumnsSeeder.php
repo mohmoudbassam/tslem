@@ -64,7 +64,7 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'email' => '1',
             'phone' => '1',
             'address' => '1',
-            'telephone' => '1',
+            'telephone' => '0',
             'city' => '1',
             'employee_number' => '1',
             'commercial_file' => '1',
