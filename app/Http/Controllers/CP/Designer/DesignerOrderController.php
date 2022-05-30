@@ -89,9 +89,9 @@ class DesignerOrderController extends Controller
             $order->save();
             save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
             optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
-            return redirect()->route('design_office');
+            return redirect()->route('design_office.orders');
         }
-        return redirect()->route('design_office')->with(['success' => 'تمت الموافقة على الطلب بنحاح']);
+        return redirect()->route('design_office.orders')->with(['success' => 'تمت الموافقة على الطلب بنحاح']);
 
     }
 
@@ -110,7 +110,7 @@ class DesignerOrderController extends Controller
             ]);
             $order->save();
         }
-        return redirect()->route('design_office')->with(['success' => 'تمت رفض الطلب بناح ']);
+        return redirect()->route('design_office.orders')->with(['success' => 'تمت رفض الطلب بناح ']);
     }
 
     public function add_files(Order $order)
