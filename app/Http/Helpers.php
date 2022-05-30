@@ -34,11 +34,11 @@ function get_user_column_file($type)
         'cv_file',
         'hajj_service_license',
         'personalization_record',
-        'company_owner_id_photo',
         'nomination_letter',
         'center_sketch',
         'gis_sketch',
         'dwg_sketch',
+        'previous_works' // For Previous Works File Of Contractor
         )->where('type', $type)->first();
 
 
@@ -70,6 +70,8 @@ function file_name_by_column($col)
         'commissioner_photo'=>'خطاب التفويض',
         'hajj_service_license'=>'ترخيص خدمة الحج',
         'personalization_record'=>'محضر التخصيص',
+        'dwg_sketch' => 'كروكي المركز (DWG)',
+        'previous_works' => 'الأعمال السابقة'
     ][$col];
 }
 
