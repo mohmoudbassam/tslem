@@ -166,7 +166,7 @@
 
 
                         <li>
-                            <a href="{{route('users.dashboard')}}">
+                            <a href="{{route('dashboard')}}">
                                 <i data-feather="pie-chart"></i>
                                 <span data-key="t-dashboard">الإحصائيات </span>
                             </a>

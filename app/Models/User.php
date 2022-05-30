@@ -75,7 +75,7 @@ class User extends Authenticatable
 
         return [
             'admin' => 'مدير النظام',
-            'service_provider' => 'مؤسسة ، شركة (مطوف)',
+            'service_provider' => 'شركات حجاج الداخل',
             'design_office' => 'مكتب هندسي',
             'Sharer' => 'جهة مشاركة',
             'consulting_office' => 'مشرف',
@@ -137,17 +137,43 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class, 'owner_id')->where('type', 'service_provider');
     }
+
     public function designer_orders()
     {
         return $this->hasMany(Order::class, 'designer_id')->where('type', 'design_office');
     }
+
     public function consulting_orders()
     {
         return $this->hasMany(Order::class, 'consulting_office_id')->where('type', 'consulting_office');
     }
+
     public function contractors_orders()
     {
         return $this->hasMany(Order::class, 'contractor_id')->where('type', 'contractor');
+    }
+
+    public function main_route()
+    {
+        if ($this->type == 'admin') {
+            return route('dashboard');
+        }
+
+        if ($this->type == 'service_provider') {
+            return route('services_providers.orders');
+        }
+
+        if ($this->type == 'Delivery') {
+            return route('delivery');
+        }
+
+        if ($this->type == 'design_office') {
+            return redirect()->route('design_office.orders');
+        }
+
+        if($this->type=='design_office'){
+            return route('design_office.orders');
+        }
     }
 
 

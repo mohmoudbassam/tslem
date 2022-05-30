@@ -45,7 +45,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type"> مؤسسة ، شركة (مطوف)</label>
+                            <label for="type">شركات حجاج الداخل</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($service_providers as $services_provider)
@@ -104,7 +104,7 @@
                             عنوان الطلب
                         </th>
                         <th>
-                            مؤسسة، شركة (مطوف)
+                            شركات حجاج الداخل
                         </th>
                         <th>
                             التاريخ

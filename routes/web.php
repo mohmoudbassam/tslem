@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('user.verify');
     Route::get('upload_files', [VerificationController::class, 'upload_files'])->name('upload_files');
     Route::post('upload_files', [VerificationController::class, 'save_upload_files'])->name('upload_files_action');
+    Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 });
 
 
@@ -78,7 +79,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('update_from/{user}', [UserController::class, 'update_from'])->name('.update_from');
         Route::get('change_password/{user}', [UserController::class, 'change_password_form'])->name('.change_password_form');
         Route::post('change_password', [UserController::class, 'change_password'])->name('.change_password');
-        Route::get('dashboard', [LoginController::class, 'dashboard'])->name('.dashboard');
+
         Route::post('update', [UserController::class, 'update'])->name('.update');
         Route::post('delete', [UserController::class, 'delete'])->name('.delete');
         Route::prefix('request')->name('.request')->group(function () {

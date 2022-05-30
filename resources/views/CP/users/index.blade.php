@@ -35,7 +35,7 @@
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
-                                <option value="service_provider">مؤسسة، شركة (مطوف)</option>
+                                <option value="service_provider">شركات حجاج الداخل</option>
                                 <option value="design_office">مكتب هندسي</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>

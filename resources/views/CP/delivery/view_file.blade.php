@@ -100,7 +100,7 @@
 
                         <div class="col-md-6 mb-3">
                             <p class="details_p"><span
-                                    class="bold">مؤسسة، شركة (مطوف) :</span> {{$order->service_provider->company_name}}</p>
+                                    class="bold">شركات حجاج الداخل :</span> {{$order->service_provider->company_name}}</p>
                         </div>
 
                         <div class="col-md-6 mb-3">

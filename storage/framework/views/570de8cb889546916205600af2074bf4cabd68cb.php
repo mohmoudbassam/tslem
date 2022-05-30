@@ -166,7 +166,7 @@
 
 
                         <li>
-                            <a href="<?php echo e(route('users.dashboard')); ?>">
+                            <a href="<?php echo e(route('dashboard')); ?>">
                                 <i data-feather="pie-chart"></i>
                                 <span data-key="t-dashboard">الإحصائيات </span>
                             </a>

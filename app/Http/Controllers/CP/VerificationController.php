@@ -18,7 +18,7 @@ class VerificationController extends Controller{
     public function verify(){
 
         if(auth()->user()->email_verified_at != NULL){
-            return redirect()->route('dashboard');
+            return  redirect(auth()->user()->main_route());
         }
 
         $token = Str::random(64);
@@ -62,7 +62,7 @@ class VerificationController extends Controller{
     public function upload_files(){
 
         if(auth()->user()->is_file_uploaded == true){
-            return redirect()->route('dashboard');
+            return  redirect(auth()->user()->main_route());
         }
 
         $type = (is_null(auth()->user()->type)) ? 'service_provider' : auth()->user()->type;
@@ -71,7 +71,7 @@ class VerificationController extends Controller{
         $col_file = get_user_column_file($type);
         if(empty($col_file)){
             auth()->user()->update(['is_file_uploaded' => true]);
-            return redirect()->route('dashboard');
+            return  redirect(auth()->user()->main_route());
         }
         return view('CP.upload_files', compact('type','record','col_file'));
     }

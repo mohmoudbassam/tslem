@@ -49,7 +49,7 @@
                         <select class="form-select" id="type" name="type">
                             <option @if($record->type =="admin") selected @endif value="admin">مدير نظام</option>
                             <option @if($record->type =="service_provider") selected @endif
-                                value="service_provider">مؤسسة، شركة (مطوف)</option>
+                                value="service_provider">شركات حجاج الداخل</option>
                             <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
                                 هندسي</option>
                             <option @if($record->type =="Sharer") selected @endif value="Sharer">جهة مشاركة</option>
@@ -87,7 +87,7 @@
 
                 @if($record->type == "Kdana")
 
-                
+
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label" for="kdana_type">التخصص<span class="text-danger required-mark">*</span></label>
@@ -117,7 +117,7 @@
                     </div>
                     @endif
 
-                    
+
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label class="form-label" for="name"> @if($record->type == "Kdana" || $record->type == "Delivery" || $record->type == "Sharer") اسم الشخصي المسؤول @else الاسم@endif<span
@@ -128,8 +128,8 @@
                     </div>
                 </div>
 
-               
-                
+
+
 
 
                 @if($record->company_name)

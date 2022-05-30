@@ -166,7 +166,7 @@
                             <select class="form-select" id="type" name="type">
 
                                 <option @if($record->type =="service_provider") selected
-                                        @endif value="service_provider">مؤسسة، شركة (مطوف)
+                                        @endif value="service_provider">شركات حجاج الداخل
                                 </option>
                                 <option @if($record->type =="design_office") selected @endif value="design_office">مكتب
                                     هندسي
@@ -261,7 +261,7 @@
                             </div>
                         </div>
                     @endif
-                   
+
                     @if($record->email)
                         <div class="col-md-6">
                             <div class="mb-3">
