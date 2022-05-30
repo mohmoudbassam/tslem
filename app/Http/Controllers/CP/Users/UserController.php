@@ -21,13 +21,11 @@ class UserController extends Controller
 
     public function add()
     {
-
         return view('CP.users.select_form');
     }
 
     public function get_form(Request $request, $id = null)
     {
-        dd($request->all());
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
         $data['type'] =  $request->type;
 
@@ -69,25 +67,21 @@ class UserController extends Controller
 
     public function edit_profile()
     {
-
         $data['record'] = BeneficiresCoulumns::query()->where('type',auth()->user()->type)->firstOrFail();
         $data['user'] =auth()->user();
         $col_file = get_user_column_file(auth()->user()->type);
         $data['col_file']= $col_file;
         $data['verified']=auth()->user()->verified;
         return view('CP.users.edit_profile',$data);
-
     }
 
     public function update_profile()
     {
         return view('CP.users.edit_profile');
-
     }
 
     public function change_password_form(User $user){
         return view('CP.users.change_password', ['user' => $user]);
-
     }
 
     public function change_password(Request $request){
@@ -124,7 +118,6 @@ class UserController extends Controller
 
     public function list(Request $request)
     {
-
         $users = User::query()->where('verified',1)->when(request('name'), function ($q) {
             $q->where('name', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('email', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
@@ -149,16 +142,36 @@ class UserController extends Controller
 
                 return $element;
             })->addColumn('actions', function ($user) {
-                $element = '<div class="btn-group me-1 mt-2">
+                $hasUploadFiles = false;
+                foreach (array_keys(get_user_column_file($user->type)) as $fileName) {
+                    if ( !empty($user->{$fileName}) or !is_null($user->{$fileName}) ) {
+                        $hasUploadFiles = true;
+                    }
+                }
+                if ( $hasUploadFiles ) {
+                    $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
+                                                <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
                                                 <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
                                                 <a class="dropdown-item" href="' . route('users.change_password_form', ['user' => $user->id]) . '">تغيير كلمة المرور</a>
-                                                <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
+                                                <a class="dropdown-item view-files" href="" data-user="' . $user->id . '">عرض المروفقات</a>
                                             </div>
                                         </div>';
+                } else {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                خيارات<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+                                                <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
+                                                <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
+                                                <a class="dropdown-item" href="' . route('users.change_password_form', ['user' => $user->id]) . '">تغيير كلمة المرور</a>
+                                            </div>
+                                        </div>';
+                }
 
                 return $element;
             })->rawColumns(['enabled', 'actions'])
@@ -290,4 +303,69 @@ class UserController extends Controller
         return back()->with(['success' => 'تمت عمليه التعديل بنجاح']);
     }
 
+
+    public function get_user_files(User $user)
+    {
+        try {
+            $hasUploadFiles = false;
+            foreach (array_keys(get_user_column_file(User::find(13)->type)) as $fileName) {
+                if ( !empty($user->{$fileName}) or !is_null($user->{$fileName}) ) {
+                    $hasUploadFiles = true;
+                }
+            }
+
+            if (!$hasUploadFiles) {
+                return response()->json([
+                    'message' => 'لاتوجد مرفقات ',
+                    'success' => false
+                ]);
+            }
+
+            $files = [];
+            $extensions = ["pdf", "png", "jpg", "jpeg", "xlsx", "xlsm", "xlsb", "xltx", "dwg"];
+            foreach (array_keys(get_user_column_file($user->type)) as $fileName) {
+                if (is_null($user->$fileName)) continue;
+                $exception = last(explode(".", $user->$fileName));
+                switch (strtolower($exception)) {
+                    case "png":
+                    case "jpg":
+                    case "jpeg":
+                        $icon = asset("assets/images/png.png");
+                        break;
+                    case "pdf":
+                        $icon = asset("assets/images/pdf.png");
+                        break;
+                    case "xlsx":
+                    case "xlsm":
+                    case "xlsb":
+                    case "xltx":
+                        $icon = asset("assets/images/xlsx.png");
+                        break;
+                    case "dwg":
+                        $icon = asset("assets/images/dwg.png");
+                        break;
+                    default:
+                        $icon = asset("assets/images/default.png");
+                }
+                $files[] = [
+                    "name" => file_name_by_column($fileName),
+                    "file" => $user->$fileName,
+                    "icon" =>  $icon,
+                    "path" => asset("storage/".$user->{$fileName}),
+                    "extension" => $exception
+                ];
+            }
+
+            return response()->json([
+                'data' => $files,
+                'message' => '',
+                'success' => true
+            ]);
+        } catch (\Exception | \Error $exception) {
+            return response()->json([
+                'message' => 'خطأ تقني الرجاء المحاولة لاحقا',
+                'success' => false
+            ]);
+        }
+    }
 }

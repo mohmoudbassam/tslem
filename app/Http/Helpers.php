@@ -70,6 +70,8 @@ function file_name_by_column($col)
         'commissioner_photo'=>'خطاب التفويض',
         'hajj_service_license'=>'ترخيص خدمة الحج',
         'personalization_record'=>'محضر التخصيص',
+        'dwg_sketch' => 'كروكي المركز (DWG)',
+        'previous_works' => 'الأعمال السابقة'
     ][$col];
 }
 
