@@ -13,23 +13,7 @@ class LoginController extends Controller
     public function index()
     {
         if(auth()->check()){
-            if(auth()->user()->type == 'admin'){
-                return redirect()->route('dashboard');
-            }
-            $user_type=auth()->user()->type;
-
-            if(auth()->user()->type == 'admin'){
-                return redirect()->route('dashboard');
-            }
-            if(auth()->user()->type=='service_provider'){
-
-                return redirect()->route('services_providers');
-
-            }
-            if(auth()->user()->type=='Delivery'){
-                return redirect()->route('delivery');
-            }
-            return redirect()->route($user_type);
+           return redirect(auth()->user()->main_route());
         }
         return view('CP.login');
     }
