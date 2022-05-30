@@ -38,7 +38,7 @@ function get_user_column_file($type)
         'nomination_letter',
         'center_sketch',
         'gis_sketch',
-
+        'dwg_sketch',
         )->where('type', $type)->first();
 
 

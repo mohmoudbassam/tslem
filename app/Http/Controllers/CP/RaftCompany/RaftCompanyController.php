@@ -34,7 +34,6 @@ class RaftCompanyController extends Controller{
             'company_name' => request('company_name'),
             'company_owner_name' => request('company_owner_name'),
             'email' => request('email'),
-            'license_number' => request('license_number'),
             'box_number' => request('box_number'),
             'camp_number' => request('camp_number'),
             'phone' => request('phone'),
@@ -44,7 +43,7 @@ class RaftCompanyController extends Controller{
         $this->uploadUserFiles($user, $request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }
-    
+
     public function list(Request $request)
     {
 
@@ -67,7 +66,6 @@ class RaftCompanyController extends Controller{
 
                 if($file){
                     $file_name = $file->getClientOriginalName();
-
                     $path = Storage::disk('public')->put('user_files', $file);
 
                     $user->{$col_name} = $path;
