@@ -148,7 +148,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::post('copy_note', [DeliveryController::class, 'copy_note'])->name('.copy_note');
     });
     Route::prefix('contractor')->name('contractor')->middleware(['contractor'])->group(function () {
-        Route::get('orders', [ContractorController::class, 'orders']);
+        Route::get('orders', [ContractorController::class, 'orders'])->name('.orders');
         Route::middleware(["verifiedUser"])
             ->group(function () {
                 Route::get('', [ContractorController::class, 'list'])->name('.list');

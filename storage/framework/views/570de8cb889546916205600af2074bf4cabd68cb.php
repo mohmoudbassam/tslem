@@ -124,7 +124,7 @@
 
                 <?php if(auth()->user()->type=='contractor'): ?>
                     <li>
-                        <a href="<?php echo e(route('contractor')); ?>">
+                        <a href="<?php echo e(route('contractor.orders')); ?>">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>

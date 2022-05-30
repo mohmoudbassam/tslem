@@ -174,6 +174,9 @@ class User extends Authenticatable
         if($this->type=='design_office'){
             return route('design_office.orders');
         }
+        if($this->type=='contractor'){
+            return route('contractor.orders');
+        }
     }
 
 

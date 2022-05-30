@@ -124,7 +124,7 @@
 
                 @if(auth()->user()->type=='contractor')
                     <li>
-                        <a href="{{route('contractor')}}">
+                        <a href="{{route('contractor.orders')}}">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
