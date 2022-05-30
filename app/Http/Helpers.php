@@ -13,7 +13,7 @@ function save_logs($order, $user_id, $data)
     ]);
 }
 
-function get_user_column_file($type)
+    function get_user_column_file($type)
 {
     $benef = BeneficiresCoulumns::query()->select(
         'commercial_file',
