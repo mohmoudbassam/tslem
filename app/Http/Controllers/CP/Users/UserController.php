@@ -36,7 +36,6 @@ class UserController extends Controller
 
     public function add_edit(StoreUserRequest $request)
     {
-
         $user = User::query()->create([
             'type' => request('type'),
             'name' => request('name'),

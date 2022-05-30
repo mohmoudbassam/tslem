@@ -11,7 +11,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">انشاء طلب</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('services_providers')}}">الطلبات</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('services_providers.orders')}}">الطلبات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
