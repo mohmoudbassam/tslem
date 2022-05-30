@@ -13,6 +13,7 @@ class LoginController extends Controller
     public function index()
     {
         if(auth()->check()){
+
            return redirect(auth()->user()->main_route());
         }
         return view('CP.login');

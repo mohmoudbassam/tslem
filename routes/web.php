@@ -199,7 +199,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     });
     Route::prefix('Sharer')->name('Sharer')->middleware(['sharer'])->group(function () {
-        Route::get('orders', [SharerController::class, 'orders']);
+        Route::get('orders', [SharerController::class, 'orders'])->name('.order');
         Route::get('', [SharerController::class, 'list'])->name('.list');
         Route::get('reject_form', [SharerController::class, 'reject_form'])->name('.reject_form');
         Route::post('accept', [SharerController::class, 'accept'])->name('.accept');

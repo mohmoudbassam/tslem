@@ -171,11 +171,18 @@ class User extends Authenticatable
             return route('design_office.orders');
         }
 
-        if($this->type=='design_office'){
+        if ($this->type == 'design_office') {
             return route('design_office.orders');
         }
-        if($this->type=='contractor'){
+        if ($this->type == 'contractor') {
             return route('contractor.orders');
+        }
+
+        if ($this->type == 'Sharer') {
+            return route('Sharer.order');
+        }
+        if ($this->type == 'raft_company') {
+            return route('raft_company');
         }
     }
 
