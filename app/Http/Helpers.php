@@ -34,11 +34,11 @@ function get_user_column_file($type)
         'cv_file',
         'hajj_service_license',
         'personalization_record',
-        'company_owner_id_photo',
         'nomination_letter',
         'center_sketch',
         'gis_sketch',
         'dwg_sketch',
+        'previous_works' // For Previous Works File Of Contractor
         )->where('type', $type)->first();
 
 
