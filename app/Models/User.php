@@ -168,7 +168,7 @@ class User extends Authenticatable
         }
 
         if ($this->type == 'design_office') {
-            return redirect()->route('design_office.orders');
+            return route('design_office.orders');
         }
 
         if($this->type=='design_office'){
