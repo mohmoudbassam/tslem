@@ -13,7 +13,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">أضافة تقرير</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('contractor')}}">الطلبات</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('contractor.orders')}}">الطلبات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
