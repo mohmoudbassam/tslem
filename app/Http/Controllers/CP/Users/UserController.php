@@ -27,7 +27,6 @@ class UserController extends Controller
 
     public function get_form(Request $request, $id = null)
     {
-        dd($request->all());
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
         $data['type'] =  $request->type;
 
