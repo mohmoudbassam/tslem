@@ -61,6 +61,7 @@
                            id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
+                        <th>#</th>
                         <th>
                             اسم المستخدم
                         </th>
@@ -72,6 +73,9 @@
                         </th>
                         <th>
                             الهاتف
+                        </th>
+                        <th>
+                            تاريخ التسجيل
                         </th>
                         <th>
                             مفعل/معطل
@@ -97,6 +101,7 @@
 @endsection
 
 @section('scripts')
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     <script>
 
 
@@ -121,10 +126,16 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
+                    {className: 'text-center', data: 'id', name: 'id'},
                     {className: 'text-center', data: 'name', name: 'name'},
                     {className: 'text-center', data: 'email', name: 'email'},
                     {className: 'text-center', data: 'type', name: 'type'},
                     {className: 'text-center', data: 'phone', name: 'phone'},
+                    {
+                        className: 'text-center', data: 'created_at', name: 'date', render: function (data) {
+                            return moment(data).format("YYYY-MM-DD hh:mm:ss");
+                        }
+                    },
                     {className: 'text-center', data: 'enabled', name: 'enabled'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
