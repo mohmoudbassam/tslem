@@ -35,12 +35,12 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
-                        <div class="col-lg-2">
-                            <label for="order_id">رقم الطلب </label>
-                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
+                        <div class="col">
+                            <label for="order_identifier">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المكتب الهندسي</label>
+                        <div class="col">
+                            <label for="designer_id">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
@@ -49,8 +49,8 @@
 
                             </select>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المشرف</label>
+                        <div class="col">
+                            <label for="consulting_id">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 @foreach($consulting as $_consulting)
@@ -58,8 +58,8 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المقاول </label>
+                        <div class="col">
+                            <label for="contractor_id">المقاول </label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
@@ -67,12 +67,12 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">من </label>
+                        <div class="col">
+                            <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">الى </label>
+                        <div class="col">
+                            <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
@@ -98,7 +98,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان الطلب
+                            رقم الطلب
                         </th>
 
                         <th>
@@ -158,7 +158,7 @@
                     url: '{{route('services_providers.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_id = $('#order_id').val();
+                        d.order_identifierentifier = $('#order_identifier').val();
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
@@ -171,7 +171,7 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-right', data: 'title', name: 'title'},
+                    {className: 'text-right', data: 'identifier', name: 'identifier'},
                     {className: 'text-right', data: 'date', name: 'date'},
                     {className: 'text-right', data: 'designer.company_name', name: 'designer'},
                     {className: 'text-right', data: 'order_status', name: 'order_status'},

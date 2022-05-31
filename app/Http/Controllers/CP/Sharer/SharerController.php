@@ -24,7 +24,17 @@ class SharerController extends Controller
 
     public function list(Request $request)
     {
-        $order = Order::query()->with(['service_provider', 'designer'])->select("orders.*")
+        $order = Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
+            ->with(['service_provider', 'designer'])->select("orders.*")
             ->whereOrderId($request->order_id)
             ->whereDate($request->from_date,$request->to_date)
             ->where('status', '>=', '3');

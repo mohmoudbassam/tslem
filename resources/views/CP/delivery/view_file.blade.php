@@ -92,7 +92,7 @@
                                 </div>
 
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
+                                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                                 </div>
 
 

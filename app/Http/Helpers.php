@@ -13,6 +13,16 @@ function save_logs($order, $user_id, $data)
     ]);
 }
 
+function randomIntIdentifier($length = 10) {
+    $length = $length > 0 ? $length: 10;
+    $numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    $identifier = "1";
+    for ($index = 1; $index < ($length - 1); $index++) {
+        $identifier .= $numbers[mt_rand(0, 9)];
+    }
+    return $identifier;
+}
+
     function get_user_column_file($type)
 {
     $benef = BeneficiresCoulumns::query()->select(

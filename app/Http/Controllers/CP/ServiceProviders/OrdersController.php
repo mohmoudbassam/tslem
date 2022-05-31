@@ -16,7 +16,6 @@ class OrdersController extends Controller
 {
     public function orders()
     {
-
         $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
         })->get();
@@ -26,7 +25,6 @@ class OrdersController extends Controller
         $data['contractors'] = User::query()->whereHas('contractors_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
         })->get();
-
 
         return view('CP.service_providers.orders', $data);
     }
@@ -44,7 +42,8 @@ class OrdersController extends Controller
             "description" => Str::random(15),
             "date" => date("Y-m-d"),
             "owner_id" => auth()->user()->id,
-            "designer_id" => $request->designer_id
+            "designer_id" => $request->designer_id,
+            "identifier" => randomIntIdentifier()
         ]);
         $order->save();
 
@@ -64,6 +63,15 @@ class OrdersController extends Controller
     {
 
         $order = Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
             ->whereOrderId($request->order_id)
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
@@ -85,11 +93,11 @@ class OrdersController extends Controller
                 $add_designer = '';
                 $add_contractor_and_consulting_office = '';
                 if ($order->designer_id == null) {
-                    $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة مكتب تصميم </a>';
+                    $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة مكتب تصميم </a>';
                 }
 
                 if ($order->status == Order::DESIGN_APPROVED && $order->contractor_id == null && $order->consulting_office_id == null) {
-                    $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus"></i>إضافة استشاري ومقاول</a>';
+                    $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus mx-2"></i>إضافة استشاري ومقاول</a>';
                 }
 
                 if (empty($add_designer) && empty($add_contractor_and_consulting_office)) {
