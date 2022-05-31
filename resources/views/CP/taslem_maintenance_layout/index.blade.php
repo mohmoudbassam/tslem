@@ -62,6 +62,12 @@
                             الاسم
                         </th>
                         <th>
+                            البريد الالكتروني
+                        </th>
+                        <th>
+                            اسم المفوض
+                        </th>
+                        <th>
                             تاريخ الموعد
                         </th>
 {{--                        <th>--}}
@@ -111,7 +117,9 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'user.name', name: 'user.name'},
+                    {className: 'text-center', data: 'user.company_name', name: 'user.company_name'},
+                    {className: 'text-center', data: 'user.email', name: 'user.email'},
+                    {className: 'text-center', data: 'user.company_owner_name', name: 'user.company_owner_name'},
                     {className: 'text-center', data: 'start_at', name: 'start_at'},
                     // {className: 'text-center', data: 'actions', name: 'actions'},
 

@@ -62,6 +62,13 @@ class TaslemMaintenance extends Controller
     }
 
     public function save_session(Request $request) {
+        $has_session=Session::query()->where('user_id',$request->user_id)->first();
+        if($has_session){
+            return response()->json([
+                'message' => 'هذا المستخدم لديه موعد مسبق',
+                'success' => false
+            ]);
+        }
         Session::query()->create([
             'user_id' => $request->user_id,
             'support_id' => auth()->user()->id,

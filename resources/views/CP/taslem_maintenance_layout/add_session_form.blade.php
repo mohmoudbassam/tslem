@@ -52,6 +52,12 @@
                             الاسم
                         </th>
                         <th>
+                            البريد الالكتروني
+                        </th>
+                        <th>
+                           اسم المفوض
+                        </th>
+                        <th>
                             اختيار
                         </th>
 
@@ -111,7 +117,9 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
+                    {className: 'text-center', data: 'company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'email', name: 'email'},
+                    {className: 'text-center', data: 'company_owner_name', name: 'company_owner_name'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
                 ],
 
@@ -159,7 +167,7 @@
             postData(formData, '{{route('taslem_maintenance.sessions.save')}}');
         });
 
-        flatpickr(".datepicker", { enableTime: true, minDate: new Date() });
+        flatpickr(".datepicker", { enableTime: true, minDate: '{{now('Asia/Riyadh')}}'});
     </script>
 
 @endsection
