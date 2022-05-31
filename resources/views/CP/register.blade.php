@@ -297,6 +297,30 @@
                             </div>
                         </div>
                     @endif
+                    @if(request('type') == 'service_provider')
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="box_number">رقم المربع<span class="text-danger required-mark">*</span></label>
+                                <input type="text"  value="{{old('box_number')}}"
+                                       class="form-control" id="box_number"
+                                       name="box_number"
+                                       placeholder="رقم المربع">
+                                <div class="col-12 text-danger" id="box_number_error"></div>
+                            </div>
+                        </div>
+                    @endif
+                    @if(request('type') == 'service_provider')
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="camp_number">رقم المخيم<span class="text-danger required-mark">*</span></label>
+                                <input type="text"  value="{{old('camp_number')}}"
+                                       class="form-control" id="رقم المخيم"
+                                       name="camp number"
+                                       placeholder="رقم المخيم">
+                                <div class="col-12 text-danger" id="camp_number_error"></div>
+                            </div>
+                        </div>
+                    @endif
                     @if($record->city)
                         <div class="col-md-6">
                             <div class="mb-3">

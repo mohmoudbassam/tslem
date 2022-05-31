@@ -55,7 +55,7 @@ class UserController extends Controller
             'password' => request('password'),
         ]);
 
-        if($user->type == 'raft_company'){
+        if($user->type == 'raft_company' && $user->type == 'taslem_maintenance'){
             $user->update([
                 'is_file_uploaded' => 1,
                 'verified' => 1

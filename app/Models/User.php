@@ -184,6 +184,10 @@ class User extends Authenticatable
         if ($this->type == 'raft_company') {
             return route('raft_company');
         }
+        if ($this->type == 'taslem_maintenance') {
+            return route('taslem_maintenance.index');
+        }
+
     }
 
 

@@ -26,7 +26,7 @@ class AddPreviousWorksToBeneficiariesColumnsTable extends Migration
     public function down()
     {
         Schema::table('beneficiaries_columns', function (Blueprint $table) {
-            //
+            $table->dropColumn('previous_works');
         });
     }
 }

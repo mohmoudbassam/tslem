@@ -16,7 +16,6 @@
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
-
             </div>
         </div>
     </div>
@@ -33,12 +32,13 @@
                             <div class="mb-3">
                                 <label class="form-label" for="type">نوع المستخدم</label>
                                 <select class="form-select" id="type" name="type">
-                                    <option  value="">اختر...</option>
+                                    <option value="">اختر...</option>
                                     <option value="service_provider">شركات حجاج الداخل</option>
                                     <option value="design_office">مكتب هندسي</option>
                                     <option value="Sharer">جهة مشاركة</option>
                                     <option value="consulting_office">مكتب استشاري</option>
                                     <option value="contractor">مقاول</option>
+                                    <option value="taslem_maintenance">صيانة تسليم</option>
                                     <option value="raft_company">شركة طوافة</option>
                                     <option value="Delivery">تسليم</option>
                                     <option value="Kdana">كدانة</option>

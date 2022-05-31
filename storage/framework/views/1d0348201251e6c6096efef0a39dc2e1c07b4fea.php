@@ -4,6 +4,24 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
+    <style>
+        .modal-backdrop.show {
+            display: initial !important;
+        }
+        .modal-backdrop.fade {
+            display: initial !important;
+        }
+        .file-view-wrapper:hover {
+            box-shadow: var(--bs-box-shadow) !important;
+        }
+        .file-view-icon {
+            height: 180px;
+            background-size: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -78,10 +96,10 @@
                             تاريخ التسجيل
                         </th>
                         <th>
-                            مفعل/معطل
+                            الحالة
                         </th>
                         <th>
-                            مفعل/معطل
+                            خيارات
                         </th>
                         </thead>
                         <tbody>
@@ -98,13 +116,31 @@
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
 
+    <div class="modal  bd-example-modal-lg" id="view-user-files" data-backdrop="static" data-keyboard="false"
+         role="dialog" aria-labelledby="View User Files" aria-hidden="true">
+    </div>
+
+    <div class="modal fade" id="view-user-files-modal" tabindex="-1" role="dialog" aria-labelledby="view-user-files-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="view-user-files-modal-title">مرفقات المستخدم</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row my-4" id="file-view-row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-view-files-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script>
-
-
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
@@ -146,6 +182,7 @@
             });
 
         });
+
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false);
         });
@@ -197,6 +234,62 @@
                 }
             });
         }
+    </script>
+
+    <script>
+        $(function () {
+
+            async function getFiles(id) {
+                let response = await fetch(`/users/${id}/files`, {
+                    headers: {
+                        'accept': 'application/json'
+                    },
+                });
+
+                return await  (await response).json();
+            }
+
+            function prepareViewFiles(data) {
+                data.map(file => {
+                    $("#file-view-row").append(`<div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" data-file="${file['path']}" style="cursor:pointer; height: 220px;">
+                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                <div class="file-view-icon" style="background-image: url('${file['icon']}');"></div>
+                                <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
+                                    <small class="text-muted" id="file-view-name">${file['name']}</small>
+                                </div>
+                            </div>
+                        </div>`);
+                });
+            }
+
+            $('#view-user-files-modal').on('hidden.bs.modal', function (e) {
+                $("#file-view-row").children().remove();
+            });
+
+            $("#close-view-files-modal").on("click", function () {
+                $("#view-user-files-modal").modal("hide");
+            })
+
+            $(document).on("click", ".file-view", async function (event) {
+                event.preventDefault();
+
+                window.open($(this).data("file"));
+            });
+
+            $(document).on("click", ".view-files", async function (event) {
+                event.preventDefault();
+                let userId = $(this).data("user");
+
+                let response = await getFiles(userId);
+
+                if ( response['success'] ) {
+                    prepareViewFiles(response['data']);
+                    $("#view-user-files-modal").modal("show");
+                } else {
+                    showAlertMessage('error', response['message']);
+                }
+            })
+        });
     </script>
 
 <?php $__env->stopSection(); ?>

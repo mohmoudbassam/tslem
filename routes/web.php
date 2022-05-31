@@ -3,6 +3,7 @@
 use App\Http\Controllers\CP\Contractor\ContractorController;
 
 use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
+use App\Http\Controllers\CP\TaslemMaintenance\TaslemMaintenance;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\LoginController;
@@ -259,6 +260,14 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
 
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
+});
+
+ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
+    Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
+    Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
+    Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
+    Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
+
 });
 //Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
