@@ -17,10 +17,7 @@ class AddCampNumberAndBoxNumberColumns extends Migration
             $table->boolean("box_number")->nullable()->default(0);
             $table->boolean("camp_number")->nullable()->default(0);
         });
-        Schema::table('users', function (Blueprint $table) {
-            $table->text("box_number")->nullable();
-            $table->text("camp_number")->nullable();
-        });
+
     }
 
     /**
@@ -34,9 +31,6 @@ class AddCampNumberAndBoxNumberColumns extends Migration
             $table->dropColumn('box_number');
             $table->dropColumn('camp_number');
         });
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('box_number');
-            $table->dropColumn('camp_number');
-        });
+
     }
 }
