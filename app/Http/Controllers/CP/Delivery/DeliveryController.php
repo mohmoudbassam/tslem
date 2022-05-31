@@ -352,6 +352,10 @@ class DeliveryController extends Controller
 
         ]);
 
+        save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
+        optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم  من مكتب التسليم', auth()->user()->id));
+        optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم من مكتب التسليم', auth()->user()->id));
+
         return response()->json([
             'success' => true,
             'message' => "تم التحويل بنجاح"
