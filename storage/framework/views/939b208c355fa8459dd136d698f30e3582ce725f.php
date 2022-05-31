@@ -11,10 +11,10 @@
 
                 <a href="#" class="logo logo-light">
                                 <span class="logo-sm">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24">
+                                    <img src="<?php echo e(asset('assets/images/logo-sm.svg')); ?>" alt="" height="24">
                                 </span>
                     <span class="logo-lg">
-                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">البوابة الرقمية تسليم</span>
+                                    <img src="<?php echo e(asset('assets/images/logo-sm.svg')); ?>" alt="" height="24"> <span class="logo-txt">البوابة الرقمية تسليم</span>
                                 </span>
                 </a>
             </div>
@@ -34,8 +34,7 @@
             <?php endif; ?>
         </div>
         <div class="d-flex">
-
-            <div class="dropdown d-inline-block d-lg-none ms-2">
+            <div class="dropdown d-inline-block d-lg-block ms-2">
                 <button type="button" class="btn header-item" id="page-header-search-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="search" class="icon-lg"></i>
@@ -57,7 +56,7 @@
             </div>
 
 
-            <div class="dropdown d-none d-sm-inline-block">
+            <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item" id="mode-setting-btn">
                     <i data-feather="moon" class="icon-lg layout-mode-dark"></i>
                     <i data-feather="sun" class="icon-lg layout-mode-light"></i>

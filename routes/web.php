@@ -264,6 +264,12 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
  Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
     Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
+    Route::prefix('sessions')->name(".sessions")->group(function () {
+        Route::get('/list', [TaslemMaintenance::class, 'list'])->name('.list');
+        Route::get('/users_list', [TaslemMaintenance::class, 'users_list'])->name('.users_list');
+        Route::get('/add', [TaslemMaintenance::class, 'add_session_form'])->name('.add_form');
+        Route::post('/save', [TaslemMaintenance::class, 'save_session'])->name('.save');
+    });
     Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
     Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
     Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');

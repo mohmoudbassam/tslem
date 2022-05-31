@@ -67,7 +67,7 @@
 
                 <?php if(auth()->user()->type=='service_provider' ): ?>
                     <li>
-                        <a href="<?php echo e(route('services_providers')); ?>">
+                        <a href="<?php echo e(route('services_providers.orders')); ?>">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
@@ -75,7 +75,7 @@
                 <?php endif; ?>
                 <?php if(auth()->user()->type=='design_office' ): ?>
                     <li>
-                        <a href="<?php echo e(route('design_office')); ?>">
+                        <a href="<?php echo e(route('design_office.orders')); ?>">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
@@ -112,9 +112,19 @@
 
                 <?php endif; ?>
 
+                <?php if(auth()->user()->type=='raft_company'): ?>
+                    <li>
+                        <a href="<?php echo e(route('raft_company')); ?>">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">المراكز</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+
                 <?php if(auth()->user()->type=='contractor'): ?>
                     <li>
-                        <a href="<?php echo e(route('contractor')); ?>">
+                        <a href="<?php echo e(route('contractor.orders')); ?>">
                             <i data-feather="list"></i>
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
@@ -152,13 +162,13 @@
                     </li>
 
                 <?php endif; ?>
-                    <?php if(auth()->user()->verified==1): ?>
+                    <?php if(auth()->user()->isAdmin()): ?>
 
 
                         <li>
                             <a href="<?php echo e(route('dashboard')); ?>">
                                 <i data-feather="pie-chart"></i>
-                                <span data-key="t-dashboard">الإحصائيات  (قريبا)</span>
+                                <span data-key="t-dashboard">الإحصائيات </span>
                             </a>
                         </li>
                     <?php endif; ?>

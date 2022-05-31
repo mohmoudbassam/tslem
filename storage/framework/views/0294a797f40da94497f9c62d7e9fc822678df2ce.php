@@ -35,9 +35,14 @@
     <link href="<?php echo e(url("/")); ?>/assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="<?php echo e(url('/assets/libs/flatpickr/flatpickr.min.css')); ?>"/>
-
-
         <style>
+            .required-field:after {
+                position: relative;
+                top: 3px;
+                right: 6px;
+                content: "*";
+                color: #fd625e;
+            }
         @font-face {
             font-family: JannaLT;
             src: url('<?php echo e(url('/assets/fonts/JannaLT-Regular.woff')); ?>');
@@ -95,11 +100,11 @@
             color: #e9ecef;
             background-color: #126a47;
             border-color: #126a47;
-            
+
         }
 
     </style>
-    
+
     <?php echo $__env->yieldContent('style'); ?>
 </head>
 
