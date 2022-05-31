@@ -72,7 +72,7 @@
             <div class="row">
 
                 <div class="col-md-6 mb-3">
-                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->id}}</p>
+                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                 </div>
 
 

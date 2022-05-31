@@ -23,19 +23,17 @@
         <div class="card-header">
             <div class="row mt-4">
                 <div class="col-lg-12">
-
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-
-                        <div class="col-lg-2">
-                            <label for="order_id">رقم الطلب </label>
-                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
+                        <div class="col">
+                            <label for="order_identifier">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">من </label>
+                        <div class="col">
+                            <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">الى </label>
+                        <div class="col">
+                            <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
@@ -44,8 +42,6 @@
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
                             <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
-
-
                     </form>
                 </div>
 
@@ -53,9 +49,7 @@
             </div>
         </div>
         <div class="card-body">
-
             <div class="row">
-
                 <div class="col-sm-12">
                     <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
                            id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
@@ -63,7 +57,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان الطلب
+                            رقم الطلب
                         </th>
                         <th>
                             شركات حجاج الداخل
@@ -91,7 +85,6 @@
 
             </div>
         </div>
-
     </div>
 
     <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
@@ -116,9 +109,8 @@
                     url: '{{route('Sharer.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.name = $('#name').val();
                         d.type = $('#type').val();
-                        d.order_id = $('#order_id').val();
+                        d.order_identifier = $('#order_identifier').val();
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
 
@@ -129,7 +121,7 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'title', name: 'title'},
+                    {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'service_provider.company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},

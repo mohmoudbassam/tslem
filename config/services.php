@@ -30,4 +30,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'unifonic' => [
+        'app_id' => env('UNIFONIC_APP_ID', ""),
+        'sender_id' => env('UNIFONIC_SENDER_ID', ""), // String, Optional
+        'account_email' => env('UNIFONIC_ACCOUNT_EMAIL', ""),
+        'account_password' => env('UNIFONIC_ACCOUNT_PASSWORD', "")
+    ],
+
 ];

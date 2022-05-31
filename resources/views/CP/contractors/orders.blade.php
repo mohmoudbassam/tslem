@@ -28,13 +28,13 @@
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
 
                         <div class="col-lg-2">
-                            <label for="order_id">رقم الطلب </label>
-                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
+                            <label for="order_identifier">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
 
 
                         <div class="col-lg-2">
-                            <label for="type">شركات حجاج الداخل</label>
+                            <label for="service_provider_id">شركات حجاج الداخل</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($service_providers as $services_provider)
@@ -44,7 +44,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type"> المكتب الهندسي</label>
+                            <label for="designer_id"> المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
@@ -53,7 +53,7 @@
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <label for="type">المشرف</label>
+                            <label for="consulting_id">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 @foreach($consulting as $_consulting)
@@ -64,11 +64,11 @@
                         </div>
 
                         <div class="col-lg-1">
-                            <label for="">من </label>
+                            <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
                         <div class="col-lg-1">
-                            <label for="">الى </label>
+                            <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
 
@@ -95,7 +95,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان الطلب
+                            رقم الطلب
                         </th>
                         <th>
                             مقدم الخدمة
@@ -151,7 +151,7 @@
                     url: '{{route('contractor.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_id = $('#order_id').val();
+                        d.order_identifier = $('#order_identifier').val();
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
@@ -164,7 +164,7 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'title', name: 'title'},
+                    {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'designer.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},

@@ -29,14 +29,12 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
 
-                        <div class="col-lg-2">
-                            <label for="order_id">رقم الطلب </label>
-                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
-
-
+                        <div class="col">
+                            <label for="order_identifier">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المقاول </label>
+                        <div class="col">
+                            <label for="contractor_id">المقاول </label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
@@ -44,7 +42,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col">
                             <label for="type">شركات حجاج الداخل</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
@@ -54,8 +52,8 @@
 
                             </select>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type"> المكتب الهندسي</label>
+                        <div class="col">
+                            <label for="designer_id"> المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
 
@@ -66,12 +64,12 @@
                             </select>
                         </div>
 
-                        <div class="col-lg-1">
-                            <label for="">من </label>
+                        <div class="col">
+                            <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">الى </label>
+                        <div class="col">
+                            <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
 
@@ -101,7 +99,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان الطلب
+                            رقم الطلب
                         </th>
                         <th>
                             شركات حجاج الداخل
@@ -154,7 +152,7 @@
                     url: '{{route('consulting_office.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_id = $('#order_id').val();
+                        d.order_identifier = $('#order_identifier').val();
                         d.service_provider_id = $('#service_provider_id').val();
                         d.type = $('#type').val();
                         d.from_date = $('#from_date').val();
@@ -168,7 +166,7 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'title', name: 'title'},
+                    {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
                     {className: 'text-center', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},

@@ -168,6 +168,8 @@ return [
          * Package Service Providers...
          */
 
+        Multicaret\Unifonic\UnifonicServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -233,7 +235,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Unifonic' => Multicaret\Unifonic\UnifonicFacade::class,
     ],
 
 ];

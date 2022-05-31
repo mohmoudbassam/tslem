@@ -592,7 +592,7 @@
 
                         showAlertMessage('success', data.message);
                         setTimeout(() => {
-                            window.location='{{route('design_office')}}';
+                            window.location='{{route('design_office.orders')}}';
                         }, "1500")
                     } else {
                         $('#page_modal').modal('hide');

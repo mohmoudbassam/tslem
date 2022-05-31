@@ -26,13 +26,24 @@ class DesignerOrderController extends Controller
         $data['services_providers'] =User::query()->whereHas('orders', function ($q) {
             $q->where('designer_id', auth()->user()->id);
         })->get();
+
         return view('CP.designer.orders',$data);
     }
 
     public function list(Request $request)
     {
-
-        $order = Order::query()->with('service_provider')
+        $order = Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                dd($request->query("order_identifier"));
+                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
+            ->with('service_provider')
             ->whereOrderId($request->order_id)
             ->whereDate($request->from_date,$request->to_date)
             ->whereServiceProviderId($request->service_provider_id)

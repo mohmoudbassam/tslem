@@ -37,7 +37,17 @@ class ContractorController extends Controller
     public function list(Request $request)
     {
 
-        $order = Order::query()->with(['service_provider', 'designer', 'contractor'])
+        $order = Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
+            ->with(['service_provider', 'designer', 'contractor'])
             ->whereOrderId($request->order_id)
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
