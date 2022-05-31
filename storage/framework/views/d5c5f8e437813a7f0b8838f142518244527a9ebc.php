@@ -178,12 +178,12 @@
             url : url,
             type: "GET",
             beforeSend(){
-                KTApp.blockPage({
-                    overlayColor: '#000000',
-                    type: 'v2',
-                    state: 'success',
-                    message: 'please wait'
-                });
+                // KTApp.blockPage({
+                //     overlayColor: '#000000',
+                //     type: 'v2',
+                //     state: 'success',
+                //     message: 'please wait'
+                // });
             },
             success:function(data) {
                 if (callback && typeof callback === "function") {
