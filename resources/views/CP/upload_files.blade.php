@@ -12,329 +12,334 @@
 
 </style>
 <div class="row">
-    <alert class="alert alert-danger" style="font-size:20px;">استكمل رفع الملفات لاعتماد تسجيلك والاطلاع عليه</alert>
-</div>
-
-<div class="card">
-    <div class="card-header">
-        <div class="row mt-4">
-            <div class="col-lg-12">
-                <h3>رفع الملفات</h3>
-            </div>
-
-
+    <div class="col-12">
+        <div class="alert alert-danger font-bold">
+            استكمل رفع الملفات لاعتماد تسجيلك والاطلاع عليه
         </div>
     </div>
-    <div class="card-body">
+</div>
 
-        <form id="add_edit_form" method="post" action="{{route('upload_files_action')}}" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-
-                @if($record->commercial_file)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commercial_file">السجل التحاري (PDF)</label>
-                            <input type="file" class="form-control" value="{{old('commercial_file')}}"
-                                id="commercial_file" name="commercial_file">
-                            <div class="col-12 text-danger" id="commercial_file_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commercial_file_end_date">تاريخ انتهاء السجل التجاري</label>
-                            <input type="text" class="form-control commercial_file_end_date"
-                                value="{{old('commercial_file_end_date')}}" id="commercial_end_date"
-                                name="commercial_file_end_date">
-                            <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->rating_certificate)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي (PDF)</label>
-                            <input type="file" class="form-control" id="rating_certificate" name="rating_certificate">
-                            <div class="col-12 text-danger" id="rating_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control rating_certificate_end_date" id="rating_certificate_end_date"
-                                name="rating_certificate_end_date">
-                            <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->address_file)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="address_file">العنوان الوطني (PDF)</label>
-                            <input type="file" class="form-control" name="address_file" id="address_file">
-                            <div class="col-12 text-danger" id="address_file_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->profession_license)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="profession_license">شهادة مزاولة المهنة (PDF)</label>
-                            <input type="file" class="form-control" id="profession_license" name="profession_license">
-                            <div class="col-12 text-danger" id="profession_license_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control profession_license_end_date" id="profession_license_end_date"
-                                name="profession_license_end_date">
-                            <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->business_license)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="business_license">رخصة نشاط تجاري (PDF)</label>
-                            <input type="file" class="form-control" name="business_license" id="business_license">
-                            <div class="col-12 text-danger" id="business_license_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control business_license_end_date" id="business_license_end_date"
-                                name="business_license_end_date">
-                            <div class="col-12 text-danger" id="business_license_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->social_insurance_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
-                                الإجتماعية (PDF)</label>
-                            <input type="file" class="form-control" id="social_insurance_certificate"
-                                name="social_insurance_certificate">
-                            <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
-                                الانتهاء</label>
-                            <input type="text" class="form-control social_insurance_certificate_end_date"
-                                id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">
-                            <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($record->saudization_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
-                            <input type="file" class="form-control" id="saudization_certificate"
-                                name="saudization_certificate">
-                            <div class="col-12 text-danger" id="saudization_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
-                            <input type="text" class="form-control saudization_certificate_end_date" id="saudization_certificate_end_date"
-                                name="saudization_certificate_end_date">
-                            <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->chamber_of_commerce_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
-                                التجارية (PDF)</label>
-                            <input type="file" class="form-control" id="chamber_of_commerce_certificate"
-                                name="chamber_of_commerce_certificate">
-                            <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
-                                الانتهاء</label>
-                            <input type="text" class="form-control chamber_of_commerce_certificate_end_date"
-                                id="chamber_of_commerce_certificate_end_date"
-                                name="chamber_of_commerce_certificate_end_date">
-                            <div class="col-12 text-danger" id="chamber_of_commerce_certificate_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->tax_registration_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة
-                                (PDF)</label>
-                            <input type="file" class="form-control" id="tax_registration_certificate"
-                                name="tax_registration_certificate">
-                            <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->wage_protection_certificate  && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
-                            <input type="file" class="form-control" id="wage_protection_certificate"
-                                name="wage_protection_certificate">
-                            <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @if($record->memorandum_of_association && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="memorandum_of_association"> عقد التأسيس (PDF)</label>
-                            <input type="file" class="form-control" id="memorandum_of_association"
-                                name="memorandum_of_association">
-                            <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                    @if($record->cv_file && $record->type == 'contractor')
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label" for="cv_file">الاعمال السابقة (PDF)</label>
-                                    <input type="file" class="form-control" id="cv_file"
-                                           name="cv_file">
-                                    <div class="col-12 text-danger" id="cv_file_error"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-
-                @if($record->company_owner_id_photo)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="company_owner_id_photo"> صورة هوية  المالك (PDF)</label>
-                            <input type="file" class="form-control" id="company_owner_id_photo"
-                                name="company_owner_id_photo">
-                            <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($record->commissioner_id_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commissioner_id_photo"> صورة هوية  المفوض (PDF)</label>
-                            <input type="file" class="form-control" id="commissioner_id_photo"
-                                name="commissioner_id_photo">
-                            <div class="col-12 text-danger" id="commissioner_id_photo_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if($record->commissioner_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="commissioner_photo"> صورة التفويض (PDF)</label>
-                            <input type="file" class="form-control" id="commissioner_photo"
-                                name="commissioner_photo">
-                            <div class="col-12 text-danger" id="commissioner_photo_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-
-                @if($record->hajj_service_license)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="hajj_service_license"> ترخيص خدمة حجاج (PDF)</label>
-                            <input type="file" class="form-control" id="hajj_service_license"
-                                name="hajj_service_license">
-                            <div class="col-12 text-danger" id="hajj_service_license_error"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="hajj_service_license_end_date">تاريخ
-                                الانتهاء</label>
-                            <input type="text" class="form-control hajj_service_license_end_date"
-                                id="hajj_service_license_end_date"
-                                name="hajj_service_license_end_date">
-                            <div class="col-12 text-danger" id="hajj_service_license_end_date_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-
-                @if($record->personalization_record)
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="personalization_record"> محضر التخصيص  (PDF)</label>
-                            <input type="file" class="form-control" id="personalization_record"
-                                name="personalization_record">
-                            <div class="col-12 text-danger" id="personalization_record_error"></div>
-                        </div>
-                    </div>
-                </div>
-                @endif
+@if ($errors->any())
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <ul class="m-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+@endif
 
 
 
-                <div class="mt-4">
-                    <button type="button" class="btn btn-lg btn-primary submit_btn">رفع الملفات</button>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="card-title">رفع الملفات</h3>
+                    </div>
                 </div>
             </div>
-        </form>
+            <div class="card-body">
+                <form id="add_edit_form" method="post" action="{{route('upload_files_action')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        @if($record->commercial_file)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="commercial_file">السجل التحاري (PDF)</label>
+                                        <input type="file" class="form-control" value="{{old('commercial_file')}}"
+                                               id="commercial_file" name="commercial_file">
+                                        <div class="col-12 text-danger" id="commercial_file_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="commercial_file_end_date">تاريخ انتهاء السجل التجاري</label>
+                                        <input type="text" class="form-control commercial_file_end_date"
+                                               value="{{old('commercial_file_end_date')}}" id="commercial_end_date"
+                                               name="commercial_file_end_date">
+                                        <div class="col-12 text-danger" id="commercial_file_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->rating_certificate)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="rating_certificate">شهادة تصنيف بلدي (PDF)</label>
+                                        <input type="file" class="form-control" id="rating_certificate" name="rating_certificate">
+                                        <div class="col-12 text-danger" id="rating_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="rating_certificate_end_date">تاريخ الانتهاء</label>
+                                        <input type="text" class="form-control rating_certificate_end_date" id="rating_certificate_end_date"
+                                               name="rating_certificate_end_date">
+                                        <div class="col-12 text-danger" id="rating_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->address_file)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="address_file">العنوان الوطني (PDF)</label>
+                                        <input type="file" class="form-control" name="address_file" id="address_file">
+                                        <div class="col-12 text-danger" id="address_file_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->profession_license)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="profession_license">شهادة مزاولة المهنة (PDF)</label>
+                                        <input type="file" class="form-control" id="profession_license" name="profession_license">
+                                        <div class="col-12 text-danger" id="profession_license_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="profession_license_end_date">تاريخ الانتهاء</label>
+                                        <input type="text" class="form-control profession_license_end_date" id="profession_license_end_date"
+                                               name="profession_license_end_date">
+                                        <div class="col-12 text-danger" id="profession_license_date_end_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->business_license)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="business_license">رخصة نشاط تجاري (PDF)</label>
+                                        <input type="file" class="form-control" name="business_license" id="business_license">
+                                        <div class="col-12 text-danger" id="business_license_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="business_license_end_date">تاريخ الانتهاء</label>
+                                        <input type="text" class="form-control business_license_end_date" id="business_license_end_date"
+                                               name="business_license_end_date">
+                                        <div class="col-12 text-danger" id="business_license_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->social_insurance_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="social_insurance_certificate">رخصة التأمينات
+                                            الإجتماعية (PDF)</label>
+                                        <input type="file" class="form-control" id="social_insurance_certificate"
+                                               name="social_insurance_certificate">
+                                        <div class="col-12 text-danger" id="social_insurance_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="social_insurance_certificate_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="text" class="form-control social_insurance_certificate_end_date"
+                                               id="social_insurance_certificate_end_date" name="social_insurance_certificate_end_date">
+                                        <div class="col-12 text-danger" id="social_insurance_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
-        @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                        @if($record->saudization_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="saudization_certificate">شهادة السعودة (PDF)</label>
+                                        <input type="file" class="form-control" id="saudization_certificate"
+                                               name="saudization_certificate">
+                                        <div class="col-12 text-danger" id="saudization_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="saudization_certificate_end_date">تاريخ الانتهاء</label>
+                                        <input type="text" class="form-control saudization_certificate_end_date" id="saudization_certificate_end_date"
+                                               name="saudization_certificate_end_date">
+                                        <div class="col-12 text-danger" id="saudization_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->chamber_of_commerce_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="chamber_of_commerce_certificate">شهادة الغرفة
+                                            التجارية (PDF)</label>
+                                        <input type="file" class="form-control" id="chamber_of_commerce_certificate"
+                                               name="chamber_of_commerce_certificate">
+                                        <div class="col-12 text-danger" id="chamber_of_commerce_certificate_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="chamber_of_commerce_certificate_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="text" class="form-control chamber_of_commerce_certificate_end_date"
+                                               id="chamber_of_commerce_certificate_end_date"
+                                               name="chamber_of_commerce_certificate_end_date">
+                                        <div class="col-12 text-danger" id="chamber_of_commerce_certificate_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->tax_registration_certificate && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="tax_registration_certificate">شهادة تسجيل الضريبة
+                                            (PDF)</label>
+                                        <input type="file" class="form-control" id="tax_registration_certificate"
+                                               name="tax_registration_certificate">
+                                        <div class="col-12 text-danger" id="tax_registration_certificate_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->wage_protection_certificate  && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="wage_protection_certificate">شهادة حماية الأجور (PDF)</label>
+                                        <input type="file" class="form-control" id="wage_protection_certificate"
+                                               name="wage_protection_certificate">
+                                        <div class="col-12 text-danger" id="wage_protection_certificate_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->memorandum_of_association && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="memorandum_of_association"> عقد التأسيس (PDF)</label>
+                                        <input type="file" class="form-control" id="memorandum_of_association"
+                                               name="memorandum_of_association">
+                                        <div class="col-12 text-danger" id="memorandum_of_association_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if($record->cv_file && $record->type == 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="cv_file">الاعمال السابقة (PDF)</label>
+                                        <input type="file" class="form-control" id="cv_file"
+                                               name="cv_file">
+                                        <div class="col-12 text-danger" id="cv_file_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
+
+                        @if($record->company_owner_id_photo)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="company_owner_id_photo"> صورة هوية  المالك (PDF)</label>
+                                        <input type="file" class="form-control" id="company_owner_id_photo"
+                                               name="company_owner_id_photo">
+                                        <div class="col-12 text-danger" id="company_owner_id_photo_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($record->commissioner_id_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="commissioner_id_photo"> صورة هوية  المفوض (PDF)</label>
+                                        <input type="file" class="form-control" id="commissioner_id_photo"
+                                               name="commissioner_id_photo">
+                                        <div class="col-12 text-danger" id="commissioner_id_photo_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if($record->commissioner_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="commissioner_photo"> صورة التفويض (PDF)</label>
+                                        <input type="file" class="form-control" id="commissioner_photo"
+                                               name="commissioner_photo">
+                                        <div class="col-12 text-danger" id="commissioner_photo_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+
+                        @if($record->hajj_service_license)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="hajj_service_license"> ترخيص خدمة حجاج (PDF)</label>
+                                        <input type="file" class="form-control" id="hajj_service_license"
+                                               name="hajj_service_license">
+                                        <div class="col-12 text-danger" id="hajj_service_license_error"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="hajj_service_license_end_date">تاريخ
+                                            الانتهاء</label>
+                                        <input type="text" class="form-control hajj_service_license_end_date"
+                                               id="hajj_service_license_end_date"
+                                               name="hajj_service_license_end_date">
+                                        <div class="col-12 text-danger" id="hajj_service_license_end_date_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+
+                        @if($record->personalization_record)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="personalization_record"> محضر التخصيص  (PDF)</label>
+                                        <input type="file" class="form-control" id="personalization_record"
+                                               name="personalization_record">
+                                        <div class="col-12 text-danger" id="personalization_record_error"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-lg btn-primary submit_btn" form="add_edit_form">رفع الملفات</button>
+            </div>
+        </div>
     </div>
-
-
+</div>
 
     @endsection
     <script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
