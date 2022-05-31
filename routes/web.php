@@ -125,7 +125,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('delete_file/{file}', [DesignerOrderController::class, 'delete_file'])->name('.delete_file');
         Route::post('edit_file_action', [DesignerOrderController::class, 'edit_file_action'])->name('.edit_file_action');
         Route::get('accept/{order}', [DesignerOrderController::class, 'accept'])->name('.accept');
-        Route::get('reject/{order}', [DesignerOrderController::class, 'reject'])->name('.reject');
+        Route::post('reject/{order}', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);

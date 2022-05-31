@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DesignerRejected;
 use App\Models\Order;
 use App\Models\OrderService;
-use App\Models\OrderServiceFile;
+use Illuminate\Support\Facades\Validator;
 use App\Models\OrderSharer;
 use App\Models\OrderSpecilatiesFiles;
 use App\Models\Service;
@@ -45,15 +45,15 @@ class DesignerOrderController extends Controller
 
                 $add_file_design = '';
                 $edit_files = '';
-                $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye"></i>عرض الطلب </a>';
+                $view = '<a class="dropdown-item" href="' . route('design_office.view_file', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الطلب </a>';
 
                 if ($order->status == Order::REQUEST_BEGIN_CREATED) {
-                    $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>إضافة تصاميم  </a>';
+                    $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة تصاميم  </a>';
                 }
 
 
                 if ($order->lastDesignerNote()->where('status',0)->count()) {
-                    $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file"></i>تعديل الملفات </a>';
+                    $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>تعديل الملفات </a>';
                 }
 
 
@@ -95,9 +95,16 @@ class DesignerOrderController extends Controller
 
     }
 
-    public function reject(Order $order)
+    public function reject(Request $request, Order $order)
     {
+        $validation = Validator::make($request->all(), [
+            'rejection_note' => 'required|string|max:1000'
+        ]);
 
+        if ($validation->fails()) {
+            return back('post/create')
+                ->withErrors(["من فضلك ادخل ملاحظات رفض الطلب"]);
+        }
 
         if ($order->status == Order::PENDING) {
             $order->status = Order::PENDING;
@@ -106,7 +113,8 @@ class DesignerOrderController extends Controller
             $order->designer_id = null;
             DesignerRejected::query()->create([
                 'order_id' => $order->id,
-                'designer_id' => auth()->user()->id
+                'designer_id' => auth()->user()->id,
+                'rejection_note' => $request->input("rejection_note")
             ]);
             $order->save();
         }
