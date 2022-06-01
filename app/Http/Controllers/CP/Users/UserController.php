@@ -289,7 +289,6 @@ class UserController extends Controller
             'telephone' => request('telephone'),
             'city' => request('city'),
             'employee_number' => request('employee_number'),
-
             'commercial_file_end_date' => request('commercial_file_end_date'),
             'rating_certificate_end_date' => request('rating_certificate_end_date'),
             'profession_license_end_date' => request('profession_license_end_date'),

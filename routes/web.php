@@ -106,6 +106,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
             Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
             Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
+            Route::get('show_appointment', [OrdersController::class, 'show_appointment'])->name('.show_appointment');
         });
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
@@ -269,7 +270,11 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('/users_list', [TaslemMaintenance::class, 'users_list'])->name('.users_list');
         Route::get('/add', [TaslemMaintenance::class, 'add_session_form'])->name('.add_form');
         Route::post('/save', [TaslemMaintenance::class, 'save_session'])->name('.save');
+
     });
+     Route::get('/add_files/{service_provider_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
+     Route::post('/upload_file/{service_provider_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');
+     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
     Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
     Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
     Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');

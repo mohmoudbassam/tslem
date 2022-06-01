@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CP\ServiceProviders;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderSharer;
+use App\Models\Session;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
@@ -190,5 +191,26 @@ class OrdersController extends Controller
             'success' => true,
             'message' => 'تم الاختيار بنجاح'
         ]);
+    }
+
+    public function show_appointment(){
+       $session= Session::query()->where('user_id',auth()->user()->id)->first();
+
+       $files=[
+           [
+               'name'=>'test.pdf',
+               'path'=>'Mechanical.pdf'
+           ]  , [
+               'name'=>'asd.pdf',
+               'path'=>'Mechanical.pdf'
+           ]  , [
+               'name'=>'ssss.pdf',
+               'path'=>'Mechanical.pdf'
+           ]
+       ];
+       return  view('CP.service_providers.show_appointment',[
+           'session'=>$session,
+           'files'=>$files
+       ]);
     }
 }

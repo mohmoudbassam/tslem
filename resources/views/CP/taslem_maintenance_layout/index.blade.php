@@ -3,7 +3,23 @@
     المواعيد
 @endsection
 @section('content')
-
+    <style>
+        .modal-backdrop.show {
+            display: initial !important;
+        }
+        .modal-backdrop.fade {
+            display: initial !important;
+        }
+        .file-view-wrapper:hover {
+            box-shadow: var(--bs-box-shadow) !important;
+        }
+        .file-view-icon {
+            height: 180px;
+            background-size: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -78,6 +94,8 @@
                         </th>
                         <th>
                             تاريخ الموعد
+                        </th>  <th>
+                            خيارات
                         </th>
 {{--                        <th>--}}
 {{--                            الخيارات--}}
@@ -96,10 +114,10 @@
 
     </div>
 
-    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
-         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    </div>
 
+    <div class="modal fade" id="page_modal" tabindex="-1" role="dialog" data-toggle="modal" data-backdrop="static" data-keyboard="false" aria-labelledby="view-user-files-modal-title" aria-hidden="true">
+
+    </div>
 @endsection
 
 @section('scripts')
@@ -126,13 +144,14 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'user.company_name', name: 'user.company_name',orderable : false},
-                    {className: 'text-center', data: 'user.email', name: 'user.email',orderable : false},
-                    {className: 'text-center', data: 'user.company_owner_name', name: 'user.company_owner_name',orderable : false},
-                    {className: 'text-center', data: 'user.phone', name: 'user.phone',orderable : false},
-                    {className: 'text-center', data: 'user.box_number', name: 'user.box_number',orderable : false},
-                    {className: 'text-center', data: 'user.camp_number', name: 'user.camp_number',orderable : false},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'service_provider.company_name',orderable : false},
+                    {className: 'text-center', data: 'service_provider.email', name: 'service_provider.email',orderable : false},
+                    {className: 'text-center', data: 'service_provider.company_owner_name', name: 'service_provider.company_owner_name',orderable : false},
+                    {className: 'text-center', data: 'service_provider.phone', name: 'service_provider.phone',orderable : false},
+                    {className: 'text-center', data: 'service_provider.box_number', name: 'service_provider.box_number',orderable : false},
+                    {className: 'text-center', data: 'service_provider.camp_number', name: 'service_provider.camp_number',orderable : false},
                     {className: 'text-center', data: 'start_at', name: 'start_at'},
+                    {className: 'text-center', data: 'actions', name: 'actions'},
                     // {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],

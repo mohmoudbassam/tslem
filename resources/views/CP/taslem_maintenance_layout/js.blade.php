@@ -108,6 +108,7 @@
                         if(id==null){
 
                             $('#page_modal').html(data.page).modal('show', {backdrop: 'static', keyboard: false});
+                            $('#page_modal').modal({backdrop: 'static', keyboard: false})
                         }else{
 
                             $(id).html(data.page).modal('show', {backdrop: 'static', keyboard: false})

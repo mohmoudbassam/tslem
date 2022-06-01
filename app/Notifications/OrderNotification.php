@@ -13,16 +13,18 @@ class OrderNotification extends Notification
 
     public  $data;
     public  $notifer_id;
+    public  $type;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data,$notifer_id)
+    public function __construct($data,$notifer_id,$type=null)
     {
         $this->data = $data;
         $this->notifer_id = $notifer_id;
+        $this->type = $type;
     }
 
     /**
@@ -42,7 +44,8 @@ class OrderNotification extends Notification
 
         return [
             'data'=>$this->data,
-            'user_id'=>$this->notifer_id
+            'user_id'=>$this->notifer_id,
+            'type'=>$this->type
         ];
     }
 }

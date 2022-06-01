@@ -159,9 +159,13 @@
                 return false;
 
             const formData = new FormData();
+             if(!$("input:radio.user_id:checked").length){
 
+                 showAlertMessage('error','الرجاء اختيار المستخدم')
+                 return false;
+             }
             formData.append("start_at", $('#start_at').val());
-            formData.append("user_id", $("#user_id").val());
+            formData.append("user_id", $("input:radio.user_id:checked").val());
             formData.append("_token", '{{ csrf_token() }}');
 
             postData(formData, '{{route('taslem_maintenance.sessions.save')}}');

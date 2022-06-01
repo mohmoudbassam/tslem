@@ -7,27 +7,40 @@
     <!-- start page title -->
     @if(auth()->user()->verified)
         <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">
-                    <div class="btn-group" role="group">
-                        <a href="{{route('services_providers.create_order')}}" class="btn btn-primary dropdown-toggle">
-                            انشاء الطلب <i class="fa fa-clipboard-check"></i>
-                        </a>
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    @if(auth()->user()->service_provider_status==3)
+                        <h4 class="mb-sm-0 font-size-18">
+                            <div class="btn-group" role="group">
+                                <a href="{{route('services_providers.create_order')}}"
+                                   class="btn btn-primary dropdown-toggle">
+                                    انشاء الطلب <i class="fa fa-clipboard-check"></i>
+                                </a>
 
+                            </div>
+                        </h4>
+                    @endif
+                        @if(auth()->user()->service_provider_status==1)
+                        <h4 class="mb-sm-0 font-size-18">
+                            <div class="btn-group" role="group">
+                                <a href="{{route('services_providers.show_appointment')}}"
+
+                                   class="btn btn-primary dropdown-toggle">
+                                    مشاهدة المواعيد والملفات <i class="fa fa-clipboard-check"></i>
+                                </a>
+                            </div>
+                        </h4>
+                    @endif
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
+                            <li class="breadcrumb-item active">الرئيسية</li>
+                        </ol>
                     </div>
-                </h4>
 
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
-                        <li class="breadcrumb-item active">الرئيسية</li>
-                    </ol>
                 </div>
-
             </div>
         </div>
-    </div>
     @endif
     <div class="card">
         <div class="card-header">
@@ -76,10 +89,12 @@
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث
+                            </button>
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -105,7 +120,7 @@
                             التاريخ
                         </th>
                         <th>
-                           المكتب الهندسي
+                            المكتب الهندسي
                         </th>
                         <th>
                             حالة الطلب
@@ -172,13 +187,13 @@
                 },
                 columns: [
                     {className: 'text-right', data: 'identifier', name: 'identifier'},
-                    {className: 'text-right', data: 'date', name: 'date', orderable : false},
-                    {className: 'text-right', data: 'designer.company_name', name: 'designer',orderable : false},
-                    {className: 'text-right', data: 'order_status', name: 'order_status',orderable : false},
-                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor',orderable : false},
-                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting',orderable : false},
+                    {className: 'text-right', data: 'date', name: 'date', orderable: false},
+                    {className: 'text-right', data: 'designer.company_name', name: 'designer', orderable: false},
+                    {className: 'text-right', data: 'order_status', name: 'order_status', orderable: false},
+                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
+                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting', orderable: false},
                     {className: 'text-right', data: 'date', name: 'date'},
-                    {className: 'text-right', data: 'actions', name: 'actions',orderable : false},
+                    {className: 'text-right', data: 'actions', name: 'actions', orderable: false},
                 ],
 
 
