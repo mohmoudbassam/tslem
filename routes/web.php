@@ -77,6 +77,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('list', [UserController::class, 'list'])->name('.list');
 
         Route::get('{user}/files', [UserController::class, 'get_user_files'])->name('.get_files');
+        Route::get('{user}/design/types', [UserController::class, 'get_design_types'])->name('.get_user_design_types');
 
         Route::post('status', [UserController::class, 'status'])->name('.status');
         Route::post('add_edit', [UserController::class, 'add_edit'])->name('.add_edit');

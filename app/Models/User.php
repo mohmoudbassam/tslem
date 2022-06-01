@@ -70,6 +70,11 @@ class User extends Authenticatable
 
     }
 
+    public function designer_types()
+    {
+        return $this->hasMany(DesignerType::class);
+    }
+
     public function getUserTypeAttribute()
     {
 

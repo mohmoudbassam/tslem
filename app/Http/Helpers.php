@@ -23,12 +23,12 @@ function randomIntIdentifier($length = 10) {
     return $identifier;
 }
 
-function get_designer_type($tpe) {
+function get_designer_type_name($tpe) {
     return [
-        "designer" => "",
-        "consulting" => "",
-        "fire" => "",
-    ];
+        "designer" => "مكتب تصميم",
+        "consulting" => "اشراف",
+        "fire" => "الحماية والوقاية من الحريق",
+    ][$tpe];
 }
 
     function get_user_column_file($type)
