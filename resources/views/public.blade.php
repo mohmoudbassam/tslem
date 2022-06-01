@@ -257,16 +257,16 @@
                                     <div class="footer-top-title">التواصل</div>
                                     <ul class="links">
                                         <li>
-                                            <a href="tel:0599720750">
-                                                <i class="fa-solid fa-phone mx-1"></i>
+                                            <a href="https://wa.me/+966599720750" target="_blank">
+                                                <i class="fa-brands fa-whatsapp text-success mx-1"></i>
                                                 <span>
                                                     العملاء: 0599720750
                                                 </span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tel:0583392323">
-                                                <i class="fa-solid fa-phone mx-1"></i>
+                                            <a href="https://wa.me/+966583392323" target="_blank">
+                                                <i class="fa-brands fa-whatsapp text-success mx-1"></i>
                                                 <span>
                                                     الدعم التقني : 0583392323
                                                 </span>
