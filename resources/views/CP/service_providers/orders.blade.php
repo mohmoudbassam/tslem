@@ -172,13 +172,13 @@
                 },
                 columns: [
                     {className: 'text-right', data: 'identifier', name: 'identifier'},
+                    {className: 'text-right', data: 'date', name: 'date', orderable : false},
+                    {className: 'text-right', data: 'designer.company_name', name: 'designer',orderable : false},
+                    {className: 'text-right', data: 'order_status', name: 'order_status',orderable : false},
+                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor',orderable : false},
+                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting',orderable : false},
                     {className: 'text-right', data: 'date', name: 'date'},
-                    {className: 'text-right', data: 'designer.company_name', name: 'designer'},
-                    {className: 'text-right', data: 'order_status', name: 'order_status'},
-                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor'},
-                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting'},
-                    {className: 'text-right', data: 'date', name: 'date'},
-                    {className: 'text-right', data: 'actions', name: 'actions'},
+                    {className: 'text-right', data: 'actions', name: 'actions',orderable : false},
                 ],
 
 

@@ -68,6 +68,15 @@
                             اسم المفوض
                         </th>
                         <th>
+                            الجوال
+                        </th>
+                        <th>
+                            رقم المربع
+                        </th>
+                        <th>
+                           رقم المخيم
+                        </th>
+                        <th>
                             تاريخ الموعد
                         </th>
 {{--                        <th>--}}
@@ -117,9 +126,12 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'user.company_name', name: 'user.company_name'},
-                    {className: 'text-center', data: 'user.email', name: 'user.email'},
-                    {className: 'text-center', data: 'user.company_owner_name', name: 'user.company_owner_name'},
+                    {className: 'text-center', data: 'user.company_name', name: 'user.company_name',orderable : false},
+                    {className: 'text-center', data: 'user.email', name: 'user.email',orderable : false},
+                    {className: 'text-center', data: 'user.company_owner_name', name: 'user.company_owner_name',orderable : false},
+                    {className: 'text-center', data: 'user.phone', name: 'user.phone',orderable : false},
+                    {className: 'text-center', data: 'user.box_number', name: 'user.box_number',orderable : false},
+                    {className: 'text-center', data: 'user.camp_number', name: 'user.camp_number',orderable : false},
                     {className: 'text-center', data: 'start_at', name: 'start_at'},
                     // {className: 'text-center', data: 'actions', name: 'actions'},
 

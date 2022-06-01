@@ -25,8 +25,13 @@ class TaslemMaintenance extends Controller
     }
 
     public function list(Request $request) {
-        $sessions = Session::query()->with('user')
-            ->get();
+
+        $sessions = Session::query()->with('user');
+
+        $sessions->when($request->from_date&&$request->to_date,function($q)use($request){
+           $q->whereBetween('start_at',[$request->from_date,$request->to_date]);
+        });
+
 
         return DataTables::of($sessions)
             ->make();
@@ -43,6 +48,8 @@ class TaslemMaintenance extends Controller
             ->when($request->camp_number, function ($q) use($request) {
                 $q->where("camp_number", $request->camp_number);
             });
+
+
 
 //        dd($users->get());
         return DataTables::of($users)

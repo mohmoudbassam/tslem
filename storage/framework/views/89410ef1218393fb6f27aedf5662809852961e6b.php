@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title'); ?>
     الطلبات
 <?php $__env->stopSection(); ?>
@@ -35,12 +34,12 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
-                        <div class="col-lg-2">
-                            <label for="order_id">رقم الطلب </label>
-                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
+                        <div class="col">
+                            <label for="order_identifier">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المكتب الهندسي</label>
+                        <div class="col">
+                            <label for="designer_id">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $designers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $designer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -49,8 +48,8 @@
 
                             </select>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المشرف</label>
+                        <div class="col">
+                            <label for="consulting_id">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $consulting; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_consulting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -58,8 +57,8 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">المقاول </label>
+                        <div class="col">
+                            <label for="contractor_id">المقاول </label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $contractors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_contractor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -67,12 +66,12 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">من </label>
+                        <div class="col">
+                            <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">الى </label>
+                        <div class="col">
+                            <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
@@ -98,7 +97,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان الطلب
+                            رقم الطلب
                         </th>
 
                         <th>
@@ -158,7 +157,7 @@
                     url: '<?php echo e(route('services_providers.list')); ?>',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_id = $('#order_id').val();
+                        d.order_identifierentifier = $('#order_identifier').val();
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
@@ -171,14 +170,14 @@
                     "url": "<?php echo e(url('/')); ?>/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-right', data: 'title', name: 'title'},
+                    {className: 'text-right', data: 'identifier', name: 'identifier'},
+                    {className: 'text-right', data: 'date', name: 'date', orderable : false},
+                    {className: 'text-right', data: 'designer.company_name', name: 'designer',orderable : false},
+                    {className: 'text-right', data: 'order_status', name: 'order_status',orderable : false},
+                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor',orderable : false},
+                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting',orderable : false},
                     {className: 'text-right', data: 'date', name: 'date'},
-                    {className: 'text-right', data: 'designer.company_name', name: 'designer'},
-                    {className: 'text-right', data: 'order_status', name: 'order_status'},
-                    {className: 'text-right', data: 'contractor.company_name', name: 'contractor'},
-                    {className: 'text-right', data: 'consulting.company_name', name: 'consulting'},
-                    {className: 'text-right', data: 'date', name: 'date'},
-                    {className: 'text-right', data: 'actions', name: 'actions'},
+                    {className: 'text-right', data: 'actions', name: 'actions',orderable : false},
                 ],
 
 

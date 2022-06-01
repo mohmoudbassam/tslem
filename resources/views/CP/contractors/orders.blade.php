@@ -151,10 +151,7 @@
                     url: '{{route('contractor.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_identifier = $('#order_identifier').val();
-                        d.designer_id = $('#designer_id').val();
-                        d.consulting_id = $('#consulting_id').val();
-                        d.contractor_id = $('#contractor_id').val();
+
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
 
@@ -165,12 +162,12 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'identifier', name: 'identifier'},
-                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
-                    {className: 'text-center', data: 'designer.company_name', name: 'company_name'},
-                    {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'order_status', name: 'order_status'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name',orderable : false},
+                    {className: 'text-center', data: 'designer.company_name', name: 'company_name',orderable : false},
+                    {className: 'text-center', data: 'date', name: 'date',orderable : false},
+                    {className: 'text-center', data: 'order_status', name: 'order_status',orderable : false},
                     {className: 'text-center', data: 'created_at', name: 'created_at'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
+                    {className: 'text-center', data: 'actions', name: 'actions',orderable : false},
                 ],
 
 
