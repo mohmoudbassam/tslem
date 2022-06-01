@@ -16,6 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
+        dd(User::find(3));
         return view('CP.users.index');
     }
 
@@ -148,6 +149,9 @@ class UserController extends Controller
                         $hasUploadFiles = true;
                     }
                 }
+                if ( $user->type == "design_office" ) {
+                    $designerType = "";
+                }
                 if ( $hasUploadFiles ) {
                     $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -237,6 +241,7 @@ class UserController extends Controller
         }
 
     }
+
     public function after_reject(Request $request)
     {
         $user =tap(auth()->user()->update([
@@ -301,7 +306,6 @@ class UserController extends Controller
         $this->uploadUserFiles(auth()->user(), $request);
         return back()->with(['success' => 'تمت عمليه التعديل بنجاح']);
     }
-
 
     public function get_user_files(User $user)
     {

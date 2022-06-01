@@ -23,6 +23,14 @@ function randomIntIdentifier($length = 10) {
     return $identifier;
 }
 
+function get_designer_type($tpe) {
+    return [
+        "designer" => "",
+        "consulting" => "",
+        "fire" => "",
+    ];
+}
+
     function get_user_column_file($type)
 {
     $benef = BeneficiresCoulumns::query()->select(

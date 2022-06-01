@@ -215,7 +215,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
                         <div class="row justify-content-between">
-                            <div class="col-lg-4 mb-4 mb-lg-0">
+                            <div class="col-lg-3 mb-4 mb-lg-0">
                                 <div class="logo mb-lg-4 mb-2"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></div>
                                 <ul class="social-media">
                                     <li>
@@ -232,7 +232,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="footer-top-links">
                                     <div class="footer-top-title">مواقع صديقة</div>
                                     <ul class="links">
@@ -241,7 +241,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="footer-top-links">
                                     <div class="footer-top-title">روابط سريعة</div>
                                     <ul class="links">
@@ -249,6 +249,29 @@
                                         <li><a href="#">تاهيل مزودي الخدمة</a></li>
                                         <li><a href="#">الدلائل والنماذج</a></li>
                                         <li><a href="{{ route('login_page') }}">تسجيل الدخول</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="footer-top-links">
+                                    <div class="footer-top-title">التواصل</div>
+                                    <ul class="links">
+                                        <li>
+                                            <a href="https://wa.me/+966599720750" target="_blank">
+                                                <i class="fa-brands fa-whatsapp text-success mx-1"></i>
+                                                <span>
+                                                    العملاء: 0599720750
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://wa.me/+966583392323" target="_blank">
+                                                <i class="fa-brands fa-whatsapp text-success mx-1"></i>
+                                                <span>
+                                                    الدعم التقني : 0583392323
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
