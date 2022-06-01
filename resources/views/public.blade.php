@@ -254,24 +254,80 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="footer-top-links">
-                                    <div class="footer-top-title">التواصل</div>
+                                    <div class="footer-top-title">تواصل معنا</div>
                                     <ul class="links">
-                                        <li>
-                                            <a href="https://wa.me/+966599720750" target="_blank">
-                                                <i class="fa-brands fa-whatsapp text-success mx-1"></i>
-                                                <span>
-                                                    العملاء: 0599720750
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://wa.me/+966583392323" target="_blank">
-                                                <i class="fa-brands fa-whatsapp text-success mx-1"></i>
-                                                <span>
-                                                    الدعم التقني : 0583392323
-                                                </span>
-                                            </a>
-                                        </li>
+                                        <li class="mb-2"><a href="https://wa.me/+966599720750" target="_blank" class="d-flex align-items-center">
+                                            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                            <svg version="1.1" width="30" class="ps-2" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;" xml:space="preserve">
+                                            <g>
+                                            <path
+                                            style="fill: #2cb742;"
+                                            d="M0,58l4.988-14.963C2.457,38.78,1,33.812,1,28.5C1,12.76,13.76,0,29.5,0S58,12.76,58,28.5
+                                                    S45.24,57,29.5,57c-4.789,0-9.299-1.187-13.26-3.273L0,58z"
+                                            />
+                                            <path
+                                            style="fill: #ffffff;"
+                                            d="M47.683,37.985c-1.316-2.487-6.169-5.331-6.169-5.331c-1.098-0.626-2.423-0.696-3.049,0.42
+                                                    c0,0-1.577,1.891-1.978,2.163c-1.832,1.241-3.529,1.193-5.242-0.52l-3.981-3.981l-3.981-3.981c-1.713-1.713-1.761-3.41-0.52-5.242
+                                                    c0.272-0.401,2.163-1.978,2.163-1.978c1.116-0.627,1.046-1.951,0.42-3.049c0,0-2.844-4.853-5.331-6.169
+                                                    c-1.058-0.56-2.357-0.364-3.203,0.482l-1.758,1.758c-5.577,5.577-2.831,11.873,2.746,17.45l5.097,5.097l5.097,5.097
+                                                    c5.577,5.577,11.873,8.323,17.45,2.746l1.758-1.758C48.048,40.341,48.243,39.042,47.683,37.985z"
+                                            />
+                                            </g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            </svg>
+                                             العملاء : 0599720750
+                                            </a></li>
+                                            <li><a href="https://wa.me/+966583392323" target="_blank" class="d-flex align-items-center">
+                                            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                                            <svg version="1.1" width="30" class="ps-2" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;" xml:space="preserve">
+                                            <g>
+                                            <path
+                                            style="fill: #2cb742;"
+                                            d="M0,58l4.988-14.963C2.457,38.78,1,33.812,1,28.5C1,12.76,13.76,0,29.5,0S58,12.76,58,28.5
+                                                    S45.24,57,29.5,57c-4.789,0-9.299-1.187-13.26-3.273L0,58z"
+                                            />
+                                            <path
+                                            style="fill: #ffffff;"
+                                            d="M47.683,37.985c-1.316-2.487-6.169-5.331-6.169-5.331c-1.098-0.626-2.423-0.696-3.049,0.42
+                                                    c0,0-1.577,1.891-1.978,2.163c-1.832,1.241-3.529,1.193-5.242-0.52l-3.981-3.981l-3.981-3.981c-1.713-1.713-1.761-3.41-0.52-5.242
+                                                    c0.272-0.401,2.163-1.978,2.163-1.978c1.116-0.627,1.046-1.951,0.42-3.049c0,0-2.844-4.853-5.331-6.169
+                                                    c-1.058-0.56-2.357-0.364-3.203,0.482l-1.758,1.758c-5.577,5.577-2.831,11.873,2.746,17.45l5.097,5.097l5.097,5.097
+                                                    c5.577,5.577,11.873,8.323,17.45,2.746l1.758-1.758C48.048,40.341,48.243,39.042,47.683,37.985z"
+                                            />
+                                            </g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            <g></g>
+                                            </svg>
+                                            الدعم الفني  : 0583392323
+                                            </a></li>
                                     </ul>
                                 </div>
                             </div>
