@@ -265,7 +265,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tel:0599720750">
+                                            <a href="tel:0583392323">
                                                 <i class="fa-solid fa-phone mx-1"></i>
                                                 <span>
                                                     الدعم التقني : 0583392323
