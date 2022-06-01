@@ -43,10 +43,10 @@ class TaslemMaintenance extends Controller
                 $q->where('id', '-1');
             })
             ->when($request->box_number, function ($q) use($request) {
-                $q->where("box_number", 'like', '%'. $request->box_number.'%');
+                $q->where("box_number", 'like', '%' . $request->box_number . '%');
             })
             ->when($request->camp_number, function ($q) use($request) {
-                $q->where("camp_number",'like%','%'. $request->box_number.'%'  );
+                $q->where("camp_number",'like','%'. $request->camp_number .'%'  );
             });
 
 
