@@ -83,8 +83,17 @@
             .login{
                 background-color: #FFF;
             }
+            .login .alert-danger {
+                color: #e9ecef;
+                background-color: #b71613;
+                border-color: #b71613;
+            }
+            .login .alert-success {
+                background-color: #0b5e3d;
+                border-color: #0b5e3d;
+            }
             .login .form-label{
-                color: #0A2373;
+                color: #fff;
             }
             .login .form-control{
                 text-align: start;
@@ -139,6 +148,7 @@
                 background-repeat: no-repeat;
                 background-position: bottom right;
             }
+
         </style>
     </head>
 
@@ -197,7 +207,7 @@
                                 </div>
                                 <div class="login-footer py-3 px-4">
                                     <div class="text-end mb-3">
-                                        <a href="" class="btn px-2 py-1 btn-secondary shadow-none">مستخدم جديد</a>
+                                        <a href="{{ route('register') }}" class="btn px-2 py-1 btn-secondary shadow-none">مستخدم جديد</a>
                                     </div>
                                 </div>
                             </div>
