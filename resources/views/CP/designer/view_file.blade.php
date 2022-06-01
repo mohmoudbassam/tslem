@@ -98,7 +98,7 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">مركز ، مؤسسة ، شركة (مطوف) :</span> {{$order->service_provider->company_name}}
+                                            class="bold">مراكز الخدمة :</span> {{$order->service_provider->company_name}}
                                     </p>
                                 </div>
 

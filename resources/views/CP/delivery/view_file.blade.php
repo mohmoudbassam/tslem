@@ -98,7 +98,7 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">شركات حجاج الداخل :</span> {{$order->service_provider->company_name}}</p>
+                                            class="bold">مراكز الخدمة :</span> {{$order->service_provider->company_name}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">

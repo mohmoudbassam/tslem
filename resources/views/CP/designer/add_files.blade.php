@@ -148,7 +148,7 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
+                                                           for="{{$_specialties->name_en}}_pdf_file">(PDF) ملف </label>
                                                     <input type="file"
                                                            class="form-control {{$_specialties->name_en}}_pdf_file pdf_file"
                                                            id="{{$_specialties->name_en}}_pdf_file"
@@ -161,7 +161,7 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_docs_file"> ملف docs</label>
+                                                           for="{{$_specialties->name_en}}_docs_file"> (DOCS) ملف</label>
                                                     <input type="file" class="form-control" value=""
                                                            id="{{$_specialties->name_en}}_docs_file"
                                                            name="{{$_specialties->name_en}}_docs_file" multiple>
@@ -173,7 +173,7 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_cad_file">CAD ملف</label>
+                                                           for="{{$_specialties->name_en}}_cad_file">DWG ملف</label>
                                                     <input type="file" class="form-control" value=""
                                                            id="{{$_specialties->name_en}}_cad_file"
                                                            name="{{$_specialties->name_en}}_cad_file" multiple>
