@@ -432,7 +432,7 @@
                                 <!-- <div class="row"> -->
                                     <div class="mb-3">
                                         <div class="mb-0 text-end">
-                                            <button class="btn px-5 py-1 btn-blue waves-effect waves-light" type="submit">دخول</button>
+                                            <button class="btn px-5 py-1 btn-blue waves-effect waves-light" type="submit">سجل الان</button>
                                         </div>
                                     </div>
                                 <!-- </div> -->
