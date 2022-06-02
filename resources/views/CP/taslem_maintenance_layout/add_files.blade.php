@@ -95,7 +95,7 @@
                                 <label class="col-12" for="note"><h4>الملاحظات</h4></label>
                                 <div class="col-12">
                                 <textarea class="form-control" name="note" id="note"
-                                          rows="10"></textarea></div>
+                                          rows="10">{{$user->service_provider_note}}</textarea></div>
                                 <div class="col-12 text-danger" id="note_error"></div>
                             </div>
                         </div>

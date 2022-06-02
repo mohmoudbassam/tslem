@@ -107,6 +107,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
             Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
             Route::get('show_appointment', [OrdersController::class, 'show_appointment'])->name('.show_appointment');
+            Route::get('show_main_files', [OrdersController::class, 'show_main_files'])->name('.show_main_files');
         });
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');

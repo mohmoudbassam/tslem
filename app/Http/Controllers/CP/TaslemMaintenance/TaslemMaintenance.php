@@ -144,10 +144,15 @@ class TaslemMaintenance extends Controller
 
         $user = User::query()->where('id', $request->service_provider_id)->first();
         $user->update([
-            'service_provider_note' => $request->note
+            'service_provider_note' => $request->note,
+            'service_provider_status'=>2
         ]);
-
-        return redirect()->route('taslem_maintenance.index')->with(['success'=>'تمت اضافة الملاحظات بنجاح']);
+        $user->notify(new OrderNotification('تمت اضافة الملفات من مكتب الصيانة', auth()->user()->id));
+        return redirect()->route('taslem_maintenance.index')->with(['success' => 'تمت اضافة الملاحظات بنجاح']);
 
     }
 }
+//////////////service_provider_status => 0 havent appointment
+//////////////service_provider_status => 1 have appointment
+//////////////service_provider_status => 2 have a file after manitener add files to service provider
+//////////////service_provider_status => 3 confirmed files
