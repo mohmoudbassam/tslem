@@ -162,8 +162,8 @@ class UserController extends Controller
                                                 <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
                                                 <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
                                                 '.$designerType.'
+                                                <a class="dropdown-item view-files" href="" data-user="' . $user->id . '">عرض المرفقات</a>
                                                 <a class="dropdown-item" href="' . route('users.change_password_form', ['user' => $user->id]) . '">تغيير كلمة المرور</a>
-                                                <a class="dropdown-item view-files" href="" data-user="' . $user->id . '">عرض المروفقات</a>
                                             </div>
                                         </div>';
                 } else {

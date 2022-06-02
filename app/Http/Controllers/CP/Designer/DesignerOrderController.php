@@ -34,7 +34,6 @@ class DesignerOrderController extends Controller
     {
         $order = Order::query()
             ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
-                dd($request->query("order_identifier"));
                 $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
             })
             ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
