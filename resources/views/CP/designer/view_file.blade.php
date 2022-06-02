@@ -98,7 +98,7 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">مراكز الخدمة :</span> {{$order->service_provider->company_name}}
+                                            class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}
                                     </p>
                                 </div>
 
@@ -109,6 +109,21 @@
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
+                                </div>
+
+                                <div class="col-12">
+                                    <p class="details_p">
+                                        <span>
+                                            تخصصات المكتب الهندسي:
+                                        </span>
+                                    </p>
+                                    <ul class="m-0">
+                                        @foreach($order->designer->designer_types as $designType)
+                                            <li style="font-size: 20px;">
+                                                {{ $designType->type }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </div>
                             <div class="row mt-5">
