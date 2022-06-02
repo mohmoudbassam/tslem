@@ -1,6 +1,6 @@
 @extends('CP.sharer_layout')
 @section('title')
-    المواعيد
+    مواعيد اليوم
 @endsection
 @section('content')
     <style>
@@ -23,44 +23,44 @@
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.add_form')}}"><i class="fa fa-plus p-2"></i>إصافة موعد</a></h4>
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.toDaySessions')}}"><i class="fa fa-clock p-2"></i>مواعيد اليوم</a></h4>
+{{--            <div class="page-title-box d-sm-flex align-items-center justify-content-between">--}}
+{{--                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.add_form')}}"><i class="fa fa-plus p-2"></i>إصافة موعد</a></h4>--}}
+{{--                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.toDaySessions')}}"><i class="fa fa-clock p-2"></i>مواعيد اليوم</a></h4>--}}
 
-{{--                <div class="page-title-right">--}}
-{{--                    <ol class="breadcrumb m-0">--}}
-{{--                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>--}}
-{{--                        <li class="breadcrumb-item active">الرئيسية</li>--}}
-{{--                    </ol>--}}
-{{--                </div>--}}
+{{--                --}}{{--                <div class="page-title-right">--}}
+{{--                --}}{{--                    <ol class="breadcrumb m-0">--}}
+{{--                --}}{{--                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>--}}
+{{--                --}}{{--                        <li class="breadcrumb-item active">الرئيسية</li>--}}
+{{--                --}}{{--                    </ol>--}}
+{{--                --}}{{--                </div>--}}
 
-            </div>
+{{--            </div>--}}
         </div>
     </div>
     <div class="card">
         <div class="card-header">
             <div class="row mt-4">
-                <div class="col-lg-12">
+{{--                <div class="col-lg-12">--}}
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
+{{--                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">--}}
 
-                        <div class="col-lg-1">
-                            <label for="">من </label>
-                            <input type="text" class="form-control datepicker" id="from_date" placeholder="">
-                        </div>
-                        <div class="col-lg-1">
-                            <label for="">الى </label>
-                            <input type="text" class="form-control datepicker" id="to_date" placeholder="">
-                        </div>
+{{--                        <div class="col-lg-1">--}}
+{{--                            <label for="">من </label>--}}
+{{--                            <input type="text" class="form-control datepicker" id="from_date" placeholder="">--}}
+{{--                        </div>--}}
+{{--                        <div class="col-lg-1">--}}
+{{--                            <label for="">الى </label>--}}
+{{--                            <input type="text" class="form-control datepicker" id="to_date" placeholder="">--}}
+{{--                        </div>--}}
 
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
-                        </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
-                        </div>
-                    </form>
-                </div>
+{{--                        <div class="col-sm-auto" style="margin-top:1.9rem;">--}}
+{{--                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-sm-auto" style="margin-top:1.9rem;">--}}
+{{--                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
 
 
             </div>
@@ -91,16 +91,16 @@
                             رقم المربع
                         </th>
                         <th>
-                           رقم المخيم
+                            رقم المخيم
                         </th>
                         <th>
                             تاريخ الموعد
                         </th>  <th>
                             خيارات
                         </th>
-{{--                        <th>--}}
-{{--                            الخيارات--}}
-{{--                        </th>--}}
+                        {{--                        <th>--}}
+                        {{--                            الخيارات--}}
+                        {{--                        </th>--}}
 
 
                         </thead>
@@ -134,7 +134,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('taslem_maintenance.sessions.list')}}',
+                    url: '{{route('taslem_maintenance.sessions.to_day_list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.from_date = $('#from_date').val();
