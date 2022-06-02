@@ -473,6 +473,20 @@ class DesignerOrderController extends Controller
             'success' => true
         ];
     }
+
+    public function get_service_obligation_files()
+    {
+        $data = [];
+        foreach (\request()->query as $key => $q) {
+            $data[] = get_specialty_obligation_files($key);
+        }
+
+        return \response()->json([
+            "data" => $data,
+            "success" => true,
+            "message" => ""
+        ]);
+    }
 }
 
 

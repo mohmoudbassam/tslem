@@ -23,6 +23,79 @@ function randomIntIdentifier($length = 10) {
     return $identifier;
 }
 
+function get_specialty_obligation_files($specialty) {
+    return [
+        "architect" => [
+            "name_ar" => "المعماري",
+            "name_en" => "architect",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة الألواح الجبسية",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة الألواح الجبسية.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة مواقع التخزين",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة مواقع التخزين.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة وسائل تغطية المداخل.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة وسائل تغطية الممرات.pdf")
+                ],
+            ]
+        ],
+        "electrical" => [
+            "name_ar" => "الكهربائية",
+            "name_en" => "electrical",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                ],
+            ]
+        ],
+        "construction" => [
+            "name_ar" => "المعماري",
+            "name_en" => "الإنشائية",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                ],
+            ]
+        ],
+        "mchanical" => [
+            "name_ar" => "الميكانيكة",
+            "name_en" => "mchanical",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf")
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المواضئ ودورات المياه.pdf")
+                ],
+            ]
+        ]
+    ][$specialty];
+}
+
 function get_designer_type_name($tpe) {
     return [
         "designer" => "مكتب تصميم",

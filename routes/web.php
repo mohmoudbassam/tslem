@@ -128,6 +128,8 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('view_file/{order}', [DesignerOrderController::class, 'view_file'])->name('.view_file');
         Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
 
+        Route::get('service/obligation/files', [DesignerOrderController::class, 'get_service_obligation_files'])->name('.service_obligation_files');
+
         Route::get('delete_service/{service}', [DesignerOrderController::class, 'delete_service'])->name('.delete_service');
         Route::get('delete_file/{file}', [DesignerOrderController::class, 'delete_file'])->name('.delete_file');
         Route::post('edit_file_action', [DesignerOrderController::class, 'edit_file_action'])->name('.edit_file_action');
