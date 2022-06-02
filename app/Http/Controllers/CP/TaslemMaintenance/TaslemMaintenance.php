@@ -108,6 +108,7 @@ class TaslemMaintenance extends Controller
     public function add_files($service_provider_id)
     {
         $user = User::query()->find($service_provider_id);
+
         $session = Session::query()->where('user_id', $service_provider_id)->first();
 
         return view('CP.taslem_maintenance_layout.add_files', [
@@ -121,6 +122,7 @@ class TaslemMaintenance extends Controller
         $file = ServiceProviderFiles::query()
             ->where('service_providers_id', $service_provider_id)
             ->where('type', $type)->first();
+
         if (!is_null($file)) {
             $file->delete();
         }

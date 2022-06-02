@@ -187,6 +187,7 @@ class User extends Authenticatable
             return route('Sharer.order');
         }
         if ($this->type == 'raft_company') {
+
             return route('raft_company');
         }
         if ($this->type == 'taslem_maintenance') {

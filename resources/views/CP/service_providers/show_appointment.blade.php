@@ -1,6 +1,6 @@
 @extends('CP.master')
 @section('title')
-    المستخدمين
+    الموعد
 @endsection
 @section('style')
 @endsection

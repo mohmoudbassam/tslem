@@ -78,6 +78,7 @@ class Kernel extends HttpKernel
         'APIUserAuth' => APIUserAuth::class,
         'raft_company'=>\App\Http\Middleware\CP\RaftCompany::class,
         'raft_center'=>\App\Http\Middleware\CP\RaftCenter::class,
+        'ServiceProviderOrder'=>\App\Http\Middleware\CP\ServiceProviderOrder::class,
 
 
 
