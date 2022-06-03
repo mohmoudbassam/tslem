@@ -87,7 +87,7 @@ File: Main Css File
   --bs-pagination-hover-bg: #e9e9ef;
   --bs-input-bg: #fff;
   --bs-input-group-addon-border-color: #ced4da;
-  --bs-input-border: #ced4da;
+  --bs-input-border: #E4E6EF;
   --bs-input-border-color: #ced4da;
   --bs-input-focus-border: #a8abdf;
   --bs-input-disabled-bg: #e9e9ef;
@@ -236,7 +236,7 @@ File: Main Css File
 
 .navbar-brand-box {
   padding: 0 1.5rem;
-  width: 250px;
+  width: 70px;
   background: var(--bs-sidebar-bg);
   border-left: 1px solid var(--bs-sidebar-border-color);
   -webkit-box-shadow: 0px 2px 2px var(--bs-sidebar-bg);
@@ -344,7 +344,7 @@ body[data-layout-mode=dark] .layout-mode-light {
 .header-profile-user {
   height: 36px;
   width: 36px;
-  background-color: var(--bs-gray-600);
+  /* background-color: var(--bs-gray-600); */
   padding: 3px;
 }
 
@@ -504,7 +504,8 @@ body[data-layout=horizontal][data-sidebar=dark] .navbar-brand-box {
   position: absolute;
   left: 0;
   color: var(--bs-footer-color);
-  right: 250px;
+  right: 0;
+  text-align: center;
   height: 60px;
   background-color: var(--bs-footer-bg);
   border-top: 1px solid var(--bs-border-color);
@@ -515,9 +516,9 @@ body[data-layout=horizontal][data-sidebar=dark] .navbar-brand-box {
   }
 }
 
-body[data-sidebar-size=sm] .footer {
+/* body[data-sidebar-size=sm] .footer {
   right: 70px;
-}
+} */
 @media (max-width: 991.98px) {
   body[data-sidebar-size=sm] .footer {
     right: 0;
@@ -614,7 +615,7 @@ body[data-layout=horizontal] .footer {
 }
 
 .vertical-menu {
-  width: 250px;
+  width: 70px;
   z-index: 1001;
   background: var(--bs-sidebar-bg);
   bottom: 0;
@@ -625,7 +626,7 @@ body[data-layout=horizontal] .footer {
 }
 
 .main-content {
-  margin-right: 250px;
+  margin-right: 70px;
   overflow: hidden;
 }
 .main-content .content {
@@ -768,25 +769,25 @@ body[data-layout=horizontal] .footer {
   }
 }
 body[data-sidebar-size=sm] {
-  min-height: 1000px;
+  min-height: 100vh;
 }
-body[data-sidebar-size=sm] .main-content {
-  margin-right: 70px;
-}
-body[data-sidebar-size=sm] .navbar-brand-box {
+    /* body[data-sidebar-size=sm] .main-content {
+    margin-right: 70px;
+    } */
+/* body[data-sidebar-size=sm] .navbar-brand-box {
   width: 70px !important;
-}
+} */
 body[data-sidebar-size=sm] .logo span.logo-lg {
   display: none;
 }
 body[data-sidebar-size=sm] .logo span.logo-sm {
   display: block;
 }
-body[data-sidebar-size=sm] .vertical-menu {
+/* body[data-sidebar-size=sm] .vertical-menu {
   position: absolute;
   width: 70px !important;
   z-index: 5;
-}
+} */
 body[data-sidebar-size=sm] .vertical-menu .simplebar-mask,
 body[data-sidebar-size=sm] .vertical-menu .simplebar-content-wrapper {
   overflow: visible !important;
@@ -797,18 +798,18 @@ body[data-sidebar-size=sm] .vertical-menu .simplebar-scrollbar {
 body[data-sidebar-size=sm] .vertical-menu .simplebar-offset {
   bottom: 0 !important;
 }
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu .menu-title,
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu .badge,
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu .sidebar-alert {
+body .vertical-menu #sidebar-menu .menu-title,
+body .vertical-menu #sidebar-menu .badge,
+body .vertical-menu #sidebar-menu .sidebar-alert {
   display: none !important;
 }
 body[data-sidebar-size=sm] .vertical-menu #sidebar-menu .nav.collapse {
   height: inherit !important;
 }
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li {
-  position: relative;
+/* body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li { */
+  /* position: relative;
   white-space: nowrap;
-}
+} */
 body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li > a {
   padding: 15px 20px;
   -webkit-transition: none;
@@ -826,14 +827,14 @@ body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li > a svg {
   width: 18px;
   margin-right: 6px;
 }
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li > a span {
+body .vertical-menu #sidebar-menu > ul > li > a span {
   display: none;
   padding-right: 25px;
 }
 body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li > a.has-arrow:after {
   display: none;
 }
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li:hover > a {
+body .vertical-menu #sidebar-menu > ul > li:hover > a {
   position: relative;
   width: calc(190px + 70px);
   color: #5156be;
@@ -1474,10 +1475,10 @@ body[data-layout=horizontal][data-layout-size=boxed] .container-fluid, body[data
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 .waves-effect {
   position: relative;
@@ -3484,7 +3485,7 @@ span.flatpickr-weekday {
   min-height: 262px;
 }
 
-/* 
+/*
 Datatable
 */
 div.dataTables_wrapper div.dataTables_filter {
@@ -4911,3 +4912,52 @@ body[data-layout=horizontal] .chat-conversation {
   border-color: var(--bs-gray-300);
 }
 /*# sourceMappingURL=app-rtl.min.css.map */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
+body{
+    background: #EEF0F8;
+    font-family: 'Cairo', sans-serif;
+}
+
+body[data-layout-mode="dark"]{
+    background-color: #313533;
+}
+
+
+.navbar-header{
+    box-shadow: 0px 10px 30px 0px rgb(82 63 105 / 8%);
+}
+
+.font-14{
+    font-size: 14px;
+}
+
+body .flatpickr-months .flatpickr-prev-month,body .flatpickr-months .flatpickr-next-month {
+    padding: 5px 10px;
+}
+
+body .flatpickr-current-month {
+    font-size: 110%;
+    padding: 1.78px 0 0 0;
+}
+
+
+
+table tr th{
+    color: #B5B5C3;
+    font-size: 0.8rem;
+    font-weight: 600 !important;
+}
+label {
+    font-weight: 400;
+}
+.pagination {
+    justify-content: flex-end;
+}
+div.dataTables_wrapper div.dataTables_info {
+    text-align: left;
+    font-size: 12px;
+}
+.page-content .container-fluid {
+    width: 95%;
+}

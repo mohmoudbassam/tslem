@@ -29,13 +29,17 @@
 
 {{--        </div>--}}
 
-        <div>
+        <a href="#" class="logo ps-4">
+            <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="30">
+        </a>
+
+        <!-- <div>
             @if(auth()->user()->verified == 0 &&  !auth()->user()->isAdmin() )
                 <div class="alert alert-danger">
                     لم يتم اعتماد حسابك بعد
                 </div>
             @endif
-        </div>
+        </div> -->
         <div class="d-flex">
 
 {{--            <div class="dropdown d-inline-block d-lg-none ms-2">--}}
@@ -125,7 +129,7 @@
 
 
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item bg-soft-light border-start border-end"
+                <button type="button" class="btn header-item"
                         id="page-header-user-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{{auth()->user()->image}}"

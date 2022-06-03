@@ -51,8 +51,8 @@
                             </select>
                         </div>
 
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
+                        <div class="col-sm-auto ms-auto text-start">
+                            <button type="button" class="btn btn-primary search_btn px-4">بحث</button>
                         </div>
                     </form>
                 </div>

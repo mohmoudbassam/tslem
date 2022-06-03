@@ -22,6 +22,8 @@
         <div class="page-content">
             <div class="container-fluid">
 
+            @if(auth()->user()->verified == 0 &&  !auth()->user()->isAdmin() ) <div class="alert alert-danger p-2 font-14"> لم يتم اعتماد حسابك بعد </div> @endif
+
 
                 @yield('content')
 

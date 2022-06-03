@@ -5,7 +5,22 @@
 @section('content')
 
     <!-- start page title -->
+
     <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active">الرئيسية</li>
+                        <li class="breadcrumb-item"><a href="{{route('users')}}">المستخدمين</a></li>
+                        <li class="breadcrumb-item active">إضافة مستخدم</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">إضافة مستخدم</h4>
@@ -18,56 +33,72 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
-        <div class="card-body p-4">
-
-            <div class="row">
-                <form id="add_edit_form" method="get" action="{{route('users.get_form')}}">
-
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                <div class="row ">
                     <div class="col-lg-12">
-                        <div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="type">نوع المستخدم</label>
-                                <select class="form-select" id="type" name="type">
-                                    <option value="">اختر...</option>
-                                    <option value="service_provider">شركات حجاج الداخل</option>
-                                    <option value="design_office">مكتب هندسي</option>
-                                    <option value="Sharer">جهة مشاركة</option>
-                                    <option value="consulting_office">مكتب استشاري</option>
-                                    <option value="contractor">مقاول</option>
-                                    <option value="taslem_maintenance">صيانة تسليم</option>
-                                    <option value="raft_company">شركة طوافة</option>
-                                    <option value="Delivery">تسليم</option>
-                                    <option value="Kdana">كدانة</option>
-                                </select>
-                            </div>
-                            <div class="col-12 text-danger" id="type_error"></div>
-                        </div>
+                        <h4>
+                        إضافة مستخدم
+                        </h4>
                     </div>
-                </form>
-                <br>
-                <br>
 
-            </div>
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger" role="alert">
-                        <li>{{ $error }}</li>
-                    </div>
-                @endforeach
-            @endif
-            @if (session('success'))
-
-                <div class="alert alert-success" role="alert">
-                    <li>{{ session('success') }}</li>
                 </div>
+            </div>
+            <div class="card-body p-4">
 
-            @endif
+                <div class="row">
+                    <form id="add_edit_form" method="get" action="{{route('users.get_form')}}">
 
+                        <div class="col-lg-12">
+                            <div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="type">نوع المستخدم</label>
+                                    <select class="form-select" id="type" name="type">
+                                        <option value="">اختر...</option>
+                                        <option value="service_provider">شركات حجاج الداخل</option>
+                                        <option value="design_office">مكتب هندسي</option>
+                                        <option value="Sharer">جهة مشاركة</option>
+                                        <option value="consulting_office">مكتب استشاري</option>
+                                        <option value="contractor">مقاول</option>
+                                        <option value="taslem_maintenance">صيانة تسليم</option>
+                                        <option value="raft_company">شركة طوافة</option>
+                                        <option value="Delivery">تسليم</option>
+                                        <option value="Kdana">كدانة</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-danger" id="type_error"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <br>
+
+                </div>
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            <li>{{ $error }}</li>
+                        </div>
+                    @endforeach
+                @endif
+                @if (session('success'))
+
+                    <div class="alert alert-success" role="alert">
+                        <li>{{ session('success') }}</li>
+                    </div>
+
+                @endif
+
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div style="z-index: 11">
