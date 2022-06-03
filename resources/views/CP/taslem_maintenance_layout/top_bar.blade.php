@@ -29,14 +29,14 @@
 
 {{--        </div>--}}
 
-        <div>
+        <!-- <div>
             @if(auth()->user()->verified == 0 &&  !auth()->user()->isAdmin() )
                 <div class="alert alert-danger">
                     لم يتم اعتماد حسابك بعد
                 </div>
             @endif
-        </div>
-        <div class="d-flex">
+        </div> -->
+        <div class="d-flex ms-auto">
 
 {{--            <div class="dropdown d-inline-block d-lg-none ms-2">--}}
 {{--                <button type="button" class="btn header-item" id="page-header-search-dropdown"--}}
@@ -125,7 +125,7 @@
 
 
             <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item bg-soft-light border-start border-end"
+                <button type="button" class="btn header-item"
                         id="page-header-user-dropdown"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{{auth()->user()->image}}"

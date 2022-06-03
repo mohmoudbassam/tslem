@@ -23,7 +23,7 @@
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-end">
                 <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.add_form')}}"><i class="dripicons-user p-2"></i>إصافة موعد</a></h4>
 
 {{--                <div class="page-title-right">--}}
@@ -38,25 +38,24 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="row mt-4">
+            <div class="row">
                 <div class="col-lg-12">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 " id="form_data">
 
-                        <div class="col-lg-1">
+                        <div class="col-lg-3 col-xxl-2">
                             <label for="">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-3 col-xxl-2">
                             <label for="">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
 
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
-                        </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
+                        <div class="col-sm-auto ms-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث</button>
+
+                            <button type="button" class="btn btn-secondary reset_btn px-4"><i class="far fa-times me-1"></i>إلغاء</button>
                         </div>
                     </form>
                 </div>
