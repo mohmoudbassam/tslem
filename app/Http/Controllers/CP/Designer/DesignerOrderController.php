@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DesignerRejected;
 use App\Models\Order;
 use App\Models\OrderService;
+use App\Models\OrderSpecialtyObligation;
 use Illuminate\Support\Facades\Validator;
 use App\Models\OrderSharer;
 use App\Models\OrderSpecilatiesFiles;
@@ -16,6 +17,7 @@ use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Response;
 
@@ -34,7 +36,6 @@ class DesignerOrderController extends Controller
     {
         $order = Order::query()
             ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
-                dd($request->query("order_identifier"));
                 $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
             })
             ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
@@ -142,12 +143,16 @@ class DesignerOrderController extends Controller
 
     public function save_file(Request $request)
     {
-
-
         $file_validation = $this->validate_file($request);
         if (!$file_validation['success']) {
             return response()->json($file_validation);
-        };
+        }
+
+        $obligation_file_validation = $this->validate_obligation_file($request);
+        if (!$obligation_file_validation['success']) {
+            return response()->json($obligation_file_validation);
+        }
+
         $order = Order::query()->find(request('order_id'));
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
         $data = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
@@ -158,7 +163,6 @@ class DesignerOrderController extends Controller
         })->filter();
 
         foreach ($data as $specialties => $services) {
-
             foreach ($services as $service) {
 
                 OrderService::query()->create([
@@ -168,9 +172,7 @@ class DesignerOrderController extends Controller
                 ]);
 
             }
-
             $specialties_obj = Specialties::query()->where('name_en', $specialties)->first();
-
             if ($specialties_obj) {
                 if (request($specialties . '_pdf_file')) {
                     $this->upload_files($order, $specialties_obj, request($specialties . '_pdf_file'), 1);
@@ -183,9 +185,8 @@ class DesignerOrderController extends Controller
                 }
 
             }
-
-
         }
+
         if (request('general_file')) {
             $path = Storage::disk('public')->put("orders/$order->id", request('general_file'));
             $file_name = request('general_file')->getClientOriginalName();
@@ -197,6 +198,21 @@ class DesignerOrderController extends Controller
                 'type' => 5
             ]);
         }
+
+        // Uploading Obligation Files
+        foreach ($request["obligations"] as $specialtyKey => $obligations) {
+            $specialty = Specialties::where("name_en", $specialtyKey)->first();
+            foreach ($obligations as $type => $obligationFile) {
+                $path = Storage::disk('public')->put("obligations/$order->id/", $obligationFile);
+                OrderSpecialtyObligation::query()->create([
+                    'path' => $path,
+                    'specialties_id' => $specialty->id,
+                    'order_id' => $order->id,
+                    'type' => $type
+                ]);
+            }
+        }
+
         session()->put('success', 'تمت اضافة التصاميم بنجاح');
         $order->status = 3;
         $order->save();
@@ -433,6 +449,36 @@ class DesignerOrderController extends Controller
         ];
     }
 
+    private function validate_obligation_file(Request $request)
+    {
+        $specialties = Specialties::query()->get()->pluck('name_en')->toArray();
+        $rules = [
+            'obligations' => ['required', 'array', 'max:'.count($specialties), 'min:1'],
+            'obligations.*' => [Rule::in($specialties)],
+        ];
+
+        foreach ($specialties as $specialty) {
+            $obligationFilesTypes = get_specialty_obligation_files_types($specialty);
+            $rules["obligations.$specialty"] = ["sometimes", "array", "size:".count($obligationFilesTypes)];
+            $rules["obligations.$specialty.*"] = ["required", "file", "mimetypes:application/pdf", "max:3000"];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'message' => "الرجاء رفع كافة ملفات التعهدات",
+                'errors' => $validator->errors(),
+                'data' => $request["obligations.architect.gypsum_obligation"]
+            ];
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
     public function validate_update_file(Request $request, $order)
     {
         $specialties_names = Specialties::all()->pluck('name_ar', 'name_en')->toArray();
@@ -472,6 +518,20 @@ class DesignerOrderController extends Controller
         return [
             'success' => true
         ];
+    }
+
+    public function get_service_obligation_files()
+    {
+        $data = [];
+        foreach (\request()->query as $key => $q) {
+            $data[] = get_specialty_obligation_files($key);
+        }
+
+        return \response()->json([
+            "data" => $data,
+            "success" => true,
+            "message" => ""
+        ]);
     }
 }
 

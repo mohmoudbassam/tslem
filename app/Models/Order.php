@@ -31,6 +31,11 @@ class Order extends Model
             ->withPivot('service_id', 'order_id', 'unit');
     }
 
+    public function obligations()
+    {
+        return $this->hasMany(OrderSpecialtyObligation::class);
+    }
+
     public function designer()
     {
         return $this->belongsTo(User::class, 'designer_id');

@@ -70,6 +70,11 @@ class User extends Authenticatable
 
     }
 
+    public function designer_types()
+    {
+        return $this->hasMany(DesignerType::class);
+    }
+
     public function getUserTypeAttribute()
     {
 
@@ -83,7 +88,7 @@ class User extends Authenticatable
             'Delivery' => 'تسليم',
             'Kdana' => 'كدانة',
             'raft_company' => "raft_company",
-            'taslem_maintenance'=>'تسليم صيانه'
+            'taslem_maintenance' => 'تسليم صيانه'
 
         ][$this->type];
     }
@@ -182,10 +187,14 @@ class User extends Authenticatable
             return route('Sharer.order');
         }
         if ($this->type == 'raft_company') {
+
             return route('raft_company');
         }
         if ($this->type == 'taslem_maintenance') {
             return route('taslem_maintenance.index');
+        }
+        if ($this->type == 'raft_center') {
+            return route('raft_center');
         }
 
     }

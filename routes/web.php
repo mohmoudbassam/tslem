@@ -77,6 +77,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('list', [UserController::class, 'list'])->name('.list');
 
         Route::get('{user}/files', [UserController::class, 'get_user_files'])->name('.get_files');
+        Route::get('{user}/design/types', [UserController::class, 'get_design_types'])->name('.get_user_design_types');
 
         Route::post('status', [UserController::class, 'status'])->name('.status');
         Route::post('add_edit', [UserController::class, 'add_edit'])->name('.add_edit');
@@ -101,16 +102,21 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
     Route::prefix('service-providers')->name('services_providers')->middleware(['service_provider'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders'])->name('.orders');
         Route::middleware(["is-verified"])
-        ->group(function () {
-            Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
-            Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
-            Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
-            Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
-            Route::get('show_appointment', [OrdersController::class, 'show_appointment'])->name('.show_appointment');
-        });
+            ->group(function () {
+
+                Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
+                Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
+                Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
+                Route::get('show_appointment', [OrdersController::class, 'show_appointment'])->name('.show_appointment');
+                Route::get('show_main_files', [OrdersController::class, 'show_main_files'])->name('.show_main_files');
+                Route::get('seen_maintain_file', [OrdersController::class, 'seen_maintain_file'])->name('.seen_maintain_file');
+                Route::middleware(['ServiceProviderOrder'])->group(function () {
+                    Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
+                });
+            });
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
-        Route::post('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
+        Route::get('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders'])->name('.orders');
@@ -121,6 +127,8 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('get_service_by_id/{id}', [DesignerOrderController::class, 'get_service_by_id'])->name('.get_service_by_id');
         Route::get('view_file/{order}', [DesignerOrderController::class, 'view_file'])->name('.view_file');
         Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
+
+        Route::get('service/obligation/files', [DesignerOrderController::class, 'get_service_obligation_files'])->name('.service_obligation_files');
 
         Route::get('delete_service/{service}', [DesignerOrderController::class, 'delete_service'])->name('.delete_service');
         Route::get('delete_file/{file}', [DesignerOrderController::class, 'delete_file'])->name('.delete_file');
@@ -254,27 +262,24 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
 
     });
-
-    Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
-        Route::get('', [RaftCenterController::class, 'index']);
-    });
-
-
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
-
- Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
+Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
+    Route::get('', [RaftCenterController::class, 'index']);
+});
+Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
     Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
     Route::prefix('sessions')->name(".sessions")->group(function () {
         Route::get('/list', [TaslemMaintenance::class, 'list'])->name('.list');
         Route::get('/users_list', [TaslemMaintenance::class, 'users_list'])->name('.users_list');
         Route::get('/add', [TaslemMaintenance::class, 'add_session_form'])->name('.add_form');
         Route::post('/save', [TaslemMaintenance::class, 'save_session'])->name('.save');
-
+        Route::get('/toDaySessions', [TaslemMaintenance::class, 'toDaySessions'])->name('.toDaySessions');
+        Route::get('/to_day_list', [TaslemMaintenance::class, 'to_day_list'])->name('.to_day_list');
     });
-     Route::get('/add_files/{service_provider_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
-     Route::post('/upload_file/{service_provider_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');
-     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
+    Route::get('/add_files/{service_provider_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
+    Route::post('/upload_file/{service_provider_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');
+    Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
     Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
     Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
     Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');

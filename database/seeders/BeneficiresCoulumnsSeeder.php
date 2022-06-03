@@ -19,14 +19,14 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'responsible_name' => '1',
             'email' => '1',
             'phone' => '1',
-            'company_owner_id_photo'=>'0'
+            'company_owner_id_photo' => '0'
 
         ]);
         BeneficiresCoulumns::query()->create([
             'type' => 'taslem_maintenance',
             'email' => '1',
             'phone' => '1',
-            'company_owner_id_photo'=>'0'
+            'company_owner_id_photo' => '0'
         ]);
         BeneficiresCoulumns::query()->create([
             'type' => 'Delivery',
@@ -34,6 +34,13 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'email' => '1',
             'phone' => '1',
 
+        ]);
+        BeneficiresCoulumns::query()->create([
+            'type' => 'raft_company',
+            'responsible_name' => '1',
+            'email' => '1',
+            'phone' => '1',
+            'company_owner_id_photo' => '0'
         ]);
         BeneficiresCoulumns::query()->create([
             'type' => 'service_provider',
@@ -53,8 +60,8 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'address_file' => '0',
             'personalization_record' => '1',
             'hajj_service_license' => '1',
-            'box_number'=>1,
-            'camp_number'=>1,
+            'box_number' => 1,
+            'camp_number' => 1,
 
         ]);
         BeneficiresCoulumns::query()->create([
@@ -97,7 +104,6 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'commissioner_photo' => 0,
             'company_owner_id_photo' => 1,
             'commissioner_id_photo' => 0,
-
 
 
         ]);

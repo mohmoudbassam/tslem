@@ -135,7 +135,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
 
+                                <div class="pb-1">
+                                    <div class="row">
+                                        <div class="col-xl-2">
+                                            <div>
+                                                <h5 class="font-size-15">التخصصات</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl">
+                                            <div class="text-muted">
+                                                <ul class="mb-2">
+                                                    @foreach($user->designer_types as $designType)
+                                                        <li>
+                                                            {{ get_designer_type_name($designType->type) }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <hr>
 
                                 <div class="py-3">

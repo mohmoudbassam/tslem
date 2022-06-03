@@ -19,7 +19,18 @@
                             </div>
                         </h4>
                     <?php endif; ?>
-                        <?php if(auth()->user()->service_provider_status==1): ?>
+                        <?php if(auth()->user()->service_provider_status==2): ?>
+                        <h4 class="mb-sm-0 font-size-18">
+                            <div class="btn-group" role="group">
+                                <a href="<?php echo e(route('services_providers.show_main_files')); ?>"
+                                   class="btn btn-primary dropdown-toggle">
+                                    مشاهدة الملفات والملاحظات<i class="fa fa-clipboard-check"></i>
+                                </a>
+
+                            </div>
+                        </h4>
+                    <?php endif; ?>
+                     <?php if(auth()->user()->service_provider_status==1): ?>
                         <h4 class="mb-sm-0 font-size-18">
                             <div class="btn-group" role="group">
                                 <a href="<?php echo e(route('services_providers.show_appointment')); ?>"

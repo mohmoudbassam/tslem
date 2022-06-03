@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CP\ServiceProviders;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderSharer;
+use App\Models\ServiceProviderFiles;
 use App\Models\Session;
 use App\Models\User;
 use App\Notifications\OrderNotification;
@@ -65,7 +66,7 @@ class OrdersController extends Controller
 
         $order = Order::query()
             ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
-                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+                $query->where("identifier", "LIKE", "%" . $request->query("order_identifier") . "%");
             })
             ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
                 $query->whereDate("created_at", ">=", $request->query("from_date"));
@@ -77,7 +78,7 @@ class OrdersController extends Controller
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
             ->whereContractorId($request->contractor_id)
-            ->whereDate($request->from_date,$request->to_date)
+            ->whereDate($request->from_date, $request->to_date)
             ->orderByDesc('created_at')
             ->with('designer')
             ->whereServiceProvider(auth()->user()->id)
@@ -193,24 +194,42 @@ class OrdersController extends Controller
         ]);
     }
 
-    public function show_appointment(){
-       $session= Session::query()->where('user_id',auth()->user()->id)->first();
+    public function show_appointment()
+    {
+        $session = Session::query()->where('user_id', auth()->user()->id)->first();
 
-       $files=[
-           [
-               'name'=>'test.pdf',
-               'path'=>'Mechanical.pdf'
-           ]  , [
-               'name'=>'asd.pdf',
-               'path'=>'Mechanical.pdf'
-           ]  , [
-               'name'=>'ssss.pdf',
-               'path'=>'Mechanical.pdf'
-           ]
-       ];
-       return  view('CP.service_providers.show_appointment',[
-           'session'=>$session,
-           'files'=>$files
-       ]);
+        $files = [
+            [
+                'name' => 'test.pdf',
+                'path' => 'Mechanical.pdf'
+            ], [
+                'name' => 'asd.pdf',
+                'path' => 'Mechanical.pdf'
+            ], [
+                'name' => 'ssss.pdf',
+                'path' => 'Mechanical.pdf'
+            ]
+        ];
+        return view('CP.service_providers.show_appointment', [
+            'session' => $session,
+            'files' => $files
+        ]);
     }
+
+    public function show_main_files()
+    {
+        $files = ServiceProviderFiles::query()->where('service_providers_id', auth()->user()->id)->get();
+        return view('CP.service_providers.view_maintainance_files', [
+            'files' => $files
+        ]);
+    }
+
+    public function seen_maintain_file()
+    {
+        auth()->user()->update([
+            'service_provider_status' => 3
+        ]);
+        return redirect()->route('services_providers.orders');
+    }
+
 }

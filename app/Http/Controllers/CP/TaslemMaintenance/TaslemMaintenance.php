@@ -28,7 +28,7 @@ class TaslemMaintenance extends Controller
     public function list(Request $request)
     {
 
-        $sessions = Session::query()->with('service_provider');
+        $sessions = Session::query()->where('support_id', auth()->user()->id)->with('service_provider');
 
         $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
             $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
@@ -108,6 +108,7 @@ class TaslemMaintenance extends Controller
     public function add_files($service_provider_id)
     {
         $user = User::query()->find($service_provider_id);
+
         $session = Session::query()->where('user_id', $service_provider_id)->first();
 
         return view('CP.taslem_maintenance_layout.add_files', [
@@ -121,6 +122,7 @@ class TaslemMaintenance extends Controller
         $file = ServiceProviderFiles::query()
             ->where('service_providers_id', $service_provider_id)
             ->where('type', $type)->first();
+
         if (!is_null($file)) {
             $file->delete();
         }
@@ -139,15 +141,51 @@ class TaslemMaintenance extends Controller
 
     }
 
+    public function to_day_list(Request $request)
+    {
+
+        $sessions = Session::query()->whereDate('start_at', '=', now()->format('Y-m-d'))
+            ->where('support_id', auth()->user()->id)
+            ->with('service_provider');
+
+        $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
+            $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
+        });
+
+
+        return DataTables::of($sessions)
+            ->addColumn('actions', function ($sessions) {
+                return '<div class="btn-group me-1 mt-2">
+                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                خيارات<i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                            <div class="dropdown-menu" style="">
+                                                <a class="dropdown-item" href="' . route('taslem_maintenance.add_files', ['service_provider_id' => $sessions->service_provider->id]) . '">إضافة الملفات</a>
+                                            </div>
+                                        </div>';
+            })->rawColumns(['actions'])
+            ->make();
+    }
+
     public function save_note(Request $request)
     {
 
         $user = User::query()->where('id', $request->service_provider_id)->first();
         $user->update([
-            'service_provider_note' => $request->note
+            'service_provider_note' => $request->note,
+            'service_provider_status' => 2
         ]);
-
-        return redirect()->route('taslem_maintenance.index')->with(['success'=>'تمت اضافة الملاحظات بنجاح']);
+        $user->notify(new OrderNotification('تمت اضافة الملفات من مكتب الصيانة', auth()->user()->id));
+        return redirect()->route('taslem_maintenance.index')->with(['success' => 'تمت اضافة الملاحظات بنجاح']);
 
     }
+
+    public function toDaySessions(Request $request)
+    {
+        return view('CP.taslem_maintenance_layout.toDaySessions');
+    }
 }
+//////////////service_provider_status => 0 havent appointment
+//////////////service_provider_status => 1 have appointment
+//////////////service_provider_status => 2 have a file after manitener add files to service provider
+//////////////service_provider_status => 3 confirmed files

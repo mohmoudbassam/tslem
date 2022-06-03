@@ -25,12 +25,12 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
-                        <div class="col-lg-2">
-                            <label for="order_id">رقم الطلب </label>
-                            <input type="text" class="form-control" id="order_id" placeholder="رقم الطلب">
+                        <div class="col">
+                            <label for="order_identifier">رقم الطلب </label>
+                            <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col-lg-2">
-                            <label for="type">شركات حجاج الداخل</label>
+                        <div class="col">
+                            <label for="service_provider_id">شركات حجاج الداخل</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 <?php $__currentLoopData = $services_providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $services_provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -39,15 +39,14 @@
 
                             </select>
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">من </label>
+                        <div class="col">
+                            <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
-                            <label for="">الى </label>
+                        <div class="col">
+                            <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
-
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
                             <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
                         </div>
@@ -71,7 +70,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان الطلب
+                            رقم الطلب
                         </th>
                         <th>
                             مركز ، مؤسسة ، شركة (مطوف)
@@ -116,7 +115,7 @@
         $(function () {
             $('#items_table').DataTable({
                 "dom": 'tpi',
-                "searching": false,
+                "searching": true,
                 "processing": true,
                 'stateSave': true,
                 "serverSide": true,
@@ -124,9 +123,8 @@
                     url: '<?php echo e(route('design_office.list')); ?>',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_id = $('#order_id').val();
+                        d.order_identifier = $('#order_identifier').val();
                         d.service_provider_id = $('#service_provider_id').val();
-                        d.type = $('#type').val();
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
                     }
@@ -135,12 +133,12 @@
                     "url": "<?php echo e(url('/')); ?>/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'title', name: 'title'},
-                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'identifier', name: 'identifier'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name',orderable : false},
                     {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'order_status', name: 'order_status'},
-                    {className: 'text-center', data: 'date', name: 'date'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
+                    {className: 'text-center', data: 'order_status', name: 'order_status',orderable : false},
+                    {className: 'text-center', data: 'created_at', name: 'created_at',orderable : false},
+                    {className: 'text-center', data: 'actions', name: 'actions',orderable : false},
 
                 ],
 

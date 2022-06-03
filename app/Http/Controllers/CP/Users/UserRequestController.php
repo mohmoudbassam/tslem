@@ -45,12 +45,17 @@ class UserRequestController extends Controller
                 return $element;
             })
             ->addColumn('actions', function ($user) {
-                $show = ' <a class="dropdown-item" href="' . route('users.request.show', ['user' => $user->id]) . '"> <i class="fa fa-eye">عرض</i> </a>';
+                $show = ' <a class="dropdown-item" href="' . route('users.request.show', ['user' => $user->id]) . '"><i class="fa fa-eye mx-1"></i> عرض</a>';
                 $accept='';
                 $reject='';
+                if ( $user->type == "design_office" ) {
+                    $designerType = '<a class="dropdown-item view-designer-types-btn" href="#" data-user="'.$user->id.'"><i class="fa fa-list mx-1"></i>التخصصات</a>';
+                } else {
+                    $designerType = "";
+                }
                 if($user->verified==0){
-                    $accept = '<a class="dropdown-item" href="javascript:;" onclick="accept(' . $user->id . ')" > <i class="fa fa-check">إعتماد</i></a>';
-                    $reject = '<a class="dropdown-item" href="javascript:;" onclick="showModal(\'' . route('users.request.reject_form', ['id' => $user->id]) . '\')" > <i class="fa fa-times">رفض</i></a>';
+                    $accept = '<a class="dropdown-item" href="javascript:;" onclick="accept(' . $user->id . ')" ><i class="fa fa-check mx-1"></i>إعتماد</a>';
+                    $reject = '<a class="dropdown-item" href="javascript:;" onclick="showModal(\'' . route('users.request.reject_form', ['id' => $user->id]) . '\')" > <i class="fa fa-times mx-1"></i>رفض</a>';
                 }
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,6 +65,7 @@ class UserRequestController extends Controller
                                                ' . $show . '
                                                ' . $accept . '
                                                ' . $reject . '
+                                               '.$designerType.'
                                             </div>
                                         </div>';
 

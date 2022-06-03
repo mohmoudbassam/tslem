@@ -11,12 +11,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
-use Hash;
 class UserController extends Controller
 {
     public function index()
     {
-        dd(User::find(3));
         return view('CP.users.index');
     }
 
@@ -27,6 +25,7 @@ class UserController extends Controller
 
     public function get_form(Request $request, $id = null)
     {
+
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
         $data['type'] =  $request->type;
 
@@ -150,6 +149,8 @@ class UserController extends Controller
                     }
                 }
                 if ( $user->type == "design_office" ) {
+                    $designerType = '<a class="dropdown-item view-designer-types-btn" href="#" data-user="'.$user->id.'">التخصصات</a>';
+                } else {
                     $designerType = "";
                 }
                 if ( $hasUploadFiles ) {
@@ -160,8 +161,9 @@ class UserController extends Controller
                                             <div class="dropdown-menu" style="">
                                                 <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
                                                 <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
+                                                '.$designerType.'
+                                                <a class="dropdown-item view-files" href="" data-user="' . $user->id . '">عرض المرفقات</a>
                                                 <a class="dropdown-item" href="' . route('users.change_password_form', ['user' => $user->id]) . '">تغيير كلمة المرور</a>
-                                                <a class="dropdown-item view-files" href="" data-user="' . $user->id . '">عرض المروفقات</a>
                                             </div>
                                         </div>';
                 } else {
@@ -172,6 +174,7 @@ class UserController extends Controller
                                             <div class="dropdown-menu" style="">
                                                 <a class="dropdown-item" href="#" onclick="delete_user(' . $user->id . ', \'' . route('users.delete') . '\')" >حذف</a>
                                                 <a class="dropdown-item" href="' . route('users.update_from', ['user' => $user->id]) . '">تعديل</a>
+                                                '.$designerType.'
                                                 <a class="dropdown-item" href="' . route('users.change_password_form', ['user' => $user->id]) . '">تغيير كلمة المرور</a>
                                             </div>
                                         </div>';
@@ -361,6 +364,39 @@ class UserController extends Controller
 
             return response()->json([
                 'data' => $files,
+                'message' => '',
+                'success' => true
+            ]);
+        } catch (\Exception | \Error $exception) {
+            return response()->json([
+                'message' => 'خطأ تقني الرجاء المحاولة لاحقا',
+                'success' => false
+            ]);
+        }
+    }
+
+    public function get_design_types(User $user)
+    {
+        try {
+
+            if ($user->type != "design_office") {
+                return response()->json([
+                    'message' => 'المستخدم ليس مكتب تصاميم',
+                    'success' => false
+                ]);
+            }
+
+            $data = [];
+
+            foreach ($user->designer_types as $designerTypes) {
+                $data[] = [
+                    "id" => $designerTypes->id,
+                    "type" => $designerTypes->type,
+                ];
+            }
+
+            return response()->json([
+                'data' => $data,
                 'message' => '',
                 'success' => true
             ]);

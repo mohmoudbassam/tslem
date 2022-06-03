@@ -14,6 +14,16 @@
             visibility: hidden !important;
         }
 
+        .file-view-wrapper:hover {
+            box-shadow: var(--bs-box-shadow) !important;
+        }
+        .file-view-icon {
+            height: 180px;
+            background-size: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         .krajee-default.file-preview-frame {
             margin: 8px;
             border: 1px solid rgba(0, 0, 0, .2);
@@ -71,13 +81,17 @@
                                role="tab">تفاصيل الطلب</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link px-3" data-bs-toggle="tab"
+                               href="#obligations"
+                               role="tab">ملفات التعهدات</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link px-3 " data-bs-toggle="tab"
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
                     </ul>
                 </div>
-
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="details" role="tabpanel">
@@ -98,7 +112,7 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">مراكز الخدمة :</span> {{$order->service_provider->company_name}}</p>
+                                            class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
@@ -108,6 +122,21 @@
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
+                                </div>
+
+                                <div class="col-12">
+                                    <p class="details_p">
+                                        <span>
+                                            تخصصات المكتب الهندسي:
+                                        </span>
+                                    </p>
+                                    <ul class="m-0">
+                                        @foreach($order->designer->designer_types as $designType)
+                                            <li style="font-size: 20px;">
+                                                {{ $designType->type }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
 
                             </div>
@@ -283,9 +312,35 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="tab-pane" id="notes"
-                             role="tabpanel">
+                        <div class="tab-pane" id="obligations" role="tabpanel">
 
+                            @foreach($order->obligations->groupBy("specialties_id") as $obligation)
+                                <div class="row">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h1 class="card-title">{{ $obligation->first()->specialty->name_ar }}</h1>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                            @foreach($obligation as $obligationFile)
+                                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
+                                                    <a href="{{ asset("storage/".$obligationFile->path) }}" download="">
+                                                        <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                                            <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf.png") }}'); height: 140px;"></div>
+                                                            <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
+                                                                <small class="text-muted" style="font-size: 12px;">{{ get_obligation_name_by_type($obligationFile->type) }}</small>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="tab-pane" id="notes" role="tabpanel">
                             <div class="row">
                                 @foreach($order_sharers as $order_sharer)
                                     <div class="col-md-3 card">
