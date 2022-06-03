@@ -389,6 +389,10 @@
                 $("#rejection-note").val("");
             });
 
+            $("#close-rejection-note-modal").on("click", function () {
+                $("#rejection-note-modal").modal("hide");
+            })
+
             $("#submit-rejection-note").on("click", function (event) {
                 event.preventDefault();
                 if ( $("#rejection-note-modal").find("textarea").val().length < 1 ) {
