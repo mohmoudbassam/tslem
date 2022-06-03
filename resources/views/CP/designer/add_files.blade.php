@@ -507,6 +507,7 @@
                 if ( parseInt(tabElementsLength) > 1 ) return null;
                 $("#obligation-wrapper").children().remove();
                 popFromTabs(currentTab.data("specialty"));
+                oldTabsLength = tabsLength;
             });
 
             async function fetchServicesObligationFiles() {
