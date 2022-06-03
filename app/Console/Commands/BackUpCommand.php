@@ -38,19 +38,6 @@ class BackUpCommand extends Command
      */
     public function handle()
     {
-        $time=str_replace(':','_',now()->format('H:i'));
-
-        $filename = "backup-" . Carbon::now()->format('Y-m-d').'_'."$time". ".sql";
-         $databasename = env('DB_DATABASE');
-         $password = env('DB_PASSWORD');
-         $filePath=storage_path('/backup/'.$filename);
-         $username=env('DB_USERNAME');
-//         $command="mysqldump -u root -p $password $databasename >".$filePath;
-
-       // $command = "mysqldump --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  | gzip > " . storage_path() .'\\'  . $filename;
-//        $result=exec($command,$filename,$output);
-
-        $result=exec("mysqldump $databasename --password=$password --user=$username --single-transaction >".$filePath,$output);
-//        mysqldump tsleemcom_ts --password=lc2dk;b=~Fnx --user=tsleemcom_ts --single-transaction> ~/www
+        \Artisan::call('backup:run');
     }
 }
