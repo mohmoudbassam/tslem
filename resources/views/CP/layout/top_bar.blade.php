@@ -2,7 +2,7 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            <div class="navbar-brand-box">
+            <div class="navbar-brand-box px-0 text-center">
                 <!-- <a href="#" class="logo logo-dark">
 
                                 <span class="logo-txt ">البوابة الرقمية تسليم</span>
@@ -11,7 +11,7 @@
 
                 <a href="#" class="logo">
                                 <span class="logo-sm">
-                                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="24">
+                                    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="38">
                                 </span>
                     <!-- <span class="logo-lg">
                                     <img src="{{ asset('assets/images/logo-sm.svg') }}" alt="" height="24"> <span class="logo-txt">البوابة الرقمية تسليم</span>

@@ -33,7 +33,7 @@
             <div class="row">
 
                 <div class="col-sm-12">
-                   
+
                 <div data-simplebar style="max-height: 230px;">
                         @foreach (auth()->user()->notifications()->get() as $notification)
 
@@ -56,7 +56,7 @@
                             </a>
                         @endforeach
                     </div>
-                    
+
                 </div>
 
 

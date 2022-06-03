@@ -852,7 +852,7 @@ body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li:hover > a svg 
 body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li:hover > a span {
   display: inline;
 }
-body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li:hover > ul {
+.vertical-menu #sidebar-menu > ul > li:hover > ul {
   display: block;
   right: 70px;
   position: absolute;
@@ -878,10 +878,13 @@ body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul > li:hover > ul a:h
   color: var(--bs-sidebar-menu-item-hover-color);
 }
 body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul ul {
-  padding: 5px 0;
-  z-index: 9999;
-  display: none;
+  /* padding: 5px 0; */
+  /* z-index: 9999; */
+  /* display: none; */
   background-color: #fff;
+}
+.vertical-menu #sidebar-menu > ul ul{
+    display: none;
 }
 body[data-sidebar-size=sm] .vertical-menu #sidebar-menu > ul ul li:hover > ul {
   display: block;
@@ -5037,4 +5040,11 @@ body .dropzone .dz-started .dz-message{
 
 .card-body {
     padding: 1.45rem 1.5rem;
+}
+.card-header .row.mt-4 {
+    margin-top: 0 !important;
+}
+.card-header .row.mt-4 h2{
+    margin-bottom: 0;
+    font-size: 22px;
 }
