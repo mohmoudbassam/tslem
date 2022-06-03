@@ -101,7 +101,6 @@
         </div>
     </div>
 
-
     <div class="modal fade" id="view-designer-types-modal" tabindex="-1" role="dialog" aria-labelledby="view-user-files-modal-title" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -132,12 +131,40 @@
     </div>
 
 
+    <div class="modal fade" id="rejection-note-modal" tabindex="-1" role="dialog" aria-labelledby="rejection-note" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rejection-note-modal-title">ملاحظات رفض الطلب</h5>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('users.request.reject') }}" id="reject-user-form">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input type="hidden" value="" name="user_id" id="user_id">
+                                    <label class="col-form-label required-field" for="rejection-note">ملاحظات رفض الطلب</label>
+                                    <textarea class="form-control mb-1" id="rejection-note" name="rejection_reason" placeholder="ملاحظات رفض الطلب" rows="10" style="resize: none;" required></textarea>
+                                    <span class="text-danger" id="rejection-note-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" id="submit-rejection-note" class="btn btn-danger" form="reject-user-form" data-dismiss="modal">رفض</button>
+                    <button type="button" id="close-rejection-note-modal" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 @section('scripts')
     <script>
-
-
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
@@ -270,7 +297,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $.ajax({
+            return $.ajax({
                 url: '{{route('users.request.reject_form')}}',
                 data: {
                     id: id
@@ -294,6 +321,7 @@
                     }
 
                     KTApp.unblockPage();
+                    return data.success;
                 },
                 error: function (data) {
                     showAlertMessage('error', 'حدث خطأ في النظام');
@@ -348,7 +376,29 @@
                     viewDesignerTypesModal.find(`div[data-type='${design}']`).removeClass("bg-danger").removeClass("bg-success");
                 });
             });
+
+
+            let userId = undefined;
+            $(document).on("click", ".rejection-user-btn", function (event) {
+                event.preventDefault();
+                userId = $(this).data("user");
+                $("#rejection-note-modal").modal("show");
+            });
+
+            $('#rejection-note-modal').on('hidden.bs.modal', function (e) {
+                $("#rejection-note").val("");
+            });
+
+            $("#submit-rejection-note").on("click", function (event) {
+                event.preventDefault();
+                if ( $("#rejection-note-modal").find("textarea").val().length < 1 ) {
+                    showAlertMessage("error", "من فضلك اذكر سبب الرفض")
+                    return false;
+                }
+
+                $("#user_id").val(userId);
+                $("#reject-user-form").submit();
+            });
         });
     </script>
-
 @endsection

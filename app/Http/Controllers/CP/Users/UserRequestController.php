@@ -55,7 +55,7 @@ class UserRequestController extends Controller
                 }
                 if($user->verified==0){
                     $accept = '<a class="dropdown-item" href="javascript:;" onclick="accept(' . $user->id . ')" ><i class="fa fa-check mx-1"></i>إعتماد</a>';
-                    $reject = '<a class="dropdown-item" href="javascript:;" onclick="showModal(\'' . route('users.request.reject_form', ['id' => $user->id]) . '\')" > <i class="fa fa-times mx-1"></i>رفض</a>';
+                    $reject = '<a class="dropdown-item rejection-user-btn" href="#" data-user="'.$user->id.'"> <i class="fa fa-times mx-1"></i>رفض</a>';
                 }
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -112,13 +112,13 @@ class UserRequestController extends Controller
 
     public function reject(Request $request)
     {
-        $user = User::query()->findOrFail($request->id);
-        $user->reject_reason = $request->reject_reason;
+
+        $user = User::query()->findOrFail($request->user_id);
+        $user->reject_reason = $request->rejection_reason;
         $user->verified = 2;
         $user->save();
-        return response()->json([
-            'success' => true,
-            'message' => 'تم رفض طلب  المستخدم بنجاح'
-        ]);
+        return redirect()
+            ->route("users.request")
+            ->with("success", "تم رفض طلب  المستخدم بنجاح");
     }
 }
