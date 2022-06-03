@@ -3580,12 +3580,21 @@ div.dataTables_wrapper div.dataTables_info {
   border: 1px solid #74788d;
 }
 .table-rep-plugin .btn-group .btn-default.btn-primary {
-  background-color: #5156be;
-  border-color: #5156be;
+  background-color: #0A2373;
+  border-color: #0A2373;
   color: #fff;
   -webkit-box-shadow: 0 0 0 2px rgba(81, 86, 190, 0.5);
           box-shadow: 0 0 0 2px rgba(81, 86, 190, 0.5);
 }
+.btn-primary {
+    background-color: #0A2373;
+    border-color: #0A2373;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #071b5d;
+    border-color: #071b5d;
+  }
 .table-rep-plugin .btn-group.pull-right {
   float: left;
 }
@@ -4915,7 +4924,7 @@ body[data-layout=horizontal] .chat-conversation {
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
 body{
-    background: #EEF0F8;
+    background: #f7f7f7;
     font-family: 'Cairo', sans-serif;
 }
 
@@ -4944,7 +4953,7 @@ body .flatpickr-current-month {
 
 
 table tr th{
-    color: #B5B5C3;
+    color: #c0946f;
     font-size: 0.8rem;
     font-weight: 600 !important;
 }
@@ -4970,4 +4979,14 @@ div.dataTables_wrapper div.dataTables_info {
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
     }
+}
+
+
+#items_table_wrapper{
+    background-color: #c0946f0f;
+    padding: 20px;
+    border-radius: 5px;
+}
+.flatpickr-months, .flatpickr-weekdays {
+    background-color: #0a2373;
 }
