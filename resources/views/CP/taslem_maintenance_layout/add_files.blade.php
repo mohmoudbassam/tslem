@@ -17,24 +17,27 @@
 @section('content')
 
     <!-- start page title -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">إضافة الملفات</h4>
+
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="card">
 
+        <div class="card-header">
+            <h4 class="mb-sm-0 font-size-18">إضافة الملفات</h4>
+        </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 my-3">
-                    <p class="details_p"><span class="bold">  الشركة : </span>{{$user->company_name}}</p>
+                    <p ><span class="bold">  الشركة : </span>{{$user->company_name}}</p>
                 </div>
 
-                <div class="col-md-6 my-3">
-                    <p class="details_p"><span class="bold">  الموعد :</span>{{$session->start_at}} </p>
+                <div class="col-md-6 my-3 text-lg-end">
+                    <p ><span class="bold">  الموعد :</span>{{$session->start_at}} </p>
                 </div>
 
 
@@ -42,69 +45,67 @@
             <form action="{{route('taslem_maintenance.save_note')}}" method="post" enctype="multipart/form-">
                 @csrf
                 <div class="row">
-                    <div class="col-4 mr-3 ml-1 dropzone" >
-                        <div id="dropzone_first_file">
-                            <div class="fallback">
-                                <input name="first_file" type="file" id="first_file">
-                            </div>
-                            <div class="dz-message needsclick">
-                                <div class="mb-3">
-                                    <i class="display-4 text-muted bx bx-cloud-upload"></i>
+                    <div class="col-lg-4">
+                        <div class="dropzone">
+                            <div id="dropzone_first_file">
+                                <div class="fallback">
+                                    <input name="first_file" type="file" id="first_file">
                                 </div>
+                                <div class="dz-message needsclick">
+                                    <div class="mb-3">
+                                        <i class="display-5 text-muted bx bx-cloud-upload"></i>
+                                    </div>
 
-                                <h5>محضر قراءة عداد الكهرباء الخاص بالمخيم</h5>
+                                    <h5>محضر قراءة عداد الكهرباء الخاص بالمخيم</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 dropzone" >
-                        <div id="dropzone_seconde_file">
-                            <div class="fallback">
-                                <input name="dropzone_seconde_file" type="file" id="dropzone_seconde_file">
-                            </div>
-                            <div class="dz-message needsclick">
-                                <div class="mb-3">
-                                    <i class="display-4 text-muted bx bx-cloud-upload"></i>
+                    <div class="col-lg-4" >
+                        <div class="dropzone">
+                            <div id="dropzone_seconde_file">
+                                <div class="fallback">
+                                    <input name="dropzone_seconde_file" type="file" id="dropzone_seconde_file">
                                 </div>
+                                <div class="dz-message needsclick">
+                                    <div class="mb-3">
+                                        <i class="display-5 text-muted bx bx-cloud-upload"></i>
+                                    </div>
 
-                                <h5>كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ</h5>
+                                    <h5>كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4 dropzone" >
-                        <div id="dropzone_third_file">
-                            <div class="fallback">
-                                <input name="dropzone_third_file" type="file" id="dropzone_third_file">
-                            </div>
-                            <div class="dz-message needsclick">
-                                <div class="mb-3">
-                                    <i class="display-4 text-muted bx bx-cloud-upload"></i>
+                    <div class="col-lg-4 " >
+                        <div class="dropzone">
+
+                            <div id="dropzone_third_file">
+                                <div class="fallback">
+                                    <input name="dropzone_third_file" type="file" id="dropzone_third_file">
                                 </div>
-                                <h5>محضر تسليم المخيمات</h5>
+                                <div class="dz-message needsclick">
+                                    <div class="mb-3">
+                                        <i class="display-5 text-muted bx bx-cloud-upload"></i>
+                                    </div>
+                                    <h5>محضر تسليم المخيمات</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
 
                 </div>
-                <div class="row">
-                    <div class="row">
-                        <div class="form-group col-lg-12 col-md-6 col-sm-12">
-                            <div class="row">
-                                <label class="col-12" for="note"><h4>الملاحظات</h4></label>
-                                <div class="col-12">
-                                <textarea class="form-control" name="note" id="note"
-                                          rows="10">{{$user->service_provider_note}}</textarea></div>
-                                <div class="col-12 text-danger" id="note_error"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="form-group mt-4">
+                    <label for="note" class="mb-2"><h5>الملاحظات</h5></label>
+                        <textarea class="form-control" name="note" id="note"
+                        rows="10">{{$user->service_provider_note}}</textarea>
+                        <div class="text-danger" id="note_error"></div>
                 </div>
-                  <input type="hidden" id="service_provider_id" name="service_provider_id" value="{{$user->id}}">
+                <input type="hidden" id="service_provider_id" name="service_provider_id" value="{{$user->id}}">
 
-                <div class="row text-end" style="margin-top:1.9rem; margin-left: 20px">
+                <div class=" text-end" style="margin-top:1.9rem;">
                     <div>
-                        <button type="submit" class="btn btn-lg btn-primary submit_btn">إرسال</button>
+                        <button type="submit" class="btn btn-lg btn-primary submit_btn px-4">إرسال</button>
                     </div>
                 </div>
             </form>

@@ -78,7 +78,7 @@
                     <label for="start_at">وقت الموعد</label>
                     <div class="input-group auth-pass-inputgroup">
                         <input type="text" class="form-control datepicker" id="start_at" name="start_at">
-                        <div class="btn btn-light shadow-none ms-0 bg-white"><i class="far fa-clock"></i></div>
+                        <div class="btn btn-light shadow-none ms-0"><i class="far fa-clock"></i></div>
                     </div>
                     <div class="col-12 text-danger" id="start_at_error"></div>
                 </div>

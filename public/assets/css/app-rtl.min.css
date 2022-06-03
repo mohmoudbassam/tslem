@@ -5008,3 +5008,33 @@ div.dataTables_wrapper div.dataTables_info {
     fill: #3f87f5;
     opacity: 1;
 }
+
+body .dropzone {
+    border: 1px solid var(--bs-input-border);
+    background-color: var(--bs-body-bg);
+    cursor: pointer;
+    min-height: 215px;
+    text-align: center;
+}
+
+body .dropzone .dz-message h5{
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--bs-body-color);
+    min-height: 44px;
+}
+
+body .dropzone .dz-message i{
+    color: var(--bs-body-color);
+}
+body .dropzone .dz-message {
+    margin: 1em 0;
+}
+
+body .dropzone .dz-started .dz-message{
+    display: none;
+}
+
+.card-body {
+    padding: 1.45rem 1.5rem;
+}
