@@ -269,6 +269,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 });
 Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
     Route::get('', [RaftCenterController::class, 'index']);
+
 });
 Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
     Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
@@ -283,9 +284,6 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
     Route::get('/add_files/{service_provider_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
     Route::post('/upload_file/{service_provider_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');
     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
-    Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
-    Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
-    Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
 
 });
 //Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
