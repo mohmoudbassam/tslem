@@ -21,14 +21,13 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="{{route('services_providers.orders')}}">الطلبات</a></li>
+                            <li class="breadcrumb-item active">الرئيسية</li>
+                        </ol>
+                    </div>
 
-
-                    <ul class="nav nav-tabs-custom card-header-tabs border-top mt-4" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link px-3 active" data-bs-toggle="tab" href="#overview" role="tab">الموعد
-                            </a>
-                        </li>
-                      </ul>
                 </div>
                 <!-- end card body -->
             </div>
@@ -60,7 +59,7 @@
                                     <div class="row">
                                         <div class="col-xl-2">
                                             <div>
-                                                <h5 class="font-size-15">الموعد :</h5>
+                                                <h5 class="font-size-15"></h5>
                                             </div>
                                         </div>
                                         <div class="col-xl">

@@ -8,14 +8,19 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-{{--                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('users.add')}}"><i class="dripicons-user p-2"></i>إصافة موعد</a></h4>--}}
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="{{route('taslem_maintenance.index')}}">الرئيسية</a></li>
+                                    <li class="breadcrumb-item active"><a href="{{route('taslem_maintenance.index')}}">إضافة موعد</a></li>
+                                </ol>
+                            </div>
 
-                {{--                <div class="page-title-right">--}}
-                {{--                    <ol class="breadcrumb m-0">--}}
-                {{--                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>--}}
-                {{--                        <li class="breadcrumb-item active">الرئيسية</li>--}}
-                {{--                    </ol>--}}
-                {{--                </div>--}}
+                        </div>
+                        <!-- end card body -->
+                    </div>
 
             </div>
         </div>

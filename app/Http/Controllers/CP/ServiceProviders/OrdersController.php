@@ -205,15 +205,15 @@ class OrdersController extends Controller
 
         $files = [
             [
-                'name' => 'محضر قراءة عداد الكهرباء الخاص بالمخيم.docx',
+                'name' => 'محضر قراءة عداد الكهرباء الخاص بالمخيم',
                 'path' => 'Mechanical.pdf',
                 'url_type'=>1
             ], [
-                'name' =>'كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx',
+                'name' =>'كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ',
                 'path' => 'Mechanical.pdf',
                 'url_type'=>2
             ], [
-                'name' =>'محضر تسليم المخيمات.docx',
+                'name' =>'محضر تسليم المخيمات',
                 'path' => 'Mechanical.pdf',
                 'url_type'=>3
             ]
@@ -246,8 +246,6 @@ class OrdersController extends Controller
 
         $file_name = uniqid(auth()->user()->id . '_') . '.docx';
         $templateProcessor = new TemplateProcessor(Storage::disk('public')->path($file_type));
-//        $Reveal_Notes = new TemplateProcessor(Storage::disk('public')->path('كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx'));
-//        $record_taslem = new TemplateProcessor(Storage::disk('public')->path('محضر تسليم المخيمات.docx'));
 
         $templateProcessor->setValues([
             'name' => auth()->user()->company_name,

@@ -22,33 +22,48 @@
         <div class="page-content">
             <div class="container-fluid">
 
+            <?php if(auth()->user()->verified == 0 &&  !auth()->user()->isAdmin() ): ?> <div class="alert alert-danger p-2 font-14"> لم يتم اعتماد حسابك بعد </div> <?php endif; ?>
+
 
                 <?php echo $__env->yieldContent('content'); ?>
-                <div class="col-12">
 
                     <?php if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() ): ?>
-                    <div class="alert alert-danger">
-
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-
-
-
-
-                            تم رفض حسابك للأسباب التاليه:     <?php echo e(auth()->user()->reject_reason); ?>
-
-
-                            <div class="page-title-right">
-                                <ol class="breadcrumb ">
-                                    <li class="breadcrumb-item"><a href="<?php echo e(route('edit_profile')); ?>">تعديل الملف الشخصي</a></li>
-
-                                </ol>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-danger">
+                                    تم رفض تأكيد الحساب
+                                </div>
                             </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex flex-row justify-content-between">
+                                        <h1 class="card-title">
+                                            ملاحظات رفض تأكيد الحساب
+                                        </h1>
+                                        <a href="<?php echo e(route('edit_profile')); ?>">
+                                            <i class="fa fa-edit"></i>
+                                            تعديل الملف الشخصي
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <ul class="m-0">
+                                                    <?php $__currentLoopData = explode("\r\n", auth()->user()->reject_reason); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reason): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <li>
+                                                            <?php echo e($reason); ?>
 
+                                                        </li>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
                     <?php endif; ?>
-                </div>
+
 
             </div>
 
