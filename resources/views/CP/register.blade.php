@@ -331,10 +331,14 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="email"> البريد الإلكتروني<span
                                                     class="text-danger required-mark">*</span></label>
-                                            <input type="email" value="{{old('email')}}" class="form-control" id="email"
+                                            <input type="email" value="{{old('email')}}" class="form-control @error('email') is-invalid @enderror" id="email"
                                                 name="email"
                                                 placeholder="البريد الإلكتروني">
-                                            <div class="col-12 text-danger" id="email_error"></div>
+                                            <div class="col-12 text-danger" id="email_error">
+                                                @error('email')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
@@ -343,10 +347,14 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="phone">رقم الجوال<span class="text-danger required-mark">*</span></label>
                                             <input type="text" onkeypress="return /[0-9]/i.test(event.key)" value="{{old('phone')}}"
-                                                class="form-control" id="phone"
+                                                class="form-control @error('email') is-invalid @enderror" id="phone"
                                                 name="phone" minlength="10" maxlength="10"
                                                 placeholder="رقم الجوال">
-                                            <div class="col-12 text-danger" id="phone_error"></div>
+                                            <div class="col-12 text-danger" id="phone_error">
+                                                @error('email')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 @endif @if($record->license_number)
@@ -354,10 +362,14 @@
                                         <div class="mb-3">
                                             <label class="form-label" for="license_number">رقم الترخيص<span class="text-danger required-mark">*</span></label>
                                             <input type="text"  value="{{old('license_number')}}"
-                                                class="form-control" id="license_number"
+                                                class="form-control @error('license_number') is-invalid @enderror" id="license_number"
                                                 name="license_number"
                                                 placeholder="رقم الترخيص">
-                                            <div class="col-12 text-danger" id="license_number_error"></div>
+                                            <div class="col-12 text-danger" id="license_number_error">
+                                                @error('license_number')
+                                                {{ $message }}
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
@@ -403,9 +415,13 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="name">اسم المستخدم<span
                                                 class="text-danger required-mark">*</span></label>
-                                        <input type="text" class="form-control" name="name" value="{{old('name')}}" id="name"
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{old('name')}}" id="name"
                                             placeholder="اسم المستخدم">
-                                        <div class="col-12 text-danger" id="name_error"></div>
+                                        <div class="col-12 text-danger" id="name_error">
+                                            @error('name')
+                                            {{ $message }}
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- <div class="row form-group"> -->

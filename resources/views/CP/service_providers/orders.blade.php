@@ -58,7 +58,7 @@
             <div class="row mt-4">
                 <div class="col-lg-12">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 row-cols-md-4 row-cols-sm-3 row-cols-lg-4 row-cols-2" id="form_data">
                         <div class="col">
                             <label for="order_identifier">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
@@ -99,12 +99,13 @@
                             <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث
+                        <!-- <div class="col-sm-auto" style="margin-top:1.9rem;">
+
+                        </div> -->
+                        <div class="col-sm-auto ms-auto text-end" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
                             </button>
-                        </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء
+                            <button type="button" class="btn btn-secondary reset_btn px-4"><i class="fa fa-window-close me-1"></i>إلغاء
                             </button>
                         </div>
                     </form>

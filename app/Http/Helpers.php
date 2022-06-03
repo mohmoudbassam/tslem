@@ -25,8 +25,28 @@ function randomIntIdentifier($length = 10)
     return $identifier;
 }
 
-function get_specialty_obligation_files($specialty)
-{
+function get_specialty_obligation_files_types($specialty) {
+    $types = [];
+    foreach (get_specialty_obligation_files($specialty)["files"] as $obligationFiles) {
+        $types[] = $obligationFiles["type"];
+    }
+    return $types;
+}
+
+function get_obligation_name_by_type($type) {
+    return [
+        "gypsum_obligation" => "التعهد الخاص بإضافة الألواح الجبسية",
+        "kitchen_obligation" => "التعهد الخاص بإضافة المطابخ",
+        "storage_obligation" => "التعهد الخاص بإضافة مواقع التخزين",
+        "entrance_obligation" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
+        "aisle_obligation" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
+        "electricity_obligation" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
+        "air_conditioner_obligation" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
+        "toilet_obligation" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
+    ][$type];
+}
+
+function get_specialty_obligation_files($specialty) {
     return [
         "architect" => [
             "name_ar" => "المعماري",
@@ -34,23 +54,28 @@ function get_specialty_obligation_files($specialty)
             "files" => [
                 [
                     "name" => "التعهد الخاص بإضافة الألواح الجبسية",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة الألواح الجبسية.pdf")
+                    "type" => "gypsum_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة الألواح الجبسية.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة مواقع التخزين",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة مواقع التخزين.pdf")
+                    "type" => "storage_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة مواقع التخزين.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية المداخل.pdf")
+                    "type" => "entrance_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة وسائل تغطية المداخل.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية الممرات.pdf")
+                    "type" => "aisle_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة وسائل تغطية الممرات.pdf")
                 ],
             ]
         ],
@@ -60,21 +85,24 @@ function get_specialty_obligation_files($specialty)
             "files" => [
                 [
                     "name" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf")
+                    "type" => "electricity_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
                 ],
             ]
         ],
         "construction" => [
-            "name_ar" => "المعماري",
-            "name_en" => "الإنشائية",
+            "name_ar" => "الإنشائية",
+            "name_en" => "construction",
             "files" => [
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
                 ],
             ]
         ],
@@ -84,15 +112,18 @@ function get_specialty_obligation_files($specialty)
             "files" => [
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf")
+                    "type" => "air_conditioner_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
-                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المواضئ ودورات المياه.pdf")
+                    "type" => "toilet_obligation",
+                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المواضئ ودورات المياه.pdf")
                 ],
             ]
         ]

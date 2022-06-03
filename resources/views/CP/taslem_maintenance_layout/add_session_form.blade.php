@@ -22,31 +22,31 @@
     </div>
     <div class="card">
 
-        <div class="card-body">
-
+    <div class="card-header">
             <div class="row">
-{{--                <form id="filters" method="post" action="{{ route('taslem_maintenance.sessions.users_list') }}">--}}
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="camp_number">رقم المخيم</label>
-                            <input type="text" class="form-control" name="camp_number" id="camp_number">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="box_number">رقم المربع</label>
-                            <input type="text" class="form-control" name="box_number" id="box_number">
-                        </div>
-                        <div class="col-md-4" style="margin-top:1.9rem;">
-                            <button type="submit" class="btn btn-primary search_btn"><i class="fa fa-search"></i></button>
-                        </div>
+                <div class="col-lg-3 col-xxl-2">
+                    <label for="camp_number">رقم المخيم</label>
+                    <input type="text" class="form-control" name="camp_number" id="camp_number">
+                </div>
+                <div class="col-lg-3 col-xxl-2">
+                    <label for="box_number">رقم المربع</label>
+                    <input type="text" class="form-control" name="box_number" id="box_number">
+                </div>
+                <div class="col-auto ms-auto" style="margin-top:1.9rem;">
+                    <button type="submit" class="btn btn-primary search_btn"><i class="fa fa-search"></i></button>
+                </div>
 
-                    </div>
-{{--                </form>--}}
-                <form id="add_edit_form" method="post" action="{{route('taslem_maintenance.sessions.save')}}" enctype="multipart/form-data">
+            </div>
+        </div>
+
+        <div class="card-body pb-0">
+
+            <form id="add_edit_form" method="post" action="{{route('taslem_maintenance.sessions.save')}}" enctype="multipart/form-data">
                 <div class="col-sm-12">
                     <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
-                           role="grid"
-                           aria-describedby="DataTables_Table_0_info">
+                        id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
+                        role="grid"
+                        aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
                             الاسم
@@ -55,7 +55,7 @@
                             البريد الالكتروني
                         </th>
                         <th>
-                           اسم المفوض
+                        اسم المفوض
                         </th>
                         <th>
                             اختيار
@@ -68,21 +68,31 @@
                     </table>
                 </div>
 
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-3">
-                                <label for="start_at">وقت الموعد</label>
-                                <input type="text" class="form-control datepicker" id="start_at" name="start_at">
-                                <div class="col-12 text-danger" id="start_at_error"></div>
-                            </div>
-                        </div>
+                @csrf
+                <div class="mb-3 mt-3">
+                    <label for="start_at">وقت الموعد</label>
+                    <div class="input-group auth-pass-inputgroup">
+                        <input type="text" class="form-control datepicker" id="start_at" name="start_at">
+                        <div class="btn btn-light shadow-none ms-0 bg-white"><i class="far fa-clock"></i></div>
                     </div>
-                </form>
-
-                <div class="d-flex flex-wrap gap-3">
-                    <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء</button>
+                    <div class="col-12 text-danger" id="start_at_error"></div>
                 </div>
+            </form>
+        </div>
+        <div class="card-body  border-top">
+
+        <div class="d-flex flex-wrap gap-3">
+            <button type="button" class="btn btn-lg btn-primary submit_btn px-4">إنشاء</button>
+        </div>
+
+
+
+
+            <div class="row">
+{{--                <form id="filters" method="post" action="{{ route('taslem_maintenance.sessions.users_list') }}">--}}
+
+{{--                </form>--}}
+
             </div>
         </div>
 
