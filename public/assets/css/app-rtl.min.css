@@ -4990,3 +4990,21 @@ div.dataTables_wrapper div.dataTables_info {
 .flatpickr-months, .flatpickr-weekdays {
     background-color: #0a2373;
 }
+
+.icon{
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 30px;
+    color: #3f87f5;
+    background: rgba(63,135,245,.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon svg path{
+    fill: #3f87f5;
+    opacity: 1;
+}
