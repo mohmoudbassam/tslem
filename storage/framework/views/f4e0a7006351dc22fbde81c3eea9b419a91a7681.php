@@ -1,7 +1,16 @@
+
 <?php $__env->startSection('title'); ?>
     المستخدمين
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
+    <style>
+        .modal-backdrop.show {
+            display: initial !important;
+        }
+        .modal-backdrop.fade {
+            display: initial !important;
+        }
+    </style>
 
     <!-- start page title -->
     <div class="row">
@@ -92,6 +101,35 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="view-designer-types-modal" tabindex="-1" role="dialog" aria-labelledby="view-user-files-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="view-designer-types-modal-title">تخصصات المكتب الهندسي</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="view-designer-types-row">
+                        <div class="col-12 d-flex flex-row justify-content-between">
+                            <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center" data-type="designer" style="height: 15px; width: 15px;"></div>
+                            <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">اشراف</p>
+                        </div>
+                        <div class="col-12 d-flex flex-row justify-content-between">
+                            <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center" data-type="consulting" style="height: 15px; width: 15px;"></div>
+                            <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">مكتب تصميم</p>
+                        </div>
+                        <div class="col-12 d-flex flex-row justify-content-between">
+                            <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center" data-type="fire" style="height: 15px; width: 15px;"></div>
+                            <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">الحماية والوقاية من الحريق</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-view-designer-types-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <?php $__env->stopSection(); ?>
@@ -263,6 +301,54 @@
                 },
             });
         }
+    </script>
+
+    <script>
+        $(function () {
+            const viewDesignerTypesModal = $("#view-designer-types-modal");
+
+            async function get_design_types(id) {
+                let response = await fetch(`/users/${id}/design/types`, {
+                    headers: {
+                        'accept': 'application/json'
+                    },
+                });
+                return await (await response).json();
+            }
+
+            function prepareUserDesignTypesModal(types) {
+                let designs = ["consulting", "designer", "fire"];
+                types.map((type) => {
+                    viewDesignerTypesModal.find(`div[data-type='${type['type']}']`).addClass("bg-success")
+                });
+
+                designs.map((design) => {
+                    if ( !viewDesignerTypesModal.find(`div[data-type='${design}']`).hasClass("bg-success") ) {
+                        viewDesignerTypesModal.find(`div[data-type='${design}']`).addClass("bg-danger")
+                    }
+                });
+
+            }
+
+            $(document).on("click", ".view-designer-types-btn", async function (event) {
+                event.preventDefault();
+                let userId = $(this).data("user");
+                let response = await get_design_types(userId);
+                prepareUserDesignTypesModal(response['data']);
+                viewDesignerTypesModal.modal("show");
+            });
+
+            $("#close-view-designer-types-modal").on("click", function () {
+                viewDesignerTypesModal.modal("hide");
+            });
+
+            viewDesignerTypesModal.on('hidden.bs.modal', function (e) {
+                let designs = ["consulting", "designer", "fire"];
+                designs.map((design) => {
+                    viewDesignerTypesModal.find(`div[data-type='${design}']`).removeClass("bg-danger").removeClass("bg-success");
+                });
+            });
+        });
     </script>
 
 <?php $__env->stopSection(); ?>
