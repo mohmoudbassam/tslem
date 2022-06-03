@@ -262,15 +262,11 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
 
     });
-
-    Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
-        Route::get('', [RaftCenterController::class, 'index']);
-    });
-
-
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
-
+Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
+    Route::get('', [RaftCenterController::class, 'index']);
+});
 Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
     Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
     Route::prefix('sessions')->name(".sessions")->group(function () {
@@ -278,7 +274,8 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::get('/users_list', [TaslemMaintenance::class, 'users_list'])->name('.users_list');
         Route::get('/add', [TaslemMaintenance::class, 'add_session_form'])->name('.add_form');
         Route::post('/save', [TaslemMaintenance::class, 'save_session'])->name('.save');
-
+        Route::get('/toDaySessions', [TaslemMaintenance::class, 'toDaySessions'])->name('.toDaySessions');
+        Route::get('/to_day_list', [TaslemMaintenance::class, 'to_day_list'])->name('.to_day_list');
     });
     Route::get('/add_files/{service_provider_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
     Route::post('/upload_file/{service_provider_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');

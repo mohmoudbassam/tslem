@@ -182,6 +182,15 @@
                         </a>
                     </li>
                 @endif
+                @if(auth()->user()->isAdmin())
+                    <li>
+                        <a href="{{url('/telescope')}}">
+
+                            <i data-feather="info"></i>
+                            <span data-key="t-authentication">تيلسكوب</span>
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="{{route('logout')}}">
 

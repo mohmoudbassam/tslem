@@ -182,6 +182,15 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                <?php if(auth()->user()->isAdmin()): ?>
+                    <li>
+                        <a href="<?php echo e(url('/telescope')); ?>">
+
+                            <i data-feather="info"></i>
+                            <span data-key="t-authentication">تيلسكوب</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li>
                     <a href="<?php echo e(route('logout')); ?>">
 
