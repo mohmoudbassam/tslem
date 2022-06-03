@@ -26,30 +26,43 @@
 
 
                 @yield('content')
-                <div class="col-12">
 
                     @if(auth()->user()->verified == 2 && !auth()->user()->isAdmin() )
-                    <div class="alert alert-danger">
-
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-
-
-
-
-                            تم رفض حسابك للأسباب التاليه:     {{auth()->user()->reject_reason}}
-
-                            <div class="page-title-right">
-                                <ol class="breadcrumb ">
-                                    <li class="breadcrumb-item"><a href="{{route('edit_profile')}}">تعديل الملف الشخصي</a></li>
-
-                                </ol>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-danger">
+                                    تم رفض تأكيد الحساب
+                                </div>
                             </div>
-
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header d-flex flex-row justify-content-between">
+                                        <h1 class="card-title">
+                                            ملاحظات رفض تأكيد الحساب
+                                        </h1>
+                                        <a href="{{route('edit_profile')}}">
+                                            <i class="fa fa-edit"></i>
+                                            تعديل الملف الشخصي
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <ul class="m-0">
+                                                    @foreach(explode("\r\n", auth()->user()->reject_reason) as $reason)
+                                                        <li>
+                                                            {{ $reason }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                    </div>
                     @endif
-                </div>
+
 
             </div>
 
