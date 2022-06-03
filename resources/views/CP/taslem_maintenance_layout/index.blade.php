@@ -25,8 +25,8 @@
         <div class="col-12">
 
             <div class="page-title-box d-sm-flex align-items-center justify-content-end">
-                <h4 class="mb-sm-0 font-size-18 me-2"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.add_form')}}"><i class="fa fa-plus p-2"></i>إصافة موعد</a></h4>
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.toDaySessions')}}"><i class="fa fa-clock p-2"></i>مواعيد اليوم</a></h4>
+                <h4 class="mb-sm-0 font-size-18 me-2"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.add_form')}}"><i class="fa fa-plus pe-2"></i>إصافة موعد</a></h4>
+                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.toDaySessions')}}"><i class="fa fa-clock pe-2"></i>مواعيد اليوم</a></h4>
 
 {{--                <div class="page-title-right">--}}
 {{--                    <ol class="breadcrumb m-0">--}}
