@@ -51,6 +51,6 @@ class BackUpCommand extends Command
 //        $result=exec($command,$filename,$output);
 
         $result=exec("mysqldump $databasename --password=$password --user=$username --single-transaction >".$filePath,$output);
-
+//        mysqldump tsleemcom_ts --password=lc2dk;b=~Fnx --user=tsleemcom_ts --single-transaction> ~/www
     }
 }
