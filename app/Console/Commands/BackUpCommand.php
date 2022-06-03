@@ -44,12 +44,13 @@ class BackUpCommand extends Command
          $databasename = env('DB_DATABASE');
          $password = env('DB_PASSWORD');
          $filePath=storage_path('/backup/'.$filename);
+         $username=env('DB_USERNAME');
 //         $command="mysqldump -u root -p $password $databasename >".$filePath;
 
        // $command = "mysqldump --user=" . env('DB_USERNAME') ." --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  | gzip > " . storage_path() .'\\'  . $filename;
 //        $result=exec($command,$filename,$output);
 
-        $result=exec("mysqldump $databasename --password=$password --user=root --single-transaction >".$filePath,$output);
+        $result=exec("mysqldump $databasename --password=$password --user=$username --single-transaction >".$filePath,$output);
 
     }
 }
