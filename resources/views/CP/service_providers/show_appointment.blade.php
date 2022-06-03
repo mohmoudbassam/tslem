@@ -95,9 +95,9 @@
                                     @foreach($files as $file)
                                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
                                              style="cursor:pointer; height: 220px;">
-                                            <a href="{{url('/Mechanical.pdf')}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                            <a href="{{route('services_providers.docx_file',['fileType'=>$file['url_type']])}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
                                                 <div class="file-view-icon"
-                                                     style="background-image: url('{{asset("assets/images/pdf.png")}}');"></div>
+                                                     style="background-image: url('{{asset("assets/images/default.png")}}');"></div>
                                                 <div
                                                     class="justify-content-center d-flex flex-column text-center border-top"
                                                     style="height: 40px; background-color: #eeeeee;">
@@ -129,62 +129,7 @@
                     <!-- end card -->
                 </div>
                 <!-- end tab pane -->
-                <div class="tab-pane" id="post" role="tabpanel">
-                    <div class="card">
 
-                        <div class="card-body">
-                            <div>
-                                <div>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>
-                                                    <h5 class="font-size-15">العنوان</h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>الجوال</div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="pb-3">
-                                        <div class="row">
-                                            <div class="col-xl-2">
-                                                <div>المدينة</div>
-                                            </div>
-                                            <div class="col-xl">
-                                                <div class="text-muted">
-                                                    <p class="mb-2"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- end card -->
-                </div>
                 <!-- end tab pane -->
             </div>
             <!-- end tab content -->

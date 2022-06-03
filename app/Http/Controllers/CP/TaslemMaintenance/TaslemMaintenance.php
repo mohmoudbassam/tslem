@@ -107,7 +107,7 @@ class TaslemMaintenance extends Controller
 
     public function add_files($service_provider_id)
     {
-        $user = User::query()->find($service_provider_id);
+        $user = User::query()->findOrFail($service_provider_id);
 
         $session = Session::query()->where('user_id', $service_provider_id)->first();
 

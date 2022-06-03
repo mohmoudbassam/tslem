@@ -21,6 +21,8 @@ use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpWord\TemplateProcessor;
 use UniSharp\LaravelFilemanager\Controllers\LfmController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\CP\RaftCompany\RaftCompanyController;
@@ -110,6 +112,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 Route::get('show_appointment', [OrdersController::class, 'show_appointment'])->name('.show_appointment');
                 Route::get('show_main_files', [OrdersController::class, 'show_main_files'])->name('.show_main_files');
                 Route::get('seen_maintain_file', [OrdersController::class, 'seen_maintain_file'])->name('.seen_maintain_file');
+                Route::get('docx_file/{fileType}', [OrdersController::class, 'docx_file'])->name('.docx_file');
                 Route::middleware(['ServiceProviderOrder'])->group(function () {
                     Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
                 });
@@ -294,10 +297,14 @@ Route::get('test', function () {
 });
 
 Route::get('generate', [PDFController::class, 'generate']);
-Route::get('test-email', function () {
-    Mail::send('mail', ['name', 'Ripon Uddin Arman'], function ($message) {
-        $message->to('test@tsleem.com.sa', 'Tutorials Point')->subject('Laravel Testing Mail with Attachment');
-    });
+Route::get('test-word', function () {
+
+    $templateProcessor = new TemplateProcessor(Storage::disk('public')->path('كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx'));
+
+    $templateProcessor->setValues([
+        'name' => 'mahmoud',
+        ]);
+       $templateProcessor->saveAs(Storage::disk('public')->path('asd.docx'));
 });
 
 

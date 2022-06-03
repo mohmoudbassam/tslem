@@ -52,7 +52,7 @@
                                     <i class="display-4 text-muted bx bx-cloud-upload"></i>
                                 </div>
 
-                                <h5>الرجاء اضافة الملف الاول</h5>
+                                <h5>محضر قراءة عداد الكهرباء الخاص بالمخيم</h5>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                     <i class="display-4 text-muted bx bx-cloud-upload"></i>
                                 </div>
 
-                                <h5>الرجاء اضافة الملف الثاني</h5>
+                                <h5>كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ</h5>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,7 @@
                                 <div class="mb-3">
                                     <i class="display-4 text-muted bx bx-cloud-upload"></i>
                                 </div>
-
-                                <h5>الرجاء اضافة الملف الثالث</h5>
+                                <h5>محضر تسليم المخيمات</h5>
                             </div>
                         </div>
                     </div>

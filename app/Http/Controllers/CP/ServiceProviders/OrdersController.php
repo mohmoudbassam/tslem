@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CP\ServiceProviders;
 
+use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderSharer;
@@ -9,9 +10,13 @@ use App\Models\ServiceProviderFiles;
 use App\Models\Session;
 use App\Models\User;
 use App\Notifications\OrderNotification;
+
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PhpOffice\PhpWord\TemplateProcessor;
 use Yajra\DataTables\DataTables;
 
 class OrdersController extends Controller
@@ -200,14 +205,17 @@ class OrdersController extends Controller
 
         $files = [
             [
-                'name' => 'test.pdf',
-                'path' => 'Mechanical.pdf'
+                'name' => 'محضر قراءة عداد الكهرباء الخاص بالمخيم.docx',
+                'path' => 'Mechanical.pdf',
+                'url_type'=>1
             ], [
-                'name' => 'asd.pdf',
-                'path' => 'Mechanical.pdf'
+                'name' =>'كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx',
+                'path' => 'Mechanical.pdf',
+                'url_type'=>2
             ], [
-                'name' => 'ssss.pdf',
-                'path' => 'Mechanical.pdf'
+                'name' =>'محضر تسليم المخيمات.docx',
+                'path' => 'Mechanical.pdf',
+                'url_type'=>3
             ]
         ];
         return view('CP.service_providers.show_appointment', [
@@ -230,6 +238,39 @@ class OrdersController extends Controller
             'service_provider_status' => 3
         ]);
         return redirect()->route('services_providers.orders');
+    }
+
+    public function docx_file($fileType)
+    {
+          $file_type=$this->fileType($fileType);
+
+        $file_name = uniqid(auth()->user()->id . '_') . '.docx';
+        $templateProcessor = new TemplateProcessor(Storage::disk('public')->path($file_type));
+//        $Reveal_Notes = new TemplateProcessor(Storage::disk('public')->path('كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx'));
+//        $record_taslem = new TemplateProcessor(Storage::disk('public')->path('محضر تسليم المخيمات.docx'));
+
+        $templateProcessor->setValues([
+            'name' => auth()->user()->company_name,
+            'box'=>auth()->user()->box_number,
+            'cmp'=>auth()->user()->camp_number,
+            'date'=>Hijri::Date('Y/m/d'),
+            'time'=>now()->format('H:i')
+        ]);
+
+        $templateProcessor->saveAs(Storage::disk('public')->path('service_provider_generator/' . $file_name));
+
+        return Response::download(Storage::disk('public')->path('service_provider_generator/'. $file_name),$file_type);
+
+    }
+
+    public function fileType($type){
+
+        if(!in_array($type,[1,2,3])){abort(404);}
+        return [
+            '1'=>'محضر قراءة عداد الكهرباء الخاص بالمخيم.docx',
+            '2'=>'كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx',
+            '3'=>'محضر تسليم المخيمات.docx'
+        ][$type];
     }
 
 }

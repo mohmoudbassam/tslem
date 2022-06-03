@@ -349,7 +349,7 @@
                                             <div class="col-12 text-danger" id="phone_error"></div>
                                         </div>
                                     </div>
-                                @endif @if(request('type') == 'service_provider')
+                                @endif @if($record->license_number)
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="license_number">رقم الترخيص<span class="text-danger required-mark">*</span></label>
@@ -361,7 +361,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if(request('type') == 'service_provider')
+                                @if($record->box_number)
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="box_number">رقم المربع<span class="text-danger required-mark">*</span></label>
@@ -373,7 +373,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if(request('type') == 'service_provider')
+                                @if($record->camp_number)
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="camp_number">رقم المخيم<span class="text-danger required-mark">*</span></label>
