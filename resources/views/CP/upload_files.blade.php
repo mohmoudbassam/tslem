@@ -268,6 +268,74 @@
                             </div>
                         @endif
 
+                        @if($record->service_provider_obligation and $record->confidentiality_obligation)
+                            <div class="row mt-4">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h1 class="card-title">
+                                                    ملفات التعهد
+                                                </h1>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="alert alert-info">
+                                                            يجب تحميل ملفات الاقرار ومن ثم توقيعها واعادة رفعها مجددا بصيغة (PDF)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">
+                                                                اتفاقية حفظ سويةالمعلومات
+                                                            </label>
+                                                            <a href="{{ asset("storage/obligations/اتفاقية حفظ سرية المعلومات.docx") }}" class="btn btn-primary d-block" download>
+                                                                <i class="fa fa-download"></i>
+                                                                تحميل ملف التعهد
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="form-group mt-2">
+                                                            <label class="form-label required-field" for="confidentiality_obligation"> اتفاقية حفظ سويةالمعلومات (PDF)</label>
+                                                            <input type="file" class="form-control" id="confidentiality_obligation"
+                                                                   accept=".pdf"
+                                                                   name="confidentiality_obligation">
+                                                            <div class="col-12 text-danger" id="confidentiality_obligation_error"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row my-3">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="col-form-label">
+                                                                اقرار مزودي الخدمة
+                                                            </label>
+                                                            <a href="{{ asset('storage/obligations/اقرار مزودي الخدمة.docx') }}" class="btn btn-primary d-block" download>
+                                                                <i class="fa fa-download"></i>
+                                                                تحميل ملف التعهد
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="form-group mt-2">
+                                                            <label class="form-label required-field" for="service_provider_obligation"> اقرار مزودي الخدمة (PDF)</label>
+                                                            <input type="file" class="form-control" id="service_provider_obligation"
+                                                                   accept=".pdf"
+                                                                   name="service_provider_obligation">
+                                                            <div class="col-12 text-danger" id="service_provider_obligation_error"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            </div>
+                        @endif
+
                         @if($record->commissioner_id_photo && auth()->user()->type != 'design_office' && auth()->user()->type != 'contractor')
                             <div class="row">
                                 <div class="col-md-6">
@@ -359,7 +427,7 @@
 
 
     @foreach(array_keys(get_user_column_file($type)) as $_col)
-    file_input_register('#{{$_col}}');
+        file_input_register('#{{$_col}}');
     @endforeach
 
     @if($record->type == 'contractor')

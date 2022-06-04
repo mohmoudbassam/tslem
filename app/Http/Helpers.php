@@ -164,7 +164,9 @@ function get_user_column_file($type)
         'center_sketch',
         'gis_sketch',
         'dwg_sketch',
-        'previous_works' // For Previous Works File Of Contractor
+        'previous_works',
+        'service_provider_obligation',
+        'confidentiality_obligation'
     )->where('type', $type)->first();
 
     if (is_null($benef)) {
