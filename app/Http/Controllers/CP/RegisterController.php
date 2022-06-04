@@ -52,7 +52,6 @@ class RegisterController extends Controller
 
     public function add_edit(StoreUserRequest $request)
     {
-
         $user = User::query()->create([
             'designer_type' => $request->designer_type,
             'type' => $request->type,
@@ -96,8 +95,13 @@ class RegisterController extends Controller
                 ]);
             }
         }
+        if(request('type') == 'contractor'){
+            ContractorSpecialtiesPivot::create([
+                'user_id' => $user->id,
+                "specialties_id" => $request->designer_type
+            ]);
+        }
         if(request('type')=='design_office'){
-
             $request->type='consulting_office';
         }
         //$this->uploadUserFiles($user, $request);
