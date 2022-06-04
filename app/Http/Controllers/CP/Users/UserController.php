@@ -379,9 +379,9 @@ class UserController extends Controller
     {
         try {
 
-            if ($user->type != "design_office") {
+            if ( !in_array($user->type,["design_office", "contractor"]) ) {
                 return response()->json([
-                    'message' => 'المستخدم ليس مكتب تصاميم',
+                    'message' => 'المستخدم ليس مكتب تصاميم او مقاول',
                     'success' => false
                 ]);
             }
