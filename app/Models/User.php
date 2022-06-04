@@ -75,6 +75,11 @@ class User extends Authenticatable
         return $this->hasMany(DesignerType::class);
     }
 
+    public function contractor_types()
+    {
+        return $this->hasMany(ContractorSpecialtiesPivot::class);
+    }
+
     public function getUserTypeAttribute()
     {
 

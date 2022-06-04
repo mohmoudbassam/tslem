@@ -148,7 +148,7 @@ class UserController extends Controller
                         $hasUploadFiles = true;
                     }
                 }
-                if ( $user->type == "design_office" ) {
+                if ( in_array($user->type, ["design_office", "contractor"]) ) {
                     $designerType = '<a class="dropdown-item view-designer-types-btn" href="#" data-user="'.$user->id.'">التخصصات</a>';
                 } else {
                     $designerType = "";
@@ -387,12 +387,23 @@ class UserController extends Controller
 
             $data = [];
 
-            foreach ($user->designer_types as $designerTypes) {
-                $data[] = [
-                    "id" => $designerTypes->id,
-                    "type" => $designerTypes->type,
-                ];
+            if ( $user->type == "design_office" ) {
+                foreach ($user->designer_types as $designerType) {
+                    $data[] = [
+                        "id" => $designerType->id,
+                        "type" => $designerType->type,
+                    ];
+                }
+            } else {
+                foreach ($user->contractor_types as $contractorType) {
+                    $data[] = [
+                        "id" => $contractorType->id,
+                        "type" => $contractorType->specialty->name_en,
+                    ];
+                }
             }
+
+
 
             return response()->json([
                 'data' => $data,
