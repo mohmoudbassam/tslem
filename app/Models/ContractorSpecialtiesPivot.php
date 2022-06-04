@@ -11,4 +11,14 @@ class ContractorSpecialtiesPivot extends Model
 
     protected $guarded=[];
     protected $table='contractor_specialties_pivot';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function specialty()
+    {
+        return $this->belongsTo(ContractorSpecialties::class, "specialties_id");
+    }
 }
