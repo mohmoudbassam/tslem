@@ -232,6 +232,20 @@
                             </div>
                         </div>
                     @endif
+                    @if($type=='raft_company')
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="raft_company_type">الشركة<span
+                                        class="text-danger required-mark">*</span></label>
+                                <select class="form-control" id="raft_company_type" name="raft_company_type">
+                                    @foreach($raft_companies as $company)
+                                        <option value="{{ $company->id }}">{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                                <div class="col-12 text-danger" id="raft_company_type_error"></div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label" for="password">كلمة المرور</label>
@@ -596,7 +610,12 @@
                 "password_confirmation": {
                     required: true,
                 },
-                @foreach(array_filter($record->makeHidden(['id', 'type'])->toArray()) as $rule => $key)
+                @if($type=='raft_company')
+                "raft_company_type": {
+                    required: true,
+                },
+                @endif
+                    @foreach(array_filter($record->makeHidden(['id', 'type'])->toArray()) as $rule => $key)
                 "{{"$rule"}}": {
                     required: true,
                 },

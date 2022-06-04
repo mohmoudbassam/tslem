@@ -263,6 +263,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
         Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
         Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
+        Route::get('get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name('.get_camp_by_box');
 
     });
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
@@ -295,15 +296,10 @@ Route::get('test', function () {
 });
 
 Route::get('generate', [PDFController::class, 'generate']);
-Route::get('test-word', function () {
-
-    $templateProcessor = new TemplateProcessor(Storage::disk('public')->path('كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx'));
-
-    $templateProcessor->setValues([
-        'name' => 'mahmoud',
-        ]);
-       $templateProcessor->saveAs(Storage::disk('public')->path('asd.docx'));
+Route::get('import-excel', function(){
+    return view('CP.import-excel.index');
 });
+Route::post('import', [\App\Http\Controllers\ImportExcelController::class,'import'])->name('import');
 
 
 

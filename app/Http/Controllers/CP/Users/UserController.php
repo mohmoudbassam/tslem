@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CP\User\StoreUserRequest;
 use App\Http\Requests\CP\User\UpdateUserRequest;
 use App\Models\BeneficiresCoulumns;
+use App\Models\RaftCompanyLocation;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,11 +30,14 @@ class UserController extends Controller
         $data['record'] = BeneficiresCoulumns::query()->where('type', $request->type)->firstOrFail();
         $data['type'] =  $request->type;
 
+       $data['raft_companies'] =RaftCompanyLocation::all();
+
         return view('CP.users.form', $data);
     }
 
     public function add_edit(StoreUserRequest $request)
     {
+
         $user = User::query()->create([
             'type' => request('type'),
             'name' => request('name'),
@@ -53,6 +57,7 @@ class UserController extends Controller
             'city' => request('city'),
             'employee_number' => request('employee_number'),
             'password' => request('password'),
+            'raft_company_type'=>request('raft_company_type')
         ]);
 
         if($user->type == 'raft_company' || $user->type == 'taslem_maintenance'){

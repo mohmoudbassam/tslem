@@ -74,29 +74,37 @@
                 </div>
 
                 @csrf
-                <div class="mb-3 mt-3">
-                    <label for="start_at">وقت الموعد</label>
-                    <div class="input-group auth-pass-inputgroup">
-                        <input type="text" class="form-control datepicker" id="start_at" name="start_at">
-                        <div class="btn btn-light shadow-none ms-0"><i class="far fa-clock"></i></div>
-                    </div>
-                    <div class="col-12 text-danger" id="start_at_error"></div>
-                </div>
+{{--                <div class="mb-3 mt-3">--}}
+{{--                    <label for="start_at">وقت الموعد</label>--}}
+{{--                    <div class="input-group auth-pass-inputgroup">--}}
+{{--                        <input type="text" class="form-control datepicker" id="start_at" name="start_at">--}}
+{{--                        <div class="btn btn-light shadow-none ms-0"><i class="far fa-clock"></i></div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-12 text-danger" id="start_at_error"></div>--}}
+{{--                </div>--}}
             </form>
         </div>
-        <div class="card-body  border-top">
+        <div class="card-body  border-top" id="dateTimeView">
+{{--            <div class="col-lg-8 fv-row">--}}
+{{--                <div class="border rounded mt-5">--}}
+{{--                    <ul class="list-unstyled row m-0 session_list">--}}
 
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--                <div id="dateTimeHiddenInput">--}}
+
+{{--                </div>--}}
+
+{{--            </div>--}}
         <div class="d-flex flex-wrap gap-3">
-            <button type="button" class="btn btn-lg btn-primary submit_btn px-4">إنشاء</button>
+            <button type="button" class="btn btn-lg btn-primary  px-4" id="add_session">إضافة</button>
         </div>
 
 
 
 
             <div class="row">
-{{--                <form id="filters" method="post" action="{{ route('taslem_maintenance.sessions.users_list') }}">--}}
 
-{{--                </form>--}}
 
             </div>
         </div>
@@ -111,6 +119,44 @@
 
 @section('scripts')
     <script>
+        $('.session_list').append('<li class="border-bottom py-3 col-6" id=""><i class="fa fa-jedi-order fa-fw"></i>    المركز :         &nbsp;&nbsp; &nbsp;سيبيسبسيبسيبس<i class="fa fa-clock fa-fw"></i> <i class="fa fa-calendar fa-fw"></i> شسي </li>');
+         $('#add_session').on('click', function(){
+             if($('.user_id:checkbox:checked').length){
+                 $('.user_id:checkbox:checked').each(function(i){
+
+                 });
+                 $.ajaxSetup({
+                     headers: {
+                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                     }
+                 });
+                 $.ajax({
+                     url : '{{route('read_message')}}',
+                     data: {},
+                     type: "POST",
+                     processData: false,
+                     contentType: false,
+                     beforeSend(){
+                         KTApp.block('#page_modal', {
+                             overlayColor: '#000000',
+                             type: 'v2',
+                             state: 'success',
+                             message: 'مكتب تصميم'
+                         });
+                     },
+                     success:function(data) {
+                         $('#notifcation_count').text('')
+                         $('#unreade_meassage').text('')
+                         KTApp.unblockPage();
+                     },
+                     error:function(data) {
+                         console.log(data);
+                         KTApp.unblock('#page_modal');
+                         KTApp.unblockPage();
+                     },
+                 });
+             }
+         })
 
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {

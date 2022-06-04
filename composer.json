@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.5",
+        "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.1",
         "multicaret/laravel-unifonic": "^2.0",
         "ncjoes/office-converter": "^1.0",
