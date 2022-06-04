@@ -206,7 +206,6 @@ class UserController extends Controller
         ]);
     }
 
-
     public function update_from(Request $request, User $user)
     {
 
