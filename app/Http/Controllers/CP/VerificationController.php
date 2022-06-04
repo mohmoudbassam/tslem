@@ -93,12 +93,6 @@ class VerificationController extends Controller{
         ]);
 
         $this->uploadUserFiles(auth()->user(), $request);
-        // if(auth()->user()->type == 'contractor'){
-        //     $path = Storage::disk('public')->put('user_files', $request->cv_file);
-        //     auth()->user()->update([
-        //        'cv_file' => $path
-        //     ]);
-        // }
         return back()->with(['success' => 'تم رفع الملفات بنجاح']);
     }
 
