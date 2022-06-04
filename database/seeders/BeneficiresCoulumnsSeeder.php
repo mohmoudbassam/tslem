@@ -43,6 +43,19 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'company_owner_id_photo' => '0'
         ]);
         BeneficiresCoulumns::query()->create([
+            'type' => 'raft_center',
+            'parent_id' => '1',
+            'name' => '1',
+            'company_name' => '1',
+            'company_owner_name' => '1',
+            'email' => '1',
+            'box_number' => '1',
+            'camp_number' => '1',
+            'phone' => '1',
+            'employee_number' => '1',
+            'password' => '1',
+        ]);
+        BeneficiresCoulumns::query()->create([
             'type' => 'service_provider',
             'company_name' => '1',
             'company_owner_name' => '1',

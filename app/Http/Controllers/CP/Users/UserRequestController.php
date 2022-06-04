@@ -48,7 +48,7 @@ class UserRequestController extends Controller
                 $show = ' <a class="dropdown-item" href="' . route('users.request.show', ['user' => $user->id]) . '"><i class="fa fa-eye mx-1"></i> عرض</a>';
                 $accept='';
                 $reject='';
-                if ( $user->type == "design_office" ) {
+                if ( in_array($user->type, ["design_office", "contractor"]) ) {
                     $designerType = '<a class="dropdown-item view-designer-types-btn" href="#" data-user="'.$user->id.'"><i class="fa fa-list mx-1"></i>التخصصات</a>';
                 } else {
                     $designerType = "";

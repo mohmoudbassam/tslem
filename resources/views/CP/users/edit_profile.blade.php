@@ -39,7 +39,7 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="row">
-                        <form id="add_edit_form" method="post" action="{{ auth()->user()->virfied ? route('after_reject'): route('save_profile')}}" enctype="multipart/form-data">
+                        <form id="add_edit_form" method="post" action="{{ in_array(auth()->user()->verified, [0, 2]) ? route('after_reject'): route('save_profile')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 @if($record->company_name)

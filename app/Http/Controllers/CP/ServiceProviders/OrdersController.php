@@ -12,10 +12,13 @@ use App\Models\User;
 use App\Notifications\OrderNotification;
 
 use Illuminate\Http\Request;
+use NcJoes\OfficeConverter\OfficeConverter;
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Yajra\DataTables\DataTables;
 
@@ -269,6 +272,33 @@ class OrdersController extends Controller
             '2'=>'كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx',
             '3'=>'محضر تسليم المخيمات.docx'
         ][$type];
+    }
+
+    public static function getWordToPDF($file_name)
+    {
+
+        $converter = new OfficeConverter(Storage::disk('public')->path('service_provider_generator/'.$file_name));
+        $file_name=str_replace('docx','pdf',$file_name);
+
+        $converter->convertTo(Storage::disk('public')->path('service_provider_generator/'.$file_name)); //generates pdf file in same directory as test-file.docx
+      //  $converter->convertTo('output-file.html'); //generates html file in same directory as test-file.docx
+
+//to specify output directory, specify it as the second argument to the constructor
+       // $converter = new OfficeConverter('test-file.docx', 'path-to-outdir');
+//        $domPdfPath = base_path('vendor/dompdf/dompdf');
+//
+//        Settings::setPdfRendererPath($domPdfPath);
+//
+//        Settings::setPdfRendererName('DomPDF');
+//
+//        $Content = IOFactory::load(Storage::disk('public')->path('service_provider_generator/'.$file_name));
+//
+//        $PDFWriter = IOFactory::createWriter($Content, 'PDF');
+//
+//        $file_name=str_replace('docx','pdf',$file_name);
+//
+//        $PDFWriter->save(Storage::disk('public')->path('service_provider_generator/'.$file_name));
+
     }
 
 }

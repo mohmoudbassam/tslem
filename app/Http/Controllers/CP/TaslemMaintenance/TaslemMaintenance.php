@@ -51,7 +51,7 @@ class TaslemMaintenance extends Controller
 
     public function users_list(Request $request)
     {
-        $users = User::query()
+        $users = User::query()->where('verified',1)
             ->when(!$request->box_number && !$request->camp_number, function ($q) {
                 $q->where('id', '-1');
             })

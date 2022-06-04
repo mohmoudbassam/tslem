@@ -17,6 +17,7 @@ class RaftCompanyController extends Controller{
     public function add_center() {
         $data['record'] = BeneficiresCoulumns::query()->where('type', 'raft_center')->first();
         $data['type'] =  'raft_center';
+//        dd($data['record']);
         return view("CP.raft_company.add_center",$data);
     }
     public function save_center(Request $request) {
