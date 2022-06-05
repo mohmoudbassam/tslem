@@ -422,4 +422,23 @@ class UserController extends Controller
             ]);
         }
     }
+
+    public function agree_to_obligation()
+    {
+        try {
+            User::where("id", auth()->id())->update([
+                "agree_to_obligation" => 1
+            ]);
+
+            return response()->json([
+                'message' => 'تمت الموافقة على الإرار بنجاح',
+                'success' => true
+            ]);
+        } catch (\Exception | \Error $exception) {
+            return response()->json([
+                'message' => 'خطا تقني الرجاء المحاولة لاحقا',
+                'success' => false
+            ]);
+        }
+    }
 }

@@ -43,6 +43,12 @@
                 content: "*";
                 color: #fd625e;
             }
+            .modal-backdrop.show {
+                display: initial !important;
+            }
+            .modal-backdrop.fade {
+                display: initial !important;
+            }
         @font-face {
             font-family: JannaLT;
             src: url('{{ url('/assets/fonts/JannaLT-Regular.woff')  }}');

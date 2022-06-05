@@ -105,7 +105,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('orders', [OrdersController::class, 'orders'])->name('.orders');
         Route::middleware(["is-verified"])
             ->group(function () {
-
+                Route::get('obligations/agree', [UserController::class, 'agree_to_obligation'])->name('.obligations_agree');
                 Route::get('edit_order/{order}', [OrdersController::class, 'edit_order'])->name('.edit_order');
                 Route::post('update_order', [OrdersController::class, 'update_order'])->name('.update_order');
                 Route::post('save_order', [OrdersController::class, 'save_order'])->name('.save_order');
