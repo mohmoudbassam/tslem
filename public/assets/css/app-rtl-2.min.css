@@ -626,7 +626,7 @@ body[data-layout=horizontal] .footer {
 }
 
 .main-content {
-  margin-right: 70px;
+  margin-right: 200px;
   overflow: hidden;
 }
 .main-content .content {
@@ -5074,4 +5074,20 @@ body .dropzone .dz-started .dz-message{
 .page-item.active .page-link {
     background-color: #0b2473;
     border-color: #0b2473;
+}
+@media(max-width:991px){
+    .cp-right-menu {
+        transform: translateX(100%);
+        transition: all .2s ease-in-out;
+        box-shadow: 0px 0px 20px #7a7a7a24;
+    }
+    body.sidebar-enable  .cp-right-menu {
+        transform: translateX(0%);
+    }
+
+    .close-menu{
+        position: absolute;
+        left: 10px;
+        top: 20px;
+    }
 }
