@@ -1,6 +1,6 @@
 @extends('CP.sharer_layout')
 @section('title')
-    المواعيد
+    رفع الملفات في المواعيد
 @endsection
 @section('style')
     <link href="{{url('/')}}/assets/dropzone.min.css" id="bootstrap-style" rel="stylesheet" type="text/css"/>
@@ -16,40 +16,41 @@
 @endsection
 @section('content')
 
-    <!-- start page title -->
-    <!-- <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-
-            </div>
-        </div>
-    </div> -->
-
     <div class="card">
 
         <div class="card-header">
-            <h4 class="mb-sm-0 font-size-18">إضافة الملفات</h4>
+            <h4 class="mb-sm-0 font-size-18 text-center">إضافة الملفات إلى موعد المربع والمخيم</h4>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-6 my-3">
-                    <p ><span class="bold">  الشركة : </span>{{$user->company_name}}</p>
+            <div class="border p-5 py-4 pb-3 mb-3">
+                <div class="row">
+                    <div class="col-md-6 my-1">
+                        <p ><span class="bold">المربع : </span>{{ $session->RaftCompanyBox->box }}</p>
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <p ><span class="bold">المخيم : </span>{{ $session->RaftCompanyBox->camp }}</p>
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <p ><span class="bold">شركة الطوافة : </span>{{ $session->RaftCompanyLocation->name }}</p>
+                    </div>
+                    <div class="col-md-6 my-1">
+                        <p ><span class="bold">الموعد :</span>{{$session->start_at}} </p>
+                    </div>
                 </div>
-
-                <div class="col-md-6 my-3 text-lg-end">
-                    <p ><span class="bold">  الموعد :</span>{{$session->start_at}} </p>
-                </div>
-
-
             </div>
             <form action="{{route('taslem_maintenance.save_note')}}" method="post" enctype="multipart/form-">
                 @csrf
                 <div class="row">
                     <div class="col-lg-4">
+                        @if($session->RaftCompanyBox->file_first)
+                        <div class="text-center mb-3">
+                            <a class="btn btn-primary" href="{{ $session->RaftCompanyBox->file_first_fullpath }}" target="_blank">استعرض الملف المرفوع</a>
+                        </div>
+                        @endif
                         <div class="dropzone">
-                            <div id="dropzone_first_file">
+                            <div id="dropzone_file_first">
                                 <div class="fallback">
-                                    <input name="first_file" type="file" id="first_file">
+                                    <input name="file_first" type="file" id="file_first">
                                 </div>
                                 <div class="dz-message needsclick">
                                     <div class="mb-3">
@@ -62,10 +63,15 @@
                         </div>
                     </div>
                     <div class="col-lg-4" >
+                         @if($session->RaftCompanyBox->file_second)
+                        <div class="text-center mb-3">
+                            <a class="btn btn-primary" href="{{ $session->RaftCompanyBox->file_second_fullpath }}" target="_blank">استعرض الملف المرفوع</a>
+                        </div>
+                        @endif
                         <div class="dropzone">
-                            <div id="dropzone_seconde_file">
+                            <div id="dropzone_file_second">
                                 <div class="fallback">
-                                    <input name="dropzone_seconde_file" type="file" id="dropzone_seconde_file">
+                                    <input name="dropzone_file_second" type="file" id="dropzone_file_second">
                                 </div>
                                 <div class="dz-message needsclick">
                                     <div class="mb-3">
@@ -78,11 +84,16 @@
                         </div>
                     </div>
                     <div class="col-lg-4 " >
+                    @if($session->RaftCompanyBox->file_third)
+                        <div class="text-center mb-3">
+                            <a class="btn btn-primary" href="{{ $session->RaftCompanyBox->file_third_fullpath }}" target="_blank">استعرض الملف المرفوع</a>
+                        </div>
+                        @endif
                         <div class="dropzone">
 
-                            <div id="dropzone_third_file">
+                            <div id="dropzone_file_third">
                                 <div class="fallback">
-                                    <input name="dropzone_third_file" type="file" id="dropzone_third_file">
+                                    <input name="dropzone_file_third" type="file" id="dropzone_file_third">
                                 </div>
                                 <div class="dz-message needsclick">
                                     <div class="mb-3">
@@ -98,12 +109,12 @@
                 <div class="form-group mt-4">
                     <label for="note" class="mb-2"><h5>الملاحظات</h5></label>
                         <textarea class="form-control" name="note" id="note"
-                        rows="10">{{$user->service_provider_note}}</textarea>
+                        rows="10">{{ $session->RaftCompanyBox->tasleem_notes }}</textarea>
                         <div class="text-danger" id="note_error"></div>
                 </div>
-                <input type="hidden" id="service_provider_id" name="service_provider_id" value="{{$user->id}}">
+                <input type="hidden" id="session_id" name="session_id" value="{{$session->id}}">
 
-                <div class=" text-end" style="margin-top:1.9rem;">
+                <div class=" text-center mt-5 mb-4">
                     <div>
                         <button type="submit" class="btn btn-lg btn-primary submit_btn px-4">إرسال</button>
                     </div>
@@ -127,8 +138,8 @@
         Dropzone.autoDiscover = false;
         $(document).ready(function () {
 
-                $('#dropzone_first_file').dropzone({
-                    url: "{{route('taslem_maintenance.upload_file',['service_provider_id'=>$user->id,'type'=>1])}}",
+                $('#dropzone_file_first').dropzone({
+                    url: "{{route('taslem_maintenance.upload_file',['type' => 'file_first','session_id'=>$session->id])}}",
                     paramName: "file", // The name that will be used to transfer the file
                     maxFiles: 10,
                     maxFilesize: 10, // MB
@@ -138,15 +149,12 @@
                     },
                     success: function (file, response) {
 
-                        uploadAttachmentsArArray.push(response.success); // uploaded image name
-                        console.log('upload_attachments_ar_arr', uploadAttachmentsArArray);
-                        $('#upload_attachments_ar_arr').val(JSON.stringify(uploadAttachmentsArArray));
 
                     },
 
                 });
-                $('#dropzone_seconde_file').dropzone({
-                    url: "{{route('taslem_maintenance.upload_file',['service_provider_id'=>$user->id,'type'=>2])}}",
+                $('#dropzone_file_second').dropzone({
+                    url: "{{route('taslem_maintenance.upload_file',['type' => 'file_second','session_id'=>$session->id])}}",
                     paramName: "file", // The name that will be used to transfer the file
                     maxFiles: 10,
                     maxFilesize: 10, // MB
@@ -155,66 +163,28 @@
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                     },
                     success: function (file, response) {
-
-                        uploadAttachmentsArArray.push(response.success); // uploaded image name
-                        console.log('upload_attachments_ar_arr', uploadAttachmentsArArray);
-                        $('#upload_attachments_ar_arr').val(JSON.stringify(uploadAttachmentsArArray));
-
-                    },
-
-                }); $('#dropzone_third_file').dropzone({
-                    url: "{{route('taslem_maintenance.upload_file',['service_provider_id'=>$user->id,'type'=>3])}}",
-                    paramName: "file", // The name that will be used to transfer the file
-                    maxFiles: 10,
-                    maxFilesize: 10, // MB
-                    addRemoveLinks: true,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{csrf_token()}}'
-                    },
-                    success: function (file, response) {
-
-                        uploadAttachmentsArArray.push(response.success); // uploaded image name
-                        console.log('upload_attachments_ar_arr', uploadAttachmentsArArray);
-                        $('#upload_attachments_ar_arr').val(JSON.stringify(uploadAttachmentsArArray));
 
                     },
 
                 });
+                $('#dropzone_file_third').dropzone({
+                    url: "{{route('taslem_maintenance.upload_file',['type' => 'file_third','session_id'=>$session->id])}}",
+                    paramName: "file", // The name that will be used to transfer the file
+                    maxFiles: 10,
+                    maxFilesize: 10, // MB
+                    addRemoveLinks: true,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+                    },
+                    success: function (file, response) {
+
+                    },
+
+                });
+
             }
         )
-        $.fn.dataTable.ext.errMode = 'none';
-        $(function () {
-            $('#items_table').DataTable({
-                "dom": 'tpi',
-                "searching": false,
-                "processing": true,
-                'stateSave': true,
-                "serverSide": true,
-                ajax: {
-                    url: '{{route('taslem_maintenance.sessions.users_list')}}',
-                    type: 'GET',
-                    "data": function (d) {
-                        d.camp_number = $('#camp_number').val();
-                        d.box_number = $('#box_number').val();
-                    }
-                },
-                language: {
-                    "url": "{{url('/')}}/assets/datatables/Arabic.json"
-                },
-                columns: [
-                    {className: 'text-center', data: 'company_name', name: 'company_name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
-                    {className: 'text-center', data: 'company_owner_name', name: 'company_owner_name'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
-                ],
 
-
-            });
-
-        });
-
-
-        flatpickr(".datepicker", {enableTime: true, minDate: '{{now('Asia/Riyadh')}}'});
     </script>
 
 @endsection
