@@ -106,7 +106,7 @@
 
             </div>
         </div>
-        <div class="d-flex flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-3 mx-4 mt-3 mb-5">
             <button type="button" class="btn btn-lg btn-primary  px-4 submit_btn" >إنشاء</button>
         </div>
 
