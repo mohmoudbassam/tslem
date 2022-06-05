@@ -248,6 +248,7 @@ class OrdersController extends Controller
           $file_type=$this->fileType($fileType);
 
         $file_name = uniqid(auth()->user()->id . '_') . '.docx';
+        $this->getWordToPDF($file_name);
         $templateProcessor = new TemplateProcessor(Storage::disk('public')->path($file_type));
 
         $templateProcessor->setValues([
@@ -257,7 +258,7 @@ class OrdersController extends Controller
             'date'=>Hijri::Date('Y/m/d'),
             'time'=>now()->format('H:i')
         ]);
-
+        $this->getWordToPDF($file_name);
         $templateProcessor->saveAs(Storage::disk('public')->path('service_provider_generator/' . $file_name));
 
         return Response::download(Storage::disk('public')->path('service_provider_generator/'. $file_name),$file_type);
@@ -277,12 +278,7 @@ class OrdersController extends Controller
     public static function getWordToPDF($file_name)
     {
 
-        $converter = new OfficeConverter(Storage::disk('public')->path('service_provider_generator/'.$file_name));
-        $file_name=str_replace('docx','pdf',$file_name);
-
-        $converter->convertTo(Storage::disk('public')->path('service_provider_generator/'.$file_name)); //generates pdf file in same directory as test-file.docx
-      //  $converter->convertTo('output-file.html'); //generates html file in same directory as test-file.docx
-
+        $unoconv = exec('/usr/bin/unoconv -f pdf ' );
 //to specify output directory, specify it as the second argument to the constructor
        // $converter = new OfficeConverter('test-file.docx', 'path-to-outdir');
 //        $domPdfPath = base_path('vendor/dompdf/dompdf');

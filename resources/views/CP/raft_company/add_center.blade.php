@@ -72,25 +72,27 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="box_number">رقم المربع<span class="text-danger required-mark">*</span></label>
-                                <input type="text"  value="{{old('box_number')}}"
-                                       class="form-control" id="box_number"
-                                       name="box_number"
-                                       placeholder="رقم المربع">
-                                <div class="col-12 text-danger" id="box_number_error"></div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="box_number">رقم المربع<span
+                                class="text-danger required-mark">*</span></label>
+                        <select class="form-control" id="box_number" name="box_number">
+                            @foreach($boxes as $box)
+                                <option value="{{ $box['box'] }}">{{$box['box']}}</option>
+                            @endforeach
+                        </select>
+                        <div class="col-12 text-danger" id="box_number_error"></div>
+                    </div>
+                </div>
                 <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label" for="camp_number">رقم المخيم<span class="text-danger required-mark">*</span></label>
-                                <input type="text"  value="{{old('camp_number')}}"
-                                       class="form-control" id="camp_number"
-                                       name="camp_number"
-                                       placeholder="رقم المخيم">
-                                <div class="col-12 text-danger" id="camp_number_error"></div>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="camp_number">رقم المخيم<span
+                                class="text-danger required-mark">*</span></label>
+                        <select class="form-control" id="camp_number" name="camp_number">
+                            <option value=""></option>
+                        </select>
+                        <div class="col-12 text-danger" id="camp_number_error"></div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="mb-3">
                         <label class="form-label" for="phone">رقم الجوال<span
@@ -235,6 +237,46 @@ $('#add_edit_form').validate({
             return false;
         $('#add_edit_form').submit()
 
+    });
+
+    $('#box_number').on('change', function(e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var url = '{{route('raft_company.get_camp_by_box',':box')}}';
+
+        url = url.replace(':box', $('#box_number').val());
+        console.log(url)
+
+        $.ajax({
+            url : url,
+            data: {},
+            type: "GET",
+            processData: false,
+            contentType: false,
+            beforeSend(){
+                KTApp.block('#page_modal', {
+                    overlayColor: '#000000',
+                    type: 'v2',
+                    state: 'success',
+                    message: 'مكتب تصميم'
+                });
+            },
+            success:function(data) {
+                if (data.success) {
+                    $("#camp_number").find('option')
+                        .remove();
+                    $('#camp_number').html(data.page);
+                }
+            },
+            error:function(data) {
+                console.log(data);
+                KTApp.unblock('#page_modal');
+                KTApp.unblockPage();
+            },
+        });
     });
 </script>
 

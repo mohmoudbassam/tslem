@@ -30,11 +30,11 @@
     <div class="card-header">
             <div class="row">
                 <div class="col-lg-3 col-xxl-2">
-                    <label for="camp_number">رقم المخيم</label>
+                    <label for="camp_number">رقم المربع   </label>
                     <input type="text" class="form-control" name="camp_number" id="camp_number">
                 </div>
                 <div class="col-lg-3 col-xxl-2">
-                    <label for="box_number">رقم المربع</label>
+                    <label for="box_number">رقم المخيم</label>
                     <input type="text" class="form-control" name="box_number" id="box_number">
                 </div>
                 <div class="col-auto ms-auto" style="margin-top:1.9rem;">
@@ -84,21 +84,30 @@
                 </div>
             </form>
         </div>
-        <div class="card-body  border-top">
+        <div class="card-body  border-top d-none" id="dateTimeView">
+{{--            <div class="col-lg-8 fv-row">--}}
+{{--                <div class="border rounded mt-5">--}}
+{{--                    <ul class="list-unstyled row m-0 session_list">--}}
 
-        <div class="d-flex flex-wrap gap-3">
-            <button type="button" class="btn btn-lg btn-primary submit_btn px-4">إنشاء</button>
-        </div>
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--                <div id="dateTimeHiddenInput">--}}
+
+{{--                </div>--}}
+
+{{--            </div>--}}
+
 
 
 
 
             <div class="row">
-{{--                <form id="filters" method="post" action="{{ route('taslem_maintenance.sessions.users_list') }}">--}}
 
-{{--                </form>--}}
 
             </div>
+        </div>
+        <div class="d-flex flex-wrap gap-3">
+            <button type="button" class="btn btn-lg btn-primary  px-4 submit_btn" >إنشاء</button>
         </div>
 
     </div>
@@ -111,6 +120,44 @@
 
 @section('scripts')
     <script>
+        $('.session_list').append('<li class="border-bottom py-3 col-6" id=""><i class="fa fa-jedi-order fa-fw"></i>    المركز :         &nbsp;&nbsp; &nbsp;سيبيسبسيبسيبس<i class="fa fa-clock fa-fw"></i> <i class="fa fa-calendar fa-fw"></i> شسي </li>');
+         $('#add_session').on('click', function(){
+             if($('.user_id:checkbox:checked').length){
+                 $('.user_id:checkbox:checked').each(function(i){
+
+                 });
+                 $.ajaxSetup({
+                     headers: {
+                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                     }
+                 });
+                 $.ajax({
+                     url : '{{route('read_message')}}',
+                     data: {},
+                     type: "POST",
+                     processData: false,
+                     contentType: false,
+                     beforeSend(){
+                         KTApp.block('#page_modal', {
+                             overlayColor: '#000000',
+                             type: 'v2',
+                             state: 'success',
+                             message: 'مكتب تصميم'
+                         });
+                     },
+                     success:function(data) {
+                         $('#notifcation_count').text('')
+                         $('#unreade_meassage').text('')
+                         KTApp.unblockPage();
+                     },
+                     error:function(data) {
+                         console.log(data);
+                         KTApp.unblock('#page_modal');
+                         KTApp.unblockPage();
+                     },
+                 });
+             }
+         })
 
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
