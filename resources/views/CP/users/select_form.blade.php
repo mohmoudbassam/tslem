@@ -66,7 +66,7 @@
                                         <option value="Sharer">جهة مشاركة</option>
                                         <option value="consulting_office">مكتب استشاري</option>
                                         <option value="contractor">مقاول</option>
-                                        <option value="taslem_maintenance">صيانة تسليم</option>
+                                        <option value="taslem_maintenance">تسليم صيانة</option>
                                         <option value="raft_company">شركة طوافة</option>
                                         <option value="Delivery">تسليم</option>
                                         <option value="Kdana">كدانة</option>
