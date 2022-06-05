@@ -281,6 +281,7 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::post('/save', [TaslemMaintenance::class, 'save_session'])->name('.save');
         Route::get('/toDaySessions', [TaslemMaintenance::class, 'toDaySessions'])->name('.toDaySessions');
         Route::get('/to_day_list', [TaslemMaintenance::class, 'to_day_list'])->name('.to_day_list');
+        Route::get('/getTable/{user_ids}', [TaslemMaintenance::class, 'getTable'])->name('.getTable');
     });
     Route::get('/add_files/{service_provider_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
     Route::post('/upload_file/{service_provider_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');

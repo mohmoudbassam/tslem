@@ -52,11 +52,10 @@ class TaslemMaintenance extends Controller
     public function users_list(Request $request)
     {
 
-        if(is_null($request->box_number)||is_null($request->camp_number)){
+        if (is_null($request->box_number) || is_null($request->camp_number)) {
             return DataTables::of([]);
         }
-        $users = User::query()->where('verified',1)
-
+        $users = User::query()->where('verified', 1)
             ->when($request->box_number, function ($q) use ($request) {
 
                 $q->where("box_number", 'like', '%' . $request->box_number . '%');
@@ -69,7 +68,7 @@ class TaslemMaintenance extends Controller
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
                 $element = '<div class="btn-group me-1 mt-2">
-                                <input type="radio" class="form-radio-primary user_id" name="user_id[]" id="user_id_'.$user->id.'" value="' . $user->id . '">
+                                <input type="checkbox" class="form-radio-primary user_id" name="user_id[]" id="user_id_' . $user->id . '" value="' . $user->id . '">
                             </div>';
 
                 return $element;
@@ -85,19 +84,17 @@ class TaslemMaintenance extends Controller
 
     public function save_session(Request $request)
     {
-        $has_session = Session::query()->where('user_id', $request->user_id)->first();
 
-        if ($has_session) {
-            return response()->json([
-                'message' => 'هذا المستخدم لديه موعد مسبق',
-                'success' => false
+        $user_sessions=$request->except('user_id','_token','user');
+
+        foreach($user_sessions as $user_id=>$session){
+            $session = Session::query()->create([
+                'user_id' => $user_id,
+                'support_id' => auth()->user()->id,
+                'start_at' => Carbon::parse($session)->format("Y-m-d h:i"),
             ]);
         }
-        $session = Session::query()->create([
-            'user_id' => $request->user_id,
-            'support_id' => auth()->user()->id,
-            'start_at' => Carbon::parse($request->start_at)->format("Y-m-d h:i"),
-        ]);
+
         $session->service_provider->service_provider_status = 1;
         $session->service_provider->save();
         $session->service_provider->notify(new OrderNotification('يوجد لديك موعد مقابله', auth()->user()->id));
@@ -185,6 +182,19 @@ class TaslemMaintenance extends Controller
     public function toDaySessions(Request $request)
     {
         return view('CP.taslem_maintenance_layout.toDaySessions');
+    }
+
+    public function getTable($uesr_ids)
+    {
+        $ids = explode(',', $uesr_ids,);
+        $service_providers = User::query()->whereIn('id', $ids)->get();
+
+        return response()->json([
+            'success' =>true,
+           'page'=> view('CP.taslem_maintenance_layout.service_providers_table_sessions',[
+                'users'=>$service_providers
+            ])->render()
+        ]) ;
     }
 }
 //////////////service_provider_status => 0 havent appointment
