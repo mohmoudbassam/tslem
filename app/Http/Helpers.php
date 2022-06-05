@@ -164,7 +164,9 @@ function get_user_column_file($type)
         'center_sketch',
         'gis_sketch',
         'dwg_sketch',
-        'previous_works' // For Previous Works File Of Contractor
+        'previous_works',
+        'service_provider_obligation',
+        'confidentiality_obligation'
     )->where('type', $type)->first();
 
     if (is_null($benef)) {
@@ -199,7 +201,9 @@ function file_name_by_column($col)
         'hajj_service_license' => 'ترخيص خدمة الحج',
         'personalization_record' => 'محضر التخصيص',
         'dwg_sketch' => 'كروكي المركز (DWG)',
-        'previous_works' => 'الأعمال السابقة'
+        'previous_works' => 'الأعمال السابقة',
+        'service_provider_obligation' => "اقرار مزودي الخدمة",
+        'confidentiality_obligation' => "اتفاقية حفظ سويةالمعلومات"
     ][$col];
 }
 
