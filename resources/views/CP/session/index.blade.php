@@ -49,9 +49,6 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            اسم شركة الطوافة
-                        </th>
-                        <th>
                             رقم المربع
                         </th>
                         <th>
@@ -98,7 +95,6 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'raft_company_location.name', name: 'raft_company_location.name'},
                     {className: 'text-center', data: 'raft_company_box.box', name: 'raft_company_box.box'},
                     {className: 'text-center', data: 'raft_company_box.camp', name: 'raft_company_box.camp'},
                     {className: 'text-center', data: 'start_at', name: 'start_at'},

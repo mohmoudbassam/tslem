@@ -15,7 +15,7 @@ class SessionController extends Controller
 
     public function list(Request $request)
     {
-        $query = \App\Models\Session::where('raft_company_location_id', auth()->user()->raft_company_type)
+        $query = \App\Models\Session::ByLocation(auth()->user()->raft_company_type)
                                     ->with('RaftCompanyLocation', 'RaftCompanyBox')
                                     ->published()
                                     ->when(request('raft_company_box_id'), function ($q) {
