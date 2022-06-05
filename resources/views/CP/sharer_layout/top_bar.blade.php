@@ -3,7 +3,7 @@
 {{--        <div class="d-flex">--}}
 {{--            <!-- LOGO -->--}}
 {{--            <div class="navbar-brand-box">--}}
-{{--                <a href="#" class="logo logo-dark">--}}
+{{--                <a href="{{ url('/'.auth()->user()->type) }}" class="logo logo-dark">--}}
 {{--                                <span class="logo-sm">--}}
 {{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24">--}}
 {{--                                </span>--}}
@@ -12,7 +12,7 @@
 {{--                                </span>--}}
 {{--                </a>--}}
 
-{{--                <a href="#" class="logo logo-light">--}}
+{{--                <a href="{{ url('/'.auth()->user()->type) }}" class="logo logo-light">--}}
 {{--                                <span class="logo-sm">--}}
 {{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24">--}}
 {{--                                </span>--}}
@@ -29,7 +29,7 @@
 
 {{--        </div>--}}
 
-        <a href="#" class="logo ps-4">
+        <a href="{{ url('/'.auth()->user()->type) }}" class="logo ps-4">
             <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="30">
         </a>
 
