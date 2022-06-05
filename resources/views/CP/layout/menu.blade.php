@@ -1,13 +1,13 @@
-<div class="vertical-menu">
-
+<div class="cp-right-menu">
+<a href="#" class="cp-right-menu-logo">
+    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="38">
+                </a>
     <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" data-key="t-menu">القوائم</li>
-
                 @if(auth()->user()->isAdmin())
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
