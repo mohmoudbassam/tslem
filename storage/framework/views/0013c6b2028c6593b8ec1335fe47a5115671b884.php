@@ -16,6 +16,7 @@
 
     <!-- preloader css -->
     <link rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/preloader.min.css" type="text/css" />
+    <link rel="stylesheet" href="<?php echo e(url('/')); ?>/assets/css/custom-panel.css?v=<?php echo e(config('app.asset_ver')); ?>" type="text/css" />
 
     <!-- Bootstrap Css -->
     <link href="<?php echo e(url('/')); ?>/assets/css/bootstrap-rtl.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -42,6 +43,12 @@
                 right: 6px;
                 content: "*";
                 color: #fd625e;
+            }
+            .modal-backdrop.show {
+                display: initial !important;
+            }
+            .modal-backdrop.fade {
+                display: initial !important;
             }
         @font-face {
             font-family: JannaLT;

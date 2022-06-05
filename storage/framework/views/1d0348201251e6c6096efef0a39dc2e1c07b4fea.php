@@ -140,23 +140,42 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="view-designer-types-modal-title">تخصصات المكتب الهندسي</h5>
+                    <h5 class="modal-title" id="view-designer-types-modal-title">تخصصات المستخدم</h5>
                 </div>
                 <div class="modal-body">
-                    <div class="row" id="view-designer-types-row">
-                        <div class="col-12 d-flex flex-row justify-content-between">
-                            <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center" data-type="designer" style="height: 15px; width: 15px;"></div>
-                            <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">اشراف</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row" id="view-designer-types-row">
+                                <div class="col-12 d-flex flex-row justify-content-between">
+                                    <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="designer" style="height: 15px; width: 15px;"></div>
+                                    <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">اشراف</p>
+                                </div>
+                                <div class="col-12 d-flex flex-row justify-content-between">
+                                    <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="consulting" style="height: 15px; width: 15px;"></div>
+                                    <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">مكتب تصميم</p>
+                                </div>
+                                <div class="col-12 d-flex flex-row justify-content-between">
+                                    <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="fire" style="height: 15px; width: 15px;"></div>
+                                    <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">الحماية والوقاية من الحريق</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 d-flex flex-row justify-content-between">
-                            <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center" data-type="consulting" style="height: 15px; width: 15px;"></div>
-                            <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">مكتب تصميم</p>
-                        </div>
-                        <div class="col-12 d-flex flex-row justify-content-between">
-                            <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center" data-type="fire" style="height: 15px; width: 15px;"></div>
-                            <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">الحماية والوقاية من الحريق</p>
+
+
+                        <div class="col-6">
+                            <div class="row" id="view-designer-types-row">
+                                <div class="col-12 d-flex flex-row justify-content-between">
+                                    <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="general" style="height: 15px; width: 15px;"></div>
+                                    <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">عام</p>
+                                </div>
+                                <div class="col-12 d-flex flex-row justify-content-between">
+                                    <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="protections" style="height: 15px; width: 15px;"></div>
+                                    <p class="d-flex flex-row justify-content-start align-items-center align-content-center" style="width: 95%;">الوقاية والحماية من الحرائق</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="close-view-designer-types-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
@@ -285,7 +304,7 @@
             }
 
             function prepareUserDesignTypesModal(types) {
-                let designs = ["consulting", "designer", "fire"];
+                let designs = ["consulting", "designer", "fire", "general", "protections"];
                 types.map((type) => {
                     viewDesignerTypesModal.find(`div[data-type='${type['type']}']`).addClass("bg-success")
                 });
@@ -311,7 +330,7 @@
             });
 
             viewDesignerTypesModal.on('hidden.bs.modal', function (e) {
-                let designs = ["consulting", "designer", "fire"];
+                let designs = ["consulting", "designer", "fire", "general", "protections"];
                 designs.map((design) => {
                     viewDesignerTypesModal.find(`div[data-type='${design}']`).removeClass("bg-danger").removeClass("bg-success");
                 });

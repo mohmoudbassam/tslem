@@ -2,22 +2,6 @@
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
-            <div class="navbar-brand-box px-0 text-center">
-                <!-- <a href="#" class="logo logo-dark">
-
-                                <span class="logo-txt ">البوابة الرقمية تسليم</span>
-
-                </a> -->
-
-                <a href="#" class="logo">
-                                <span class="logo-sm">
-                                    <img src="<?php echo e(asset('assets/images/logo-dark.png')); ?>" alt="" height="38">
-                                </span>
-                    <!-- <span class="logo-lg">
-                                    <img src="<?php echo e(asset('assets/images/logo-sm.svg')); ?>" alt="" height="24"> <span class="logo-txt">البوابة الرقمية تسليم</span>
-                                </span> -->
-                </a>
-            </div>
 
             <!-- <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>

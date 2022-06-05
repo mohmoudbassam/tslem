@@ -21,23 +21,26 @@
         }
     </style>
     <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
+    <div class="row align-items-center">
+        <div class="col-lg">
+            @if($isToday)
+            <h2>مواعيد اليوم</h2>
+            @else
+            <h2>جميع المواعيد</h2>
+            @endif
+        </div>
+        <div class="col-lg-auto mt-3 mt-lg-0">
 
 
             <div class="page-title-box d-sm-flex align-items-center justify-content-end">
                 <h4 class="mb-sm-0 font-size-18 me-2"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.add_form')}}"><i class="fa fa-plus pe-2"></i>إضافة موعد</a></h4>
+                @if(!$isToday)
                 <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.sessions.toDaySessions')}}"><i class="fa fa-clock pe-2"></i>مواعيد اليوم</a></h4>
-
+                @else
+                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('taslem_maintenance.index')}}"><i class="fa fa-clock pe-2"></i>جميع المواعيد</a></h4>
+                @endif
 
             <div class="page-title-box d-sm-flex align-items-center justify-content-end">
-{{--                <div class="page-title-right">--}}
-{{--                    <ol class="breadcrumb m-0">--}}
-{{--                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>--}}
-{{--                        <li class="breadcrumb-item active">الرئيسية</li>--}}
-{{--                    </ol>--}}
-{{--                </div>--}}
-
             </div>
         </div>
     </div>
@@ -47,7 +50,7 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 " id="form_data">
-
+                    @if(!$isToday)
                         <div class="col-lg-3 col-xxl-2">
                             <label for="">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
@@ -56,6 +59,7 @@
                             <label for="">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
+                        @endif
 
                         <div class="col-sm-auto ms-auto" style="margin-top:1.9rem;">
                             <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث</button>
@@ -79,16 +83,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            الاسم
-                        </th>
-                        <th>
-                            البريد الالكتروني
-                        </th>
-                        <th>
-                            اسم المفوض
-                        </th>
-                        <th>
-                            الجوال
+                            اسم شركة الطوافة
                         </th>
                         <th>
                             رقم المربع
@@ -97,13 +92,11 @@
                            رقم المخيم
                         </th>
                         <th>
-                            تاريخ الموعد
-                        </th>  <th>
-                            خيارات
+                            وقت الموعد
                         </th>
-{{--                        <th>--}}
-{{--                            الخيارات--}}
-{{--                        </th>--}}
+                        <th>
+                            
+                        </th>
 
 
                         </thead>
@@ -137,7 +130,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('taslem_maintenance.sessions.list')}}',
+                    url: '{{route('taslem_maintenance.sessions.list',["list_type" => (($isToday) ? 'today' : 'general')])}}',
                     type: 'GET',
                     "data": function (d) {
                         d.from_date = $('#from_date').val();
@@ -148,15 +141,11 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'service_provider.company_name', name: 'service_provider.company_name',orderable : false},
-                    {className: 'text-center', data: 'service_provider.email', name: 'service_provider.email',orderable : false},
-                    {className: 'text-center', data: 'service_provider.company_owner_name', name: 'service_provider.company_owner_name',orderable : false},
-                    {className: 'text-center', data: 'service_provider.phone', name: 'service_provider.phone',orderable : false},
-                    {className: 'text-center', data: 'service_provider.box_number', name: 'service_provider.box_number',orderable : false},
-                    {className: 'text-center', data: 'service_provider.camp_number', name: 'service_provider.camp_number',orderable : false},
+                    {className: 'text-right', data: 'raft_company_location.name', name: 'raft_company_location.name',orderable : false},
+                    {className: 'text-center', data: 'raft_company_box.box', name: 'raft_company_box.box',orderable : false},
+                    {className: 'text-center', data: 'raft_company_box.camp', name: 'raft_company_box.camp',orderable : false},
                     {className: 'text-center', data: 'start_at', name: 'start_at'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
-                    // {className: 'text-center', data: 'actions', name: 'actions'},
+                    {className: 'text-left', data: 'actions', name: 'actions'}
 
                 ],
 
@@ -172,85 +161,6 @@
             $('#items_table').DataTable().ajax.reload(null, false);
         });
         flatpickr(".datepicker");
-
-        {{--function accept(id) {--}}
-
-        {{--    $.ajaxSetup({--}}
-        {{--        headers: {--}}
-        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--    $.ajax({--}}
-        {{--        url: '{{route('design_office.accept')}}',--}}
-        {{--        data: {--}}
-        {{--            id: id--}}
-        {{--        },--}}
-        {{--        type: "POST",--}}
-
-        {{--        beforeSend() {--}}
-        {{--            KTApp.block('#page_modal', {--}}
-        {{--                overlayColor: '#000000',--}}
-        {{--                type: 'v2',--}}
-        {{--                state: 'success',--}}
-        {{--                message: 'مكتب تصميم'--}}
-        {{--            });--}}
-        {{--        },--}}
-        {{--        success: function (data) {--}}
-        {{--            if(data.success){--}}
-        {{--                showAlertMessage('success', data.message);--}}
-        {{--                $('#items_table').DataTable().ajax.reload(null, false);--}}
-        {{--            }else {--}}
-        {{--                showAlertMessage('error', 'حدث خطأ في النظام');--}}
-        {{--            }--}}
-
-        {{--            KTApp.unblockPage();--}}
-        {{--        },--}}
-        {{--        error: function (data) {--}}
-        {{--            showAlertMessage('error', 'حدث خطأ في النظام');--}}
-        {{--            KTApp.unblockPage();--}}
-        {{--        },--}}
-        {{--    });--}}
-        {{--}--}}
-
-        {{--function reject(id) {--}}
-
-        {{--    $.ajaxSetup({--}}
-        {{--        headers: {--}}
-        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('design_office.reject') }}',--}}
-        {{--        data: {--}}
-        {{--            id: id--}}
-        {{--        },--}}
-        {{--        type: "POST",--}}
-
-        {{--        beforeSend() {--}}
-        {{--            KTApp.block('#page_modal', {--}}
-        {{--                overlayColor: '#000000',--}}
-        {{--                type: 'v2',--}}
-        {{--                state: 'success',--}}
-        {{--                message: 'مكتب تصميم'--}}
-        {{--            });--}}
-        {{--        },--}}
-        {{--        success: function (data) {--}}
-        {{--            if(data.success){--}}
-        {{--                showAlertMessage('success', data.message);--}}
-        {{--                $('#items_table').DataTable().ajax.reload(null, false);--}}
-        {{--            }else {--}}
-        {{--                showAlertMessage('error', 'حدث خطأ في النظام');--}}
-        {{--            }--}}
-
-        {{--            KTApp.unblockPage();--}}
-        {{--        },--}}
-        {{--        error: function (data) {--}}
-        {{--            showAlertMessage('error', 'حدث خطأ في النظام');--}}
-        {{--            KTApp.unblockPage();--}}
-        {{--        },--}}
-        {{--    });--}}
-        {{--}--}}
-
 
 
     </script>

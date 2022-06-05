@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{route('services_providers.orders')}}">الطلبات</a></li>
+                            <li class="breadcrumb-item"><a href="">الطلبات</a></li>
                             <li class="breadcrumb-item active">الرئيسية</li>
                         </ol>
                     </div>
@@ -94,7 +94,7 @@
                                     @foreach($files as $file)
                                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
                                              style="cursor:pointer; height: 220px;">
-                                            <a href="{{route('services_providers.docx_file',['fileType'=>$file['url_type'])}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                            <a href="{{route('raft_company.docx_file',['fileType'=>$file['url_type'],'session'=>$session->id])}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
                                                 <div class="file-view-icon"
                                                      style="background-image: url('{{asset("assets/images/default.png")}}');"></div>
                                                 <div

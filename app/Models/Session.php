@@ -11,7 +11,19 @@ class Session extends Model
 
     protected $guarded = [];
 
-    public function service_provider() {
-        return $this->belongsTo(User::class,'user_id');
+    public function RaftCompanyLocation() {
+        return $this->belongsTo('App\Models\RaftCompanyLocation');
+    }
+
+    public function RaftCompanyBox() {
+        return $this->belongsTo(RaftCompanyBox::class,'raft_company_box_id','id');
+    }
+
+    public function scopePublished($query){
+        return $query->where('is_published','1');
+    }
+
+    public function scopeNotPublished($query){
+        return $query->where('is_published','0');
     }
 }

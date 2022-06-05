@@ -3,32 +3,46 @@
 namespace App\Http\Controllers\CP\TaslemMaintenance;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContractorReportFile;
 use App\Models\Order;
 use App\Models\OrderSharer;
 use App\Models\OrderSharerReject;
 use App\Models\ServiceProviderFiles;
 use App\Models\Session;
 use App\Models\User;
-use App\Notifications\OrderNotification;
+use App\Notifications\TasleemMaintenanceNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-use App\Models\OrderService;
-use App\Models\OrderSpecilatiesFiles;
+use App\Models\RaftCompanyBox;
 
 class TaslemMaintenance extends Controller
 {
     public function index()
     {
-        return view('CP.taslem_maintenance_layout.index');
+        if(request()->route()->getName() == 'taslem_maintenance.sessions.toDaySessions'){
+            $data['isToday'] = true;
+        }else {
+            $data['isToday'] = false;
+        }
+        return view('CP.taslem_maintenance_layout.index',$data);
     }
 
-    public function list(Request $request)
+    public function list($list_type,Request $request)
     {
 
-        $sessions = Session::query()->where('support_id', auth()->user()->id)->with('service_provider');
+        $sessions = Session::query()->published()->where('support_id', auth()->user()->id)->with('RaftCompanyLocation','RaftCompanyBox');
+
+        if($list_type == 'today'){
+            $sessions = $sessions->whereDate('start_at', '=', now()->format('Y-m-d'));
+        }
+
+        if($request->raft_company_location_id){
+            $sessions = $sessions->where('raft_company_location_id', $request->raft_company_location_id);
+        }
 
         $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
             $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
@@ -36,168 +50,156 @@ class TaslemMaintenance extends Controller
 
 
         return DataTables::of($sessions)
-            ->addColumn('actions', function ($sessions) {
-                return '<div class="btn-group me-1 mt-2">
+            ->addColumn('actions', function ($session) {
+                return '<div class="d-flex justify-content-end"><div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                                <a class="dropdown-item" href="' . route('taslem_maintenance.add_files', ['service_provider_id' => $sessions->service_provider->id]) . '">إضافة الملفات</a>
+                                                <a class="dropdown-item" href="' . route('taslem_maintenance.add_files', ['session_id' => $session->id]) . '">إضافة الملفات</a>
                                             </div>
-                                        </div>';
+                                        </div></div>';
             })->rawColumns(['actions'])
             ->make();
     }
 
-    public function users_list(Request $request)
+    public function sessions_list(Request $request)
     {
 
-        if (is_null($request->box_number) || is_null($request->camp_number)) {
-            return DataTables::of([]);
-        }
-        $users = User::query()->where('verified', 1)
-            ->when($request->box_number, function ($q) use ($request) {
-
-                $q->where("box_number", 'like', '%' . $request->box_number . '%');
-            })
-            ->when($request->camp_number, function ($q) use ($request) {
-                $q->where("camp_number", 'like', '%' . $request->camp_number . '%');
-            });
+        $Sessions = Session::where('support_id',auth()->user()->id)->notPublished()->with('RaftCompanyLocation','RaftCompanyBox');
 
 
-        return DataTables::of($users)
-            ->addColumn('actions', function ($user) {
-                $element = '<div class="btn-group me-1 mt-2">
-                                <input type="checkbox" class="form-radio-primary user_id" name="user_id[]" id="user_id_' . $user->id . '" value="' . $user->id . '">
-                            </div>';
-
+        return DataTables::of($Sessions)
+            ->addColumn('actions', function ($session) {
+                $element = '<div class="justify-content-end d-flex"><button type="button" class="btn btn-info btn-sm" onclick="delete_session(' . $session->id . ' )" href="javascript:;"><i class="fa fa-trash mx-1"></i>حذف</button></div>';
                 return $element;
-            })
-            ->rawColumns(['actions'])
+
+            })->rawColumns(['actions'])
             ->make();
     }
 
     public function add_session_form(Request $request)
     {
-        return view('CP.taslem_maintenance_layout.add_session_form');
+        $data['boxes'] = \App\Models\RaftCompanyBox::query()->select('box')->groupBy('box')->get()->toArray();
+        return view('CP.taslem_maintenance_layout.add_session_form',$data);
+    }
+
+    public function publish_session(Request $request)
+    {
+        $Sessions = Session::where('support_id', auth()->user()->id)->notPublished()->with('RaftCompanyLocation','RaftCompanyBox')->get();
+
+        $raftUsers = [];
+
+        foreach($Sessions as $Session){
+            if(!isset($raftUsers[$Session->raft_company_location_id])){
+                $raftUsers[$Session->raft_company_location_id] = 0;
+            }
+            $raftUsers[$Session->raft_company_location_id]++;
+
+
+        }
+
+        $Users = User::where('type','raft_company')->whereIn('raft_company_type',array_keys($raftUsers))->get();
+
+        foreach($Users as $User){
+            $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth()->user()->id));
+        }
+
+        Session::where('support_id', auth()->user()->id)->notPublished()->update(['is_published' => '1']);
+
+        return response()->json([
+            'message' => 'تمت عمليه النشر  بنجاح',
+            'success' => true
+        ]);
     }
 
     public function save_session(Request $request)
     {
 
-        $user_sessions=$request->except('user_id','_token','user');
 
-        foreach($user_sessions as $user_id=>$session){
-            $session = Session::query()->create([
-                'user_id' => $user_id,
-                'support_id' => auth()->user()->id,
-                'start_at' => Carbon::parse($session)->format("Y-m-d h:i"),
+        $getRaftCompanyBox = RaftCompanyBox::where([['camp',$request->camp_number],['box',$request->box_number]])->first();
+        if(!$getRaftCompanyBox){
+            return response()->json([
+                'message' => 'لم يتم العثور على رقم المربع والمخيم في قاعدة البيانات',
+                'success' => false
             ]);
         }
 
-        $session->service_provider->service_provider_status = 1;
-        $session->service_provider->save();
-        $session->service_provider->notify(new OrderNotification('يوجد لديك موعد مقابله', auth()->user()->id));
+        $Session = Session::where([['support_id',auth()->user()->id],['raft_company_box_id',$getRaftCompanyBox->id]])->notPublished()->first();
+        if(!$Session){
+            $Session = new Session;
+            $Session->raft_company_box_id = $getRaftCompanyBox->id;
+            $Session->raft_company_location_id = $getRaftCompanyBox->raft_company_location_id;
+            $Session->support_id = auth()->user()->id;
+        }
+        $Session->start_at = Carbon::parse($request->start_at)->format("Y-m-d h:i");
+        $Session->save();
+
         return response()->json([
             'message' => 'تمت عمليه الاضافة  بنجاح',
             'success' => true
         ]);
     }
 
-    public function add_files($service_provider_id)
+    public function delete_session(Request $request)
     {
-        $user = User::query()->findOrFail($service_provider_id);
 
-        $session = Session::query()->where('user_id', $service_provider_id)->first();
+        $Session = Session::where([['support_id',auth()->user()->id],['id',$request->session_id]])->delete();
 
-        return view('CP.taslem_maintenance_layout.add_files', [
-            'user' => $user,
-            'session' => $session
+        return response()->json([
+            'message' => 'تمت عمليه الاضافة  بنجاح',
+            'success' => true
         ]);
     }
 
-    public function upload_file(Request $request, $service_provider_id, $type)
+    public function add_files($sessionId)
     {
-        $file = ServiceProviderFiles::query()
-            ->where('service_providers_id', $service_provider_id)
-            ->where('type', $type)->first();
+        $Session = Session::where('id',$sessionId)->with('RaftCompanyLocation','RaftCompanyBox')->first();
+        return view('CP.taslem_maintenance_layout.add_files', [
+            'session' => $Session
+        ]);
+    }
 
-        if (!is_null($file)) {
-            $file->delete();
-        }
+    public function upload_file(Request $request, $session_id, $type)
+    {
+        $Session = Session::query()->where('id', $session_id)->first();
+
         if ($request->file('file')) {
             $path = Storage::disk('public')->put("service_provider", $request->file('file'));
             $file_name = request('file')->getClientOriginalName();
-            ServiceProviderFiles::query()->create([
-                'service_providers_id' => $service_provider_id,
-                'type' => $type,
-                'maintainers_id' => auth()->user()->id,
-                'real_name' => $file_name,
-                'path' => $path,
 
-            ]);
+            $update = [];
+            $update[$type] = $path;
+            $update[$type.'_name'] = $file_name;
+
+            RaftCompanyBox::where('id',$Session->raft_company_box_id)->update($update);
         }
-
+        return response()->json([
+            'message' => 'تم الرفع بنجاح',
+            'success' => true
+        ]);
     }
 
-    public function to_day_list(Request $request)
+    public function download_file($id)
     {
+        $file = ContractorReportFile::query()->where('id', $id)->first();
 
-        $sessions = Session::query()->whereDate('start_at', '=', now()->format('Y-m-d'))
-            ->where('support_id', auth()->user()->id)
-            ->with('service_provider');
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => "attachment; filename=$file->path",
+        ];
 
-        $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
-            $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
-        });
+        return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
 
-
-        return DataTables::of($sessions)
-            ->addColumn('actions', function ($sessions) {
-                return '<div class="btn-group me-1 mt-2">
-                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                خيارات<i class="mdi mdi-chevron-down"></i>
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-                                                <a class="dropdown-item" href="' . route('taslem_maintenance.add_files', ['service_provider_id' => $sessions->service_provider->id]) . '">إضافة الملفات</a>
-                                            </div>
-                                        </div>';
-            })->rawColumns(['actions'])
-            ->make();
     }
+
 
     public function save_note(Request $request)
     {
+        $Session = Session::query()->where('id', $request->session_id)->first();
+        RaftCompanyBox::where('id',$Session->raft_company_box_id)->update(['tasleem_notes' => $request->note]);
 
-        $user = User::query()->where('id', $request->service_provider_id)->first();
-        $user->update([
-            'service_provider_note' => $request->note,
-            'service_provider_status' => 2
-        ]);
-        $user->notify(new OrderNotification('تمت اضافة الملفات من مكتب الصيانة', auth()->user()->id));
-        return redirect()->route('taslem_maintenance.index')->with(['success' => 'تمت اضافة الملاحظات بنجاح']);
-
+        return redirect()->route('taslem_maintenance.index')->with(['success' => 'تمت اضافة الملفات والملاحظات بنجاح']);
     }
 
-    public function toDaySessions(Request $request)
-    {
-        return view('CP.taslem_maintenance_layout.toDaySessions');
-    }
-
-    public function getTable($uesr_ids)
-    {
-        $ids = explode(',', $uesr_ids,);
-        $service_providers = User::query()->whereIn('id', $ids)->get();
-
-        return response()->json([
-            'success' =>true,
-           'page'=> view('CP.taslem_maintenance_layout.service_providers_table_sessions',[
-                'users'=>$service_providers
-            ])->render()
-        ]) ;
-    }
 }
-//////////////service_provider_status => 0 havent appointment
-//////////////service_provider_status => 1 have appointment
-//////////////service_provider_status => 2 have a file after manitener add files to service provider
-//////////////service_provider_status => 3 confirmed files

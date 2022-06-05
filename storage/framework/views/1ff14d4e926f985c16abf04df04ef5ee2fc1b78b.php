@@ -17,7 +17,7 @@
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->
-    <div class="main-content">
+    <div class="main-content" style="margin-right: 200px;">
 
         <div class="page-content">
             <div class="container-fluid">

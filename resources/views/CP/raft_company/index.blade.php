@@ -49,13 +49,16 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            اسم المستخدم
+                            المربع
                         </th>
                         <th>
-                            البريد الالكتروني
+                           المخيم
                         </th>
                         <th>
-                            الهاتف
+                            الموعد
+                        </th>
+                        <th>
+                            الخيارات
                         </th>
                         </thead>
                         <tbody>
@@ -95,12 +98,11 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
+                    {className: 'text-center', data: 'raft_company_box.box', name: 'RaftCompanyBox',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'raft_company_box.camp', name: 'RaftCompanyBox',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'start_at', name: 'start_at',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'actions', name: 'actions',serchable: false,orderable: false},
                 ],
-
-
             });
 
         });

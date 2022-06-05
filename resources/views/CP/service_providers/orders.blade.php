@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    @if(auth()->user()->service_provider_status==3)
+                    @if($box->seen_notes)
                         <h4 class="mb-sm-0 font-size-18">
                             <div class="btn-group" role="group">
                                 <a href="{{route('services_providers.create_order')}}"
@@ -20,28 +20,7 @@
                             </div>
                         </h4>
                     @endif
-                        @if(auth()->user()->service_provider_status==2)
-                        <h4 class="mb-sm-0 font-size-18">
-                            <div class="btn-group" role="group">
-                                <a href="{{route('services_providers.show_main_files')}}"
-                                   class="btn btn-primary dropdown-toggle">
-                                    مشاهدة الملفات والملاحظات<i class="fa fa-clipboard-check"></i>
-                                </a>
 
-                            </div>
-                        </h4>
-                    @endif
-                     @if(auth()->user()->service_provider_status==1)
-                        <h4 class="mb-sm-0 font-size-18">
-                            <div class="btn-group" role="group">
-                                <a href="{{route('services_providers.show_appointment')}}"
-
-                                   class="btn btn-primary dropdown-toggle">
-                                    مشاهدة المواعيد والملفات <i class="fa fa-clipboard-check"></i>
-                                </a>
-                            </div>
-                        </h4>
-                    @endif
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>

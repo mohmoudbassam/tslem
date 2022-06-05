@@ -6,6 +6,7 @@ use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderSharer;
+use App\Models\RaftCompanyBox;
 use App\Models\ServiceProviderFiles;
 use App\Models\Session;
 use App\Models\User;
@@ -26,6 +27,7 @@ class OrdersController extends Controller
 {
     public function orders()
     {
+
         $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
         })->get();
@@ -34,8 +36,10 @@ class OrdersController extends Controller
         })->get();
         $data['contractors'] = User::query()->whereHas('contractors_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
-        })->get();
 
+        })->get();
+        $box = RaftCompanyBox::query()->where('box',auth()->user()->box_number)->where('camp',auth()->user()->camp_number)->first();
+        $data['box']= $box;
         return view('CP.service_providers.orders', $data);
     }
 
