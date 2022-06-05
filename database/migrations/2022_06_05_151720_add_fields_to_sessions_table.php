@@ -16,8 +16,8 @@ class AddFieldsToSessionsTable extends Migration
         Schema::table('sessions', function (Blueprint $table) {
             $table->foreignId("raft_company_box_id")->references("id")->on("raft_company_box")->cascadeOnDelete();
             $table->foreignId("raft_company_location_id")->references("id")->on("raft_company_location")->cascadeOnDelete();
-            $table->foreignId("support_id")->references("id")->on("users")->cascadeOnDelete();
-            $table->dateTime("start_at")->nullable();
+//            $table->foreignId("support_id")->references("id")->on("users")->cascadeOnDelete();
+//            $table->dateTime("start_at")->nullable();
             $table->enum('is_published', array('0','1'))->default('0');
         });
     }
