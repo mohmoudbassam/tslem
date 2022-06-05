@@ -51,11 +51,14 @@ class TaslemMaintenance extends Controller
 
     public function users_list(Request $request)
     {
+
+        if(is_null($request->box_number)||is_null($request->camp_number)){
+            return DataTables::of([]);
+        }
         $users = User::query()->where('verified',1)
-            ->when(!$request->box_number && !$request->camp_number, function ($q) {
-                $q->where('id', '-1');
-            })
+
             ->when($request->box_number, function ($q) use ($request) {
+
                 $q->where("box_number", 'like', '%' . $request->box_number . '%');
             })
             ->when($request->camp_number, function ($q) use ($request) {
@@ -63,11 +66,10 @@ class TaslemMaintenance extends Controller
             });
 
 
-//        dd($users->get());
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
                 $element = '<div class="btn-group me-1 mt-2">
-                                <input type="radio" class="form-radio-primary user_id" name="user_id" id="user_id" value="' . $user->id . '">
+                                <input type="radio" class="form-radio-primary user_id" name="user_id[]" id="user_id_'.$user->id.'" value="' . $user->id . '">
                             </div>';
 
                 return $element;

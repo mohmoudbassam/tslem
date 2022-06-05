@@ -44,8 +44,7 @@ class BeneficiresCoulumnsSeeder extends Seeder
         ]);
         BeneficiresCoulumns::query()->create([
             'type' => 'raft_center',
-            'parent_id' => '1',
-            'name' => '1',
+
             'company_name' => '1',
             'company_owner_name' => '1',
             'email' => '1',
@@ -53,7 +52,7 @@ class BeneficiresCoulumnsSeeder extends Seeder
             'camp_number' => '1',
             'phone' => '1',
             'employee_number' => '1',
-            'password' => '1',
+
         ]);
         BeneficiresCoulumns::query()->create([
             'type' => 'service_provider',
