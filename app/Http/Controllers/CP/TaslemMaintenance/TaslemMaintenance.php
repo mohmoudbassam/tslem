@@ -69,7 +69,7 @@ class TaslemMaintenance extends Controller
         return DataTables::of($users)
             ->addColumn('actions', function ($user) {
                 $element = '<div class="btn-group me-1 mt-2">
-                                <input type="checkbox" class="form-radio-primary user_id" name="user_id[]" id="user_id_'.$user->id.'" value="' . $user->id . '">
+                                <input type="radio" class="form-radio-primary user_id" name="user_id[]" id="user_id_'.$user->id.'" value="' . $user->id . '">
                             </div>';
 
                 return $element;

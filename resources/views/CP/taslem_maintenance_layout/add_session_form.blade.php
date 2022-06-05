@@ -30,11 +30,11 @@
     <div class="card-header">
             <div class="row">
                 <div class="col-lg-3 col-xxl-2">
-                    <label for="camp_number">رقم المخيم</label>
+                    <label for="camp_number">رقم المربع   </label>
                     <input type="text" class="form-control" name="camp_number" id="camp_number">
                 </div>
                 <div class="col-lg-3 col-xxl-2">
-                    <label for="box_number">رقم المربع</label>
+                    <label for="box_number">رقم المخيم</label>
                     <input type="text" class="form-control" name="box_number" id="box_number">
                 </div>
                 <div class="col-auto ms-auto" style="margin-top:1.9rem;">
@@ -74,17 +74,17 @@
                 </div>
 
                 @csrf
-{{--                <div class="mb-3 mt-3">--}}
-{{--                    <label for="start_at">وقت الموعد</label>--}}
-{{--                    <div class="input-group auth-pass-inputgroup">--}}
-{{--                        <input type="text" class="form-control datepicker" id="start_at" name="start_at">--}}
-{{--                        <div class="btn btn-light shadow-none ms-0"><i class="far fa-clock"></i></div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-12 text-danger" id="start_at_error"></div>--}}
-{{--                </div>--}}
+                <div class="mb-3 mt-3">
+                    <label for="start_at">وقت الموعد</label>
+                    <div class="input-group auth-pass-inputgroup">
+                        <input type="text" class="form-control datepicker" id="start_at" name="start_at">
+                        <div class="btn btn-light shadow-none ms-0"><i class="far fa-clock"></i></div>
+                    </div>
+                    <div class="col-12 text-danger" id="start_at_error"></div>
+                </div>
             </form>
         </div>
-        <div class="card-body  border-top" id="dateTimeView">
+        <div class="card-body  border-top d-none" id="dateTimeView">
 {{--            <div class="col-lg-8 fv-row">--}}
 {{--                <div class="border rounded mt-5">--}}
 {{--                    <ul class="list-unstyled row m-0 session_list">--}}
@@ -96,9 +96,7 @@
 {{--                </div>--}}
 
 {{--            </div>--}}
-        <div class="d-flex flex-wrap gap-3">
-            <button type="button" class="btn btn-lg btn-primary  px-4" id="add_session">إضافة</button>
-        </div>
+
 
 
 
@@ -107,6 +105,9 @@
 
 
             </div>
+        </div>
+        <div class="d-flex flex-wrap gap-3">
+            <button type="button" class="btn btn-lg btn-primary  px-4 submit_btn" >إنشاء</button>
         </div>
 
     </div>
