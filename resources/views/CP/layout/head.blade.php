@@ -16,6 +16,7 @@
 
     <!-- preloader css -->
     <link rel="stylesheet" href="{{url('/')}}/assets/css/preloader.min.css" type="text/css" />
+    <link rel="stylesheet" href="{{url('/')}}/assets/css/custom-panel.css?v={{ config('app.asset_ver') }}" type="text/css" />
 
     <!-- Bootstrap Css -->
     <link href="{{url('/')}}/assets/css/bootstrap-rtl.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
