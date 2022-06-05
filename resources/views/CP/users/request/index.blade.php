@@ -70,10 +70,19 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            اسم المستخدم
+                            الشركة
+                        </th>
+                        <th>
+                            المستخدم
                         </th>
                         <th>
                             البريد الالكتروني
+                        </th>
+                        <th>
+                            الترخيص
+                        </th>
+                        <th>
+                            السجل
                         </th>
                         <th>
                             الصلاحيه
@@ -82,10 +91,10 @@
                             الهاتف
                         </th>
                         <th>
-                            مفعل/معطل
+                            الحالة
                         </th>
                         <th>
-                           الحالة
+                           الاعتماد
                         </th>
                         <th>
                             الخيارات
@@ -204,8 +213,11 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
+                    {className: 'text-center', data: 'company_name', name: 'company_name'},
                     {className: 'text-center', data: 'name', name: 'name'},
                     {className: 'text-center', data: 'email', name: 'email'},
+                    {className: 'text-center', data: 'license_number', name: 'license_number'},
+                    {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
                     {className: 'text-center', data: 'type', name: 'type'},
                     {className: 'text-center', data: 'phone', name: 'phone'},
                     {className: 'text-center', data: 'enabled', name: 'enabled'},
