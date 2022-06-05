@@ -47,7 +47,7 @@ class RaftCompanyController extends Controller
             'camp_number' => request('camp_number'),
             'phone' => request('phone'),
             'employee_number' => request('employee_number'),
-            'password' => bcrypt(request('password')),
+            'password' => request('password'),
             'verified' => 1,
             'is_file_uploaded' => 1
         ]);
