@@ -77,9 +77,11 @@ class RaftCompanyController extends Controller
                 $view_files_and_appoitment = '';
                 $view_maintainance_files = '';
 
-                $view_files_and_appoitment = '<a class="dropdown-item"  href="' . route('raft_company.view_files_and_appointment', ['session' => $session->id]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الموعدوالملفات </a>';
-                if ($session->RaftCompanyBox->file_first || $session->RaftCompanyBox->file_second || $session->RaftCompanyBox->file_third) {
-                    $view_maintainance_files = '<a class="dropdown-item"  href="' . route('raft_company.view_maintainance_files', ['session' => $session->id]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض ملفات الصيانةوالملاحظات </a>';
+                if ($session->RaftCompanyBox->file_first) {
+                    $view_maintainance_files = '<a class="dropdown-item"  href="' . route('raft_company.view_maintainance_files', ['session' => $session->id]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الملفات و الملاحظات </a>';
+                }
+                if ($session->RaftCompanyBox->file_first ==null) {
+                    $view_files_and_appoitment = '<a class="dropdown-item"  href="' . route('raft_company.view_files_and_appointment', ['session' => $session->id]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الموعد والملفات </a>';
                 }
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">

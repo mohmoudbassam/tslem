@@ -1,6 +1,6 @@
 @extends('CP.master')
 @section('title')
-    المراكز
+    قائمة المواعيد
 @endsection
 @section('content')
 
@@ -8,11 +8,10 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('raft_company.add_center')}}"><i class="dripicons-user p-2"></i>إصافة مركز</a></h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">إدارة المراكز</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">المواعيد</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
@@ -49,13 +48,16 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            اسم المستخدم
+                            المربع
                         </th>
                         <th>
-                            البريد الالكتروني
+                            المخيم
                         </th>
                         <th>
-                            الهاتف
+                            الموعد
+                        </th>
+                        <th>
+                            الخيارات
                         </th>
                         </thead>
                         <tbody>
@@ -72,6 +74,8 @@
 
 @section('scripts')
     <script>
+
+
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
@@ -86,21 +90,25 @@
                     "data": function (d) {
                         d.name = $('#name').val();
                         d.type = $('#type').val();
+
                     }
                 },
                 language: {
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
+                    {className: 'text-center', data: 'raft_company_box.box', name: 'RaftCompanyBox',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'raft_company_box.camp', name: 'RaftCompanyBox',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'start_at', name: 'start_at',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'actions', name: 'actions',serchable: false,orderable: false},
                 ],
             });
+
         });
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false);
         });
+
     </script>
 
 @endsection

@@ -50,18 +50,13 @@
                                         </div>
                                         <div class="col-xl">
                                             <div class="h4">
-                                                <p class="mb-2">{{$session->tasleem_notes}}</p>
+                                                <p class="mb-2">{{$session->RaftCompanyBox->tasleem_notes}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-
-
                             </div>
-
-
                         </div>
 
                         <!-- end card body -->

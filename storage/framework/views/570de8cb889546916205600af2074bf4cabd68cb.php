@@ -119,6 +119,12 @@
                             <span data-key="t-authentication">المراكز</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="<?php echo e(route('session')); ?>">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">قائمة المواعيد</span>
+                        </a>
+                    </li>
                 <?php endif; ?>
 
 
