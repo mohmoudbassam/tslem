@@ -264,9 +264,19 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('list', [RaftCompanyController::class, 'list'])->name('.list');
             Route::get('center/add', [RaftCompanyController::class, 'add_center'])->name('.add_center');
             Route::post('center/save_center', [RaftCompanyController::class, 'save_center'])->name('.save_center');
-            
+
         });
          Route::get('get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name('.get_camp_by_box');
+    });
+    Route::prefix('session')->name('session')->group(function () {
+        Route::middleware(['raft_company'])->group(function () {
+            Route::get('', [\App\Http\Controllers\CP\Session\SessionController::class, 'index']);
+            Route::get('list', [\App\Http\Controllers\CP\Session\SessionController::class, 'list'])->name('.list');
+            Route::get('add', [\App\Http\Controllers\CP\Session\SessionController::class, 'add'])->name('.add');
+            Route::post('save', [\App\Http\Controllers\CP\Session\SessionController::class, 'save'])->name('.save');
+
+        });
+         Route::get('get_camp_by_box/{box}', [\App\Http\Controllers\CP\Session\SessionController::class, 'get_camp_by_box'])->name('.get_camp_by_box');
     });
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
