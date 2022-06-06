@@ -39,7 +39,7 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="row">
-                        <form id="add_edit_form" method="post" action="<?php echo e(auth()->user()->virfied ? route('after_reject'): route('save_profile')); ?>" enctype="multipart/form-data">
+                        <form id="add_edit_form" method="post" action="<?php echo e(in_array(auth()->user()->verified, [0, 2]) ? route('after_reject'): route('save_profile')); ?>" enctype="multipart/form-data">
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <?php if($record->company_name): ?>
@@ -82,7 +82,7 @@
                                             <label class="form-label required-field" for="commercial_record"> رقم السجل التجاري</label>
                                             <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
                                                    value="<?php echo e($user->commercial_record); ?>"
-                                                   id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
+                                                   id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record" minlength="10" maxlength="10">
                                             <div class="col-12 text-danger" id="commercial_record_error"></div>
                                         </div>
                                     </div>
@@ -431,7 +431,8 @@
             "commercial_record": {
                 minlength: 10,
                 maxlength: 10,
-                required: false
+                required: true,
+                number: true
             },
             errorElement: 'span',
             errorClass: 'help-block help-block-error',

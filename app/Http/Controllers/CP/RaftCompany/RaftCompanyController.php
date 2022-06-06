@@ -8,10 +8,12 @@ use App\Models\Order;
 use App\Models\RaftCompanyBox;
 use App\Models\RaftCompanyLocation;
 use App\Models\Session;
+use ConvertApi\ConvertApi;
 use Illuminate\Http\Request;
 use App\Models\BeneficiresCoulumns;
 use App\Models\User;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -179,10 +181,18 @@ class RaftCompanyController extends Controller
             'date' => Hijri::Date('Y/m/d'),
             'time' => now()->format('H:i')
         ]);
-
         $templateProcessor->saveAs(Storage::disk('public')->path('service_provider_generator/' . $file_name));
 
-        return Response::download(Storage::disk('public')->path('service_provider_generator/' . $file_name), $file_type);
+        ConvertApi::setApiSecret('uVAzHfhZAhfyQ1mZ');
+        $result = ConvertApi::convert('pdf', [
+            'File' => Storage::disk('public')->path('service_provider_generator/' . $file_name)
+        ], 'docx'
+        );
+
+        $result->saveFiles(Storage::disk('public')->path('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)));
+
+
+        return Response::download(Storage::disk('public')->path('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)),Str::replace('.docx','.pdf',$file_type));
 
     }
 

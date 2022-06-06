@@ -397,4 +397,10 @@
     }
 </script>
 
+
+<script>
+    $('.close-menu').click(function(){
+       $('body').removeClass('sidebar-enable')
+    })
+</script>
 <?php /**PATH C:\wamp64\www\taslem\resources\views/CP/layout/js.blade.php ENDPATH**/ ?>
