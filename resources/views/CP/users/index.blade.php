@@ -233,7 +233,7 @@
         });
 
         $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, false);
+            $('#items_table').DataTable().ajax.reload(null, true);
         });
 
         function delete_user(id, url, callback = null) {
@@ -277,7 +277,6 @@
                             }
                         },
                         error: function (data) {
-                            console.log(data);
                         },
                     });
                 }
