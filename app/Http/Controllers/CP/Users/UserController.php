@@ -60,7 +60,7 @@ class UserController extends Controller
             'raft_company_type'=>request('raft_company_type')
         ]);
 
-        if($user->type == 'raft_company' || $user->type == 'taslem_maintenance'){
+        if(in_array($user->type, ["raft_company", "taslem_maintenance", "Kdana", "Delivery", "Sharer"])){
             $user->update([
                 'is_file_uploaded' => 1,
                 'verified' => 1
@@ -123,7 +123,8 @@ class UserController extends Controller
 
     public function list(Request $request)
     {
-        $users = User::query()->where('verified',1)->when(request('name'), function ($q) {
+        $users = User::query()->where('verified',1)
+            ->when(request('name'), function ($q) {
             $q->where('name', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('email', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');
             $q->orwhere('phone', 'like', '%' . request('name') . '%')->where('type', '!=', 'admin');

@@ -63,40 +63,45 @@
         <div class="card-body">
 
             <div class="row">
-
                 <div class="col-sm-12">
-                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
-                           aria-describedby="DataTables_Table_0_info">
-                        <thead>
-                        <th>
-                            اسم المستخدم
-                        </th>
-                        <th>
-                            البريد الالكتروني
-                        </th>
-                        <th>
-                            الصلاحيه
-                        </th>
-                        <th>
-                            الهاتف
-                        </th>
-                        <th>
-                            مفعل/معطل
-                        </th>
-                        <th>
-                           الحالة
-                        </th>
-                        <th>
-                            الخيارات
-                        </th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+                               id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                               aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                            <th>
+                                المستخدم
+                            </th>
+                            <th>
+                                البريد الالكتروني
+                            </th>
+                            <th>
+                                الترخيص
+                            </th>
+                            <th>
+                                السجل
+                            </th>
+                            <th>
+                                الصلاحيه
+                            </th>
+                            <th>
+                                الهاتف
+                            </th>
+                            <th>
+                                الحالة
+                            </th>
+                            <th>
+                                الاعتماد
+                            </th>
+                            <th>
+                                الخيارات
+                            </th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -191,6 +196,7 @@
                 "processing": true,
                 'stateSave': true,
                 "serverSide": true,
+                "autoWidth": false,
                 ajax: {
                     url: '{{route('users.request.list')}}',
                     type: 'GET',
@@ -206,6 +212,8 @@
                 columns: [
                     {className: 'text-center', data: 'name', name: 'name'},
                     {className: 'text-center', data: 'email', name: 'email'},
+                    {className: 'text-center', data: 'license_number', name: 'license_number'},
+                    {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
                     {className: 'text-center', data: 'type', name: 'type'},
                     {className: 'text-center', data: 'phone', name: 'phone'},
                     {className: 'text-center', data: 'enabled', name: 'enabled'},
@@ -220,7 +228,7 @@
 
         });
         $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, false);
+            $('#items_table').DataTable().ajax.reload(null, true);
         });
 
         function delete_user(id, url, callback = null) {
@@ -255,7 +263,7 @@
                                 callback(data);
                             } else {
                                 if (data.success) {
-                                    $('#items_table').DataTable().ajax.reload(null, false);
+                                    $('#items_table').DataTable().ajax.reload(null, true);
                                     showAlertMessage('success', data.message);
                                 } else {
                                     showAlertMessage('error', 'هناك خطأ ما');
@@ -264,7 +272,7 @@
                             }
                         },
                         error: function (data) {
-                            console.log(data);
+                            // console.log(data);
                         },
                     });
                 }
@@ -295,7 +303,7 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        $('#items_table').DataTable().ajax.reload(null, false);
+                        $('#items_table').DataTable().ajax.reload(null, true);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
@@ -332,7 +340,7 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        $('#items_table').DataTable().ajax.reload(null, false);
+                        $('#items_table').DataTable().ajax.reload(null, true);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
