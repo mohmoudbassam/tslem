@@ -232,7 +232,7 @@
 
         });
         $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, false);
+            $('#items_table').DataTable().ajax.reload(null, true);
         });
 
         function delete_user(id, url, callback = null) {
@@ -267,7 +267,7 @@
                                 callback(data);
                             } else {
                                 if (data.success) {
-                                    $('#items_table').DataTable().ajax.reload(null, false);
+                                    $('#items_table').DataTable().ajax.reload(null, true);
                                     showAlertMessage('success', data.message);
                                 } else {
                                     showAlertMessage('error', 'هناك خطأ ما');
@@ -307,7 +307,7 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        $('#items_table').DataTable().ajax.reload(null, false);
+                        $('#items_table').DataTable().ajax.reload(null, true);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
@@ -344,7 +344,7 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        $('#items_table').DataTable().ajax.reload(null, false);
+                        $('#items_table').DataTable().ajax.reload(null, true);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
