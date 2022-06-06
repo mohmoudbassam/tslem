@@ -78,10 +78,9 @@
                 "dom": 'tpi',
                 "searching": false,
                 "processing": true,
-                'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: "{{route('raft_company.list')}}",
+                    url: "{{route('raft_company.centers_list')}}",
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
@@ -92,9 +91,9 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
+                    {className: 'text-center', data: 'name', name: 'name',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'email', name: 'email',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'phone', name: 'phone',serchable: false,orderable: false},
                 ],
             });
         });

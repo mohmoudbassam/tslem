@@ -59,6 +59,14 @@ class RaftCompanyController extends Controller
         $this->uploadUserFiles($user, $request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }
+    public function centers_list(Request $request){
+        $users = User::query()->where('parent_id', auth()->user()->id)->when(request('name'), function ($q) {
+            $q->where('name', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
+            $q->orwhere('email', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
+            $q->orwhere('phone', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
+        });
+        return DataTables::of($users)->make(true);
+    }
 
     public function list(Request $request)
     {
@@ -98,6 +106,7 @@ class RaftCompanyController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
+
 
     private function uploadUserFiles($user, $file)
     {
