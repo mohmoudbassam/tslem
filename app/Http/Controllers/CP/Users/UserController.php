@@ -394,6 +394,7 @@ class UserController extends Controller
             $data = [];
 
             if ( $user->type == "design_office" ) {
+
                 foreach ($user->designer_types as $designerType) {
                     $data[] = [
                         "id" => $designerType->id,
@@ -412,6 +413,7 @@ class UserController extends Controller
 
 
             return response()->json([
+                'user_type' => $user->type,
                 'data' => $data,
                 'message' => '',
                 'success' => true
