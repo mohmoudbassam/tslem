@@ -11,4 +11,8 @@ class RaftCompanyLocation extends Model
 
     protected $table='raft_company_location';
     protected $guarded=[];
+
+    public function user(){
+        return $this->belongsTo(User::class,'id','raft_company_type');
+    }
 }

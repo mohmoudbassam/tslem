@@ -3,6 +3,7 @@
     المواعيد
 @endsection
 @section('content')
+
     <style>
         .modal-backdrop.show {
             display: initial !important;
@@ -88,14 +89,18 @@
                         <th>
                             رقم المربع
                         </th>
+
                         <th>
                            رقم المخيم
+                        </th>
+                        <th>
+                            رقم الجوال
                         </th>
                         <th>
                             وقت الموعد
                         </th>
                         <th>
-                            
+
                         </th>
 
 
@@ -144,6 +149,7 @@
                     {className: 'text-right', data: 'raft_company_location.name', name: 'raft_company_location.name',orderable : false},
                     {className: 'text-center', data: 'raft_company_box.box', name: 'raft_company_box.box',orderable : false},
                     {className: 'text-center', data: 'raft_company_box.camp', name: 'raft_company_box.camp',orderable : false},
+                    {className: 'text-center', data: 'raft_company_location.user.phone', name: 'raft_company_location.user.phone',orderable : false},
                     {className: 'text-center', data: 'start_at', name: 'start_at'},
                     {className: 'text-left', data: 'actions', name: 'actions'}
 

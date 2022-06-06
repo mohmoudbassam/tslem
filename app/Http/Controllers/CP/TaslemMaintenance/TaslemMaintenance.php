@@ -34,7 +34,7 @@ class TaslemMaintenance extends Controller
     public function list($list_type, Request $request)
     {
 
-        $sessions = Session::query()->published()->where('support_id', auth()->user()->id)->with('RaftCompanyLocation', 'RaftCompanyBox');
+        $sessions = Session::query()->published()->where('support_id', auth()->user()->id)->with('RaftCompanyLocation.user', 'RaftCompanyBox');
 
         if ($list_type == 'today') {
             $sessions = $sessions->whereDate('start_at', '=', now()->format('Y-m-d'));
@@ -101,7 +101,12 @@ class TaslemMaintenance extends Controller
         }
 
         $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
+        $Users->each(function ($user){
+            if($user->phone){
+                sms($user->phone,'asdasdasdasd');
+            }
 
+        });
         foreach ($Users as $User) {
             $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth()->user()->id));
         }
