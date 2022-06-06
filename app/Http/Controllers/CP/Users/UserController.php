@@ -403,7 +403,7 @@ class UserController extends Controller
                 }
             } else {
                 foreach ($user->contractor_types as $contractorType) {
-                    $data = [
+                    $data[] = [
                         "id" => $contractorType->id,
                         "type" => $contractorType->specialty->name_en,
                     ];
