@@ -63,49 +63,48 @@
         <div class="card-body">
 
             <div class="row">
-
                 <div class="col-sm-12">
-                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
-                           aria-describedby="DataTables_Table_0_info">
-                        <thead>
-                        <th>
-                            الشركة
-                        </th>
-                        <th>
-                            المستخدم
-                        </th>
-                        <th>
-                            البريد الالكتروني
-                        </th>
-                        <th>
-                            الترخيص
-                        </th>
-                        <th>
-                            السجل
-                        </th>
-                        <th>
-                            الصلاحيه
-                        </th>
-                        <th>
-                            الهاتف
-                        </th>
-                        <th>
-                            الحالة
-                        </th>
-                        <th>
-                           الاعتماد
-                        </th>
-                        <th>
-                            الخيارات
-                        </th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+                               id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                               aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                            <th>
+                                الشركة
+                            </th>
+                            <th>
+                                المستخدم
+                            </th>
+                            <th>
+                                البريد الالكتروني
+                            </th>
+                            <th>
+                                الترخيص
+                            </th>
+                            <th>
+                                السجل
+                            </th>
+                            <th>
+                                الصلاحيه
+                            </th>
+                            <th>
+                                الهاتف
+                            </th>
+                            <th>
+                                الحالة
+                            </th>
+                            <th>
+                                الاعتماد
+                            </th>
+                            <th>
+                                الخيارات
+                            </th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -200,6 +199,7 @@
                 "processing": true,
                 'stateSave': true,
                 "serverSide": true,
+                "autoWidth": false,
                 ajax: {
                     url: '{{route('users.request.list')}}',
                     type: 'GET',
@@ -213,7 +213,11 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'company_name', name: 'company_name'},
+                    {
+                        className: 'text-center', data: 'company_name', name: 'company_name', render: function (data) {
+                            return typeof (data) === "string" ? data.slice(0, 10000): data;
+                        }
+                    },
                     {className: 'text-center', data: 'name', name: 'name'},
                     {className: 'text-center', data: 'email', name: 'email'},
                     {className: 'text-center', data: 'license_number', name: 'license_number'},
@@ -276,7 +280,7 @@
                             }
                         },
                         error: function (data) {
-                            console.log(data);
+                            // console.log(data);
                         },
                     });
                 }
