@@ -55,9 +55,9 @@
             src: url('{{ url('/assets/fonts/JannaLT-Regular.woff')  }}');
         }
 
-        /* body {
+        body {
             font-family: JannaLT !important;
-        } */
+        }
         .container {
             position: fixed;
             right: 0;
@@ -99,11 +99,11 @@
             background-color: #db1c19;
             border-color: #e21a13;
             font-size: 16px;
-            /* font-family: JannaLT !important; */
+            font-family: JannaLT !important;
         }
         .alert-success{
             font-size: 16px;
-            /* font-family: JannaLT !important; */
+            font-family: JannaLT !important;
             color: #e9ecef;
             background-color: #126a47;
             border-color: #126a47;

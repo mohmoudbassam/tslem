@@ -4928,7 +4928,7 @@ body[data-layout=horizontal] .chat-conversation {
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
 body{
     background: #f7f7f7;
-    font-family: 'Cairo', sans-serif;
+    /* font-family: 'Cairo', sans-serif; */
 }
 
 body[data-layout-mode="dark"]{

@@ -45,7 +45,7 @@
         }
 
         body {
-            /* font-family: JannaLT !important; */
+            font-family: JannaLT !important;
         }
         .container {
             position: fixed;
