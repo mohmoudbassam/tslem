@@ -11,10 +11,20 @@
         }
 
         .file-view-icon {
-            height: 160px;
+            height: 180px;
             background-size: 50%;
             background-position: center;
             background-repeat: no-repeat;
+        }
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
         }
     </style>
     <div class="row">
@@ -81,10 +91,11 @@
                                 <div class="row">
                                     @foreach($files as $file)
                                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
-                                             style="cursor:pointer; height: 220px;">
-                                            <a href="{{asset('storage/'.$file->path)}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                             style="cursor:pointer;">
+                                            <a href="{{asset('storage/'.$file->path)}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                                 <div class="file-view-icon"
-                                                     style="background-image: url('{{asset("assets/images/pdf.png")}}');"></div>
+                                                     style="background-image: url('{{asset("assets/images/pdf-file.png")}}');"></div>
+                                                     <div class="file-view-download"><i class="fas fa-download"></i></div>
                                                 <div
                                                     class="justify-content-center d-flex flex-column text-center border-top"
                                                     style="height: 40px; background-color: #eeeeee;">

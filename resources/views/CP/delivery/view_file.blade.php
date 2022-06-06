@@ -24,6 +24,17 @@
             background-repeat: no-repeat;
         }
 
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
+        }
+
         .krajee-default.file-preview-frame {
             margin: 8px;
             border: 1px solid rgba(0, 0, 0, .2);
@@ -325,8 +336,9 @@
                                             @foreach($obligation as $obligationFile)
                                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
                                                     <a href="{{ asset("storage/".$obligationFile->path) }}" download="">
-                                                        <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
-                                                            <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf.png") }}'); height: 140px;"></div>
+                                                        <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
+                                                            <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
+                                                            <div class="file-view-download"><i class="fas fa-download"></i></div>
                                                             <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
                                                                 <small class="text-muted" style="font-size: 12px;">{{ get_obligation_name_by_type($obligationFile->type) }}</small>
                                                             </div>
