@@ -70,9 +70,6 @@
                                aria-describedby="DataTables_Table_0_info">
                             <thead>
                             <th>
-                                الشركة
-                            </th>
-                            <th>
                                 المستخدم
                             </th>
                             <th>
@@ -213,11 +210,6 @@
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {
-                        className: 'text-center', data: 'company_name', name: 'company_name', render: function (data) {
-                            return typeof (data) === "string" ? data.slice(0, 10000): data;
-                        }
-                    },
                     {className: 'text-center', data: 'name', name: 'name'},
                     {className: 'text-center', data: 'email', name: 'email'},
                     {className: 'text-center', data: 'license_number', name: 'license_number'},
