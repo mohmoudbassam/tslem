@@ -11,15 +11,25 @@
         }
 
         .file-view-icon {
-            height: 160px;
+            height: 180px;
             background-size: 50%;
             background-position: center;
             background-repeat: no-repeat;
         }
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
+        }
     </style>
     <div class="row">
         <div class="col-xl-12 col-lg-12">
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">
 
 
@@ -30,33 +40,28 @@
                         </li>
                     </ul>
                 </div>
-                <!-- end card body -->
-            </div>
+            </div> -->
+            <!-- end card body -->
             <!-- end card -->
 
             <div class="tab-content">
                 <div class="tab-pane active" id="overview" role="tabpanel">
                     <div class="card">
 
-                        <div class="card-body">
-                            <div class="row">
+                        <div class="card-header">
 
-                                <div class="pb-3">
-                                    <div class="row">
-                                        <div class="col-xl-2">
-                                            <div>
-                                                <h5 class="font-size-20">الملاحظات : </h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl">
-                                            <div class="h4">
-                                                <p class="mb-2">{{$session->RaftCompanyBox->tasleem_notes}}</p>
-                                            </div>
-                                        </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0">الملاحظات</h4>
+                                <form action="{{route('raft_company.seen_maintain_file',['session'=>$session->id])}}" method="get">
+                                    <div>
+                                        <button type="submit" class="btn btn-lg btn-primary submit_btn">تم الإطلاع</button>
                                     </div>
-                                </div>
-
+                                </form>
                             </div>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="mb-2">{{$session->RaftCompanyBox->tasleem_notes}}</p>
                         </div>
 
                         <!-- end card body -->
@@ -76,37 +81,40 @@
                                 <div class="row">
 
                                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
-                                             style="cursor:pointer; height: 220px;">
-                                            <a href="{{asset('storage/'.$session->RaftCompanyBox->file_first)}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                             style="cursor:pointer;">
+                                            <a href="{{asset('storage/'.$session->RaftCompanyBox->file_first)}}" target="_blank" class="w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                                 <div class="file-view-icon"
-                                                     style="background-image: url('{{asset("assets/images/pdf.png")}}');"></div>
+                                                     style="background-image: url('{{asset("assets/images/pdf-file.png")}}');"></div>
+                                                     <div class="file-view-download"><i class="fas fa-download"></i></div>
                                                 <div
-                                                    class="justify-content-center d-flex flex-column text-center border-top"
-                                                    style="height: 40px; background-color: #eeeeee;">
-                                                    <small class="text-muted" id="file-view-name">{{$session->RaftCompanyBox->file_first_name}}</small>
+                                                    class="p-2 justify-content-center d-flex flex-column text-center border-top"
+                                                    style="background-color: #eeeeee;">
+                                                    <p class="text-muted mb-0" id="file-view-name">{{$session->RaftCompanyBox->file_first_name}}</p>
                                                 </div>
                                             </a>
                                         </div>
                                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
-                                         style="cursor:pointer; height: 220px;">
-                                        <a href="{{asset('storage/'.$session->RaftCompanyBox->file_second)}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                         style="cursor:pointer;">
+                                        <a href="{{asset('storage/'.$session->RaftCompanyBox->file_second)}}" target="_blank" class="w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                             <div class="file-view-icon"
-                                                 style="background-image: url('{{asset("assets/images/pdf.png")}}');"></div>
+                                                 style="background-image: url('{{asset("assets/images/pdf-file.png")}}');"></div>
+                                                 <div class="file-view-download"><i class="fas fa-download"></i></div>
                                             <div
-                                                class="justify-content-center d-flex flex-column text-center border-top"
-                                                style="height: 40px; background-color: #eeeeee;">
-                                                <small class="text-muted" id="file-view-name">{{$session->RaftCompanyBox->file_second_name}}</small>
+                                                class="p-2 justify-content-center d-flex flex-column text-center border-top"
+                                                style="background-color: #eeeeee;">
+                                                <p class="text-muted mb-0" id="file-view-name">{{$session->RaftCompanyBox->file_second_name}}</p>
                                             </div>
                                         </a>
                                     </div> <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
-                                         style="cursor:pointer; height: 220px;">
-                                        <a href="{{asset('storage/'.$session->RaftCompanyBox->file_third)}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                         style="cursor:pointer;">
+                                        <a href="{{asset('storage/'.$session->RaftCompanyBox->file_third)}}" target="_blank" class="w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                             <div class="file-view-icon"
-                                                 style="background-image: url('{{asset("assets/images/pdf.png")}}');"></div>
+                                                 style="background-image: url('{{asset("assets/images/pdf-file.png")}}');"></div>
+                                                 <div class="file-view-download"><i class="fas fa-download"></i></div>
                                             <div
-                                                class="justify-content-center d-flex flex-column text-center border-top"
-                                                style="height: 40px; background-color: #eeeeee;">
-                                                <small class="text-muted" id="file-view-name">{{$session->RaftCompanyBox->file_third_name}}</small>
+                                                class="p-2 justify-content-center d-flex flex-column text-center border-top"
+                                                style="background-color: #eeeeee;">
+                                                <p class="text-muted mb-0" id="file-view-name">{{$session->RaftCompanyBox->file_third_name}}</p>
                                             </div>
                                         </a>
                                     </div>
@@ -120,14 +128,14 @@
                                 <!-- end row -->
                             </div>
                         </div>
-                        <div class="row text-end" style="margin-top:1.9rem; margin-left: 30px">
+                        <!-- <div class="row text-end pb-4" style="margin-top:1.9rem; margin-left: 30px">
                             <form action="{{route('raft_company.seen_maintain_file',['session'=>$session->id])}}" method="get">
                                 <div>
                                     <button type="submit" class="btn btn-lg btn-primary submit_btn">تم الإطلاع</button>
                                 </div>
                             </form>
 
-                        </div>
+                        </div> -->
                         <!-- end card body -->
                     </div>
                     <!-- end card -->

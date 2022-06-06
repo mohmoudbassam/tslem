@@ -12,14 +12,24 @@
 
         .file-view-icon {
             height: 160px;
-            background-size: 50%;
+            background-size: 30%;
             background-position: center;
             background-repeat: no-repeat;
+        }
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
         }
     </style>
     <div class="row">
         <div class="col-xl-12 col-lg-12">
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -29,8 +39,8 @@
                     </div>
 
                 </div>
-                <!-- end card body -->
-            </div>
+            </div> -->
+            <!-- end card body -->
             <!-- end card -->
 
             <div class="tab-content">
@@ -42,33 +52,30 @@
 
                                 <div class="pb-3">
                                     <div class="row">
-                                        <div class="col-xl-2">
+                                        <div class="col-xl-1 px-lg-0">
                                             <div>
-                                                <h5 class="font-size-20">الموعد : </h5>
+                                                <h5 class="font-size-22">الموعد : </h5>
                                             </div>
                                         </div>
                                         <div class="col-xl">
-                                            <div class="h4">
-                                                <p class="mb-2">{{$session->start_at}}</p>
-                                            </div>
+                                            <h6 class="mb-2 mt-1">{{$session->start_at}}</h5>
+                                            <h6 class="mb-2">{{\Carbon\Carbon::parse($session->start_at)->diffForHumans()}}</h6>
+
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="pb-3">
+                                <!-- <div class="pb-3">
                                     <div class="row">
-                                        <div class="col-xl-2">
+                                        <div class="col-xl-1">
                                             <div>
-                                                <h5 class="font-size-15"></h5>
+                                                <h6 class="font-size-15"></h6>
                                             </div>
                                         </div>
                                         <div class="col-xl">
-                                            <div class="h4">
-                                                <p class="mb-2">{{\Carbon\Carbon::parse($session->start_at)->diffForHumans()}}</p>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                             </div>
@@ -90,16 +97,17 @@
 
                         <div class="card-body">
                             <div>
-                                <div class="row">
+                                <div class="row justify-content-center">
                                     @foreach($files as $file)
                                         <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view"
-                                             style="cursor:pointer; height: 220px;">
-                                            <a href="{{route('raft_company.docx_file',['fileType'=>$file['url_type'],'session'=>$session->id])}}" target="_blank" class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                                             style="cursor:pointer;">
+                                            <a href="{{route('raft_company.docx_file',['fileType'=>$file['url_type'],'session'=>$session->id])}}" target="_blank" class="w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                                 <div class="file-view-icon"
-                                                     style="background-image: url('{{asset("assets/images/default.png")}}');"></div>
+                                                     style="background-image: url('{{asset("assets/images/pdf-file.png")}}');"></div>
+                                                     <div class="file-view-download"><i class="fas fa-download"></i></div>
                                                 <div
-                                                    class="justify-content-center d-flex flex-column text-center border-top"
-                                                    style="height: 40px; background-color: #eeeeee;">
+                                                    class="p-2 justify-content-center d-flex flex-column text-center border-top"
+                                                    style="    min-height: 50px;background-color: #eeeeee;">
                                                     <small class="text-muted" id="file-view-name">{{$file['name']}}</small>
                                                 </div>
                                             </a>

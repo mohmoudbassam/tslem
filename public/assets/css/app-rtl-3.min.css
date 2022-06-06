@@ -4925,10 +4925,15 @@ body[data-layout=horizontal] .chat-conversation {
 }
 /*# sourceMappingURL=app-rtl.min.css.map */
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap'); */
+@font-face {
+    font-family: JannaLT;
+    src: url('../fonts/JannaLT-Regular.woff');
+}
+
 body{
     background: #f7f7f7;
-    /* font-family: 'Cairo', sans-serif; */
+    font-family: JannaLT !important;
 }
 
 body[data-layout-mode="dark"]{
