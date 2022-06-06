@@ -397,3 +397,9 @@
     }
 </script>
 
+
+<script>
+    $('.close-menu').click(function(){
+       $('body').removeClass('sidebar-enable')
+    })
+</script>

@@ -23,7 +23,7 @@
     <!-- Icons Css -->
     <link href="{{url('/')}}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="{{url('/')}}/assets/css/app-rtl.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="{{url('/')}}/assets/css/app-rtl-2.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link href="{{url("/")}}/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{url("/")}}/assets/libs/alertifyjs/build/css/alertify.min.css" rel="stylesheet" type="text/css" />
 
