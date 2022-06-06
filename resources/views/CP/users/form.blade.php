@@ -109,7 +109,7 @@
                                 </div>
                             @endif
 
-                            @if($record->type == "Kdana")
+                            @if($record->type == "Kdana" and 1 == 2)
 
 
                                 <div class="col-md-6">
@@ -126,7 +126,7 @@
                                 </div>
                             @endif
 
-                            @if($record->type == "Sharer")
+                            @if($record->type == "Sharer" and 1 == 2)
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="sharer_type">نوع الجهة<span
