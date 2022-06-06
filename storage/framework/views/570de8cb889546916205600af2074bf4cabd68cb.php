@@ -1,5 +1,8 @@
 <div class="cp-right-menu">
 <a href="#" class="cp-right-menu-logo">
+    <div class="close-menu d-lg-none p-2">
+        <i class="far fa-times"></i>
+    </div>
     <img src="<?php echo e(asset('assets/images/logo-dark.png')); ?>" alt="" height="38">
                 </a>
     <div data-simplebar class="h-100">
