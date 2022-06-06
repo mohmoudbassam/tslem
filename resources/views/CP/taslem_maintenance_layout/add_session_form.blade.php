@@ -2,6 +2,10 @@
 @section('title')
     المواعيد
 @endsection
+@section('style')
+    <link href="{{url('/assets/libs/choices.js/public/assets/styles/choices.min.css')}}" rel="stylesheet" type="text/css" />
+
+@endsection
 @section('content')
 
     <!-- start page title -->
@@ -27,7 +31,7 @@
                             <div class="col-lg col-xxl">
                                 <label class="form-label" for="box_number">رقم المربع <span
                                         class="text-danger required-mark">*</span></label>
-                                <select class="form-control" id="box_number" name="box_number">
+                                <select class="form-control" data-trigger id="box_number" name="box_number">
                                     <option value="" disable>أختر</option>
                                     @foreach($boxes as $box)
                                         <option value="{{ $box['box'] }}">{{$box['box']}}</option>
@@ -124,6 +128,7 @@
             @endsection
 
             @section('scripts')
+                <script src="{{url('/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
                 <script>
                     $.fn.dataTable.ext.errMode = 'none';
                     $(function () {
@@ -280,6 +285,14 @@
                     }
 
                     flatpickr(".datepicker", { enableTime: true, minDate: '{{now('Asia/Riyadh')}}'});
+                    var e= document.querySelectorAll("[data-trigger]");
+                    for (i = 0; i < e.length; ++i) {
+                        var a = e[i];
+                        new Choices(a, {
+                            placeholderValue: "This is a placeholder set in the config", searchPlaceholderValue:
+                                "بحث"
+                        })
+                    }
                 </script>
 
 @endsection

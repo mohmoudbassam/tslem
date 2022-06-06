@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <?php if($box->seen_notes): ?>
+                    <?php if($can_create_order): ?>
                         <h4 class="mb-sm-0 font-size-18">
                             <div class="btn-group" role="group">
                                 <a href="<?php echo e(route('services_providers.create_order')); ?>"
