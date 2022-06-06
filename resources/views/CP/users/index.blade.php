@@ -144,7 +144,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6" id="designer">
                             <div class="row" id="view-designer-types-row">
                                 <div class="col-12 d-flex flex-row justify-content-between">
                                     <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="designer" style="height: 15px; width: 15px;"></div>
@@ -162,7 +162,7 @@
                         </div>
 
 
-                        <div class="col-6">
+                        <div class="col-6" id="contractor">
                             <div class="row" id="view-designer-types-row">
                                 <div class="col-12 d-flex flex-row justify-content-between">
                                     <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="general" style="height: 15px; width: 15px;"></div>
@@ -302,7 +302,7 @@
                 return await (await response).json();
             }
 
-            function prepareUserDesignTypesModal(types) {
+            function prepareUserDesignTypesModal(types, userType) {
                 let designs = ["consulting", "designer", "fire", "general", "protections"];
                 types.map((type) => {
                     viewDesignerTypesModal.find(`div[data-type='${type['type']}']`).addClass("bg-success")
@@ -314,13 +314,19 @@
                     }
                 });
 
+                if ( userType === "design_office" ) {
+                    $("#contractor").hide();
+                } else {
+                    $("#designer").hide();
+                }
+
             }
 
             $(document).on("click", ".view-designer-types-btn", async function (event) {
                 event.preventDefault();
                 let userId = $(this).data("user");
                 let response = await get_design_types(userId);
-                prepareUserDesignTypesModal(response['data']);
+                prepareUserDesignTypesModal(response['data'], response['user_type']);
                 viewDesignerTypesModal.modal("show");
             });
 
@@ -333,6 +339,8 @@
                 designs.map((design) => {
                     viewDesignerTypesModal.find(`div[data-type='${design}']`).removeClass("bg-danger").removeClass("bg-success");
                 });
+                $("#designer").show();
+                $("#contractor").show();
             });
 
             async function getFiles(id) {
