@@ -55,8 +55,8 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
+                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="type"></label>
@@ -69,10 +69,6 @@
                                 <option value="consulting_office">مكتب استشاري</option>
                                 <option value="contractor">مقاول</option>
                             </select>
-                        </div>
-
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
                         </div>
                     </form>
                 </div>
@@ -199,8 +195,9 @@
 @section('scripts')
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script>
-        $.fn.dataTable.ext.errMode = 'none';
+        let submitSearch = () => $('#items_table').DataTable().ajax.reload(null, true);
 
+        $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
                 "dom": 'tpi',
@@ -241,9 +238,17 @@
             });
 
         });
-
-        $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, true);
+        $('#type').change(function (e) {
+            submitSearch()
+        });
+        $('#name').keypress(function (e) {
+            if( e.keyCode === 13 ) {
+                e.preventDefault()
+                submitSearch()
+                return false
+            } else if( this.value.length >= 2 ) {
+                submitSearch()
+            }
         });
 
         function delete_user(id, url, callback = null) {

@@ -81,6 +81,7 @@ class TaslemMaintenance extends Controller
     public function add_session_form(Request $request)
     {
         $data['boxes'] = \App\Models\RaftCompanyBox::query()->select('box')->groupBy('box')->get()->toArray();
+
         return view('CP.taslem_maintenance_layout.add_session_form', $data);
     }
 

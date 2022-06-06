@@ -38,14 +38,32 @@ class OrdersController extends Controller
             $q->where('owner_id', auth()->user()->id);
 
         })->get();
-        $box = RaftCompanyBox::query()->where('box',auth()->user()->box_number)->where('camp',auth()->user()->camp_number)->first();
-        $data['box']= $box;
+        if(auth()->user()->license_number){
+            $box=RaftCompanyBox::query()->where('license_number',auth()->user()->license_number)->first();
+            if(isset($box)){
+                 $data['can_create_order']=$box->seen_notes;
+            }else{
+                $data['can_create_order']=0;
+            }
+        }else{
+            $box = RaftCompanyBox::query()->where('box',auth()->user()->box_number)->where('camp',auth()->user()->camp_number)->first();
+            if(isset($box)){
+                $data['can_create_order']=$box->seen_notes;
+            }else{
+                $data['can_create_order']=0;
+            }
+        }
+        if(isset($box)){
+            $data['box']= $box;
+        }
         return view('CP.service_providers.orders', $data);
     }
 
     public function create_order()
     {
         $data['designers'] = User::query()->whereVitrified()->where('type', 'design_office')->get();
+
+
         return view('CP.service_providers.create_order', $data);
     }
 
