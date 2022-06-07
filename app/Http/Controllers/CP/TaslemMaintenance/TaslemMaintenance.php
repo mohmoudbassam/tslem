@@ -4,10 +4,7 @@ namespace App\Http\Controllers\CP\TaslemMaintenance;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContractorReportFile;
-use App\Models\Order;
-use App\Models\OrderSharer;
-use App\Models\OrderSharerReject;
-use App\Models\ServiceProviderFiles;
+
 use App\Models\Session;
 use App\Models\User;
 use App\Notifications\TasleemMaintenanceNotification;
@@ -15,10 +12,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
-use Multicaret\Unifonic\UnifonicFacade;
 
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Yajra\DataTables\DataTables;
 use App\Models\RaftCompanyBox;
 
@@ -244,6 +240,13 @@ class TaslemMaintenance extends Controller
             'success' => true,
             'message' => 'تمت العمليه بنجاح'
         ]);
+    }
+
+    function export(){
+        $sessions = Session::query()->whereDate('start_at', '=', now()->format('Y-m-d'))->get();
+
+        $pdf = PDF::loadView('CP.taslem_maintenance_layout.toDaySessionPdf',['sessions'=>$sessions]);
+        return $pdf->download('invoice.pdf');
     }
 
 }

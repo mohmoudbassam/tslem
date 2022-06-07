@@ -399,7 +399,7 @@ function sms($number, $body)
     ));
 
     $response = curl_exec($ch);
-    dd($response);
+
     $info = curl_getinfo($ch);
     curl_close($ch);
 

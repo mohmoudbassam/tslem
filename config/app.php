@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -180,8 +180,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        Alkoumi\LaravelHijriDate\LaravelHijriDateServiceProvider::class
-
+        Alkoumi\LaravelHijriDate\LaravelHijriDateServiceProvider::class,
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
 
 
     ],
@@ -239,6 +239,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Unifonic' => Multicaret\Unifonic\UnifonicFacade::class,
-    ],
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
+    ]
+
 
 ];
