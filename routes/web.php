@@ -116,6 +116,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
 
             });
+        Route::get('{user}/design/types', [UserController::class, 'get_design_types'])->name('.get_user_design_types');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
         Route::get('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');

@@ -288,7 +288,6 @@
                         headers: {
                             'X-CSRF-TOKEN': "{{ @csrf_token() }}",
                             'Accept': 'application/json',
-                            'Content': 'application/json',
                             'Content-Type': 'application/json'
                         },
                     });
