@@ -382,14 +382,14 @@ function sms($number, $body)
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
 
     curl_setopt($ch, CURLOPT_POST, TRUE);
-
+    $number = normalize_phone_number($number);
     $fields = [
         "userName" => "KIDANA",
         "numbers" => "$number",
         "userSender" => "KIDANA",
         "apiKey" => "23a90280110c155ba8a2d7c98efe2054",
-        "msg" =>$body,
-        'message'=>$body
+        "msg" => $body,
+        'message' => $body
     ];
 
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
@@ -403,5 +403,16 @@ function sms($number, $body)
     $info = curl_getinfo($ch);
     curl_close($ch);
 
+
+}
+
+function normalize_phone_number($number)
+{
+
+    $number = preg_replace('/^0+/', '', $number);
+
+    if (strlen($number) < 12) return '966' . $number;
+
+    return $number;
 
 }

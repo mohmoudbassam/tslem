@@ -326,7 +326,9 @@ Route::get('test', function () {
 
 Route::get('generate', [PDFController::class, 'generate']);
 Route::get('import-excel', function () {
-    return view('CP.import-excel.index');
+
+
+//    return view('CP.import-excel.index');
 });
 Route::post('import', [\App\Http\Controllers\ImportExcelController::class, 'import'])->name('import');
 
