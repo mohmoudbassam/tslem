@@ -25,7 +25,8 @@ function randomIntIdentifier($length = 10)
     return $identifier;
 }
 
-function get_specialty_obligation_files_types($specialty) {
+function get_specialty_obligation_files_types($specialty)
+{
     $types = [];
     foreach (get_specialty_obligation_files($specialty)["files"] as $obligationFiles) {
         $types[] = $obligationFiles["type"];
@@ -33,7 +34,8 @@ function get_specialty_obligation_files_types($specialty) {
     return $types;
 }
 
-function get_obligation_name_by_type($type) {
+function get_obligation_name_by_type($type)
+{
     return [
         "gypsum_obligation" => "التعهد الخاص بإضافة الألواح الجبسية",
         "kitchen_obligation" => "التعهد الخاص بإضافة المطابخ",
@@ -46,7 +48,8 @@ function get_obligation_name_by_type($type) {
     ][$type];
 }
 
-function get_specialty_obligation_files($specialty) {
+function get_specialty_obligation_files($specialty)
+{
     return [
         "architect" => [
             "name_ar" => "المعماري",
@@ -55,27 +58,27 @@ function get_specialty_obligation_files($specialty) {
                 [
                     "name" => "التعهد الخاص بإضافة الألواح الجبسية",
                     "type" => "gypsum_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة الألواح الجبسية.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة الألواح الجبسية.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
                     "type" => "kitchen_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة مواقع التخزين",
                     "type" => "storage_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة مواقع التخزين.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة مواقع التخزين.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
                     "type" => "entrance_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة وسائل تغطية المداخل.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية المداخل.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
                     "type" => "aisle_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة وسائل تغطية الممرات.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية الممرات.pdf")
                 ],
             ]
         ],
@@ -86,12 +89,12 @@ function get_specialty_obligation_files($specialty) {
                 [
                     "name" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
                     "type" => "electricity_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
                     "type" => "kitchen_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
                 ],
             ]
         ],
@@ -102,7 +105,7 @@ function get_specialty_obligation_files($specialty) {
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
                     "type" => "kitchen_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
                 ],
             ]
         ],
@@ -113,17 +116,17 @@ function get_specialty_obligation_files($specialty) {
                 [
                     "name" => "التعهد الخاص بإضافة المطابخ",
                     "type" => "kitchen_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المطابخ.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
                     "type" => "air_conditioner_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf")
                 ],
                 [
                     "name" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
                     "type" => "toilet_obligation",
-                    "path" => asset("storage/obligations/"."التعهد الخاص بإضافة المواضئ ودورات المياه.pdf")
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المواضئ ودورات المياه.pdf")
                 ],
             ]
         ]
@@ -368,27 +371,37 @@ function api_exception(Exception $e)
             'trace' => $e->getTrace(),
         ])->get();
 }
+
 function sms($number, $body)
 {
-    $url = "https://el.cloud.unifonic.com/rest/Messages/Send";
-    $data = [
-        'AppSid' => '23a90280110c155ba8a2d7c98efe2054',
-        'Recipient' => intval($number),
-        'SenderID' => 'KIDANA',
-        'Body' => $body,
-    ];
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);// this should be set to true in production
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $responseData = curl_exec($ch);
-    if (curl_errno($ch)) {
-        return curl_error($ch);
-    }
+
+    curl_setopt($ch, CURLOPT_URL, "https://www.msegat.com/gw/sendsms.php");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+
+    $fields = [
+        "userName" => "KIDANA",
+        "numbers" => "$number",
+        "userSender" => "KIDANA",
+        "apiKey" => "23a90280110c155ba8a2d7c98efe2054",
+        "msg" =>$body,
+        'message'=>$body
+    ];
+
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Content-Type: application/json"
+    ));
+
+    $response = curl_exec($ch);
+    dd($response);
+    $info = curl_getinfo($ch);
+    curl_close($ch);
 
 
-    return json_decode($responseData, true);
 }

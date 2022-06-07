@@ -180,7 +180,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        Alkoumi\LaravelHijriDate\LaravelHijriDateServiceProvider::class,
+        Alkoumi\LaravelHijriDate\LaravelHijriDateServiceProvider::class
+
+
 
     ],
 

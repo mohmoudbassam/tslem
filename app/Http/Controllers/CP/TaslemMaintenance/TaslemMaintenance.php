@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
+use Multicaret\Unifonic\UnifonicFacade;
+
 use Yajra\DataTables\DataTables;
 use App\Models\RaftCompanyBox;
 
@@ -87,11 +90,13 @@ class TaslemMaintenance extends Controller
 
     public function publish_session(Request $request)
     {
+
         $Sessions = Session::where('support_id', auth()->user()->id)->notPublished()->with('RaftCompanyLocation', 'RaftCompanyBox')->get();
 
         $raftUsers = [];
 
         foreach ($Sessions as $Session) {
+
             if (!isset($raftUsers[$Session->raft_company_location_id])) {
                 $raftUsers[$Session->raft_company_location_id] = 0;
             }
@@ -99,11 +104,32 @@ class TaslemMaintenance extends Controller
 
 
         }
+      ;
+        foreach ($Sessions as $session) {
+
+            $user = User::where('type', 'raft_company')->where('raft_company_type',$session->raft_company_location_id )->first();
+
+            if($user&&$user->phone){
+
+                $box=RaftCompanyBox::query()->where('id',$session->raft_company_box_id)->first();
+
+                sms($user->phone, __('message.appointment', [
+                    'camp' => optional($box)->camp,
+                    'box' => optional($box)->box,
+                    'company_name' => $user->company_name
+                ]));
+            }
+        }
 
         $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
-        $Users->each(function ($user){
-            if($user->phone){
-                sms($user->phone,'asdasdasdasd');
+        $Users->each(function ($user) {
+            if ($user->phone) {
+
+                sms($user->phone, __('message.appointment', [
+                    'camp' => '456',
+                    'box' => '12564',
+                    'company_name' => 'sdfs'
+                ]));
             }
 
         });
