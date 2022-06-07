@@ -211,6 +211,44 @@
 
                     window.location =Url;
                 }
+
+                function send_sms(id){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: '{{route('taslem_maintenance.sessions.send_sms')}}',
+                        data: {
+                            id: id
+                        },
+                        type: "POST",
+
+                        beforeSend() {
+                            KTApp.block('#page_modal', {
+                                overlayColor: '#000000',
+                                type: 'v2',
+                                state: 'success',
+                                message: 'جاري الانتظار'
+                            });
+                        },
+                        success: function (data) {
+                            if(data.success){
+                                $('#items_table').DataTable().ajax.reload(null, false);
+                                showAlertMessage('success', data.message);
+                            }else {
+                                showAlertMessage('error', 'حدث خطأ في النظام');
+                            }
+
+                            KTApp.unblockPage();
+                        },
+                        error: function (data) {
+                            showAlertMessage('error', 'حدث خطأ في النظام');
+                            KTApp.unblockPage();
+                        },
+                    });
+                }
             </script>
 
 @endsection

@@ -50,12 +50,15 @@ class TaslemMaintenance extends Controller
 
         return DataTables::of($sessions)
             ->addColumn('actions', function ($session) {
+
                 return '<div class="d-flex justify-content-end"><div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
                                                 <a class="dropdown-item" href="' . route('taslem_maintenance.add_files', ['session_id' => $session->id]) . '">إضافة الملفات</a>
+                                               <a class="dropdown-item" href="javascript:;" onclick="send_sms(' . $session->id . ')">إعادة إرسال الرسالة</a>
+
                                             </div>
                                         </div></div>';
             })->rawColumns(['actions'])
@@ -99,15 +102,14 @@ class TaslemMaintenance extends Controller
                 $raftUsers[$Session->raft_company_location_id]++;
 
 
-            }
-            ;
+            };
             foreach ($Sessions as $session) {
 
-                $user = User::where('type', 'raft_company')->where('raft_company_type',$session->raft_company_location_id )->first();
+                $user = User::where('type', 'raft_company')->where('raft_company_type', $session->raft_company_location_id)->first();
 
-                if($user&&$user->phone){
+                if ($user && $user->phone) {
 
-                    $box=RaftCompanyBox::query()->where('id',$session->raft_company_box_id)->first();
+                    $box = RaftCompanyBox::query()->where('id', $session->raft_company_box_id)->first();
 
                     sms($user->phone, __('message.appointment', [
                         'camp' => optional($box)->camp,
@@ -118,17 +120,7 @@ class TaslemMaintenance extends Controller
             }
 
             $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
-            $Users->each(function ($user) {
-                if ($user->phone) {
 
-                    sms($user->phone, __('message.appointment', [
-                        'camp' => '456',
-                        'box' => '12564',
-                        'company_name' => 'sdfs'
-                    ]));
-                }
-
-            });
             foreach ($Users as $User) {
                 $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth()->user()->id));
             }
@@ -249,11 +241,34 @@ class TaslemMaintenance extends Controller
         ]);
     }
 
-    function export(){
+    function export()
+    {
         $sessions = Session::query()->whereDate('start_at', '=', now()->format('Y-m-d'))->get();
 
-        $pdf = PDF::loadView('CP.taslem_maintenance_layout.toDaySessionPdf',['sessions'=>$sessions]);
+        $pdf = PDF::loadView('CP.taslem_maintenance_layout.toDaySessionPdf', ['sessions' => $sessions]);
         return $pdf->download('invoice.pdf');
+    }
+
+    public function send_sms(Request $request)
+    {
+
+        $session = Session::query()->where('id', $request->id)->first();
+        $user = User::query()->where('type', 'raft_company')->where('raft_company_type', $session->raft_company_location_id)->first();
+
+        $box = RaftCompanyBox::query()->where('id', $session->raft_company_box_id)->first();
+
+        if ($user->phone) {
+
+            sms($user->phone, __('message.appointment', [
+                'camp' => optional($box)->camp,
+                'box' => optional($box)->box,
+                'company_name' => $user->company_name
+            ]));
+        }
+        return response()->json([
+            'message' => 'تم ارسال الرسالة بنجاح',
+            'success' => true
+        ]);
     }
 
 }
