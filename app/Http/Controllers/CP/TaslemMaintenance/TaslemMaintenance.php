@@ -86,59 +86,66 @@ class TaslemMaintenance extends Controller
 
     public function publish_session(Request $request)
     {
+        try {
+            $Sessions = Session::where('support_id', auth()->user()->id)->notPublished()->with('RaftCompanyLocation', 'RaftCompanyBox')->get();
 
-        $Sessions = Session::where('support_id', auth()->user()->id)->notPublished()->with('RaftCompanyLocation', 'RaftCompanyBox')->get();
+            $raftUsers = [];
 
-        $raftUsers = [];
+            foreach ($Sessions as $Session) {
 
-        foreach ($Sessions as $Session) {
+                if (!isset($raftUsers[$Session->raft_company_location_id])) {
+                    $raftUsers[$Session->raft_company_location_id] = 0;
+                }
+                $raftUsers[$Session->raft_company_location_id]++;
 
-            if (!isset($raftUsers[$Session->raft_company_location_id])) {
-                $raftUsers[$Session->raft_company_location_id] = 0;
+
             }
-            $raftUsers[$Session->raft_company_location_id]++;
+            ;
+            foreach ($Sessions as $session) {
 
+                $user = User::where('type', 'raft_company')->where('raft_company_type',$session->raft_company_location_id )->first();
 
-        }
-      ;
-        foreach ($Sessions as $session) {
+                if($user&&$user->phone){
 
-            $user = User::where('type', 'raft_company')->where('raft_company_type',$session->raft_company_location_id )->first();
+                    $box=RaftCompanyBox::query()->where('id',$session->raft_company_box_id)->first();
 
-            if($user&&$user->phone){
-
-                $box=RaftCompanyBox::query()->where('id',$session->raft_company_box_id)->first();
-
-                sms($user->phone, __('message.appointment', [
-                    'camp' => optional($box)->camp,
-                    'box' => optional($box)->box,
-                    'company_name' => $user->company_name
-                ]));
-            }
-        }
-
-        $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
-        $Users->each(function ($user) {
-            if ($user->phone) {
-
-                sms($user->phone, __('message.appointment', [
-                    'camp' => '456',
-                    'box' => '12564',
-                    'company_name' => 'sdfs'
-                ]));
+                    sms($user->phone, __('message.appointment', [
+                        'camp' => optional($box)->camp,
+                        'box' => optional($box)->box,
+                        'company_name' => $user->company_name
+                    ]));
+                }
             }
 
-        });
-        foreach ($Users as $User) {
-            $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth()->user()->id));
+            $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
+            $Users->each(function ($user) {
+                if ($user->phone) {
+
+                    sms($user->phone, __('message.appointment', [
+                        'camp' => '456',
+                        'box' => '12564',
+                        'company_name' => 'sdfs'
+                    ]));
+                }
+
+            });
+            foreach ($Users as $User) {
+                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth()->user()->id));
+            }
+
+            Session::where('support_id', auth()->user()->id)->notPublished()->update(['is_published' => '1']);
+
+            return response()->json([
+                'message' => 'تمت عمليه النشر  بنجاح',
+                'success' => true
+            ]);
+        } catch (\Exception | \Error $exception) {
+            return response()->json([
+                'message' => 'خطا تقني الرجاء المحاولة لاحقا',
+                'success' => false,
+                'error' => $exception->getMessage()
+            ]);
         }
-
-        Session::where('support_id', auth()->user()->id)->notPublished()->update(['is_published' => '1']);
-
-        return response()->json([
-            'message' => 'تمت عمليه النشر  بنجاح',
-            'success' => true
-        ]);
     }
 
     public function save_session(Request $request)

@@ -26,7 +26,8 @@
         "phpoffice/phpword": "^0.18.3",
         "spatie/laravel-backup": "^7.0",
         "unisharp/laravel-filemanager": "^2.4",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+      "ext-curl": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
