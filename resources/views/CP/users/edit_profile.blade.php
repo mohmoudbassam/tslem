@@ -398,6 +398,42 @@
         </div>
     </div>
 
+    @if(auth()->user()->type == "contractor" and auth()->user()->contractor_types()->count() == 0)
+        <div class="modal fade" id="choose-contractor-specialty-modal" tabindex="-1" role="dialog" aria-labelledby="choose-contractor-specialty-modal-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="choose-contractor-specialty-modal-title">اختيار التخصص</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-info-circle">
+                                        من فضلك قم بإختيار التخصص الخاص بك
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label required-field" for="contractor-specialty">التخصص</label>
+                                    <select class="form-control select2" name="contractor_specialty" id="contractor-specialty" required>
+                                        <option value="1">عام</option>
+                                        <option value="2">الوقاية والحماية من الحرائق</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" id="submit-contractor-specialty-btn" class="btn btn-primary" data-dismiss="modal">موافق</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 @section('scripts')
 
@@ -459,4 +495,49 @@
 
         flatpickr(".flatpickr");
     </script>
+
+    @if(auth()->user()->type == "contractor" and auth()->user()->contractor_types()->count() == 0)
+        <script>
+            $(function () {
+                // $('.select2').select2({
+                //     width: "100%",
+                // });
+                $("#choose-contractor-specialty-modal").modal({backdrop: 'static', keyboard: false});
+                $("#choose-contractor-specialty-modal").modal("show");
+
+                async function update_contractor_specialty(specialty) {
+                    let response = await fetch("/contractor/update_specialty", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            specialty_id: specialty
+                        }),
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ @csrf_token() }}",
+                            'Accept': 'application/json',
+                            'Content': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                    });
+
+                    return await (await response).json();
+                }
+
+                $("#submit-contractor-specialty-btn").on("click", async function (event) {
+                    event.preventDefault();
+
+                    let specialty = $("#contractor-specialty").val();
+                    let response = await update_contractor_specialty(specialty);
+
+                    if ( response['success'] ) {
+                        showAlertMessage("success", response['message']);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        showAlertMessage("error", response['message']);
+                    }
+                });
+            })
+        </script>
+    @endif
 @endsection

@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Notifications\OrderNotification;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use NcJoes\OfficeConverter\OfficeConverter;
 
 use Illuminate\Support\Facades\Response;
@@ -69,6 +71,17 @@ class OrdersController extends Controller
 
     public function save_order(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'designer_id' => Rule::exists("users", "id")->where(function ($query) {
+                $query->where("type", "design_office");
+            }),
+            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('services_providers.save_order')->with(['error' => 'فشل في انشاء الطلب']);
+        }
+
         $order = Order::query()->create([
             "title" => Str::random(15),
             "description" => Str::random(15),
