@@ -184,6 +184,10 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 Route::get('accept_order/{order}', [ContractorController::class, 'accept_order'])->name('.accept_order');
                 Route::get('reject_order/{order}', [ContractorController::class, 'reject_order'])->name('.reject_order');
             });
+
+        Route::post("update_specialty", [ContractorController::class, "update_specialty"])
+            ->name(".update_specialty");
+
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
