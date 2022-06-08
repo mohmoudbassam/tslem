@@ -15,4 +15,8 @@ class RaftCompanyLocation extends Model
     public function user(){
         return $this->belongsTo(User::class,'id','raft_company_type');
     }
+
+    public function box(){
+       return $this->hasMany(RaftCompanyBox::class,'raft_company_location_id');
+    }
 }

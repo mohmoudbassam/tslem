@@ -23,7 +23,7 @@
     <!-- Icons Css -->
     <link href="<?php echo e(url('/')); ?>/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="<?php echo e(url('/')); ?>/assets/css/app-rtl-2.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="<?php echo e(url('/')); ?>/assets/css/app-rtl-3.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link href="<?php echo e(url("/")); ?>/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo e(url("/")); ?>/assets/libs/alertifyjs/build/css/alertify.min.css" rel="stylesheet" type="text/css" />
 
@@ -50,10 +50,10 @@
             .modal-backdrop.fade {
                 display: initial !important;
             }
-        @font-face {
+        /* @font-face {
             font-family: JannaLT;
             src: url('<?php echo e(url('/assets/fonts/JannaLT-Regular.woff')); ?>');
-        }
+        } */
 
         /* body {
             font-family: JannaLT !important;

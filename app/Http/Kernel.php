@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
     ];
 
@@ -79,6 +80,7 @@ class Kernel extends HttpKernel
         'raft_company'=>\App\Http\Middleware\CP\RaftCompany::class,
         'raft_center'=>\App\Http\Middleware\CP\RaftCenter::class,
         'ServiceProviderOrder'=>\App\Http\Middleware\CP\ServiceProviderOrder::class,
+        'MaintenanceAuth'=>\App\Http\Middleware\API\MaintenanceAuth::class
 
 
 

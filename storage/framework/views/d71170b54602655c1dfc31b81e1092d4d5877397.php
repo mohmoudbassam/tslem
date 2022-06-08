@@ -12,6 +12,16 @@
             position: relative;
         }
 
+        .file-view-wrapper:hover {
+            box-shadow: var(--bs-box-shadow) !important;
+        }
+        .file-view-icon {
+            height: 180px;
+            background-size: 50%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
         /*.blockOverlay{*/
         /*    po*/
         /*}*/
@@ -217,11 +227,7 @@
                             </div>
                             <div class="tab-pane" id="obligation_files_panel"
                                  role="tabpanel">
-                                <div class="card-body">
-                                    <div>
-                                        <div class="row" id="obligation-wrapper">
-                                        </div>
-                                    </div>
+                                <div class="card-body px-0" id="obligation-wrapper">
                                 </div>
                             </div>
                         </div>
@@ -330,13 +336,12 @@
                                 KTApp.unblockPage();
                             },
                             error: function (data) {
-                                console.log(data);
                                 KTApp.unblock('#page_modal');
                                 KTApp.unblockPage();
                             },
                         });
                     });
-                    $(this).find('.<?php echo e($_specialties->name_en); ?>_service_id').val($(this).find('.<?php echo e($_specialties->name_en); ?>_service_id').children().eq(1).attr("value")).trigger("change");
+                    
                 })
                 $(this).slideDown();
 
@@ -369,7 +374,6 @@
                 error.appendTo(element.next());
             },
             success: function (label, element) {
-                console.log(element);
                 $(element).removeClass("is-invalid");
             }
         });
@@ -384,17 +388,15 @@
                 $(e).rules("add", {required: true})
             });
 
-              console.log($("#add_edit_form").valid())
             if (!$("#add_edit_form").valid()) {
                 showAlertMessage('error', 'الرجاء ملئ جميع الحقول')
-
                 return false;
             }
-           console.log($('#add_edit_form').find(':input').length)
             if ($('#add_edit_form').find(':input').length <= 29) {
                 showAlertMessage('error', 'الرجاء تعبئة الطلب')
                 return false;
             }
+
             $.ajax({
                 url : '<?php echo e(route('design_office.save_file')); ?>',
                 data : new FormData($('#add_edit_form').get(0)),
@@ -425,16 +427,12 @@
                     KTApp.unblockPage();
                 },
                 error:function(data) {
-                    console.log(data);
                     KTApp.unblock('#page_modal');
                     KTApp.unblockPage();
                 },
             });
-
             $('#page_modal').appendTo('body').modal('show');
             $(".blockUI").remove();
-            // $("#add_edit_form").submit()
-
         });
 
 
@@ -486,14 +484,17 @@
 
     <script>
         $(function () {
-            const repeaterRowBtn = $("#repeater-row-btn");
             let tabs = [];
+            let tabsLength = 0;
+            let oldTabsLength = 0;
             function pushToTabs(name) {
                 if (tabs.includes(name.toLowerCase())) return null;
                  tabs.push(name.toLowerCase());
+                tabsLength = tabs.length;
             }
             function popFromTabs(name) {
                 tabs.splice(tabs.indexOf(name.toLowerCase()), 1);
+                tabsLength = tabs.length;
             }
             $(document).on("click", "#repeater-row-btn", function () {
                 const currentTab = $("li.nav-item > a.nav-link.specialty-nav.active[aria-selected='true']");
@@ -504,7 +505,9 @@
                 const currentTab = $("li.nav-item > a.nav-link.specialty-nav.active[aria-selected='true']");
                 const tabElementsLength = $(this).parents(`[data-repeater-list='${currentTab.data("specialty")}']`).children().length;
                 if ( parseInt(tabElementsLength) > 1 ) return null;
+                $("#obligation-wrapper").children().remove();
                 popFromTabs(currentTab.data("specialty"));
+                oldTabsLength = tabsLength;
             });
 
             async function fetchServicesObligationFiles() {
@@ -517,13 +520,47 @@
                 return await (await response).json();
             }
 
-            $("li.nav-item > a.nav-link[href='#obligation_files_panel']").on("click", function () {
+            function prepareObligationFilesUploader(data) {
+                data.map((dt) => {
+
+                    $("#obligation-wrapper").append(`
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h1 class="card-title">
+                                            ${dt['name_ar']}
+                                        </h1>
+                                    </div>
+                                    <div class="card-body" id="">
+                                        <div class="row">
+                                            ${dt['files'].map((file) => {
+                                                return `<div class="col-4"><div class="form-group"><label class="col-form-label">${file['name']}</label><a href="${file['path']}" download="" class="btn btn-block col-12 btn-primary">تحميل ملف التعهد</a> </div></div>  <div class="col-8"><div class="form-group"><label class="col-form-label required-field">${file['name']} ( بعد التعديل )</label> <input type="file" class="form-control pdf-file" name="obligations[${dt['name_en']}][${file['type']}]" accept="application/pdf" required></div> </div>`;
+                                            }).join(" ")}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
+
+                file_input_cu($(document).find(".pdf-file"), {}, ['pdf']);
+            }
+
+            $("li.nav-item > a.nav-link[href='#obligation_files_panel']").on("click", async function () {
                 if ( tabs.length < 1 ) {
-                    $("#obligation-wrapper").append(`<div class="col-12"><div class="alert alert-danger"><span>من فضلك قم بإضافة بعض الخدمات للطلب لكي يتسنى لك تحميل تعهدات الخدمة</span></div></div>`);
+                    $("#obligation-wrapper").append(`<siv class="row"><div class="col-12"><div class="alert alert-danger"><span>من فضلك قم بإضافة بعض الخدمات للطلب لكي يتسنى لك تحميل تعهدات الخدمة</span></div></div></div>`);
                     return null;
                 } else {
-                    fetchServicesObligationFiles();
-                    $("#obligation-wrapper").children().remove();
+                    if ( oldTabsLength !== tabsLength ) {
+                        $("#obligation-wrapper").children().remove();
+                        const obligationWrapper = $("#obligation-wrapper");
+                        obligationWrapper.append(`<div class="row"><div class="col-12"><div class="alert alert-info"><i class="fa fa-info-circle mx-2"></i><span>من فضلك قم بتحميل ملفات التعهد ومن ثم قم بإعادة رفعها بعد اكمال البيانات</span></div></div></div>`);
+                        let response = await fetchServicesObligationFiles();
+                        prepareObligationFilesUploader(response['data']);
+                        oldTabsLength = tabsLength;
+                    }
                 }
             });
 
