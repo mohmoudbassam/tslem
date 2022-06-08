@@ -206,8 +206,16 @@ class OrdersController extends Controller
 
     public function add_constructor_form(Order $order)
     {
-        $contractors = User::query()->where('type', '=', 'contractor')->get();
-        $consulting_offices = User::query()->where('type', '=', 'consulting_office')->get();
+        $contractors = User::query()->where('type', '=', 'contractor')
+            ->where("verified", 1)
+            ->get();
+        $consulting_offices = User::query()->where('type', '=', 'design_office')
+            ->where("verified", 1)
+            ->whereHas("designer_types", function ($query) {
+                $query
+                    ->where("type", "consulting");
+            })
+            ->get();
         return response()->json([
             'success' => true,
             'page' => view('CP.service_providers.chice_constractor', [
