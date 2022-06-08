@@ -156,12 +156,13 @@ class UserController extends Controller
                      ->when(request('name'), function ($query) {
                          return $query->where(function (Builder $q) {
                              $columns = [
-                                 'name',
+//                                 'name',
+                                 'id',
                                  'email',
                                  'phone',
                                  'license_number',
                                  'commercial_record',
-//                                 'company_name',
+                                 'company_name',
 //                                 'company_owner_name',
 //                                 'website',
 //                                 'responsible_name',
