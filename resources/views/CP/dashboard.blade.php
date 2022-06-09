@@ -2,14 +2,104 @@
 @section('title')
     المستخدمين
 @endsection
+@section('style')
+    <style>
+        .apexcharts-canvas{
+            width: 100% !important;
+        }
+        .apexcharts-tooltip-marker {
+            margin-left: 10px;
+            margin-right: 0px;
+        }
+        .legend-info {
+            font-family: JannaLT !important;
+            display: flex;
+          align-items: center;
+        }
+        .apexcharts-legend-series {
+          display: flex;
+          align-items: center;
+        }
+        .apexcharts-legend-marker {
+            margin-left: 7px;
+            margin-right: 0;
+        }
+        .apexcharts-datalabels-group *{
+          font-family: JannaLT !important;
+        }
+        .card.card-chart {
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px #c0946f38;
+        }
+    </style>
+
+@endsection
 @section('content')
+    <div class="row justify-content-center">
+        <div class="col-xl-4 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-1"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-4 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-2"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-4 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-3"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-6 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-4"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-6 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-5"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12 col-md-12">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-6"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div>
     <div class="row">
         <div class="col-xl-4 col-md-6">
             <!-- card -->
-            <div class="card card-h-100">
+            <div class="casrd card-sh-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="d-flex align-items-center py-3">
+                    <!-- <div class="d-flex align-items-center py-3">
                         <div class="col-auto me-3">
                             <div class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -25,7 +115,7 @@
                             <h2><span class="counter-value" data-target="{{$number_of_user}}"></span></h2>
                             <h6 class="text-muted mb-0">عدد المسجلين</h6>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div><!-- end card body -->
             </div><!-- end card -->
@@ -33,10 +123,10 @@
 
         <div class="col-xl-4 col-md-6">
             <!-- card -->
-            <div class="card card-h-100">
+            <div class="casrd card-sh-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="d-flex align-items-center py-3">
+                    <!-- <div class="d-flex align-items-center py-3">
                         <div class="col-auto me-3">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -52,16 +142,16 @@
                             <h2><span class="counter-value" data-target="{{$number_of_user_under_approve}}"></span></h2>
                             <h6 class="text-muted mb-0">عدد المستخدمين تحت الإعتماد</h6>
                         </div>
-                    </div>
+                    </div> -->
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col-->
         <div class="col-xl-4 col-md-6">
             <!-- card -->
-            <div class="card card-h-100">
+            <div class="casrd card-sh-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="d-flex align-items-center py-3">
+                    <!-- <div class="d-flex align-items-center py-3">
                         <div class="col-auto me-3">
                             <div class="icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -77,16 +167,16 @@
                             <h2><span class="counter-value" data-target="{{$number_of_approve_user}}"></span></h2>
                             <h6 class="text-muted mb-0">عدد المستخدمين المعتمدين</h6>
                         </div>
-                    </div>
+                    </div> -->
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col-->
         <div class="col-xl-4 col-md-6">
             <!-- card -->
-            <div class="card card-h-100">
+            <div class="casrd card-sh-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="d-flex align-items-center py-3">
+                    <!-- <div class="d-flex align-items-center py-3">
                         <div class="col-auto me-3">
                             <div class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -102,17 +192,17 @@
                             <h2><span class="counter-value" data-target="{{$number_of_service_providers}}"></span></h2>
                             <h6 class="text-muted mb-0">عدد مراكز الخدمة</h6>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col-->
         <div class="col-xl-4 col-md-6">
             <!-- card -->
-            <div class="card card-h-100">
+            <div class="casrd card-sh-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="d-flex align-items-center py-3">
+                    <!-- <div class="d-flex align-items-center py-3">
                         <div class="col-auto me-3">
                             <div class="icon">
                                 <svg width="30" height="30" viewBox="0 0 512 512" enable-background="new 0 0 512 512" id="Layer_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M484.582,319.536c-26.98-11.333-51.265-27.472-72.175-47.954c-12.721-12.472-34.628-12.472-47.391,0   c-6.171,6.046-12.721,11.588-19.462,16.863c-10.022-4.112-66.687-17.029-73.118-19.023c-12.745-3.964-23.117-13.665-28.077-25.858   c39.327-17.106,60.172-61.317,63.494-105.77v-6.657h16.715c5.038,0,9.114-4.082,9.114-9.114c0-5.032-4.076-9.114-9.114-9.114   h-11.392l-1.264-12.816c-2.985-30.166-23.692-55.217-52.755-63.833l-16.614-4.925v-6.218c0-5.032-4.076-9.114-9.114-9.114h-51.871   c-5.026,0-9.102,4.07-9.114,9.09l-0.012,6.183l-16.994,5.043c-28.944,8.58-49.634,33.524-52.719,63.524l-1.347,13.066H90.212   c-5.032,0-9.114,4.082-9.114,9.114c0,5.032,4.082,9.114,9.114,9.114h17.148l0.012,7.346c3.287,43.647,23.894,87.483,62.77,104.78   c-4.907,12.454-14.798,22.162-27.828,26.185c-11.072,3.418-54.054,12.828-54.054,12.828c-0.006,0-0.012,0-0.012,0   c-5.939,1.317-58.196,14.051-64.224,56.273c-3.637,25.395-7.88,49.497-7.886,49.545c-0.469,2.646,0.267,5.376,1.994,7.441   c1.733,2.065,4.29,3.252,6.984,3.252h279.23c10.336,20.672,22.791,40.265,37.411,58.54l20.951,26.179   c6.349,7.939,15.831,12.496,26.001,12.496c10.176,0,19.652-4.557,26.007-12.496l20.963-26.202   c27.466-34.343,47.521-73.196,59.602-115.478C497.873,332.756,493.269,323.179,484.582,319.536z M327.321,301.32   c-10.947,6.96-22.399,13.143-34.491,18.216c-3.459,1.46-6.028,4.017-7.992,6.948l8.111-33.032   C293.802,293.654,324.431,300.46,327.321,301.32z M253.977,53.727c21.924,6.503,37.541,25.407,39.796,48.168l1.092,11.013h-52.322   V50.339L253.977,53.727z M224.315,34.23v78.678h-33.833l0.172-78.678H224.315z M120.853,101.717   c2.326-22.642,17.937-41.451,39.772-47.931l11.766-3.489l-0.136,62.61h-52.553L120.853,101.717z M125.576,137.793v-6.657h164.061   l0.012,5.969c-3.584,47.658-30.344,95.731-82.048,95.731S129.136,184.762,125.576,137.793z M207.6,251.063   c6.847,0,13.267-0.777,19.397-2.029c3.323,8.817,8.503,16.602,15.107,22.969l-34.26,27.822l-34.812-28.119   c6.456-6.331,11.505-14.033,14.745-22.743C194.031,250.268,200.593,251.063,207.6,251.063z M121.891,293.458l22.168,87.098H86.308   v-78.868C89.56,300.685,113.744,295.339,121.891,293.458z M42.062,341.134c2.189-15.308,14.264-25.473,26.018-31.863v71.285H35.915   C37.505,371.003,39.902,356.24,42.062,341.134z M162.868,380.556l-23.271-91.429c2.99-0.783,14.863-4.794,18.044-6.408   l44.495,35.927c1.667,1.341,3.697,2.017,5.726,2.017c2.035,0,4.07-0.676,5.744-2.041l43.961-35.696   c3.032,1.507,14.65,5.394,17.676,6.183l-22.446,91.447H162.868z M271.564,380.556c0,0,10.277-39.772,10.579-38.722   c3.792,13.273,8.461,26.161,13.801,38.722H271.564z M421.444,445.907l-20.963,26.202c-5.75,7.191-17.789,7.191-23.544,0   l-20.945-26.179c-25.953-32.432-44.905-69.149-56.095-109.592c39.603-16.09,70.383-44.394,77.883-51.74   c2.943-2.884,6.824-4.474,10.941-4.474c4.106,0,7.986,1.59,10.924,4.474c22.571,22.096,48.767,39.505,78.103,52.227   C466.336,376.77,447.391,413.463,421.444,445.907z"></path><path d="M359.658,370.338c-3.56-3.56-9.327-3.56-12.888,0c-3.56,3.56-3.56,9.327,0,12.888l24.535,24.529   c2.035,2.053,4.753,3.18,7.642,3.18c2.89,0,5.601-1.127,7.619-3.157l50.286-50.292c3.56-3.56,3.56-9.327,0-12.888   c-3.554-3.56-9.327-3.56-12.888,0l-45.017,45.023L359.658,370.338z"></path></g></svg>
@@ -122,16 +212,16 @@
                             <h2><span class="counter-value" data-target="{{$number_of_contractors}}"></span></h2>
                             <h6 class="text-muted mb-0">عدد المقاولون</h6>
                         </div>
-                    </div>
+                    </div> -->
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col-->
         <div class="col-xl-4 col-md-6">
             <!-- card -->
-            <div class="card card-h-100">
+            <div class="casrd card-sh-100">
                 <!-- card body -->
                 <div class="card-body">
-                    <div class="d-flex align-items-center py-3">
+                    <!-- <div class="d-flex align-items-center py-3">
                         <div class="col-auto me-3">
                             <div class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -147,7 +237,7 @@
                             <h2><span class="counter-value" data-target="{{$number_of_consulting_office}}"></span></h2>
                             <h6 class="text-muted mb-0">عدد المكاتب الإستشارية</h6>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div><!-- end card body -->
             </div><!-- end card -->
@@ -158,4 +248,354 @@
 @endsection
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+
+var chart1 = {
+    chart: {
+    id: 'sparkline2',
+    group: 'sparklines',
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
+    },
+  },
+
+  stroke: {
+    curve: 'straight'
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'المجوع',
+    data: [50 ,35  ,60 ,50 , 70]
+  }],
+  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  yaxis: {
+    min: 0
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+  colors: ['#0A2373'],
+  title: {
+    text: '283',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+    }
+  },
+  subtitle: {
+    text: ' المحاضر المسلمة لشركات حجاج الداخل',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+      padding:"0px 20px"
+    }
+  }
+}
+new ApexCharts(document.querySelector("#chart-1"), chart1).render();
+
+//
+
+
+
+
+var chart2 = {
+    chart: {
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
+    },
+  },
+
+  stroke: {
+    curve: 'straight'
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'المجوع',
+    data: [50 ,70  ,80 ,90 , 100]
+  }],
+  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  yaxis: {
+    min: 0
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+  colors: ['#0A2373'],
+  title: {
+    text: '150',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+    }
+  },
+  subtitle: {
+    text: 'المحاضر المسلمة لشركات حجاج الخارج',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+      padding:"0px 20px"
+    }
+  }
+}
+new ApexCharts(document.querySelector("#chart-2"), chart2).render();
+
+
+//
+
+
+
+
+
+
+
+var chart3 = {
+    chart: {
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
+    },
+  },
+
+  stroke: {
+    curve: 'straight'
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'المجوع',
+    data: [50 ,35  ,111 ,50 , 70]
+  }],
+  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  yaxis: {
+    min: 0
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+  colors: ['#0A2373'],
+  title: {
+    text: '190',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+    }
+  },
+  subtitle: {
+    text: 'الشركات التي تم تسليمهم المواقع',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+      padding:"0px 20px"
+    }
+  }
+}
+new ApexCharts(document.querySelector("#chart-3"), chart3).render();
+
+
+//
+
+
+
+
+var chart4 = {
+    chart: {
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
+    },
+  },
+
+  stroke: {
+    curve: 'straight'
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'المجوع',
+    data: [10 ,20  ,10 ,20 , 10]
+  }],
+  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  yaxis: {
+    min: 0
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+  colors: ['#0A2373'],
+  title: {
+    text: '200',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+    }
+  },
+  subtitle: {
+    text: 'المواعيد التي تم اطلاقها لإستلام المخيمات',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+      padding:"0px 20px"
+    }
+  }
+}
+new ApexCharts(document.querySelector("#chart-4"), chart4).render();
+
+
+
+//
+
+
+
+
+
+
+
+
+var chart5 = {
+    chart: {
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
+    },
+  },
+
+  stroke: {
+    curve: 'straight'
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'المجوع',
+    data: [33 ,35  ,12 ,55 , 20]
+  }],
+  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  yaxis: {
+    min: 0
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+  colors: ['#0A2373'],
+  title: {
+    text: '350',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+    }
+  },
+  subtitle: {
+    text: 'مرات الدخول الى المنصة',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+      padding:"0px 20px"
+    }
+  }
+}
+new ApexCharts(document.querySelector("#chart-5"), chart5).render();
+
+
+
+
+//
+
+
+
+
+var optionDonut = {
+  chart: {
+      type: 'donut',
+      width: '100%',
+      height: 250,
+  },
+    colors: ['#bf9370', '#8e6f50','#615036', '#745931','#663e00'],
+    legend: {
+      fontWeight: 400,
+     formatter: function(seriesName, opts) {
+        return '<div class="legend-info">' + '<span class="pe-2">' + seriesName + '</span>' + '<span class="text-dark font-size-18">' + opts.w.globals.series[opts.seriesIndex] + '</span>' + '</div>'
+      }
+    },
+  series: [400, 600, 310, 700, 660]
+  ,
+    dataLabels: {
+      enabled: false,
+    },
+    labels: ['شركات الطوافة (حجاج الخارج) المسجلة', 'عدد مراكز خدمات الحج التابعة لشركات حجاج الخارج المضافة', 'عدد شركات حجاج الداخل المسجلين', 'عدد المكاتب الهندسية المسجلة', 'عدد المقاولين المسجلين'],
+
+     plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            show: true,
+            name: {
+              show: true,
+              color: '#dfsda',
+              offsetY: -10
+            },
+            value: {
+              show: true,
+              color: undefined,
+              offsetY: 16,
+              formatter: function (val) {
+                return val
+              }
+            },
+            total: {
+              show: true,
+              label: 'المجموع',
+              color: '#373d3f',
+              formatter: function (w) {
+                return w.globals.seriesTotals.reduce((a, b) => {
+                  return a + b
+                }, 0)
+              }
+            }
+          }
+        }
+      }
+    },
+}
+
+var donut = new ApexCharts(
+  document.querySelector("#chart-6"),
+  optionDonut
+)
+donut.render();
+
+</script>
 @endsection
