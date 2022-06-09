@@ -6,12 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SessionResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
     public function toArray($request)
     {
         return [
@@ -21,6 +16,9 @@ class SessionResource extends JsonResource
             'camp'=>optional($this->RaftCompanyBox)->camp ?? '',
             'phone'=>optional($this->RaftCompanyLocation)->user->phone ?? '',
             'start_at'=>$this->start_at ?? '',
+            'first_file'=>$this->RaftCompanyBox->file_first ?? '',
+            'file_second'=>$this->RaftCompanyBox->file_second ?? '',
+            'file_third'=>$this->RaftCompanyBox->file_third ?? '',
         ];
     }
 }

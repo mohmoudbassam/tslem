@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\TaslemMaintenance;
+namespace App\Http\Controllers\API\RaftCompany;
 
+use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Controllers\Controller;
 
 
-use App\Http\Requests\DeleteSessionRequest;
 use App\Http\Requests\MaintainanceUploadFile;
 use App\Http\Requests\SaveNote;
-use App\Http\Resources\BoxesResource;
 use App\Http\Resources\RaftCompanyLocationResource;
 use App\Http\Resources\SessionResource;
 use App\Models\RaftCompanyBox;
@@ -17,25 +16,21 @@ use App\Models\Session;
 use App\Models\User;
 use App\Notifications\TasleemMaintenanceNotification;
 use Carbon\Carbon;
+use ConvertApi\ConvertApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use PhpOffice\PhpWord\TemplateProcessor;
 
 
-class TaslemMaintainance extends Controller
+class RaftCompany extends Controller
 {
 
-    public function sessions(Request $request, $list_type = null)
+    public function sessions(Request $request)
     {
-        $sessions = Session::query()->published()->where('support_id', auth('users')->user()->id)->with('RaftCompanyLocation.user', 'RaftCompanyBox');
 
-        if ($list_type == 'today') {
-
-            $sessions = $sessions->whereDate('start_at', '=', now()->format('Y-m-d'));
-        }
-//
-//        if ($request->raft_company_location_id) {
-//            $sessions = $sessions->where('raft_company_location_id', $request->raft_company_location_id);
-//        }
+        $sessions = Session::query()->published()->where('raft_company_location_id',auth('users')->user()->raft_company_type)->with('RaftCompanyLocation.user', 'RaftCompanyBox');
 
         $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
             $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
@@ -49,13 +44,10 @@ class TaslemMaintainance extends Controller
 
     public function company_box(Request $request)
     {
-
         $raft_company = RaftCompanyLocation::query()->get();
-        $boxes = RaftCompanyBox::query()->get();
 
         return api(true, 200, 'تمت العمليه بنجاح')
-            ->add('raft_company', RaftCompanyLocationResource::collection($raft_company))
-            ->add('boxes', BoxesResource::collection($boxes)->collection->groupBy('box'))
+            ->add('sessions', RaftCompanyLocationResource::collection($raft_company))
             ->get();
     }
 
@@ -81,11 +73,10 @@ class TaslemMaintainance extends Controller
         return api(true, 200, 'تمت العمليه بنجاح')
             ->get();
     }
-
     public function publish_sessions(Request $request)
     {
         try {
-            $Sessions = Session::where('support_id', auth('users')->user()->id)->notPublished()->with('RaftCompanyLocation', 'RaftCompanyBox')->get();
+            $Sessions = Session::where('support_id',  auth('users')->user()->id)->notPublished()->with('RaftCompanyLocation', 'RaftCompanyBox')->get();
 
             $raftUsers = [];
 
@@ -118,10 +109,10 @@ class TaslemMaintainance extends Controller
             $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
 
             foreach ($Users as $User) {
-                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth('users')->user()->id));
+                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها',  auth('users')->user()->id));
             }
 
-            Session::where('support_id', auth('users')->user()->id)->notPublished()->update(['is_published' => '1']);
+            Session::where('support_id',  auth('users')->user()->id)->notPublished()->update(['is_published' => '1']);
 
             return api(true, 200, 'تمت العمليه بنجاح')
                 ->get();
@@ -132,12 +123,11 @@ class TaslemMaintainance extends Controller
         }
     }
 
-    public function upload_file(MaintainanceUploadFile $request)
-    {
+    public function upload_file(MaintainanceUploadFile $request){
 
         $Session = Session::query()->where('id', $request->session_id)->first();
 
-        $type = $request->type;
+        $type=$request->type;
 
         if ($request->file('file')) {
             $path = Storage::disk('public')->put("service_provider", $request->file('file'));
@@ -152,9 +142,7 @@ class TaslemMaintainance extends Controller
         return api(true, 200, 'تمت العمليه بنجاح')
             ->get();
     }
-
-    public function save_note(SaveNote $request)
-    {
+    public function save_note(SaveNote $request){
 
         $Session = Session::query()->where('id', $request->session_id)->first();
 
@@ -166,17 +154,66 @@ class TaslemMaintainance extends Controller
 
         RaftCompanyBox::where('id', $Session->raft_company_box_id)->update(['tasleem_notes' => $request->note]);
 
-
         return api(true, 200, 'تمت العمليه بنجاح')
             ->get();
     }
-
-    public function delete_session(DeleteSessionRequest $request)
+    public function docx_file(Request $request)
     {
 
+        $file_type = $this->fileType($request->file_type);
+        $session=Session::query()->find($request->session_id);
+        if(!$session){
+            return api(false, 404, 'لم يتم العثور على الموعد')
+                ->get();
+        }
+        $file_name = uniqid(auth('users')->user()->id . '_') . '.docx';
 
-        $Session = Session::where([['support_id', auth('users')->user()->id], ['id', $request->session_id]])->delete();
+        $templateProcessor = new TemplateProcessor(Storage::disk('public')->path($file_type));
 
+        $templateProcessor->setValues([
+            'box' => $session->RaftCompanyBox->box,
+            'cmp' => $session->RaftCompanyBox->camp,
+            'date' => Hijri::Date('Y/m/d'),
+            'time' => now()->format('H:i')
+        ]);
+        $templateProcessor->saveAs(Storage::disk('public')->path('service_provider_generator/' . $file_name));
+
+        ConvertApi::setApiSecret('uVAzHfhZAhfyQ1mZ');
+        $result = ConvertApi::convert('pdf', [
+            'File' => Storage::disk('public')->path('service_provider_generator/' . $file_name)
+        ], 'docx'
+        );
+
+        $result->saveFiles(Storage::disk('public')->path('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)));
+
+        return api(true, 200, 'تمت العمليه بنجاح')
+            ->add('path',Storage::disk('public')->path('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)))
+            ->get();
+    }
+
+    public function fileType($type)
+    {
+
+        if (!in_array($type, [1, 2, 3])) {
+            abort(404);
+        }
+        return [
+            '1' => 'محضر قراءة عداد الكهرباء الخاص بالمخيم.docx',
+            '2' => 'كشف بالملاحظات والتلفيات والمفقودات عند تسليم المخيمات للجهات المستفيدة لموسم حج 1443 هـ.docx',
+            '3' => 'محضر تسليم المخيمات.docx'
+        ][$type];
+    }
+
+    public function seen_maintain_file(Request $request)
+    {
+        $session=Session::query()->find($request->session_id);
+        if(!$session){
+            return api(false, 404, 'لم يتم العثور على الموعد')
+                ->get();
+        }
+        $session->RaftCompanyBox->update([
+            'seen_notes'=>1
+        ]);
         return api(true, 200, 'تمت العمليه بنجاح')
             ->get();
     }

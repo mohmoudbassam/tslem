@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\RaftCompany\RaftCompany;
 use App\Http\Controllers\API\TaslemMaintenance\TaslemMaintainance;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Resources\UserResource;
@@ -33,10 +34,19 @@ Route::prefix('auth')->group(function () {
 
 });
 Route::middleware(['APIUserAuth', 'MaintenanceAuth'])->prefix('maintenance')->group(function () {
-Route::get('sessions/{list_type?}',[TaslemMaintainance::class,'sessions']);
-Route::get('company_box',[TaslemMaintainance::class,'company_box']);
-Route::post('save_session',[TaslemMaintainance::class,'save_session']);
-Route::post('publish_sessions',[TaslemMaintainance::class,'publish_sessions']);
+    Route::get('sessions/{list_type?}', [TaslemMaintainance::class, 'sessions']);
+    Route::get('company_box', [TaslemMaintainance::class, 'company_box']);
+    Route::post('save_session', [TaslemMaintainance::class, 'save_session']);
+    Route::post('publish_sessions', [TaslemMaintainance::class, 'publish_sessions']);
+    Route::post('upload_file', [TaslemMaintainance::class, 'upload_file']);
+    Route::post('save_note', [TaslemMaintainance::class, 'save_note']);
+    Route::post('delete_session', [TaslemMaintainance::class, 'delete_session']);
+});
+Route::middleware(['APIUserAuth', 'RaftCompanyAuth'])->prefix('raft')->group(function () {
+    Route::get('sessions',[RaftCompany::class, 'sessions']);
+    Route::get('file',[RaftCompany::class, 'docx_file']);
+    Route::post('seen',[RaftCompany::class, 'seen_maintain_file']);
+
 });
 Route::prefix('user')->group(function () {
     Route::post('save', [UserController::class, 'postRegister']);

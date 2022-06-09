@@ -80,7 +80,8 @@ class Kernel extends HttpKernel
         'raft_company'=>\App\Http\Middleware\CP\RaftCompany::class,
         'raft_center'=>\App\Http\Middleware\CP\RaftCenter::class,
         'ServiceProviderOrder'=>\App\Http\Middleware\CP\ServiceProviderOrder::class,
-        'MaintenanceAuth'=>\App\Http\Middleware\API\MaintenanceAuth::class
+        'MaintenanceAuth'=>\App\Http\Middleware\API\MaintenanceAuth::class,
+        'RaftCompanyAuth'=>\App\Http\Middleware\API\RaftCompanyAuth::class
 
 
 

@@ -125,7 +125,6 @@ class RaftCompanyController extends Controller
                     $user->{$col_name} = $path;
                 }
 
-
             }
             $user->save();
         }

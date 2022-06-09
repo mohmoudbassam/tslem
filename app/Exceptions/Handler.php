@@ -83,5 +83,6 @@ class Handler extends ExceptionHandler
                 return api_exception($e);
             }
         });
+
     }
 }
