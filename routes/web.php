@@ -121,6 +121,9 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
         Route::get('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
     });
+    Route::prefix('design-office')->name('design_office')->group(function () {
+        Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
+    });
     Route::prefix('design-office')->name('design_office')->middleware(['design_office'])->group(function () {
         Route::get('orders', [DesignerOrderController::class, 'orders'])->name('.orders');
         Route::get('', [DesignerOrderController::class, 'list'])->name('.list');
@@ -129,7 +132,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('edit_files/{order}', [DesignerOrderController::class, 'edit_files'])->name('.edit_files');
         Route::get('get_service_by_id/{id}', [DesignerOrderController::class, 'get_service_by_id'])->name('.get_service_by_id');
         Route::get('view_file/{order}', [DesignerOrderController::class, 'view_file'])->name('.view_file');
-        Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
 
         Route::get('service/obligation/files', [DesignerOrderController::class, 'get_service_obligation_files'])->name('.service_obligation_files');
 
