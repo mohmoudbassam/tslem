@@ -116,6 +116,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
 
             });
+        Route::get('{user}/design/types', [UserController::class, 'get_design_types'])->name('.get_user_design_types');
         Route::get('list', [OrdersController::class, 'list'])->name('.list');
         Route::get('add_constructor_form/{order}', [OrdersController::class, 'add_constructor_form'])->name('.add_constructor_form');
         Route::get('choice_constructor_action', [OrdersController::class, 'choice_constructor_action'])->name('.choice_constructor_action');
@@ -184,6 +185,10 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 Route::get('accept_order/{order}', [ContractorController::class, 'accept_order'])->name('.accept_order');
                 Route::get('reject_order/{order}', [ContractorController::class, 'reject_order'])->name('.reject_order');
             });
+
+        Route::post("update_specialty", [ContractorController::class, "update_specialty"])
+            ->name(".update_specialty");
+
     });
     Route::prefix('consulting-office')->name('consulting_office')->middleware(['consulting_office', 'verifiedUser'])->group(function () {
         Route::get('orders', [ConsultingOfficeController::class, 'orders']);
@@ -302,6 +307,8 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::post('/delete_session', [TaslemMaintenance::class, 'delete_session'])->name('.delete');
         Route::post('/publish', [TaslemMaintenance::class, 'publish_session'])->name('.publish');
         Route::get('/toDaySessions', [TaslemMaintenance::class, 'index'])->name('.toDaySessions');
+        Route::get('/export', [TaslemMaintenance::class, 'export'])->name('.export');
+        Route::post('send_sms', [TaslemMaintenance::class, 'send_sms'])->name('.send_sms');
 
     });
     Route::get('/add_files/{session_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
@@ -320,7 +327,9 @@ Route::get('test', function () {
 
 Route::get('generate', [PDFController::class, 'generate']);
 Route::get('import-excel', function () {
-    return view('CP.import-excel.index');
+
+
+//    return view('CP.import-excel.index');
 });
 Route::post('import', [\App\Http\Controllers\ImportExcelController::class, 'import'])->name('import');
 

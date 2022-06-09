@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Notifications\OrderNotification;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use NcJoes\OfficeConverter\OfficeConverter;
 
 use Illuminate\Support\Facades\Response;
@@ -69,6 +71,17 @@ class OrdersController extends Controller
 
     public function save_order(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'designer_id' => Rule::exists("users", "id")->where(function ($query) {
+                $query->where("type", "design_office");
+            }),
+            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('services_providers.save_order')->with(['error' => 'فشل في انشاء الطلب']);
+        }
+
         $order = Order::query()->create([
             "title" => Str::random(15),
             "description" => Str::random(15),
@@ -193,8 +206,16 @@ class OrdersController extends Controller
 
     public function add_constructor_form(Order $order)
     {
-        $contractors = User::query()->where('type', '=', 'contractor')->get();
-        $consulting_offices = User::query()->where('type', '=', 'consulting_office')->get();
+        $contractors = User::query()->where('type', '=', 'contractor')
+            ->where("verified", 1)
+            ->get();
+        $consulting_offices = User::query()->where('type', '=', 'design_office')
+            ->where("verified", 1)
+            ->whereHas("designer_types", function ($query) {
+                $query
+                    ->where("type", "consulting");
+            })
+            ->get();
         return response()->json([
             'success' => true,
             'page' => view('CP.service_providers.chice_constractor', [

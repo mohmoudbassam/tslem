@@ -12,7 +12,8 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
     {
-        $user = User::query()->where('name', $request->username)->first();
+        $user = User::query()->where('name', $request->username)->whereIn('type',['raft_company','taslem_maintenance'])->first();
+
         if (!$user) {
             return api(false, 400, 'الرجاء إدخال كلمة مرور صحيحة')->get();
         }

@@ -20,6 +20,16 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
+        }
     </style>
 
     <!-- start page title -->
@@ -45,8 +55,8 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
+                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="type"></label>
@@ -59,10 +69,6 @@
                                 <option value="consulting_office">مكتب استشاري</option>
                                 <option value="contractor">مقاول</option>
                             </select>
-                        </div>
-
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
                         </div>
                     </form>
                 </div>
@@ -189,8 +195,9 @@
 <?php $__env->startSection('scripts'); ?>
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script>
-        $.fn.dataTable.ext.errMode = 'none';
+        let submitSearch = () => $('#items_table').DataTable().ajax.reload(null, true);
 
+        $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
                 "dom": 'tpi',
@@ -231,9 +238,17 @@
             });
 
         });
-
-        $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, true);
+        $('#type').change(function (e) {
+            submitSearch()
+        });
+        $('#name').keypress(function (e) {
+            if( e.keyCode === 13 ) {
+                e.preventDefault()
+                submitSearch()
+                return false
+            } else if( this.value.length >= 2 ) {
+                submitSearch()
+            }
         });
 
         function delete_user(id, url, callback = null) {
@@ -355,9 +370,10 @@
 
             function prepareViewFiles(data) {
                 data.map(file => {
-                    $("#file-view-row").append(`<div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" data-file="${file['path']}" style="cursor:pointer; height: 220px;">
-                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                    $("#file-view-row").append(`<div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" data-file="${file['path']}" style="cursor:pointer;">
+                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                 <div class="file-view-icon" style="background-image: url('${file['icon']}');"></div>
+                                <div class="file-view-download"><i class="fas fa-download"></i></div>
                                 <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
                                     <small class="text-muted" id="file-view-name">${file['name']}</small>
                                 </div>

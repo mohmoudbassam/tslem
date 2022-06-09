@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\TaslemMaintenance\TaslemMaintainance;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Resources\UserResource;
 use App\Http\Controllers\API\Auth\AuthController;
@@ -26,9 +27,17 @@ Route::prefix('auth')->group(function () {
     Route::middleware('APIUserAuth')->group(function () {
         Route::get('me', [AuthController::class, 'getMe']);
         Route::post('logout', [AuthController::class, 'postLogout']);
-    });
-});
 
+
+    });
+
+});
+Route::middleware(['APIUserAuth', 'MaintenanceAuth'])->prefix('maintenance')->group(function () {
+Route::get('sessions/{list_type?}',[TaslemMaintainance::class,'sessions']);
+Route::get('company_box',[TaslemMaintainance::class,'company_box']);
+Route::post('save_session',[TaslemMaintainance::class,'save_session']);
+Route::post('publish_sessions',[TaslemMaintainance::class,'publish_sessions']);
+});
 Route::prefix('user')->group(function () {
     Route::post('save', [UserController::class, 'postRegister']);
 });

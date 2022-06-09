@@ -10,6 +10,7 @@
         "alkoumi/laravel-hijri-date": "^1.0",
         "barryvdh/laravel-dompdf": "^1.0",
         "convertapi/convertapi-php": "^1.5",
+        "dompdf/dompdf": "^1.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
@@ -21,10 +22,12 @@
         "mpdf/mpdf": "^8.1",
         "multicaret/laravel-unifonic": "^2.0",
         "ncjoes/office-converter": "^1.0",
+        "niklasravnsborg/laravel-pdf": "^4.1",
         "phpoffice/phpword": "^0.18.3",
         "spatie/laravel-backup": "^7.0",
         "unisharp/laravel-filemanager": "^2.4",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+      "ext-curl": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -73,7 +76,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform-check": false
     },
     "minimum-stability": "dev",
     "prefer-stable": true

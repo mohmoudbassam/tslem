@@ -76,10 +76,15 @@
                                aria-describedby="DataTables_Table_0_info">
                             <thead>
                             <th>
+                               اسم الشركة
+                            </th>
+                            <th>
                                 رقم المربع
                             </th>
                             <th>
                                 رقم المخيم
+                            </th><th>
+                                رقم الشركة
                             </th>
                             <th>
                                 وقت الموعد
@@ -152,9 +157,12 @@
                                 "url": "{{url('/')}}/assets/datatables/Arabic.json"
                             },
                             columns: [
-                                {className: 'text-center',"width": "30%", data: 'raft_company_box.box', name: 'box_number'},
-                                {className: 'text-center',"width": "30%", data: 'raft_company_box.camp', name: 'camp_number'},
-                                {className: 'text-center',"width": "30%", data: 'start_at', name: 'start_at'},
+                                {className: 'text-center',"width": "20%", data: 'raft_company_location.name', name: 'raft_company_location'},
+                                {className: 'text-center',"width": "20%", data: 'raft_company_box.box', name: 'box_number'},
+                                {className: 'text-center',"width": "20%", data: 'raft_company_box.camp', name: 'camp_number'},
+                                {className: 'text-center',"width": "20%", data: 'raft_company_location.user.phone', name: 'raft_company_location.user.phone'},
+
+                                {className: 'text-center',"width": "20%", data: 'start_at', name: 'start_at'},
                                 {className: 'text-left',"width": "10%", data: 'actions', name: 'actions'}
                             ],
 
