@@ -52,10 +52,11 @@ class TaslemMaintainance extends Controller
 
         $raft_company = RaftCompanyLocation::query()->get();
         $boxes = RaftCompanyBox::query()->get();
-
+//          $bx=collect(BoxesResource::collection($boxes)->collection->groupBy('box'));
+        $newCol = $this->prepare_box_list($boxes);
         return api(true, 200, 'تمت العمليه بنجاح')
             ->add('raft_company', RaftCompanyLocationResource::collection($raft_company))
-            ->add('boxes', BoxesResource::collection($boxes)->collection->groupBy('box'))
+            ->add('boxes', $newCol)
             ->get();
     }
 
@@ -179,5 +180,26 @@ class TaslemMaintainance extends Controller
 
         return api(true, 200, 'تمت العمليه بنجاح')
             ->get();
+    }
+
+    public function prepare_box_list($boxes)
+    {
+        $boxes = $boxes->groupBy('box');
+
+
+        $newCol = $boxes->map(function ($boxes, $box_id) {
+
+            $camp = $boxes->map(function ($key, $val) {
+                return $key->camp;
+
+
+            });
+
+            return [
+                'camps' => $camp,
+                'raft_id' => $boxes[0]->raft_company_location_id
+            ];
+        });
+        return $newCol;
     }
 }
