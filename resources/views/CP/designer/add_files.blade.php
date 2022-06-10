@@ -55,7 +55,7 @@
                         <li class="nav-item">
                             <a class="nav-link px-3 " data-bs-toggle="tab"
                                href="#general_file_panel"
-                               role="tab">ملف الموقع العام</a>
+                               role="tab">الوقاية والحماية من الحريق</a>
                         </li>
                             <li class="nav-item">
                                 <a class="nav-link px-3 " data-bs-toggle="tab"

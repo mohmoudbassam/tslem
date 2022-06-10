@@ -109,10 +109,6 @@
                             <div class="row">
 
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  العنوان : </span>{{$order->title}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
                                     <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
                                 </div>
 
@@ -120,14 +116,9 @@
                                     <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                                 </div>
 
-
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">   التفاصيل : </span>{{$order->description}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
