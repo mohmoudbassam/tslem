@@ -62,8 +62,19 @@
                     <div id="chart-3"></div>
                 </div><!-- end card body -->
             </div><!-- end card -->
-        </div><!-- end col -->
-        <div class="col-xl-6 col-md-6">
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <!-- card -->
+            <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                    <div id="chart-7"></div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div>
+
+      <!-- end col -->
+        <div class="col-xl-4 col-md-6">
             <!-- card -->
             <div class="card card-h-100 card-chart">
                 <!-- card body -->
@@ -72,7 +83,7 @@
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col -->
-        <div class="col-xl-6 col-md-6">
+        <div class="col-xl-4 col-md-6">
             <!-- card -->
             <div class="card card-h-100 card-chart">
                 <!-- card body -->
@@ -139,7 +150,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <h2><span class="counter-value" data-target="{{$number_of_user_under_approve}}"></span></h2>
+                            <h2><span class="counter-value" data-target=""></span></h2>
                             <h6 class="text-muted mb-0">عدد المستخدمين تحت الإعتماد</h6>
                         </div>
                     </div> -->
@@ -164,7 +175,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <h2><span class="counter-value" data-target="{{$number_of_approve_user}}"></span></h2>
+                            <h2><span class="counter-value" data-target=""></span></h2>
                             <h6 class="text-muted mb-0">عدد المستخدمين المعتمدين</h6>
                         </div>
                     </div> -->
@@ -189,7 +200,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <h2><span class="counter-value" data-target="{{$number_of_service_providers}}"></span></h2>
+                            <h2><span class="counter-value" data-target=""></span></h2>
                             <h6 class="text-muted mb-0">عدد مراكز الخدمة</h6>
                         </div>
                     </div> -->
@@ -209,7 +220,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <h2><span class="counter-value" data-target="{{$number_of_contractors}}"></span></h2>
+                            <h2><span class="counter-value" data-target=""></span></h2>
                             <h6 class="text-muted mb-0">عدد المقاولون</h6>
                         </div>
                     </div> -->
@@ -234,7 +245,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <h2><span class="counter-value" data-target="{{$number_of_consulting_office}}"></span></h2>
+                            <h2><span class="counter-value" data-target=""></span></h2>
                             <h6 class="text-muted mb-0">عدد المكاتب الإستشارية</h6>
                         </div>
                     </div> -->
@@ -270,9 +281,9 @@ var chart1 = {
   },
   series: [{
     name: 'المجوع',
-    data: [50 ,35  ,60 ,50 , 70]
+    data: @json(array_values($box_with_files_in))
   }],
-  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  labels: @json(array_keys($box_with_files_in)),
   yaxis: {
     min: 0
   },
@@ -281,7 +292,7 @@ var chart1 = {
   },
   colors: ['#0A2373'],
   title: {
-    text: '283',
+    text: @json($count_box_with_files_in),
     offsetX: 0+'%',
     style: {
       fontSize: '24px',
@@ -324,9 +335,9 @@ var chart2 = {
   },
   series: [{
     name: 'المجوع',
-    data: [50 ,70  ,80 ,90 , 100]
+    data: @json(array_values($box_with_files_out))
   }],
-  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  labels: @json(array_keys($box_with_files_out)),
   yaxis: {
     min: 0
   },
@@ -335,7 +346,7 @@ var chart2 = {
   },
   colors: ['#0A2373'],
   title: {
-    text: '150',
+    text: @json($count_box_with_files_out),
     offsetX: 0+'%',
     style: {
       fontSize: '24px',
@@ -382,9 +393,9 @@ var chart3 = {
   },
   series: [{
     name: 'المجوع',
-    data: [50 ,35  ,111 ,50 , 70]
+    data: @json(array_values($count_actions_performed_per_day))
   }],
-  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  labels:  @json(array_keys($count_actions_performed_per_day)),
   yaxis: {
     min: 0
   },
@@ -393,7 +404,7 @@ var chart3 = {
   },
   colors: ['#0A2373'],
   title: {
-    text: '190',
+    text: @json($count_actions_performed),
     offsetX: 0+'%',
     style: {
       fontSize: '24px',
@@ -402,7 +413,7 @@ var chart3 = {
     }
   },
   subtitle: {
-    text: 'الشركات التي تم تسليمهم المواقع',
+    text: 'عدد الإجراءات المنفذة',
     offsetX: 0+'%',
     style: {
       fontSize: '14px',
@@ -417,8 +428,8 @@ new ApexCharts(document.querySelector("#chart-3"), chart3).render();
 
 //
 
-
-
+var asd= [...Array(5).keys()].map(n => `2018-09-0${n+1}`)
+console.log(asd)
 
 var chart4 = {
     chart: {
@@ -437,9 +448,9 @@ var chart4 = {
   },
   series: [{
     name: 'المجوع',
-    data: [10 ,20  ,10 ,20 , 10]
+    data: @json(array_values($session_for_boxes))
   }],
-  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  labels: @json(array_keys($session_for_boxes)),
   yaxis: {
     min: 0
   },
@@ -448,7 +459,7 @@ var chart4 = {
   },
   colors: ['#0A2373'],
   title: {
-    text: '200',
+    text: '{{$session_count}}',
     offsetX: 0+'%',
     style: {
       fontSize: '24px',
@@ -497,9 +508,9 @@ var chart5 = {
   },
   series: [{
     name: 'المجوع',
-    data: [33 ,35  ,12 ,55 , 20]
+    data: @json(array_values($number_of_login_per_day))
   }],
-  labels: [...Array(5).keys()].map(n => `2018-09-0${n+1}`),
+  labels: @json(array_keys($number_of_login_per_day)),
   yaxis: {
     min: 0
   },
@@ -508,7 +519,7 @@ var chart5 = {
   },
   colors: ['#0A2373'],
   title: {
-    text: '350',
+    text: '{{$number_of_login}}',
     offsetX: 0+'%',
     style: {
       fontSize: '24px',
@@ -528,6 +539,55 @@ var chart5 = {
   }
 }
 new ApexCharts(document.querySelector("#chart-5"), chart5).render();
+
+var chart7 = {
+    chart: {
+    type: 'area',
+    height: 160,
+    sparkline: {
+      enabled: true
+    },
+  },
+
+  stroke: {
+    curve: 'straight'
+  },
+  fill: {
+    opacity: 1,
+  },
+  series: [{
+    name: 'المجوع',
+    data: @json(array_values($count_actions_outing_per_day))
+  }],
+  labels: @json(array_keys($count_actions_outing_per_day)),
+  yaxis: {
+    min: 0
+  },
+  xaxis: {
+    type: 'datetime',
+  },
+  colors: ['#0A2373'],
+  title: {
+    text: '{{$count_actions_outing}}',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '24px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+    }
+  },
+  subtitle: {
+    text: 'عدد الطلبات الصادرة',
+    offsetX: 0+'%',
+    style: {
+      fontSize: '14px',
+      cssClass: 'apexcharts-yaxis-title px-4',
+      fontFamily: 'JannaLT',
+      padding:"0px 20px"
+    }
+  }
+}
+new ApexCharts(document.querySelector("#chart-7"), chart7).render();
 
 
 
@@ -550,12 +610,12 @@ var optionDonut = {
         return '<div class="legend-info">' + '<span class="pe-2">' + seriesName + '</span>' + '<span class="text-dark font-size-18">' + opts.w.globals.series[opts.seriesIndex] + '</span>' + '</div>'
       }
     },
-  series: [400, 600, 310, 700, 660]
+  series: @json(array_values($donat))
   ,
     dataLabels: {
       enabled: false,
     },
-    labels: ['شركات الطوافة (حجاج الخارج) المسجلة', 'عدد مراكز خدمات الحج التابعة لشركات حجاج الخارج المضافة', 'عدد شركات حجاج الداخل المسجلين', 'عدد المكاتب الهندسية المسجلة', 'عدد المقاولين المسجلين'],
+    labels: ['شركات الطوافة (حجاج الخارج) المسجلة', 'عدد شركات حجاج الداخل المسجلين', 'عدد المكاتب الهندسية المسجلة', 'عدد المقاولين المسجلين'],
 
      plotOptions: {
       pie: {
