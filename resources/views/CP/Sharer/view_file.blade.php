@@ -174,7 +174,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            // $2y$10$XGozjn0FyhruBgBy6S8t1.iaxC6EY4uCdbNAGb4TI9eCxr1vQ4QT6
 
                             @if(auth()->user()->type == \App\Models\User::SHARER_TYPE )
                                 <div class="offset-md-9 col-md-3 mb-3">
