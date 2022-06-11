@@ -97,6 +97,11 @@
                                role="tab">ملفات التعهدات</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link px-3" data-bs-toggle="tab"
+                               href="#fire_protections_files"
+                               role="tab">ملفات الوقاية والحماية من الحريق</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link px-3 " data-bs-toggle="tab"
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
@@ -342,6 +347,33 @@
                                     </div>
                                 </div>
                             @endforeach
+                        </div>
+                        <div class="tab-pane" id="fire_protections_files" role="tabpanel">
+                            <div class="row">
+                                @foreach($order->specialties_file->whereIn("type", [5,6,7,8]) as $file)
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
+                                        <a href="{{ asset("storage/".$file->path) }}" download="">
+                                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
+                                                <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
+                                                <div class="file-view-download"><i class="fas fa-download"></i></div>
+                                                <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
+                                                    <small class="text-muted" style="font-size: 12px;">
+                                                        @if($file->type == 5)
+                                                            سلامة ارواح
+                                                        @elseif($file->type == 6)
+                                                            انذار
+                                                        @elseif($file->type == 7)
+                                                            اطفاء
+                                                        @else
+                                                            اخرى
+                                                        @endif
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="tab-pane" id="notes" role="tabpanel">
                             <div class="row">

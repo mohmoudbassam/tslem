@@ -48,7 +48,7 @@
                             <li class="nav-item">
                                 <a class="nav-link px-3 " data-bs-toggle="tab"
                                    href="#general_file_panel"
-                                   role="tab">ملف الموقع العام</a>
+                                   role="tab">الوقاية والحماية من الحريق</a>
                             </li>
 
                     </ul>
@@ -318,7 +318,6 @@
                                     @endforeach
                                 </div>
                             </div>
-
                             <div class="card">
                                 <div class="card-header">
                                     <div class="d-flex">
@@ -330,139 +329,160 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <div>
-                                        <div class="row">
-
-
-                                            <div class="col-md-4">
-                                                <div class="mb-3">
-                                                    <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
-                                                    <input type="file"
-                                                           class="form-control {{$_specialties->name_en}}_pdf_file"
-                                                           id="{{$_specialties->name_en}}_pdf_file"
-                                                           name="{{$_specialties->name_en}}_pdf_file">
-                                                    <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_pdf_file"></div>
-                                                </div>
-
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label"
+                                                       for="{{$_specialties->name_en}}_pdf_file">Pdf ملف </label>
+                                                <input type="file"
+                                                       class="form-control {{$_specialties->name_en}}_pdf_file"
+                                                       id="{{$_specialties->name_en}}_pdf_file"
+                                                       name="{{$_specialties->name_en}}_pdf_file">
+                                                <div class="col-12 text-danger"
+                                                     id="{{$_specialties->name_en}}_pdf_file"></div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="mb-3">
-                                                    <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_docs_file"> ملف docs</label>
-                                                    <input type="file" class="form-control" value=""
-                                                           id="{{$_specialties->name_en}}_docs_file"
-                                                           name="{{$_specialties->name_en}}_docs_file" multiple>
-                                                    <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_docs_file"></div>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="mb-3">
-                                                    <label class="form-label"
-                                                           for="{{$_specialties->name_en}}_cad_file">CAD ملف</label>
-                                                    <input type="file" class="form-control" value=""
-                                                           id="{{$_specialties->name_en}}_cad_file"
-                                                           name="{{$_specialties->name_en}}_cad_file" multiple>
-                                                    <div class="col-12 text-danger"
-                                                         id="{{$_specialties->name_en}}_cad_error"></div>
-                                                </div>
-
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label"
+                                                       for="{{$_specialties->name_en}}_docs_file"> ملف docs</label>
+                                                <input type="file" class="form-control" value=""
+                                                       id="{{$_specialties->name_en}}_docs_file"
+                                                       name="{{$_specialties->name_en}}_docs_file" multiple>
+                                                <div class="col-12 text-danger"
+                                                     id="{{$_specialties->name_en}}_docs_file"></div>
                                             </div>
 
                                         </div>
-                                        <!-- end row -->
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label"
+                                                       for="{{$_specialties->name_en}}_cad_file">CAD ملف</label>
+                                                <input type="file" class="form-control" value=""
+                                                       id="{{$_specialties->name_en}}_cad_file"
+                                                       name="{{$_specialties->name_en}}_cad_file" multiple>
+                                                <div class="col-12 text-danger"
+                                                     id="{{$_specialties->name_en}}_cad_error"></div>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                 </div>
                                 <!-- end card body -->
                             </div>
                         </div>
                     @endforeach
-                        <div class="tab-pane " id="general_file_panel"
-                             role="tabpanel">
-                            @if($general_file)
-                            <div class="card">
+                    <div class="tab-pane " id="general_file_panel"
+                         role="tabpanel">
+
+                        <div class="card">
                                 <div class="card-body">
-                                    <div class="col-md-offset-3 col-md-2">
-                                        <div class="panel panel-default bootcards-file">
-
-                                            <div class="list-group">
-                                                <div class="list-group-item">
-                                                    <a href="#">
-                                                        <i class="fa fa-file-pdf fa-4x"></i>
-                                                    </a>
-                                                    <h5 class="list-group-item-heading">
-                                                        <a href="#">
-                                                            {{$general_file->real_name}}
-                                                        </a>
-                                                    </h5>
-
-                                                </div>
-                                                <div class="list-group-item">
-                                                   الملف العام
-                                                </div>
-                                            </div>
-                                            <div class="panel-footer">
-                                                <div class="btn-group btn-group-justified">
-                                                    <div class="btn-group">
-                                                        <a class="btn btn-success"
-                                                           href="{{route('design_office.download',['id'=>$general_file->id])}}">
-                                                            <i class="fa fa-arrow-down"></i>
-                                                            تنزيل
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="btn-group btn-group-justified">
-                                                    <div class="btn-group">
-                                                        <a class="btn btn-danger"
-                                                           href="{{route('design_office.delete_file',['file'=>$general_file->id])}}">
-                                                            <i class="fa fa-trash-alt"></i>
-                                                            حذف
-                                                        </a>
-                                                    </div>
-
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            @endif
-                           <div class="card-body">
-                            <div>
-                                <div class="row">
-
-
                                     <div class="row">
-                                        <div class="form-group col-lg-12 col-md-6 col-sm-12">
-                                            <div class="row">
-                                                <label class="col-12" for="reject_reason">ملف الموقع العام</label>
-                                                <div class="col-12">
-                                                    <input type="file" class="form-control" value=""
-                                                           id="general_file"
-                                                           name="general_file">
+                                        @foreach($order->specialties_file->whereIn("type", [5,6,7,8]) as $file)
+                                            <div class="col-md-3">
+                                                <div class="panel panel-default bootcards-file">
+
+                                                    <div class="list-group">
+                                                        <div class="list-group-item d-flex flex-column justify-content-center text-center align-content-center align-items-center">
+                                                            <a href="#">
+                                                                <i class="fa fa-file-pdf fa-4x"></i>
+                                                            </a>
+                                                            <h5 class="list-group-item-heading">
+                                                                <a href="#">
+                                                                    {{$file->real_name}}
+                                                                </a>
+                                                            </h5>
+
+                                                        </div>
+                                                        <div class="list-group-item">
+                                                            @if($file->type == 5)
+                                                                سلامة ارواح
+                                                            @elseif($file->type == 6)
+                                                                انذار
+                                                            @elseif($file->type == 7)
+                                                                اطفاء
+                                                            @else
+                                                                اخرى
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="panel-footer mt-2">
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-success"
+                                                                   href="{{route('design_office.download',['id'=>$file->id])}}">
+                                                                    <i class="fa fa-arrow-down"></i>
+                                                                    تنزيل
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="btn-group btn-group-justified">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-danger"
+                                                                   href="{{route('design_office.delete_file',['file'=>$file->id])}}">
+                                                                    <i class="fa fa-trash-alt"></i>
+                                                                    حذف
+                                                                </a>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 text-danger" id="reject_reason_error"></div>
                                             </div>
-                                        </div>
-
+                                        @endforeach
                                     </div>
-
-
                                 </div>
-                                <!-- end row -->
-                            </div>
                         </div>
+                       <div class="card-body">
+                           <div class="row">
+                               <div class="col-lg-3 col-md-6 col-sm-12">
+                                   <div class="form-group">
+                                       <label class="col-form-label" for="souls_safety_file">سلامة ارواح</label>
+                                       <input type="file" class="form-control" value=""
+                                              id="souls_safety_file"
+                                              name="souls_safety_file">
+                                       <div class="col-12 text-danger" id="souls_safety_file_error"></div>
+                                   </div>
+                               </div>
 
+                               <div class="col-lg-3 col-md-6 col-sm-12">
+                                   <div class="form-group">
+                                       <label class="col-form-label" for="warning_file">انذار</label>
+                                       <input type="file" class="form-control" value=""
+                                              id="warning_file"
+                                              name="warning_file">
+                                       <div class="col-12 text-danger" id="warning_file_error"></div>
+                                   </div>
+                               </div>
+
+                               <div class="col-lg-3 col-md-6 col-sm-12">
+                                   <div class="form-group">
+                                       <label class="col-form-label" for="fire_fighter_file">اطفاء</label>
+                                       <input type="file" class="form-control" value=""
+                                              id="fire_fighter_file"
+                                              name="fire_fighter_file">
+                                       <div class="col-12 text-danger" id="fire_fighter_file_error"></div>
+                                   </div>
+                               </div>
+
+                               <div class="col-lg-3 col-md-6 col-sm-12">
+                                   <div class="form-group">
+                                       <label class="col-form-label" for="other_file">اخرى</label>
+                                       <input type="file" class="form-control" value=""
+                                              id="other_file"
+                                              name="other_file">
+                                       <div class="col-12 text-danger" id="other_file_error"></div>
+                                   </div>
+                               </div>
+
+                           </div>
                         </div>
+                    </div>
                 </div>
-
-
                 <input type="hidden" name="order_id" value="{{$order->id}}">
                 <br>
                 <br>
@@ -708,7 +728,7 @@
             let settings = $.extend({}, defaults, options);
             $(selector).fileinput(settings);
         }
-        file_input_cu('#general_file')
+
         @foreach($specialties as $_specialties)
         file_input_cu('#{{$_specialties->name_en}}_pdf_file')
         @endforeach
@@ -718,7 +738,10 @@
         file_input_cu('#{{$_specialties->name_en}}_cad_file')
         @endforeach
 
-        file_input_cu('#general_file')
+        file_input_cu('#souls_safety_file')
+        file_input_cu('#warning_file')
+        file_input_cu('#fire_fighter_file')
+        file_input_cu('#other_file')
     </script>
 
     </script>
