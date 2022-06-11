@@ -38,6 +38,20 @@
                             <div class="col-12 text-danger" id="consulting_office_id_error"></div>
                         </div>
                     </div>
+                    <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                        <div class="row">
+                            <label class="col-12" for="waste_contractor">اختر مقاول النفايات</label>
+                            <div class="col-12">
+                                <select class="form-control" name="waste_contractor" id="waste_contractor">
+                                    <option value="">اختر ...</option>
+                                    @foreach($waste_contractors as $wasteContractor)
+                                        <option value="{{ $wasteContractor['name'] }}">{{ $wasteContractor['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 text-danger" id="waste_contractor_error"></div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -60,6 +74,9 @@
             "consulting_office_id": {
                 required: true,
             },
+            "waste_contractor": {
+                required: true,
+            }
         },
         errorElement: 'span',
         errorClass: 'help-block help-block-error',
