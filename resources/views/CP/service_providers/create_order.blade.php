@@ -42,9 +42,9 @@
                 <div class="d-flex flex-row align-items-center">
                     <i class="fa fa-info-circle mx-2"></i>
                     <b>
-                        تنبيه:
+                        المكتب الذي قمت بإختياره ليس من ضمن إختصاصاته ( الحماية والوقاية من الحريق ) نرجوا منكم التنويه على المكتب الذي تم اختياره بإعتماد التصاميم من إحدى المكاتب المعتمدة في الحماية والوقاية من الحريق.
                     </b>
-                    المكتب الذي قمت بإختياره ليس من ضمن إختصاصاته ( الحماية والحريق والسلامة ) نرجوا منكم التأكيد على معرفتكم بذلك
+
                 </div>
 
                 <b class="btn text-white bg-success" id="agree-to-designer-has-no-fire" style="font-weight: bolder; cursor: pointer;">
