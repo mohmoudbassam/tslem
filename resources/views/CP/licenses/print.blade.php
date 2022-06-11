@@ -242,12 +242,6 @@
             border: 1px solid black !important;
         }
 
-        .map-image2 {
-            position: absolute;
-            top: 25%;
-            left: 25%;
-        }
-
         .fit-content {
             height: fit-content !important;
         }
