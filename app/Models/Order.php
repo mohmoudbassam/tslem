@@ -18,6 +18,7 @@ class Order extends Model
     public const DESIGN_APPROVED = 4;
     public const PROCESSING = 5;
     public const COMPLETED = 6;
+    public const PENDING_LICENSE_ISSUED = 7;
 
 
     public function specialties_file()
@@ -133,7 +134,8 @@ class Order extends Model
             '1' => 'معلق',
             '2' => 'قيد انشاء الطلب',
             '3' => 'مراجعة التصاميم',
-            '4' => 'معتمد التصاميم'
+            '4' => 'معتمد التصاميم',
+            '7' => 'بإنتظار اصدار الرخصة'
 
         ][$this->status];
     }

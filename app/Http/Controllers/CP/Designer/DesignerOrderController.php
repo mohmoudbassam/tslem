@@ -334,7 +334,7 @@ class DesignerOrderController extends Controller
 
         $headers = [
             'Content-Type' => 'application/json',
-            'Content-Disposition' => "attachment; filename=$file->path",
+            'Content-Disposition' => "attachment; filename=$file->real_name",
         ];
 
         return (new Response(Storage::disk('public')->get($file->path), 200, $headers));

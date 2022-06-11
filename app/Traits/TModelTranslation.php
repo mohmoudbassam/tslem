@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use Illuminate\Support\Str;
 
 trait TModelTranslation
 {
@@ -16,15 +17,15 @@ trait TModelTranslation
      */
     public static function trans($key = null, $replace = [], $locale = null, $default = null)
     {
-        $model_table = (snake_case(static::make()->getTable()));
-        $model_name = (snake_case(class_basename(static::class)));
+        $model_table = (Str::snake(static::make()->getTable()));
+        $model_name = (Str::snake(class_basename(static::class)));
         $models = [
-            str_plural($model_table),
-            str_singular($model_table),
+            Str::plural($model_table),
+            Str::singular($model_table),
             $model_table,
 
-            str_plural($model_name),
-            str_singular($model_name),
+            Str::plural($model_name),
+            Str::singular($model_name),
             $model_name,
         ];
 

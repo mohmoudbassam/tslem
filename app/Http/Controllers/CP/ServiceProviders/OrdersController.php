@@ -126,6 +126,11 @@ class OrdersController extends Controller
             ->with('designer')
             ->whereServiceProvider(auth()->user()->id)
             ->with(['designer', 'contractor', 'consulting']);
+
+            if($request->waste_contractor){
+                $order = $order->whereWasteContractor($request->waste_contractor);
+            }
+        
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
@@ -209,19 +214,21 @@ class OrdersController extends Controller
         $contractors = User::query()->where('type', '=', 'contractor')
             ->where("verified", 1)
             ->get();
-        $consulting_offices = User::query()->where('type', '=', 'design_office')
+            $consulting_offices = User::query()->where('type', '=', 'design_office')
             ->where("verified", 1)
             ->whereHas("designer_types", function ($query) {
                 $query
                     ->where("type", "consulting");
             })
             ->get();
+        $wasteContractors = wasteContractorsList();
         return response()->json([
             'success' => true,
             'page' => view('CP.service_providers.chice_constractor', [
                 'order' => $order,
                 'contractors' => $contractors,
                 'consulting_offices' => $consulting_offices,
+                'waste_contractors' => $wasteContractors
             ])->render()
         ]);
 
@@ -232,11 +239,13 @@ class OrdersController extends Controller
 
         $order = Order::query()->findOrFail($request->id);
         $order->update([
+            'status' => Order::PENDING_LICENSE_ISSUED,
             'contractor_id' => $request->contractor_id,
-            'consulting_office_id' => $request->consulting_office_id
+            'consulting_office_id' => $request->consulting_office_id,
+            'waste_contractor' => $request->waste_contractor
         ]);
+        
         save_logs($order, auth()->user()->id, "تم اخيار المشرف ومكتب المقاولات");
-
         optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب  ', auth()->user()->id));
         optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب   ', auth()->user()->id));
         return response()->json([

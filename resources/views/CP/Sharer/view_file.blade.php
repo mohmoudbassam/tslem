@@ -149,12 +149,12 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
+                                            class="bold">مركز الخدمة :</span> {{isset($order->service_provider) ? $order->service_provider->company_name: ''}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
+                                            class="bold"> اسم مكتب التصميم :  </span>{{isset($order->designer) ? $order->designer->company_name: ''}}</p>
                                 </div>
 
                                 <div class="col-12">
@@ -164,25 +164,29 @@
                                         </span>
                                     </p>
                                     <ul class="m-0">
-                                        @foreach($order->designer->designer_types as $designType)
-                                            <li style="font-size: 20px;">
-                                                {{ $designType->type }}
-                                            </li>
-                                        @endforeach
+                                        @if (isset($order->designer))
+                                            @foreach($order->designer->designer_types as $designType)
+                                                <li style="font-size: 20px;">
+                                                    {{ $designType->type }}
+                                                </li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
 
                             @if(auth()->user()->type == \App\Models\User::SHARER_TYPE )
                                 <div class="offset-md-9 col-md-3 mb-3">
-                                    @if($order_sharer->status ==0)
-                                        <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
-                                    @endif
-                                    @if($order_sharer->status ==0)
-                                        <button
-                                            onclick="showModal('{{ route('Sharer.reject_form', ['id' => $order->id]) }}', {{ $order->id }})"
-                                            class="btn btn-danger" id="reject_order">ارجاع ملاحظات
-                                        </button>
+                                    @if( isset($order_sharer->status) )
+                                        @if($order_sharer->status ==0)
+                                            <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
+                                        @endif
+                                        @if($order_sharer->status ==0)
+                                            <button
+                                                onclick="showModal('{{ route('Sharer.reject_form', ['id' => $order->id]) }}', {{ $order->id }})"
+                                                class="btn btn-danger" id="reject_order">ارجاع ملاحظات
+                                            </button>
+                                        @endif
                                     @endif
                                 </div>
                             @endif

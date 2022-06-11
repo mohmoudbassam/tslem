@@ -321,11 +321,10 @@ class ContractorController extends Controller
 
         $headers = [
             'Content-Type' => 'application/json',
-            'Content-Disposition' => "attachment; filename=$file->path",
+            'Content-Disposition' => "attachment; filename=$file->real_name",
         ];
 
         return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
-
     }
 
     public function accept_order(Order $order)
