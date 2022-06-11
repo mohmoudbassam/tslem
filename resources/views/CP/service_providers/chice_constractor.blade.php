@@ -10,9 +10,9 @@
             @csrf
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                    <div class="form-group pb-4 col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
-                            <label class="col-12" for="reject_reason">اختر المقاول</label>
+                            <label class="col-12 font-weight-bold" for="reject_reason">اختر المقاول</label>
                             <div class="col-12">
                                 <select class="form-control" name="contractor_id" id="contractor_id">
                                     <option value="">اختر ...</option>
@@ -24,9 +24,9 @@
                             <div class="col-12 text-danger" id="contractor_id_error"></div>
                         </div>
                     </div>
-                    <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                    <div class="form-group pb-4 col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
-                            <label class="col-12" for="reject_reason">اختر المشرف</label>
+                            <label class="col-12 font-weight-bold" for="reject_reason">اختر المشرف</label>
                             <div class="col-12">
                                 <select class="form-control" name="consulting_office_id" id="consulting_office_id">
                                     <option value="">اختر ...</option>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
-                            <label class="col-12" for="waste_contractor">اختر مقاول النفايات</label>
+                            <label class="col-12 font-weight-bold" for="waste_contractor">اختر مقاول النفايات</label>
                             <div class="col-12">
                                 <select class="form-control" name="waste_contractor" id="waste_contractor">
                                     <option value="">اختر ...</option>

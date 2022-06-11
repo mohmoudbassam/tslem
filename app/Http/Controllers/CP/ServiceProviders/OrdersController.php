@@ -239,6 +239,7 @@ class OrdersController extends Controller
 
         $order = Order::query()->findOrFail($request->id);
         $order->update([
+            'status' => Order::PENDING_LICENSE_ISSUED,
             'contractor_id' => $request->contractor_id,
             'consulting_office_id' => $request->consulting_office_id,
             'waste_contractor' => $request->waste_contractor
