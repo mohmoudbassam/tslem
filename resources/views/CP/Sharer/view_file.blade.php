@@ -164,11 +164,13 @@
                                         </span>
                                     </p>
                                     <ul class="m-0">
-                                        @foreach($order->designer->designer_types as $designType)
-                                            <li style="font-size: 20px;">
-                                                {{ $designType->type }}
-                                            </li>
-                                        @endforeach
+                                        @if (isset($order->designer))
+                                            @foreach($order->designer->designer_types as $designType)
+                                                <li style="font-size: 20px;">
+                                                    {{ $designType->type }}
+                                                </li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
