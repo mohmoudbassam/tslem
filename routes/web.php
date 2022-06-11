@@ -148,7 +148,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             Route::get('add_constructor_form/{order}', [ OrdersController::class, 'add_constructor_form' ])->name(
                 '.add_constructor_form'
             );
-            Route::get('choice_constructor_action', [ OrdersController::class, 'choice_constructor_action' ])->name(
+            Route::post('choice_constructor_action', [ OrdersController::class, 'choice_constructor_action' ])->name(
                 '.choice_constructor_action'
             );
         }

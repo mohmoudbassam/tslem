@@ -57,7 +57,6 @@
             </div>
             <input type="hidden" name="id" value="{{$order->id}}">
             <div class="modal-footer">
-
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
                 <button type="button" class="btn btn-primary submit_btn">اعتماد</button>
             </div>
