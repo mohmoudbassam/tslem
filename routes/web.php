@@ -40,7 +40,7 @@ Route::get('/', [ SiteController::class, 'getHome' ])->name('public');
 Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
 
 Route::get('clean-boxes',function(){
-    return env('MSEGAT_SENDER');
+    return 'MSEGAT_SENDER:'.env('MSEGAT_SENDER').' MSEGAT_APIKEY:'.env('MSEGAT_APIKEY');
     // $getDuplicatedBoxes = \App\Models\RaftCompanyBox::selectRaw('box,camp,COUNT(id) AS count_id')->groupBy('box','camp')->get()->where('count_id','>',1)->all();
 
     // $getBoxes = \App\Models\RaftCompanyBox::get();
