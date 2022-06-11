@@ -1,10 +1,10 @@
 <div class="cp-right-menu">
-<a href="#" class="cp-right-menu-logo">
-    <div class="close-menu d-lg-none p-2">
-        <i class="far fa-times"></i>
-    </div>
-    <img src="<?php echo e(asset('assets/images/logo-dark.png')); ?>" alt="" height="38">
-                </a>
+    <a href="#" class="cp-right-menu-logo">
+        <div class="close-menu d-lg-none p-2">
+            <i class="far fa-times"></i>
+        </div>
+        <img src="<?php echo e(asset('assets/images/logo-dark.png')); ?>" alt="" height="38">
+    </a>
     <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
@@ -34,8 +34,31 @@
                                     <span data-key="t-chat">طلبات المستخدمين</span>
                                 </a>
                             </li>
-
-
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="licenses"></i>
+                            <span data-key="t-apps"><?php echo e(\App\Models\License::trans('group')); ?></span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="<?php echo e(route('licenses')); ?>">
+                                    <span data-key="t-calendar"><?php echo e(\App\Models\License::crudTrans('index')); ?></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo e(route('licenses.add')); ?>">
+                                    <span data-key="t-chat"><?php echo e(\App\Models\License::crudTrans('add')); ?></span>
+                                </a>
+                            </li>
+                            <?php if(request()->routeIs('licenses.edit')): ?>
+                                <li>
+                                    <a onclick="event.preventDefault(); return false" href="<?php echo e(route('licenses.edit',['license'=>request()->license])); ?>">
+                                        <span data-key="t-chat"><?php echo e(\App\Models\License::crudTrans('update')); ?></span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                     </li>
                     <li>
@@ -53,7 +76,8 @@
                                 <a href="<?php echo e(route('service.index')); ?>">
                                     <span data-key="t-calendar">الخدمات</span>
                                 </a>
-                            </li>  <li>
+                            </li>
+                            <li>
                                 <a href="<?php echo e(route('news')); ?>">
                                     <span data-key="t-calendar">الاخبار</span>
                                 </a>
@@ -171,16 +195,16 @@
                     </li>
 
                 <?php endif; ?>
-                    <?php if(auth()->user()->isAdmin()): ?>
+                <?php if(auth()->user()->isAdmin()): ?>
 
 
-                        <li>
-                            <a href="<?php echo e(route('dashboard')); ?>">
-                                <i data-feather="pie-chart"></i>
-                                <span data-key="t-dashboard">الإحصائيات </span>
-                            </a>
-                        </li>
-                    <?php endif; ?>
+                    <li>
+                        <a href="<?php echo e(route('dashboard')); ?>">
+                            <i data-feather="pie-chart"></i>
+                            <span data-key="t-dashboard">الإحصائيات </span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <?php if(!auth()->user()->isAdmin()): ?>
                     <li>
