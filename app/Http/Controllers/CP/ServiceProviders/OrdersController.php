@@ -118,6 +118,7 @@ class OrdersController extends Controller
                 $query->whereDate("created_at", "<=", $request->query("to_date"));
             })
             ->whereOrderId($request->order_id)
+            ->whereWasteContractor($request->waste_contractor)
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
             ->whereContractorId($request->contractor_id)
@@ -126,6 +127,8 @@ class OrdersController extends Controller
             ->with('designer')
             ->whereServiceProvider(auth()->user()->id)
             ->with(['designer', 'contractor', 'consulting']);
+
+        
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');

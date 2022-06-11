@@ -34,7 +34,7 @@
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
                         <div class="col">
-                            <label for="contractor_id">المقاول </label>
+                            <label for="contractor_id">المقاول</label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
