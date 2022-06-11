@@ -416,13 +416,3 @@ function normalize_phone_number($number)
     return '+'.$number;
 
 }
-
-function snake_case($str, $glue  = '_')
-{
-    return ltrim(
-        preg_replace_callback('/[A-Z]/', function ($matches) use ($glue) {
-            return $glue . strtolower($matches[0]);
-        }, $str),
-        $glue
-    );
-}
