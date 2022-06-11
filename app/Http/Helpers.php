@@ -539,7 +539,7 @@ if( !function_exists('crudTrans') ) {
      */
     function crudTrans($model = null, $key = null, $locale = null, $default = null, $instance = null)
     {
-        $locale ??= currentLocale();
+        $locale = app()->getLocale();
         $getModelTrans =
             fn($is_singular = true) => isModel($model) ? $model::trans(
                 $is_singular ? 'singular' : 'plural',
