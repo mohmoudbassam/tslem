@@ -187,15 +187,51 @@ class DesignerOrderController extends Controller
             }
         }
 
-        if (request('general_file')) {
-            $path = Storage::disk('public')->put("orders/$order->id", request('general_file'));
-            $file_name = request('general_file')->getClientOriginalName();
+        if (request('souls_safety_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('souls_safety_file'));
+            $file_name = request('souls_safety_file')->getClientOriginalName();
             OrderSpecilatiesFiles::query()->create([
                 'path' => $path,
                 'real_name' => $file_name,
                 'specialties_id' => 1,
                 'order_id' => $order->id,
                 'type' => 5
+            ]);
+        }
+
+        if (request('warning_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('warning_file'));
+            $file_name = request('warning_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 6
+            ]);
+        }
+
+        if (request('fire_fighter_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('fire_fighter_file'));
+            $file_name = request('fire_fighter_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 7
+            ]);
+        }
+
+        if (request('other_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('other_file'));
+            $file_name = request('other_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 8
             ]);
         }
 
@@ -259,7 +295,10 @@ class DesignerOrderController extends Controller
         $system_specialties_services = Specialties::query()->with('service')->get();
         $order_designer_files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get();
-        $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
+        // type 5 => souls_safety_file
+        // type 6 => warning_file
+        // type 7 => fire_fighter_file
+        // type 8 => other_file
         $order->delivery_notes = 0;
         $order->save();
         return view('CP.designer.edit_files', ['order' => $order, 'specialties' => $specialties,
@@ -267,7 +306,6 @@ class DesignerOrderController extends Controller
             'order_specialties' => $order_specialties,
             'order_files' => $order_designer_files,
             'filess' => $files,
-            'general_file' => $general_file
         ]);
     }
 
@@ -389,14 +427,10 @@ class DesignerOrderController extends Controller
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
             }
         }
-        if (request('general_file')) {
-            $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
-            if ($general_file) {
-                $general_file->delete();
-            }
 
-            $path = Storage::disk('public')->put("orders/$order->id", request('general_file'));
-            $file_name = request('general_file')->getClientOriginalName();
+        if (request('souls_safety_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('souls_safety_file'));
+            $file_name = request('souls_safety_file')->getClientOriginalName();
             OrderSpecilatiesFiles::query()->create([
                 'path' => $path,
                 'real_name' => $file_name,
@@ -405,6 +439,43 @@ class DesignerOrderController extends Controller
                 'type' => 5
             ]);
         }
+
+        if (request('warning_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('warning_file'));
+            $file_name = request('warning_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 6
+            ]);
+        }
+
+        if (request('fire_fighter_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('fire_fighter_file'));
+            $file_name = request('fire_fighter_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 7
+            ]);
+        }
+
+        if (request('other_file')) {
+            $path = Storage::disk('public')->put("orders/$order->id", request('other_file'));
+            $file_name = request('other_file')->getClientOriginalName();
+            OrderSpecilatiesFiles::query()->create([
+                'path' => $path,
+                'real_name' => $file_name,
+                'specialties_id' => 1,
+                'order_id' => $order->id,
+                'type' => 8
+            ]);
+        }
+
         $order->lastDesignerNote()->update([
             'status'=>1
         ]);
@@ -420,10 +491,24 @@ class DesignerOrderController extends Controller
 
     private function validate_file($request)
     {
-        if (!(request('general_file'))) {
+        if (!(request('souls_safety_file'))) {
             return [
                 'success' => false,
-                'message' => "الرجاء إرفاق ملف الموقع العام "
+                'message' => "الرجاء إرفاق ملف سلامة الارواح "
+            ];
+        }
+
+        if (!(request('warning_file'))) {
+            return [
+                'success' => false,
+                'message' => "الرجاء إرفاق ملف الانذار "
+            ];
+        }
+
+        if (!(request('fire_fighter_file'))) {
+            return [
+                'success' => false,
+                'message' => "الرجاء إرفاق ملف الاطفاء "
             ];
         }
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();

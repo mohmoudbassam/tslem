@@ -22,7 +22,7 @@
     <!-- Icons Css -->
     <link href="{{url('/')}}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="{{url('/')}}/assets/css/app-rtl.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="{{url('/')}}/assets/css/app-rtl-3.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link href="{{url("/")}}/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{url("/")}}/assets/libs/alertifyjs/build/css/alertify.min.css" rel="stylesheet" type="text/css" />
 
@@ -39,10 +39,10 @@
 
 
     <style>
-        @font-face {
-            font-family: JannaLT;
+        /* @font-face { */
+            /* font-family: JannaLT;
             src: url('{{ url('/assets/fonts/JannaLT-Regular.woff')  }}');
-        }
+        } */
 
         body {
             /* font-family: JannaLT !important; */
@@ -56,17 +56,17 @@
              text-align: right;
          }
          .modal {
-             display:    none;
-             position:   absolute;
-             z-index:    1000;
-             top:        0;
-             left:       0;
-             height:     100%;
-             width:      100%;
-             background: rgba( 255, 255, 255, .8 )
-             url('http://i.stack.imgur.com/FhHRx.gif')
-             50% 50%
-             no-repeat;
+             /*display:    none;*/
+             /*position:   absolute;*/
+             /*z-index:    1000;*/
+             /*top:        0;*/
+             /*left:       0;*/
+             /*height:     100%;*/
+             /*width:      100%;*/
+             /*background: rgba( 255, 255, 255, .8 )*/
+             /*url('http://i.stack.imgur.com/FhHRx.gif')*/
+             /*50% 50%*/
+             /*no-repeat;*/
          }
 
          /* When the body has the loading class, we turn

@@ -39,7 +39,7 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="row">
-                        <form id="add_edit_form" method="post" action="<?php echo e(auth()->user()->virfied ? route('after_reject'): route('save_profile')); ?>" enctype="multipart/form-data">
+                        <form id="add_edit_form" method="post" action="<?php echo e(in_array(auth()->user()->verified, [0, 2]) ? route('after_reject'): route('save_profile')); ?>" enctype="multipart/form-data">
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <?php if($record->company_name): ?>
@@ -82,7 +82,7 @@
                                             <label class="form-label required-field" for="commercial_record"> رقم السجل التجاري</label>
                                             <input type="text" onkeypress="return /[0-9]/i.test(event.key)" class="form-control"
                                                    value="<?php echo e($user->commercial_record); ?>"
-                                                   id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record">
+                                                   id="commercial_record" placeholder="xxxxxxxxx" name="commercial_record" minlength="10" maxlength="10">
                                             <div class="col-12 text-danger" id="commercial_record_error"></div>
                                         </div>
                                     </div>
@@ -398,6 +398,42 @@
         </div>
     </div>
 
+    <?php if(auth()->user()->type == "contractor" and auth()->user()->contractor_types()->count() == 0): ?>
+        <div class="modal fade" id="choose-contractor-specialty-modal" tabindex="-1" role="dialog" aria-labelledby="choose-contractor-specialty-modal-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="choose-contractor-specialty-modal-title">اختيار التخصص</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-info-circle">
+                                        من فضلك قم بإختيار التخصص الخاص بك
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label required-field" for="contractor-specialty">التخصص</label>
+                                    <select class="form-control select2" name="contractor_specialty" id="contractor-specialty" required>
+                                        <option value="1">عام</option>
+                                        <option value="2">الوقاية والحماية من الحرائق</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" id="submit-contractor-specialty-btn" class="btn btn-primary" data-dismiss="modal">موافق</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
 
@@ -431,7 +467,8 @@
             "commercial_record": {
                 minlength: 10,
                 maxlength: 10,
-                required: false
+                required: true,
+                number: true
             },
             errorElement: 'span',
             errorClass: 'help-block help-block-error',
@@ -458,6 +495,51 @@
 
         flatpickr(".flatpickr");
     </script>
+
+    <?php if(auth()->user()->type == "contractor" and auth()->user()->contractor_types()->count() == 0): ?>
+        <script>
+            $(function () {
+                // $('.select2').select2({
+                //     width: "100%",
+                // });
+                $("#choose-contractor-specialty-modal").modal({backdrop: 'static', keyboard: false});
+                $("#choose-contractor-specialty-modal").modal("show");
+
+                async function update_contractor_specialty(specialty) {
+                    let response = await fetch("/contractor/update_specialty", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            specialty_id: specialty
+                        }),
+                        headers: {
+                            'X-CSRF-TOKEN': "<?php echo e(@csrf_token()); ?>",
+                            'Accept': 'application/json',
+                            'Content': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                    });
+
+                    return await (await response).json();
+                }
+
+                $("#submit-contractor-specialty-btn").on("click", async function (event) {
+                    event.preventDefault();
+
+                    let specialty = $("#contractor-specialty").val();
+                    let response = await update_contractor_specialty(specialty);
+
+                    if ( response['success'] ) {
+                        showAlertMessage("success", response['message']);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        showAlertMessage("error", response['message']);
+                    }
+                });
+            })
+        </script>
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/users/edit_profile.blade.php ENDPATH**/ ?>

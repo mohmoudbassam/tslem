@@ -6,12 +6,15 @@ use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderSharer;
+use App\Models\RaftCompanyBox;
 use App\Models\ServiceProviderFiles;
 use App\Models\Session;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use NcJoes\OfficeConverter\OfficeConverter;
 
 use Illuminate\Support\Facades\Response;
@@ -26,6 +29,7 @@ class OrdersController extends Controller
 {
     public function orders()
     {
+
         $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
         })->get();
@@ -34,19 +38,50 @@ class OrdersController extends Controller
         })->get();
         $data['contractors'] = User::query()->whereHas('contractors_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
-        })->get();
 
+        })->get();
+        if(auth()->user()->license_number){
+            $box=RaftCompanyBox::query()->where('license_number',auth()->user()->license_number)->first();
+            if(isset($box)){
+                 $data['can_create_order']=$box->seen_notes;
+            }else{
+                $data['can_create_order']=0;
+            }
+        }else{
+            $box = RaftCompanyBox::query()->where('box',auth()->user()->box_number)->where('camp',auth()->user()->camp_number)->first();
+            if(isset($box)){
+                $data['can_create_order']=$box->seen_notes;
+            }else{
+                $data['can_create_order']=0;
+            }
+        }
+        if(isset($box)){
+            $data['box']= $box;
+        }
         return view('CP.service_providers.orders', $data);
     }
 
     public function create_order()
     {
         $data['designers'] = User::query()->whereVitrified()->where('type', 'design_office')->get();
+
+
         return view('CP.service_providers.create_order', $data);
     }
 
     public function save_order(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'designer_id' => Rule::exists("users", "id")->where(function ($query) {
+                $query->where("type", "design_office");
+            }),
+            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('services_providers.save_order')->with(['error' => 'فشل في انشاء الطلب']);
+        }
+
         $order = Order::query()->create([
             "title" => Str::random(15),
             "description" => Str::random(15),
@@ -171,8 +206,16 @@ class OrdersController extends Controller
 
     public function add_constructor_form(Order $order)
     {
-        $contractors = User::query()->where('type', '=', 'contractor')->get();
-        $consulting_offices = User::query()->where('type', '=', 'consulting_office')->get();
+        $contractors = User::query()->where('type', '=', 'contractor')
+            ->where("verified", 1)
+            ->get();
+        $consulting_offices = User::query()->where('type', '=', 'design_office')
+            ->where("verified", 1)
+            ->whereHas("designer_types", function ($query) {
+                $query
+                    ->where("type", "consulting");
+            })
+            ->get();
         return response()->json([
             'success' => true,
             'page' => view('CP.service_providers.chice_constractor', [

@@ -1,6 +1,6 @@
 @extends('CP.master')
 @section('title')
-المراكز
+    المراكز
 @endsection
 @section('content')
 
@@ -72,42 +72,34 @@
 
 @section('scripts')
     <script>
-
-
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
                 "dom": 'tpi',
                 "searching": false,
                 "processing": true,
-                'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: "{{route('raft_company.list')}}",
+                    url: "{{route('raft_company.centers_list')}}",
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
                         d.type = $('#type').val();
-
                     }
                 },
                 language: {
                     "url": "{{url('/')}}/assets/datatables/Arabic.json"
                 },
                 columns: [
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
+                    {className: 'text-center', data: 'name', name: 'name',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'email', name: 'email',serchable: false,orderable: false},
+                    {className: 'text-center', data: 'phone', name: 'phone',serchable: false,orderable: false},
                 ],
-
-
             });
-
         });
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false);
         });
-
     </script>
 
 @endsection

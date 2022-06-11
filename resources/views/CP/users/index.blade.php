@@ -20,6 +20,16 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
+        }
     </style>
 
     <!-- start page title -->
@@ -45,8 +55,8 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
+                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="type"></label>
@@ -59,10 +69,6 @@
                                 <option value="consulting_office">مكتب استشاري</option>
                                 <option value="contractor">مقاول</option>
                             </select>
-                        </div>
-
-                        <div class="col-sm-auto">
-                            <button type="button" class="btn btn-primary search_btn">بحث</button>
                         </div>
                     </form>
                 </div>
@@ -81,16 +87,16 @@
                         <thead>
                         <th>#</th>
                         <th>
-                            اسم المستخدم
+                            الشركة
                         </th>
                         <th>
-                            البريد الالكتروني
+                            الترخيص
+                        </th>
+                        <th>
+                            السجل
                         </th>
                         <th>
                             الصلاحيه
-                        </th>
-                        <th>
-                            الهاتف
                         </th>
                         <th>
                             تاريخ التسجيل
@@ -144,7 +150,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6" id="designer">
                             <div class="row" id="view-designer-types-row">
                                 <div class="col-12 d-flex flex-row justify-content-between">
                                     <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="designer" style="height: 15px; width: 15px;"></div>
@@ -162,7 +168,7 @@
                         </div>
 
 
-                        <div class="col-6">
+                        <div class="col-6" id="contractor">
                             <div class="row" id="view-designer-types-row">
                                 <div class="col-12 d-flex flex-row justify-content-between">
                                     <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="general" style="height: 15px; width: 15px;"></div>
@@ -189,8 +195,9 @@
 @section('scripts')
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script>
-        $.fn.dataTable.ext.errMode = 'none';
+        let submitSearch = () => $('#items_table').DataTable().ajax.reload(null, true);
 
+        $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
                 "dom": 'tpi',
@@ -212,10 +219,10 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'id', name: 'id'},
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
+                    {className: 'text-center', data: 'company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'license_number', name: 'license_number'},
+                    {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
                     {className: 'text-center', data: 'type', name: 'type'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
                     {
                         className: 'text-center', data: 'created_at', name: 'date', render: function (data) {
                             return moment(data).format("YYYY-MM-DD hh:mm:ss");
@@ -231,9 +238,17 @@
             });
 
         });
-
-        $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, false);
+        $('#type').change(function (e) {
+            submitSearch()
+        });
+        $('#name').keypress(function (e) {
+            if( e.keyCode === 13 ) {
+                e.preventDefault()
+                submitSearch()
+                return false
+            } else if( this.value.length >= 2 ) {
+                submitSearch()
+            }
         });
 
         function delete_user(id, url, callback = null) {
@@ -277,7 +292,6 @@
                             }
                         },
                         error: function (data) {
-                            console.log(data);
                         },
                     });
                 }
@@ -303,7 +317,7 @@
                 return await (await response).json();
             }
 
-            function prepareUserDesignTypesModal(types) {
+            function prepareUserDesignTypesModal(types, userType) {
                 let designs = ["consulting", "designer", "fire", "general", "protections"];
                 types.map((type) => {
                     viewDesignerTypesModal.find(`div[data-type='${type['type']}']`).addClass("bg-success")
@@ -315,13 +329,19 @@
                     }
                 });
 
+                if ( userType === "design_office" ) {
+                    $("#contractor").hide();
+                } else {
+                    $("#designer").hide();
+                }
+
             }
 
             $(document).on("click", ".view-designer-types-btn", async function (event) {
                 event.preventDefault();
                 let userId = $(this).data("user");
                 let response = await get_design_types(userId);
-                prepareUserDesignTypesModal(response['data']);
+                prepareUserDesignTypesModal(response['data'], response['user_type']);
                 viewDesignerTypesModal.modal("show");
             });
 
@@ -334,6 +354,8 @@
                 designs.map((design) => {
                     viewDesignerTypesModal.find(`div[data-type='${design}']`).removeClass("bg-danger").removeClass("bg-success");
                 });
+                $("#designer").show();
+                $("#contractor").show();
             });
 
             async function getFiles(id) {
@@ -348,9 +370,10 @@
 
             function prepareViewFiles(data) {
                 data.map(file => {
-                    $("#file-view-row").append(`<div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" data-file="${file['path']}" style="cursor:pointer; height: 220px;">
-                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
+                    $("#file-view-row").append(`<div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" data-file="${file['path']}" style="cursor:pointer;">
+                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                 <div class="file-view-icon" style="background-image: url('${file['icon']}');"></div>
+                                <div class="file-view-download"><i class="fas fa-download"></i></div>
                                 <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
                                     <small class="text-muted" id="file-view-name">${file['name']}</small>
                                 </div>
@@ -388,5 +411,4 @@
             })
         });
     </script>
-
 @endsection

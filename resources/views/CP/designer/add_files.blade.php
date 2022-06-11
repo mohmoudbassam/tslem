@@ -54,8 +54,8 @@
                         @endforeach
                         <li class="nav-item">
                             <a class="nav-link px-3 " data-bs-toggle="tab"
-                               href="#general_file_panel"
-                               role="tab">ملف الموقع العام</a>
+                               href="#fire_protection_file_panel"
+                               role="tab">الوقاية والحماية من الحريق</a>
                         </li>
                             <li class="nav-item">
                                 <a class="nav-link px-3 " data-bs-toggle="tab"
@@ -195,32 +195,67 @@
 
                                 </div>
                             @endforeach
-                            <div class="tab-pane" id="general_file_panel"
+                            <div class="tab-pane" id="fire_protection_file_panel"
                                  role="tabpanel">
 
                                 <div class="card-body">
-                                    <div>
-                                        <div class="row">
-
-
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-12">
                                             <div class="row">
-                                                <div class="form-group col-lg-12 col-md-6 col-sm-12">
-                                                    <div class="row">
-                                                        <label class="col-12" for="reject_reason">ملف الموقع العام</label>
-                                                        <div class="col-12">
-                                                            <input type="file" class="form-control"
-                                                                   id="general_file"
-                                                                   name="general_file">
-                                                        </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label required-field" for="souls_safety_file">سلامة ارواح</label>
+                                                        <input type="file" class="form-control"
+                                                               id="souls_safety_file"
+                                                               name="souls_safety_file" required>
                                                         <div class="col-12 text-danger"></div>
                                                     </div>
                                                 </div>
-
                                             </div>
-
-
                                         </div>
-                                        <!-- end row -->
+
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label required-field" for="warning_file">انذار</label>
+                                                        <input type="file" class="form-control"
+                                                               id="warning_file"
+                                                               name="warning_file" required>
+                                                        <div class="col-12 text-danger"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row my-4">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label required-field" for="fire_fighter_file">اطفاء</label>
+                                                        <input type="file" class="form-control"
+                                                               id="fire_fighter_file"
+                                                               name="fire_fighter_file" required>
+                                                        <div class="col-12 text-danger"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="col-form-label" for="other_file">اخرى</label>
+                                                        <input type="file" class="form-control"
+                                                               id="other_file"
+                                                               name="other_file">
+                                                        <div class="col-12 text-danger"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -242,47 +277,6 @@
             </div>
         </div>
     </div>
-{{--    <div class="modal  bd-example-modal-lg" id="page_modal"--}}
-{{--         role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
-{{--        <div class="modal-dialog modal-dialog-centered modal-lg">--}}
-{{--            <div class="modal-content">--}}
-
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title"--}}
-{{--                        id="exampleModalLongTitle"></h5>--}}
-
-{{--                </div>--}}
-{{--                <form action="" method="post" id="general_file_from" enctype="multipart/form-data">--}}
-
-{{--                    <div class="modal-body">--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="form-group col-lg-12 col-md-6 col-sm-12">--}}
-{{--                                <div class="row">--}}
-{{--                                    <label class="col-12" for="reject_reason">الرجاء ارفاق ملف الموقع العام</label>--}}
-{{--                                    <div class="col-12">--}}
-{{--                                        <input type="file" class="form-control" value=""--}}
-{{--                                               id="general_file"--}}
-{{--                                               name="general_file">--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-12 text-danger" id="reject_reason_error"></div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <input type="hidden" name="id" value="">--}}
-{{--                    <div class="modal-footer">--}}
-
-{{--                        <button type="button" class="btn btn-secondary btn_general_file_submit" data-bs-dismiss="modal">--}}
-{{--                            الغاء--}}
-{{--                        </button>--}}
-{{--                        <button type="button" class="btn btn-primary general_file_submit">ارسال</button>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
 @endsection
 
 @section('scripts')
@@ -352,7 +346,10 @@
             }
         });
         @endforeach
-        file_input_cu('#general_file')
+        file_input_cu('#souls_safety_file')
+        file_input_cu('#warning_file')
+        file_input_cu('#fire_fighter_file')
+        file_input_cu('#other_file')
 
         @foreach($specialties as $_specialties)
         file_input_cu('#{{$_specialties->name_en}}_pdf_file',{},['pdf'])

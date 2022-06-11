@@ -6,17 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\ConsultingOrders;
 use App\Models\ContractorReport;
 use App\Models\ContractorReportFile;
+use App\Models\ContractorSpecialtiesPivot;
 use App\Models\Order;
 use App\Models\ReportComment;
 use App\Models\User;
-use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
 use App\Models\OrderService;
 use App\Models\OrderSpecilatiesFiles;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
+
 
 class ContractorController extends Controller
 {
@@ -142,7 +145,6 @@ class ContractorController extends Controller
             ->make(true);
     }
 
-
     public function add_report_from(Order $order)
     {
         if ($order->contractor_id != auth()->user()->id) {
@@ -160,7 +162,6 @@ class ContractorController extends Controller
             'filess' => $files
         ]);
     }
-
 
     public function add_edit_report(Request $request)
     {
@@ -298,7 +299,6 @@ class ContractorController extends Controller
         ]);
     }
 
-
     public function save_comment(Request $request)
     {
         ReportComment::query()->create([
@@ -315,7 +315,6 @@ class ContractorController extends Controller
         //return redirect()->back()->with(['success' => 'تمت إضافة التعليق بناح']);
     }
 
-
     public function download($id)
     {
         $file = ContractorReportFile::query()->where('id', $id)->first();
@@ -328,6 +327,7 @@ class ContractorController extends Controller
         return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
 
     }
+
     public function accept_order(Order $order)
     {
         ConsultingOrders::create([
@@ -346,5 +346,29 @@ class ContractorController extends Controller
         return redirect()->back()->with(['success' => 'تم رفض الطلب بنجاح']);
     }
 
+    public function update_specialty(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'specialty_id' => ['required', Rule::exists("contractor_specialties", "id")],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'من فضلك اختر التخصص الخاص بك',
+                'success' => false,
+                'errors' => $request->specialty_id
+            ]);
+        }
+
+        ContractorSpecialtiesPivot::create([
+            'user_id' => auth()->id(),
+            'specialties_id' => $request->specialty_id
+        ]);
+
+        return response()->json([
+            'message' => 'تم تحديث بيانات التخصص بنجاح',
+            'success' => true,
+        ]);
+    }
 
 }

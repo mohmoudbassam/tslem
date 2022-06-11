@@ -35,8 +35,8 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">الاسم او البريد</label>
-                            <input type="text" class="form-control" id="name" placeholder="الاسم او البريد">
+                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
                             <label class="visually-hidden" for="type"></label>
@@ -50,10 +50,6 @@
                                 <option value="contractor">مقاول</option>
                             </select>
                         </div>
-
-                        <div class="col-sm-auto ms-auto text-start">
-                            <button type="button" class="btn btn-primary search_btn px-4">بحث</button>
-                        </div>
                     </form>
                 </div>
 
@@ -63,40 +59,45 @@
         <div class="card-body">
 
             <div class="row">
-
                 <div class="col-sm-12">
-                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                           id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
-                           aria-describedby="DataTables_Table_0_info">
-                        <thead>
-                        <th>
-                            اسم المستخدم
-                        </th>
-                        <th>
-                            البريد الالكتروني
-                        </th>
-                        <th>
-                            الصلاحيه
-                        </th>
-                        <th>
-                            الهاتف
-                        </th>
-                        <th>
-                            مفعل/معطل
-                        </th>
-                        <th>
-                           الحالة
-                        </th>
-                        <th>
-                            الخيارات
-                        </th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+                               id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
+                               aria-describedby="DataTables_Table_0_info">
+                            <thead>
+                            <th>
+                                المستخدم
+                            </th>
+                            <th>
+                                البريد الالكتروني
+                            </th>
+                            <th>
+                                الترخيص
+                            </th>
+                            <th>
+                                السجل
+                            </th>
+                            <th>
+                                الصلاحيه
+                            </th>
+                            <th>
+                                الهاتف
+                            </th>
+                            <th>
+                                الحالة
+                            </th>
+                            <th>
+                                الاعتماد
+                            </th>
+                            <th>
+                                الخيارات
+                            </th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -109,7 +110,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-6" id="designer">
                             <div class="row" id="view-designer-types-row">
                                 <div class="col-12 d-flex flex-row justify-content-between">
                                     <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="designer" style="height: 15px; width: 15px;"></div>
@@ -127,7 +128,7 @@
                         </div>
 
 
-                        <div class="col-6">
+                        <div class="col-6" id="contractor">
                             <div class="row" id="view-designer-types-row">
                                 <div class="col-12 d-flex flex-row justify-content-between">
                                     <div class="border rounded-circle d-flex flex-row justify-content-center align-items-center align-content-center mt-1" data-type="general" style="height: 15px; width: 15px;"></div>
@@ -183,6 +184,8 @@
 
 @section('scripts')
     <script>
+        let submitSearch = () => $('#items_table').DataTable().ajax.reload(null, true);
+
         $.fn.dataTable.ext.errMode = 'none';
         $(function () {
             $('#items_table').DataTable({
@@ -191,6 +194,7 @@
                 "processing": true,
                 'stateSave': true,
                 "serverSide": true,
+                "autoWidth": false,
                 ajax: {
                     url: '{{route('users.request.list')}}',
                     type: 'GET',
@@ -206,6 +210,8 @@
                 columns: [
                     {className: 'text-center', data: 'name', name: 'name'},
                     {className: 'text-center', data: 'email', name: 'email'},
+                    {className: 'text-center', data: 'license_number', name: 'license_number'},
+                    {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
                     {className: 'text-center', data: 'type', name: 'type'},
                     {className: 'text-center', data: 'phone', name: 'phone'},
                     {className: 'text-center', data: 'enabled', name: 'enabled'},
@@ -219,8 +225,17 @@
             });
 
         });
-        $('.search_btn').click(function (ev) {
-            $('#items_table').DataTable().ajax.reload(null, false);
+        $('#type').change(function (e) {
+            submitSearch()
+        });
+        $('#name').keypress(function (e) {
+            if( e.keyCode === 13 ) {
+                e.preventDefault()
+                submitSearch()
+                return false
+            } else if( this.value.length >= 2 ) {
+                submitSearch()
+            }
         });
 
         function delete_user(id, url, callback = null) {
@@ -255,7 +270,7 @@
                                 callback(data);
                             } else {
                                 if (data.success) {
-                                    $('#items_table').DataTable().ajax.reload(null, false);
+                                    $('#items_table').DataTable().ajax.reload(null, true);
                                     showAlertMessage('success', data.message);
                                 } else {
                                     showAlertMessage('error', 'هناك خطأ ما');
@@ -264,7 +279,7 @@
                             }
                         },
                         error: function (data) {
-                            console.log(data);
+                            // console.log(data);
                         },
                     });
                 }
@@ -295,7 +310,7 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        $('#items_table').DataTable().ajax.reload(null, false);
+                        $('#items_table').DataTable().ajax.reload(null, true);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
@@ -332,7 +347,7 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        $('#items_table').DataTable().ajax.reload(null, false);
+                        $('#items_table').DataTable().ajax.reload(null, true);
                         showAlertMessage('success', data.message);
                     }else {
                         showAlertMessage('error', 'حدث خطأ في النظام');
@@ -362,7 +377,7 @@
                 return await (await response).json();
             }
 
-            function prepareUserDesignTypesModal(types) {
+            function prepareUserDesignTypesModal(types, userType) {
                 let designs = ["consulting", "designer", "fire", "general", "protections"];
                 types.map((type) => {
                     viewDesignerTypesModal.find(`div[data-type='${type['type']}']`).addClass("bg-success")
@@ -374,13 +389,19 @@
                     }
                 });
 
+                if ( userType === "design_office" ) {
+                    $("#contractor").hide();
+                } else {
+                    $("#designer").hide();
+                }
+
             }
 
             $(document).on("click", ".view-designer-types-btn", async function (event) {
                 event.preventDefault();
                 let userId = $(this).data("user");
                 let response = await get_design_types(userId);
-                prepareUserDesignTypesModal(response['data']);
+                prepareUserDesignTypesModal(response['data'], response['user_type']);
                 viewDesignerTypesModal.modal("show");
             });
 
@@ -393,6 +414,9 @@
                 designs.map((design) => {
                     viewDesignerTypesModal.find(`div[data-type='${design}']`).removeClass("bg-danger").removeClass("bg-success");
                 });
+
+                $("#designer").show();
+                $("#contractor").show();
             });
 
 

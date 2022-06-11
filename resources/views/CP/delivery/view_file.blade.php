@@ -24,6 +24,17 @@
             background-repeat: no-repeat;
         }
 
+        .file-view-wrapper{
+            position: relative;
+        }
+        .file-view-download{
+            position: absolute;
+            top: 9px;
+            left: 11px;
+            font-size: 18px;
+            color: #0b2473;
+        }
+
         .krajee-default.file-preview-frame {
             margin: 8px;
             border: 1px solid rgba(0, 0, 0, .2);
@@ -86,6 +97,11 @@
                                role="tab">ملفات التعهدات</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link px-3" data-bs-toggle="tab"
+                               href="#fire_protections_files"
+                               role="tab">ملفات الوقاية والحماية من الحريق</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link px-3 " data-bs-toggle="tab"
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
@@ -98,10 +114,6 @@
                             <div class="row">
 
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  العنوان : </span>{{$order->title}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
                                     <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
                                 </div>
 
@@ -109,14 +121,9 @@
                                     <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                                 </div>
 
-
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">   التفاصيل : </span>{{$order->description}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
@@ -325,8 +332,9 @@
                                             @foreach($obligation as $obligationFile)
                                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
                                                     <a href="{{ asset("storage/".$obligationFile->path) }}" download="">
-                                                        <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper">
-                                                            <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf.png") }}'); height: 140px;"></div>
+                                                        <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
+                                                            <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
+                                                            <div class="file-view-download"><i class="fas fa-download"></i></div>
                                                             <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
                                                                 <small class="text-muted" style="font-size: 12px;">{{ get_obligation_name_by_type($obligationFile->type) }}</small>
                                                             </div>
@@ -339,6 +347,33 @@
                                     </div>
                                 </div>
                             @endforeach
+                        </div>
+                        <div class="tab-pane" id="fire_protections_files" role="tabpanel">
+                            <div class="row">
+                                @foreach($order->specialties_file->whereIn("type", [5,6,7,8]) as $file)
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
+                                        <a href="{{ asset("storage/".$file->path) }}" download="">
+                                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
+                                                <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
+                                                <div class="file-view-download"><i class="fas fa-download"></i></div>
+                                                <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
+                                                    <small class="text-muted" style="font-size: 12px;">
+                                                        @if($file->type == 5)
+                                                            سلامة ارواح
+                                                        @elseif($file->type == 6)
+                                                            انذار
+                                                        @elseif($file->type == 7)
+                                                            اطفاء
+                                                        @else
+                                                            اخرى
+                                                        @endif
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="tab-pane" id="notes" role="tabpanel">
                             <div class="row">

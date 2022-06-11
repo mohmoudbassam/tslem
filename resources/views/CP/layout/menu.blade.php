@@ -1,7 +1,10 @@
 <div class="cp-right-menu">
-<a href="#" class="cp-right-menu-logo">
-    <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="38">
-                </a>
+    <a href="#" class="cp-right-menu-logo">
+        <div class="close-menu d-lg-none p-2">
+            <i class="far fa-times"></i>
+        </div>
+        <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="38">
+    </a>
     <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
@@ -31,8 +34,31 @@
                                     <span data-key="t-chat">طلبات المستخدمين</span>
                                 </a>
                             </li>
-
-
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="licenses"></i>
+                            <span data-key="t-apps">{{\App\Models\License::trans('group')}}</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{route('licenses')}}">
+                                    <span data-key="t-calendar">{{\App\Models\License::crudTrans('index')}}</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('licenses.add')}}">
+                                    <span data-key="t-chat">{{\App\Models\License::crudTrans('add')}}</span>
+                                </a>
+                            </li>
+                            @if(request()->routeIs('licenses.edit'))
+                                <li>
+                                    <a onclick="event.preventDefault(); return false" href="{{route('licenses.edit',['license'=>request()->license])}}">
+                                        <span data-key="t-chat">{{ \App\Models\License::crudTrans('update') }}</span>
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                     <li>
@@ -50,7 +76,8 @@
                                 <a href="{{route('service.index')}}">
                                     <span data-key="t-calendar">الخدمات</span>
                                 </a>
-                            </li>  <li>
+                            </li>
+                            <li>
                                 <a href="{{route('news')}}">
                                     <span data-key="t-calendar">الاخبار</span>
                                 </a>
@@ -119,6 +146,12 @@
                             <span data-key="t-authentication">المراكز</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{route('session')}}">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">قائمة المواعيد</span>
+                        </a>
+                    </li>
                 @endif
 
 
@@ -162,16 +195,16 @@
                     </li>
 
                 @endif
-                    @if(auth()->user()->isAdmin())
+                @if(auth()->user()->isAdmin())
 
 
-                        <li>
-                            <a href="{{route('dashboard')}}">
-                                <i data-feather="pie-chart"></i>
-                                <span data-key="t-dashboard">الإحصائيات </span>
-                            </a>
-                        </li>
-                    @endif
+                    <li>
+                        <a href="{{route('dashboard')}}">
+                            <i data-feather="pie-chart"></i>
+                            <span data-key="t-dashboard">الإحصائيات </span>
+                        </a>
+                    </li>
+                @endif
 
                 @if(!auth()->user()->isAdmin())
                     <li>

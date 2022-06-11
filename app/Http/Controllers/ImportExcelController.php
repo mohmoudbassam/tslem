@@ -13,13 +13,16 @@ class ImportExcelController extends Controller
     public function import()
     {
         $data = Excel::toArray(new LocationImport(), request()->file('file'));
+
         foreach ($data as $_date) {
+
             foreach ($_date as $_d) {
                 if ($_d[0]) {
                     RaftCompanyBox::query()->create([
-                       'raft_company_location_id'=>6,
-                        'box'=>$_d[0],
-                        'camp'=>$_d[1].'/'.$_d[2]
+                        'raft_company_location_id' => 7,
+                        'box' => $_d[0],
+                        'camp' => $_d[1] ,
+                        'license_number'=>$_d[5]
                     ]);
                 }
             }

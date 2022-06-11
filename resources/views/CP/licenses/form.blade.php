@@ -1,0 +1,132 @@
+@extends('CP.master')
+@php
+    $mode ??= 'create';
+    $mode_form ??= ($mode === 'create' ? 'store' : 'update');
+    $model = optional($model ?? null);
+@endphp
+@section('title')
+    {{\App\Models\License::crudTrans($mode)}}
+@endsection
+@section('content')
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18"></h4>
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{\App\Models\License::crudTrans($mode)}}</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('licenses')}}">{{\App\Models\License::crudTrans('index')}}</a></li>
+                        <li class="breadcrumb-item active">الرئيسية</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if ($errors->any())
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <ul class="m-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-12"><h4>{{\App\Models\License::crudTrans($mode)}}</h4></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="form" method="post" action="{{route("licenses.{$mode_form}", ['license'=>$model->id])}}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            @foreach(\App\Models\License::$RULES as $input => $rules)
+                                @include('CP.helpers.form_input', [
+                                    'col' => 6,
+                                    'id' => $input,
+                                    'name' => $input,
+                                    'label' => \App\Models\License::trans($input),
+                                    'required' => in_array('required', $rules) ?? false,
+                                    'type' => ends_with($input, '_id') ? 'select' : (in_array('numeric', $rules) ? 'number' : 'text'),
+                                    'options' => ends_with($input, '_id') ? \App\Models\License::optionsFor($input) : [],
+                                    'value' => $model->$input,
+                                    'selected' => $model->$input,
+                                    'model' => $model,
+                                ])
+                            @endforeach
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex flex-wrap gap-3">
+                        <button type="button" class="btn btn-lg btn-primary submit_btn" form="form">
+                            {{\App\Models\License::crudTrans($mode)}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    </div>
+@endsection
+
+
+@section('scripts')
+    <script src="{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
+    <script src="{{url('/assets/libs/flatpickr/l10n/ar.js')}}"></script>
+
+    <script>
+        jQuery.validator.addMethod("alphanumeric", function (value, element) {
+            return this.optional(element) || /^\w+$/i.test(value);
+        }, "يرجى ادخال حروف  أو أرقام او علامة _ ");
+
+        @foreach(array_keys(\App\Models\License::$RULES) as $_col)
+            file_input_register('#{{$_col}}');
+        @endforeach
+
+        $('#form').validate({
+            rules: @json(\App\Models\License::getRules()),
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            errorPlacement: function (error, element) {
+                $(element).addClass("is-invalid");
+                error.appendTo('#' + $(element).attr('id') + '_error');
+            },
+            success: function (label, element) {
+                $(element).removeClass("is-invalid");
+            }
+        });
+
+        $('.submit_btn').click(function (e) {
+            e.preventDefault();
+            if (!$("#form").valid()) return false;
+
+            $('#form').submit()
+        });
+
+        $(()=>{
+        @foreach(\App\Models\License::$RULES as $column => $rules)
+            @if ( isDateAttribute(\App\Models\License::class, $column) )
+                flatpickr(".{{$column}}_input",{
+                    "locale": "{{currentLocale()}}",
+                    typeCalendar: "Umm al-Qura"
+                });
+            @endif
+        @endforeach
+        })
+    </script>
+@endsection

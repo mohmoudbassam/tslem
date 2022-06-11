@@ -1,84 +1,111 @@
+/* flatpickr v4.5.2, @license MIT */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.default = {}));
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (factory((global.default = {})));
 }(this, (function (exports) { 'use strict';
 
-  var english = {
-      weekdays: {
-          shorthand: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-          longhand: [
-              "Sunday",
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-          ],
-      },
-      months: {
-          shorthand: [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-          ],
-          longhand: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
-          ],
-      },
-      daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-      firstDayOfWeek: 0,
-      ordinal: function (nth) {
-          var s = nth % 100;
-          if (s > 3 && s < 21)
-              return "th";
-          switch (s % 10) {
-              case 1:
-                  return "st";
-              case 2:
-                  return "nd";
-              case 3:
-                  return "rd";
-              default:
-                  return "th";
-          }
-      },
-      rangeSeparator: " to ",
-      weekAbbreviation: "Wk",
-      scrollTitle: "Scroll to increment",
-      toggleTitle: "Click to toggle",
-      amPM: ["AM", "PM"],
-      yearAriaLabel: "Year",
-      monthAriaLabel: "Month",
-      hourAriaLabel: "Hour",
-      minuteAriaLabel: "Minute",
-      time_24hr: false,
-  };
+    const english = {
+        weekdays: {
+            shorthand: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            longhand: [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+            ],
+        },
+        months: {
+            shorthand: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+            ],
+            longhand: [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+            ],
+        },
+        monthsHijri: {
+            shorthand: [
+                "Muh.",
+                "Saf.",
+                "Rab. 1",
+                "Rab. 2",
+                "Jum. 1",
+                "Jum. 2",
+                "Raj.",
+                "Shab.",
+                "Ramad.",
+                "Shaw.",
+                "Dhu. 1",
+                "Dhu. 2",
+            ],
+            longhand: [
+                "Muharram",
+                "Safar",
+                "Rabi al-Avval",
+                "Rabi ath-thani",
+                "Jumada al-thani",
+                "Jumada al-thula",
+                "Rajab",
+                "Shaban",
+                "Ramadan",
+                "Shawwal",
+                "Dhu al-Qadah",
+                "Dhu al-Hijjan",
+            ],
+        },
+        daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+        firstDayOfWeek: 0,
+        ordinal: (nth) => {
+            const s = nth % 100;
+            if (s > 3 && s < 21)
+                return "th";
+            switch (s % 10) {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+                default:
+                    return "th";
+            }
+        },
+        rangeSeparator: " to ",
+        weekAbbreviation: "Wk",
+        scrollTitle: "Scroll to increment",
+        toggleTitle: "Click to toggle",
+        amPM: ["AM", "PM"],
+        yearAriaLabel: "Year",
+    };
 
-  exports.default = english;
-  exports.english = english;
+    exports.english = english;
+    exports.default = english;
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

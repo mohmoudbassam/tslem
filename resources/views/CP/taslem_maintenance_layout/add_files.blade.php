@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{route('taslem_maintenance.save_note')}}" method="post" enctype="multipart/form-">
+            <form action="{{route('taslem_maintenance.save_note')}}" id="add_edit_form" method="post" enctype="multipart/form-">
                 @csrf
                 <div class="row">
                     <div class="col-lg-4">
@@ -137,7 +137,6 @@
     <script>
         Dropzone.autoDiscover = false;
         $(document).ready(function () {
-
                 $('#dropzone_file_first').dropzone({
                     url: "{{route('taslem_maintenance.upload_file',['type' => 'file_first','session_id'=>$session->id])}}",
                     paramName: "file", // The name that will be used to transfer the file
@@ -147,6 +146,14 @@
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                     },
+                    accept: function(file, done) {
+
+                        if (file.type != "application/pdf") {
+                            showAlertMessage('error', 'الرجاء ارفاق ملف pdf');
+                            done("الرجاء ارفاق ملف pdf");
+                        }else { done(); }
+                        },
+
                     success: function (file, response) {
 
 
@@ -159,6 +166,13 @@
                     maxFiles: 10,
                     maxFilesize: 10, // MB
                     addRemoveLinks: true,
+                    accept: function(file, done) {
+
+                        if (file.type != "application/pdf") {
+                            showAlertMessage('error', 'الرجاء ارفاق ملف pdf');
+                            done("الرجاء ارفاق ملف pdf");
+                        }else { done(); }
+                    },
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                     },
@@ -173,6 +187,13 @@
                     maxFiles: 10,
                     maxFilesize: 10, // MB
                     addRemoveLinks: true,
+                    accept: function(file, done) {
+
+                        if (file.type != "application/pdf") {
+                            showAlertMessage('error', 'الرجاء ارفاق ملف pdf');
+                            done("الرجاء ارفاق ملف pdf");
+                        }else { done(); }
+                    },
                     headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                     },
@@ -181,9 +202,41 @@
                     },
 
                 });
-
             }
         )
+
+        $('#add_edit_form').validate({
+            rules: {
+                "note": {
+                    required: true,
+                },
+
+            },
+            errorElement: 'span',
+            errorClass: 'help-block help-block-error',
+            focusInvalid: true,
+            errorPlacement: function (error, element) {
+                $(element).addClass("is-invalid");
+                error.appendTo('#' + $(element).attr('id') + '_error');
+            },
+            success: function (label, element) {
+
+                $(element).removeClass("is-invalid");
+            }
+        });
+
+        $('.submit_btn').click(function (e) {
+            e.preventDefault();
+
+            if (!$("#add_edit_form").valid())
+                return false;
+
+
+            postData(new FormData($('#add_edit_form').get(0)), '{{route('taslem_maintenance.save_note')}}');
+
+
+
+        });
 
     </script>
 

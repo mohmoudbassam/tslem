@@ -18,6 +18,8 @@
 
     </style>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/wowjs@1.1.3/css/libs/animate.css">
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -32,7 +34,25 @@
             </div>
         </div>
     </div>
+
     <div class="row">
+
+        <div class="col-12" id="designer-type-warning-alert-wrapper" style="display: none;">
+            <div class="alert alert-warning d-flex justify-content-between wow" id="designer-type-warning-alert">
+                <div class="d-flex flex-row align-items-center">
+                    <i class="fa fa-info-circle mx-2"></i>
+                    <b>
+                        تنبيه:
+                    </b>
+                    المكتب الذي قمت بإختياره ليس من ضمن إختصاصاته ( الحماية والحريق والسلامة ) نرجوا منكم التأكيد على معرفتكم بذلك
+                </div>
+
+                <b class="btn text-white bg-success" id="agree-to-designer-has-no-fire" style="font-weight: bolder; cursor: pointer;">
+                    لا مانع لدي
+                </b>
+            </div>
+        </div>
+
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -43,6 +63,7 @@
                 <div class="card-body">
                     <form id="add_edit_form" method="post" action="{{route('services_providers.save_order')}}" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" value="0" id="agree_to_designer_has_no_fire_specialty" name="agree_to_designer_has_no_fire_specialty">
                         <div class="row my-4">
                             <div class="col-12">
                                 <div class="form-group" id="designer_id_parent">
@@ -69,10 +90,10 @@
             </div>
         </div>
     </div>
+
     <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
-
 
     <div class="modal fade" id="obligations-modal" tabindex="-1" role="dialog" aria-labelledby="obligations-modal-title" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -131,6 +152,12 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" integrity="sha512-Eak/29OTpb36LLo2r47IpVzPBLXnAMPAVypbSZiZ4Qkf8p/7S/XRG5xp7OKWPPYfJT6metI+IORkR5G8F900+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        new WOW().init();
+    </script>
+
     <script>
         file_input('#files');
         $('#add_edit_form').validate({
@@ -152,22 +179,18 @@
                 $(element).removeClass("is-invalid");
             }
         });
-
-        $('.submit_btn').click(function (e) {
-            e.preventDefault();
-            if (!$("#add_edit_form").valid())
-                return false;
-            $('#add_edit_form').submit()
-        });
     </script>
 
     <script>
         $(function () {
             let agreed = parseInt("{{ auth()->user()->agree_to_obligation }}");
+            let agreed_to_designer_has_no_fire = false;
+
             $(".select2").select2({});
             $(".designer_id").select2({
                 dropdownParent: $("#designer_id_parent")
             });
+
             $("#obligations-modal").modal({backdrop: 'static', keyboard: false});
 
             $("#designer_id").on("select2:opening", function (event) {
@@ -178,10 +201,26 @@
             });
 
             $("#submit-order").on("click", function (event) {
+                event.preventDefault();
+
+                if (!$("#add_edit_form").valid())
+                    return false;
+
                 if ( !agreed ) {
-                    event.preventDefault();
                     $("#obligations-modal").modal("show");
+                    return false;
                 }
+
+                if ( !agreed_to_designer_has_no_fire ) {
+                    $("#designer-type-warning-alert").addClass("shake");
+                    showAlertMessage("warning", "من فضلك قم بالموافقة بأنه لا مانع لديك من اختيار هذا المكتب الهندسي");
+                    setTimeout(() => {
+                        $("#designer-type-warning-alert").removeClass("shake");
+                    }, 500);
+                    return false;
+                }
+
+                $('#add_edit_form').submit();
             });
 
             $("#close-obligations-modal").on("click", function () {
@@ -210,6 +249,61 @@
                 agreed = true;
                 $("#obligations-modal").modal("hide");
                 $("#designer_id").select2("open");
+            });
+
+
+
+
+
+
+            // Getting Designer Type After Selecting One Designer.
+
+            $("#agree-to-designer-has-no-fire").on("click", function () {
+                $("#agree_to_designer_has_no_fire_specialty").val(1);
+                $(this).slideUp("slow");
+                agreed_to_designer_has_no_fire = true;
+            });
+
+            async function getDesignerType(id) {
+                let response = await fetch(`/service-providers/${id}/design/types`, {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+
+                return await (await response).json();
+            }
+
+            function showDesignerWarningMessage() {
+                $("#designer-type-warning-alert-wrapper").slideDown("slow");
+            }
+
+            function hideDesignerWarningMessage() {
+                $("#designer-type-warning-alert-wrapper").slideUp("slow", function () {
+                    $("#agree-to-designer-has-no-fire").slideDown("slow");
+                    $("#agree_to_designer_has_no_fire_specialty").val(0);
+                    agreed_to_designer_has_no_fire = false;
+                });
+            }
+
+            $("#designer_id").on("change", async function () {
+                let designer = $(this).val();
+                let response = await getDesignerType(designer);
+                if ( response['success'] ) {
+                    let resultLength = response['data'].filter((dt) => {
+                        return dt['type'] === "fire";
+                    }).length;
+                    if ( resultLength === 0 ) {
+                        agreed_to_designer_has_no_fire = false;
+                        showDesignerWarningMessage();
+                    } else {
+                        agreed_to_designer_has_no_fire = true;
+                        hideDesignerWarningMessage();
+                    }
+                } else {
+                    showAlertMessage("error", response['message']);
+                }
             });
         });
     </script>

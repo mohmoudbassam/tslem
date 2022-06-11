@@ -4,6 +4,20 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
+    <style>
+        .select2-selection__rendered {
+            line-height: 36px !important;
+        }
+        .select2-container .select2-selection--single {
+            height: 40px !important;
+        }
+        .select2-selection__arrow {
+            height: 39px !important;
+        }
+        Share
+
+    </style>
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -31,9 +45,9 @@
                         <?php echo csrf_field(); ?>
                         <div class="row my-4">
                             <div class="col-12">
-                                <div class="form-group">
+                                <div class="form-group" id="designer_id_parent">
                                     <label class="form-label" for="designer_id">المكتب الهندسي</label>
-                                    <select class="form-select" id="designer_id" name="designer_id">
+                                    <select class="form-select select2" id="designer_id" name="designer_id">
                                         <option  value="">اختر...</option>
                                         <?php $__currentLoopData = $designers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $designer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option  value="<?php echo e($designer->id); ?>"><?php echo e($designer->company_name); ?></option>
@@ -48,7 +62,7 @@
 
                 <div class="card-footer">
                     <div class="d-flex flex-wrap gap-3">
-                        <button type="button" class="btn btn-lg btn-primary submit_btn">إنشاء طلب</button>
+                        <button type="button" class="btn btn-lg btn-primary submit_btn" id="submit-order">إنشاء طلب</button>
                     </div>
                 </div>
 
@@ -57,6 +71,63 @@
     </div>
     <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    </div>
+
+
+    <div class="modal fade" id="obligations-modal" tabindex="-1" role="dialog" aria-labelledby="obligations-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="obligations-modal-title">تعهد وإقرار</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <h5 class="font-bold">
+                                اتعهد في حال صدور رخصة الاضافات و إعتمادها  بأن التزم  بالتالي  :-
+                            </h5>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <ol>
+                                <li class="my-3 mark" style="font-size: 14px; font-weight: bolder;">
+                                    الالتزام بتنفيذ جميع الأعمال الإضافية المطلوبة و الموضحة بهذا التصريح من قبلنا و تحت مسؤوليتنا وفقاً للشروط و المواصفات و الادلة ومتابعة الإشراف و الإلتزام بالتنسيق مع مقاولي التشغيل و الصيانة في المشروع .
+                                </li>
+                                <li class="my-3 mark" style="font-size: 14px; font-weight: bolder;">
+                                    إزالة الإضافات و إعادة الوضع الى ما كان عليه سابقا متى ما طلب مني الإزالة و عدم الاعتراض .
+                                </li>
+                                <li class="my-3 mark" style="font-size: 14px; font-weight: bolder;">
+                                    عدم إعاقة فرق المتابعة في أداء عملها و التعاون التام معها.
+                                </li>
+                                <li class="my-3 mark" style="font-size: 14px; font-weight: bolder;">
+                                    التعاقد مع إحدى شركات نقل المخلفات و عدم رميها في الممرات و  الطرق و الشوارع العامة .
+                                </li>
+                                <li class="my-3 mark" style="font-size: 14px; font-weight: bolder;">
+                                    للجهات الرسمية الحق في العودة بتكاليف الإصلاحات و الغرامات المتناسبة في حالة وجود تلف أو مخالفة .
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="form-check" style="margin-right: 15px;">
+                                <input class="form-check-input" type="checkbox" value="" id="agree_checkbox">
+                                <label class="form-check-label" for="agree_checkbox" style="font-weight: bold;">
+                                    اوافق على الاقرار والتعهد
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" id="agree-to-obligations-btn" class="btn btn-primary" data-dismiss="modal">موافق</button>
+                    <button type="button" id="close-obligations-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
     </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
@@ -88,9 +159,60 @@
                 return false;
             $('#add_edit_form').submit()
         });
-
     </script>
 
+    <script>
+        $(function () {
+            let agreed = parseInt("<?php echo e(auth()->user()->agree_to_obligation); ?>");
+            $(".select2").select2({});
+            $(".designer_id").select2({
+                dropdownParent: $("#designer_id_parent")
+            });
+            $("#obligations-modal").modal({backdrop: 'static', keyboard: false});
+
+            $("#designer_id").on("select2:opening", function (event) {
+                if ( !agreed ) {
+                    event.preventDefault();
+                    $("#obligations-modal").modal("show");
+                }
+            });
+
+            $("#submit-order").on("click", function (event) {
+                if ( !agreed ) {
+                    event.preventDefault();
+                    $("#obligations-modal").modal("show");
+                }
+            });
+
+            $("#close-obligations-modal").on("click", function () {
+                $("#obligations-modal").modal("hide");
+            });
+
+            $("#agree-to-obligations-btn").on("click",  async function () {
+                if ( !$("#agree_checkbox").prop("checked") ) {
+                    showAlertMessage("error", "من فضلك قم بالنوافقة على الاقرار والتعهد")
+                    return null;
+                }
+
+                let response = await (await fetch(`/service-providers/obligations/agree`, {
+                    METHOD: "GET",
+                    headers: {
+                        'accept': 'application/json'
+                    },
+                })).json();
+
+                if ( !response['success'] ) {
+                    showAlertMessage("error", response['message']);
+                    return;
+                }
+
+                showAlertMessage("success", response['message']);
+                agreed = true;
+                $("#obligations-modal").modal("hide");
+                $("#designer_id").select2("open");
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/service_providers/create_order.blade.php ENDPATH**/ ?>
