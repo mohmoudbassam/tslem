@@ -14,6 +14,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
+        "laravel/helpers": "^1.5",
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.9",
@@ -26,8 +27,7 @@
         "phpoffice/phpword": "^0.18.3",
         "spatie/laravel-backup": "^7.0",
         "unisharp/laravel-filemanager": "^2.4",
-        "yajra/laravel-datatables-oracle": "~9.0",
-      "ext-curl": "*"
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -45,7 +45,9 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Http/Helpers.php"
+            "app/Http/Helpers.php",
+            "app/Helpers/FIs.php",
+            "app/Helpers/FGet.php"
         ]
     },
     "autoload-dev": {

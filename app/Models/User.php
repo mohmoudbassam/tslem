@@ -143,6 +143,11 @@ class User extends Authenticatable
         return $query->where('type', 'design_office');
     }
 
+    public function scopeOnlyRaftCompanies($query)
+    {
+        return $query->where('type', 'raft_company');
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class, 'owner_id')->where('type', 'service_provider');

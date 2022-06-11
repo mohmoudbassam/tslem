@@ -1,41 +1,16 @@
+/* flatpickr v4.5.2, @license MIT */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.index = {}));
+    (factory((global.index = {})));
 }(this, (function (exports) { 'use strict';
 
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation.
-
-    Permission to use, copy, modify, and/or distribute this software for any
-    purpose with or without fee is hereby granted.
-
-    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-    PERFORMANCE OF THIS SOFTWARE.
-    ***************************************************************************** */
-
-    var __assign = function() {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
-    var fp = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Arabic = {
+    const Arabic = {
         weekdays: {
             shorthand: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
             longhand: [
@@ -65,17 +40,16 @@
                 "ديسمبر",
             ],
         },
-        rangeSeparator: " - ",
     };
     fp.l10ns.ar = Arabic;
     fp.l10ns;
 
-    var fp$1 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$1 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Austria = {
+    const Austria = {
         weekdays: {
             shorthand: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
             longhand: [
@@ -127,74 +101,12 @@
     fp$1.l10ns.at = Austria;
     fp$1.l10ns;
 
-    var fp$2 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$2 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Azerbaijan = {
-        weekdays: {
-            shorthand: ["B.", "B.e.", "Ç.a.", "Ç.", "C.a.", "C.", "Ş."],
-            longhand: [
-                "Bazar",
-                "Bazar ertəsi",
-                "Çərşənbə axşamı",
-                "Çərşənbə",
-                "Cümə axşamı",
-                "Cümə",
-                "Şənbə",
-            ],
-        },
-        months: {
-            shorthand: [
-                "Yan",
-                "Fev",
-                "Mar",
-                "Apr",
-                "May",
-                "İyn",
-                "İyl",
-                "Avq",
-                "Sen",
-                "Okt",
-                "Noy",
-                "Dek",
-            ],
-            longhand: [
-                "Yanvar",
-                "Fevral",
-                "Mart",
-                "Aprel",
-                "May",
-                "İyun",
-                "İyul",
-                "Avqust",
-                "Sentyabr",
-                "Oktyabr",
-                "Noyabr",
-                "Dekabr",
-            ],
-        },
-        firstDayOfWeek: 1,
-        ordinal: function () {
-            return ".";
-        },
-        rangeSeparator: " - ",
-        weekAbbreviation: "Hf",
-        scrollTitle: "Artırmaq üçün sürüşdürün",
-        toggleTitle: "Aç / Bağla",
-        amPM: ["GƏ", "GS"],
-        time_24hr: true,
-    };
-    fp$2.l10ns.az = Azerbaijan;
-    fp$2.l10ns;
-
-    var fp$3 = typeof window !== "undefined" && window.flatpickr !== undefined
-        ? window.flatpickr
-        : {
-            l10ns: {},
-        };
-    var Belarusian = {
+    const Belarusian = {
         weekdays: {
             shorthand: ["Нд", "Пн", "Аў", "Ср", "Чц", "Пт", "Сб"],
             longhand: [
@@ -247,71 +159,16 @@
         toggleTitle: "Націсніце для пераключэння",
         amPM: ["ДП", "ПП"],
         yearAriaLabel: "Год",
-        time_24hr: true,
     };
-    fp$3.l10ns.be = Belarusian;
-    fp$3.l10ns;
+    fp$2.l10ns.be = Belarusian;
+    fp$2.l10ns;
 
-    var fp$4 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$3 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Bosnian = {
-        firstDayOfWeek: 1,
-        weekdays: {
-            shorthand: ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
-            longhand: [
-                "Nedjelja",
-                "Ponedjeljak",
-                "Utorak",
-                "Srijeda",
-                "Četvrtak",
-                "Petak",
-                "Subota",
-            ],
-        },
-        months: {
-            shorthand: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "Maj",
-                "Jun",
-                "Jul",
-                "Avg",
-                "Sep",
-                "Okt",
-                "Nov",
-                "Dec",
-            ],
-            longhand: [
-                "Januar",
-                "Februar",
-                "Mart",
-                "April",
-                "Maj",
-                "Juni",
-                "Juli",
-                "Avgust",
-                "Septembar",
-                "Oktobar",
-                "Novembar",
-                "Decembar",
-            ],
-        },
-        time_24hr: true,
-    };
-    fp$4.l10ns.bs = Bosnian;
-    fp$4.l10ns;
-
-    var fp$5 = typeof window !== "undefined" && window.flatpickr !== undefined
-        ? window.flatpickr
-        : {
-            l10ns: {},
-        };
-    var Bulgarian = {
+    const Bulgarian = {
         weekdays: {
             shorthand: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
             longhand: [
@@ -354,18 +211,16 @@
                 "Декември",
             ],
         },
-        time_24hr: true,
-        firstDayOfWeek: 1,
     };
-    fp$5.l10ns.bg = Bulgarian;
-    fp$5.l10ns;
+    fp$3.l10ns.bg = Bulgarian;
+    fp$3.l10ns;
 
-    var fp$6 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$4 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Bangla = {
+    const Bangla = {
         weekdays: {
             shorthand: ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহস্পতি", "শুক্র", "শনি"],
             longhand: [
@@ -409,15 +264,15 @@
             ],
         },
     };
-    fp$6.l10ns.bn = Bangla;
-    fp$6.l10ns;
+    fp$4.l10ns.bn = Bangla;
+    fp$4.l10ns;
 
-    var fp$7 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$5 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Catalan = {
+    const Catalan = {
         weekdays: {
             shorthand: ["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"],
             longhand: [
@@ -460,8 +315,8 @@
                 "Desembre",
             ],
         },
-        ordinal: function (nth) {
-            var s = nth % 100;
+        ordinal: nth => {
+            const s = nth % 100;
             if (s > 3 && s < 21)
                 return "è";
             switch (s % 10) {
@@ -478,17 +333,16 @@
             }
         },
         firstDayOfWeek: 1,
-        time_24hr: true,
     };
-    fp$7.l10ns.cat = fp$7.l10ns.ca = Catalan;
-    fp$7.l10ns;
+    fp$5.l10ns.cat = Catalan;
+    fp$5.l10ns;
 
-    var fp$8 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$6 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Czech = {
+    const Czech = {
         weekdays: {
             shorthand: ["Ne", "Po", "Út", "St", "Čt", "Pá", "So"],
             longhand: [
@@ -541,17 +395,16 @@
         toggleTitle: "Přepnout dopoledne/odpoledne",
         amPM: ["dop.", "odp."],
         yearAriaLabel: "Rok",
-        time_24hr: true,
     };
-    fp$8.l10ns.cs = Czech;
-    fp$8.l10ns;
+    fp$6.l10ns.cs = Czech;
+    fp$6.l10ns;
 
-    var fp$9 = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$7 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Welsh = {
+    const Welsh = {
         weekdays: {
             shorthand: ["Sul", "Llun", "Maw", "Mer", "Iau", "Gwe", "Sad"],
             longhand: [
@@ -595,7 +448,7 @@
             ],
         },
         firstDayOfWeek: 1,
-        ordinal: function (nth) {
+        ordinal: nth => {
             if (nth === 1)
                 return "af";
             if (nth === 2)
@@ -619,20 +472,18 @@
                 return "eg";
             if (nth >= 21 && nth <= 39)
                 return "ain";
-            // Inconclusive.
             return "";
         },
-        time_24hr: true,
     };
-    fp$9.l10ns.cy = Welsh;
-    fp$9.l10ns;
+    fp$7.l10ns.cy = Welsh;
+    fp$7.l10ns;
 
-    var fp$a = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$8 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Danish = {
+    const Danish = {
         weekdays: {
             shorthand: ["søn", "man", "tir", "ons", "tors", "fre", "lør"],
             longhand: [
@@ -675,23 +526,22 @@
                 "december",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
         firstDayOfWeek: 1,
         rangeSeparator: " til ",
         weekAbbreviation: "uge",
-        time_24hr: true,
     };
-    fp$a.l10ns.da = Danish;
-    fp$a.l10ns;
+    fp$8.l10ns.da = Danish;
+    fp$8.l10ns;
 
-    var fp$b = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$9 = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var German = {
+    const German = {
         weekdays: {
             shorthand: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
             longhand: [
@@ -739,12 +589,11 @@
         rangeSeparator: " bis ",
         scrollTitle: "Zum Ändern scrollen",
         toggleTitle: "Zum Umschalten klicken",
-        time_24hr: true,
     };
-    fp$b.l10ns.de = German;
-    fp$b.l10ns;
+    fp$9.l10ns.de = German;
+    fp$9.l10ns;
 
-    var english = {
+    const english = {
         weekdays: {
             shorthand: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
             longhand: [
@@ -787,10 +636,40 @@
                 "December",
             ],
         },
+        monthsHijri: {
+            shorthand: [
+                "Muh.",
+                "Saf.",
+                "Rab. 1",
+                "Rab. 2",
+                "Jum. 1",
+                "Jum. 2",
+                "Raj.",
+                "Shab.",
+                "Ramad.",
+                "Shaw.",
+                "Dhu. 1",
+                "Dhu. 2",
+            ],
+            longhand: [
+                "Muharram",
+                "Safar",
+                "Rabi al-Avval",
+                "Rabi ath-thani",
+                "Jumada al-thani",
+                "Jumada al-thula",
+                "Rajab",
+                "Shaban",
+                "Ramadan",
+                "Shawwal",
+                "Dhu al-Qadah",
+                "Dhu al-Hijjan",
+            ],
+        },
         daysInMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         firstDayOfWeek: 0,
-        ordinal: function (nth) {
-            var s = nth % 100;
+        ordinal: (nth) => {
+            const s = nth % 100;
             if (s > 3 && s < 21)
                 return "th";
             switch (s % 10) {
@@ -810,18 +689,14 @@
         toggleTitle: "Click to toggle",
         amPM: ["AM", "PM"],
         yearAriaLabel: "Year",
-        monthAriaLabel: "Month",
-        hourAriaLabel: "Hour",
-        minuteAriaLabel: "Minute",
-        time_24hr: false,
     };
 
-    var fp$c = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$a = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Esperanto = {
+    const Esperanto = {
         firstDayOfWeek: 1,
         rangeSeparator: " ĝis ",
         weekAbbreviation: "Sem",
@@ -869,20 +744,19 @@
                 "decembro",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return "-a";
         },
-        time_24hr: true,
     };
-    fp$c.l10ns.eo = Esperanto;
-    fp$c.l10ns;
+    fp$a.l10ns.eo = Esperanto;
+    fp$a.l10ns;
 
-    var fp$d = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$b = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Spanish = {
+    const Spanish = {
         weekdays: {
             shorthand: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
             longhand: [
@@ -925,22 +799,21 @@
                 "Diciembre",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return "º";
         },
         firstDayOfWeek: 1,
         rangeSeparator: " a ",
-        time_24hr: true,
     };
-    fp$d.l10ns.es = Spanish;
-    fp$d.l10ns;
+    fp$b.l10ns.es = Spanish;
+    fp$b.l10ns;
 
-    var fp$e = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$c = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Estonian = {
+    const Estonian = {
         weekdays: {
             shorthand: ["P", "E", "T", "K", "N", "R", "L"],
             longhand: [
@@ -991,17 +864,16 @@
         rangeSeparator: " kuni ",
         scrollTitle: "Keri, et suurendada",
         toggleTitle: "Klõpsa, et vahetada",
-        time_24hr: true,
     };
-    fp$e.l10ns.et = Estonian;
-    fp$e.l10ns;
+    fp$c.l10ns.et = Estonian;
+    fp$c.l10ns;
 
-    var fp$f = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$d = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Persian = {
+    const Persian = {
         weekdays: {
             shorthand: ["یک", "دو", "سه", "چهار", "پنج", "جمعه", "شنبه"],
             longhand: [
@@ -1045,19 +917,19 @@
             ],
         },
         firstDayOfWeek: 6,
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
     };
-    fp$f.l10ns.fa = Persian;
-    fp$f.l10ns;
+    fp$d.l10ns.fa = Persian;
+    fp$d.l10ns;
 
-    var fp$g = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$e = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Finnish = {
+    const Finnish = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
@@ -1101,20 +973,19 @@
                 "Joulukuu",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
-        time_24hr: true,
     };
-    fp$g.l10ns.fi = Finnish;
-    fp$g.l10ns;
+    fp$e.l10ns.fi = Finnish;
+    fp$e.l10ns;
 
-    var fp$h = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$f = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Faroese = {
+    const Faroese = {
         weekdays: {
             shorthand: ["Sun", "Mán", "Týs", "Mik", "Hós", "Frí", "Ley"],
             longhand: [
@@ -1157,7 +1028,7 @@
                 "Desembur",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
         firstDayOfWeek: 1,
@@ -1166,17 +1037,16 @@
         scrollTitle: "Rulla fyri at broyta",
         toggleTitle: "Trýst fyri at skifta",
         yearAriaLabel: "Ár",
-        time_24hr: true,
     };
-    fp$h.l10ns.fo = Faroese;
-    fp$h.l10ns;
+    fp$f.l10ns.fo = Faroese;
+    fp$f.l10ns;
 
-    var fp$i = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$g = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var French = {
+    const French = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
@@ -1220,7 +1090,7 @@
                 "décembre",
             ],
         },
-        ordinal: function (nth) {
+        ordinal: nth => {
             if (nth > 1)
                 return "";
             return "er";
@@ -1229,17 +1099,16 @@
         weekAbbreviation: "Sem",
         scrollTitle: "Défiler pour augmenter la valeur",
         toggleTitle: "Cliquer pour basculer",
-        time_24hr: true,
     };
-    fp$i.l10ns.fr = French;
-    fp$i.l10ns;
+    fp$g.l10ns.fr = French;
+    fp$g.l10ns;
 
-    var fp$j = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$h = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Greek = {
+    const Greek = {
         weekdays: {
             shorthand: ["Κυ", "Δε", "Τρ", "Τε", "Πέ", "Πα", "Σά"],
             longhand: [
@@ -1292,17 +1161,17 @@
         toggleTitle: "Κάντε κλικ για αλλαγή",
         amPM: ["ΠΜ", "ΜΜ"],
     };
-    fp$j.l10ns.gr = Greek;
-    fp$j.l10ns;
+    fp$h.l10ns.gr = Greek;
+    fp$h.l10ns;
 
-    var fp$k = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$i = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Hebrew = {
+    const Hebrew = {
         weekdays: {
-            shorthand: ["א", "ב", "ג", "ד", "ה", "ו", "ש"],
+            shorthand: ["א", "ב", "ג", "ד", "ה", "ו", "ז"],
             longhand: ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"],
         },
         months: {
@@ -1335,18 +1204,16 @@
                 "דצמבר",
             ],
         },
-        rangeSeparator: " אל ",
-        time_24hr: true,
     };
-    fp$k.l10ns.he = Hebrew;
-    fp$k.l10ns;
+    fp$i.l10ns.he = Hebrew;
+    fp$i.l10ns;
 
-    var fp$l = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$j = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Hindi = {
+    const Hindi = {
         weekdays: {
             shorthand: ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"],
             longhand: [
@@ -1390,15 +1257,15 @@
             ],
         },
     };
-    fp$l.l10ns.hi = Hindi;
-    fp$l.l10ns;
+    fp$j.l10ns.hi = Hindi;
+    fp$j.l10ns;
 
-    var fp$m = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$k = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Croatian = {
+    const Croatian = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
@@ -1442,17 +1309,16 @@
                 "Prosinac",
             ],
         },
-        time_24hr: true,
     };
-    fp$m.l10ns.hr = Croatian;
-    fp$m.l10ns;
+    fp$k.l10ns.hr = Croatian;
+    fp$k.l10ns;
 
-    var fp$n = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$l = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Hungarian = {
+    const Hungarian = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["V", "H", "K", "Sz", "Cs", "P", "Szo"],
@@ -1503,17 +1369,16 @@
         scrollTitle: "Görgessen",
         toggleTitle: "Kattintson a váltáshoz",
         rangeSeparator: " - ",
-        time_24hr: true,
     };
-    fp$n.l10ns.hu = Hungarian;
-    fp$n.l10ns;
+    fp$l.l10ns.hu = Hungarian;
+    fp$l.l10ns;
 
-    var fp$o = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$m = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Indonesian = {
+    const Indonesian = {
         weekdays: {
             shorthand: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
             longhand: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
@@ -1549,21 +1414,19 @@
             ],
         },
         firstDayOfWeek: 1,
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
-        time_24hr: true,
-        rangeSeparator: " - ",
     };
-    fp$o.l10ns.id = Indonesian;
-    fp$o.l10ns;
+    fp$m.l10ns.id = Indonesian;
+    fp$m.l10ns;
 
-    var fp$p = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$n = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Icelandic = {
+    const Icelandic = {
         weekdays: {
             shorthand: ["Sun", "Mán", "Þri", "Mið", "Fim", "Fös", "Lau"],
             longhand: [
@@ -1606,24 +1469,23 @@
                 "Desember",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
         firstDayOfWeek: 1,
         rangeSeparator: " til ",
         weekAbbreviation: "vika",
         yearAriaLabel: "Ár",
-        time_24hr: true,
     };
-    fp$p.l10ns.is = Icelandic;
-    fp$p.l10ns;
+    fp$n.l10ns.is = Icelandic;
+    fp$n.l10ns;
 
-    var fp$q = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$o = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Italian = {
+    const Italian = {
         weekdays: {
             shorthand: ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
             longhand: [
@@ -1667,22 +1529,21 @@
             ],
         },
         firstDayOfWeek: 1,
-        ordinal: function () { return "°"; },
+        ordinal: () => "°",
         rangeSeparator: " al ",
         weekAbbreviation: "Se",
         scrollTitle: "Scrolla per aumentare",
         toggleTitle: "Clicca per cambiare",
-        time_24hr: true,
     };
-    fp$q.l10ns.it = Italian;
-    fp$q.l10ns;
+    fp$o.l10ns.it = Italian;
+    fp$o.l10ns;
 
-    var fp$r = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$p = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Japanese = {
+    const Japanese = {
         weekdays: {
             shorthand: ["日", "月", "火", "水", "木", "金", "土"],
             longhand: [
@@ -1725,86 +1586,16 @@
                 "12月",
             ],
         },
-        time_24hr: true,
-        rangeSeparator: " から ",
-        monthAriaLabel: "月",
-        amPM: ["午前", "午後"],
-        yearAriaLabel: "年",
-        hourAriaLabel: "時間",
-        minuteAriaLabel: "分",
     };
-    fp$r.l10ns.ja = Japanese;
-    fp$r.l10ns;
+    fp$p.l10ns.ja = Japanese;
+    fp$p.l10ns;
 
-    var fp$s = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$q = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Georgian = {
-        weekdays: {
-            shorthand: ["კვ", "ორ", "სა", "ოთ", "ხუ", "პა", "შა"],
-            longhand: [
-                "კვირა",
-                "ორშაბათი",
-                "სამშაბათი",
-                "ოთხშაბათი",
-                "ხუთშაბათი",
-                "პარასკევი",
-                "შაბათი",
-            ],
-        },
-        months: {
-            shorthand: [
-                "იან",
-                "თებ",
-                "მარ",
-                "აპრ",
-                "მაი",
-                "ივნ",
-                "ივლ",
-                "აგვ",
-                "სექ",
-                "ოქტ",
-                "ნოე",
-                "დეკ",
-            ],
-            longhand: [
-                "იანვარი",
-                "თებერვალი",
-                "მარტი",
-                "აპრილი",
-                "მაისი",
-                "ივნისი",
-                "ივლისი",
-                "აგვისტო",
-                "სექტემბერი",
-                "ოქტომბერი",
-                "ნოემბერი",
-                "დეკემბერი",
-            ],
-        },
-        firstDayOfWeek: 1,
-        ordinal: function () {
-            return "";
-        },
-        rangeSeparator: " — ",
-        weekAbbreviation: "კვ.",
-        scrollTitle: "დასქროლეთ გასადიდებლად",
-        toggleTitle: "დააკლიკეთ გადართვისთვის",
-        amPM: ["AM", "PM"],
-        yearAriaLabel: "წელი",
-        time_24hr: true,
-    };
-    fp$s.l10ns.ka = Georgian;
-    fp$s.l10ns;
-
-    var fp$t = typeof window !== "undefined" && window.flatpickr !== undefined
-        ? window.flatpickr
-        : {
-            l10ns: {},
-        };
-    var Korean = {
+    const Korean = {
         weekdays: {
             shorthand: ["일", "월", "화", "수", "목", "금", "토"],
             longhand: [
@@ -1847,20 +1638,19 @@
                 "12월",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return "일";
         },
-        rangeSeparator: " ~ ",
     };
-    fp$t.l10ns.ko = Korean;
-    fp$t.l10ns;
+    fp$q.l10ns.ko = Korean;
+    fp$q.l10ns;
 
-    var fp$u = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$r = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Khmer = {
+    const Khmer = {
         weekdays: {
             shorthand: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស.", "សុក្រ", "សៅរ៍"],
             longhand: [
@@ -1903,7 +1693,7 @@
                 "ធ្នូ",
             ],
         },
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
         firstDayOfWeek: 1,
@@ -1912,17 +1702,16 @@
         scrollTitle: "រំកិលដើម្បីបង្កើន",
         toggleTitle: "ចុចដើម្បីផ្លាស់ប្ដូរ",
         yearAriaLabel: "ឆ្នាំ",
-        time_24hr: true,
     };
-    fp$u.l10ns.km = Khmer;
-    fp$u.l10ns;
+    fp$r.l10ns.km = Khmer;
+    fp$r.l10ns;
 
-    var fp$v = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$s = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Kazakh = {
+    const Kazakh = {
         weekdays: {
             shorthand: ["Жс", "Дс", "Сc", "Ср", "Бс", "Жм", "Сб"],
             longhand: [
@@ -1976,15 +1765,15 @@
         amPM: ["ТД", "ТК"],
         yearAriaLabel: "Жыл",
     };
-    fp$v.l10ns.kz = Kazakh;
-    fp$v.l10ns;
+    fp$s.l10ns.kz = Kazakh;
+    fp$s.l10ns;
 
-    var fp$w = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$t = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Lithuanian = {
+    const Lithuanian = {
         weekdays: {
             shorthand: ["S", "Pr", "A", "T", "K", "Pn", "Š"],
             longhand: [
@@ -2031,21 +1820,19 @@
         ordinal: function () {
             return "-a";
         },
-        rangeSeparator: " iki ",
         weekAbbreviation: "Sav",
         scrollTitle: "Keisti laiką pelės rateliu",
         toggleTitle: "Perjungti laiko formatą",
-        time_24hr: true,
     };
-    fp$w.l10ns.lt = Lithuanian;
-    fp$w.l10ns;
+    fp$t.l10ns.lt = Lithuanian;
+    fp$t.l10ns;
 
-    var fp$x = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$u = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Latvian = {
+    const Latvian = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["Sv", "Pr", "Ot", "Tr", "Ce", "Pk", "Se"],
@@ -2090,17 +1877,16 @@
             ],
         },
         rangeSeparator: " līdz ",
-        time_24hr: true,
     };
-    fp$x.l10ns.lv = Latvian;
-    fp$x.l10ns;
+    fp$u.l10ns.lv = Latvian;
+    fp$u.l10ns;
 
-    var fp$y = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$v = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Macedonian = {
+    const Macedonian = {
         weekdays: {
             shorthand: ["Не", "По", "Вт", "Ср", "Че", "Пе", "Са"],
             longhand: [
@@ -2146,17 +1932,16 @@
         firstDayOfWeek: 1,
         weekAbbreviation: "Нед.",
         rangeSeparator: " до ",
-        time_24hr: true,
     };
-    fp$y.l10ns.mk = Macedonian;
-    fp$y.l10ns;
+    fp$v.l10ns.mk = Macedonian;
+    fp$v.l10ns;
 
-    var fp$z = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$w = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Mongolian = {
+    const Mongolian = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["Да", "Мя", "Лх", "Пү", "Ба", "Бя", "Ня"],
@@ -2193,17 +1978,16 @@
             ],
         },
         rangeSeparator: "-с ",
-        time_24hr: true,
     };
-    fp$z.l10ns.mn = Mongolian;
-    fp$z.l10ns;
+    fp$w.l10ns.mn = Mongolian;
+    fp$w.l10ns;
 
-    var fp$A = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$x = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Malaysian = {
+    const Malaysian = {
         weekdays: {
             shorthand: ["Min", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"],
             longhand: [
@@ -2247,18 +2031,18 @@
             ],
         },
         firstDayOfWeek: 1,
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
     };
-    fp$A.l10ns;
+    fp$x.l10ns;
 
-    var fp$B = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$y = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Burmese = {
+    const Burmese = {
         weekdays: {
             shorthand: ["နွေ", "လာ", "ဂါ", "ဟူး", "ကြာ", "သော", "နေ"],
             longhand: [
@@ -2302,20 +2086,19 @@
             ],
         },
         firstDayOfWeek: 1,
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
-        time_24hr: true,
     };
-    fp$B.l10ns.my = Burmese;
-    fp$B.l10ns;
+    fp$y.l10ns.my = Burmese;
+    fp$y.l10ns;
 
-    var fp$C = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$z = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Dutch = {
+    const Dutch = {
         weekdays: {
             shorthand: ["zo", "ma", "di", "wo", "do", "vr", "za"],
             longhand: [
@@ -2360,25 +2143,24 @@
         },
         firstDayOfWeek: 1,
         weekAbbreviation: "wk",
-        rangeSeparator: " t/m ",
+        rangeSeparator: " tot ",
         scrollTitle: "Scroll voor volgende / vorige",
         toggleTitle: "Klik om te wisselen",
-        time_24hr: true,
-        ordinal: function (nth) {
+        ordinal: nth => {
             if (nth === 1 || nth === 8 || nth >= 20)
                 return "ste";
             return "de";
         },
     };
-    fp$C.l10ns.nl = Dutch;
-    fp$C.l10ns;
+    fp$z.l10ns.nl = Dutch;
+    fp$z.l10ns;
 
-    var fp$D = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$A = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Norwegian = {
+    const Norwegian = {
         weekdays: {
             shorthand: ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"],
             longhand: [
@@ -2426,20 +2208,19 @@
         weekAbbreviation: "Uke",
         scrollTitle: "Scroll for å endre",
         toggleTitle: "Klikk for å veksle",
-        time_24hr: true,
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
     };
-    fp$D.l10ns.no = Norwegian;
-    fp$D.l10ns;
+    fp$A.l10ns.no = Norwegian;
+    fp$A.l10ns;
 
-    var fp$E = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$B = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Punjabi = {
+    const Punjabi = {
         weekdays: {
             shorthand: ["ਐਤ", "ਸੋਮ", "ਮੰਗਲ", "ਬੁੱਧ", "ਵੀਰ", "ਸ਼ੁੱਕਰ", "ਸ਼ਨਿੱਚਰ"],
             longhand: [
@@ -2482,17 +2263,16 @@
                 "ਦਸੰਬਰ",
             ],
         },
-        time_24hr: true,
     };
-    fp$E.l10ns.pa = Punjabi;
-    fp$E.l10ns;
+    fp$B.l10ns.pa = Punjabi;
+    fp$B.l10ns;
 
-    var fp$F = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$C = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Polish = {
+    const Polish = {
         weekdays: {
             shorthand: ["Nd", "Pn", "Wt", "Śr", "Cz", "Pt", "So"],
             longhand: [
@@ -2537,23 +2317,22 @@
         },
         rangeSeparator: " do ",
         weekAbbreviation: "tydz.",
-        scrollTitle: "Przewiń, aby zwiększyć",
-        toggleTitle: "Kliknij, aby przełączyć",
+        scrollTitle: "Przwiń aby zwiększyć",
+        toggleTitle: "Kliknij aby przełączyć",
         firstDayOfWeek: 1,
-        time_24hr: true,
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
     };
-    fp$F.l10ns.pl = Polish;
-    fp$F.l10ns;
+    fp$C.l10ns.pl = Polish;
+    fp$C.l10ns;
 
-    var fp$G = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$D = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Portuguese = {
+    const Portuguese = {
         weekdays: {
             shorthand: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
             longhand: [
@@ -2597,19 +2376,18 @@
             ],
         },
         rangeSeparator: " até ",
-        time_24hr: true,
     };
-    fp$G.l10ns.pt = Portuguese;
-    fp$G.l10ns;
+    fp$D.l10ns.pt = Portuguese;
+    fp$D.l10ns;
 
-    var fp$H = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$E = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Romanian = {
+    const Romanian = {
         weekdays: {
-            shorthand: ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
+            shorthand: ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sam"],
             longhand: [
                 "Duminică",
                 "Luni",
@@ -2651,20 +2429,19 @@
             ],
         },
         firstDayOfWeek: 1,
-        time_24hr: true,
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
     };
-    fp$H.l10ns.ro = Romanian;
-    fp$H.l10ns;
+    fp$E.l10ns.ro = Romanian;
+    fp$E.l10ns;
 
-    var fp$I = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$F = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Russian = {
+    const Russian = {
         weekdays: {
             shorthand: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
             longhand: [
@@ -2717,17 +2494,16 @@
         toggleTitle: "Нажмите для переключения",
         amPM: ["ДП", "ПП"],
         yearAriaLabel: "Год",
-        time_24hr: true,
     };
-    fp$I.l10ns.ru = Russian;
-    fp$I.l10ns;
+    fp$F.l10ns.ru = Russian;
+    fp$F.l10ns;
 
-    var fp$J = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$G = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Sinhala = {
+    const Sinhala = {
         weekdays: {
             shorthand: ["ඉ", "ස", "අ", "බ", "බ්‍ර", "සි", "සෙ"],
             longhand: [
@@ -2770,17 +2546,16 @@
                 "දෙසැම්බර්",
             ],
         },
-        time_24hr: true,
     };
-    fp$J.l10ns.si = Sinhala;
-    fp$J.l10ns;
+    fp$G.l10ns.si = Sinhala;
+    fp$G.l10ns;
 
-    var fp$K = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$H = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Slovak = {
+    const Slovak = {
         weekdays: {
             shorthand: ["Ned", "Pon", "Ut", "Str", "Štv", "Pia", "Sob"],
             longhand: [
@@ -2825,20 +2600,19 @@
         },
         firstDayOfWeek: 1,
         rangeSeparator: " do ",
-        time_24hr: true,
         ordinal: function () {
             return ".";
         },
     };
-    fp$K.l10ns.sk = Slovak;
-    fp$K.l10ns;
+    fp$H.l10ns.sk = Slovak;
+    fp$H.l10ns;
 
-    var fp$L = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$I = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Slovenian = {
+    const Slovenian = {
         weekdays: {
             shorthand: ["Ned", "Pon", "Tor", "Sre", "Čet", "Pet", "Sob"],
             longhand: [
@@ -2883,20 +2657,19 @@
         },
         firstDayOfWeek: 1,
         rangeSeparator: " do ",
-        time_24hr: true,
         ordinal: function () {
             return ".";
         },
     };
-    fp$L.l10ns.sl = Slovenian;
-    fp$L.l10ns;
+    fp$I.l10ns.sl = Slovenian;
+    fp$I.l10ns;
 
-    var fp$M = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$J = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Albanian = {
+    const Albanian = {
         weekdays: {
             shorthand: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],
             longhand: [
@@ -2939,17 +2712,16 @@
                 "Dhjetor",
             ],
         },
-        time_24hr: true,
     };
-    fp$M.l10ns.sq = Albanian;
-    fp$M.l10ns;
+    fp$J.l10ns.sq = Albanian;
+    fp$J.l10ns;
 
-    var fp$N = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$K = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Serbian = {
+    const Serbian = {
         weekdays: {
             shorthand: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
             longhand: [
@@ -2995,17 +2767,16 @@
         firstDayOfWeek: 1,
         weekAbbreviation: "Ned.",
         rangeSeparator: " do ",
-        time_24hr: true,
     };
-    fp$N.l10ns.sr = Serbian;
-    fp$N.l10ns;
+    fp$K.l10ns.sr = Serbian;
+    fp$K.l10ns;
 
-    var fp$O = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$L = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Swedish = {
+    const Swedish = {
         firstDayOfWeek: 1,
         weekAbbreviation: "v",
         weekdays: {
@@ -3050,20 +2821,19 @@
                 "December",
             ],
         },
-        time_24hr: true,
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
     };
-    fp$O.l10ns.sv = Swedish;
-    fp$O.l10ns;
+    fp$L.l10ns.sv = Swedish;
+    fp$L.l10ns;
 
-    var fp$P = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$M = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Thai = {
+    const Thai = {
         weekdays: {
             shorthand: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
             longhand: [
@@ -3110,20 +2880,19 @@
         rangeSeparator: " ถึง ",
         scrollTitle: "เลื่อนเพื่อเพิ่มหรือลด",
         toggleTitle: "คลิกเพื่อเปลี่ยน",
-        time_24hr: true,
-        ordinal: function () {
+        ordinal: () => {
             return "";
         },
     };
-    fp$P.l10ns.th = Thai;
-    fp$P.l10ns;
+    fp$M.l10ns.th = Thai;
+    fp$M.l10ns;
 
-    var fp$Q = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$N = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Turkish = {
+    const Turkish = {
         weekdays: {
             shorthand: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
             longhand: [
@@ -3167,7 +2936,7 @@
             ],
         },
         firstDayOfWeek: 1,
-        ordinal: function () {
+        ordinal: () => {
             return ".";
         },
         rangeSeparator: " - ",
@@ -3175,17 +2944,16 @@
         scrollTitle: "Artırmak için kaydırın",
         toggleTitle: "Aç/Kapa",
         amPM: ["ÖÖ", "ÖS"],
-        time_24hr: true,
     };
-    fp$Q.l10ns.tr = Turkish;
-    fp$Q.l10ns;
+    fp$N.l10ns.tr = Turkish;
+    fp$N.l10ns;
 
-    var fp$R = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$O = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Ukrainian = {
+    const Ukrainian = {
         firstDayOfWeek: 1,
         weekdays: {
             shorthand: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -3229,143 +2997,16 @@
                 "Грудень",
             ],
         },
-        time_24hr: true,
     };
-    fp$R.l10ns.uk = Ukrainian;
-    fp$R.l10ns;
+    fp$O.l10ns.uk = Ukrainian;
+    fp$O.l10ns;
 
-    var fp$S = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$P = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Uzbek = {
-        weekdays: {
-            shorthand: ["Якш", "Душ", "Сеш", "Чор", "Пай", "Жум", "Шан"],
-            longhand: [
-                "Якшанба",
-                "Душанба",
-                "Сешанба",
-                "Чоршанба",
-                "Пайшанба",
-                "Жума",
-                "Шанба",
-            ],
-        },
-        months: {
-            shorthand: [
-                "Янв",
-                "Фев",
-                "Мар",
-                "Апр",
-                "Май",
-                "Июн",
-                "Июл",
-                "Авг",
-                "Сен",
-                "Окт",
-                "Ноя",
-                "Дек",
-            ],
-            longhand: [
-                "Январ",
-                "Феврал",
-                "Март",
-                "Апрел",
-                "Май",
-                "Июн",
-                "Июл",
-                "Август",
-                "Сентябр",
-                "Октябр",
-                "Ноябр",
-                "Декабр",
-            ],
-        },
-        firstDayOfWeek: 1,
-        ordinal: function () {
-            return "";
-        },
-        rangeSeparator: " — ",
-        weekAbbreviation: "Ҳафта",
-        scrollTitle: "Катталаштириш учун айлантиринг",
-        toggleTitle: "Ўтиш учун босинг",
-        amPM: ["AM", "PM"],
-        yearAriaLabel: "Йил",
-        time_24hr: true,
-    };
-    fp$S.l10ns.uz = Uzbek;
-    fp$S.l10ns;
-
-    var fp$T = typeof window !== "undefined" && window.flatpickr !== undefined
-        ? window.flatpickr
-        : {
-            l10ns: {},
-        };
-    var UzbekLatin = {
-        weekdays: {
-            shorthand: ["Ya", "Du", "Se", "Cho", "Pa", "Ju", "Sha"],
-            longhand: [
-                "Yakshanba",
-                "Dushanba",
-                "Seshanba",
-                "Chorshanba",
-                "Payshanba",
-                "Juma",
-                "Shanba",
-            ],
-        },
-        months: {
-            shorthand: [
-                "Yan",
-                "Fev",
-                "Mar",
-                "Apr",
-                "May",
-                "Iyun",
-                "Iyul",
-                "Avg",
-                "Sen",
-                "Okt",
-                "Noy",
-                "Dek",
-            ],
-            longhand: [
-                "Yanvar",
-                "Fevral",
-                "Mart",
-                "Aprel",
-                "May",
-                "Iyun",
-                "Iyul",
-                "Avgust",
-                "Sentabr",
-                "Oktabr",
-                "Noyabr",
-                "Dekabr",
-            ],
-        },
-        firstDayOfWeek: 1,
-        ordinal: function () {
-            return "";
-        },
-        rangeSeparator: " — ",
-        weekAbbreviation: "Hafta",
-        scrollTitle: "Kattalashtirish uchun aylantiring",
-        toggleTitle: "O‘tish uchun bosing",
-        amPM: ["AM", "PM"],
-        yearAriaLabel: "Yil",
-        time_24hr: true,
-    };
-    fp$T.l10ns["uz_latn"] = UzbekLatin;
-    fp$T.l10ns;
-
-    var fp$U = typeof window !== "undefined" && window.flatpickr !== undefined
-        ? window.flatpickr
-        : {
-            l10ns: {},
-        };
-    var Vietnamese = {
+    const Vietnamese = {
         weekdays: {
             shorthand: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
             longhand: [
@@ -3404,22 +3045,21 @@
                 "Tháng tám",
                 "Tháng chín",
                 "Tháng mười",
-                "Tháng mười một",
-                "Tháng mười hai",
+                "Tháng 11",
+                "Tháng 12",
             ],
         },
         firstDayOfWeek: 1,
-        rangeSeparator: " đến ",
     };
-    fp$U.l10ns.vn = Vietnamese;
-    fp$U.l10ns;
+    fp$P.l10ns.vn = Vietnamese;
+    fp$P.l10ns;
 
-    var fp$V = typeof window !== "undefined" && window.flatpickr !== undefined
+    const fp$Q = typeof window !== "undefined" && window.flatpickr !== undefined
         ? window.flatpickr
         : {
             l10ns: {},
         };
-    var Mandarin = {
+    const Mandarin = {
         weekdays: {
             shorthand: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
             longhand: [
@@ -3467,80 +3107,21 @@
         scrollTitle: "滚动切换",
         toggleTitle: "点击切换 12/24 小时时制",
     };
-    fp$V.l10ns.zh = Mandarin;
-    fp$V.l10ns;
+    fp$Q.l10ns.zh = Mandarin;
+    fp$Q.l10ns;
 
-    var fp$W = typeof window !== "undefined" && window.flatpickr !== undefined
-        ? window.flatpickr
-        : {
-            l10ns: {},
-        };
-    var MandarinTraditional = {
-        weekdays: {
-            shorthand: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"],
-            longhand: [
-                "星期日",
-                "星期一",
-                "星期二",
-                "星期三",
-                "星期四",
-                "星期五",
-                "星期六",
-            ],
-        },
-        months: {
-            shorthand: [
-                "一月",
-                "二月",
-                "三月",
-                "四月",
-                "五月",
-                "六月",
-                "七月",
-                "八月",
-                "九月",
-                "十月",
-                "十一月",
-                "十二月",
-            ],
-            longhand: [
-                "一月",
-                "二月",
-                "三月",
-                "四月",
-                "五月",
-                "六月",
-                "七月",
-                "八月",
-                "九月",
-                "十月",
-                "十一月",
-                "十二月",
-            ],
-        },
-        rangeSeparator: " 至 ",
-        weekAbbreviation: "週",
-        scrollTitle: "滾動切換",
-        toggleTitle: "點擊切換 12/24 小時時制",
-    };
-    fp$W.l10ns.zh_tw = MandarinTraditional;
-    fp$W.l10ns;
-
-    var l10n = {
+    const l10n = {
         ar: Arabic,
         at: Austria,
-        az: Azerbaijan,
         be: Belarusian,
         bg: Bulgarian,
         bn: Bangla,
-        bs: Bosnian,
-        ca: Catalan,
         cat: Catalan,
         cs: Czech,
         cy: Welsh,
         da: Danish,
         de: German,
-        default: __assign({}, english),
+        default: Object.assign({}, english),
         en: english,
         eo: Esperanto,
         es: Spanish,
@@ -3558,7 +3139,6 @@
         is: Icelandic,
         it: Italian,
         ja: Japanese,
-        ka: Georgian,
         ko: Korean,
         km: Khmer,
         kz: Kazakh,
@@ -3586,9 +3166,6 @@
         uk: Ukrainian,
         vn: Vietnamese,
         zh: Mandarin,
-        zh_tw: MandarinTraditional,
-        uz: Uzbek,
-        uz_latn: UzbekLatin,
     };
 
     exports.default = l10n;

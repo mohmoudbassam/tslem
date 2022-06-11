@@ -43,7 +43,7 @@
             <div class="row">
 
                 <div class="col-sm-12">
-                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-f ooter"
                            id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;" role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
