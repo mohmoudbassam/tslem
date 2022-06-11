@@ -123,12 +123,12 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
+                                            class="bold">مركز الخدمة :</span> {{ (isset($order->service_provider)) ? $order->service_provider->company_name : ''}}</p>
                                 </div>
-
+                                
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
+                                            class="bold"> اسم مكتب التصميم :  </span>{{ (isset($order->designer)) ? $order->designer->company_name : ''}}</p>
                                 </div>
 
                                 <div class="col-12">
