@@ -8,22 +8,20 @@
         </div>
         <form action="'{{route('Sharer.reject')}}'" method="post" id="add_edit_form" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="id" value="{{$order->id}}">
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group col-lg-12 col-md-6 col-sm-12">
-                        <div class="row">
-                            <label class="col-12" for="note">سبب الرفض</label>
-                            <div class="col-12">
-                                <textarea class="form-control" name="note" id="note" rows="10"></textarea>
-                            </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="col-form-label" for="note">سبب الرفض</label>
+                            <textarea class="form-control" name="note" id="note" rows="10"></textarea>
                             <div class="col-12 text-danger" id="note_error"></div>
                         </div>
+
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="id" value="{{$order->id}}">
             <div class="modal-footer">
-
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
                 <button type="button" class="btn btn-danger submit_btn">رفض</button>
             </div>
