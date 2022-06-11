@@ -48,9 +48,10 @@ Route::get('clean-boxes',function(){
         $duplicatedBoxDetails = $getBoxes->where('box',$duplicatedBox->box)->where('camp',$duplicatedBox->camp)->all();
 
         $itemsToBeFilled = ['raft_company_location_id','box','camp','file_first','file_second','file_third','tasleem_notes','file_first_name','file_second_name','file_third_name','seen_notes','license_number'];        
+        $itemsToBeFilledDefault = ['raft_company_location_id' => null,'box' => null,'camp' => null,'file_first' => null,'file_second' => null,'file_third' => null,'tasleem_notes' => null,'file_first_name' => null,'file_second_name' => null,'file_third_name' => null,'seen_notes' => 0,'license_number' => null];        
         $insertNewItem = [];
-        foreach($itemsToBeFilled as $itemsToBeFilledItem){
-            $insertNewItem[$itemsToBeFilledItem] = null;
+        foreach($itemsToBeFilledDefault as $itemKey => $itemVal){
+            $insertNewItem[$itemKey] = $itemVal;
         }
 
         foreach($duplicatedBoxDetails as $duplicatedBoxDetailsItem){
