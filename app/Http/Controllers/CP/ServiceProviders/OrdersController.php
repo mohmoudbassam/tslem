@@ -118,7 +118,6 @@ class OrdersController extends Controller
                 $query->whereDate("created_at", "<=", $request->query("to_date"));
             })
             ->whereOrderId($request->order_id)
-            ->whereWasteContractor($request->waste_contractor)
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
             ->whereContractorId($request->contractor_id)
@@ -128,6 +127,9 @@ class OrdersController extends Controller
             ->whereServiceProvider(auth()->user()->id)
             ->with(['designer', 'contractor', 'consulting']);
 
+            if($request->waste_contractor){
+                $order = $order->whereWasteContractor($request->waste_contractor);
+            }
         
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
