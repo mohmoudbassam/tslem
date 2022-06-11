@@ -411,8 +411,8 @@ function normalize_phone_number($number)
 
     $number = preg_replace('/^0+/', '', $number);
 
-    if (strlen($number) < 12) return '966' . $number;
+    if (strlen($number) < 12) return '+966' . $number;
 
-    return $number;
+    return '+'.$number;
 
 }
