@@ -114,7 +114,7 @@ class LoginController extends Controller
             ->where('status', 5)
             ->select(DB::raw('count(*) as count'), DB::raw("DATE_FORMAT(updated_at,'%M-%d') as days"))
             ->groupBy('days')->get()->pluck('count', 'days')->toArray();
-///////////الاجراءات الصادرة
+        ///////////الاجراءات الصادرة
         $data['count_actions_outing'] = Order::query()
             ->where('status', 6)->count();
         $data['count_actions_outing_per_day'] = Order::query()

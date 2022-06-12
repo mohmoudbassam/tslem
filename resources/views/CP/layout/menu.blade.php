@@ -36,7 +36,7 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li>
+                <!-- <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i data-feather="licenses"></i>
                             <span data-key="t-apps">{{\App\Models\License::trans('group')}}</span>
@@ -53,14 +53,14 @@
                                 </a>
                             </li>
                             @if(request()->routeIs('licenses.edit'))
-                                <li>
-                                    <a onclick="event.preventDefault(); return false" href="{{route('licenses.edit',['license'=>request()->license])}}">
+                    <li>
+                        <a onclick="event.preventDefault(); return false" href="{{route('licenses.edit',['license'=>request()->license])}}">
                                         <span data-key="t-chat">{{ \App\Models\License::crudTrans('update') }}</span>
                                     </a>
                                 </li>
                             @endif
-                        </ul>
-                    </li> -->
+                    </ul>
+                </li> -->
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i data-feather="settings"></i>
@@ -99,7 +99,9 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
+
                 @endif
+
                 @if(auth()->user()->type=='design_office' )
                     <li>
                         <a href="{{route('design_office.orders')}}">
@@ -107,6 +109,14 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
+                    @if(auth()->user()->is_designer_consulting() )
+                        <li>
+                            <a href="{{route('design_office.orders')}}">
+                                <i data-feather="list"></i>
+                                <span data-key="t-authentication">طلبات الإشراف</span>
+                            </a>
+                        </li>
+                    @endif
                 @endif
                 @if(auth()->user()->type=='Delivery')
                     <li>
