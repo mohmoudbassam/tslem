@@ -38,8 +38,8 @@ class OrdersController extends Controller
         })->get();
         $data['contractors'] = User::query()->whereHas('contractors_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
-
         })->get();
+
         if(auth()->user()->license_number){
             $box=RaftCompanyBox::query()->where('license_number',auth()->user()->license_number)->first();
             if(isset($box)){
@@ -55,6 +55,7 @@ class OrdersController extends Controller
                 $data['can_create_order']=0;
             }
         }
+        
         if(isset($box)){
             $data['box']= $box;
         }

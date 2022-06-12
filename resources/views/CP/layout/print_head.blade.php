@@ -1,13 +1,26 @@
-<!doctype html>
-<html dir="{{currentLocale() === 'ar' ? 'rtl' : 'ltr'}}">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="{{currentLocale()}}">
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>@yield('title')</title>
 
+    <link href="http://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <!-- Bootstrap Css -->
-    <link href="{{url('/')}}/assets/css/bootstrap-rtl.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
-
     <style>
+        .page-break {
+            page-break-after: always;
+        }
+        @if(request()->has('html'))
+            body {
+                padding: 4em !important;
+                margin: 0 !important;
+                font-family: "Amiri", DejaVu Sans, sans-serif !important;
+            }
+        @endif
+        body {
+            font-size: 16px !important;
+            line-height: unset !important;
+        }
         .required-field:after {
             position: relative;
             top: 3px;
@@ -27,4 +40,4 @@
 
     @yield('style')
 </head>
-<body>
+<body dir="{{request()->has('html') ? 'ltr' : (currentLocale() == 'ar' ? 'rtl' : 'ltr')}}">

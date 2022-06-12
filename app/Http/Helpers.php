@@ -454,10 +454,10 @@ function sms($number, $body)
     curl_setopt($ch, CURLOPT_POST, TRUE);
     $number = normalize_phone_number($number);
     $fields = [
-        "userName" => "KIDANA",
+        "userName" => env('MSEGAT_SENDER'),
         "numbers" => "$number",
-        "userSender" => "KIDANA",
-        "apiKey" => "23a90280110c155ba8a2d7c98efe2054",
+        "userSender" => env('MSEGAT_SENDER'),
+        "apiKey" => env('MSEGAT_APIKEY'),
         "msg" => $body,
         'message' => $body
     ];
@@ -539,7 +539,7 @@ if( !function_exists('crudTrans') ) {
      */
     function crudTrans($model = null, $key = null, $locale = null, $default = null, $instance = null)
     {
-        $locale ??= currentLocale();
+        $locale = app()->getLocale();
         $getModelTrans =
             fn($is_singular = true) => isModel($model) ? $model::trans(
                 $is_singular ? 'singular' : 'plural',
