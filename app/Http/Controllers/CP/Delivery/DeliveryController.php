@@ -23,10 +23,12 @@ class DeliveryController extends Controller
 {
     public function orders()
     {
-        $data['designers'] = User::query()->where('type', 'design_office')->get();
-        $data['consulting'] = User::query()->where('type', 'consulting_office')->get();
-        $data['contractors'] = User::query()->where('type', 'contractor')->get();
-        $data['services_providers'] = User::query()->where('type', 'service_provider')->get();
+        $data['designers'] = User::query()->where('type', 'design_office')->where('verified',1)->get();
+        $data['consulting'] = User::query()->whereHas('designer_types',function($Type){
+            return $Type->where('type','consulting');
+        })->where('verified',1)->get();
+        $data['contractors'] = User::query()->where('type', 'contractor')->where('verified',1)->get();
+        $data['services_providers'] = User::query()->where('type', 'service_provider')->where('verified',1)->get();
         return view('CP.delivery.orders',$data);
     }
 

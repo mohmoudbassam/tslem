@@ -168,6 +168,7 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'contractor_id')->where('type', 'contractor');
     }
 
+
     public function main_route()
     {
         if( $this->type == 'admin' ) {
