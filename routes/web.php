@@ -59,7 +59,6 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::get('dashboard', [ LoginController::class, 'dashboard' ])->name('dashboard');
 });
 
-
 //,'is-verified'
 Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
 
@@ -451,5 +450,6 @@ Route::get('import-excel', function () {
 });
 Route::post('import', [ \App\Http\Controllers\ImportExcelController::class, 'import' ])->name('import');
 
-
-
+Route::get('raft_company/get_camp_by_box/{box}', [ RaftCompanyController::class, 'get_camp_by_box' ])->name(
+    'raft_company.get_camp_by_box'
+);
