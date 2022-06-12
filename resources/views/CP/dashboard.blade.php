@@ -264,14 +264,12 @@
 
 var chart1 = {
     chart: {
-    id: 'sparkline2',
-    group: 'sparklines',
-    type: 'area',
-    height: 160,
-    sparkline: {
-      enabled: true
+        type: 'area',
+        height: 160,
+        sparkline: {
+            enabled: true
+        },
     },
-  },
 
   stroke: {
     curve: 'straight'
