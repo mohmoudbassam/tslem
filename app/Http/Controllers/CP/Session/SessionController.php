@@ -20,7 +20,7 @@ class SessionController extends Controller
                                     ->published()
                                     ->when(request('raft_company_box_id'), function ($q) {
                                         $q->where('raft_company_box_id', request('raft_company_box_id'));
-                                    });
+                                    })->published();
 
         return DataTables::of($query->get())->make(true);
     }

@@ -46,7 +46,7 @@ class RegisterController extends Controller
         }
         $data['contractor_types']=ContractorSpecialties::all();
         $data['col_file'] = get_user_column_file($type);
-
+        $data['boxes'] = \App\Models\RaftCompanyBox::query()->select('box')->where('raft_company_location_id',7)->groupBy('box')->get()->toArray();
         return view('CP.register', $data);
     }
 
