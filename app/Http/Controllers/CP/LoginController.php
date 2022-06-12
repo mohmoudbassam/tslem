@@ -92,7 +92,7 @@ class LoginController extends Controller
             ->whereNotNull('file_third')
             ->groupBy('days')->get()->pluck('count', 'days')->toArray();
        if(!count($data['box_with_files_in'])){
-           return $data['box_with_files_in']=[];
+         $data['box_with_files_in']=[];
        }
 ////////////// المحاضر المسلمة لشركات حجاج الخارج
         $data['count_box_with_files_out'] = RaftCompanyBox::query()
