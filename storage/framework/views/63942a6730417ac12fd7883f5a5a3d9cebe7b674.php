@@ -29,7 +29,7 @@
                     <form class="p-3">
                         <div class="form-group m-0">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search ..."
+                                <input type="text" class="form-control" placeholder="بحث"
                                        aria-label="Search Result">
 
                                 <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>

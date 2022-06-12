@@ -36,7 +36,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i data-feather="licenses"></i>
                             <span data-key="t-apps"><?php echo e(\App\Models\License::trans('group')); ?></span>
@@ -60,7 +60,7 @@
                                 </li>
                             <?php endif; ?>
                         </ul>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i data-feather="settings"></i>

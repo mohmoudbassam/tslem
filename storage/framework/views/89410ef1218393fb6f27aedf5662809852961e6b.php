@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
     الطلبات
 <?php $__env->stopSection(); ?>
@@ -70,6 +71,15 @@
                             </select>
                         </div>
                         <div class="col">
+                            <label for="waste_contractor">مقاول النفايات </label>
+                            <select class="form-control" id="waste_contractor" name="waste_contractor">
+                                <option value="">اختر...</option>
+                            <?php $__currentLoopData = wasteContractorsList(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wasteContractor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($wasteContractor['name']); ?>"><?php echo e($wasteContractor['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                        <div class="col">
                             <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
@@ -122,6 +132,9 @@
                             المكتب الإستشاري
                         </th>
                         <th>
+                           مقاول النفايات
+                        </th>
+                        <th>
                             تاريخ الإنشاء
                         </th>
                         <th>
@@ -169,7 +182,7 @@
                         d.contractor_id = $('#contractor_id').val();
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
-
+                        d.waste_contractor = $('#waste_contractor').val();
                     }
                 },
                 language: {
@@ -182,11 +195,10 @@
                     {className: 'text-right', data: 'order_status', name: 'order_status', orderable: false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
                     {className: 'text-right', data: 'consulting.company_name', name: 'consulting', orderable: false},
+                    {className: 'text-right', data: 'waste_contractor', name: 'waste_contractor', orderable: false},
                     {className: 'text-right', data: 'date', name: 'date'},
                     {className: 'text-right', data: 'actions', name: 'actions', orderable: false},
-                ],
-
-
+                ]
             });
 
         });

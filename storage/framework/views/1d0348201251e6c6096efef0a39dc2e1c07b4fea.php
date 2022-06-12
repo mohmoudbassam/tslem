@@ -87,16 +87,16 @@
                         <thead>
                         <th>#</th>
                         <th>
-                            اسم المستخدم
+                            الشركة
                         </th>
                         <th>
-                            البريد الالكتروني
+                            الترخيص
+                        </th>
+                        <th>
+                            السجل
                         </th>
                         <th>
                             الصلاحيه
-                        </th>
-                        <th>
-                            الهاتف
                         </th>
                         <th>
                             تاريخ التسجيل
@@ -219,10 +219,10 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'id', name: 'id'},
-                    {className: 'text-center', data: 'name', name: 'name'},
-                    {className: 'text-center', data: 'email', name: 'email'},
+                    {className: 'text-center', data: 'company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'license_number', name: 'license_number'},
+                    {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
                     {className: 'text-center', data: 'type', name: 'type'},
-                    {className: 'text-center', data: 'phone', name: 'phone'},
                     {
                         className: 'text-center', data: 'created_at', name: 'date', render: function (data) {
                             return moment(data).format("YYYY-MM-DD hh:mm:ss");
@@ -411,7 +411,6 @@
             })
         });
     </script>
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/users/index.blade.php ENDPATH**/ ?>
