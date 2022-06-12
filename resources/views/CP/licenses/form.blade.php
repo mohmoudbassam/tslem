@@ -85,7 +85,7 @@
 
 @section('scripts')
     <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
-    <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
+    <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css?v=1')}}"/>
     <script src="{{url('/assets/libs/flatpickr/l10n/ar.js')}}"></script>
 
     <script>
