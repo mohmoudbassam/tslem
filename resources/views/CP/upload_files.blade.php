@@ -410,7 +410,7 @@
 </div>
 
     @endsection
-    <script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+    <script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
     @section('scripts')
     <script>
 
