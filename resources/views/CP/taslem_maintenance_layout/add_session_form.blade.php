@@ -292,7 +292,7 @@
                         });
                     }
 
-                    flatpickr(".datepicker", { enableTime: true, minDate: '{{now('Asia/Riyadh')}}'});
+                    flatpickr(".datepicker", { enableTime: true, minDate: '{{now('Asia/Riyadh')}}',dateFormat: "Y-m-d H:i"});
                     var e= document.querySelectorAll("[data-trigger]");
                     for (i = 0; i < e.length; ++i) {
                         var a = e[i];
