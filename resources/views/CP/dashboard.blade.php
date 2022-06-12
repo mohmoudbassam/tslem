@@ -261,7 +261,7 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-console.log('{{$box_with_files_in}}')
+
 var chart1 = {
     chart: {
         type: 'area',
