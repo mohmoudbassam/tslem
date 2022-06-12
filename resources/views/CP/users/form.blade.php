@@ -582,7 +582,7 @@
 @endsection
 
 
-<script src="{{url('/assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
+<script src="{{asset('assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
 
 @section('scripts')
 

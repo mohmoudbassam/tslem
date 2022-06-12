@@ -54,7 +54,9 @@
                                 <label for="start_at">وقت الموعد <span
                                         class="text-danger required-mark">*</span></label>
                                 <div class="input-group auth-pass-inputgroup">
-                                    <input type="text" class="form-control datepicker" data-enabletime=true" id="start_at" name="start_at">
+
+                                    <input type="text" class="form-control datepicker" data-enabletime="true" id="start_at" name="start_at">
+
                                     <div class="btn btn-light shadow-none ms-0"><i class="far fa-clock"></i></div>
                                 </div>
                                 <div class="col-12 text-danger" id="start_at_error"></div>
@@ -317,8 +319,6 @@
 
                     flatpickr(".datepicker", {
                         enableTime: true, dateFormat: "Y-M-d H:i", minDate: '{{now('Asia/Riyadh')}}',
-
-
                     });
                     var e = document.querySelectorAll("[data-trigger]");
                     for (i = 0; i < e.length; ++i) {
