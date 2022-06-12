@@ -111,7 +111,7 @@
                     </li>
                     @if(auth()->user()->is_designer_consulting() )
                         <li>
-                            <a href="{{route('design_office.orders')}}">
+                            <a href="{{route('design_office.consulting.orders')}}">
                                 <i data-feather="list"></i>
                                 <span data-key="t-authentication">طلبات الإشراف</span>
                             </a>

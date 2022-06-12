@@ -34,6 +34,7 @@ class DeliveryController extends Controller
 
     public function list(Request $request)
     {
+
         $order = Order::query()
             ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
                 $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
@@ -52,6 +53,7 @@ class DeliveryController extends Controller
             ->whereContractorId($request->contractor_id)
             ->whereDate($request->from_date, $request->to_date)
             ->where('status', '>=', '3');
+
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -78,12 +80,15 @@ class DeliveryController extends Controller
                                                 عرض التفاصيل
                                             </a>
                                         </div>';
+
                 return $element;
 
             })
             ->addColumn('created_at', function ($order) {
+
                 return $order->created_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
+
                 return $order->order_status;
             })->rawColumns(['actions'])
             ->make(true);

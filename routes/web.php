@@ -176,6 +176,10 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
         Route::post('edit_file_action', [ DesignerOrderController::class, 'edit_file_action' ])->name(
             '.edit_file_action'
         );
+        Route::prefix('consulting')->middleware('ConsultingDesigner')->name('.consulting')->group(function () {
+            Route::get('orders', [ ConsultingOfficeController::class, 'orders' ])->name('.orders');
+            Route::get('list', [ ConsultingOfficeController::class, 'list' ])->name('.list');
+        });
         Route::get('accept/{order}', [ DesignerOrderController::class, 'accept' ])->name('.accept');
         Route::post('reject/{order}', [ DesignerOrderController::class, 'reject' ])->name('.reject');
     });
@@ -258,7 +262,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
     });
     Route::prefix('consulting-office')
          ->name('consulting_office')
-         ->middleware([ 'consulting_office', 'verifiedUser' ])
+         ->middleware(['ConsultingDesigner', 'verifiedUser' ])
          ->group(function () {
              Route::get('orders', [ ConsultingOfficeController::class, 'orders' ]);
              Route::get('', [ ConsultingOfficeController::class, 'list' ])->name('.list');
