@@ -3,7 +3,7 @@
 انشاء موعد
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}" />
+<link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css?v=1')}}" />
 <style>
 .file-preview {
     display: none;
