@@ -17,7 +17,7 @@ class SessionController extends Controller
     {
         $query = \App\Models\Session::ByLocation(auth()->user()->raft_company_type)
                                     ->with('RaftCompanyLocation', 'RaftCompanyBox')
-                                    ->published();
+                                    ->where('is_published',4);
 
         if($q->raft_company_box_id){
             $query = $query->where('raft_company_box_id',$q->raft_company_box_id);
