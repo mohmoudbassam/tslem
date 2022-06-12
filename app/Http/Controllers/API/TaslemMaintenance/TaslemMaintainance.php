@@ -191,15 +191,16 @@ class TaslemMaintainance extends Controller
 
             $camp = $boxes->map(function ($key, $val) {
                 return $key->camp;
-
-
             });
 
-            return [
-                'camps' => $camp,
-                'raft_id' => $boxes[0]->raft_company_location_id
-            ];
-        });
+            return
+                [
+                    'camps' => $camp,
+                    'raft_id' => $boxes[0]->raft_company_location_id,
+                    'box'=>$box_id
+                ];
+
+        })->values();
         return $newCol;
     }
 }

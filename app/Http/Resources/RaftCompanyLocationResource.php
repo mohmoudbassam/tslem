@@ -17,6 +17,7 @@ class RaftCompanyLocationResource extends JsonResource
         return [
             'id' => $this->id ?? '',
             'name' => $this->name ?? '',
+            'phone'=>$this->user->phone ??''
 
         ];
     }
