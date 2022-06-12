@@ -233,7 +233,7 @@
 <script src="{{url("/")}}/assets/libs/@simonwep/pickr/pickr.es5.min.js"></script>
 
 <!-- datepicker js -->
-<script src="assets/libs/flatpickr/flatpickr.min.js?v=1"></script>
+<script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js?v=1') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 @include('CP.sharer_layout.js')
