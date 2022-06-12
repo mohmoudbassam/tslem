@@ -271,12 +271,12 @@ var chart1 = {
         },
     },
 
-  stroke: {
-    curve: 'straight'
-  },
-  fill: {
-    opacity: 1,
-  },
+    stroke: {
+        curve: 'straight'
+    },
+    fill: {
+        opacity: 1,
+    },
   series: [{
     name: 'المجوع',
     data: @json(array_values($box_with_files_in))
@@ -290,7 +290,7 @@ var chart1 = {
   },
   colors: ['#0A2373'],
   title: {
-    text: @json($count_box_with_files_in),
+    text:'{{$count_box_with_files_in}}',
     offsetX: 0+'%',
     style: {
       fontSize: '24px',
@@ -426,8 +426,7 @@ new ApexCharts(document.querySelector("#chart-3"), chart3).render();
 
 //
 
-var asd= [...Array(5).keys()].map(n => `2018-09-0${n+1}`)
-console.log(asd)
+
 
 var chart4 = {
     chart: {
