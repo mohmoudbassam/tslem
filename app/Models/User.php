@@ -230,14 +230,7 @@ class User extends Authenticatable
 
     public function getRaftCompanyBox($default = null)
     {
-        $user = $this;
-        $where = ($license_number = $user->license_number) ?
-            compact('license_number') : [
-                'box' => $user->box_number,
-                'camp' => $user->camp_number,
-            ];
-
-        return \App\Models\RaftCompanyBox::where($where)->first() ?? value($default);
+        return getUserRaftCompanyBox($this, $default);
     }
 
     public function hasRaftCompanyBox(): bool

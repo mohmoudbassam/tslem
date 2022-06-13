@@ -82,6 +82,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
              Route::post('store', [ LicenseController::class, 'store' ])->name('.store');
              Route::get('order/{order}/form', [ LicenseController::class, 'order_license_form' ])->name('.order_license_form');
              Route::post('order/{order}/create', [ LicenseController::class, 'order_license_create' ])->name('.order_license_create');
+             Route::post('delete_map_path/{license}', [ LicenseController::class, 'delete_map_path' ])->name('.delete_map_path');
          });
 
     Route::prefix('users')->name('users')->middleware('admin')->group(function() {

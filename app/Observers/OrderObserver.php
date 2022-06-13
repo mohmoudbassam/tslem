@@ -15,13 +15,11 @@ class OrderObserver
      */
     public function saving(Order $order)
     {
-        if( $order->wasChanged('status') ) {
-            if( $order->licenseNeeded() ) {
-                $order->saveLicense()
-                      ->forceFill([ 'created_at' => null ])
-                      ->save();
-            }
-        }
+        // if( $order->wasChanged('status') ) {
+        //     if( $order->licenseNeeded() ) {
+        //         $order->saveLicense();
+        //     }
+        // }
     }
 
     /**

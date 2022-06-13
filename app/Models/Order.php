@@ -218,17 +218,39 @@ class Order extends Model
 
     public function hasLicense(): bool
     {
-        return $this->license()->count();
+        return $this->license()->whereNotNull('created_at')->count();
     }
 
     public function getLicenseOrCreate(array $attributes = [])
     {
-        return $this->license()->firstOrCreate($attributes);
+        $attributes[ 'created_at' ] ??= null;
+        $license = $this->license()->firstOrNew([], $attributes);
+
+        if( !$license->exists ) {
+            $license->forceFill([ 'created_at' => data_get($attributes, 'created_at') ])
+                    ->save();
+
+            return $license->refresh();
+        }
+
+        return $license;
     }
 
     public function saveLicense(array $attributes = [])
     {
-        return $this->license()->updateOrCreate([ 'order_id' => $this->id ], $attributes);
+        $license = $this->getLicenseOrCreate([ 'order_id' => $this->id ]);
+        $created_at = ($attributes[ 'created_at' ] ??= data_get($attributes, 'created_at', $license->created_at ?: now()));
+        $attributes[ 'date' ] = data_get($attributes, 'date', $created_at ? ($license->date ?: now()) : null);
+        if( $raft_company_box = currentUser()->getRaftCompanyBox() ) {
+            $attributes[ 'box_raft_company_box_id' ] = data_get($raft_company_box, 'id');
+            $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
+        }
+
+        $license->fill($attributes)
+                ->forceFill(compact('created_at'))
+                ->save();
+
+        return $license->refresh();
     }
 
     public function isDesignApproved()

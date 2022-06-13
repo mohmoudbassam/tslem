@@ -57,7 +57,10 @@
                                     'name' => $input,
                                     'label' => \App\Models\License::trans($input),
                                     'required' => in_array('required', $rules) ?? false,
-                                    'type' => ends_with($input, '_id') ? 'select' : (in_array('numeric', $rules) ? 'number' : 'text'),
+                                    'type' => ends_with($input, '_id') ? 'select' : (
+                                        ends_with($input, '_path') ? 'file' :
+                                            (in_array('numeric', $rules) ? 'number' : 'text')
+                                        ),
                                     'options' => ends_with($input, '_id') ? \App\Models\License::optionsFor($input) : [],
                                     'value' => $model->$input,
                                     'selected' => $model->$input,
@@ -83,19 +86,12 @@
 @endsection
 
 
-@section('scripts')
+@push('js')
     <script src="{{asset('assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
     <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css?v=1')}}"/>
     <script src="{{url('/assets/libs/flatpickr/l10n/ar.js')}}"></script>
 
     <script>
-        jQuery.validator.addMethod("alphanumeric", function (value, element) {
-            return this.optional(element) || /^\w+$/i.test(value);
-        }, "يرجى ادخال حروف  أو أرقام او علامة _ ");
-
-        @foreach(array_keys(\App\Models\License::$RULES) as $_col)
-            file_input_register('#{{$_col}}');
-        @endforeach
 
         $('#form').validate({
             rules: @json(\App\Models\License::getRules()),
@@ -119,14 +115,16 @@
         });
 
         $(()=>{
-        @foreach(\App\Models\License::$RULES as $column => $rules)
-            @if ( isDateAttribute(\App\Models\License::class, $column) )
-                flatpickr(".{{$column}}_input",{
-                    "locale": "{{currentLocale()}}",
+            @foreach(\App\Models\License::$RULES as $column => $rules)
+                @if(isDateAttribute(\App\Models\License::class, $column))
+
+                flatpickr(".{{$column}}_input", {
+                    locale: "{{currentLocale()}}",
                     typeCalendar: "Umm al-Qura"
                 });
-            @endif
-        @endforeach
+
+                @endif
+            @endforeach
         })
     </script>
-@endsection
+@endpush
