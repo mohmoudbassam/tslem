@@ -3,7 +3,7 @@
 تفعيل الحساب
 @endsection
 @section('content')
-<link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
+<link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css?v=1')}}"/>
 <style>
 .file-preview {
     display: none;
@@ -410,7 +410,7 @@
 </div>
 
     @endsection
-    <script src = "{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+    <script src = "{{asset('assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
     @section('scripts')
     <script>
 

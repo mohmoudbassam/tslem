@@ -142,6 +142,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
                      Route::get('create_order', [ OrdersController::class, 'create_order' ])->name('.create_order');
 
                  });
+            Route::post("update-licence-number", [UserController::class, "update_licence_number"])
+                ->name(".update_licence_number");
             Route::get('{user}/design/types', [ UserController::class, 'get_design_types' ])->name(
                 '.get_user_design_types'
             );
@@ -178,6 +180,10 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
         Route::post('edit_file_action', [ DesignerOrderController::class, 'edit_file_action' ])->name(
             '.edit_file_action'
         );
+        Route::prefix('consulting')->middleware('ConsultingDesigner')->name('.consulting')->group(function () {
+            Route::get('orders', [ ConsultingOfficeController::class, 'orders' ])->name('.orders');
+            Route::get('list', [ ConsultingOfficeController::class, 'list' ])->name('.list');
+        });
         Route::get('accept/{order}', [ DesignerOrderController::class, 'accept' ])->name('.accept');
         Route::post('reject/{order}', [ DesignerOrderController::class, 'reject' ])->name('.reject');
     });
@@ -260,7 +266,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
     });
     Route::prefix('consulting-office')
          ->name('consulting_office')
-         ->middleware([ 'consulting_office', 'verifiedUser' ])
+         ->middleware(['ConsultingDesigner', 'verifiedUser' ])
          ->group(function() {
              Route::get('orders', [ ConsultingOfficeController::class, 'orders' ]);
              Route::get('', [ ConsultingOfficeController::class, 'list' ])->name('.list');
@@ -452,5 +458,6 @@ Route::get('import-excel', function() {
 });
 Route::post('import', [ \App\Http\Controllers\ImportExcelController::class, 'import' ])->name('import');
 
-
-
+Route::get('raft_company/get_camp_by_box/{box}', [ RaftCompanyController::class, 'get_camp_by_box' ])->name(
+    'raft_company.get_camp_by_box'
+);

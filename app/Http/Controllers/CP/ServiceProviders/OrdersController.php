@@ -55,7 +55,7 @@ class OrdersController extends Controller
                 $data['can_create_order']=0;
             }
         }
-        
+
         if(isset($box)){
             $data['box']= $box;
         }
@@ -76,11 +76,14 @@ class OrdersController extends Controller
             'designer_id' => Rule::exists("users", "id")->where(function ($query) {
                 $query->where("type", "design_office");
             }),
-            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
+//            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('services_providers.save_order')->with(['error' => 'فشل في انشاء الطلب']);
+            return redirect()->route('services_providers.create_order')->with([
+                'error' => 'فشل في انشاء الطلب',
+                'errors' => $validator->errors()
+            ]);
         }
 
         $order = Order::query()->create([
@@ -131,7 +134,7 @@ class OrdersController extends Controller
             if($request->waste_contractor){
                 $order = $order->whereWasteContractor($request->waste_contractor);
             }
-        
+
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
@@ -245,7 +248,7 @@ class OrdersController extends Controller
             'consulting_office_id' => $request->consulting_office_id,
             'waste_contractor' => $request->waste_contractor
         ]);
-        
+
         save_logs($order, auth()->user()->id, "تم اخيار المشرف ومكتب المقاولات");
         optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب  ', auth()->user()->id));
         optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب   ', auth()->user()->id));

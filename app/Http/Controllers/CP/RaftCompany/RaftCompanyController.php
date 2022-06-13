@@ -61,6 +61,7 @@ class RaftCompanyController extends Controller
         $this->uploadUserFiles($user, $request);
         return back()->with(['success' => 'تمت عمليه الإضافة بنجاح']);
     }
+
     public function centers_list(Request $request){
         $users = User::query()->where('parent_id', auth()->user()->id)->when(request('name'), function ($q) {
             $q->where('name', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
@@ -73,14 +74,8 @@ class RaftCompanyController extends Controller
     public function list(Request $request)
     {
 
-//        $users = User::query()->where('parent_id', auth()->user()->id)->when(request('name'), function ($q) {
-//            $q->where('name', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
-//            $q->orwhere('email', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
-//            $q->orwhere('phone', 'like', '%' . request('name') . '%')->where('type', 'raft_center');
-//        });
-
         $session = Session::query()->with('RaftCompanyBox')
-            ->where('raft_company_location_id', auth()->user()->raft_company_type)->get();
+            ->where('raft_company_location_id', auth()->user()->raft_company_type)->published()->get();
 
         return DataTables::of($session)
             ->addColumn('actions', function ($session) {
@@ -108,7 +103,6 @@ class RaftCompanyController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
-
 
     private function uploadUserFiles($user, $file)
     {

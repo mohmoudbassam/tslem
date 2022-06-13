@@ -122,7 +122,7 @@ class TaslemMaintenance extends Controller
             $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
 
             foreach ($Users as $User) {
-                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth()->user()->id));
+                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد استلام جديدة يرجى منك متابعتها', auth()->user()->id));
             }
 
             Session::where('support_id', auth()->user()->id)->notPublished()->update(['is_published' => '1']);

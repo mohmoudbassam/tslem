@@ -32,10 +32,18 @@ class TaslemMaintainance extends Controller
 
             $sessions = $sessions->whereDate('start_at', '=', now()->format('Y-m-d'));
         }
-//
-//        if ($request->raft_company_location_id) {
-//            $sessions = $sessions->where('raft_company_location_id', $request->raft_company_location_id);
-//        }
+
+        if(request('id')){
+
+            $sessions=$sessions->where('id',request('id'))->first();
+            if(!$sessions){
+                return api(true, 200, 'الموعد غير موجود')
+                    ->get();
+            }
+            return api(true, 200, 'تمت العمليه بنجاح')
+                ->add('session', SessionResource::make($sessions))
+                ->get();
+        }
 
         $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
             $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
@@ -119,7 +127,7 @@ class TaslemMaintainance extends Controller
             $Users = User::where('type', 'raft_company')->whereIn('raft_company_type', array_keys($raftUsers))->get();
 
             foreach ($Users as $User) {
-                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد مقابلة جديدة يرجى منك متابعتها', auth('users')->user()->id));
+                $User->notify(new TasleemMaintenanceNotification('لديك مواعيد استلام جديدة يرجى منك متابعتها', auth('users')->user()->id));
             }
 
             Session::where('support_id', auth('users')->user()->id)->notPublished()->update(['is_published' => '1']);
@@ -148,9 +156,11 @@ class TaslemMaintainance extends Controller
             $update[$type] = $path;
             $update[$type . '_name'] = $file_name;
 
-            RaftCompanyBox::where('id', $Session->raft_company_box_id)->update($update);
+           $raft_company_box= tap(RaftCompanyBox::query()->find( $Session->raft_company_box_id))->update($update);
+
         }
         return api(true, 200, 'تمت العمليه بنجاح')
+            ->add('file_url',asset('storage/'.$raft_company_box->{$type}))
             ->get();
     }
 
@@ -191,15 +201,31 @@ class TaslemMaintainance extends Controller
 
             $camp = $boxes->map(function ($key, $val) {
                 return $key->camp;
-
-
             });
 
-            return [
-                'camps' => $camp,
-                'raft_id' => $boxes[0]->raft_company_location_id
-            ];
-        });
+            return
+                [
+                    'camps' => $camp,
+                    'raft_id' => $boxes[0]->raft_company_location_id,
+                    'box' => $box_id
+                ];
+
+        })->values();
         return $newCol;
+    }
+
+    public function not_published_sessions(Request $request){
+        $sessions = Session::query()->NotPublished()->where('support_id', auth('users')->user()->id)->with('RaftCompanyLocation.user', 'RaftCompanyBox');
+
+
+
+
+        $sessions->when($request->from_date && $request->to_date, function ($q) use ($request) {
+            $q->whereBetween('start_at', [$request->from_date, $request->to_date]);
+        });
+        $sessions = $sessions->paginate(request('per_page') ?? 10);
+        return api(true, 200, 'تمت العمليه بنجاح')
+            ->add('sessions', SessionResource::collection($sessions), $sessions)
+            ->get();
     }
 }

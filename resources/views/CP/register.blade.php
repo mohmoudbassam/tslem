@@ -34,7 +34,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
     <link href="{{url("/")}}/assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
 
-    <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css')}}"/>
+    <link rel="stylesheet" href="{{url('/assets/libs/flatpickr/flatpickr.min.css?v=1')}}"/>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300&family=Tajawal:wght@200;400&display=swap"
           rel="stylesheet">
 
@@ -374,27 +374,26 @@
                                     </div>
                                 @endif
                                 @if($record->box_number)
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="box_number">رقم المربع<span class="text-danger required-mark">*</span></label>
-                                            <input type="text"  value="{{old('box_number')}}"
-                                                class="form-control" id="box_number"
-                                                name="box_number"
-                                                placeholder="رقم المربع">
-                                            <div class="col-12 text-danger" id="box_number_error"></div>
-                                        </div>
+                                    <div class="col-lg-6">
+                                        <label class="form-label" for="box_number">رقم المربع <span
+                                                class="text-danger required-mark">*</span></label>
+                                        <select class="form-control" data-trigger id="box_number" name="box_number">
+                                            <option value="" disable>أختر</option>
+                                            @foreach($boxes as $box)
+                                                <option value="{{ $box['box'] }}">{{$box['box']}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="col-12 text-danger" id="box_number_error"></div>
                                     </div>
                                 @endif
                                 @if($record->camp_number)
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="camp_number">رقم المخيم<span class="text-danger required-mark">*</span></label>
-                                            <input type="text"  value="{{old('camp_number')}}"
-                                                class="form-control" id="رقم المخيم"
-                                                name="camp number"
-                                                placeholder="رقم المخيم">
-                                            <div class="col-12 text-danger" id="camp_number_error"></div>
-                                        </div>
+                                    <div class="col-lg-6">
+                                        <label class="form-label" for="camp_number">رقم المخيم <span
+                                                class="text-danger required-mark">*</span></label>
+                                        <select class="form-control" disabled id="camp_number" name="camp_number">
+                                            <option value=""></option>
+                                        </select>
+                                        <div class="col-12 text-danger" id="camp_number_error"></div>
                                     </div>
                                 @endif
                                 @if($record->city)
@@ -478,7 +477,7 @@
 <link href="{{url("/")}}/assets/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/js/fileinput.min.js" type="text/javascript"></script>
 <script src="{{url("/")}}/assets/bootstrap-fileinput/fileinput-theme.js" type="text/javascript"></script>
-<script src="{{url('/assets/libs/flatpickr/flatpickr.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('assets/libs/flatpickr/flatpickr.min.js?v=1')}}" type="text/javascript"></script>
 <script src="{{url('/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}" type="text/javascript"></script>
 
 @include('CP.layout.js')
@@ -548,7 +547,40 @@
     {{--    window.location = '{{route('register')}}/' + '{{request('type')}}' +'/'+'{{request('designer_type')}}'+$(this).val()--}}
     {{--});--}}
     flatpickr(".datepicker", {defaultDate: (old_date == '') ? new Date : old_date});
+    $('#box_number').on('change', function(e) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var url = '{{route('raft_company.get_camp_by_box',':box')}}';
+
+        url = url.replace(':box', $('#box_number').val());
+
+        $.ajax({
+            url : url,
+            data: {},
+            type: "GET",
+            processData: false,
+            contentType: false,
+            success:function(data) {
+                if (data.success) {
+                    $("#camp_number").find('option')
+                        .remove();
+                    $('#camp_number').html(data.page);
+
+                    $('#camp_number').removeAttr("disabled");
+                }
+            },
+            error:function(data) {
+                console.log(data);
+                KTApp.unblock('#page_modal');
+                KTApp.unblockPage();
+            },
+        });
+    });
 </script>
+
 
 </body>
 </html>
