@@ -55,7 +55,7 @@ class OrdersController extends Controller
                 $data['can_create_order']=0;
             }
         }
-        
+
         if(isset($box)){
             $data['box']= $box;
         }
@@ -131,7 +131,7 @@ class OrdersController extends Controller
             if($request->waste_contractor){
                 $order = $order->whereWasteContractor($request->waste_contractor);
             }
-        
+
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
@@ -245,7 +245,7 @@ class OrdersController extends Controller
             'consulting_office_id' => $request->consulting_office_id,
             'waste_contractor' => $request->waste_contractor
         ]);
-        
+
         save_logs($order, auth()->user()->id, "تم اخيار المشرف ومكتب المقاولات");
         optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب  ', auth()->user()->id));
         optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب   ', auth()->user()->id));
