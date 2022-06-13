@@ -218,10 +218,10 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label class="col-form-label required-field" for="warning_file">انذار</label>
+                                                        <label class="col-form-label" for="warning_file">انذار</label>
                                                         <input type="file" class="form-control"
                                                                id="warning_file"
-                                                               name="warning_file" required>
+                                                               name="warning_file">
                                                         <div class="col-12 text-danger"></div>
                                                     </div>
                                                 </div>
@@ -233,10 +233,10 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label class="col-form-label required-field" for="fire_fighter_file">اطفاء</label>
+                                                        <label class="col-form-label" for="fire_fighter_file">اطفاء</label>
                                                         <input type="file" class="form-control"
                                                                id="fire_fighter_file"
-                                                               name="fire_fighter_file" required>
+                                                               name="fire_fighter_file">
                                                         <div class="col-12 text-danger"></div>
                                                     </div>
                                                 </div>
