@@ -76,11 +76,14 @@ class OrdersController extends Controller
             'designer_id' => Rule::exists("users", "id")->where(function ($query) {
                 $query->where("type", "design_office");
             }),
-            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
+//            'agree_to_designer_has_no_fire_specialty' => ['required', Rule::in([1,"1"])],
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('services_providers.create_order')->with(['error' => 'فشل في انشاء الطلب']);
+            return redirect()->route('services_providers.create_order')->with([
+                'error' => 'فشل في انشاء الطلب',
+                'errors' => $validator->errors()
+            ]);
         }
 
         $order = Order::query()->create([

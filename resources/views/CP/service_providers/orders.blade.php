@@ -154,9 +154,38 @@
 
     </div>
 
-    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
+    <div class="modal bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
+
+
+    @if(is_null(auth()->user()->license_number) and auth()->user()->type == "service_provider")
+        <div class="modal fade" id="licence-number-modal" tabindex="-1" role="dialog" aria-labelledby="licence-number-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="licence-number-modal-title">إضافة رقم الترخيص</h5>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ route('services_providers.update_licence_number') }}" id="update-licence-number-form">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="col-form-label required-field" for="licence-number">رقم الترخيص</label>
+                                    <input type="number" class="form-control" name="license_number" id="licence-number" placeholder="رقم الترخيص" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" id="submit-licence-number" form="update-licence-number-form" class="btn btn-primary" data-dismiss="modal">موافق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
 @endsection
 
@@ -213,4 +242,10 @@
 
     </script>
 
+    <script>
+        $(function () {
+            $("#licence-number-modal").modal({backdrop: 'static', keyboard: false});
+            $("#licence-number-modal").modal("show", {backdrop: 'static', keyboard: false});
+        });
+    </script>
 @endsection
