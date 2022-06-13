@@ -80,7 +80,7 @@ class OrdersController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('services_providers.save_order')->with(['error' => 'فشل في انشاء الطلب']);
+            return redirect()->route('services_providers.create_order')->with(['error' => 'فشل في انشاء الطلب']);
         }
 
         $order = Order::query()->create([
