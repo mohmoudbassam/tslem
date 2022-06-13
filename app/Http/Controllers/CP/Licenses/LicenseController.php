@@ -4,12 +4,13 @@ namespace App\Http\Controllers\CP\Licenses;
 
 use App\Helpers\Calendar;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest;
 use App\Http\Requests\CP\License\StoreLicenseRequest;
 use App\Models\License;
 use App\Models\Order;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class LicenseController extends Controller
@@ -109,9 +110,18 @@ class LicenseController extends Controller
         ]);
     }
 
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreLicenseRequest $request)
     {
-        $license = License::create($request->validated());
+        $data = $request->validated();
+        $data[ 'order_id' ] ??= 0;
+        $license = License::create($data);
 
         return redirect()
             ->route('licenses')
@@ -142,6 +152,14 @@ class LicenseController extends Controller
         ]);
     }
 
+    /**
+     * @post
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\Response|string
+     */
     public function print(Request $request, License $license)
     {
         $reportHtml = view('CP.licenses.print', [
@@ -230,6 +248,14 @@ HTML;
                          ->make(true);
     }
 
+    /**
+     * @post
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(Request $request, License $license)
     {
         $license->delete();
@@ -245,28 +271,54 @@ HTML;
         return response()->json([
                                     'page' => view('CP.licenses.form_modal', [
                                         'model' => $order,
+                                        'license' => $order->getLicenseOrCreate(),
                                     ])->render(),
                                     'message' => __('general.success'),
                                     'success' => true,
                                 ]);
     }
 
-    public function order_license_create(Request $request, Order $model)
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
+     * @param \App\Models\Order                                              $order
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function order_license_create(StoreLicenseOrderApprovedRequest $request, Order $order)
     {
-        dd($request->all());
+        $order->saveLicense($request->validated());
+
         return response()->json([
-                                    'page' => view('CP.licenses.form_modal', [
-                                        'model' => $model,
-                                    ])->render(),
                                     'message' => __('general.success'),
                                     'success' => true,
                                 ]);
     }
 
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
+     * @param \App\Models\License                               $license
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(StoreLicenseRequest $request, License $license)
     {
         $license->update($request->validated());
 
         return back()->with('success', __('general.success'));
     }
+
+    public function delete_map_path(Request $request, License $license)
+    {
+        $license->deleteMapPathFile(true);
+
+        return response()->json([
+                                    'success' => true,
+                                    'message' => 'تم حذف المرفق بنجاح',
+                                ]);
+    }
+
 }

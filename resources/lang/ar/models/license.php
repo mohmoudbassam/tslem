@@ -14,5 +14,6 @@ return [
         'tents_count' => 'عدد الخيام',
         'person_count' => 'عدد الحجاج',
         'camp_space' => 'مساحة المخيم',
+        'map_path' => 'خريطة الموقع',
     ],
 ];

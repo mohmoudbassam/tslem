@@ -120,6 +120,7 @@
 
 @include('CP.layout.js')
 @yield('scripts')
+@stack('js')
     <script>
         $(function () {
             feather.replace();

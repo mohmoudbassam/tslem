@@ -430,11 +430,16 @@
 
 @section('scripts')
     <script>
-{{--@if($order->licenseNeeded())--}}
-$(()=>{
-    showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}',null,'#view-user-files-modal')
-})
-{{--@endif--}}
+        /**
+         * Show create license modal
+         * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form
+         */
+        @if($order->licenseNeeded())
+            $(()=>{
+                showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}',null,'#view-user-files-modal')
+            })
+        @endif
+
         function reject() {
             showModal('{{ route('delivery.reject_form') }}', null, {{ $order->id }});
         }

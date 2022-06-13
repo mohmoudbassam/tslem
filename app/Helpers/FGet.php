@@ -1,7 +1,7 @@
 <?php
 
 if( !function_exists('getUserRaftCompanyBox') ) {
-    function getUserRaftCompanyBox(?\Illuminate\Database\Eloquent\Model $user = null): ?\App\Models\RaftCompanyBox
+    function getUserRaftCompanyBox(?\Illuminate\Database\Eloquent\Model $user = null, $default = null): ?\App\Models\RaftCompanyBox
     {
         $user = optional($user ?? currentUser());
         $where = ($license_number = $user->license_number) ?
@@ -10,6 +10,6 @@ if( !function_exists('getUserRaftCompanyBox') ) {
                 'camp' => $user->camp_number,
             ];
 
-        return \App\Models\RaftCompanyBox::where($where)->first();
+        return \App\Models\RaftCompanyBox::where($where)->first() ?: value($default);
     }
 }

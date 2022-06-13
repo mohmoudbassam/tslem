@@ -14,5 +14,6 @@ return [
         'tents_count' => 'Tents Count',
         'person_count' => 'Person Count',
         'camp_space' => 'Camp Space',
+        'map_path' => 'Location Map',
     ],
 ];
