@@ -23,15 +23,18 @@ class DeliveryController extends Controller
 {
     public function orders()
     {
-        $data['designers'] = User::query()->where('type', 'design_office')->get();
-        $data['consulting'] = User::query()->where('type', 'consulting_office')->get();
-        $data['contractors'] = User::query()->where('type', 'contractor')->get();
-        $data['services_providers'] = User::query()->where('type', 'service_provider')->get();
+        $data['designers'] = User::query()->where('type', 'design_office')->where('verified',1)->get();
+        $data['consulting'] = User::query()->whereHas('designer_types',function($Type){
+            return $Type->where('type','consulting');
+        })->where('verified',1)->get();
+        $data['contractors'] = User::query()->where('type', 'contractor')->where('verified',1)->get();
+        $data['services_providers'] = User::query()->where('type', 'service_provider')->where('verified',1)->get();
         return view('CP.delivery.orders',$data);
     }
 
     public function list(Request $request)
     {
+
         $order = Order::query()
             ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
                 $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
@@ -50,6 +53,7 @@ class DeliveryController extends Controller
             ->whereContractorId($request->contractor_id)
             ->whereDate($request->from_date, $request->to_date)
             ->where('status', '>=', '3');
+
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -76,12 +80,15 @@ class DeliveryController extends Controller
                                                 عرض التفاصيل
                                             </a>
                                         </div>';
+
                 return $element;
 
             })
             ->addColumn('created_at', function ($order) {
+
                 return $order->created_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
+
                 return $order->order_status;
             })->rawColumns(['actions'])
             ->make(true);

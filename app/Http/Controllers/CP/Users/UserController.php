@@ -540,4 +540,13 @@ class UserController extends Controller
                                     ]);
         }
     }
+
+    public function update_licence_number(Request $request)
+    {
+        auth()->user()->update([
+            'license_number' => $request->license_number
+        ]);
+
+        return redirect()->route("services_providers.orders");
+    }
 }

@@ -17,10 +17,13 @@ class SessionController extends Controller
     {
         $query = \App\Models\Session::ByLocation(auth()->user()->raft_company_type)
                                     ->with('RaftCompanyLocation', 'RaftCompanyBox')
-                                    ->published()
-                                    ->when(request('raft_company_box_id'), function ($q) {
-                                        $q->where('raft_company_box_id', request('raft_company_box_id'));
-                                    });
+                                    ->where('is_published',1);
+
+        if($q->raft_company_box_id){
+            $query = $query->where('raft_company_box_id',$q->raft_company_box_id);
+        }
+
+                                    
 
         return DataTables::of($query->get())->make(true);
     }

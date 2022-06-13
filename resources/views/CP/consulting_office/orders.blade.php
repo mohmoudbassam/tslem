@@ -149,7 +149,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('consulting_office.list')}}',
+                    url: '{{route('design_office.consulting.list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.order_identifier = $('#order_identifier').val();

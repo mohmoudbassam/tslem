@@ -47,8 +47,7 @@ class ConsultingOfficeController extends Controller
             })
             ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
                 $query->whereDate("created_at", "<=", $request->query("to_date"));
-            })
-            ->with(['service_provider', 'designer'])
+            })->with(['service_provider', 'designer'])
             ->whereOrderId($request->order_id)
             ->whereDate($request->from_date, $request->to_date)
             ->where('consulting_office_id', auth()->user()->id);
@@ -144,7 +143,7 @@ class ConsultingOfficeController extends Controller
 
     public function reports_view_details(Order $order)
     {
-        dd('erw');
+
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         return view('CP.consulting_office.reports_view_details', [

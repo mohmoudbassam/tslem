@@ -35,6 +35,7 @@ Route::prefix('auth')->group(function () {
 });
 Route::middleware(['APIUserAuth', 'MaintenanceAuth'])->prefix('maintenance')->group(function () {
     Route::get('sessions/{list_type?}', [TaslemMaintainance::class, 'sessions']);
+    Route::get('not_published_sessions', [TaslemMaintainance::class, 'not_published_sessions']);
     Route::get('company_box', [TaslemMaintainance::class, 'company_box']);
     Route::post('save_session', [TaslemMaintainance::class, 'save_session']);
     Route::post('publish_sessions', [TaslemMaintainance::class, 'publish_sessions']);
@@ -46,7 +47,6 @@ Route::middleware(['APIUserAuth', 'RaftCompanyAuth'])->prefix('raft')->group(fun
     Route::get('sessions',[RaftCompany::class, 'sessions']);
     Route::get('file',[RaftCompany::class, 'docx_file']);
     Route::post('seen',[RaftCompany::class, 'seen_maintain_file']);
-
 });
 Route::prefix('user')->group(function () {
     Route::post('save', [UserController::class, 'postRegister']);

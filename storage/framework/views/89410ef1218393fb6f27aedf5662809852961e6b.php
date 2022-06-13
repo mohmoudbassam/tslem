@@ -1,25 +1,25 @@
-@extends('CP.master')
-@section('title')
+
+<?php $__env->startSection('title'); ?>
     الطلبات
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <!-- start page title -->
-    @if(auth()->user()->verified)
+    <?php if(auth()->user()->verified): ?>
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    @if($can_create_order)
+                    <?php if($can_create_order): ?>
                         <h4 class="mb-sm-0 font-size-18">
                             <div class="btn-group" role="group">
-                                <a href="{{route('services_providers.create_order')}}"
+                                <a href="<?php echo e(route('services_providers.create_order')); ?>"
                                    class="btn btn-primary dropdown-toggle">
                                     انشاء الطلب <i class="fa fa-clipboard-check"></i>
                                 </a>
 
                             </div>
                         </h4>
-                    @endif
+                    <?php endif; ?>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    <?php endif; ?>
     <div class="card">
         <div class="card-header">
             <div class="row mt-4">
@@ -46,9 +46,9 @@
                             <label for="designer_id">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
-                                @foreach($designers as $designer)
-                                    <option value="{{$designer->id}}">{{$designer->company_name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $designers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $designer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($designer->id); ?>"><?php echo e($designer->company_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </select>
                         </div>
@@ -56,27 +56,27 @@
                             <label for="consulting_id">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
-                                @foreach($consulting as $_consulting)
-                                    <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $consulting; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_consulting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($_consulting->id); ?>"><?php echo e($_consulting->company_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col">
                             <label for="contractor_id">المقاول </label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
-                                @foreach($contractors as $_contractor)
-                                    <option value="{{$_contractor->id}}">{{$_contractor->company_name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $contractors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $_contractor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($_contractor->id); ?>"><?php echo e($_contractor->company_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col">
                             <label for="waste_contractor">مقاول النفايات </label>
                             <select class="form-control" id="waste_contractor" name="waste_contractor">
                                 <option value="">اختر...</option>
-                            @foreach(wasteContractorsList() as $wasteContractor)
-                                    <option value="{{$wasteContractor['name']}}">{{$wasteContractor['name']}}</option>
-                                @endforeach
+                            <?php $__currentLoopData = wasteContractorsList(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wasteContractor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($wasteContractor['name']); ?>"><?php echo e($wasteContractor['name']); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col">
@@ -154,42 +154,13 @@
 
     </div>
 
-    <div class="modal bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
+    <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
 
+<?php $__env->stopSection(); ?>
 
-    @if(is_null(auth()->user()->license_number) and auth()->user()->type == "service_provider" and is_null(auth()->user()->parent_id))
-        <div class="modal fade" id="licence-number-modal" tabindex="-1" role="dialog" aria-labelledby="licence-number-modal-title" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="licence-number-modal-title">إضافة رقم الترخيص</h5>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="{{ route('services_providers.update_licence_number') }}" id="update-licence-number-form">
-                        @csrf
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="col-form-label required-field" for="licence-number">رقم الترخيص</label>
-                                    <input type="number" class="form-control" name="license_number" id="licence-number" placeholder="رقم الترخيص" required>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" id="submit-licence-number" form="update-licence-number-form" class="btn btn-primary" data-dismiss="modal">موافق</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
-@endsection
-
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
     <script>
 
 
@@ -202,7 +173,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('services_providers.list')}}',
+                    url: '<?php echo e(route('services_providers.list')); ?>',
                     type: 'GET',
                     "data": function (d) {
                         d.order_identifierentifier = $('#order_identifier').val();
@@ -215,7 +186,7 @@
                     }
                 },
                 language: {
-                    "url": "{{url('/')}}/assets/datatables/Arabic.json"
+                    "url": "<?php echo e(url('/')); ?>/assets/datatables/Arabic.json"
                 },
                 columns: [
                     {className: 'text-right', data: 'identifier', name: 'identifier'},
@@ -242,10 +213,6 @@
 
     </script>
 
-    <script>
-        $(function () {
-            $("#licence-number-modal").modal({backdrop: 'static', keyboard: false});
-            $("#licence-number-modal").modal("show", {backdrop: 'static', keyboard: false});
-        });
-    </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('CP.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\taslem\resources\views/CP/service_providers/orders.blade.php ENDPATH**/ ?>
