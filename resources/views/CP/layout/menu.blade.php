@@ -109,6 +109,12 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
+                        <li>
+                            <a href="{{ asset("storage/المكتبة_الهندسية.zip") }}" download="">
+                                <i data-feather="file"></i>
+                                <span>المكتبة الهندسية</span>
+                            </a>
+                        </li>
                     @if(auth()->user()->is_designer_consulting() )
                         <li>
                             <a href="{{route('design_office.consulting.orders')}}">

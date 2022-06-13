@@ -140,6 +140,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
                      Route::get('create_order', [ OrdersController::class, 'create_order' ])->name('.create_order');
 
                  });
+            Route::post("update-licence-number", [UserController::class, "update_licence_number"])
+                ->name(".update_licence_number");
             Route::get('{user}/design/types', [ UserController::class, 'get_design_types' ])->name(
                 '.get_user_design_types'
             );

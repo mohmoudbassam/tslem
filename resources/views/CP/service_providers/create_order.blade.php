@@ -295,11 +295,11 @@
                         return dt['type'] === "fire";
                     }).length;
                     if ( resultLength === 0 ) {
-                        agreed_to_designer_has_no_fire = false;
                         showDesignerWarningMessage();
+                        agreed_to_designer_has_no_fire = false;
                     } else {
-                        agreed_to_designer_has_no_fire = true;
                         hideDesignerWarningMessage();
+                        agreed_to_designer_has_no_fire = true;
                     }
                 } else {
                     showAlertMessage("error", response['message']);
