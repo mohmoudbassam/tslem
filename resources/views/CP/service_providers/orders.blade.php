@@ -159,7 +159,7 @@
     </div>
 
 
-    @if(is_null(auth()->user()->license_number) and auth()->user()->type == "service_provider")
+    @if(is_null(auth()->user()->license_number) and auth()->user()->type == "service_provider" and is_null(auth()->user()->parent_id))
         <div class="modal fade" id="licence-number-modal" tabindex="-1" role="dialog" aria-labelledby="licence-number-modal-title" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
