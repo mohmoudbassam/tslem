@@ -70,4 +70,9 @@ trait TModelTranslation
 
         return crudTrans(static::class, $key, $locale, $default, $model);
     }
+
+    public function getIdLabelAttribute()
+    {
+        return $this->id;
+    }
 }

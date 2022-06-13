@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', [ SiteController::class, 'getHome' ])->name('public');
 Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
 
@@ -47,7 +46,7 @@ Route::post('regester_action', [ RegisterController::class, 'add_edit' ])->name(
 
 Route::any('logout', [ LoginController::class, 'logout' ])->name('logout');
 
-Route::middleware([ 'auth' ])->group(function () {
+Route::middleware([ 'auth' ])->group(function() {
     Route::get('verify', [ VerificationController::class, 'verify' ])
          ->middleware([ "is-unverified" ])
          ->name('verify');
@@ -59,9 +58,8 @@ Route::middleware([ 'auth' ])->group(function () {
     Route::get('dashboard', [ LoginController::class, 'dashboard' ])->name('dashboard');
 });
 
-
 //,'is-verified'
-Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
+Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
 
     Route::get('edit_profile', [ UserController::class, 'edit_profile' ])->name('edit_profile');
     Route::post('save_profile', [ UserController::class, 'save_profile' ])->name('save_profile');
@@ -70,8 +68,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
 
     Route::prefix('licenses')
          ->name('licenses')
-         ->middleware('admin')
-         ->group(function () {
+         ->middleware([ 'user_type:admin,Delivery' ])
+         ->group(function() {
              Route::get('', [ LicenseController::class, 'index' ]);
              Route::get('add', [ LicenseController::class, 'add' ])->name('.add');
              Route::get('edit/{license}', [ LicenseController::class, 'edit' ])->name('.edit');
@@ -82,9 +80,11 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
              Route::post('update/{license}', [ LicenseController::class, 'update' ])->name('.update');
              Route::post('delete/{license}', [ LicenseController::class, 'delete' ])->name('.delete');
              Route::post('store', [ LicenseController::class, 'store' ])->name('.store');
+             Route::get('order/{order}/form', [ LicenseController::class, 'order_license_form' ])->name('.order_license_form');
+             Route::post('order/{order}/create', [ LicenseController::class, 'order_license_create' ])->name('.order_license_create');
          });
 
-    Route::prefix('users')->name('users')->middleware('admin')->group(function () {
+    Route::prefix('users')->name('users')->middleware('admin')->group(function() {
         Route::get('users', [ UserController::class, 'index' ]);
         Route::get('add', [ UserController::class, 'add' ])->name('.add');
         Route::get('form', [ UserController::class, 'get_form' ])->name('.get_form');
@@ -105,7 +105,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
 
         Route::post('update', [ UserController::class, 'update' ])->name('.update');
         Route::post('delete', [ UserController::class, 'delete' ])->name('.delete');
-        Route::prefix('request')->name('.request')->group(function () {
+        Route::prefix('request')->name('.request')->group(function() {
             Route::get('', [ UserRequestController::class, 'index' ]);
             Route::get('list', [ UserRequestController::class, 'list' ])->name('.list');
             Route::get('show', [ UserRequestController::class, 'show' ])->name('.show');
@@ -118,10 +118,10 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
     });
 
     Route::prefix('service-providers')->name('services_providers')->middleware([ 'service_provider' ])->group(
-        function () {
+        function() {
             Route::get('orders', [ OrdersController::class, 'orders' ])->name('.orders');
             Route::middleware([ "is-verified" ])
-                 ->group(function () {
+                 ->group(function() {
                      Route::get('obligations/agree', [ UserController::class, 'agree_to_obligation' ])->name(
                          '.obligations_agree'
                      );
@@ -153,10 +153,10 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             );
         }
     );
-    Route::prefix('design-office')->name('design_office')->group(function () {
+    Route::prefix('design-office')->name('design_office')->group(function() {
         Route::get('download/{id}', [ DesignerOrderController::class, 'download' ])->name('.download');
     });
-    Route::prefix('design-office')->name('design_office')->middleware([ 'design_office' ])->group(function () {
+    Route::prefix('design-office')->name('design_office')->middleware([ 'design_office' ])->group(function() {
         Route::get('orders', [ DesignerOrderController::class, 'orders' ])->name('.orders');
         Route::get('', [ DesignerOrderController::class, 'list' ])->name('.list');
         Route::get('add-files/{order}', [ DesignerOrderController::class, 'add_files' ])->name('.add_files');
@@ -180,7 +180,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
         Route::get('accept/{order}', [ DesignerOrderController::class, 'accept' ])->name('.accept');
         Route::post('reject/{order}', [ DesignerOrderController::class, 'reject' ])->name('.reject');
     });
-    Route::prefix('delivery')->name('delivery')->middleware([ 'delivery' ])->group(function () {
+    Route::prefix('delivery')->name('delivery')->middleware([ 'delivery' ])->group(function() {
         Route::get('orders', [ DeliveryController::class, 'orders' ]);
         Route::get('', [ DeliveryController::class, 'list' ])->name('.list');
         Route::get('/{order}/reports', [ DeliveryController::class, 'reports_view' ])->name('.reports_view');
@@ -210,10 +210,10 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
         Route::get('/reports/add', [ DeliveryController::class, 'add_report_page' ])->name('.report_add_form');
         Route::post('copy_note', [ DeliveryController::class, 'copy_note' ])->name('.copy_note');
     });
-    Route::prefix('contractor')->name('contractor')->middleware([ 'contractor' ])->group(function () {
+    Route::prefix('contractor')->name('contractor')->middleware([ 'contractor' ])->group(function() {
         Route::get('orders', [ ContractorController::class, 'orders' ])->name('.orders');
         Route::middleware([ "verifiedUser" ])
-             ->group(function () {
+             ->group(function() {
                  Route::get('', [ ContractorController::class, 'list' ])->name('.list');
                  Route::get('add_report/{order}', [ ContractorController::class, 'add_report_from' ])->name(
                      '.add_report_form'
@@ -260,7 +260,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
     Route::prefix('consulting-office')
          ->name('consulting_office')
          ->middleware([ 'consulting_office', 'verifiedUser' ])
-         ->group(function () {
+         ->group(function() {
              Route::get('orders', [ ConsultingOfficeController::class, 'orders' ]);
              Route::get('', [ ConsultingOfficeController::class, 'list' ])->name('.list');
              Route::get('/{order}/reports', [ ConsultingOfficeController::class, 'reports_view' ])->name(
@@ -317,7 +317,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
              );
 
          });
-    Route::prefix('Sharer')->name('Sharer')->middleware([ 'sharer' ])->group(function () {
+    Route::prefix('Sharer')->name('Sharer')->middleware([ 'sharer' ])->group(function() {
         Route::get('orders', [ SharerController::class, 'orders' ])->name('.order');
         Route::get('', [ SharerController::class, 'list' ])->name('.list');
         Route::get('reject_form', [ SharerController::class, 'reject_form' ])->name('.reject_form');
@@ -325,8 +325,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
         Route::post('reject', [ SharerController::class, 'reject' ])->name('.reject');
         Route::get('view_file/{order}', [ SharerController::class, 'view_file' ])->name('.view_file');
     });
-    Route::prefix('system-config')->group(function () {
-        Route::prefix('const')->name('const')->group(function () {
+    Route::prefix('system-config')->group(function() {
+        Route::prefix('const')->name('const')->group(function() {
             Route::get('', [ SystemConstController::class, 'index' ])->name('.index');
             Route::get('list', [ SystemConstController::class, 'list' ])->name('.list');
             Route::get('add', [ SystemConstController::class, 'add' ])->name('.add');
@@ -337,7 +337,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             Route::post('delete', [ SystemConstController::class, 'delete' ])->name('.delete');
             Route::post('update', [ SystemConstController::class, 'update' ])->name('.update');
         });
-        Route::prefix('service')->name('service')->group(function () {
+        Route::prefix('service')->name('service')->group(function() {
             Route::get('', [ ServicesController::class, 'index' ])->name('.index');
             Route::get('list', [ ServicesController::class, 'list' ])->name('.list');
             Route::get('add', [ ServicesController::class, 'add' ])->name('.add');
@@ -346,7 +346,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             Route::post('delete', [ ServicesController::class, 'delete' ])->name('.delete');
             Route::post('update', [ ServicesController::class, 'update' ])->name('.update');
         });
-        Route::prefix('specialties')->name('specialties')->group(function () {
+        Route::prefix('specialties')->name('specialties')->group(function() {
             Route::get('', [ SpecialtiesController::class, 'index' ])->name('.index');
             Route::get('list', [ SpecialtiesController::class, 'list' ])->name('.list');
             Route::get('add', [ SpecialtiesController::class, 'add' ])->name('.add');
@@ -357,7 +357,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             Route::post('delete', [ SpecialtiesController::class, 'delete' ])->name('.delete');
             Route::post('update', [ SpecialtiesController::class, 'update' ])->name('.update');
         });
-        Route::prefix('news')->name('news')->group(function () {
+        Route::prefix('news')->name('news')->group(function() {
             Route::get('', [ NewsController::class, 'index' ]);
             Route::get('list', [ NewsController::class, 'list' ])->name('.list');
             Route::get('form/{news?}', [ NewsController::class, 'form' ])->name('.form');
@@ -365,8 +365,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             Route::post('delete', [ NewsController::class, 'delete' ])->name('.delete');
         });
     });
-    Route::prefix('raft_company')->name('raft_company')->group(function () {
-        Route::middleware([ 'raft_company' ])->group(function () {
+    Route::prefix('raft_company')->name('raft_company')->group(function() {
+        Route::middleware([ 'raft_company' ])->group(function() {
             Route::get('', [ RaftCompanyController::class, 'index' ]);
             Route::get('list', [ RaftCompanyController::class, 'list' ])->name('.list');
             Route::get('centers_list', [ RaftCompanyController::class, 'centers_list' ])->name('.centers_list');
@@ -390,8 +390,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
             '.get_camp_by_box'
         );
     });
-    Route::prefix('session')->name('session')->group(function () {
-        Route::middleware([ 'raft_company' ])->group(function () {
+    Route::prefix('session')->name('session')->group(function() {
+        Route::middleware([ 'raft_company' ])->group(function() {
             Route::get('', [ \App\Http\Controllers\CP\Session\SessionController::class, 'index' ]);
             Route::get('list', [ \App\Http\Controllers\CP\Session\SessionController::class, 'list' ])->name('.list');
             Route::get('add', [ \App\Http\Controllers\CP\Session\SessionController::class, 'add' ])->name('.add');
@@ -405,13 +405,13 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function () {
     });
     Route::post('read_message', [ NotificationController::class, 'read_message' ])->name('read_message');
 });
-Route::prefix('raft_center')->name('raft_center')->middleware([ 'raft_center' ])->group(function () {
+Route::prefix('raft_center')->name('raft_center')->middleware([ 'raft_center' ])->group(function() {
     Route::get('', [ RaftCenterController::class, 'index' ]);
 
 });
-Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware([ 'auth' ])->group(function () {
+Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware([ 'auth' ])->group(function() {
     Route::get('', [ TaslemMaintenance::class, 'index' ])->name('.index');
-    Route::prefix('sessions')->name(".sessions")->group(function () {
+    Route::prefix('sessions')->name(".sessions")->group(function() {
         Route::get('/list/{list_type}', [ TaslemMaintenance::class, 'list' ])->name('.list');
         Route::get('/sessions_list', [ TaslemMaintenance::class, 'sessions_list' ])->name('.sessions_list');
         Route::get('/add', [ TaslemMaintenance::class, 'add_session_form' ])->name('.add_form');
@@ -439,12 +439,12 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware([ 'a
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
 
-Route::get('test', function () {
+Route::get('test', function() {
     return view('fm');
 });
 
 Route::get('generate', [ PDFController::class, 'generate' ]);
-Route::get('import-excel', function () {
+Route::get('import-excel', function() {
 
 
 //    return view('CP.import-excel.index');

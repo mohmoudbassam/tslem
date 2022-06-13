@@ -15,6 +15,9 @@ class License extends Model
     use TModelTranslation;
 
     public static $RULES = [
+        // 'order_id'          => [
+        //     'required',
+        // ],
         'raft_company_id'          => [
             'required',
         ],
@@ -56,6 +59,7 @@ class License extends Model
     ];
 
     protected $fillable = [
+        'order_id',
         'raft_company_id',
         'box_raft_company_box_id',
         'camp_raft_company_box_id',
@@ -64,6 +68,7 @@ class License extends Model
         'tents_count',
         'person_count',
         'camp_space',
+        // 'created_at',
     ];
 
     /**
@@ -72,11 +77,12 @@ class License extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'date'                     => 'date',
+        'expiry_date'              => 'date',
+        'order_id'          => 'integer',
         'raft_company_id'          => 'integer',
         'box_raft_company_box_id'  => 'integer',
         'camp_raft_company_box_id' => 'integer',
-        'date'                     => 'date',
-        'expiry_date'              => 'date',
         'tents_count'              => 'integer',
         'person_count'             => 'integer',
         'camp_space'               => 'double',
@@ -96,7 +102,7 @@ class License extends Model
                 'name'      => $name = value($name),
                 'data'      => is_null($data = value($data)) ? $name : $data,
                 'className' => $className = value($className),
-                'orderable' => value($orderable) ?? false,
+                'orderable' => value($orderable) ?? false//ends_with($name, '_id'),
             ];
             if( !is_null($render) ) {
                 if( is_string($render = value($render)) && $render === 'date' ) {
@@ -111,17 +117,18 @@ CODE;
             return $result;
         };
         $columns = [];
-        $columns[] = $makeColumn('id', true);
+        // $columns[] = $makeColumn('id', true);
+        // dd(($model = static::make())->getFillable());
         foreach( ($model = static::make())->getFillable() as $column ) {
-            $columns[] = $makeColumn($column, false);
+            $columns[] = $makeColumn($column);
         }
 
         if( $with_extras ) {
             foreach( __('general.datatable.fields') as $field => $label ) {
-                $columns[] = $makeColumn($field, false);
+                $columns[] = $makeColumn($field);
             }
         }
-//        dd($columns);
+
         return $as_json ? json_encode($columns) : $columns;
     }
 
@@ -136,6 +143,9 @@ CODE;
         }
         if( $column === 'camp_raft_company_box_id' ) {
             return RaftCompanyBox::pluck('camp', 'id')->toArray();
+        }
+        if( $column === 'order_id' ) {
+            return Order::pluck('id', 'id')->toArray();
         }
 
         return [];
@@ -175,6 +185,11 @@ CODE;
     public function camp()
     {
         return $this->belongsTo(RaftCompanyBox::class, 'camp_raft_company_box_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function scopeByRaftCompany(Builder $builder, $id)
@@ -241,5 +256,15 @@ CODE;
     public function getCampNameAttribute()
     {
         return ($m = $this->camp) ? $m->camp : null;
+    }
+
+    public function getIdLabelAttribute()
+    {
+        return $this->order_id;
+    }
+
+    public function owner()
+    {
+        return optional($this->order)->service_provider();
     }
 }

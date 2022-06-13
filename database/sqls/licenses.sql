@@ -16,3 +16,6 @@ CREATE TABLE `licenses`
     INDEX (`box_raft_company_box_id`),
     INDEX (`camp_raft_company_box_id`)
 ) ENGINE = InnoDB;
+
+
+ALTER TABLE `licenses` ADD `order_id` BIGINT UNSIGNED NOT NULL AFTER `id`, ADD INDEX (`order_id`);

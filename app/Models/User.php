@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -221,4 +220,27 @@ class User extends Authenticatable
         return $this;
     }
 
+    public function getRaftCompanyBox($default = null)
+    {
+        $user = $this;
+        $where = ($license_number = $user->license_number) ?
+            compact('license_number') : [
+                'box' => $user->box_number,
+                'camp' => $user->camp_number,
+            ];
+
+        return \App\Models\RaftCompanyBox::where($where)->first() ?? value($default);
+    }
+
+    public function hasRaftCompanyBox(): bool
+    {
+        $user = $this;
+        $where = ($license_number = $user->license_number) ?
+            compact('license_number') : [
+                'box' => $user->box_number,
+                'camp' => $user->camp_number,
+            ];
+
+        return \App\Models\RaftCompanyBox::where($where)->count();
+    }
 }
