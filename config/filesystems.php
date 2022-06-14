@@ -41,6 +41,12 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
+        'order_licenses' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/orders/licenses'),
+            'url' => env('APP_URL') . '/storage/orders/licenses',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

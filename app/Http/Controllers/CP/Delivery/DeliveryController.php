@@ -346,6 +346,7 @@ class DeliveryController extends Controller
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
 
+
         return view('CP.delivery.view_file', [
             'order' => $order,
             'order_specialties' => $order_specialties,

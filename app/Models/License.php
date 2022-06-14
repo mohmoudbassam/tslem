@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class License extends Model
 {
@@ -15,32 +17,61 @@ class License extends Model
     use TModelTranslation;
 
     public static $RULES = [
-        'raft_company_id'          => [
+        // 'order_id'          => [
+        //     'required',
+        // ],
+        'raft_company_id' => [
             'required',
         ],
-        'box_raft_company_box_id'  => [
+        'box_raft_company_box_id' => [
             'required',
         ],
         'camp_raft_company_box_id' => [
             'required',
         ],
-        'date'                     => [
+        'date' => [
             'required',
         ],
-        'expiry_date'              => [
+        'expiry_date' => [
             'required',
         ],
-        'tents_count'              => [
+        'tents_count' => [
             'required',
             'numeric',
         ],
-        'person_count'             => [
+        'person_count' => [
             'required',
             'numeric',
         ],
-        'camp_space'               => [
+        'camp_space' => [
             'required',
             'numeric',
+        ],
+        'map_path' => [
+            'nullable',
+            'file',
+        ],
+    ];
+
+    public static $ORDER_APPROVED_RULES = [
+        'expiry_date' => [
+            'required',
+        ],
+        'tents_count' => [
+            'required',
+            'numeric',
+        ],
+        'person_count' => [
+            'required',
+            'numeric',
+        ],
+        'camp_space' => [
+            'required',
+            'numeric',
+        ],
+        'map_path' => [
+            'nullable',
+            'file',
         ],
     ];
     /**
@@ -54,8 +85,13 @@ class License extends Model
         'box_raft_company_box_id',
         'camp_raft_company_box_id',
     ];
+    /**
+     * @var string
+     */
+    public static $DISK = 'order_licenses';
 
     protected $fillable = [
+        'order_id',
         'raft_company_id',
         'box_raft_company_box_id',
         'camp_raft_company_box_id',
@@ -64,6 +100,8 @@ class License extends Model
         'tents_count',
         'person_count',
         'camp_space',
+        'map_path',
+        // 'created_at',
     ];
 
     /**
@@ -72,14 +110,16 @@ class License extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'raft_company_id'          => 'integer',
-        'box_raft_company_box_id'  => 'integer',
+        'date' => 'date',
+        'expiry_date' => 'date',
+        'order_id' => 'integer',
+        'raft_company_id' => 'integer',
+        'box_raft_company_box_id' => 'integer',
         'camp_raft_company_box_id' => 'integer',
-        'date'                     => 'date',
-        'expiry_date'              => 'date',
-        'tents_count'              => 'integer',
-        'person_count'             => 'integer',
-        'camp_space'               => 'double',
+        'tents_count' => 'integer',
+        'person_count' => 'integer',
+        'camp_space' => 'double',
+        'map_path' => 'string',
     ];
 
     protected $dates = [
@@ -91,12 +131,12 @@ class License extends Model
 
     public static function getDatatableColumns($as_json = false, $with_extras = false)
     {
-        $makeColumn = function ($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
+        $makeColumn = function($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
             $result = [
-                'name'      => $name = value($name),
-                'data'      => is_null($data = value($data)) ? $name : $data,
+                'name' => $name = value($name),
+                'data' => is_null($data = value($data)) ? $name : $data,
                 'className' => $className = value($className),
-                'orderable' => value($orderable) ?? false,
+                'orderable' => value($orderable) ?? false//ends_with($name, '_id'),
             ];
             if( !is_null($render) ) {
                 if( is_string($render = value($render)) && $render === 'date' ) {
@@ -108,20 +148,24 @@ CODE;
                     $result[ 'render' ] = $render;
                 }
             }
+
             return $result;
         };
         $columns = [];
         $columns[] = $makeColumn('id', true);
+        // dd(($model = static::make())->getFillable());
         foreach( ($model = static::make())->getFillable() as $column ) {
-            $columns[] = $makeColumn($column, false);
+            if( in_array($column, static::$LIST_COLUMNS) ) {
+                $columns[] = $makeColumn($column);
+            }
         }
 
         if( $with_extras ) {
             foreach( __('general.datatable.fields') as $field => $label ) {
-                $columns[] = $makeColumn($field, false);
+                $columns[] = $makeColumn($field);
             }
         }
-//        dd($columns);
+
         return $as_json ? json_encode($columns) : $columns;
     }
 
@@ -137,6 +181,9 @@ CODE;
         if( $column === 'camp_raft_company_box_id' ) {
             return RaftCompanyBox::pluck('camp', 'id')->toArray();
         }
+        if( $column === 'order_id' ) {
+            return Order::pluck('id', 'id')->toArray();
+        }
 
         return [];
     }
@@ -144,12 +191,13 @@ CODE;
     public static function getRules()
     {
         $rules = [];
-        foreach( static::$RULES as $column => $rules ) {
+
+        foreach( static::$RULES as $column => $_rules ) {
             $rules[ $column ] = [];
-            if( in_array('required', $rules) ) {
+            if( in_array('required', $_rules) ) {
                 $rules[ $column ][ 'required' ] = true;
             }
-            if( in_array('nullable', $rules) ) {
+            if( in_array('nullable', $_rules) ) {
                 $rules[ $column ][ 'required' ] = false;
             }
         }
@@ -157,9 +205,19 @@ CODE;
         return $rules;
     }
 
-    public static function getIndexColumns()
+    public static function getIndexColumns($with_extras = false)
     {
-        return collect(\App\Models\License::trans('fields'))->reject(static::$LIST_COLUMNS)->all();
+        $results = collect(\App\Models\License::trans('fields'))
+            ->reject(fn($v, $k) => !in_array($k, static::$LIST_COLUMNS))
+            ->all();
+
+        if( $with_extras ) {
+            foreach( __('general.datatable.fields') as $field ) {
+                $results[] = $field;
+            }
+        }
+
+        return $results;
     }
 
     public function raft_company()
@@ -175,6 +233,11 @@ CODE;
     public function camp()
     {
         return $this->belongsTo(RaftCompanyBox::class, 'camp_raft_company_box_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 
     public function scopeByRaftCompany(Builder $builder, $id)
@@ -196,6 +259,7 @@ CODE;
     {
         $value ??= data_get($this->attributes, 'date');
         $value = $value ? Carbon::parse($value) : null;
+
         return $value ? $value->toDateString() : null;
     }
 
@@ -208,6 +272,7 @@ CODE;
     public function date()
     {
         $value = data_get($this->attributes, 'date');
+
         return $value ? Carbon::parse($value) : null;
     }
 
@@ -215,6 +280,7 @@ CODE;
     {
         $value ??= data_get($this->attributes, 'expiry_date');
         $value = $value ? Carbon::parse($value) : null;
+
         return $value ? $value->toDateString() : null;
     }
 
@@ -227,6 +293,7 @@ CODE;
     public function expiry_date()
     {
         $value = data_get($this->attributes, 'expiry_date');
+
         return $value ? Carbon::parse($value) : null;
     }
 
@@ -234,12 +301,84 @@ CODE;
     {
         return ($m = $this->raft_company) ? $m->name : null;
     }
+
     public function getBoxNameAttribute()
     {
         return ($m = $this->box) ? $m->box : null;
     }
+
     public function getCampNameAttribute()
     {
         return ($m = $this->camp) ? $m->camp : null;
+    }
+
+    public function getIdLabelAttribute()
+    {
+        return $this->order_id;
+    }
+
+    public function owner()
+    {
+        return optional($this->order)->service_provider();
+    }
+
+    public function addMapPath($file, bool $save = false)
+    {
+        if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
+            $this->map_path = $full_path;
+
+            if( $save ) {
+                $this->save();
+            }
+        }
+
+        return $this;
+    }
+
+    public static function disk()
+    {
+        return Storage::disk(static::$DISK);
+    }
+
+    // public function getMapPathFullAttribute()
+    // {
+    //     return static::disk()->path($this->map_path);
+    // }
+
+    public function getMapPathUrlAttribute()
+    {
+        return $this->map_path ? static::disk()->url($this->map_path) : "";
+    }
+
+    public function setMapPathAttribute($value)
+    {
+        if(
+            $value &&
+            (
+                is_subclass_of($value, UploadedFile::class) ||
+                is_a($value, UploadedFile::class)
+            )
+        ) {
+            $this->addMapPath($value);
+        } else {
+            $this->attributes[ 'map_path' ] = $value;
+        }
+    }
+
+    public function deleteMapPathFile(bool $save = false)
+    {
+        $storage = static::disk();
+        if( $storage->exists($this->map_path) ) {
+            $storage->delete($this->map_path);
+        }
+
+        $this->map_path = null;
+        if( $save ) {
+            $this->save();
+
+            return $this->refresh();
+        }
+
+        return $this;
     }
 }

@@ -48,17 +48,18 @@
                 <div class="tab-pane active" id="overview" role="tabpanel">
                     <div class="card">
 
-                        <div class="card-header">
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h4 class="mb-0">الملاحظات</h4>
-                                <form action="{{route('raft_company.seen_maintain_file',['session'=>$session->id])}}" method="get">
-                                    <div>
-                                        <button type="submit" class="btn btn-lg btn-primary submit_btn">تم الإطلاع</button>
-                                    </div>
-                                </form>
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="mb-0">الملاحظات</h4>
+                                    <form action="{{route('raft_company.seen_maintain_file',['session'=>$session->id])}}" method="get">
+                                        <div>
+                                            <button type="submit" class="btn btn-lg btn-primary submit_btn">تم الإطلاع</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
+
 
                         <div class="card-body">
                             <p class="mb-2">{{$session->RaftCompanyBox->tasleem_notes}}</p>

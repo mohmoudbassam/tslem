@@ -11,7 +11,6 @@ class Order extends Model
 
     protected $guarded = [];
 
-
     public const PENDING = 1;
     public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
@@ -20,6 +19,10 @@ class Order extends Model
     public const COMPLETED = 6;
     public const PENDING_LICENSE_ISSUED = 7;
 
+    public function license()
+    {
+        return $this->hasOne(License::class);
+    }
 
     public function specialties_file()
     {
@@ -29,7 +32,7 @@ class Order extends Model
     public function service()
     {
         return $this->belongsToMany(Service::class, 'order_service', 'order_id', 'service_id')
-            ->withPivot('service_id', 'order_id', 'unit');
+                    ->withPivot('service_id', 'order_id', 'unit');
     }
 
     public function obligations()
@@ -67,7 +70,6 @@ class Order extends Model
         return $q->where('contractor_id', $contractor_id);
     }
 
-
     public function file()
     {
         return $this->hasMany(OrderFile::class);
@@ -77,7 +79,6 @@ class Order extends Model
     {
         return $this->hasMany(OrderLogs::class);
     }
-
 
     public function contractorReport()
     {
@@ -131,15 +132,15 @@ class Order extends Model
     public function getOrderStatusAttribute()
     {
         return [
-            '1' => 'معلق',
-            '2' => 'قيد انشاء الطلب',
-            '3' => 'مراجعة التصاميم',
-            '4' => 'معتمد التصاميم',
-            '5' => 'PROCESSING',
-            '6' => 'COMPLETED',
-            '7' => 'بإنتظار اصدار الرخصة'
+                   '1' => 'معلق',
+                   '2' => 'قيد انشاء الطلب',
+                   '3' => 'مراجعة التصاميم',
+                   '4' => 'معتمد التصاميم',
+                   '5' => 'PROCESSING',
+                   '6' => 'COMPLETED',
+                   '7' => 'بإنتظار اصدار الرخصة'
 
-        ][$this->status];
+               ][ $this->status ];
     }
 
     public function lastDesignerNote()
@@ -162,11 +163,10 @@ class Order extends Model
     /// filters     //
     /// //////////////
 
-
     public function scopeWhereOrderId($q, $order_id)
     {
 
-        return $q->when($order_id, function ($q) use ($order_id) {
+        return $q->when($order_id, function($q) use ($order_id) {
             $q->where('id', $order_id);
         });
     }
@@ -174,7 +174,7 @@ class Order extends Model
     public function scopeWhereDesignerId($q, $designer_id)
     {
 
-        return $q->when($designer_id, function ($q) use ($designer_id) {
+        return $q->when($designer_id, function($q) use ($designer_id) {
             $q->where('designer_id', $designer_id);
         });
     }
@@ -182,7 +182,7 @@ class Order extends Model
     public function scopeWhereConsultingId($q, $consulting_id)
     {
 
-        return $q->when($consulting_id, function ($q) use ($consulting_id) {
+        return $q->when($consulting_id, function($q) use ($consulting_id) {
             $q->where('consulting_office_id', $consulting_id);
         });
     }
@@ -190,24 +190,71 @@ class Order extends Model
     public function scopeWhereContractorId($q, $contractor_id)
     {
 
-        return $q->when($contractor_id, function ($q) use ($contractor_id) {
+        return $q->when($contractor_id, function($q) use ($contractor_id) {
             $q->where('contractor_id', $contractor_id);
         });
     }
-    public function scopeWhereDate($q, $from_date ,$to_date)
+
+    public function scopeWhereDate($q, $from_date, $to_date)
     {
 
-        return $q->when($from_date&&$to_date, function ($q) use ($from_date,$to_date) {
-            $q->whereBetween('date',[$from_date,$to_date]);
+        return $q->when($from_date && $to_date, function($q) use ($from_date, $to_date) {
+            $q->whereBetween('date', [ $from_date, $to_date ]);
         });
     }
+
     public function scopeWhereServiceProviderId($q, $service_provider_id)
     {
 
-        return $q->when($service_provider_id, function ($q) use ($service_provider_id) {
+        return $q->when($service_provider_id, function($q) use ($service_provider_id) {
             $q->where('owner_id', $service_provider_id);
         });
     }
 
+    public function licenseNeeded(): bool
+    {
+        return $this->isDesignApproved() && !$this->hasLicense();
+    }
 
+    public function hasLicense(): bool
+    {
+        return $this->license()->whereNotNull('created_at')->count();
+    }
+
+    public function getLicenseOrCreate(array $attributes = [])
+    {
+        $attributes[ 'created_at' ] ??= null;
+        $license = $this->license()->firstOrNew([], $attributes);
+
+        if( !$license->exists ) {
+            $license->forceFill([ 'created_at' => data_get($attributes, 'created_at') ])
+                    ->save();
+
+            return $license->refresh();
+        }
+
+        return $license;
+    }
+
+    public function saveLicense(array $attributes = [])
+    {
+        $license = $this->getLicenseOrCreate([ 'order_id' => $this->id ]);
+        $created_at = ($attributes[ 'created_at' ] ??= data_get($attributes, 'created_at', $license->created_at ?: now()));
+        $attributes[ 'date' ] = data_get($attributes, 'date', $created_at ? ($license->date ?: now()) : null);
+        if( $raft_company_box = currentUser()->getRaftCompanyBox() ) {
+            $attributes[ 'box_raft_company_box_id' ] = data_get($raft_company_box, 'id');
+            $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
+        }
+
+        $license->fill($attributes)
+                ->forceFill(compact('created_at'))
+                ->save();
+
+        return $license->refresh();
+    }
+
+    public function isDesignApproved()
+    {
+        return $this->status === static::DESIGN_APPROVED;
+    }
 }

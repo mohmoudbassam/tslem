@@ -59,13 +59,10 @@
                            role="grid"
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
-                        @foreach(\App\Models\License::getIndexColumns() as $field)
+                        @foreach(\App\Models\License::getIndexColumns(true) as $field)
                             <th>{{$field}}</th>
                         @endforeach
 
-                        @foreach(__('general.datatable.fields') as $field)
-                            <th>{{$field}}</th>
-                        @endforeach
                         </thead>
                         <tbody>
                         </tbody>

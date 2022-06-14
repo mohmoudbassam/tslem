@@ -66,7 +66,6 @@
 @endsection
 
 @section('content')
-
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -410,10 +409,36 @@
     <div class="modal fade bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
+
+    <div class="modal fade" id="view-user-files-modal" tabindex="-1" role="dialog" aria-labelledby="view-user-files-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="view-user-files-modal-title">مرفقات المستخدم</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row my-4" id="file-view-row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-view-files-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
     <script>
+        /**
+         * Show create license modal
+         * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form
+         */
+        @if($order->licenseNeeded())
+            $(()=>{
+                showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}',null,'#view-user-files-modal')
+            })
+        @endif
 
         function reject() {
             showModal('{{ route('delivery.reject_form') }}', null, {{ $order->id }});

@@ -29,7 +29,6 @@ class OrdersController extends Controller
 {
     public function orders()
     {
-
         $data['designers'] = User::query()->whereHas('designer_orders', function ($q) {
             $q->where('owner_id', auth()->user()->id);
         })->get();

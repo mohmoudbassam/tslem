@@ -77,16 +77,12 @@ class Kernel extends HttpKernel
         'is-unverified' => \App\Http\Middleware\UnverifiedMiddelware::class,
         'is-file-uploaded' => \App\Http\Middleware\IsFileUploaded::class,
         'APIUserAuth' => APIUserAuth::class,
-        'raft_company'=>\App\Http\Middleware\CP\RaftCompany::class,
-        'raft_center'=>\App\Http\Middleware\CP\RaftCenter::class,
-        'ServiceProviderOrder'=>\App\Http\Middleware\CP\ServiceProviderOrder::class,
+        'raft_company' => \App\Http\Middleware\CP\RaftCompany::class,
+        'raft_center' => \App\Http\Middleware\CP\RaftCenter::class,
+        'ServiceProviderOrder' => \App\Http\Middleware\CP\ServiceProviderOrder::class,
         'ConsultingDesigner'=>\App\Http\Middleware\CP\ConsultingDesigner::class,
-        'MaintenanceAuth'=>\App\Http\Middleware\API\MaintenanceAuth::class,
-        'RaftCompanyAuth'=>\App\Http\Middleware\API\RaftCompanyAuth::class,
-
-
-
-
-
+        'MaintenanceAuth' => \App\Http\Middleware\API\MaintenanceAuth::class,
+        'RaftCompanyAuth' => \App\Http\Middleware\API\RaftCompanyAuth::class,
+        'user_type' => \App\Http\Middleware\CP\CheckUserType::class,
     ];
 }
