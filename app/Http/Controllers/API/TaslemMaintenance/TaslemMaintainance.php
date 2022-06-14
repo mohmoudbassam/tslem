@@ -160,7 +160,7 @@ class TaslemMaintainance extends Controller
 
         }
         return api(true, 200, 'تمت العمليه بنجاح')
-            ->add('file_url',asset('storage/'.$raft_company_box->{$type}))
+            ->add('file_url',Storage::disk('public')->url('service_provider/'.$raft_company_box->{$type}))
             ->get();
     }
 
