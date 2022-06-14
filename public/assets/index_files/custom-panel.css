@@ -1,0 +1,20 @@
+.cp-right-menu {
+  position: fixed;
+  width: 200px;
+  background: #fff;
+  z-index: 9999;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+
+.cp-right-menu-logo {
+
+border-bottom: 1px solid var(--bs-card-border-color);
+
+text-align: center;
+
+padding: 16px 0;
+
+display: block;
+}

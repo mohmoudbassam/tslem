@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LoginNumber;
 use App\Models\Order;
 use App\Models\RaftCompanyBox;
+use App\Models\RaftCompanyLocation;
 use App\Models\Session;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -121,6 +122,27 @@ class LoginController extends Controller
             ->where('status', 6)
             ->select(DB::raw('count(*) as count'), DB::raw("DATE_FORMAT(updated_at,'%M-%d') as days"))
             ->groupBy('days')->get()->pluck('count', 'days')->toArray();
+
+        //////////order count
+        $data['order_count']=Order::query()->count();
+        //////complete orders
+         $data['complete_orders'] = Order::query()->where('status','>=' ,Order::COMPLETED)->count();
+         ///not complete
+        $data['not_complete_orders'] = Order::query()->where('status', '<',Order::COMPLETED)->count();
+        ///all orders
+        $data['all_order'] = Order::query()->count();
+
+        ///bar chart
+      $data['bar']=  RaftCompanyLocation::query()->select('name')
+            ->withCount(['box'=>function($q){
+                $q->where('seen_notes',1);
+            }])->get()->map(function($location){
+             return [
+                 'x'=>$location->name,
+                 'y'=>$location->box_count
+             ];
+          });
+
         return view('CP.dashboard', $data);
 
     }
