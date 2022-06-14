@@ -36,31 +36,9 @@
                             </li>
                         </ul>
                     </li>
-                <!-- <li>
-                        <a href="javascript: void(0);" class="has-arrow">
-                            <i data-feather="licenses"></i>
-                            <span data-key="t-apps"><?php echo e(\App\Models\License::trans('group')); ?></span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="false">
-                            <li>
-                                <a href="<?php echo e(route('licenses')); ?>">
-                                    <span data-key="t-calendar"><?php echo e(\App\Models\License::crudTrans('index')); ?></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo e(route('licenses.add')); ?>">
-                                    <span data-key="t-chat"><?php echo e(\App\Models\License::crudTrans('add')); ?></span>
-                                </a>
-                            </li>
-                            <?php if(request()->routeIs('licenses.edit')): ?>
-                    <li>
-                        <a onclick="event.preventDefault(); return false" href="<?php echo e(route('licenses.edit',['license'=>request()->license])); ?>">
-                                        <span data-key="t-chat"><?php echo e(\App\Models\License::crudTrans('update')); ?></span>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                    </ul>
-                </li> -->
+
+                    <?php echo $__env->make('CP.licenses.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
                     <li>
                         <a href="javascript: void(0);" class="has-arrow">
                             <i data-feather="settings"></i>
@@ -99,7 +77,6 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
-
                 <?php endif; ?>
 
                 <?php if(auth()->user()->type=='design_office' ): ?>
@@ -109,6 +86,12 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
+                        <li>
+                            <a href="<?php echo e(asset("storage/المكتبة_الهندسية.zip")); ?>" download="">
+                                <i data-feather="file"></i>
+                                <span>المكتبة الهندسية</span>
+                            </a>
+                        </li>
                     <?php if(auth()->user()->is_designer_consulting() ): ?>
                         <li>
                             <a href="<?php echo e(route('design_office.consulting.orders')); ?>">
@@ -147,6 +130,7 @@
                         </ul>
                     </li>
 
+                    <?php echo $__env->make('CP.licenses.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <?php endif; ?>
 
                 <?php if(auth()->user()->type=='raft_company'): ?>
@@ -206,7 +190,6 @@
 
                 <?php endif; ?>
                 <?php if(auth()->user()->isAdmin()): ?>
-
 
                     <li>
                         <a href="<?php echo e(route('dashboard')); ?>">

@@ -63,7 +63,7 @@ class OrdersController extends Controller
 
     public function create_order()
     {
-        $data['designers'] = User::query()->whereVitrified()->where('type', 'design_office')->get();
+        $data['designers'] = User::query()->whereVitrified() ->where("enabled", 1)->where('type', 'design_office')->get();
 
 
         return view('CP.service_providers.create_order', $data);
@@ -192,7 +192,7 @@ class OrdersController extends Controller
     public function edit_order(Order $order)
     {
         $data['designers'] = User::query()
-            ->whereVitrified()->where('type', 'design_office')->get();
+            ->whereVitrified() ->where("enabled", 1)->where('type', 'design_office')->get();
         $data['order'] = $order;
 
         return view('CP.service_providers.edit_order', $data);
@@ -216,9 +216,11 @@ class OrdersController extends Controller
     {
         $contractors = User::query()->where('type', '=', 'contractor')
             ->where("verified", 1)
+            ->where("enabled", 1)
             ->get();
             $consulting_offices = User::query()->where('type', '=', 'design_office')
             ->where("verified", 1)
+                ->where("enabled", 1)
             ->whereHas("designer_types", function ($query) {
                 $query
                     ->where("type", "consulting");
