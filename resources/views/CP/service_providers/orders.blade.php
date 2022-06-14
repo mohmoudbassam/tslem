@@ -10,7 +10,7 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     @if($can_create_order)
-                        <h4 class="mb-sm-0 font-size-18">
+                        <div class="col-3 d-flex flex-row justify-content-between">
                             <div class="btn-group" role="group">
                                 <a href="{{route('services_providers.create_order')}}"
                                    class="btn btn-primary dropdown-toggle">
@@ -18,21 +18,35 @@
                                 </a>
 
                             </div>
-                        </h4>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="filesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-download"></i>
-                                ملفات الاطلاع
-                            </button>
-                            <ul class="dropdown-menu m-0 p-0" aria-labelledby="filesDropdown">
-{{--                                @foreach()--}}
-{{--                                    <li class="">--}}
-{{--                                        <a class="dropdown-item" href="#" download="">Action</a>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-                            </ul>
+                            @if(isset($box->file_first) or isset($box->file_second) or isset($box->file_third))
+                                <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="filesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ملفات الاستلام
+                                    <i class="fa fa-download"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="filesDropdown">
+                                    @if(isset($box->file_first))
+                                        <li class="">
+                                            <a class="dropdown-item" href="{{ asset('storage/'.$box->file_first) }}" download="">{{ $box->file_first_name ?? "الملف الاول" }}</a>
+                                        </li>
+                                    @endif
+                                    @if(isset($box->file_second))
+                                        <li class="">
+                                            <a class="dropdown-item" href="{{ asset('storage/'.$box->file_second) }}" download="">{{ $box->file_second_name ?? "الملف الثاني" }}</a>
+                                        </li>
+                                    @endif
+                                    @if(isset($box->file_third))
+                                        <li class="">
+                                            <a class="dropdown-item" href="{{ asset('storage/'.$box->file_third) }}" download="">{{ $box->file_third_name ?? "الملف الثالث" }}</a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
+                            @endif
                         </div>
                     @endif
+
+
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
