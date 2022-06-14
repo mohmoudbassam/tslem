@@ -65,7 +65,6 @@ class OrdersController extends Controller
     {
         $data['designers'] = User::query()->whereVitrified() ->where("enabled", 1)->where('type', 'design_office')->get();
 
-
         return view('CP.service_providers.create_order', $data);
     }
 

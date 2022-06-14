@@ -198,6 +198,15 @@
                         </a>
                     </li>
                 @endif
+                  @if(auth()->user()->isAdmin())
+
+                    <li>
+                        <a href="{{route('orders')}}">
+                            <i data-feather="pie-chart"></i>
+                            <span data-key="t-dashboard">الطلبات </span>
+                        </a>
+                    </li>
+                @endif
 
                 @if(!auth()->user()->isAdmin())
                     <li>

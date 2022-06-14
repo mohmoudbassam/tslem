@@ -198,6 +198,15 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                  <?php if(auth()->user()->isAdmin()): ?>
+
+                    <li>
+                        <a href="<?php echo e(route('orders')); ?>">
+                            <i data-feather="pie-chart"></i>
+                            <span data-key="t-dashboard">الطلبات </span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <?php if(!auth()->user()->isAdmin()): ?>
                     <li>

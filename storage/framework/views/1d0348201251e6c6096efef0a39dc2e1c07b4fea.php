@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title'); ?>
     المستخدمين
 <?php $__env->stopSection(); ?>
@@ -50,8 +49,8 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="row mt-4">
-                <div class="col-lg-12">
+            <div class="row mt-4 d-flex ">
+                <div class="col-lg-8">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
@@ -70,8 +69,14 @@
                                 <option value="contractor">مقاول</option>
                             </select>
                         </div>
+                        <div class="col-sm-auto">
+                            <button type="button"  onclick="exportExcel()" class="btn btn-primary">تصدير</button>
+                        </div>
                     </form>
+
                 </div>
+
+
 
 
             </div>
@@ -222,14 +227,14 @@
                     {className: 'text-center', data: 'company_name', name: 'company_name'},
                     {className: 'text-center', data: 'license_number', name: 'license_number'},
                     {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
-                    {className: 'text-center', data: 'type', name: 'type'},
+                    {className: 'text-center', data: 'type', name: 'type',searchable:false,orderable:false},
                     {
                         className: 'text-center', data: 'created_at', name: 'date', render: function (data) {
                             return moment(data).format("YYYY-MM-DD hh:mm:ss");
-                        }
+                        },searchable:false,orderable:false
                     },
-                    {className: 'text-center', data: 'enabled', name: 'enabled'},
-                    {className: 'text-center', data: 'actions', name: 'actions'},
+                    {className: 'text-center', data: 'enabled', name: 'enabled',searchable:false,orderable:false},
+                    {className: 'text-center', data: 'actions', name: 'actions',searchable:false,orderable:false},
 
 
                 ],
@@ -410,6 +415,18 @@
                 }
             })
         });
+        function exportExcel() {
+
+            var query = {
+
+                type : $('#type').val(),
+
+            };
+
+            var ExcelUrl = "<?php echo e(route('users.user_export')); ?>?" + $.param(query);
+
+            window.location = ExcelUrl;
+        }
     </script>
 <?php $__env->stopSection(); ?>
 

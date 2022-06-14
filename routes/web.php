@@ -90,6 +90,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
         Route::get('add', [ UserController::class, 'add' ])->name('.add');
         Route::get('form', [ UserController::class, 'get_form' ])->name('.get_form');
         Route::get('list', [ UserController::class, 'list' ])->name('.list');
+        Route::get('user_export', [ UserController::class, 'user_export' ])->name('.user_export');
+
 
         Route::get('{user}/files', [ UserController::class, 'get_user_files' ])->name('.get_files');
         Route::get('{user}/design/types', [ UserController::class, 'get_design_types' ])->name(
@@ -116,6 +118,12 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
             Route::post('reject', [ UserRequestController::class, 'reject' ])->name('.reject');
 
         });
+    });
+
+    Route::prefix('orders')->middleware('admin')->name('orders')->group(function () {
+        Route::get('',[\App\Http\Controllers\CP\admin\OrdersController::class,'index']);
+        Route::get('list',[\App\Http\Controllers\CP\admin\OrdersController::class,'list'])->name('.list');
+        Route::get('export',[\App\Http\Controllers\CP\admin\OrdersController::class,'export'])->name('.export');
     });
 
     Route::prefix('service-providers')->name('services_providers')->middleware([ 'service_provider' ])->group(
