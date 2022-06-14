@@ -52,17 +52,38 @@
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h4 class="mb-0">الملاحظات</h4>
-                                    <form action="{{route('raft_company.seen_maintain_file',['session'=>$session->id])}}" method="get">
+                                    @if(isset($session->RaftCompanyBox) and !$session->RaftCompanyBox->seen_notes)
+                                        <form action="{{route('raft_company.seen_maintain_file',['session'=>$session->id])}}" method="get">
+                                            <div>
+                                                <button type="submit" class="btn btn-lg btn-primary submit_btn">تم الإطلاع</button>
+                                            </div>
+                                        </form>
+                                    @else
                                         <div>
-                                            <button type="submit" class="btn btn-lg btn-primary submit_btn">تم الإطلاع</button>
+                                            <button type="button" class="btn btn-lg btn-success submit_btn">
+                                                <i class="fa fa-check-circle"></i>
+                                                تم الإطلاع
+                                            </button>
                                         </div>
-                                    </form>
+                                    @endif
                                 </div>
                             </div>
 
-
                         <div class="card-body">
-                            <p class="mb-2">{{$session->RaftCompanyBox->tasleem_notes}}</p>
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>اسم الشكركة:</p>
+                                    <span>{{ \App\Models\User::where("license_number", $session->RaftCompanyBox->license_number)->orWhere("box_number", $session->RaftCompanyBox->box)->orWhere("camp_number", $session->RaftCompanyBox->camp)->first()->company_name ?? "" }}</span>
+                                </div>
+                                <div class="col-4">
+                                    <p>المربع:</p>
+                                    <span>{{ isset($session->RaftCompanyBox) ? $session->RaftCompanyBox->box: "" }}</span>
+                                </div>
+                                <div class="col-4">
+                                    <p>المخيم:</p>
+                                    <span>{{ isset($session->RaftCompanyBox) ? $session->RaftCompanyBox->camp: "" }}</span>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- end card body -->
