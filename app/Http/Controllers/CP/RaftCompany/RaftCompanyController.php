@@ -210,9 +210,11 @@ class RaftCompanyController extends Controller
 
     public function seen_maintain_file(Session $session)
     {
-
-        $session->RaftCompanyBox->update([
-            'seen_notes'=>1
+//        $session->RaftCompanyBox->update([
+//            'seen_notes'=>1
+//        ]);
+        RaftCompanyBox::where("box", $session->RaftCompanyBox->box)->where("camp", $session->RaftCompanyBox->camp)->update([
+            'seen_notes' => 1
         ]);
         return redirect()->route('raft_company');
     }
