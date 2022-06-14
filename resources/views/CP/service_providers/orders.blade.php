@@ -19,6 +19,19 @@
 
                             </div>
                         </h4>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="filesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-download"></i>
+                                ملفات الاطلاع
+                            </button>
+                            <ul class="dropdown-menu m-0 p-0" aria-labelledby="filesDropdown">
+{{--                                @foreach()--}}
+{{--                                    <li class="">--}}
+{{--                                        <a class="dropdown-item" href="#" download="">Action</a>--}}
+{{--                                    </li>--}}
+{{--                                @endforeach--}}
+                            </ul>
+                        </div>
                     @endif
 
                     <div class="page-title-right">

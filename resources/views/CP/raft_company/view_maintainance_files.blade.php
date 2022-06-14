@@ -48,7 +48,7 @@
                 <div class="tab-pane active" id="overview" role="tabpanel">
                     <div class="card">
 
-                        @if(isset($session->RaftCompanyBox) and !$session->RaftCompanyBox->seen_notes)
+
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h4 class="mb-0">الملاحظات</h4>
@@ -59,7 +59,7 @@
                                     </form>
                                 </div>
                             </div>
-                        @endif
+
 
                         <div class="card-body">
                             <p class="mb-2">{{$session->RaftCompanyBox->tasleem_notes}}</p>
