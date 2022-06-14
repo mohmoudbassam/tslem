@@ -57,7 +57,7 @@
                     <div class="card-body px-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="_x3C_Layer_x3E_" version="1.1" xml:space="preserve"><g id="folder"><g><path d="M29.5,7h-18c-0.167,0-0.323-0.084-0.416-0.223L9.639,4.609C9.426,4.29,8.884,4,8.5,4h-5    C3.224,4,3,4.225,3,4.5v2C3,6.776,2.776,7,2.5,7S2,6.776,2,6.5v-2C2,3.673,2.673,3,3.5,3h5c0.723,0,1.571,0.453,1.971,1.055    L11.768,6H29.5C29.776,6,30,6.224,30,6.5S29.776,7,29.5,7z" fill="currentColor"/></g><g><g><path d="M29.5,30h-27C1.673,30,1,29.327,1,28.5v-19C1,8.673,1.673,8,2.5,8h27C30.327,8,31,8.673,31,9.5v19     C31,29.327,30.327,30,29.5,30z M2.5,9C2.224,9,2,9.225,2,9.5v19C2,28.775,2.224,29,2.5,29h27c0.276,0,0.5-0.225,0.5-0.5v-19     C30,9.225,29.776,9,29.5,9H2.5z" fill="currentColor"/></g></g><g><g><path d="M25.5,28h-24C1.224,28,1,27.776,1,27.5S1.224,27,1.5,27h24c0.276,0,0.5,0.224,0.5,0.5S25.776,28,25.5,28z     " fill="currentColor"/></g></g><g><g><path d="M13.5,13h-9C4.224,13,4,12.776,4,12.5S4.224,12,4.5,12h9c0.276,0,0.5,0.224,0.5,0.5S13.776,13,13.5,13z" fill="currentColor"/></g></g><g><g><path d="M9.5,15h-5C4.224,15,4,14.776,4,14.5S4.224,14,4.5,14h5c0.276,0,0.5,0.224,0.5,0.5S9.776,15,9.5,15z" fill="currentColor"/></g></g><g><circle cx="27.5" cy="27.5" fill="currentColor" r="0.5"/></g></g></svg>
                         <h3>المخيمات تحت التنفيد</h3>
-                        <p>0 مخيم</p>
+                        <p>{{$not_complete_orders}}  مخيم </p>
                         <a href="#">عرض المخيمات</a>
                     </div>
                 </div>
@@ -78,8 +78,8 @@
                                     <span>{{$complete_orders}}      مخيم  </span>
                                 </p>
                                 <div class="progress">
-                                    <div class="progress-bar bg-blue-dark" role="progressbar" style="width: 70%" aria-valuenow="{{number_format($not_complete_orders/$all_order,1)}}" aria-valuemin="0" aria-valuemax="100">{{number_format($not_complete_orders/$all_order,1)}}%</div>
-                                    <div class="progress-bar bg-blue-light" role="progressbar" style="width: 30%" aria-valuenow="{{number_format($complete_orders/$all_order,1)}}" aria-valuemin="0" aria-valuemax="100">{{number_format($complete_orders/$all_order,1)}}%</div>
+                                    <div class="progress-bar bg-blue-dark" role="progressbar" style="width: 70%" aria-valuenow="{{number_format($not_complete_orders/$all_order,1)}}" aria-valuemin="0" aria-valuemax="100">{{number_format(($not_complete_orders/$all_order)*100,1)}}%</div>
+                                    <div class="progress-bar bg-blue-light" role="progressbar" style="width: 30%" aria-valuenow="{{number_format($complete_orders/$all_order,1)}}" aria-valuemin="0" aria-valuemax="100">{{number_format(($complete_orders/$all_order)*100,1)}}%</div>
                                 </div>
 
                             </li>
