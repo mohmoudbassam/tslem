@@ -3,9 +3,14 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class OrdersExport implements FromCollection
+class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColumnWidths, WithTitle, WithMapping
 {
     public $data;
 
@@ -41,7 +46,7 @@ class OrdersExport implements FromCollection
             'المكتب الهندسي',
             'حالة الطلب',
             ' المقاول',
-            ' المكتب الإستشاري',
+            'المكتب الإستشاري',
             ' مقاول النفايات',
         ];
     }

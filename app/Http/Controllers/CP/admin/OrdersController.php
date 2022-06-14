@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CP\admin;
 
+use App\Exports\OrdersExport;
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -78,7 +79,7 @@ class OrdersController extends Controller
 
         $orders = $orders->get();
 
-        return Excel::download(new UserExport($orders), 'orders.xlsx');
+        return Excel::download(new OrdersExport($orders), 'orders.xlsx');
 
     }
 }
