@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CP\User\StoreUserRequest;
 use App\Http\Requests\CP\User\UpdateUserRequest;
 use App\Models\BeneficiresCoulumns;
+use App\Models\LoginNumber;
 use App\Models\RaftCompanyLocation;
 use App\Models\User;
 use Carbon\Carbon;
@@ -300,7 +301,7 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-
+        LoginNumber::where("user_id", request('id'))->delete();
         User::query()->find(request('id'))->delete();
         return response()->json([
             'message' => 'تمت عمليه الحذف بنجاخ بنجاح',
