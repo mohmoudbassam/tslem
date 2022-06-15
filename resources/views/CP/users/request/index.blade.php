@@ -35,11 +35,11 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <label class="col-form-label" for="name">البحث</label>
                             <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
+                            <label class="col-form-label" for="type">فئات المستخدمين</label>
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
