@@ -87,7 +87,7 @@
                         </a>
                     </li>
                         <li>
-                            <a href="<?php echo e(asset("storage/المكتبة_الهندسية.zip")); ?>" download="">
+                            <a href="<?php echo e(asset("storage/المكتبة_الهندسية.rar")); ?>" download="">
                                 <i data-feather="file"></i>
                                 <span>المكتبة الهندسية</span>
                             </a>

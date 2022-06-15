@@ -84,6 +84,9 @@
                         <div class="col-sm-auto ms-auto text-end" style="margin-top:1.9rem;">
                             <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search ms-1"></i>بحث
                             </button>
+                            <button type="button" class="btn btn-primary  px-4 me-2" onclick="exportExcel()"><i
+                                    class="fa fa-file-excel me-1" ></i>تصدير
+                            </button>
                             <button type="button" class="btn btn-secondary reset_btn px-4"><i class="fa fa-window-close ms-1"></i>إلغاء
                             </button>
                         </div>
@@ -275,6 +278,26 @@
                     KTApp.unblockPage();
                 },
             });
+        }
+        function exportExcel() {
+
+            var query = {
+
+                type: $('#type').val(),
+                order_identifier: $('#order_identifier').val(),
+                service_provider_id: $('#service_provider_id').val(),
+                from_date: $('#from_date').val(),
+                to_date: $('#to_date').val(),
+                designer_id: $('#designer_id').val(),
+                consulting_id: $('#consulting_id').val(),
+                contractor_id: $('#contractor_id').val(),
+
+
+            };
+
+            var ExcelUrl = "{{route('delivery.export')}}?" + $.param(query);
+
+            window.location = ExcelUrl;
         }
 
     </script>

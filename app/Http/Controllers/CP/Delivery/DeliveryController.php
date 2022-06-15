@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CP\Delivery;
 
+use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\ConsultingReport;
 use App\Models\ConsultingReportAttchment;
@@ -15,6 +16,7 @@ use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 use App\Models\OrderService;
 use App\Models\OrderSpecilatiesFiles;
@@ -23,21 +25,21 @@ class DeliveryController extends Controller
 {
     public function orders()
     {
-        $data['designers'] = User::query()->where('type', 'design_office')->where('verified',1)->get();
-        $data['consulting'] = User::query()->whereHas('designer_types',function($Type){
-            return $Type->where('type','consulting');
-        })->where('verified',1)->get();
-        $data['contractors'] = User::query()->where('type', 'contractor')->where('verified',1)->get();
-        $data['services_providers'] = User::query()->where('type', 'service_provider')->where('verified',1)->get();
-        return view('CP.delivery.orders',$data);
+        $data['designers'] = User::query()->where('type', 'design_office')->where('verified', 1)->get();
+        $data['consulting'] = User::query()->whereHas('designer_types', function ($Type) {
+            return $Type->where('type', 'consulting');
+        })->where('verified', 1)->get();
+        $data['contractors'] = User::query()->where('type', 'contractor')->where('verified', 1)->get();
+        $data['services_providers'] = User::query()->where('type', 'service_provider')->where('verified', 1)->get();
+        return view('CP.delivery.orders', $data);
     }
 
-    public function list(Request $request)
+    public function list(Request $request, $flag = false)
     {
 
         $order = Order::query()
             ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
-                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+                $query->where("identifier", "LIKE", "%" . $request->query("order_identifier") . "%");
             })
             ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
                 $query->whereDate("created_at", ">=", $request->query("from_date"));
@@ -53,7 +55,9 @@ class DeliveryController extends Controller
             ->whereContractorId($request->contractor_id)
             ->whereDate($request->from_date, $request->to_date)
             ->where('status', '>=', '3');
-
+        if ($flag) {
+            return $order->get();
+        }
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -377,5 +381,12 @@ class DeliveryController extends Controller
             'success' => true,
             'message' => "تم التحويل بنجاح"
         ]);
+    }
+
+    public function export(Request $request)
+    {
+
+        $orders =$this->list($request,true);
+        return Excel::download(new OrdersExport($orders), 'orders.xlsx');
     }
 }

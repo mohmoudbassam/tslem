@@ -224,6 +224,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
         Route::get('view_file/{order}', [ DeliveryController::class, 'view_file' ])->name('.view_file');
         Route::get('/reports/add', [ DeliveryController::class, 'add_report_page' ])->name('.report_add_form');
         Route::post('copy_note', [ DeliveryController::class, 'copy_note' ])->name('.copy_note');
+        Route::get('export', [ DeliveryController::class, 'export' ])->name('.export');
     });
     Route::prefix('contractor')->name('contractor')->middleware([ 'contractor' ])->group(function() {
         Route::get('orders', [ ContractorController::class, 'orders' ])->name('.orders');
