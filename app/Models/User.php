@@ -54,7 +54,7 @@ class User extends Authenticatable
     public function getImageAttribute($file)
     {
 
-        if ($file) {
+        if( $file ) {
 
             return asset('storage/' . $file);
         } else {
@@ -65,7 +65,7 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
 
-        $this->attributes['password'] = bcrypt($password);
+        $this->attributes[ 'password' ] = bcrypt($password);
 
     }
 
@@ -83,18 +83,18 @@ class User extends Authenticatable
     {
 
         return [
-            'admin' => 'مدير النظام',
-            'service_provider' => 'شركات حجاج الداخل',
-            'design_office' => 'مكتب هندسي',
-            'Sharer' => 'جهة مشاركة',
-            'consulting_office' => 'مشرف',
-            'contractor' => 'مقاول',
-            'Delivery' => 'تسليم',
-            'Kdana' => 'كدانة',
-            'raft_company' => "raft_company",
-            'taslem_maintenance' => 'تسليم صيانه',
+                   'admin' => 'مدير النظام',
+                   'service_provider' => 'شركات حجاج الداخل',
+                   'design_office' => 'مكتب هندسي',
+                   'Sharer' => 'جهة مشاركة',
+                   'consulting_office' => 'مشرف',
+                   'contractor' => 'مقاول',
+                   'Delivery' => 'تسليم',
+                   'Kdana' => 'كدانة',
+                   'raft_company' => "raft_company",
+                   'taslem_maintenance' => 'تسليم صيانه',
 
-        ][$this->type];
+               ][ $this->type ];
     }
 
     /////filters
@@ -106,11 +106,11 @@ class User extends Authenticatable
     /////////////////////localization
     public function getCoTypeAttribute()
     {
-        if ($this->company_type) {
+        if( $this->company_type ) {
             return [
-                'organization' => 'مؤسسة',
-                'office' => 'مكتب',
-            ][$this->company_type];
+                       'organization' => 'مؤسسة',
+                       'office' => 'مكتب',
+                   ][ $this->company_type ];
         }
 
         return null;
@@ -119,11 +119,11 @@ class User extends Authenticatable
 
     public function getVerifiedStatusAttribute()
     {
-        if ($this->verified == 0) {
+        if( $this->verified == 0 ) {
             return 'غير معتمد';
-        } elseif ($this->verified == 1) {
+        } elseif( $this->verified == 1 ) {
             return 'تم الإعتماد';
-        } elseif ($this->verified == 2) {
+        } elseif( $this->verified == 2 ) {
             return 'تم الرفض';
         }
 
@@ -134,7 +134,7 @@ class User extends Authenticatable
     public function designer_order_rejected()
     {
         return $this->belongsTo(DesignerRejected::class, 'id', 'designer_id')
-            ->where('type', 'design_office');
+                    ->where('type', 'design_office');
     }
 
     public function scopeWhereDesigner($query)
@@ -167,59 +167,58 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'contractor_id')->where('type', 'contractor');
     }
 
-
     public function main_route()
     {
-        if ($this->type == 'admin') {
+        if( $this->type == 'admin' ) {
             return route('dashboard');
         }
 
-        if ($this->type == 'service_provider') {
+        if( $this->type == 'service_provider' ) {
             return route('services_providers.orders');
         }
 
-        if ($this->type == 'Delivery') {
+        if( $this->type == 'Delivery' ) {
             return route('delivery');
         }
 
-        if ($this->type == 'design_office') {
+        if( $this->type == 'design_office' ) {
             return route('design_office.orders');
         }
 
-        if ($this->type == 'design_office') {
+        if( $this->type == 'design_office' ) {
             return route('design_office.orders');
         }
-        if ($this->type == 'contractor') {
+        if( $this->type == 'contractor' ) {
             return route('contractor.orders');
         }
 
-        if ($this->type == 'Sharer') {
+        if( $this->type == 'Sharer' ) {
             return route('Sharer.order');
         }
-        if ($this->type == 'raft_company') {
+        if( $this->type == 'raft_company' ) {
 
             return route('raft_company');
         }
-        if ($this->type == 'taslem_maintenance') {
+        if( $this->type == 'taslem_maintenance' ) {
             return route('taslem_maintenance.index');
         }
-        if ($this->type == 'raft_center') {
+        if( $this->type == 'raft_center' ) {
             return route('raft_center');
         }
 
     }
 
-
-    public function is_designer_consulting(){
-       return $this->hasMany(DesignerType::class,'user_id')
-            ->where('type','consulting')->first();
+    public function is_designer_consulting()
+    {
+        return $this->hasMany(DesignerType::class, 'user_id')
+                    ->where('type', 'consulting')->first();
 
     }
 
     public function updatePassword($password, $save = false)
     {
         $this->password = $password;
-        if ($save) {
+        if( $save ) {
             $this->save();
 
             return $this->refresh();
@@ -228,9 +227,27 @@ class User extends Authenticatable
         return $this;
     }
 
+    public function getRaftCompanyNameAttribute()
+    {
+        if( !$this->parent_id ) {
+            $raft_company_location_name = License::trans("no_parent_name");
+        } else {
+            $raft_company_location_name = License::trans('raft_company_name', [
+                'name' => optional($this->raft_company_location)->name,
+            ]);
+        }
+
+        return "{$this->company_name} / {$raft_company_location_name}";
+    }
+
     public function getRaftCompanyBox($default = null)
     {
         return getUserRaftCompanyBox($this, $default);
+    }
+
+    public function raft_company_location()
+    {
+        return optional($this->getRaftCompanyBox())->raft_company_location();
     }
 
     public function hasRaftCompanyBox(): bool
@@ -243,5 +260,10 @@ class User extends Authenticatable
             ];
 
         return \App\Models\RaftCompanyBox::where($where)->count();
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }

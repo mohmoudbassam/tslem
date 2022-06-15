@@ -20,3 +20,4 @@ CREATE TABLE `licenses`
 
 ALTER TABLE `licenses` ADD `order_id` BIGINT UNSIGNED NOT NULL AFTER `id`, ADD INDEX (`order_id`);
 ALTER TABLE `licenses` ADD `map_path` VARCHAR(255) NULL DEFAULT NULL AFTER `camp_space`;
+ALTER TABLE `licenses` DROP `raft_company_id`;

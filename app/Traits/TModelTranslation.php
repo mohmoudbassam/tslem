@@ -63,7 +63,12 @@ trait TModelTranslation
      */
     public static function crudTrans($key = null, $locale = null, $default = null)
     {
-        $model = collect(request()->route()->parameters())->first(fn($v, $n)=>is_object($v) && get_class($v)===static::class);
+        try {
+            $parameters = optional(request()->route())->parameters() ?? [];
+        } catch(\Exception $exception) {
+            $parameters = [];
+        }
+        $model = collect($parameters)->first(fn($v, $n)=>is_object($v) && get_class($v)===static::class);
         if( is_array($key) ) {
             [$key, $model] = $key;
         }

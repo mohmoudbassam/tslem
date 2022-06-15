@@ -51,6 +51,5 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        DatabaseNotification::observe(NotifcationObserver::class);
     }
 }

@@ -80,85 +80,87 @@
 @section('scripts')
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script>
-        let submitSearch = () => $( '#items_table' ).DataTable().ajax.reload( null, true );
+        let submitSearch = () => $('#items_table').DataTable().ajax.reload(null, true);
 
         $.fn.dataTable.ext.errMode = 'none';
-        $( function () {
-            $( '#items_table' ).DataTable( {
-                                               "dom": 'tpi',
-                                               "searching": false,
-                                               "processing": true,
-                                               'stateSave': true,
-                                               "serverSide": true,
-                                               ajax: {
-                                                   url: '{{route('licenses.list')}}',
-                                                   type: 'GET',
-                                                   "data": function (d) {
-                                                       d.name = $( '#name' ).val();
-                                                   },
-                                               },
-                                               language: {
-                                                   "url": "{{url('/')}}/assets/datatables/Arabic.json",
-                                               },
-                                               columns: {!! \App\Models\License::getDatatableColumns(true, true) !!}
-                                           } );
+        $(function () {
+            $('#items_table').DataTable({
+                "dom": 'tpi',
+                "ordering": true,
+                "searching": true,
+                "processing": true,
+                'stateSave': true,
+                "serverSide": true,
+                ajax: {
+                    url: '{{route('licenses.list')}}',
+                    type: 'GET',
+                    "data": function (d) {
+                        d.name = $('#name').val();
+                    },
+                },
+                language: {
+                    "url": "{{url('/')}}/assets/datatables/Arabic.json",
+                },
+                columns: {!! \App\Models\License::getDatatableColumns(true, true) !!}
+            })
+                .order([0, 'desc']);
 
-        } );
-        $( '#name' ).keypress( function (e) {
-            if( e.keyCode === 13 ) {
+        });
+        $('#name').keypress(function (e) {
+            if (e.keyCode === 13) {
                 e.preventDefault()
                 submitSearch()
                 return false
-            } else if( this.value.length >= 2 ) {
+            } else if (this.value.length >= 2) {
                 submitSearch()
             }
-        } );
+        });
 
         function delete_model(id, url, callback = null) {
-            Swal.fire( {
-                           title: '{{\App\Models\License::crudTrans('delete_confirm')}}',
-                           text: "",
-                           type: 'warning',
-                           showCancelButton: true,
-                           confirmButtonColor: '#84dc61',
-                           cancelButtonColor: '#d33',
-                           confirmButtonText: '@lang('general.yes')',
-                           cancelButtonText: '@lang('general.no')',
-                       } ).then( (result) => {
-                if( result.value ) {
-                    $.ajax( {
-                                url: url,
-                                type: "POST",
-                                data: {
-                                    "_token": "{{ csrf_token() }}",
-                                    'id': id,
-                                },
-                                beforeSend() {
-                                    KTApp.blockPage( {
-                                                         overlayColor: '#000000',
-                                                         type: 'v2',
-                                                         state: 'success',
-                                                         message: '@lang('general.please_wait')',
-                                                     } );
-                                },
-                                success: function (data) {
-                                    if( callback && typeof callback === "function" ) {
-                                        callback( data );
-                                    } else {
-                                        if( data.success ) {
-                                            $( '#items_table' ).DataTable().ajax.reload( null, false );
-                                            showAlertMessage( 'success', data.message );
-                                        } else {
-                                            showAlertMessage( 'error', '@lang('general.something_went_wrong')' );
-                                        }
-                                        KTApp.unblockPage();
-                                    }
-                                },
-                                error: function (data) {
-                                },
-                            } );
+            Swal.fire({
+                title: '{{\App\Models\License::crudTrans('delete_confirm')}}',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#84dc61',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '@lang('general.yes')',
+                cancelButtonText: '@lang('general.no')',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            'id': id,
+                        },
+                        beforeSend() {
+                            KTApp.blockPage({
+                                overlayColor: '#000000',
+                                type: 'v2',
+                                state: 'success',
+                                message: '@lang('general.please_wait')',
+                            });
+                        },
+                        success: function (data) {
+                            if (callback && typeof callback === "function") {
+                                callback(data);
+                            } else {
+                                if (data.success) {
+                                    $('#items_table').DataTable().ajax.reload(null, false);
+                                    showAlertMessage('success', data.message);
+                                } else {
+                                    showAlertMessage('error', '@lang('general.something_went_wrong')');
+                                }
+                                KTApp.unblockPage();
+                            }
+                        },
+                        error: function (data) {
+                        },
+                    });
                 }
-            } );
+            });
         }
     </script>
 @endsection

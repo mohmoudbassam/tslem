@@ -85,6 +85,17 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
              Route::post('delete_map_path/{license}', [ LicenseController::class, 'delete_map_path' ])->name('.delete_map_path');
          });
 
+    Route::prefix('licenses')
+         ->name('licenses')
+         ->group(function() {
+             Route::get('download/{order}/license', [ LicenseController::class, 'download' ])
+                  ->name('.download');
+             Route::get('view_pdf/{order}/license', [ LicenseController::class, 'view_pdf' ])
+                  ->name('.view_pdf');
+             Route::get('view_html/{order}/license', [ LicenseController::class, 'view_html' ])
+                  ->name('.view_html');
+         });
+
     Route::prefix('users')->name('users')->middleware('admin')->group(function() {
         Route::get('users', [ UserController::class, 'index' ]);
         Route::get('add', [ UserController::class, 'add' ])->name('.add');

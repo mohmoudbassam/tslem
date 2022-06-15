@@ -434,7 +434,7 @@
          * Show create license modal
          * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form
          */
-        @if($order->licenseNeeded())
+        @if($order->licenseNeededForDelivery())
             $(()=>{
                 showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}',null,'#view-user-files-modal')
             })

@@ -25,6 +25,7 @@ class OrderNotification extends Notification
         $this->data = $data;
         $this->notifer_id = $notifer_id;
         $this->type = $type;
+        // dd($this,$this->data);
     }
 
     /**

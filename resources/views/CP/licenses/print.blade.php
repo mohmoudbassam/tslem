@@ -1,4 +1,4 @@
-@extends('CP.print_master')
+@extends('CP.layout.print_layout')
 @php
     $mode ??= 'print';
     $mode_form ??= ($mode === 'print' ? 'print' : 'create');
@@ -6,11 +6,11 @@
 
 @endphp
 
-@if( !request()->has('print') )
+{{--@if( !request()->has('print') )--}}
     @section('title')
         {{\App\Models\License::crudTrans($mode)}}
     @endsection
-@endif
+{{--@endif--}}
 
 @section('content')
     @if( !request()->has('print') )
@@ -71,10 +71,4 @@
             height: fit-content !important;
         }
     </style>
-@endsection
-
-@section('script')
-    <script type="text/javascript">
-
-    </script>
 @endsection
