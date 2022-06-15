@@ -194,7 +194,8 @@ class UserController extends Controller
                 });
             })
             ->when(request('type'), function ($q) {
-                $q->where('type', request('type'));
+                $q->where('type', request('type'))
+                    ->whereNull("parent_id");
             });
         if ($flag) {
             return $users->get();
