@@ -187,7 +187,7 @@ class RaftCompany extends Controller
         $result->saveFiles(Storage::disk('public')->path('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)));
 
         return api(true, 200, 'تمت العمليه بنجاح')
-            ->add('path',Storage::disk('public')->path('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)))
+            ->add('path',Storage::disk('public')->url('service_provider_generator/' . Str::replace('.docx','.pdf',$file_name)))
             ->get();
     }
 
