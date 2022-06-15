@@ -33,7 +33,11 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
             $user->email,
             $user->phone,
             $user->commercial_record,
+            $user->commercial_file_end_date,
             $user->id_number,
+            $user->license_number,
+            $user->address,
+            $user->city,
         ];
     }
 
@@ -45,7 +49,11 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
             'البريد الالتكروني',
             'الجوال',
             ' السجل التجاي',
+            'تاريخ انتهاء السجل التجاري',
             ' الهوية',
+            ' رقم الترخيص',
+            'العنوان',
+            'المدينة',
         ];
     }
 
@@ -58,6 +66,10 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
             'D' => 30,
             'E' => 30,
             'F' => 30,
+            'G' => 30,
+            'H' => 30,
+            'I' => 30,
+            'J' => 30,
 
         ];
     }
@@ -72,7 +84,7 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->setRightToLeft(true);
-                $cellRange = 'A1:F1';
+                $cellRange = 'A1:J1';
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
                 // $event->sheet->setMergeColumn(  ['columns' => array('A','B','C','D')]);
                 //$event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setUnderline(true);

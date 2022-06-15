@@ -34,8 +34,8 @@
                             <button type="button" class="btn btn-primary search_btn px-4 me-2"><i
                                     class="fa fa-search me-1"></i>بحث
                             </button>
-                            <button type="button" class="btn btn-primary  px-4 me-2"><i
-                                    class="fa fa-file-excel me-1" onclick="exportExcel()"></i>تصدير
+                            <button type="button" class="btn btn-primary  px-4 me-2" onclick="exportExcel()"><i
+                                    class="fa fa-file-excel me-1" ></i>تصدير
                             </button>
                             <button type="button" class="btn btn-secondary reset_btn px-4"><i
                                     class="fa fa-window-close me-1"></i>إلغاء
