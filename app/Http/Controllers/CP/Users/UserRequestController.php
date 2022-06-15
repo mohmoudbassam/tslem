@@ -60,7 +60,8 @@ class UserRequestController extends Controller
                          });
                      })
                      ->when(request('type'), function ($q) {
-                         $q->where('type', request('type'));
+                         $q->where('type', request('type'))
+                             ->whereNull("parent_id");
                      });
 
         return DataTables::of($users)
