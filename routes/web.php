@@ -465,9 +465,7 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware([ 'a
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
 
-Route::get('test', function() {
-    return view('fm');
-});
+
 
 Route::get('generate', [ PDFController::class, 'generate' ]);
 Route::get('import-excel', function() {
@@ -480,3 +478,6 @@ Route::post('import', [ \App\Http\Controllers\ImportExcelController::class, 'imp
 Route::get('raft_company/get_camp_by_box/{box}', [ RaftCompanyController::class, 'get_camp_by_box' ])->name(
     'raft_company.get_camp_by_box'
 );
+Route::get('test',function () {
+    dd(order_services(4));
+});
