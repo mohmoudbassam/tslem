@@ -98,6 +98,16 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
+                                            class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</p>
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</p>
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
                                             class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
                                 </div>
 
