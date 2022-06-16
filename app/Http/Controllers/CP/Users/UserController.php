@@ -78,10 +78,18 @@ class UserController extends Controller
 
     private function uploadUserFiles($user, $file)
     {
-        $columns_name = get_user_column_file($user->type);
+        if ($user->type == "service_provider" and !is_null($user->parent_id)) {
+            $columns_name = get_user_column_file("raft_center");
+        } else {
+            $columns_name = get_user_column_file($user->type);
+        }
 
         if (!empty($columns_name)) {
-            $files = request()->all(array_keys(get_user_column_file($user->type)));
+            if ($user->type == "service_provider" and !is_null($user->parent_id)) {
+                $files = request()->all(array_keys(get_user_column_file("raft_center")));
+            } else {
+                $files = request()->all(array_keys(get_user_column_file($user->type)));
+            }
             foreach ($files as $col_name => $file) {
 
                 if ($file) {
@@ -101,9 +109,16 @@ class UserController extends Controller
 
     public function edit_profile()
     {
-        $data['record'] = BeneficiresCoulumns::query()->where('type', auth()->user()->type)->firstOrFail();
+        if ( auth()->user()->type == "service_provider" and !is_null(auth()->user()->parent_id) ) {
+            $data['record'] = BeneficiresCoulumns::query()->where('type', "raft_center")->firstOrFail();
+            $col_file = get_user_column_file("raft_center");
+        } else {
+            $data['record'] = BeneficiresCoulumns::query()->where('type', auth()->user()->type)->firstOrFail();
+            $col_file = get_user_column_file(auth()->user()->type);
+        }
+
         $data['user'] = auth()->user();
-        $col_file = get_user_column_file(auth()->user()->type);
+
         $data['col_file'] = $col_file;
         $data['verified'] = auth()->user()->verified;
         return view('CP.users.edit_profile', $data);
@@ -194,15 +209,22 @@ class UserController extends Controller
                 });
             })
             ->when(request('type'), function ($q) {
-                $q->where('type', request('type'))
-                    ->whereNull("parent_id");
+                if ( request('type') == "service_provider" ) {
+                    $q->where('type', request('type'))
+                        ->whereNull("parent_id");
+                } elseif ( request('type') == "raft_center" ) {
+                    $q->where('type', "service_provider")
+                        ->whereNotNull("parent_id");
+                } else {
+                    $q->where('type', request('type'));
+                }
             });
         if ($flag) {
             return $users->get();
         }
         return DataTables::of($users)
             ->addColumn('type', function ($user) {
-                return $user->user_type;
+                return ($user->type == "service_provider" and !is_null($user->parent_id)) ? "شركات حجاج الخارج": $user->user_type;
             })
             ->addColumn('enabled', function ($user) {
                 if ($user->enabled) {
