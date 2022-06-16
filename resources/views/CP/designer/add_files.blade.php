@@ -394,6 +394,7 @@
                 return false;
             }
 
+            
             $.ajax({
                 url : '{{route('design_office.save_file')}}',
                 data : new FormData($('#add_edit_form').get(0)),
