@@ -8,22 +8,18 @@
         <td>
             <table style='width: 100%;' cellspacing="0" cellpadding="0">
                 <tbody align="center">
-                <tr>
-                    <td nowrap="nowrap" width="60%">-</td>
-                    <td nowrap="nowrap" width="40%">مخرج طوارئ (عدد)</td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">-</td>
-                    <td nowrap="nowrap">مضلات مقاومة للحريق (م2)</td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">-</td>
-                    <td nowrap="nowrap">مغاسل (عدد)</td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">-</td>
-                    <td nowrap="nowrap">اخرى (عدد)</td>
-                </tr>
+                @foreach($second_services as $service)
+
+                    <tr>
+                        <td nowrap="nowrap" width="60%">{{$service['quantity']}}</td>
+                        <td nowrap="nowrap" width="40%">{{$service['name']}} ({{$service['quantity_label']}})</td>
+                    </tr>
+                @endforeach
+
+                @if(count($second_services) != count($first_services) )
+                    <td nowrap="nowrap" width="100%" style="color:white">test</td>
+                    <td nowrap="nowrap" width="100%" style="color:white">test</td>
+                @endif
                 </tbody>
             </table>
         </td>
@@ -33,22 +29,14 @@
         <td>
             <table style='width: 100%;' cellspacing="0" cellpadding="0">
                 <tbody align="center">
-                <tr>
-                    <td nowrap="nowrap" width="60%">-</td>
-                    <td nowrap="nowrap" width="40%">القواطع الجبسية (م .ط)</td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">-</td>
-                    <td nowrap="nowrap">المكيفات (عدد)</td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">-</td>
-                    <td nowrap="nowrap">دورة المياه (عدد)</td>
-                </tr>
-                <tr>
-                    <td nowrap="nowrap">-</td>
-                    <td nowrap="nowrap">رشاش حريق (عدد)</td>
-                </tr>
+                @foreach($first_services as $service)
+
+                    <tr>
+                        <td nowrap="nowrap" width="60%">{{$service['quantity']}}</td>
+                        <td nowrap="nowrap" width="40%">{{$service['name']}} ({{$service['quantity_label']}})</td>
+                    </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </td>

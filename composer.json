@@ -15,7 +15,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
-        "h4cc/wkhtmltopdf-amd64": "0.12.x",
+        "h4cc/wkhtmltopdf-amd64": "^0.12.4",
         "khaled.alshamaa/ar-php": "^6.2",
         "laravel/framework": "^8.75",
         "laravel/helpers": "^1.5",
@@ -31,6 +31,7 @@
         "phpoffice/phpword": "^0.18.3",
         "spatie/laravel-backup": "^7.0",
         "unisharp/laravel-filemanager": "^2.4",
+        "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {

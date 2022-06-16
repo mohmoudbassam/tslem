@@ -27,15 +27,15 @@ class LicenseController extends Controller
 
     public static function makeTable($value)
     {
-        if( is_array($value) ) {
-            $table_content = [ "", "" ];
+        if (is_array($value)) {
+            $table_content = ["", ""];
 
-            foreach( $value as $k => $v ) {
-                $table_content[ 0 ] .= static::makeTd($k);
-                $table_content[ 1 ] .= static::makeTd($v);
+            foreach ($value as $k => $v) {
+                $table_content[0] .= static::makeTd($k);
+                $table_content[1] .= static::makeTd($v);
             }
 
-            return static::makeTable(static::makeTr($table_content[ 0 ]) . static::makeTr($table_content[ 1 ]));
+            return static::makeTable(static::makeTr($table_content[0]) . static::makeTr($table_content[1]));
         }
 
         return static::makeTable($value);
@@ -118,12 +118,12 @@ class LicenseController extends Controller
     public function store(StoreLicenseRequest $request)
     {
         $data = $request->validated();
-        $data[ 'order_id' ] ??= 0;
+        $data['order_id'] ??= 0;
         $license = License::create($data);
 
         return redirect()
             ->route('licenses')
-            ->with([ 'success' => __('general.success') ]);
+            ->with(['success' => __('general.success')]);
     }
 
     public function edit(Request $request, License $license)
@@ -137,7 +137,7 @@ class LicenseController extends Controller
 
     public function show_print(Request $request, License $license)
     {
-        if( request()->has('print') ) {
+        if (request()->has('print')) {
             return $this->print($request, $license);
         }
 
@@ -150,7 +150,7 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License      $license
+     * @param \App\Models\License $license
      *
      * @return \Illuminate\Http\Response|string
      */
@@ -162,16 +162,16 @@ class LicenseController extends Controller
             'model' => $license,
         ])->render();
 
-        if( $request->has('html') ) {
+        if ($request->has('html')) {
             return $reportHtml;
         }
 
         $Arabic = new \ArPHP\I18N\Arabic();
         $p = $Arabic->arIdentify($reportHtml);
 
-        for( $i = count($p) - 1; $i >= 0; $i -= 2 ) {
-            $utf8ar = $Arabic->utf8Glyphs(substr($reportHtml, $p[ $i - 1 ], $p[ $i ] - $p[ $i - 1 ]));
-            $reportHtml = substr_replace($reportHtml, $utf8ar, $p[ $i - 1 ], $p[ $i ] - $p[ $i - 1 ]);
+        for ($i = count($p) - 1; $i >= 0; $i -= 2) {
+            $utf8ar = $Arabic->utf8Glyphs(substr($reportHtml, $p[$i - 1], $p[$i] - $p[$i - 1]));
+            $reportHtml = substr_replace($reportHtml, $utf8ar, $p[$i - 1], $p[$i] - $p[$i - 1]);
         }
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($reportHtml, 'UTF-8');
@@ -182,13 +182,13 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License      $license
+     * @param \App\Models\License $license
      *
      * @return \Illuminate\Http\Response|string
      */
     public function download(Request $request, Order $order)
     {
-        $request->merge([ 'print' => 1 ]);
+        $request->merge(['print' => 1]);
         /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
         $pdf = app()->make('snappy.pdf.wrapper');
 
@@ -213,21 +213,28 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License      $license
+     * @param \App\Models\License $license
      *
      * @return \Illuminate\Http\Response|string
      */
     public function view_pdf(Request $request, Order $order)
     {
-        $request->merge([ 'print' => 1 ]);
+        $request->merge(['print' => 1]);
         /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
         $pdf = app()->make('snappy.pdf.wrapper');
+        $service = order_services($order->id);
+        $half = ceil($service->count() / 2);
+        $chunks = $service->chunk($half);
+
+
 
         return $pdf
             ->loadView('CP.licenses.print', [
                 'mode' => 'print',
                 'mode_form' => 'print',
                 'model' => $order->license,
+                'first_services' => $chunks[0] ?? [],
+                'second_services' => $chunks[1] ?? [],
             ])
             ->setPaper('a4')
             ->setOrientation('portrait')
@@ -244,7 +251,7 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License      $license
+     * @param \App\Models\License $license
      *
      * @return \Illuminate\Http\Response|string
      */
@@ -256,7 +263,7 @@ class LicenseController extends Controller
             'model' => $order->license,
         ])->render();
 
-        if( $request->has('html') ) {
+        if ($request->has('html')) {
             return $reportHtml;
         }
 
@@ -280,55 +287,55 @@ class LicenseController extends Controller
     public function list(Request $request)
     {
         $licenses = License::query()
-                           ->orderBy('created_at', data_get(collect($request->get('order', [ 'desc' ]))->first(), 'dir', 'desc'))
-                           ->when(request('name'), function($query) {
-                               return $query->where(function(Builder $q) {
-                                   $columns = [
-                                       'id',
-                                       'tents_count',
-                                       'person_count',
-                                       'camp_space',
-                                   ];
-                                   foreach( $columns as $column ) {
-                                       $q = $q->orWhere($column, 'like', '%' . request('name') . '%');
-                                   }
+            ->orderBy('created_at', data_get(collect($request->get('order', ['desc']))->first(), 'dir', 'desc'))
+            ->when(request('name'), function ($query) {
+                return $query->where(function (Builder $q) {
+                    $columns = [
+                        'id',
+                        'tents_count',
+                        'person_count',
+                        'camp_space',
+                    ];
+                    foreach ($columns as $column) {
+                        $q = $q->orWhere($column, 'like', '%' . request('name') . '%');
+                    }
 
-                                   return $q;
-                               });
-                           });
+                    return $q;
+                });
+            });
 
         return DataTables::of($licenses)
-                         ->addColumn('id', fn(License $license) => $license->id)
-                         ->addColumn('order_id', fn(License $license) => $license->order_id)
-                         ->addColumn(
-                             'date',
-                             fn(License $license) => $license->date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->date) : "-"
-                         )
-                         ->addColumn(
-                             'expiry_date',
-                             fn(License $license) => $license->expiry_date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->expiry_date) : "-"
-                         )
-                         ->addColumn('raft_company', fn(License $license) => $license->raft_company_name ?? "")
-                         ->addColumn('box_raft_company_box_id', fn(License $license) => $license->box()->value('box'))
-                         ->addColumn('camp_raft_company_box_id', fn(License $license) => $license->camp()->value('camp'))
-                         ->addColumn('actions', function($license) {
-                             $title = __('general.datatable.fields.actions');
-                             $delete_title = License::crudTrans('delete');
-                             $delete_route = route('licenses.delete', [ 'license' => $license->id ]);
-                             $update_title = License::crudTrans('update');
-                             $update_route = route('licenses.edit', [ 'license' => $license->id ]);
+            ->addColumn('id', fn(License $license) => $license->id)
+            ->addColumn('order_id', fn(License $license) => $license->order_id)
+            ->addColumn(
+                'date',
+                fn(License $license) => $license->date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->date) : "-"
+            )
+            ->addColumn(
+                'expiry_date',
+                fn(License $license) => $license->expiry_date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->expiry_date) : "-"
+            )
+            ->addColumn('raft_company', fn(License $license) => $license->raft_company_name ?? "")
+            ->addColumn('box_raft_company_box_id', fn(License $license) => $license->box()->value('box'))
+            ->addColumn('camp_raft_company_box_id', fn(License $license) => $license->camp()->value('camp'))
+            ->addColumn('actions', function ($license) {
+                $title = __('general.datatable.fields.actions');
+                $delete_title = License::crudTrans('delete');
+                $delete_route = route('licenses.delete', ['license' => $license->id]);
+                $update_title = License::crudTrans('update');
+                $update_route = route('licenses.edit', ['license' => $license->id]);
 
-                             if( $license->isFullyCreated() && $license->order_id ) {
-                                 $print_title = License::trans('download_for_service_provider');
-                                 $print_route = route('licenses.view_pdf', [ 'order' => $license->order_id ]);
-                                 $print_license = <<<HTML
+                if ($license->isFullyCreated() && $license->order_id) {
+                    $print_title = License::trans('download_for_service_provider');
+                    $print_route = route('licenses.view_pdf', ['order' => $license->order_id]);
+                    $print_license = <<<HTML
 <a class="dropdown-item" target="_blank" href="{$print_route}">{$print_title}</a>
 HTML;
-                             } else {
-                                 $print_license = "";
-                             }
+                } else {
+                    $print_license = "";
+                }
 
-                             return <<<HTML
+                return <<<HTML
 <div class="btn-group me-1 mt-2">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         {$title}<i class="mdi mdi-chevron-down"></i>
@@ -341,16 +348,16 @@ HTML;
     </div>
 </div>
 HTML;
-                         })
-                         ->rawColumns([ 'actions' ])
-                         ->make(true);
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
     }
 
     /**
      * @post
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License      $license
+     * @param \App\Models\License $license
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -359,28 +366,28 @@ HTML;
         $license->delete();
 
         return response()->json([
-                                    'message' => __('general.success'),
-                                    'success' => true,
-                                ]);
+            'message' => __('general.success'),
+            'success' => true,
+        ]);
     }
 
     public function order_license_form(Request $request, Order $order)
     {
         return response()->json([
-                                    'page' => view('CP.licenses.form_modal', [
-                                        'model' => $order,
-                                        'license' => $order->getLicenseOrCreate(),
-                                    ])->render(),
-                                    'message' => __('general.success'),
-                                    'success' => true,
-                                ]);
+            'page' => view('CP.licenses.form_modal', [
+                'model' => $order,
+                'license' => $order->getLicenseOrCreate(),
+            ])->render(),
+            'message' => __('general.success'),
+            'success' => true,
+        ]);
     }
 
     /**
      * @post
      *
      * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
-     * @param \App\Models\Order                                              $order
+     * @param \App\Models\Order $order
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -389,16 +396,16 @@ HTML;
         $order->saveLicense($request->validated());
 
         return response()->json([
-                                    'message' => __('general.success'),
-                                    'success' => true,
-                                ]);
+            'message' => __('general.success'),
+            'success' => true,
+        ]);
     }
 
     /**
      * @post
      *
      * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
-     * @param \App\Models\License                               $license
+     * @param \App\Models\License $license
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -414,8 +421,8 @@ HTML;
         $license->deleteMapPathFile(true);
 
         return response()->json([
-                                    'success' => true,
-                                    'message' => 'تم حذف المرفق بنجاح',
-                                ]);
+            'success' => true,
+            'message' => 'تم حذف المرفق بنجاح',
+        ]);
     }
 }

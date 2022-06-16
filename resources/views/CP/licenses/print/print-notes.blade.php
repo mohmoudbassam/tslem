@@ -16,15 +16,16 @@
                 <tbody align="center">
                 <tr>
                     <td rowspan="2" width="30%" style="margin: 0">
-                        <img src="{{asset('images/licenses/qr.png')}}" class="my-2 qr-image img" width="100">
+                        <img src="{{public_path('images/licenses/qr.png')}}" class="my-2 qr-image img" height="100"  width="100">
                     </td>
-                    <td width="20%">تاريخ الطباعة</td>
-                    <td rowspan="2" width="20%">-</td>
+                    <td width="30%">تاريخ الطباعة</td>
+                    <td rowspan="2" width="30%" ><img class="my-2 qr-image img" src="{{public_path('images/licenses/Stamp.png')}}" width="100" alt=""></td>
                     <td width="30%">اعتماد مدير المركز</td>
                 </tr>
+
                 <tr>
                     <td>{{hijriDateTime()}}</td>
-                    <td>-</td>
+                    <td style="border-bottom: 0 solid" width="30%"><img class="my-2 qr-image img" src="{{public_path('images/licenses/segnuture.jpeg')}}"  width="100" alt=""> </td>
                 </tr>
                 </tbody>
             </table>
