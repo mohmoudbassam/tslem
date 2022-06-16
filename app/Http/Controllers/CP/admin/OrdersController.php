@@ -37,6 +37,7 @@ class OrdersController extends Controller
             ->whereDate($request->from_date, $request->to_date)
             ->orderByDesc('created_at')
             ->with('designer')
+            ->with('service_provider')
             ->with(['designer', 'contractor', 'consulting']);
 
         if ($request->waste_contractor) {
