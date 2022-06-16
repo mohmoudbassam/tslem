@@ -148,15 +148,14 @@ class Order extends Model
         return $this->hasOne(DeliverRejectReson::class)->orderByDesc('created_at')->take(1);
     }
 
-    public function consulting_or_constroctor()
+    public function consulting_orders()
     {
         return $this->hasMany(ConsultingOrders::class, 'order_id');
     }
 
     public function is_accepted($user)
     {
-
-        return $this->consulting_or_constroctor->where('user_id', $user->id)->count();
+        return $this->consulting_orders->where('user_id', isModel($user) ? $user->id : $user)->count();
     }
 
     //////////////////
@@ -211,7 +210,13 @@ class Order extends Model
         });
     }
 
-    public function licenseNeeded(): bool
+    public function licenseNeededForServiceProvider(): bool
+    {
+        return $this->status === static::PENDING_LICENSE_ISSUED && $this->hasLicense() &&
+            $this->is_accepted($this->contractor_id) && $this->is_accepted($this->consulting_office_id);
+    }
+
+    public function licenseNeededForDelivery(): bool
     {
         return $this->isDesignApproved() && !$this->hasLicense();
     }
@@ -241,7 +246,7 @@ class Order extends Model
         $license = $this->getLicenseOrCreate([ 'order_id' => $this->id ]);
         $created_at = ($attributes[ 'created_at' ] ??= data_get($attributes, 'created_at', $license->created_at ?: now()));
         $attributes[ 'date' ] = data_get($attributes, 'date', $created_at ? ($license->date ?: now()) : null);
-        if( $raft_company_box = currentUser()->getRaftCompanyBox() ) {
+        if( $raft_company_box = $this->service_provider->getRaftCompanyBox() ) {
             $attributes[ 'box_raft_company_box_id' ] = data_get($raft_company_box, 'id');
             $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
         }

@@ -2,22 +2,22 @@
     <h4>منفذي الاعمال</h4>
 </div>
 
-<table style='width: 100%;' border="1" cellspacing="0" cellpadding="0">
+<table style='width: 100%;' cellspacing="0" cellpadding="0">
     <tbody align="center">
     <tr>
-        <td>-</td>
+        <td>{{$model->designer_name}}</td>
         <td width="20%">المكتب المصمم</td>
     </tr>
     <tr>
-        <td>-</td>
+        <td>{{$model->consulting_office_name}}</td>
         <td>الإستشاري المشرف</td>
     </tr>
     <tr>
-        <td>-</td>
+        <td>{{$model->contractor_name}}</td>
         <td>المقاول المنفذ</td>
     </tr>
     <tr>
-        <td>-</td>
+        <td>{{$model->waste_contractor_name}}</td>
         <td>مقاول نقل النفايات</td>
     </tr>
     </tbody>

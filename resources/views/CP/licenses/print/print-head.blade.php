@@ -1,8 +1,8 @@
-<table style='width: 100%;'>
+<table class="no-border" style='width: 100%;'>
     <tbody align="center">
     <tr>
         <td >
-            <table width="100%">
+            <table class="no-border" width="100%">
                 <tbody align="center">
                 <tr>
                     <td>{{$model->id}}1</td>
@@ -37,7 +37,7 @@
     </tbody>
 </table>
 
-<table style='width: 100%;'>
+<table class="no-border" style='width: 100%;'>
     <tbody align="center">
     <tr>
         <td>

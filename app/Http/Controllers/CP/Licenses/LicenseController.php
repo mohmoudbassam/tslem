@@ -8,9 +8,9 @@ use App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest;
 use App\Http\Requests\CP\License\StoreLicenseRequest;
 use App\Models\License;
 use App\Models\Order;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class LicenseController extends Controller
@@ -27,8 +27,6 @@ class LicenseController extends Controller
 
     public static function makeTable($value)
     {
-        $makeTable = fn($v) => "\n<table style='width: 100%;'>\n\t<tbody>\n{$v}\n\t</tbody>\n</table>\n";
-
         if( is_array($value) ) {
             $table_content = [ "", "" ];
 
@@ -37,10 +35,10 @@ class LicenseController extends Controller
                 $table_content[ 1 ] .= static::makeTd($v);
             }
 
-            return $makeTable(static::makeTr($table_content[ 0 ]) . static::makeTr($table_content[ 1 ]));
+            return static::makeTable(static::makeTr($table_content[ 0 ]) . static::makeTr($table_content[ 1 ]));
         }
 
-        return $makeTable($value);
+        return static::makeTable($value);
     }
 
     // public static function getPrintData(License $license)
@@ -147,14 +145,10 @@ class LicenseController extends Controller
             'mode' => 'print',
             'mode_form' => 'print',
             'model' => $license,
-
-            // 'data' => static::getPrintData($license),
         ]);
     }
 
     /**
-     * @post
-     *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\License      $license
      *
@@ -166,8 +160,6 @@ class LicenseController extends Controller
             'mode' => 'print',
             'mode_form' => 'print',
             'model' => $license,
-
-            // 'data' => static::getPrintData($license),
         ])->render();
 
         if( $request->has('html') ) {
@@ -188,9 +180,107 @@ class LicenseController extends Controller
         return $pdf->stream("License-{$license->id}.pdf");
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\Response|string
+     */
+    public function download(Request $request, Order $order)
+    {
+        $request->merge([ 'print' => 1 ]);
+        /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
+        $pdf = app()->make('snappy.pdf.wrapper');
+
+        return $pdf
+            ->loadView('CP.licenses.print', [
+                'mode' => 'print',
+                'mode_form' => 'print',
+                'model' => $order->license,
+            ])
+            ->setPaper('a4')
+            ->setOrientation('portrait')
+            ->setOption('margin-bottom', 0)
+            ->setOption('enable-forms', true)
+            //->setOption('grayscale', true)
+            //->setOption('debug-javascript', true)
+            //->setOption('page-offset', 8)
+            ->setOption('encoding', 'utf-8')
+            //->setOption('header-font-name', 'msyh')
+            ->setOption('enable-external-links', true)
+            ->download("License-{$order->license()->value('id')}.pdf");
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\Response|string
+     */
+    public function view_pdf(Request $request, Order $order)
+    {
+        $request->merge([ 'print' => 1 ]);
+        /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
+        $pdf = app()->make('snappy.pdf.wrapper');
+
+        return $pdf
+            ->loadView('CP.licenses.print', [
+                'mode' => 'print',
+                'mode_form' => 'print',
+                'model' => $order->license,
+            ])
+            ->setPaper('a4')
+            ->setOrientation('portrait')
+            ->setOption('margin-bottom', 0)
+            ->setOption('enable-forms', true)
+            //->setOption('grayscale', true)
+            //->setOption('debug-javascript', true)
+            //->setOption('page-offset', 8)
+            ->setOption('encoding', 'utf-8')
+            //->setOption('header-font-name', 'msyh')
+            ->setOption('enable-external-links', true)
+            ->inline("License-{$order->license()->value('id')}.pdf");
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\Response|string
+     */
+    public function view_html(Request $request, Order $order)
+    {
+        $reportHtml = view('CP.licenses.print', [
+            'mode' => 'print',
+            'mode_form' => 'print',
+            'model' => $order->license,
+        ])->render();
+
+        if( $request->has('html') ) {
+            return $reportHtml;
+        }
+
+        /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
+        $pdf = app()->make('snappy.pdf.wrapper');
+
+        return $pdf
+            ->loadHtml($reportHtml)
+            ->setPaper('a4', 'portrait')
+            ->setOption('margin-bottom', 0)
+            ->setOption('enable-forms', false)
+            // ->setOption('grayscale', true)
+            ->setOption('debug-javascript', true)
+            ->setOption('page-offset', 8)
+            ->setOption('encoding', 'utf-8')
+            //->setOption('header-font-name', 'msyh')
+            ->setOption('enable-external-links', true)
+            ->inline("License-{$order->license()->value('id')}.pdf");
+    }
+
     public function list(Request $request)
     {
-        $licenses = License::query()->orderBy('created_at', data_get(collect($request->get('order', [ 'desc' ]))->first(), 'dir', 'desc'))
+        $licenses = License::query()
+                           ->orderBy('created_at', data_get(collect($request->get('order', [ 'desc' ]))->first(), 'dir', 'desc'))
                            ->when(request('name'), function($query) {
                                return $query->where(function(Builder $q) {
                                    $columns = [
@@ -208,6 +298,7 @@ class LicenseController extends Controller
                            });
 
         return DataTables::of($licenses)
+                         ->addColumn('id', fn(License $license) => $license->id)
                          ->addColumn('order_id', fn(License $license) => $license->order_id)
                          ->addColumn(
                              'date',
@@ -217,18 +308,25 @@ class LicenseController extends Controller
                              'expiry_date',
                              fn(License $license) => $license->expiry_date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->expiry_date) : "-"
                          )
-                         ->addColumn('raft_company_id', fn(License $license) => $license->raft_company()->value('name'))
+                         ->addColumn('raft_company', fn(License $license) => $license->raft_company_name ?? "")
                          ->addColumn('box_raft_company_box_id', fn(License $license) => $license->box()->value('box'))
-                         ->addColumn('camp_raft_company_box_id', fn(License $license) => $license->camp()->value('camp')
-                         )
+                         ->addColumn('camp_raft_company_box_id', fn(License $license) => $license->camp()->value('camp'))
                          ->addColumn('actions', function($license) {
                              $title = __('general.datatable.fields.actions');
                              $delete_title = License::crudTrans('delete');
                              $delete_route = route('licenses.delete', [ 'license' => $license->id ]);
                              $update_title = License::crudTrans('update');
                              $update_route = route('licenses.edit', [ 'license' => $license->id ]);
-                             $print_title = License::crudTrans('print');
-                             $print_route = route('licenses.print', [ 'license' => $license->id ]);
+
+                             if( $license->isFullyCreated() && $license->order_id ) {
+                                 $print_title = License::trans('download_for_service_provider');
+                                 $print_route = route('licenses.view_pdf', [ 'order' => $license->order_id ]);
+                                 $print_license = <<<HTML
+<a class="dropdown-item" target="_blank" href="{$print_route}">{$print_title}</a>
+HTML;
+                             } else {
+                                 $print_license = "";
+                             }
 
                              return <<<HTML
 <div class="btn-group me-1 mt-2">
@@ -239,7 +337,7 @@ class LicenseController extends Controller
     <div class="dropdown-menu" style="">
         <a class="dropdown-item" href="#" onclick="delete_model({$license->id}, '{$delete_route}')" >{$delete_title}</a>
         <a class="dropdown-item" href="{$update_route}">{$update_title}</a>
-        <a class="dropdown-item" href="{$print_route}">{$print_title}</a>
+        {$print_license}
     </div>
 </div>
 HTML;
@@ -320,5 +418,4 @@ HTML;
                                     'message' => 'تم حذف المرفق بنجاح',
                                 ]);
     }
-
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CP\ServiceProviders;
 
 use Alkoumi\LaravelHijriDate\Hijri;
 use App\Http\Controllers\Controller;
+use App\Models\License;
 use App\Models\Order;
 use App\Models\OrderSharer;
 use App\Models\RaftCompanyBox;
@@ -140,10 +141,10 @@ class OrdersController extends Controller
             ->addColumn('order_status', function ($order) {
                 return $order->order_status;
             })
-            ->addColumn('actions', function ($order) {
-
+            ->addColumn('actions', function (Order $order) {
                 $add_designer = '';
                 $add_contractor_and_consulting_office = '';
+                $add_generate_license = '';
                 if ($order->designer_id == null) {
                     $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة مكتب تصميم </a>';
                 }
@@ -152,7 +153,11 @@ class OrdersController extends Controller
                     $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus mx-2"></i>إضافة استشاري ومقاول</a>';
                 }
 
-                if (empty($add_designer) && empty($add_contractor_and_consulting_office)) {
+                if ($order->licenseNeededForServiceProvider()) {
+                    $add_generate_license = '<a class="dropdown-item" href="' . route('licenses.view_pdf', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_for_service_provider') . '</a>';
+                }
+
+                if (empty($add_designer) && empty($add_contractor_and_consulting_office) && empty($add_generate_license)) {
                     $element = '';
                 } else {
 
@@ -161,10 +166,9 @@ class OrdersController extends Controller
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-
                                                ' . $add_designer . '
                                                ' . $add_contractor_and_consulting_office . '
-
+                                               ' . $add_generate_license . '
                                                 </div>
                               </div>';
                 }
@@ -240,7 +244,6 @@ class OrdersController extends Controller
 
     public function choice_constructor_action(Request $request)
     {
-
         $order = Order::query()->findOrFail($request->id);
         $order->update([
             'status' => Order::PENDING_LICENSE_ISSUED,

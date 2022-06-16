@@ -238,6 +238,8 @@
 
 @include('CP.sharer_layout.js')
 @yield('scripts')
+
+@stack('js')
 <script>
     function read_message(){
 

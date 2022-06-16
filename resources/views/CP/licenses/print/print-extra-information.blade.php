@@ -2,11 +2,11 @@
     <h4>مكونات الاضافة:</h4>
 </div>
 
-<table style='width: 100%;' border="1" cellspacing="0" cellpadding="0">
+<table style='width: 100%;' cellspacing="0" cellpadding="0" class="no-border">
     <tbody align="center">
     <tr>
         <td>
-            <table style='width: 100%;' border="1" cellspacing="0" cellpadding="0">
+            <table style='width: 100%;' cellspacing="0" cellpadding="0">
                 <tbody align="center">
                 <tr>
                     <td nowrap="nowrap" width="60%">-</td>
@@ -28,10 +28,10 @@
             </table>
         </td>
 
-        <td width="5%"></td>
+        <td width="5%" class="border"></td>
 
         <td>
-            <table style='width: 100%;' border="1" cellspacing="0" cellpadding="0">
+            <table style='width: 100%;' cellspacing="0" cellpadding="0">
                 <tbody align="center">
                 <tr>
                     <td nowrap="nowrap" width="60%">-</td>

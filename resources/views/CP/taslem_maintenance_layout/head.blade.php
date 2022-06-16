@@ -98,6 +98,7 @@
 
     </style>
     @yield('style')
+    @stack('css')
 </head>
 
 <body lang="en" dir="rtl">

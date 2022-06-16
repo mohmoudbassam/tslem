@@ -3,22 +3,23 @@
 use App\Helpers\APIResponse;
 use App\Models\BeneficiresCoulumns;
 use App\Models\Order;
+use App\Models\OrderService;
 
 function save_logs($order, $user_id, $data)
 {
     $order->logs()->create([
-                               'data' => $data,
-                               'user_id' => $user_id,
-                           ]);
+        'data' => $data,
+        'user_id' => $user_id,
+    ]);
 }
 
 function randomIntIdentifier($length = 10)
 {
     $length = $length > 0 ? $length : 10;
-    $numbers = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" ];
+    $numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     $identifier = "1";
-    for( $index = 1; $index < ($length - 1); $index++ ) {
-        $identifier .= $numbers[ mt_rand(0, 9) ];
+    for ($index = 1; $index < ($length - 1); $index++) {
+        $identifier .= $numbers[mt_rand(0, 9)];
     }
 
     return $identifier;
@@ -27,8 +28,8 @@ function randomIntIdentifier($length = 10)
 function get_specialty_obligation_files_types($specialty)
 {
     $types = [];
-    foreach( get_specialty_obligation_files($specialty)[ "files" ] as $obligationFiles ) {
-        $types[] = $obligationFiles[ "type" ];
+    foreach (get_specialty_obligation_files($specialty)["files"] as $obligationFiles) {
+        $types[] = $obligationFiles["type"];
     }
 
     return $types;
@@ -37,109 +38,109 @@ function get_specialty_obligation_files_types($specialty)
 function get_obligation_name_by_type($type)
 {
     return [
-               "gypsum_obligation" => "التعهد الخاص بإضافة الألواح الجبسية",
-               "kitchen_obligation" => "التعهد الخاص بإضافة المطابخ",
-               "storage_obligation" => "التعهد الخاص بإضافة مواقع التخزين",
-               "entrance_obligation" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
-               "aisle_obligation" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
-               "electricity_obligation" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
-               "air_conditioner_obligation" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
-               "toilet_obligation" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
-           ][ $type ];
+        "gypsum_obligation" => "التعهد الخاص بإضافة الألواح الجبسية",
+        "kitchen_obligation" => "التعهد الخاص بإضافة المطابخ",
+        "storage_obligation" => "التعهد الخاص بإضافة مواقع التخزين",
+        "entrance_obligation" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
+        "aisle_obligation" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
+        "electricity_obligation" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
+        "air_conditioner_obligation" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
+        "toilet_obligation" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
+    ][$type];
 }
 
 function get_specialty_obligation_files($specialty)
 {
     return [
-               "architect" => [
-                   "name_ar" => "المعماري",
-                   "name_en" => "architect",
-                   "files" => [
-                       [
-                           "name" => "التعهد الخاص بإضافة الألواح الجبسية",
-                           "type" => "gypsum_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة الألواح الجبسية.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة المطابخ",
-                           "type" => "kitchen_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة مواقع التخزين",
-                           "type" => "storage_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة مواقع التخزين.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
-                           "type" => "entrance_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية المداخل.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
-                           "type" => "aisle_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية الممرات.pdf"),
-                       ],
-                   ],
-               ],
-               "electrical" => [
-                   "name_ar" => "الكهربائية",
-                   "name_en" => "electrical",
-                   "files" => [
-                       [
-                           "name" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
-                           "type" => "electricity_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة المطابخ",
-                           "type" => "kitchen_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
-                       ],
-                   ],
-               ],
-               "construction" => [
-                   "name_ar" => "الإنشائية",
-                   "name_en" => "construction",
-                   "files" => [
-                       [
-                           "name" => "التعهد الخاص بإضافة المطابخ",
-                           "type" => "kitchen_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
-                       ],
-                   ],
-               ],
-               "mchanical" => [
-                   "name_ar" => "الميكانيكة",
-                   "name_en" => "mchanical",
-                   "files" => [
-                       [
-                           "name" => "التعهد الخاص بإضافة المطابخ",
-                           "type" => "kitchen_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
-                           "type" => "air_conditioner_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf"),
-                       ],
-                       [
-                           "name" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
-                           "type" => "toilet_obligation",
-                           "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المواضئ ودورات المياه.pdf"),
-                       ],
-                   ],
-               ],
-           ][ $specialty ];
+        "architect" => [
+            "name_ar" => "المعماري",
+            "name_en" => "architect",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة الألواح الجبسية",
+                    "type" => "gypsum_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة الألواح الجبسية.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة مواقع التخزين",
+                    "type" => "storage_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة مواقع التخزين.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة وسائل تغطية المداخل",
+                    "type" => "entrance_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية المداخل.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة وسائل تغطية الممرات",
+                    "type" => "aisle_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة وسائل تغطية الممرات.pdf"),
+                ],
+            ],
+        ],
+        "electrical" => [
+            "name_ar" => "الكهربائية",
+            "name_en" => "electrical",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية",
+                    "type" => "electricity_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة التمديدات والأجهزة الكهربائية.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
+                ],
+            ],
+        ],
+        "construction" => [
+            "name_ar" => "الإنشائية",
+            "name_en" => "construction",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
+                ],
+            ],
+        ],
+        "mchanical" => [
+            "name_ar" => "الميكانيكة",
+            "name_en" => "mchanical",
+            "files" => [
+                [
+                    "name" => "التعهد الخاص بإضافة المطابخ",
+                    "type" => "kitchen_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المطابخ.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المكيفات )الاسبليت(",
+                    "type" => "air_conditioner_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المكيفات )الاسبليت(.pdf"),
+                ],
+                [
+                    "name" => "التعهد الخاص بإضافة المواضئ ودورات المياه",
+                    "type" => "toilet_obligation",
+                    "path" => asset("storage/obligations/" . "التعهد الخاص بإضافة المواضئ ودورات المياه.pdf"),
+                ],
+            ],
+        ],
+    ][$specialty];
 }
 
 function get_designer_type_name($tpe)
 {
     return [
-               "designer" => "مكتب تصميم",
-               "consulting" => "اشراف",
-               "fire" => "الحماية والوقاية من الحريق",
-           ][ $tpe ];
+        "designer" => "مكتب تصميم",
+        "consulting" => "اشراف",
+        "fire" => "الحماية والوقاية من الحريق",
+    ][$tpe];
 }
 
 function get_user_column_file($type)
@@ -172,7 +173,7 @@ function get_user_column_file($type)
         'confidentiality_obligation'
     )->where('type', $type)->first();
 
-    if( is_null($benef) ) {
+    if (is_null($benef)) {
         return [];
     }
 
@@ -185,29 +186,29 @@ function get_user_column_file($type)
 function file_name_by_column($col)
 {
     return [
-               'commercial_file' => 'ملف السجل التجاري',
-               'rating_certificate' => 'شهادة تصنيف وطني',
-               'address_file' => 'العنوان الوطني',
-               'profession_license' => 'مزاولة مهنة',
-               'business_license' => 'شهادةالنشاط التجاري',
-               'social_insurance_certificate' => 'شهادة التأمينات الاجتماعي',
-               'certificate_of_zakat' => 'شهادةالزكاة والدخل',
-               'saudization_certificate' => 'شهادةالسعودة',
-               'chamber_of_commerce_certificate' => 'شهادة الغرفة التجارية',
-               'tax_registration_certificate' => 'شهادة تسجيل الضريبة',
-               'wage_protection_certificate' => 'شهادة حماية الأجور',
-               'memorandum_of_association' => ' عقد التأسيس ',
-               'company_owner_id_photo' => 'صورة هوية المالك',
-               'commissioner_id_photo' => 'صورة هوية المفوض',
-               'cv_file' => 'الاعمال السابقة',
-               'commissioner_photo' => 'خطاب التفويض',
-               'hajj_service_license' => 'الرخصة الموسيمية',
-               'personalization_record' => 'الكروكي',
-               'dwg_sketch' => 'كروكي المركز (DWG)',
-               'previous_works' => 'الأعمال السابقة',
-               'service_provider_obligation' => "اقرار مزودي الخدمة",
-               'confidentiality_obligation' => "اتفاقية حفظ سويةالمعلومات",
-           ][ $col ];
+        'commercial_file' => 'ملف السجل التجاري',
+        'rating_certificate' => 'شهادة تصنيف وطني',
+        'address_file' => 'العنوان الوطني',
+        'profession_license' => 'مزاولة مهنة',
+        'business_license' => 'شهادةالنشاط التجاري',
+        'social_insurance_certificate' => 'شهادة التأمينات الاجتماعي',
+        'certificate_of_zakat' => 'شهادةالزكاة والدخل',
+        'saudization_certificate' => 'شهادةالسعودة',
+        'chamber_of_commerce_certificate' => 'شهادة الغرفة التجارية',
+        'tax_registration_certificate' => 'شهادة تسجيل الضريبة',
+        'wage_protection_certificate' => 'شهادة حماية الأجور',
+        'memorandum_of_association' => ' عقد التأسيس ',
+        'company_owner_id_photo' => 'صورة هوية المالك',
+        'commissioner_id_photo' => 'صورة هوية المفوض',
+        'cv_file' => 'الاعمال السابقة',
+        'commissioner_photo' => 'خطاب التفويض',
+        'hajj_service_license' => 'الرخصة الموسيمية',
+        'personalization_record' => 'الكروكي',
+        'dwg_sketch' => 'كروكي المركز (DWG)',
+        'previous_works' => 'الأعمال السابقة',
+        'service_provider_obligation' => "اقرار مزودي الخدمة",
+        'confidentiality_obligation' => "اتفاقية حفظ سويةالمعلومات",
+    ][$col];
 }
 
 function citiesList()
@@ -303,70 +304,70 @@ function citiesList()
 function wasteContractorsList()
 {
     return collect([
-                       [
-                           'name' => 'مسارات النقل',
-                       ],
-                       [
-                           'name' => 'سدر للخدمات',
-                       ],
-                       [
-                           'name' => 'الفارس المختص',
-                       ],
-                       [
-                           'name' => 'غربيات الدولية',
-                       ],
-                       [
-                           'name' => 'ابراج الغيوم',
-                       ],
-                       [
-                           'name' => 'مؤسسة ضيف الله القرشي',
-                       ],
-                       [
-                           'name' => 'دائرة النظافة',
-                       ],
-                       [
-                           'name' => 'مستقبل البيئة',
-                       ],
-                       [
-                           'name' => 'مؤسسة نباتات',
-                       ],
-                       [
-                           'name' => 'المدن النظيفة',
-                       ],
-                       [
-                           'name' => 'عز البيارق',
-                       ],
-                       [
-                           'name' => 'مؤسسة الوادي',
-                       ],
-                       [
-                           'name' => 'لجين التجارية',
-                       ],
-                       [
-                           'name' => 'البلد الامين',
-                       ],
-                       [
-                           'name' => 'مؤسسة افاق',
-                       ],
-                       [
-                           'name' => 'افراس للمقاولات',
-                       ],
-                       [
-                           'name' => 'سعود المتقدمة',
-                       ],
-                       [
-                           'name' => 'اناقة المدن',
-                       ],
-                       [
-                           'name' => 'مهندسو البيئة',
-                       ],
-                       [
-                           'name' => 'اسطورة الانفال',
-                       ],
-                       [
-                           'name' => 'التراث والبيئة',
-                       ],
-                   ]);
+        [
+            'name' => 'مسارات النقل',
+        ],
+        [
+            'name' => 'سدر للخدمات',
+        ],
+        [
+            'name' => 'الفارس المختص',
+        ],
+        [
+            'name' => 'غربيات الدولية',
+        ],
+        [
+            'name' => 'ابراج الغيوم',
+        ],
+        [
+            'name' => 'مؤسسة ضيف الله القرشي',
+        ],
+        [
+            'name' => 'دائرة النظافة',
+        ],
+        [
+            'name' => 'مستقبل البيئة',
+        ],
+        [
+            'name' => 'مؤسسة نباتات',
+        ],
+        [
+            'name' => 'المدن النظيفة',
+        ],
+        [
+            'name' => 'عز البيارق',
+        ],
+        [
+            'name' => 'مؤسسة الوادي',
+        ],
+        [
+            'name' => 'لجين التجارية',
+        ],
+        [
+            'name' => 'البلد الامين',
+        ],
+        [
+            'name' => 'مؤسسة افاق',
+        ],
+        [
+            'name' => 'افراس للمقاولات',
+        ],
+        [
+            'name' => 'سعود المتقدمة',
+        ],
+        [
+            'name' => 'اناقة المدن',
+        ],
+        [
+            'name' => 'مهندسو البيئة',
+        ],
+        [
+            'name' => 'اسطورة الانفال',
+        ],
+        [
+            'name' => 'التراث والبيئة',
+        ],
+    ]);
 }
 
 function is_image($extension)
@@ -388,7 +389,7 @@ function is_pdf($extension)
 
 function get_file_icon($ext)
 {
-    switch( $ext ) {
+    switch ($ext) {
         case 'pdf':
             return $type = 'fa fa-file-pdf';
             break;
@@ -476,23 +477,37 @@ function sms($number, $body)
 
 }
 
+function order_services($id)
+{
+   $order= Order::query()->find($id);
+   $order_services= OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get();
+  $services=  $order_services->map(function($service){
+      return [
+         'name'=> $service->service->name,
+          'quantity'=> $service->unit,
+          'quantity_label'=> $service->service->unit,
+      ];
+    });
+    return $services;
+}
+
 function normalize_phone_number($number)
 {
 
     $number = preg_replace('/^0+/', '', $number);
 
-    if( strlen($number) < 12 ) return '+966' . $number;
+    if (strlen($number) < 12) return '+966' . $number;
 
     return '+' . $number;
 
 }
 
-if( !function_exists('getTrans') ) {
+if (!function_exists('getTrans')) {
     /**
      * Translate the given message or return default.
      *
      * @param string|null $key
-     * @param array       $replace
+     * @param array $replace
      * @param string|null $locale
      *
      * @return string|array|null
@@ -506,7 +521,7 @@ if( !function_exists('getTrans') ) {
     }
 }
 
-if( !function_exists('currentLocale') ) {
+if (!function_exists('currentLocale')) {
     /**
      * return appLocale
      *
@@ -516,8 +531,8 @@ if( !function_exists('currentLocale') ) {
      */
     function currentLocale($full = false): string
     {
-        if( $full ) {
-            return (string) app()->getLocale();
+        if ($full) {
+            return (string)app()->getLocale();
         }
 
         $locale = str_replace('_', '-', app()->getLocale());
@@ -527,7 +542,7 @@ if( !function_exists('currentLocale') ) {
     }
 }
 
-if( !function_exists('currentUser') ) {
+if (!function_exists('currentUser')) {
     /**
      * Returns current logged in user
      *
@@ -545,18 +560,18 @@ if( !function_exists('currentUser') ) {
     }
 }
 
-if( !function_exists('crudTrans') ) {
+if (!function_exists('crudTrans')) {
     /**
      * @param \Illuminate\Database\Eloquent\Model|string|\Closure $model
-     * @param \Closure|string|null                                $key
-     * @param \Closure|string|null                                $locale
-     * @param \Closure|mixed|null                                 $default
+     * @param \Closure|string|null $key
+     * @param \Closure|string|null $locale
+     * @param \Closure|mixed|null $default
      *
      * @return array|string|null
      */
     function crudTrans($model = null, $key = null, $locale = null, $default = null, $instance = null)
     {
-        $locale = app()->getLocale();
+        $locale ??= currentLocale();
         $getModelTrans =
             fn($is_singular = true) => isModel($model) ? $model::trans(
                 $is_singular ? 'singular' : 'plural',
@@ -564,22 +579,21 @@ if( !function_exists('crudTrans') ) {
                 $locale
             )
                 : ($is_singular ? 'str_singular' : 'str_plural')($model);
-        $_instance = $instance;
-        $instance = $instance && isModel($instance) ? $instance : optional((object) [ 'id_label' => $instance ?? '' ]);
-//        dump($instance->id,$instance,$_instance);
+
+        $instance = $instance && isModel($instance) ? $instance : optional((object)['id_label' => $instance ?? '']);
+
         $results = __('general.model', [
             'prefix' => $instance->id_label ? $getModelTrans(true) . ' ' : '',
             'model' => $instance->id_label ?: $getModelTrans(true),
             'models' => $getModelTrans(false),
-        ],            $locale);
+        ], $locale);
 
         $key = value($key);
-
         return is_null($key) ? $results : data_get($results, $key, $default);
     }
 }
 
-if( !function_exists('isModel') ) {
+if (!function_exists('isModel')) {
     /**
      * Determine if a given object is inherit Model class.
      *
@@ -593,7 +607,7 @@ if( !function_exists('isModel') ) {
             return ($object instanceof \Illuminate\Database\Eloquent\Model)
                 || is_a($object, \Illuminate\Database\Eloquent\Model::class)
                 || is_subclass_of($object, \Illuminate\Database\Eloquent\Model::class);
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
 
         }
 
@@ -601,7 +615,7 @@ if( !function_exists('isModel') ) {
     }
 }
 
-if( !function_exists('isDateAttribute') ) {
+if (!function_exists('isDateAttribute')) {
     /**
      * @param $model
      * @param $key
@@ -614,8 +628,8 @@ if( !function_exists('isDateAttribute') ) {
             $model = is_object($model) ? $model : app($model);
 
             return in_array($key, $model->getDates(), true) ||
-                $model->hasCast($key, [ 'date', 'datetime', 'immutable_date', 'immutable_datetime' ]);
-        } catch(Exception $exception) {
+                $model->hasCast($key, ['date', 'datetime', 'immutable_date', 'immutable_datetime']);
+        } catch (Exception $exception) {
 
         }
 
@@ -623,10 +637,10 @@ if( !function_exists('isDateAttribute') ) {
     }
 }
 
-if( !function_exists('saveLicense') ) {
+if (!function_exists('saveLicense')) {
     /**
      * @param Order|int $order
-     * @param array     $attributes
+     * @param array $attributes
      *
      * @return \Illuminate\Database\Eloquent\Model
      */

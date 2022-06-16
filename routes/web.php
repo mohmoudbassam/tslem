@@ -85,6 +85,17 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
              Route::post('delete_map_path/{license}', [ LicenseController::class, 'delete_map_path' ])->name('.delete_map_path');
          });
 
+    Route::prefix('licenses')
+         ->name('licenses')
+         ->group(function() {
+             Route::get('download/{order}/license', [ LicenseController::class, 'download' ])
+                  ->name('.download');
+             Route::get('view_pdf/{order}/license', [ LicenseController::class, 'view_pdf' ])
+                  ->name('.view_pdf');
+             Route::get('view_html/{order}/license', [ LicenseController::class, 'view_html' ])
+                  ->name('.view_html');
+         });
+
     Route::prefix('users')->name('users')->middleware('admin')->group(function() {
         Route::get('users', [ UserController::class, 'index' ]);
         Route::get('add', [ UserController::class, 'add' ])->name('.add');
@@ -455,9 +466,7 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware([ 'a
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
 
-Route::get('test', function() {
-    return view('fm');
-});
+
 
 Route::get('generate', [ PDFController::class, 'generate' ]);
 Route::get('import-excel', function() {
@@ -470,3 +479,6 @@ Route::post('import', [ \App\Http\Controllers\ImportExcelController::class, 'imp
 Route::get('raft_company/get_camp_by_box/{box}', [ RaftCompanyController::class, 'get_camp_by_box' ])->name(
     'raft_company.get_camp_by_box'
 );
+Route::get('test',function () {
+    dd(order_services(4));
+});

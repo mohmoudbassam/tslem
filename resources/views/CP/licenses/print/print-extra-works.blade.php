@@ -2,14 +2,16 @@
     <b>الأعمال الإضافية</b>
 </div>
 
+<br>
+
 <div>
-    <table style='width: 100%;' cellspacing="0" cellpadding="0">
-        <tbody >
+    <table style='width: 100%;' cellspacing="0" cellpadding="0" class="no-border">
+        <tbody>
         <tr>
             <td>أولا: متطلبات الأعمال الإضافية المقدمة من قبل شركات ومؤسسات حجاج الداخل والخارج</td>
         </tr>
         <tr>
-            <td >
+            <td>
                 <ol>
                     <li>
                         إنشاء دورات مياه عامة بحيث تتكون المجموعة الواحدة من أربع دورات أكثر ويتم إنشائة خارج المنطقة
