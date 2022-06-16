@@ -44,6 +44,7 @@
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
                                 <option value="service_provider">شركات حجاج الداخل</option>
+                                <option value="raft_center">شركات حجاج الخارج</option>
                                 <option value="design_office">مكتب هندسي</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>
@@ -78,7 +79,7 @@
                                 السجل
                             </th>
                             <th>
-                                الصلاحيه
+                                نوع المستخدم
                             </th>
                             <th>
                                 الهاتف

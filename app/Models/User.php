@@ -85,6 +85,7 @@ class User extends Authenticatable
         return [
             'admin' => 'مدير النظام',
             'service_provider' => 'شركات حجاج الداخل',
+            'raf_center' => 'شركات حجاج الخارج',
             'design_office' => 'مكتب هندسي',
             'Sharer' => 'جهة مشاركة',
             'consulting_office' => 'مشرف',

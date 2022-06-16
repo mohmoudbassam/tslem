@@ -194,15 +194,22 @@ class UserController extends Controller
                 });
             })
             ->when(request('type'), function ($q) {
-                $q->where('type', request('type'))
-                    ->whereNull("parent_id");
+                if ( request('type') == "service_provider" ) {
+                    $q->where('type', request('type'))
+                        ->whereNull("parent_id");
+                } elseif ( request('type') == "raft_center" ) {
+                    $q->where('type', "service_provider")
+                        ->whereNotNull("parent_id");
+                } else {
+                    $q->where('type', request('type'));
+                }
             });
         if ($flag) {
             return $users->get();
         }
         return DataTables::of($users)
             ->addColumn('type', function ($user) {
-                return $user->user_type;
+                return ($user->type == "service_provider" and !is_null($user->parent_id)) ? "شركات حجاج الخارج": $user->user_type;
             })
             ->addColumn('enabled', function ($user) {
                 if ($user->enabled) {
