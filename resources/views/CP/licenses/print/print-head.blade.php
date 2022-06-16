@@ -9,21 +9,21 @@
                     <td>رقم الرخصة:</td>
                 </tr>
                 <tr>
-                    <td>{{$model->hijri_date}}2</td>
+                    <td>{{$model->hijri_date}}</td>
                     <td>تاريخها:</td>
                 </tr>
                 <tr>
-                    <td>{{$model->hijri_expiry_date}}3</td>
+                    <td>{{$model->hijri_expiry_date}}</td>
                     <td>تاريخ الإنتهاء:</td>
                 </tr>
                 </tbody>
             </table>
         </td>
         <td>
-            <img src="{{asset('images/licenses/logo.png')}}" class="logo-image img" width="250">
+            <img src="{{public_path('/images/licenses/logo.png')}}" class="logo-image img" width="250">
         </td>
         <td>
-            <img src="{{asset('images/licenses/ksa.jpg')}}" class="ksa-image img" width="200">
+            <img src="{{public_path('/images/licenses/ksa.jpg')}}" class="ksa-image img" width="100">
         </td>
     </tr>
     <tr>

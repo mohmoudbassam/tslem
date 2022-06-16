@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c819e0a5031cd96f005c5f2971fa146c",
+    "content-hash": "4885a0579b762e6561cf2d1bd0375a34",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -4491,16 +4491,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.6.1",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "d6e1d5d0fb2458dfdd7018ec2f74be120353a3b9"
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/d6e1d5d0fb2458dfdd7018ec2f74be120353a3b9",
-                "reference": "d6e1d5d0fb2458dfdd7018ec2f74be120353a3b9",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
+                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
                 "shasum": ""
             },
             "require": {
@@ -4554,7 +4554,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2022-06-11T00:43:46+00:00"
+            "time": "2022-06-14T06:56:20+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -5925,16 +5925,16 @@
         },
         {
             "name": "spatie/db-dumper",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/db-dumper.git",
-                "reference": "17152c3fd799fb55b34f35885f8f129678faed73"
+                "reference": "e90bdffb902b43c7d76dd45dd350a54f4330fee5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/17152c3fd799fb55b34f35885f8f129678faed73",
-                "reference": "17152c3fd799fb55b34f35885f8f129678faed73",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/e90bdffb902b43c7d76dd45dd350a54f4330fee5",
+                "reference": "e90bdffb902b43c7d76dd45dd350a54f4330fee5",
                 "shasum": ""
             },
             "require": {
@@ -5972,8 +5972,7 @@
                 "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/db-dumper/issues",
-                "source": "https://github.com/spatie/db-dumper/tree/3.2.0"
+                "source": "https://github.com/spatie/db-dumper/tree/3.2.1"
             },
             "funding": [
                 {
@@ -5985,7 +5984,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-10T16:01:42+00:00"
+            "time": "2022-06-15T13:27:17+00:00"
         },
         {
             "name": "spatie/laravel-backup",
@@ -9028,6 +9027,61 @@
             "time": "2022-06-03T18:03:27+00:00"
         },
         {
+            "name": "wemersonjanuario/wkhtmltopdf-windows",
+            "version": "0.12.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wemersonjanuario/wkhtmltopdf-windows.git",
+                "reference": "90fcd3487cad5931287742113c449b926e9e48d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wemersonjanuario/wkhtmltopdf-windows/zipball/90fcd3487cad5931287742113c449b926e9e48d8",
+                "reference": "90fcd3487cad5931287742113c449b926e9e48d8",
+                "shasum": ""
+            },
+            "suggest": {
+                "h4cc/wkhtmltopdf-amd64": "*",
+                "h4cc/wkhtmltopdf-i386": "*",
+                "wemersonjanuario/laravelpdf": "1.0.*"
+            },
+            "bin": [
+                "bin/32bit/wkhtmltopdf.exe",
+                "bin/32bit/wkhtmltoimage.exe",
+                "bin/64bit/wkhtmltopdf.exe",
+                "bin/64bit/wkhtmltoimage.exe"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL Version 3"
+            ],
+            "authors": [
+                {
+                    "name": "Wemerson Januario",
+                    "email": "wemerson.januario@gmail.com",
+                    "homepage": "http://wemersonjanuario.com.br"
+                }
+            ],
+            "description": "Convert html to pdf using webkit (qtwebkit). Static linked windows binary for 32 bit and 64 bit systems.",
+            "homepage": "http://wkhtmltopdf.org/",
+            "keywords": [
+                "binary",
+                "convert",
+                "htmltoimage",
+                "htmltopdf",
+                "pdf",
+                "snapshot",
+                "thumbnail",
+                "wkhtmltopdf"
+            ],
+            "support": {
+                "issues": "https://github.com/wemersonjanuario/wkhtmltopdf-windows/issues?state=open",
+                "source": "https://github.com/wemersonjanuario/wkhtmltopdf-windows/tree/master"
+            },
+            "time": "2015-06-30T20:19:22+00:00"
+        },
+        {
             "name": "yajra/laravel-datatables-oracle",
             "version": "v9.20.0",
             "source": {
@@ -11791,5 +11845,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.0.0"
 }

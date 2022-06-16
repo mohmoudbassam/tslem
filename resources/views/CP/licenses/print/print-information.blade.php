@@ -11,13 +11,13 @@
 
     <tr>
         <td width="55%">خريطة Gis</td>
-        <td width="30%">{{$model->service_provider()->value('users.id')}}</td>
+        <td width="30%">{{$model->service_provider()->value('users.id') ?? ""}}</td>
         <td width="15%">رقم المركز</td>
     </tr>
 
     <tr>
         <td rowspan="5">
-            <img src="{{$model->map_path_url}}" class="my-2 map-image img" width="300">
+{{--            <img src="{{$model->map_path_url}}" class="my-2 map-image img" width="300">--}}
         </td>
         <td>{{$model->box_name}}</td>
         <td>رقم المربع</td>
