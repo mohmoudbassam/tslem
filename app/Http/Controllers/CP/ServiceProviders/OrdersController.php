@@ -203,13 +203,14 @@ class OrdersController extends Controller
 
     public function update_order(Request $request)
     {
-        $order = tap(Order::query()->where('id', $request->order_id)->first())
+        $orderDetails = Order::query()->where('id', $request->order_id)->first();
+        $order = tap($orderDetails)
             ->update($request->except('files', '_token', 'order_id'));
 
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 
-        $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
+        $user->notify(new OrderNotification('يوجد لديك طلب #'.$orderDetails->identifier.' بإنتظار مراجعتك ', auth()->user()->id));
         return redirect()->route('services_providers.orders')->with(['success' => 'تم تعديل الطلب بنجاح']);
 
 
