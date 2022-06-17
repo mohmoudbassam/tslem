@@ -502,6 +502,19 @@
                             $('#page_modal').modal('hide');
                             KTApp.unblockPage();
                         }
+            
+            $.ajax({
+                url : '{{route('design_office.save_file')}}',
+                data : new FormData($('#add_edit_form').get(0)),
+                type: "POST",
+                processData: false,
+                contentType: false,
+                beforeSend(){
+                    KTApp.block('#page_modal', {
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'الرجاء الانتظار..........'
                     });
                 }
                 let handleNextUpload = async () => {
