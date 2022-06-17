@@ -16,7 +16,7 @@ return [
         'camp_space' => 'Camp Space',
         'map_path' => 'Location Map',
     ],
-    "raft_company_name" => "شركة طوافة حجاج :name",
+    "raft_company_name" => ":name",
     "no_parent_name" => "المجلس التنسيقي لحجاج الداخل",
     "download_for_service_provider" => "اصدار رخصة الإضافات",
 ];
