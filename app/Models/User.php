@@ -248,6 +248,8 @@ class User extends Authenticatable
         return getUserRaftCompanyBox($this, $default);
     }
 
+
+
     public function raft_company_location()
     {
         return optional($this->getRaftCompanyBox())->raft_company_location();

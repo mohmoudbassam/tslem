@@ -91,10 +91,10 @@
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                                 </div>
-                                @if(isset($order->service_provider->raft_company_location))
+                                @if($this->service_provider->raft_company_name)
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">شركة الطوافة :</span> {{ $order->service_provider->raft_company_location->name }}</p>
+                                            class="bold">شركة الطوافة :</span> {{ $this->service_provider->raft_company_name }}</p>
                                 </div>
                                 @endif
                                 <div class="col-md-6 my-3">
