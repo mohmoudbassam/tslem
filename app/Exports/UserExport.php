@@ -36,7 +36,6 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
             $user->commercial_file_end_date,
             $user->id_number,
             $user->license_number,
-            $user->address,
             $user->city,
         ];
     }
@@ -46,13 +45,12 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
         return [
             'اسم المكتب',
             'اسم المالك',
-            'البريد الالتكروني',
+            'البريد الإلكتروني',
             'الجوال',
-            ' السجل التجاي',
+            ' السجل التجاري',
             'تاريخ انتهاء السجل التجاري',
             ' الهوية',
             ' رقم الترخيص',
-            'العنوان',
             'المدينة',
         ];
     }
