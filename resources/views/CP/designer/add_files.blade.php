@@ -463,10 +463,11 @@
                 tabs.splice(tabs.indexOf(name.toLowerCase()), 1);
                 tabsLength = tabs.length;
             }
-            $(document).on("click", "#repeater-row-btn", function () {
+            function repeatCreateFunc(){
                 const currentTab = $("li.nav-item > a.nav-link.specialty-nav.active[aria-selected='true']");
                 pushToTabs(currentTab.data("specialty"));
-            });
+            }
+            $(document).on("click", "#repeater-row-btn", repeatCreateFunc);
             $(document).on("click", "#repeater-delete-btn", function () {
                 const currentTab = $("li.nav-item > a.nav-link.specialty-nav.active[aria-selected='true']");
                 const tabElementsLength = $(this).parents(`[data-repeater-list='${currentTab.data("specialty")}']`).children().length;
