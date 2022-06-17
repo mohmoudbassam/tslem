@@ -132,7 +132,7 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold"> مكتب النفايات :  </span>{{ $order->waste_contractor }}</p>
+                                            class="bold"> مقاول النفايات :  </span></p>
                                 </div>
 
                                 <div class="col-12">
