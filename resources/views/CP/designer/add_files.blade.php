@@ -360,6 +360,12 @@
         }
         $('.submit_btn').click(function (e) {
             e.preventDefault();
+
+            if (!$("[data-repeater-item]").length) {
+                showAlertMessage('error', 'الرجاء اضافة خدمة جديدة')
+                return false;
+            }
+
             $('.req').each((i, e) => {
                 $(e).rules("add", {required: true})
             });
@@ -468,6 +474,8 @@
                 pushToTabs(currentTab.data("specialty"));
             }
             $(document).on("click", "#repeater-row-btn", repeatCreateFunc);
+
+
             $(document).on("click", "#repeater-delete-btn", function () {
                 const currentTab = $("li.nav-item > a.nav-link.specialty-nav.active[aria-selected='true']");
                 const tabElementsLength = $(this).parents(`[data-repeater-list='${currentTab.data("specialty")}']`).children().length;
@@ -524,6 +532,8 @@
                     }
                 }
             });
+
+            $('#repeater-row-btn').click();
         });
     </script>
 @endsection
