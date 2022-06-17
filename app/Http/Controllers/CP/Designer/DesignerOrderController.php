@@ -99,8 +99,8 @@ class DesignerOrderController extends Controller
         if( $order->status == Order::PENDING ) {
             $order->status = Order::REQUEST_BEGIN_CREATED;
             $order->save();
-            save_logs($order, $order->designer_id, 'تم اعتماد الطلب #'.$order->identifier.' من مكتب التصميم ');
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
+            save_logs($order, $order->designer_id, 'تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم ');
+            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
 
             return redirect()->route('design_office.orders');
         }
