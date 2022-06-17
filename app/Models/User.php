@@ -245,7 +245,7 @@ class User extends Authenticatable
 
     public function getRaftCompanyBox($default = null)
     {
-        return getUserRaftCompanyBox($this, $default);
+        return \getUserRaftCompanyBox($this, $default);
     }
 
 
