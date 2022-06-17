@@ -52,7 +52,8 @@
             <div class="row">
 
                 <div class="col-sm-12">
-                    <table class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
+                    <div class="table-responsive">
+                        <table class="table align-middle datatable dt-responsive table-check dataTable no-footer"
                            id="items_table" style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
                            role="grid"
                            aria-describedby="DataTables_Table_0_info">
@@ -60,9 +61,8 @@
                         <th>
                             رقم الطلب
                         </th>
-
                         <th>
-                            التاريخ
+                            مركز الخدمة
                         </th>
                         <th>
                             المكتب الهندسي
@@ -86,6 +86,7 @@
                         <tbody>
                         </tbody>
                     </table>
+                    </div>
                 </div>
 
 
@@ -165,7 +166,7 @@
                 },
                 columns: [
                     {className: 'text-right', data: 'identifier', name: 'identifier'},
-                    {className: 'text-right', data: 'date', name: 'date', orderable: false},
+                    {className: 'text-right', data: 'service_provider.company_name', name: 'service_provider', orderable: false},
                     {className: 'text-right', data: 'designer.company_name', name: 'designer', orderable: false},
                     {className: 'text-right', data: 'order_status', name: 'order_status', orderable: false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},

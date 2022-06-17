@@ -85,6 +85,7 @@
                             <div class="row">
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
+
                                 </div>
 
                                 <div class="col-md-6 my-3">
@@ -94,6 +95,16 @@
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</p>
+                                </div>
+
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">

@@ -17,7 +17,9 @@
 
     <tr>
         <td rowspan="5">
-{{--            <img src="{{$model->map_path_url}}" class="my-2 map-image img" width="300">--}}
+            @if($model->map_path)
+            <img src="{{$model->map_path_url}}" class="my-2 map-image img" width="300">
+            @endif
         </td>
         <td>{{$model->box_name}}</td>
         <td>رقم المربع</td>

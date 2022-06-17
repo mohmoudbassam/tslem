@@ -37,6 +37,7 @@ class OrdersController extends Controller
             ->whereDate($request->from_date, $request->to_date)
             ->orderByDesc('created_at')
             ->with('designer')
+            ->with('service_provider')
             ->with(['designer', 'contractor', 'consulting']);
 
         if ($request->waste_contractor) {
@@ -46,6 +47,9 @@ class OrdersController extends Controller
         return DataTables::of($order)
             ->addColumn('created_at', function ($order) {
                 return $order->created_at->format('Y-m-d');
+            })
+            ->addColumn('updated_at', function ($order) {
+                return $order->updated_at->format('Y-m-d');
             })
             ->addColumn('order_status', function ($order) {
                 return $order->order_status;

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class License extends Model
 {
@@ -266,6 +267,11 @@ CODE;
         return $builder->whereIn('camp_raft_company_box_id', (array) $id);
     }
 
+    public function scopeOnlyFullyCreated(Builder $builder)
+    {
+        return $builder->whereNotNull('created_at');
+    }
+
     // endregion: scopes
 
     // region: map_path
@@ -418,5 +424,22 @@ CODE;
     public function isFullyCreated(): bool
     {
         return !is_null($this->created_at);
+    }
+
+    /**
+     * @return void|\Illuminate\Support\HtmlString|string
+     */
+    public function getQRElement()
+    {
+        $data = "";
+        if( $raft = $this->service_provider->getRaftCompanyBox() ) {
+            $data = implode(" , ", [
+                $raft->file_first_fullpath,
+                $raft->file_second_fullpath,
+                $raft->file_third_fullpath,
+            ]);
+        }
+
+        return QrCode::generate($data);
     }
 }
