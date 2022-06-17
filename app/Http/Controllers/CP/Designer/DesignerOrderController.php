@@ -522,19 +522,6 @@ class DesignerOrderController extends Controller
             ];
         }
 
-        if( !(request('warning_file')) ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء إرفاق ملف الانذار ",
-            ];
-        }
-
-        if( !(request('fire_fighter_file')) ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء إرفاق ملف الاطفاء ",
-            ];
-        }
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
         $specialties = collect($request->except('_token', 'order_id'))->map(function($item, $key) use ($specialties_names) {
             if( in_array($key, $specialties_names) ) {
