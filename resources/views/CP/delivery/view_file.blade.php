@@ -113,7 +113,7 @@
                             <div class="row">
 
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
+                                    <p class="details_p"><span class="bold">  تاريخ الإنشاء :</span> {{$order->created_at->format("Y-m-d")}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
@@ -130,6 +130,11 @@
                                             class="bold"> اسم مكتب التصميم :  </span>{{ (isset($order->designer)) ? $order->designer->company_name : ''}}</p>
                                 </div>
 
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold"> مقاول النفايات :  </span>{{ $order->waste_contractor }}</p>
+                                </div>
+
                                 <div class="col-12">
                                     <p class="details_p">
                                         <span>
@@ -139,7 +144,7 @@
                                     <ul class="m-0">
                                         @foreach($order->designer->designer_types as $designType)
                                             <li style="font-size: 20px;">
-                                                {{ $designType->type }}
+                                                {{ get_designer_type_name($designType->type) }}
                                             </li>
                                         @endforeach
                                     </ul>

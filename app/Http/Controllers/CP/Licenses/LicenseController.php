@@ -287,6 +287,7 @@ class LicenseController extends Controller
     public function list(Request $request)
     {
         $licenses = License::query()
+            ->onlyFullyCreated()
             ->orderBy('created_at', data_get(collect($request->get('order', ['desc']))->first(), 'dir', 'desc'))
             ->when(request('name'), function ($query) {
                 return $query->where(function (Builder $q) {
@@ -306,7 +307,7 @@ class LicenseController extends Controller
 
         return DataTables::of($licenses)
             ->addColumn('id', fn(License $license) => $license->id)
-            ->addColumn('order_id', fn(License $license) => $license->order_id)
+            ->addColumn('order_id', fn(License $license) => $license->order()->value('identifier'))
             ->addColumn(
                 'date',
                 fn(License $license) => $license->date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->date) : "-"

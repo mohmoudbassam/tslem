@@ -119,16 +119,10 @@
                             المقاول
                         </th>
                         <th>
-                            مقاول النفايات
-                        </th>
-                        <th>
                             التاريخ
                         </th>
                         <th>
                             حالة الطلب
-                        </th>
-                        <th>
-                            تاريخ الإنشاء
                         </th>
                         <th>
                             الخيارات
@@ -136,7 +130,7 @@
 
 
                         </thead>
-                        <tbody>
+                        <tbody style="font-size: 13px;">
                         </tbody>
                     </table>
                 </div>
@@ -187,10 +181,8 @@
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name',orderable : false},
                     {className: 'text-center', data: 'designer.company_name', name: 'company_name',orderable : false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
-                    {className: 'text-right', data: 'waste_contractor', name: 'waste_contractor', orderable: false},
-                    {className: 'text-center', data: 'date', name: 'date',orderable : false},
+                    {className: 'text-center', data: 'updated_at', name: 'updated_at',orderable : false},
                     {className: 'text-center', data: 'order_status', name: 'order_status',orderable : false},
-                    {className: 'text-center', data: 'created_at', name: 'created_at',orderable : false},
                     {className: 'text-center', data: 'actions', name: 'actions',orderable : false},
 
                 ],
