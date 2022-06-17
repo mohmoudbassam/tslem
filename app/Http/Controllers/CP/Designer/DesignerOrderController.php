@@ -122,8 +122,8 @@ class DesignerOrderController extends Controller
 
         if( $order->status == Order::PENDING ) {
             $order->status = Order::PENDING;
-            save_logs($order, $order->designer_id, 'تم رفض الطلب من مكتب التصميم');
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب من مكتب التصميم', $order->designer_id));
+            save_logs($order, $order->designer_id, 'تم رفض الطلب #'.$order->identifier.' من مكتب التصميم');
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
             $order->designer_id = null;
             DesignerRejected::query()->create([
                                                   'order_id' => $order->id,
@@ -133,7 +133,7 @@ class DesignerOrderController extends Controller
             $order->save();
         }
 
-        return redirect()->route('design_office.orders')->with([ 'success' => 'تمت رفض الطلب بناح ' ]);
+        return redirect()->route('design_office.orders')->with([ 'success' => 'تمت رفض الطلب بنجاح' ]);
     }
 
     public function add_files(Order $order)
