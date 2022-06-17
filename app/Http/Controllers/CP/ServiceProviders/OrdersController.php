@@ -103,7 +103,7 @@ class OrdersController extends Controller
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 
-        $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
+        $user->notify(new OrderNotification('تم إضافة الطلب #'.$order->identifier.' إلى قائمة طلباتك للمراجعة  ', auth()->user()->id));
         return redirect()->route('services_providers.orders')->with(['success' => 'تم انشاء الطلب بنجاح']);
     }
 
