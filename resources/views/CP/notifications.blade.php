@@ -40,7 +40,7 @@
                             <a href="#!" class="text-reset notification-item">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
-                                        <img src="{{ \App\Models\User::where('id',$notification->notifiable_id)->first()->image }}"
+                                        <img src="{{ \App\Models\User::select('image')->where('id',$notification->notifiable_id)->first()->image }}"
                                              class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
 

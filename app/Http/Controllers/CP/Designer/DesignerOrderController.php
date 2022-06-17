@@ -99,13 +99,13 @@ class DesignerOrderController extends Controller
         if( $order->status == Order::PENDING ) {
             $order->status = Order::REQUEST_BEGIN_CREATED;
             $order->save();
-            save_logs($order, $order->designer_id, 'تم اعتماد الطلب  من مكتب التصميم ');
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التصميم   ', $order->designer_id));
+            save_logs($order, $order->designer_id, 'تم اعتماد الطلب #'.$order->identifier.' من مكتب التصميم ');
+            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
 
             return redirect()->route('design_office.orders');
         }
 
-        return redirect()->route('design_office.orders')->with([ 'success' => 'تمت الموافقة على الطلب بنحاح' ]);
+        return redirect()->route('design_office.orders')->with([ 'success' => 'تمت الموافقة على الطلب بنجاح' ]);
 
     }
 
@@ -122,8 +122,8 @@ class DesignerOrderController extends Controller
 
         if( $order->status == Order::PENDING ) {
             $order->status = Order::PENDING;
-            save_logs($order, $order->designer_id, 'تم رفض الطلب #'.$order->identifier.' من مكتب التصميم');
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
+            save_logs($order, $order->designer_id, 'تم رفض الطلب #'.$order->identifier.' من مكتب التصميم بسبب'.$request->input("rejection_note"));
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #'.$order->identifier.' بسبب '.$request->input("rejection_note"), $order->designer_id));
             $order->designer_id = null;
             DesignerRejected::query()->create([
                                                   'order_id' => $order->id,
@@ -133,7 +133,7 @@ class DesignerOrderController extends Controller
             $order->save();
         }
 
-        return redirect()->route('design_office.orders')->with([ 'success' => 'تمت رفض الطلب بنجاح' ]);
+        return redirect()->route('design_office.orders')->with([ 'success' => 'تم رفض الطلب بنجاح' ]);
     }
 
     public function add_files(Order $order)
