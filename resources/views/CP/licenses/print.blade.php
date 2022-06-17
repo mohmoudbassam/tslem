@@ -6,11 +6,9 @@
 
 @endphp
 
-{{--@if( !request()->has('print') )--}}
     @section('title')
         {{\App\Models\License::crudTrans($mode)}}
     @endsection
-{{--@endif--}}
 
 @section('content')
     @if( !request()->has('print') )
@@ -38,37 +36,13 @@
 
 @section('style')
     <style>
-        body {
-            /*font-family: "Amiri", DejaVu Sans, sans-serif !important;*/
-        }
-
         h4 {
             margin: 0 !important;
             margin-top: 15px !important;
         }
 
-        .print-page-container {
-            /*font-size: 16px*/
-        }
-
-        .text-bold {
-            font-weight: bold;
-        }
-
-        .img {
-            /*max-width: 200px;*/
-        }
-
-        .ksa-image2, .qr-image {
-            /*max-width: 156px;*/
-        }
-
         .border {
             border: 1px solid black !important;
-        }
-
-        .fit-content {
-            height: fit-content !important;
         }
     </style>
 @endsection
