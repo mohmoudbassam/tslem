@@ -132,7 +132,7 @@
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold"> مكتب النفايات :  </span>{{ (isset($order->designer)) ? $order->designer->company_name : ''}}</p>
+                                            class="bold"> مكتب النفايات :  </span>{{ $order->waste_contractor }}</p>
                                 </div>
 
                                 <div class="col-12">
