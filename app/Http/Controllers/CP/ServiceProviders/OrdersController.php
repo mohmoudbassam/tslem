@@ -270,10 +270,10 @@ class OrdersController extends Controller
 
         save_logs($order, auth()->user()->id, "تم اختيار المشرف ومكتب المقاولات");
         if($old_contractor_id != $request->contractor_id){
-            optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمكتب استشاري على الطلب #'.$order->identifier.' ', auth()->user()->id));
+            optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمكتب استشاري على الطلب #'.$order->identifier.' تابع العملية من صفحة طلبات الإشراف في القائمة يساراً', auth()->user()->id));
         }
         if($old_consulting_office_id != $request->consulting_office_id){
-            optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمكتب مقاولات على الطلب #'.$order->identifier.' ', auth()->user()->id));
+            optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمكتب مقاولات على الطلب #'.$order->identifier.' تابع العملية من صفحة طلبات الإشراف في القائمة يساراً', auth()->user()->id));
         }
         return response()->json([
             'success' => true,
