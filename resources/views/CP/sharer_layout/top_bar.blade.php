@@ -100,7 +100,7 @@
                     <div data-simplebar style="max-height: 230px;">
                         @foreach (auth()->user()->notifications()->take(5)->get() as $notification)
 
-                            <a href="#!" class="text-reset notification-item">
+                            <div class="text-reset notification-item">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <img src="{{optional($notification->Notifer)->image}}"
@@ -116,7 +116,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                     <div class="p-2 border-top d-grid">
