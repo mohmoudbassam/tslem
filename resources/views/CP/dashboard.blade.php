@@ -147,7 +147,7 @@
                             </g></svg>
                         <h3>الطلبات لدى المكاتب الهندسية</h3>
                         <p> {{$order_count_per_designer}} طلب </p>
-                        <a href="{{route('orders')}}?params=contractor">عرض الطلبات</a>
+                        <a href="{{route('orders')}}?params=designe_office_orders">عرض الطلبات</a>
                     </div>
                 </div>
             </div>
