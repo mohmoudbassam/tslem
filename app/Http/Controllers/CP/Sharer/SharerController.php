@@ -101,27 +101,28 @@ class SharerController extends Controller
         ->with('user')
         ->get();
 
-        $isAllAccepted = true;
         $isSomeoneRejected = false;
+
         foreach($getCountOrderSharer as $getCountOrderSharerItem){
+
             if($getCountOrderSharerItem->status == 2 || $getCountOrderSharerItem->status == '2'){
                 $isSomeoneRejected = true;
-                $isAllAccepted = false;
             }
-            if($getCountOrderSharerItem->status == 0 || $getCountOrderSharerItem->status == '0'){
-                $isAllAccepted = false;
-            }
+
         }
 
         if($isSomeoneRejected){
             $order->status = Order::DESIGN_REVIEW;
             $order->delivery_notes = 1;
             $order->save();
-        }elseif($isAllAccepted){
+        }
+        
+        if($getCountOrderSharer->count() == $getCountOrderSharer->where('status',1)->count()){
             $order->allow_deliver = 1;
             $order->status = Order::DESIGN_APPROVED;
             $order->save();
         }
+
     }
 
     public function reject(Request $request)
