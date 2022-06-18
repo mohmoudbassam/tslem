@@ -12,7 +12,7 @@ use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+use App\Notifications\OrderNotification;
 class LicenseController extends Controller
 {
     public static function makeTd($value)
@@ -396,10 +396,17 @@ HTML;
     {
         $order->saveLicense($request->validated());
 
+
+        // Send notification to service provider
+        
+        $notificationText = 'تم اصدار الرخصة للطلب #'.$order->identifier.' وبإنتظار اختيارك للمشرف والمقاول';
+        save_logs($order, auth()->user()->id,$notificationText);
+        optional($order->service_provider)->notify(new OrderNotification($notificationText,auth()->user()->id));
         return response()->json([
             'message' => __('general.success'),
             'success' => true,
         ]);
+
     }
 
     /**
