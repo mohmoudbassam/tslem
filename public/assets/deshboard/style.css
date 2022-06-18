@@ -1,120 +1,133 @@
 .card.card-chart__filled {
-  color: #fff;
-  background: linear-gradient(0deg, #0a2373, #324ea3);
-  padding: 12px 110px 0 30px;
-  position: relative;
-}
-.card.card-chart__filled--blue {
-  background: linear-gradient(0deg, #0a2373, #324ea3);
-}
-.card.card-chart__filled--brown {
-  background: linear-gradient(0deg, #b78560, #dba47e);
-}
+    color: #fff;
+    background: linear-gradient(0deg, #0a2373, #324ea3);
+    padding: 12px 70px 0 0px;
+    position: relative;
+  }
+  .card.card-chart__filled--blue {
+    background: linear-gradient(0deg, #0a2373, #324ea3);
+  }
+  .card.card-chart__filled--brown {
+    background: linear-gradient(0deg, #b78560, #dba47e);
+  }
 
-.card.card-chart__filled--lighbrown {
-  background: linear-gradient(0deg, #e3ba9c, #ebccb7);
-}
+  .card.card-chart__filled--lighbrown {
+    background: linear-gradient(0deg, #e3ba9c, #ebccb7);
+  }
 
-.card.card-chart__filled h3 {
-  color: #fff;
-  font-weight: normal;
-  font-size: 16px;
-  margin: 0;
-}
+  .card.card-chart__filled h3 {
+      color: #fff;
+      font-weight: normal;
+      font-size: 16px;
+      margin: 0;
+      margin-bottom: 10px;
+  }
 
-.card.card-chart__filled p {
-  font-size: 48px;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 10px;
-}
+  .card.card-chart__filled p {
+      font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+  }
 
-.card.card-chart__filled a {
-  color: #fff;
-  float: left;
-}
+  .card.card-chart__filled a {
+    color: #fff;
+    float: left;
+  }
 
-.card.card-chart__filled a:after {
-  content: "\f0142";
-  font-family: "Material Design Icons";
-  display: inline-block;
-  transition: transform 0.2s;
-  background: #ffffff24;
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-  text-align: center;
-  line-height: 24px;
-  font-size: 18px;
-  border-radius: 50%;
-  vertical-align: middle;
-  transform: rotate(180deg);
-}
-.card.card-chart__filled svg {
-  position: absolute;
-  top: 38px;
-  right: 30px;
-  width: auto;
-  height: 68px;
-}
-.bg-blue-dark {
-  background: #0d2777;
-}
-.bg-blue-light {
-  background: #95a7dd;
-}
-.bg-brown-dark {
-  background: #b98762;
-}
-.bg-brown-light {
-  background: #e5bea2;
-}
-.custom-stats {
-  list-style: none;
-  padding: 0 30px;
-  margin: 0;
-}
-.custom-stats-title {
-  padding: 0 30px;
-  margin-bottom: 28px;
-}
-ul.custom-stats p {
-  display: inline-block;
-  border: 1px solid #dfdfdf;
-  border-radius: 8px;
-  padding: 18px;
-  color: #bfbfbf;
-  margin-left: 15px;
-}
+  .card.card-chart__filled a:after {
+    content: "\f0142";
+    font-family: "Material Design Icons";
+    display: inline-block;
+    transition: transform 0.2s;
+    background: #ffffff24;
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 18px;
+    border-radius: 50%;
+    vertical-align: middle;
+    transform: rotate(180deg);
+  }
+  .card.card-chart__filled svg {
+    position: absolute;
+    top: 38px;
+    right: 15px;
+    width: auto;
+    height: 50px;
+  }
+  .bg-blue-dark {
+    background: #0d2777;
+  }
+  .bg-blue-light {
+    background: #95a7dd;
+  }
+  .bg-brown-dark {
+    background: #b98762;
+  }
+  .bg-brown-light {
+    background: #e5bea2;
+  }
+  .custom-stats {
+    list-style: none;
+    padding: 0 30px;
+    margin: 0;
+  }
+  .custom-stats-title {
+    padding: 0 30px;
+    margin-bottom: 28px;
+  }
+  ul.custom-stats p {
+    display: inline-block;
+    border: 1px solid #dfdfdf;
+    border-radius: 8px;
+    padding: 18px;
+    color: #bfbfbf;
+    margin-left: 15px;
+  }
 
-ul.custom-stats label {
-  display: block;
-  margin: 0;
-}
+  ul.custom-stats label {
+    display: block;
+    margin: 0;
+  }
 
-ul.custom-stats span {
-  font-weight: bold;
-  color: #0f2979;
-  font-size: 18px;
-}
-ul.custom-stats i {
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  border-radius: 50%;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-.progress {
-  border-radius: 25px;
-  height: 18px;
-  margin: 30px 0 30px 0;
-}
-.apexcharts-legend-text {
-  font-family: JannaLT !important;
-}
-.apexcharts-text tspan {
-  font-family: JannaLT !important;
-  font-size: 11px;
-  fill: #898989;
-}
+  ul.custom-stats span {
+    font-weight: bold;
+    color: #0f2979;
+    font-size: 18px;
+  }
+  ul.custom-stats i {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+  .progress {
+    border-radius: 25px;
+    height: 18px;
+    margin: 30px 0 30px 0;
+  }
+  .apexcharts-legend-text {
+    font-family: JannaLT !important;
+  }
+  .apexcharts-text tspan {
+    font-family: JannaLT !important;
+    font-size: 11px;
+    fill: #898989;
+  }
+
+
+  @media(max-width:991px){
+    ul.custom-stats p {
+        display: block;
+        margin-left: 0;
+    }
+  }
+
+  /* .apexcharts-xaxis-texts-g *{
+    transform: rotate(0);
+  } */
