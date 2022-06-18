@@ -507,6 +507,12 @@ class DesignerOrderController extends Controller
                                           'status' => OrderSharer::PENDING,
                                       ]);
 
+        $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
+        foreach($getTasleemUsers as $taslemUser){
+            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #'.$order->identifier.' من مكتب التصميم الهندسي', $order->designer_id));
+        }
+
+
         return response()->json([
                                     'success' => true,
                                     'message' => 'تمت اضافة التعديل  بنجاح',
