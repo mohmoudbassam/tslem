@@ -320,8 +320,8 @@ class DeliveryController extends Controller
             $order->save();
 
             save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
-            optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
+            optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت رفض الطلب بنجاح'
@@ -377,8 +377,8 @@ class DeliveryController extends Controller
         ]);
 
         save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
-        optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
-        optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
+        optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
+        optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
 
         return response()->json([
             'success' => true,
