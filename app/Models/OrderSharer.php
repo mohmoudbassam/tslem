@@ -31,6 +31,12 @@ class OrderSharer extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function lastnote()
     {
         return $this->hasOne(OrderSharerReject::class, 'order_sharer_id')->latest()->take(1);

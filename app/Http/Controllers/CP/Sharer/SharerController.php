@@ -78,20 +78,51 @@ class SharerController extends Controller
         $orderSharer->status = OrderSharer::ACCEPT;
         $orderSharer->save();
 
+
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
-        $accepted_sharer = OrderSharer::query()->where('order_id', $request->id)->where('status', 1)->count();
 
-        $all_sharer = OrderSharer::query()->where('order_id', $request->id)->count();
-
-        if ($all_sharer == $accepted_sharer) {
-            $order->allow_deliver = 1;
-            $order->save();
-        }
-
+        
+        $this->prepareUpdateOrderStatus($order);
+        
+        optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
+        
         return response()->json([
             'success' => true,
             'message' => 'تمت اعتماد الطلب بنجاح'
         ]);
+    }
+
+
+    public function prepareUpdateOrderStatus($order){
+
+        $getCountOrderSharer = OrderSharer::query()
+        ->where("order_id", $request->id)
+        ->where('user_id', auth()->user()->id)
+        ->with('user')
+        ->get();
+
+        $isAllAccepted = true;
+        $isSomeoneRejected = false;
+        $rejectedSharerName = '';
+        foreach($getCountOrderSharer as $getCountOrderSharerItem){
+            if($getCountOrderSharerItem->status == 2){
+                $isSomeoneRejected = true;
+                $isAllAccepted = false;
+                $rejectedSharerName = $getCountOrderSharer->user->name;
+            }
+            if($getCountOrderSharerItem->status == 0){
+                $isAllAccepted = false;
+            }
+        }
+
+        if($isSomeoneRejected){
+            $order->status = Order::DESIGN_REVIEW;
+            $order->save();
+        }elseif($isAllAccepted){
+            $order->allow_deliver = 1;
+            $order->status = Order::DESIGN_APPROVED;
+            $order->save();
+        }
     }
 
     public function reject(Request $request)
@@ -106,10 +137,16 @@ class SharerController extends Controller
 
         OrderSharerReject::query()->create([
             'note' => $request->note,
-            'order_sharer_id' => $order_sharer->id,
-
+            'order_sharer_id' => $order_sharer->id
         ]);
 
+        $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
+
+        
+        $sharerUser = User::where('id', auth()->user()->id)->first();
+        optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name.' والملاحظة هي '.$request->note, auth()->user()->id));
+        
+        $this->prepareUpdateOrderStatus($order);
         return response()->json([
             'success' => true,
             'message' => 'تمت إضافة الملاحظات بنجاح'
