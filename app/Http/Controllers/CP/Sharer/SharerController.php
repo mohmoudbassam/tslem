@@ -94,7 +94,7 @@ class SharerController extends Controller
 
         $this->prepareUpdateOrderStatus($order);
 
-        optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
+        // optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
 
         return response()->json([
             'success' => true,
@@ -150,7 +150,7 @@ class SharerController extends Controller
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
 
 
-        optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name.' والملاحظة هي '.$request->note, auth()->user()->id));
+        optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' والملاحظة هي '.$request->note, auth()->user()->id));
 
         $this->prepareUpdateOrderStatus($order);
         return response()->json([
