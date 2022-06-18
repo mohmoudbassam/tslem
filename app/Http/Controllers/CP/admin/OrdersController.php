@@ -39,7 +39,11 @@ class OrdersController extends Controller
             ->with('designer')
             ->with('service_provider')
             ->with(['designer', 'contractor', 'consulting']);
-
+        $order->when($request->params == 'contractor', function ($q) {
+            $q->whereNotNull('contractor_id');
+        });   $order->when($request->params == 'tasleem', function ($q) {
+            $q->where('status','>',3);
+        });
         if ($request->waste_contractor) {
             $order = $order->whereWasteContractor($request->waste_contractor);
         }
