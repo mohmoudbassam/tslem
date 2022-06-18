@@ -103,14 +103,12 @@ class SharerController extends Controller
 
         $isAllAccepted = true;
         $isSomeoneRejected = false;
-        $rejectedSharerName = '';
         foreach($getCountOrderSharer as $getCountOrderSharerItem){
-            if($getCountOrderSharerItem->status == 2){
+            if($getCountOrderSharerItem->status == 2 || $getCountOrderSharerItem->status == '2'){
                 $isSomeoneRejected = true;
                 $isAllAccepted = false;
-                $rejectedSharerName = $getCountOrderSharerItem->user->name;
             }
-            if($getCountOrderSharerItem->status == 0){
+            if($getCountOrderSharerItem->status == 0 || $getCountOrderSharerItem->status == '0'){
                 $isAllAccepted = false;
             }
         }
