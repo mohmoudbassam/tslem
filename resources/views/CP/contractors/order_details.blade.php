@@ -95,15 +95,20 @@ file-drop-zone clearfix {}
                                     </div>
 
 
-
-                                    <div class="col-md-6 my-3">
+                                    @if($order->service_provider->raft_company_name)
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</p>
+                                </div>
+                                @endif
+                                <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</p>
+                                            class="bold">البريد الإلكتروني لمركز الخدمة :</span> {{$order->service_provider->email}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
