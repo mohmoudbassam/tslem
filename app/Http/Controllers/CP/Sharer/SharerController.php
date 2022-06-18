@@ -79,13 +79,23 @@ class SharerController extends Controller
         $orderSharer->save();
 
 
+        $count = OrderSharer::where("order_id", $request->id)
+            ->where("status", OrderSharer::ACCEPT)->count();
+
+        if ( $count == OrderSharer::where("order_id", $request->id)->count() ) {
+            Order::where("id", $request->id)->update([
+                'status' => Order::ORDER_APPROVED
+            ]);
+        }
+
+
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
 
-        
+
         $this->prepareUpdateOrderStatus($order);
-        
+
         optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
-        
+
         return response()->json([
             'success' => true,
             'message' => 'تمت اعتماد الطلب بنجاح'
@@ -113,7 +123,7 @@ class SharerController extends Controller
             $order->delivery_notes = 1;
             $order->save();
         }
-        
+
         if($getCountOrderSharer->count() == $getCountOrderSharer->where('status',1)->count()){
             $order->allow_deliver = 1;
             $order->status = Order::DESIGN_APPROVED;
@@ -139,9 +149,9 @@ class SharerController extends Controller
 
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
 
-        
+
         optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name.' والملاحظة هي '.$request->note, auth()->user()->id));
-        
+
         $this->prepareUpdateOrderStatus($order);
         return response()->json([
             'success' => true,
