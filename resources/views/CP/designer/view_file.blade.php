@@ -330,25 +330,32 @@
                                 {{--                @endif--}}
                             </div>
                         </div>
-
-                        @if($order->status >= \App\Models\Order::DESIGN_REVIEW)
-                            <div class="tab-pane" id="notes"
-                             role="tabpanel">
+                        <div class="tab-pane" id="notes" role="tabpanel">
                             <div class="row">
-                                <div class="col-12">
-                                    <ul>
-                                        @if($last_note)
-                                            @foreach($last_note as $note)
-                                                @if(preg_match('/\S/', $note))
-                                                    <li class="h4"> {{$note}}</li>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </div>
+                                @foreach($order_sharers as $order_sharer)
+                                    <div class="col-md-3 card">
+                                        <div class="card-header d-flex
+                                            @if($order_sharer->status == 1)
+                                                bg-success
+                                            @elseif($order_sharer->status == 2)
+                                                bg-danger
+                                            @elseif($order_sharer->status ==0)
+                                                bg-secondary
+                                            @endif
+                                            ">
+                                            <a href="#" class="h4">{{ $order_sharer->users->name }}</a>
+                                            <span class="ms-auto h4 text-white"> {{$order_sharer->order_sharer_status}} </span>
+                                        </div>
+                                        <div class="card-body h4">
+                                            @if($order_sharer->status == 2)
+                                                {{ $order_sharer->lastnote->note }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>

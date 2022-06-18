@@ -342,11 +342,14 @@ class DesignerOrderController extends Controller
             $tex = array_filter(preg_split("/\r\n|\n|\r\s+/", $last_note->note));
         }
 
+        $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
+
         return view('CP.designer.view_file', [
             'order' => $order,
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'last_note' => $tex,
+            'order_sharers' => $order_sharers
         ]);
 
     }
