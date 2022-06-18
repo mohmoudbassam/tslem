@@ -15,6 +15,7 @@ class Order extends Model
     public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
     public const DESIGN_APPROVED = 4;
+    public const DESIGN_AWAITING_GOV_APPROVE = 8;
     public const PROCESSING = 5;
     public const COMPLETED = 6;
     public const PENDING_LICENSE_ISSUED = 7;
@@ -136,8 +137,9 @@ class Order extends Model
                    '2' => 'قيد انشاء الطلب',
                    '3' => 'مراجعة التصاميم',
                    '4' => 'معتمد التصاميم',
-                   '5' => 'PROCESSING',
-                   '6' => 'COMPLETED',
+                   '8' => 'بإنتظار اعتماد الجهات الحكومية',
+                   '5' => 'الطلب تحت الإجراء',
+                   '6' => 'الطلب مكتمل',
                    '7' => 'بإنتظار اصدار الرخصة'
 
                ][ $this->status ];
