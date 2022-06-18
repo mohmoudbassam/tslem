@@ -384,7 +384,7 @@
                                 @foreach($order_sharers as $order_sharer)
                                     <div class="col-md-3">
                                         <div class="card px-0">
-                                            <div class="card-header d-flex
+                                            <div class="card-header text-center
                                             @if($order_sharer->status == 1)
                                                 bg-success
                                             @elseif($order_sharer->status == 2)
@@ -393,8 +393,8 @@
                                                 bg-secondary
                                             @endif
                                                 ">
-                                                <a href="#" class="h4">{{ $order_sharer->users->company_name }}</a>
-                                                <span class="ms-auto h4 text-white"> {{$order_sharer->order_sharer_status}} </span>
+                                                <p class="text-white mb-1 p-0" style="font-size: 18px; font-weight: bolder;">{{ $order_sharer->users->company_name }}</p>
+                                                <p class="">( {{$order_sharer->order_sharer_status}} )</p>
                                             </div>
                                             <div class="card-body h4">
                                                 @if($order_sharer->status == 2)

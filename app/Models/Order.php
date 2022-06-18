@@ -16,6 +16,7 @@ class Order extends Model
     public const DESIGN_REVIEW = 3;
     public const DESIGN_APPROVED = 4;
     public const DESIGN_AWAITING_GOV_APPROVE = 8;
+    public const ORDER_APPROVED = 9;
     public const PROCESSING = 5;
     public const COMPLETED = 6;
     public const PENDING_LICENSE_ISSUED = 7;
@@ -263,6 +264,6 @@ class Order extends Model
 
     public function isDesignApproved()
     {
-        return $this->status === static::DESIGN_APPROVED;
+        return $this->status === static::ORDER_APPROVED;
     }
 }
