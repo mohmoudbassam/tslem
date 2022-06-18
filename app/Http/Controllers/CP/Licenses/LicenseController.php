@@ -223,7 +223,9 @@ class LicenseController extends Controller
         /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
         $pdf = app()->make('snappy.pdf.wrapper');
         $service = order_services($order->id);
-        $half = ceil($service->count() / 2);
+        $limit = 8;
+        $servicesLimit = $service->count() > $limit ? $limit : $service->count();
+        $half = ceil($servicesLimit / 2);
         $chunks = $service->chunk($half);
 
 
@@ -398,14 +400,14 @@ HTML;
 
 
         // Send notification to service provider
-        
+
         $notificationText = 'تم اصدار الرخصة للطلب #'.$order->identifier.' وبإنتظار اختيارك للمشرف والمقاول';
         save_logs($order, auth()->user()->id,$notificationText);
         optional($order->service_provider)->notify(new OrderNotification($notificationText,auth()->user()->id));
-        
+
         $order->status = 7;
         $order->save();
-        
+
         return response()->json([
             'message' => __('general.success'),
             'success' => true,
