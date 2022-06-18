@@ -142,7 +142,6 @@ function get_designer_type_name($tpe)
         "fire" => "الحماية والوقاية من الحريق",
     ][$tpe];
 }
-<<<<<<< HEAD
 // function ends_with($string, $substring) {
 //    $length = strlen($substring);
 //    if ( substr_compare($string, $substring, -$length) === 0 ) {
@@ -151,8 +150,6 @@ function get_designer_type_name($tpe)
 //        return false;
 //    }
 // }
-=======
->>>>>>> 523be070249a5b76201c4251002abe45cf89053b
 function get_user_column_file($type)
 {
     $benef = BeneficiresCoulumns::query()->select(
