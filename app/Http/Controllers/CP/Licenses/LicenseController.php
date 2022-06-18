@@ -287,7 +287,7 @@ class LicenseController extends Controller
     public function list(Request $request)
     {
         $licenses = License::query()
-            // ->onlyFullyCreated()
+            ->onlyFullyCreated()
             ->orderBy('created_at', data_get(collect($request->get('order', ['desc']))->first(), 'dir', 'desc'))
             ->when(request('name'), function ($query) {
                 return $query->where(function (Builder $q) {
