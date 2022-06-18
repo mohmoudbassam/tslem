@@ -108,7 +108,7 @@ class SharerController extends Controller
             if($getCountOrderSharerItem->status == 2){
                 $isSomeoneRejected = true;
                 $isAllAccepted = false;
-                $rejectedSharerName = $getCountOrderSharer->user->name;
+                $rejectedSharerName = $getCountOrderSharerItem->user->name;
             }
             if($getCountOrderSharerItem->status == 0){
                 $isAllAccepted = false;
@@ -143,7 +143,6 @@ class SharerController extends Controller
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
 
         
-        $sharerUser = User::where('id', auth()->user()->id)->first();
         optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name.' والملاحظة هي '.$request->note, auth()->user()->id));
         
         $this->prepareUpdateOrderStatus($order);
