@@ -97,15 +97,12 @@ class SharerController extends Controller
 
         $getCountOrderSharer = OrderSharer::query()
         ->where("order_id", $order->id)
-        ->where('user_id', auth()->user()->id)
-        ->with('user')
         ->get();
 
         $isSomeoneRejected = false;
-
         foreach($getCountOrderSharer as $getCountOrderSharerItem){
 
-            if($getCountOrderSharerItem->status == 2 || $getCountOrderSharerItem->status == '2'){
+            if($getCountOrderSharerItem->status == 2){
                 $isSomeoneRejected = true;
             }
 
