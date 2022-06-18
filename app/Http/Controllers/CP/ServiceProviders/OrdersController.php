@@ -231,6 +231,9 @@ class OrdersController extends Controller
             })
             ->get();
         $wasteContractors = wasteContractorsList();
+
+        
+
         return response()->json([
             'success' => true,
             'page' => view('CP.service_providers.chice_constractor', [
@@ -246,16 +249,32 @@ class OrdersController extends Controller
     public function choice_constructor_action(Request $request)
     {
         $order = Order::query()->findOrFail($request->id);
-        $order->update([
-            'status' => Order::PENDING_LICENSE_ISSUED,
-            'contractor_id' => $request->contractor_id,
-            'consulting_office_id' => $request->consulting_office_id,
-            'waste_contractor' => $request->waste_contractor
-        ]);
 
-        save_logs($order, auth()->user()->id, "تم اخيار المشرف ومكتب المقاولات");
-        optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمكتب استشاري على الطلب #'.$order->identifier.' ', auth()->user()->id));
-        optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمكتب مقاولات على الطلب #'.$order->identifier.' ', auth()->user()->id));
+        $old_contractor_id = $order->contractor_id;
+        $old_consulting_office_id = $order->consulting_office_id;
+
+        $update = [
+            'status' => Order::PENDING_LICENSE_ISSUED
+        ];
+        if($request->waste_contractor){
+            $update['waste_contractor'] = $request->waste_contractor;
+        }
+        if($request->consulting_office_id){
+            $update['consulting_office_id'] = $request->consulting_office_id;
+        }
+        if($request->contractor_id){
+            $update['contractor_id'] = $request->contractor_id;
+        }
+
+        $order->update($update);
+
+        save_logs($order, auth()->user()->id, "تم اختيار المشرف ومكتب المقاولات");
+        if($old_contractor_id != $request->contractor_id){
+            optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمكتب استشاري على الطلب #'.$order->identifier.' ', auth()->user()->id));
+        }
+        if($old_consulting_office_id != $request->consulting_office_id){
+            optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمكتب مقاولات على الطلب #'.$order->identifier.' ', auth()->user()->id));
+        }
         return response()->json([
             'success' => true,
             'message' => 'تم الاختيار بنجاح'
