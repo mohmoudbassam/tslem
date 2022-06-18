@@ -292,8 +292,8 @@ class DeliveryController extends Controller
             $order->status = Order::DESIGN_AWAITING_GOV_APPROVE;
             $order->save();
 
-            $order->orderSharer()->update([
-                'status' => OrderSharer::PENDING,
+            OrderSharer::where('order_id',$request->id)->update([
+                'status' => OrderSharer::PENDING
             ]);
 
             $notificationText = 'تم اعتماد الطلب #'.$order->identifier.' من مكتب تسليم وبإنتظار باقي الجهات الحكومية';
