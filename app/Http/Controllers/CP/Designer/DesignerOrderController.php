@@ -319,6 +319,8 @@ class DesignerOrderController extends Controller
         $order->delivery_notes = 0;
         $order->save();
 
+        
+
         return view('CP.designer.edit_files', [
             'order' => $order,
             'specialties' => $specialties,
@@ -340,11 +342,14 @@ class DesignerOrderController extends Controller
             $tex = array_filter(preg_split("/\r\n|\n|\r\s+/", $last_note->note));
         }
 
+        $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
+
         return view('CP.designer.view_file', [
             'order' => $order,
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'last_note' => $tex,
+            'order_sharers' => $order_sharers
         ]);
 
     }
@@ -506,6 +511,12 @@ class DesignerOrderController extends Controller
         $order->orderSharer()->update([
                                           'status' => OrderSharer::PENDING,
                                       ]);
+
+        $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
+        foreach($getTasleemUsers as $taslemUser){
+            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #'.$order->identifier.' من مكتب التصميم الهندسي', $order->designer_id));
+        }
+
 
         return response()->json([
                                     'success' => true,

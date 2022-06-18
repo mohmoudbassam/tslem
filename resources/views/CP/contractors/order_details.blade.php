@@ -71,12 +71,6 @@ file-drop-zone clearfix {}
                                     <span class="d-none d-sm-block">تفاصيل الطلب</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#reports" role="tab">
-                                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                                    <span class="d-none d-sm-block">تقارير الإنجاز الدورية</span>
-                                </a>
-                            </li>
 
                         </ul>
 
@@ -91,35 +85,36 @@ file-drop-zone clearfix {}
                                 <div class="row">
 
                                     <div class="col-md-6 mb-3">
-                                        <p class="details_p"> <span class="bold"> رقم الطلب : </span>{{$order->id}}</p>
+                                        <p class="details_p"> <span class="bold"> رقم الطلب : </span>{{$order->identifier}}</p>
                                     </div>
 
 
                                     <div class="col-md-6 mb-3">
-                                        <p class="details_p"> <span class="bold"> التاريخ: </span>{{$order->created_at}}
+                                        <p class="details_p"> <span class="bold"> التاريخ: </span>{{$order->created_at->format("Y-m-d")}}
                                         </p>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <p class="details_p"> <span class="bold"> العنوان : </span>{{$order->title}}</p>
-                                    </div>
 
+                                    @if($order->service_provider->raft_company_name)
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</p>
+                                </div>
+                                @endif
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</p>
+                                </div>
 
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold">البريد الإلكتروني لمركز الخدمة :</span> {{$order->service_provider->email}}</p>
+                                </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <p class="details_p"><span class="bold">اسم مقدم الخدمة :</span>
-                                            {{$order->service_provider->name}}</p>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <p class="details_p"> <span class="bold"> التفاصيل :
-                                            </span>{{$order->description}}</p>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <p class="details_p"> <span class="bold"> اسم مكتب التصميم :
-                                            </span>{{$order->designer->name}}</p>
-                                    </div>
+                                <div class="col-md-6 my-3">
+                                    <p class="details_p"><span
+                                            class="bold"> اسم المشرف :  </span>{{$order->designer->company_name}}</p>
+                                </div>
 
                                 </div>
 
@@ -288,96 +283,6 @@ file-drop-zone clearfix {}
                                     </div>
                                     @endforeach
                                 </div>
-
-                            </div>
-                            <div class="tab-pane" id="reports" role="tabpanel">
-
-
-
-                                <!-- start page title -->
-
-                                <div class="card">
-                                    <div class="card-header">
-                                    <div class="row"><div class="col-lg-2 offset-10">
-                                    <a class="btn btn btn-primary" href="{{route('contractor.add_report_form', ['order' => $order->id])}}">إنشاء تقرير</a>
-                                    </div></div>
-
-                                    
-                                        <div class="row mt-4">
-                                            <div class="col-lg-12">
-
-                                                <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-                                                    <div class="col-lg-4">
-                                                        <label class="visually-hidden" for="specificSizeInputName">الاسم
-                                                            او البريد</label>
-                                                        <input type="text" class="form-control" id="name"
-                                                            placeholder="الاسم او البريد">
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <label class="visually-hidden" for="type"></label>
-                                                        <select class="form-control" id="type" name="type">
-                                                            <option value="">اختر...</option>
-                                                            <option value="admin">مدير نظام</option>
-                                                            <option value="service_provider">مقدم خدمة</option>
-                                                            <option value="design_office">مكتب تصميم</option>
-                                                            <option value="Sharer">جهة مشاركة</option>
-                                                            <option value="consulting_office">مكتب استشاري</option>
-                                                            <option value="contractor">مقاول</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="col-sm-auto">
-                                                        <button type="button"
-                                                            class="btn btn-primary search_btn">بحث</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <div class="row">
-
-                                            <div class="col-sm-12">
-                                                <table
-                                                    class="table align-middle datatable dt-responsive table-check nowrap dataTable no-footer"
-                                                    id="items_table"
-                                                    style="border-collapse: collapse; border-spacing: 0px 8px; width: 100%;"
-                                                    role="grid" aria-describedby="DataTables_Table_0_info">
-                                                    <thead>
-                                                        <th>
-                                                            عنوان التقرير
-                                                        </th>
-                                                        <th>
-                                                           الوصف
-                                                        </th>
-                                                        <th>
-                                                            تاريخ الإنشاء
-                                                        </th>
-                                                        <th>
-                                                            الخيارات
-                                                        </th>
-
-
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static"
-                                    data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                                    aria-hidden="true">
-                                </div>
-
 
                             </div>
 

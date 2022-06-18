@@ -71,7 +71,7 @@ class ContractorController extends Controller
                 // }
                 $accept_order='';
                 $reject_order='';
-                $view_details = ' <a class="dropdown-item" href="' . route('consulting_office.reports_view_details', ['order' => $order->id]) . '">
+                $view_details = ' <a class="dropdown-item" href="' . route('contractor.order_details', ['order' => $order->id]) . '">
                     عرض التفاصيل
                 </a>';
                 $accept_order = '';

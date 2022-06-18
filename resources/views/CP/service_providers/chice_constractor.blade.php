@@ -10,6 +10,7 @@
             @csrf
             <div class="modal-body">
                 <div class="row">
+                    @if(!$order->contractor_id)
                     <div class="form-group pb-4 col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                             <label class="col-12 font-weight-bold" for="reject_reason">اختر المقاول</label>
@@ -24,6 +25,8 @@
                             <div class="col-12 text-danger" id="contractor_id_error"></div>
                         </div>
                     </div>
+                    @endif
+                    @if(!$order->consulting_office_id)
                     <div class="form-group pb-4 col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                             <label class="col-12 font-weight-bold" for="reject_reason">اختر المشرف</label>
@@ -38,6 +41,8 @@
                             <div class="col-12 text-danger" id="consulting_office_id_error"></div>
                         </div>
                     </div>
+                    @endif
+                    @if(!$order->waste_contractor)
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                             <label class="col-12 font-weight-bold" for="waste_contractor">اختر مقاول النفايات</label>
@@ -52,6 +57,7 @@
                             <div class="col-12 text-danger" id="waste_contractor_error"></div>
                         </div>
                     </div>
+                    @endif
 
                 </div>
             </div>
@@ -67,15 +73,21 @@
 <script>
     $('#add_edit_form').validate({
         rules: {
+            @if(!$order->contractor_id)
             "contractor_id": {
                 required: true,
             },
+            @endif
+            @if(!$order->consulting_office_id)
             "consulting_office_id": {
                 required: true,
             },
+            @endif
+            @if(!$order->waste_contractor)
             "waste_contractor": {
                 required: true,
             }
+            @endif
         },
         errorElement: 'span',
         errorClass: 'help-block help-block-error',
