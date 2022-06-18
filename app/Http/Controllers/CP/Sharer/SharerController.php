@@ -37,7 +37,7 @@ class SharerController extends Controller
             ->with(['service_provider', 'designer'])->select("orders.*")
             ->whereOrderId($request->order_id)
             ->whereDate($request->from_date,$request->to_date)
-            ->where('status', '>=', '3');
+            ->where('status', Order::DESIGN_AWAITING_GOV_APPROVE);
 
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
