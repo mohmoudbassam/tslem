@@ -149,7 +149,7 @@ class OrdersController extends Controller
                     $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة مكتب تصميم </a>';
                 }
 
-                if ($order->status == Order::DESIGN_APPROVED && $order->contractor_id == null && $order->consulting_office_id == null) {
+                if (($order->status == Order::DESIGN_APPROVED || $order->status == Order::PENDING_LICENSE_ISSUED) && ($order->contractor_id == null || $order->consulting_office_id == null)) {
                     $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus mx-2"></i>إضافة استشاري ومقاول</a>';
                 }
 
