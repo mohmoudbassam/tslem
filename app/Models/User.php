@@ -245,8 +245,18 @@ class User extends Authenticatable
 
     public function getRaftCompanyBox($default = null)
     {
-        return getUserRaftCompanyBox($this, $default);
+        $user = $this;
+        $user = optional($user ?? currentUser());
+        $where = ($license_number = $user->license_number) ?
+            compact('license_number') : [
+                'box' => $user->box_number,
+                'camp' => $user->camp_number,
+            ];
+
+        return \App\Models\RaftCompanyBox::where($where)->first() ?: value($default);
     }
+
+
 
     public function raft_company_location()
     {

@@ -10,7 +10,7 @@
             },
             // hideThumbnailContent: true,
             browseClass: "btn btn-info",
-            browseLabel: "اضغط للاستعراض",
+            browseLabel: "اضغط للرفع",
             browseIcon: "<i class='la la-file'></i>",
             removeClass: "btn btn-danger",
             removeLabel: "delete",
@@ -258,7 +258,7 @@
             msgZoomModalHeading: "معلومات الملف",
             dropZoneClickTitle: '<br> اضغط للاستعراض',
             initialPreviewAsData: true, // defaults markup,
-            browseLabel: "اضغط للاستعراض",
+            browseLabel: "اضغط للرفع",
             initialPreviewConfig: [
 
             ],

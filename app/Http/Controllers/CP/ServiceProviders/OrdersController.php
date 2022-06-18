@@ -103,7 +103,7 @@ class OrdersController extends Controller
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 
-        $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
+        $user->notify(new OrderNotification('تم إضافة الطلب #'.$order->identifier.' إلى قائمة طلباتك للمراجعة  ', auth()->user()->id));
         return redirect()->route('services_providers.orders')->with(['success' => 'تم انشاء الطلب بنجاح']);
     }
 
@@ -203,13 +203,14 @@ class OrdersController extends Controller
 
     public function update_order(Request $request)
     {
-        $order = tap(Order::query()->where('id', $request->order_id)->first())
+        $orderDetails = Order::query()->where('id', $request->order_id)->first();
+        $order = tap($orderDetails)
             ->update($request->except('files', '_token', 'order_id'));
 
         save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
         $user = User::query()->find($request->designer_id);
 
-        $user->notify(new OrderNotification('تم إنشاء الطلب  ', auth()->user()->id));
+        $user->notify(new OrderNotification('يوجد لديك طلب #'.$orderDetails->identifier.' بإنتظار مراجعتك ', auth()->user()->id));
         return redirect()->route('services_providers.orders')->with(['success' => 'تم تعديل الطلب بنجاح']);
 
 
@@ -253,8 +254,8 @@ class OrdersController extends Controller
         ]);
 
         save_logs($order, auth()->user()->id, "تم اخيار المشرف ومكتب المقاولات");
-        optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب  ', auth()->user()->id));
-        optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب   ', auth()->user()->id));
+        optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمتب استشاري على الطلب #'.$order->identifier.' ', auth()->user()->id));
+        optional($order->contractor)->notify(new OrderNotification('تم اختيارك كمتب مقاولات على الطلب #'.$order->identifier.' ', auth()->user()->id));
         return response()->json([
             'success' => true,
             'message' => 'تم الاختيار بنجاح'

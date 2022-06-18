@@ -339,7 +339,7 @@ class ConsultingOfficeController extends Controller
 
             save_logs($order, auth()->user()->id, 'تم اعتماد الطلب  من مكتب التسليم ');
 
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب  من مكتب التسليم   ', $order->designer_id));
+            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من مكتب التسليم', $order->designer_id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت اعتماد الطلب بنجاح'
@@ -357,7 +357,7 @@ class ConsultingOfficeController extends Controller
 
             save_logs($order, auth()->user()->id, 'تم اتمام الطلب  من المشرف');
 
-            optional($order->service_provider)->notify(new OrderNotification('تم اتمام الطلب  من المشرف', $order->consulting_office_id));
+            optional($order->service_provider)->notify(new OrderNotification('تم اتمام الطلب #'.$order->identifier.' من المشرف', $order->consulting_office_id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت اتمام الطلب بنجاح'
@@ -373,9 +373,9 @@ class ConsultingOfficeController extends Controller
             $order->status = Order::DESIGN_REVIEW;
             $order->save();
 
-            save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم  من مكتب التسليم', auth()->user()->id));
-            optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم من مكتب التسليم', auth()->user()->id));
+            save_logs($order, auth()->user()->id, 'تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم');
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
+            optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
             return response()->json([
                 'success' => true,
                 'message' => 'تمت رفض الطلب بنجاح'
