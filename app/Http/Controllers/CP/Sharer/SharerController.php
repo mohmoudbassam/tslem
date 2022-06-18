@@ -96,7 +96,7 @@ class SharerController extends Controller
     public function prepareUpdateOrderStatus($order){
 
         $getCountOrderSharer = OrderSharer::query()
-        ->where("order_id", $request->id)
+        ->where("order_id", $order->id)
         ->where('user_id', auth()->user()->id)
         ->with('user')
         ->get();
