@@ -117,6 +117,7 @@ class SharerController extends Controller
 
         if($isSomeoneRejected){
             $order->status = Order::DESIGN_REVIEW;
+            $order->delivery_notes = 1;
             $order->save();
         }elseif($isAllAccepted){
             $order->allow_deliver = 1;

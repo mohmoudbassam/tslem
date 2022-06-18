@@ -319,6 +319,8 @@ class DesignerOrderController extends Controller
         $order->delivery_notes = 0;
         $order->save();
 
+        
+
         return view('CP.designer.edit_files', [
             'order' => $order,
             'specialties' => $specialties,
