@@ -49,7 +49,7 @@ class OrderSharer extends Model
         return [
             '1' => 'تم القبول',
             '2' => 'تم الرفض',
-            '0' => 'معلق'
+            '0' => 'بإنتظار القبول'
         ][$this->status];
     }
 }
