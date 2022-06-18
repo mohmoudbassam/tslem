@@ -398,10 +398,14 @@ HTML;
 
 
         // Send notification to service provider
+        $order->status = 7;
+        $order->save();
         
         $notificationText = 'تم اصدار الرخصة للطلب #'.$order->identifier.' وبإنتظار اختيارك للمشرف والمقاول';
         save_logs($order, auth()->user()->id,$notificationText);
         optional($order->service_provider)->notify(new OrderNotification($notificationText,auth()->user()->id));
+
+        
         return response()->json([
             'message' => __('general.success'),
             'success' => true,
