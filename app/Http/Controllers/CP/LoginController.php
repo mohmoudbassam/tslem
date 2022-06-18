@@ -142,6 +142,9 @@ class LoginController extends Controller
                  'y'=>$location->box_count
              ];
           });
+      ///order per designer office
+       $data['order_count_per_designer'] = Order::query()->whereNotNull('designer_id')->count();
+       $data['order_count_per_taslem'] = Order::query()->where('status','>',Order::DESIGN_REVIEW)->count();
 
         return view('CP.dashboard', $data);
 

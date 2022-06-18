@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
     المستخدمين
 <?php $__env->stopSection(); ?>
@@ -52,25 +53,29 @@
             <div class="row mt-4 d-flex ">
                 <div class="col-lg-8">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+                    <form class="row">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <label class="col-form-label" for="name">البحث</label>
                             <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
+                            <label class="col-form-label" for="type">فئات المستخدمين</label>
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
                                 <option value="service_provider">شركات حجاج الداخل</option>
+                                <option value="raft_center">شركات حجاج الخارج</option>
                                 <option value="design_office">مكتب هندسي</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>
                                 <option value="contractor">مقاول</option>
                             </select>
                         </div>
-                        <div class="col-sm-auto">
-                            <button type="button"  onclick="exportExcel()" class="btn btn-primary">تصدير</button>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label style="opacity: 0;" class="col-form-label d-block">تصدير</label>
+                                <button type="button"  onclick="exportExcel()" class="btn btn-primary btn-block">تصدير</button>
+                            </div>
                         </div>
                     </form>
 
@@ -101,7 +106,7 @@
                             السجل
                         </th>
                         <th>
-                            الصلاحيه
+                            نوع المستخدم
                         </th>
                         <th>
                             تاريخ التسجيل
