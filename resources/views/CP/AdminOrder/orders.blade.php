@@ -149,7 +149,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('orders.list')}}',
+                    url: '{{route('orders.list')}}?params='+'{{request('params')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.order_identifierentifier = $('#order_identifier').val();
@@ -159,6 +159,8 @@
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
                         d.waste_contractor = $('#waste_contractor').val();
+                        d.waste_contractor = $('#waste_contractor').val();
+
                     }
                 },
                 language: {

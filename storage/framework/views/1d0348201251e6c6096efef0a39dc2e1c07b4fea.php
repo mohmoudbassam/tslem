@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="<?php echo e(route('users.add')); ?>"><i class="dripicons-user p-2"></i>إصافة مستخدم</a></h4>
+                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="<?php echo e(route('users.add')); ?>"><i class="dripicons-user p-2"></i>إضافة مستخدم</a></h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -52,25 +52,29 @@
             <div class="row mt-4 d-flex ">
                 <div class="col-lg-8">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+                    <form class="row">
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="specificSizeInputName">البحث</label>
+                            <label class="col-form-label" for="name">البحث</label>
                             <input type="text" class="form-control" id="name" placeholder="البحث">
                         </div>
                         <div class="col-lg-4">
-                            <label class="visually-hidden" for="type"></label>
+                            <label class="col-form-label" for="type">فئات المستخدمين</label>
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
-                                <option value="service_provider">شركات حجاج الداخل</option>
-                                <option value="design_office">مكتب هندسي</option>
+                                <option <?php if(request('params')=='raft_in'): ?> selected <?php endif; ?>  value="service_provider">شركات حجاج الداخل</option>
+                                <option <?php if(request('params')=='raft_out'): ?> selected <?php endif; ?> value="raft_center">شركات حجاج الخارج</option>
+                                <option <?php if(request('params')=='design_office'): ?> selected <?php endif; ?> value="design_office">مكتب هندسي</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>
-                                <option value="contractor">مقاول</option>
+                                <option  <?php if(request('params')=='contractor'): ?> selected <?php endif; ?>  value="contractor">مقاول</option>
                             </select>
                         </div>
-                        <div class="col-sm-auto">
-                            <button type="button"  onclick="exportExcel()" class="btn btn-primary">تصدير</button>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label style="opacity: 0;" class="col-form-label d-block">تصدير</label>
+                                <button type="button"  onclick="exportExcel()" class="btn btn-primary btn-block">تصدير</button>
+                            </div>
                         </div>
                     </form>
 
@@ -101,7 +105,7 @@
                             السجل
                         </th>
                         <th>
-                            الصلاحيه
+                            نوع المستخدم
                         </th>
                         <th>
                             تاريخ التسجيل

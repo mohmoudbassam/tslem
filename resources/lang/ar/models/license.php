@@ -16,7 +16,7 @@ return [
         'camp_space' => 'مساحة المخيم',
         'map_path' => 'خريطة الموقع',
     ],
-    "raft_company_name" => "شركة طوافة حجاج :name",
+    "raft_company_name" => ":name",
     "no_parent_name" => "المجلس التنسيقي لحجاج الداخل",
     "download_for_service_provider" => "اصدار رخصة الإضافات",
 ];

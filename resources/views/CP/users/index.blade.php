@@ -36,7 +36,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('users.add')}}"><i class="dripicons-user p-2"></i>إصافة مستخدم</a></h4>
+                <h4 class="mb-sm-0 font-size-18"><a class="btn btn-primary" href="{{route('users.add')}}"><i class="dripicons-user p-2"></i>إضافة مستخدم</a></h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -63,12 +63,12 @@
                             <select class="form-control" id="type" name="type">
                                 <option value="">اختر...</option>
                                 <option value="admin">مدير نظام</option>
-                                <option value="service_provider">شركات حجاج الداخل</option>
-                                <option value="raft_center">شركات حجاج الخارج</option>
-                                <option value="design_office">مكتب هندسي</option>
+                                <option @if(request('params')=='raft_in') selected @endif  value="service_provider">شركات حجاج الداخل</option>
+                                <option @if(request('params')=='raft_out') selected @endif value="raft_center">شركات حجاج الخارج</option>
+                                <option @if(request('params')=='design_office') selected @endif value="design_office">مكتب هندسي</option>
                                 <option value="Sharer">جهة مشاركة</option>
                                 <option value="consulting_office">مكتب استشاري</option>
-                                <option value="contractor">مقاول</option>
+                                <option  @if(request('params')=='contractor') selected @endif  value="contractor">مقاول</option>
                             </select>
                         </div>
                         <div class="col-lg-2">

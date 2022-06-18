@@ -122,13 +122,13 @@
 
                 @if($record->center_sketch)
                     <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label required-field" for="center_sketch">كروكي المركز بصيغة (PDF)</label>
-                                <input type="file" class="form-control" id="center_sketch"
-                                    name="center_sketch" accept=".pdf">
-                                <div class="col-12 text-danger" id="center_sketch_error"></div>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label required-field" for="center_sketch">كروكي المركز بصيغة (PDF)</label>
+                            <input type="file" class="form-control" id="center_sketch"
+                                name="center_sketch" accept=".pdf">
+                            <div class="col-12 text-danger" id="center_sketch_error"></div>
                         </div>
+                    </div>
                 @endif
 
                 @if($record->dwg_sketch)

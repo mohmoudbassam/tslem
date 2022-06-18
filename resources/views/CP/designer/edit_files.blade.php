@@ -699,7 +699,7 @@
                 },
 
                 browseClass: "btn btn-info",
-                browseLabel: "اضغط للاستعراض",
+                browseLabel: "اضغط للرفع",
                 browseIcon: "<i class='la la-file'></i>",
                 removeClass: "btn btn-danger",
                 removeLabel: "delete",

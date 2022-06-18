@@ -37,10 +37,10 @@
                 <div data-simplebar style="max-height: 230px;">
                         @foreach (auth()->user()->notifications()->get() as $notification)
 
-                            <a href="#!" class="text-reset notification-item">
+                            <div class="text-reset notification-item">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
-                                        <img src="{{optional($notification->Notifer)->image}}"
+                                        <img src="{{ \App\Models\User::select('image')->where('id',$notification->notifiable_id)->first()->image }}"
                                              class="rounded-circle avatar-sm" alt="user-pic">
                                     </div>
 
@@ -53,7 +53,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
 

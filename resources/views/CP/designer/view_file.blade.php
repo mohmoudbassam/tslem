@@ -91,11 +91,12 @@
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                                 </div>
-
+                                @if($order->service_provider->raft_company_name)
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
-                                            class="bold">مركز الخدمة :</span> {{$order->service_provider->company_name}}</p>
+                                            class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</p>
                                 </div>
+                                @endif
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
@@ -110,21 +111,6 @@
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span
                                             class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
-                                </div>
-
-                                <div class="col-12">
-                                    <p class="details_p">
-                                        <span>
-                                            تخصصات المكتب الهندسي:
-                                        </span>
-                                    </p>
-                                    <ul class="m-0">
-                                        @foreach($order->designer->designer_types as $designType)
-                                            <li style="font-size: 20px;">
-                                                {{ $designType->type }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
                                 </div>
                             </div>
                             <div class="row mt-5">
@@ -344,25 +330,32 @@
                                 {{--                @endif--}}
                             </div>
                         </div>
-
-                        @if($order->status >= \App\Models\Order::DESIGN_REVIEW)
-                            <div class="tab-pane" id="notes"
-                             role="tabpanel">
+                        <div class="tab-pane" id="notes" role="tabpanel">
                             <div class="row">
-                                <div class="col-12">
-                                    <ul>
-                                        @if($last_note)
-                                            @foreach($last_note as $note)
-                                                @if(preg_match('/\S/', $note))
-                                                    <li class="h4"> {{$note}}</li>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </div>
+                                @foreach($order_sharers as $order_sharer)
+                                    <div class="col-md-3 card">
+                                        <div class="card-header d-flex
+                                            @if($order_sharer->status == 1)
+                                                bg-success
+                                            @elseif($order_sharer->status == 2)
+                                                bg-danger
+                                            @elseif($order_sharer->status ==0)
+                                                bg-secondary
+                                            @endif
+                                            ">
+                                            <a href="#" class="h4">{{ $order_sharer->users->name }}</a>
+                                            <span class="ms-auto h4 text-white"> {{$order_sharer->order_sharer_status}} </span>
+                                        </div>
+                                        <div class="card-body h4">
+                                            @if($order_sharer->status == 2)
+                                                {{ $order_sharer->lastnote->note }}
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>

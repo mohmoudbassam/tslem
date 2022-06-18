@@ -3,7 +3,7 @@
 {{--        <div class="d-flex">--}}
 {{--            <!-- LOGO -->--}}
 {{--            <div class="navbar-brand-box">--}}
-{{--                <a href="{{ url('/'.auth()->user()->type) }}" class="logo logo-dark">--}}
+{{--                <a href="{{ url('/'.auth()->user()->type) }}/orders" class="logo logo-dark">--}}
 {{--                                <span class="logo-sm">--}}
 {{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24">--}}
 {{--                                </span>--}}
@@ -29,7 +29,7 @@
 
 {{--        </div>--}}
 
-        <a href="{{ url('/'.auth()->user()->type) }}" class="logo ps-4">
+        <a href="{{ url('/'.auth()->user()->type) }}/orders" class="logo ps-4">
             <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="30">
         </a>
 
@@ -100,7 +100,7 @@
                     <div data-simplebar style="max-height: 230px;">
                         @foreach (auth()->user()->notifications()->take(5)->get() as $notification)
 
-                            <a href="#!" class="text-reset notification-item">
+                            <div class="text-reset notification-item">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <img src="{{optional($notification->Notifer)->image}}"
@@ -116,7 +116,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                     <div class="p-2 border-top d-grid">

@@ -37,7 +37,7 @@ class SharerController extends Controller
             ->with(['service_provider', 'designer'])->select("orders.*")
             ->whereOrderId($request->order_id)
             ->whereDate($request->from_date,$request->to_date)
-            ->where('status', '>=', '3');
+            ->where('status', Order::DESIGN_AWAITING_GOV_APPROVE);
 
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
@@ -78,20 +78,58 @@ class SharerController extends Controller
         $orderSharer->status = OrderSharer::ACCEPT;
         $orderSharer->save();
 
-        $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
-        $accepted_sharer = OrderSharer::query()->where('order_id', $request->id)->where('status', 1)->count();
 
-        $all_sharer = OrderSharer::query()->where('order_id', $request->id)->count();
+        $count = OrderSharer::where("order_id", $request->id)
+            ->where("status", OrderSharer::ACCEPT)->count();
 
-        if ($all_sharer == $accepted_sharer) {
-            $order->allow_deliver = 1;
-            $order->save();
+        if ( $count == OrderSharer::where("order_id", $request->id)->count() ) {
+            Order::where("id", $request->id)->update([
+                'status' => Order::ORDER_APPROVED
+            ]);
         }
+
+
+        $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
+
+
+        $this->prepareUpdateOrderStatus($order);
+
+        optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
 
         return response()->json([
             'success' => true,
             'message' => 'تمت اعتماد الطلب بنجاح'
         ]);
+    }
+
+
+    public function prepareUpdateOrderStatus($order){
+
+        $getCountOrderSharer = OrderSharer::query()
+        ->where("order_id", $order->id)
+        ->get();
+
+        $isSomeoneRejected = false;
+        foreach($getCountOrderSharer as $getCountOrderSharerItem){
+
+            if($getCountOrderSharerItem->status == 2){
+                $isSomeoneRejected = true;
+            }
+
+        }
+
+        if($isSomeoneRejected){
+            $order->status = Order::DESIGN_REVIEW;
+            $order->delivery_notes = 1;
+            $order->save();
+        }
+
+        if($getCountOrderSharer->count() == $getCountOrderSharer->where('status',1)->count()){
+            $order->allow_deliver = 1;
+            $order->status = Order::DESIGN_APPROVED;
+            $order->save();
+        }
+
     }
 
     public function reject(Request $request)
@@ -106,10 +144,15 @@ class SharerController extends Controller
 
         OrderSharerReject::query()->create([
             'note' => $request->note,
-            'order_sharer_id' => $order_sharer->id,
-
+            'order_sharer_id' => $order_sharer->id
         ]);
 
+        $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
+
+
+        optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name.' والملاحظة هي '.$request->note, auth()->user()->id));
+
+        $this->prepareUpdateOrderStatus($order);
         return response()->json([
             'success' => true,
             'message' => 'تمت إضافة الملاحظات بنجاح'

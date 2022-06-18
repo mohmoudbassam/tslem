@@ -142,14 +142,6 @@ function get_designer_type_name($tpe)
         "fire" => "الحماية والوقاية من الحريق",
     ][$tpe];
 }
-// function ends_with($string, $substring) {
-//     $length = strlen($substring);
-//     if ( substr_compare($string, $substring, -$length) === 0 ) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
 function get_user_column_file($type)
 {
     $benef = BeneficiresCoulumns::query()->select(
