@@ -27,6 +27,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
 
     public function map($order): array
     {
+
         return [
             $order->identifier ?? '',
             $order->date ?? '',
@@ -36,6 +37,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             optional($order->contractor)->company_name ?? '',
             optional($order->consulting)->company_name,
             $order->waste_contractor ?? '',
+            $order->service_provider->raft_company->raft_company_locations->name ?? 'المجلس التنسيقي'
         ];
     }
 
@@ -50,6 +52,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             ' المقاول',
             'المكتب الإستشاري',
             ' مقاول النفايات',
+            'شركة الطوافة',
         ];
     }
 
@@ -63,6 +66,8 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             'E' => 30,
             'F' => 30,
             'J' => 30,
+            'H' => 30,
+            'I' => 30,
 
         ];
     }
@@ -77,7 +82,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->setRightToLeft(true);
-                $cellRange = 'A1:G1';
+                $cellRange = 'A1:I1';
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
                 // $event->sheet->setMergeColumn(  ['columns' => array('A','B','C','D')]);
                 //$event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setUnderline(true);

@@ -279,4 +279,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
+
+    public function raft_company(){
+       return $this->belongsTo(User::class,'parent_id','id');
+    }
+    public function raft_company_locations(){
+       return $this->belongsTo(RaftCompanyLocation::class,'raft_company_type','id');
+    }
 }

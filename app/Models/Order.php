@@ -276,4 +276,8 @@ class Order extends Model
     {
         return $this->status === static::ORDER_APPROVED;
     }
+
+//    public function raft_company(){
+//        return $this->service_provider()->belongsTo(User::class,'parent_id','id');
+//    }
 }
