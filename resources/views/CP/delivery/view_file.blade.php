@@ -393,7 +393,7 @@
                                                 bg-secondary
                                             @endif
                                                 ">
-                                                <p class="text-white mb-1 p-0" style="font-size: 18px; font-weight: bolder;">{{ $order_sharer->users->company_name }}</p>
+                                                <p class="text-white mb-1 p-0" style="font-size: 18px; font-weight: bolder;">{{ $order_sharer->user->company_name }}</p>
                                                 <p class="">( {{$order_sharer->order_sharer_status}} )</p>
                                             </div>
                                             <div class="card-body h4">
