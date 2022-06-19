@@ -30,6 +30,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
         return [
             $order->identifier ?? '',
             $order->date ?? '',
+            $order->service_provider->name ?? '',
             optional($order->designer)->company_name ?? '',
             $order->order_status ?? '',
             optional($order->contractor)->company_name ?? '',
@@ -43,6 +44,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
         return [
             'رقم الطلب',
             'التاريخ',
+            'مقدم الخدمة',
             'المكتب الهندسي',
             'حالة الطلب',
             ' المقاول',
