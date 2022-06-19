@@ -433,13 +433,10 @@ CODE;
     {
         $data = "";
         if( $raft = $this->service_provider->getRaftCompanyBox() ) {
-            $data = implode(" , ", [
-                $raft->file_first_fullpath,
-                $raft->file_second_fullpath,
-                $raft->file_third_fullpath,
-            ]);
+
+            return QrCode::generate(route('qr_download_files',['raft_company_box_id'=>$raft->id]));
         }
 
-        return QrCode::generate($data);
+       return false;
     }
 }

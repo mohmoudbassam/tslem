@@ -479,6 +479,5 @@ Route::post('import', [ \App\Http\Controllers\ImportExcelController::class, 'imp
 Route::get('raft_company/get_camp_by_box/{box}', [ RaftCompanyController::class, 'get_camp_by_box' ])->name(
     'raft_company.get_camp_by_box'
 );
-Route::get('test',function () {
-    dd(order_services(4));
-});
+Route::get('qr_download_files/{raft_company_box_id}',[LicenseController::class,'qr_download_files'])->name('qr_download_files');
+Route::get('download_raft_company_file/{rf_id}/{file_type}',[LicenseController::class,'download_raft_company_file'])->name('download_raft_company_file');

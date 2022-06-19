@@ -8,11 +8,15 @@ use App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest;
 use App\Http\Requests\CP\License\StoreLicenseRequest;
 use App\Models\License;
 use App\Models\Order;
+use App\Models\RaftCompanyBox;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use App\Notifications\OrderNotification;
+
 class LicenseController extends Controller
 {
     public static function makeTd($value)
@@ -229,7 +233,6 @@ class LicenseController extends Controller
         $chunks = $service->chunk($half);
 
 
-
         return $pdf
             ->loadView('CP.licenses.print', [
                 'mode' => 'print',
@@ -401,9 +404,9 @@ HTML;
 
         // Send notification to service provider
 
-        $notificationText = 'تم اصدار الرخصة للطلب #'.$order->identifier.' وبإنتظار اختيارك للمشرف والمقاول';
-        save_logs($order, auth()->user()->id,$notificationText);
-        optional($order->service_provider)->notify(new OrderNotification($notificationText,auth()->user()->id));
+        $notificationText = 'تم اصدار الرخصة للطلب #' . $order->identifier . ' وبإنتظار اختيارك للمشرف والمقاول';
+        save_logs($order, auth()->user()->id, $notificationText);
+        optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
 
         $order->status = 7;
         $order->save();
@@ -438,5 +441,23 @@ HTML;
             'success' => true,
             'message' => 'تم حذف المرفق بنجاح',
         ]);
+    }
+
+    public function qr_download_files($raft_company_box_id)
+    {
+        $raft_company_box = RaftCompanyBox::where('id', $raft_company_box_id)->firstOrFail();
+
+        return view('CP.download_box_files', ['rf' => $raft_company_box]);
+    }
+
+    public function download_raft_company_file($rf_id, $file_type)
+    {
+        $raft_company_box = RaftCompanyBox::where('id', $rf_id)->firstOrFail();
+
+     $test=Storage::exists(Storage::disk('public')->path('service_provider/'.$raft_company_box->{$file_type}));
+
+        $path = Storage::disk('public')->path($raft_company_box->{$file_type});
+
+        return Response::download($path, $raft_company_box->{$file_type . '_name'});
     }
 }
