@@ -54,7 +54,8 @@ class DeliveryController extends Controller
             ->whereConsultingId($request->consulting_id)
             ->whereContractorId($request->contractor_id)
             ->whereDate($request->from_date, $request->to_date)
-            ->where('status', '>=', '3');
+            ->where('status', '>=', '3')
+        ->latest();
         if ($flag) {
             return $order->get();
         }
@@ -287,15 +288,18 @@ class DeliveryController extends Controller
 
     public function accept(Request $request)
     {
+        /** @var Order $order */
         $order = Order::query()->findOrFail($request->id);
         if ($order->status == Order::DESIGN_REVIEW) {
             $order->status = Order::DESIGN_AWAITING_GOV_APPROVE;
             $order->save();
+            // [A.F] Change only Rejected
+            //OrderSharer::where('order_id',$request->id)->update([
+            //    'status' => OrderSharer::PENDING
+            //]);
+            $order->orderSharerRegected()->update(['status' => OrderSharer::PENDING]);
 
-            OrderSharer::where('order_id',$request->id)->update([
-                'status' => OrderSharer::PENDING
-            ]);
-
+            // Todo: [A.F] Don't use inline text, use laravel localisation instead
             $notificationText = 'تم اعتماد الطلب #'.$order->identifier.' من مكتب تسليم وبإنتظار باقي الجهات الحكومية';
             save_logs($order, auth()->user()->id,$notificationText);
 

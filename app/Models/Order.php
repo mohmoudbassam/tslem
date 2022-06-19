@@ -97,6 +97,11 @@ class Order extends Model
         return $this->hasMany(OrderSharer::class, 'order_id');
     }
 
+    public function orderSharerRegected()
+    {
+        return $this->orderSharer()->where('status',OrderSharer::REJECT);
+    }
+
     public function orderSharerAccepts()
     {
         return $this->hasManyThrough(

@@ -53,9 +53,7 @@ class DesignerOrderController extends Controller
                       ->with('designer');
 
         return DataTables::of($order)
-                         ->addColumn('actions', function($order) {
-                             $add_file_design = '';
-
+                         ->addColumn('actions', function(Order $order) {
                              $add_file_design = '';
                              $edit_files = '';
                              $view = '<a class="dropdown-item" href="' . route('design_office.view_file', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الطلب </a>';
@@ -64,7 +62,9 @@ class DesignerOrderController extends Controller
                                  $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة تصاميم  </a>';
                              }
 
-                             if( $order->lastDesignerNote()->where('status', 0)->count() ) {
+                             if( $order->lastDesignerNote()->where('status', 0)->exists()
+                             || ($order->orderSharerRegected()->exists()  && $order->delivery_notes == 1)
+                             ) {
                                  $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>تعديل الملفات </a>';
                              }
 
@@ -140,7 +140,7 @@ class DesignerOrderController extends Controller
     {
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
-
+        //dd($service);
         return view('CP.designer.add_files', [ 'order' => $order, 'specialties' => $specialties, 'services' => $service ]);
     }
 
@@ -303,9 +303,8 @@ class DesignerOrderController extends Controller
 
     public function edit_files(Order $order)
     {
-
         $specialties = Specialties::with('service')->get();
-        $service = Service::all();
+        //$service = Service::all();
         $order->with('service.specialties');
 
         $order_specialties = OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
@@ -319,7 +318,7 @@ class DesignerOrderController extends Controller
         $order->delivery_notes = 0;
         $order->save();
 
-        
+
 
         return view('CP.designer.edit_files', [
             'order' => $order,
@@ -383,8 +382,7 @@ class DesignerOrderController extends Controller
 
     public function edit_file_action(Request $request)
     {
-
-
+        /** @var Order $order */
         $order = Order::query()->where('id', $request->order_id)->first();
         $file_validation = $this->validate_update_file($request, $order);
         if( !$file_validation[ 'success' ] ) {
@@ -508,9 +506,14 @@ class DesignerOrderController extends Controller
         $order->lastDesignerNote()->update([
                                                'status' => 1,
                                            ]);
-        $order->orderSharer()->update([
-                                          'status' => OrderSharer::PENDING,
-                                      ]);
+        // [A.F] 2022-06-19.
+        // Disable this flow. don't update users status.
+        //$order->orderSharer()->update([
+        //                                  'status' => OrderSharer::PENDING,
+        //                              ]);
+        //$order->orderSharer()->update([
+        //                                  'status' => OrderSharer::PENDING,
+        //                              ]);
 
         $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
         foreach($getTasleemUsers as $taslemUser){
@@ -601,13 +604,14 @@ class DesignerOrderController extends Controller
         $order_specialties = OrderSpecilatiesFiles::query()->with('specialties')
                                                   ->where('order_id', $order->id)
                                                   ->get()->pluck('specialties.name_en')->unique();
-        $general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
-        if( !($general_file || request('general_file')) ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء إرفاق ملف الموقع العام ",
-            ];
-        }
+        // Todo: A.F. check this file
+        //$general_file = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->where('type', 5)->first();
+        //if( !($general_file || request('general_file')) ) {
+        //    return [
+        //        'success' => false,
+        //        'message' => "الرجاء إرفاق ملف الموقع العام ",
+        //    ];
+        //}
 
         foreach( $order_specialties as $order_special ) {
             $file_count = OrderSpecilatiesFiles::query()
