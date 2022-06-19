@@ -102,39 +102,43 @@ class SharerController extends Controller
         ]);
     }
 
-
+    /**
+     * @param Order $order
+     *
+     * @return void
+     */
     public function prepareUpdateOrderStatus($order){
+        //dd(2);
+        // [A.F] Fix query collection
+        $getCountOrderSharer = $order->orderSharer();
+        //dd($order->id,$getCountOrderSharer->count());
 
-        $getCountOrderSharer = OrderSharer::query()
-        ->where("order_id", $order->id)
-        ->get();
+        //$isSomeoneRejected =  $order->orderSharer()->where('status', OrderSharer::REJECT)->exists();
+        //foreach($getCountOrderSharer->get() as $getCountOrderSharerItem){
+        //    if($getCountOrderSharerItem->status == 2){
+        //        $isSomeoneRejected = true;
+        //    }
+        //}
 
-        $isSomeoneRejected = false;
-        foreach($getCountOrderSharer as $getCountOrderSharerItem){
-
-            if($getCountOrderSharerItem->status == 2){
-                $isSomeoneRejected = true;
-            }
-
-        }
-
-        if($isSomeoneRejected){
+        // [A.F] Fix reject status
+        if($order->orderSharer()->where('status', OrderSharer::REJECT)->exists()){
             $order->status = Order::DESIGN_REVIEW;
+            // [A.F] Should explain `delivery_notes`
             $order->delivery_notes = 1;
+            $order->allow_deliver = 0;
             $order->save();
-        }
-
-        if($getCountOrderSharer->count() == $getCountOrderSharer->where('status',1)->count()){
+            // [A.F] Delete all deliver reject reasons
+            $order->deliverRejectReson()->delete();
+        } elseif($getCountOrderSharer->count() == $getCountOrderSharer->where('status',OrderSharer::ACCEPT)->count()){
+            // [A.F] All users already accepted
             $order->allow_deliver = 1;
             $order->status = Order::DESIGN_APPROVED;
             $order->save();
         }
-
     }
 
     public function reject(Request $request)
     {
-
         $order_sharer = OrderSharer::query()
             ->where('order_id', $request->id)
             ->where('user_id', auth()->user()->id)
