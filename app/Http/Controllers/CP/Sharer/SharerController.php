@@ -79,52 +79,66 @@ class SharerController extends Controller
         $orderSharer->save();
 
 
+        $count = OrderSharer::where("order_id", $request->id)
+            ->where("status", OrderSharer::ACCEPT)->count();
+
+        if ( $count == OrderSharer::where("order_id", $request->id)->count() ) {
+            Order::where("id", $request->id)->update([
+                'status' => Order::ORDER_APPROVED
+            ]);
+        }
+
+
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
 
-        
+
         $this->prepareUpdateOrderStatus($order);
-        
-        optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
-        
+
+        // optional($order->designer)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name, auth()->user()->id));
+
         return response()->json([
             'success' => true,
             'message' => 'تمت اعتماد الطلب بنجاح'
         ]);
     }
 
-
+    /**
+     * @param Order $order
+     *
+     * @return void
+     */
     public function prepareUpdateOrderStatus($order){
+        //dd(2);
+        // [A.F] Fix query collection
+        $getCountOrderSharer = $order->orderSharer();
+        //dd($order->id,$getCountOrderSharer->count());
 
-        $getCountOrderSharer = OrderSharer::query()
-        ->where("order_id", $order->id)
-        ->get();
+        //$isSomeoneRejected =  $order->orderSharer()->where('status', OrderSharer::REJECT)->exists();
+        //foreach($getCountOrderSharer->get() as $getCountOrderSharerItem){
+        //    if($getCountOrderSharerItem->status == 2){
+        //        $isSomeoneRejected = true;
+        //    }
+        //}
 
-        $isSomeoneRejected = false;
-        foreach($getCountOrderSharer as $getCountOrderSharerItem){
-
-            if($getCountOrderSharerItem->status == 2){
-                $isSomeoneRejected = true;
-            }
-
-        }
-
-        if($isSomeoneRejected){
+        // [A.F] Fix reject status
+        if($order->orderSharer()->where('status', OrderSharer::REJECT)->exists()){
             $order->status = Order::DESIGN_REVIEW;
+            // [A.F] Should explain `delivery_notes`
             $order->delivery_notes = 1;
+            $order->allow_deliver = 0;
             $order->save();
-        }
-        
-        if($getCountOrderSharer->count() == $getCountOrderSharer->where('status',1)->count()){
+            // [A.F] Delete all deliver reject reasons
+            $order->deliverRejectReson()->delete();
+        } elseif($getCountOrderSharer->count() == $getCountOrderSharer->where('status',OrderSharer::ACCEPT)->count()){
+            // [A.F] All users already accepted
             $order->allow_deliver = 1;
             $order->status = Order::DESIGN_APPROVED;
             $order->save();
         }
-
     }
 
     public function reject(Request $request)
     {
-
         $order_sharer = OrderSharer::query()
             ->where('order_id', $request->id)
             ->where('user_id', auth()->user()->id)
@@ -139,9 +153,9 @@ class SharerController extends Controller
 
         $order = Order::query()->with(['orderSharer', 'orderSharerAccepts'])->findOrFail($request->id);
 
-        
-        optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' من قبل '. auth()->user()->company_name.' والملاحظة هي '.$request->note, auth()->user()->id));
-        
+
+        optional($order->designer)->notify(new OrderNotification('توجد ملاحظات على تصاميم الطلب #'.$order->identifier.' والملاحظة هي '.$request->note, auth()->user()->id));
+
         $this->prepareUpdateOrderStatus($order);
         return response()->json([
             'success' => true,

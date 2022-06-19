@@ -761,7 +761,7 @@
         {{--            </div><!-- end card -->--}}
         {{--        </div><!-- end col -->--}}
     </div>
-    <div class="row justify-content-center">
+    <!-- <div class="row justify-content-center align-items-start">
         <div class="col-xl-6 col-md-12">
             <div class="card card-chart">
                 <div class="card-body px-2">
@@ -807,7 +807,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     {{--    <div class="row">--}}
     {{--        <div class="col-xl-12 col-xxl-12 col-md-12">--}}
     {{--            <!-- card -->--}}
@@ -989,7 +989,12 @@
                 '#4169E1', '#A52A2A', '#D3D3D3', '#FFC0CB'],
             series: [{
                 data: @json($bar)
-            }]
+            }],
+            xaxis: {
+                labels: {
+                    rotate: 0
+                }
+            }
         }
         new ApexCharts(document.querySelector("#barchart-1"), barchart1).render();
 

@@ -490,7 +490,7 @@ function file_input_cu(selector, options, type) {
                         state: 'success',
                         message: 'الرجاء الانتظار..........'
                     });
-                }
+                },
                 let handleNextUpload = async () => {
                     if (lastResponse && requests.length) {
                         let request = requests.shift()

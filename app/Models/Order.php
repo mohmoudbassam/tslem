@@ -16,6 +16,7 @@ class Order extends Model
     public const DESIGN_REVIEW = 3;
     public const DESIGN_APPROVED = 4;
     public const DESIGN_AWAITING_GOV_APPROVE = 8;
+    public const ORDER_APPROVED = 9;
     public const PROCESSING = 5;
     public const COMPLETED = 6;
     public const PENDING_LICENSE_ISSUED = 7;
@@ -96,6 +97,11 @@ class Order extends Model
         return $this->hasMany(OrderSharer::class, 'order_id');
     }
 
+    public function orderSharerRegected()
+    {
+        return $this->orderSharer()->where('status',OrderSharer::REJECT);
+    }
+
     public function orderSharerAccepts()
     {
         return $this->hasManyThrough(
@@ -132,17 +138,22 @@ class Order extends Model
 
     public function getOrderStatusAttribute()
     {
-        return [
-                   '1' => 'معلق',
-                   '2' => 'قيد انشاء الطلب',
-                   '3' => 'مراجعة التصاميم',
-                   '4' => 'معتمد التصاميم',
-                   '8' => 'بإنتظار اعتماد الجهات الحكومية',
-                   '5' => 'الطلب تحت الإجراء',
-                   '6' => 'الطلب مكتمل',
-                   '7' => 'بإنتظار اصدار الرخصة'
-
-               ][ $this->status ];
+        $orderStatus = [
+            '1' => 'معلق',
+            '2' => 'قيد انشاء الطلب',
+            '3' => 'مراجعة التصاميم',
+            '4' => 'معتمد التصاميم',
+            '8' => 'بإنتظار اعتماد الجهات الحكومية',
+            '5' => 'الطلب تحت الإجراء',
+            '6' => 'الطلب مكتمل',
+            '7' => 'بإنتظار اصدار الرخصة',
+            '9' => 'تمت الموافقة النهائية'
+        ];
+        if(isset($orderStatus[$this->status])){
+            return $orderStatus[$this->status];
+        }else {
+            return null;
+        }
     }
 
     public function lastDesignerNote()
@@ -263,6 +274,6 @@ class Order extends Model
 
     public function isDesignApproved()
     {
-        return $this->status === static::DESIGN_APPROVED;
+        return $this->status === static::ORDER_APPROVED;
     }
 }

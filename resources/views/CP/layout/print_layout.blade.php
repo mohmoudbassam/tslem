@@ -5,6 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>@yield('title')</title>
 
+    <link href="{{public_path('assets/fonts/tajawal/stylesheet.css')}}" rel="stylesheet">
+    <style type="text/css">
+        html,body {
+            font-family: 'Tajawal', arial, serif !important;
+        }
+    </style>
+
     <style type="text/css">
         .page-break {
             page-break-after: always;
