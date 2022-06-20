@@ -209,6 +209,7 @@ class RaftCompanyController extends Controller
     }
 
     public function seen_maintain_file(Session $session)
+
     {
 //        $session->RaftCompanyBox->update([
 //            'seen_notes'=>1

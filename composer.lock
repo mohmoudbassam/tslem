@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e2239feb47ccefcccf4937afc51de427",
+    "content-hash": "4129b7ef707f5358d1925fc85bf60086",
     "packages": [
         {
             "name": "alexusmai/laravel-file-manager",
@@ -1882,16 +1882,16 @@
         },
         {
             "name": "khaled.alshamaa/ar-php",
-            "version": "v6.2.0",
+            "version": "v6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/khaled-alshamaa/ar-php.git",
-                "reference": "a3eb0dfe14ea9ba0fa291673c52ae7a75749e35a"
+                "reference": "a35d61400a646a0c685a98d3fc7eea8721bc404e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/khaled-alshamaa/ar-php/zipball/a3eb0dfe14ea9ba0fa291673c52ae7a75749e35a",
-                "reference": "a3eb0dfe14ea9ba0fa291673c52ae7a75749e35a",
+                "url": "https://api.github.com/repos/khaled-alshamaa/ar-php/zipball/a35d61400a646a0c685a98d3fc7eea8721bc404e",
+                "reference": "a35d61400a646a0c685a98d3fc7eea8721bc404e",
                 "shasum": ""
             },
             "require": {
@@ -1931,9 +1931,9 @@
             ],
             "support": {
                 "issues": "https://github.com/khaled-alshamaa/ar-php/issues",
-                "source": "https://github.com/khaled-alshamaa/ar-php/tree/v6.2.0"
+                "source": "https://github.com/khaled-alshamaa/ar-php/tree/v6.3.0"
             },
-            "time": "2021-06-20T18:15:36+00:00"
+            "time": "2022-06-17T18:17:40+00:00"
         },
         {
             "name": "knplabs/knp-snappy",
@@ -10820,16 +10820,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.20",
+            "version": "9.5.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "12bc8879fb65aef2138b26fc633cb1e3620cffba"
+                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/12bc8879fb65aef2138b26fc633cb1e3620cffba",
-                "reference": "12bc8879fb65aef2138b26fc633cb1e3620cffba",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e32b76be457de00e83213528f6bb37e2a38fcb1",
+                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1",
                 "shasum": ""
             },
             "require": {
@@ -10863,7 +10863,6 @@
                 "sebastian/version": "^3.0.2"
             },
             "require-dev": {
-                "ext-pdo": "*",
                 "phpspec/prophecy-phpunit": "^2.0.1"
             },
             "suggest": {
@@ -10907,7 +10906,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.20"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.21"
             },
             "funding": [
                 {
@@ -10919,7 +10918,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-01T12:37:26+00:00"
+            "time": "2022-06-19T12:14:25+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12011,8 +12010,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^7.4|^8.0|^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.0.0"
 }

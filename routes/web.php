@@ -181,6 +181,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             );
         }
     );
+
     Route::prefix('design-office')->name('design_office')->group(function () {
         Route::get('download/{id}', [DesignerOrderController::class, 'download'])->name('.download');
     });
@@ -212,6 +213,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('accept/{order}', [DesignerOrderController::class, 'accept'])->name('.accept');
         Route::post('reject/{order}', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
+  
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');
@@ -220,9 +222,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
         Route::get('/{order}/reports/list', [DeliveryController::class, 'reports_list'])->name('.reports_list');
         Route::get('/reports/list', [DeliveryController::class, 'reports_list_all'])->name('.reports_list_all');
-        Route::get('/reports/edit/{report}', [DeliveryController::class, 'edit_report_page'])->name(
-            '.report_edit_form'
-        );
+        Route::get('/reports/edit/{report}', [DeliveryController::class, 'edit_report_page'])->name('.report_edit_form');
         //Route::get('/{order}/add', [DeliveryController::class, 'add_report_page'])->name('.report_add_form');
         Route::post('/delete_report', [DeliveryController::class, 'delete_report'])->name('.delete_report');
         Route::post('/delete_file/{attchment}', [DeliveryController::class, 'delete_file'])->name('.delete_file');
@@ -487,3 +487,5 @@ Route::get('raft_company/get_camp_by_box/{box}', [RaftCompanyController::class, 
 Route::get('test', function () {
     dd(order_services(4));
 });
+Route::get('qr_download_files/{raft_company_box_id}',[LicenseController::class,'qr_download_files'])->name('qr_download_files');
+Route::get('download_raft_company_file/{rf_id}/{file_type}',[LicenseController::class,'download_raft_company_file'])->name('download_raft_company_file');

@@ -80,11 +80,19 @@ class DeliveryController extends Controller
                 // if ($order->status == 2) {
                 //     $reports_add = '';
                 // }
-                $element = '<div class="btn-group me-1 mt-2">
+                if ( $order->status == Order::ORDER_APPROVED ) {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-success btn-sm  type="button"  href="' . route('delivery.view_file', ['order' => $order->id]) . '">
+                                                إصدار الرخصة
+                                            </a>
+                                        </div>';
+                } else {
+                    $element = '<div class="btn-group me-1 mt-2">
                                             <a class="btn btn-info btn-sm  type="button"  href="' . route('delivery.view_file', ['order' => $order->id]) . '">
                                                 عرض التفاصيل
                                             </a>
                                         </div>';
+                }
 
                 return $element;
 
