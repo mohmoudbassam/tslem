@@ -56,6 +56,7 @@ class DeliveryController extends Controller
             ->whereDate($request->from_date, $request->to_date)
             ->where('status', '>=', '3')
         ->latest();
+
         if ($flag) {
             return $order->get();
         }

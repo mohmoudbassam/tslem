@@ -71,6 +71,7 @@ class License extends Model
             'nullable',
             'file',
         ],
+
     ];
 
     /**
@@ -446,7 +447,7 @@ CODE;
         $data = "";
         if( $raft = $this->service_provider->getRaftCompanyBox() ) {
 
-            return QrCode::generate(route('qr_download_files',['raft_company_box_id'=>$raft->id]));
+            return QrCode::generate(route('qr_download_files',['order'=>$this->order->id]));
         }
 
        return false;

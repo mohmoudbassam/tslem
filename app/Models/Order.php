@@ -241,6 +241,7 @@ class Order extends Model
 
     public function hasLicense(): bool
     {
+
         return $this->license()->whereNotNull('created_at')->count();
     }
 
@@ -269,9 +270,9 @@ class Order extends Model
             $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
         }
 
-        $license->fill($attributes)
-                ->forceFill(compact('created_at'))
-                ->save();
+//        $license->fill($attributes)
+//                ->forceFill(compact('created_at'))
+//                ->save();
 
         return $license->refresh();
     }

@@ -5,7 +5,8 @@
                 id="exampleModalLongTitle">معلومات الرخصة</h5>
 
         </div>
-        <form action="'{{route('licenses.order_license_create', ['order'=>$model->id])}}'" method="post" id="form_modal" enctype="multipart/form-data">
+        <form action="'{{route('licenses.order_license_create', ['order'=>$model->id])}}'" method="post" id="form_modal"
+              enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
                 <div class="row">
@@ -26,6 +27,19 @@
                             'model' => $license,
                         ])
                     @endforeach
+                        <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="attachment">المرفقات</label>
+                                        <input type="file" class="form-control"
+                                               id="attachment"
+                                               name="attachment">
+                                        <div class="col-12 text-danger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -41,6 +55,7 @@
 <script src="{{url('/assets/libs/flatpickr/l10n/ar.js')}}"></script>
 <script>
     file_input('#map_path');
+    file_input('#attachment');
     $('#form_modal').validate({
         rules: @json(\App\Models\License::getRules()),
         errorElement: 'span',
