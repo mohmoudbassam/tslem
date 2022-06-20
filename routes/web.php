@@ -19,6 +19,7 @@ use App\Http\Controllers\CP\TaslemMaintenance\TaslemMaintenance;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use App\Http\Controllers\CP\Licenses\LicenseController;
+use App\Http\Controllers\CP\NewsArticles\NewsArticleController;
 use App\Http\Controllers\CP\VerificationController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SiteController;
@@ -95,6 +96,21 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
              Route::get('view_html/{order}/license', [ LicenseController::class, 'view_html' ])
                   ->name('.view_html');
          });
+
+    Route::prefix('news_articles')
+     ->name('news_articles')
+     ->middleware([ 'user_type:admin' ])
+     ->group(function() {
+         Route::get('', [ NewsArticleController::class, 'index' ]);
+         Route::get('add', [ NewsArticleController::class, 'add' ])->name('.add');
+         Route::get('edit/{news_article}', [ NewsArticleController::class, 'edit' ])->name('.edit');
+         Route::get('form', [ NewsArticleController::class, 'form' ])->name('.form');
+         Route::get('list', [ NewsArticleController::class, 'list' ])->name('.list');
+         Route::post('update/{news_article}', [ NewsArticleController::class, 'update' ])->name('.update');
+         Route::post('delete/{news_article}', [ NewsArticleController::class, 'delete' ])->name('.delete');
+         Route::post('store', [ NewsArticleController::class, 'store' ])->name('.store');
+         Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
+     });
 
     Route::prefix('users')->name('users')->middleware('admin')->group(function() {
         Route::get('users', [ UserController::class, 'index' ]);
