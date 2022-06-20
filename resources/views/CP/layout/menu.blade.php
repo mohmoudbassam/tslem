@@ -80,9 +80,10 @@
                                     <span data-key="t-calendar">الخدمات</span>
                                 </a>
                             </li>
+                            @include('CP.news_articles.menu')
                             <li>
                                 <a href="{{route('news')}}">
-                                    <span data-key="t-calendar">الاخبار</span>
+                                    <span data-key="t-calendar">شريط الاخبار</span>
                                 </a>
                             </li>
                             <li>

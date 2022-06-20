@@ -384,6 +384,7 @@ CODE;
     {
         return $this->designer()->value('company_name');
     }
+
     public function getConsultingOfficeNameAttribute()
     {
         return $this->consulting_office()->value('name');
@@ -393,6 +394,7 @@ CODE;
     {
         return $this->consulting_office()->value('company_name');
     }
+
     public function getContractorNameAttribute()
     {
         return $this->contractor()->value('name');
@@ -402,6 +404,7 @@ CODE;
     {
         return $this->contractor()->value('company_name');
     }
+
     public function getWasteContractorNameAttribute()
     {
         return $this->order()->value('waste_contractor');

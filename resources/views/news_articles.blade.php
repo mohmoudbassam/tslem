@@ -50,8 +50,7 @@
                     </div>
                     <div class="menu-container mx-auto menu-nav">
                         <ul class="main-menu">
-                            <li class="menu_item"><a class="menu_link active" data-scroll="section-home">الرئيسية</a>
-                            </li>
+                            <li class="menu_item"><a class="menu_link" href="{{ url('/') }}">الرئيسية</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
                             <li class="menu_item"><a class="menu_link">تأهيل مزودي الخدمات</a>
@@ -60,7 +59,7 @@
                                     <li><a>مقاولين</a></li>
                                 </ul>
                             </li>
-                            <li class="menu_item"><a class="menu_link">المركز الاعلامي</a>
+                            <li class="menu_item"><a class="menu_link active">المركز الاعلامي</a>
                                 <ul class="main-menu-sub">
                                     <li><a href="{{ route('NewsArticles.Mainlist') }}">الأخبار</a></li>
                                 </ul>
@@ -118,56 +117,34 @@
     </header>
 
 
-    <section class="section section-home" id="section-home">
-        <div class="container">
+    <section class="section section-home section-sub-page" id="section-home">
+        <div class="container text-center">
 
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-xl-3 mb-4 mx-auto">
-                    <div class="home-content">
-                        <h2 class="wow fadeInUp font-bold text-white mb-lg-3" data-wow-delay="0.2s">البوابة الرقمية</h2>
-                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #C0946F">تسليم</h3>
-                        <h3 class="wow fadeInUp font-bold text-white" data-wow-delay="0.4s">مركز ريــادي متكامل</h3>
-                    </div>
-                </div>
-            </div>
+            <div class="page-title">{{ $pageTitle }}</div>
 
         </div>
 
     </section>
     <!-- end:: section -->
-    <!-- start:: section -->
-    <section class="section section-about pt-5" id="section-about">
+    <section class="section section-sub-page-content" id="section-home">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="row">
-                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="section-title mb-3">
-                                <h2 class="font-bold bg bg-start">عن المركز</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="guide-links">
+                        @foreach($links as $linkItem)
+                            <div style="display: inline-block;margin-bottom: 5px;" class="col-sm-12 col-md-6 col-lg-6">
+                                <a style="margin-bottom: 0;" href="{{ route('NewsArticles.article', ['news_article' => $linkItem->id]) }}" >{{ $linkItem['title'] }}</a>
                             </div>
-                            <div class="section-about-desc">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل
-                                الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</div>
-                            <div class="widget__item-serve-list row">
-                                <div class="col-6 widget__item-serve">
-                                خدمة مميزة
-                                </div>
-                                <div class="col-6 widget__item-serve">
-                                بيانات آمنة
-                                </div>
-                                <div class="col-6 widget__item-serve">
-                                متابعة مستمرة
-                                </div>
-                                <div class="col-6 widget__item-serve">
-                                سهولة الخدمات
-                                </div>
+                            <div style="display: inline-block;" class="col-sm-12 col-md-4 col-lg-4">
+                                تاريخ الإنشاء : {{ $linkItem['created_at'] }}
                             </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
-    <!-- end:: section -->
     <!-- start:: section -->
     <section class="section section-guidelines" id="section-guidelines">
         <div class="container">
@@ -219,7 +196,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
                         <div class="row justify-content-between">
-                            <div class="col-lg-3 mb-4 mb-lg-0">
+                            <div class="col-lg-4 mb-4 mb-lg-0">
                                 <div class="logo mb-lg-4 mb-2"><img src="{{ asset('assets/images/logo-dark.png') }}" alt=""/></div>
                                 <ul class="social-media">
                                     <li>
@@ -236,7 +213,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <div class="footer-top-links">
                                     <div class="footer-top-title">مواقع صديقة</div>
                                     <ul class="links">
@@ -245,7 +222,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <div class="footer-top-links">
                                     <div class="footer-top-title">روابط سريعة</div>
                                     <ul class="links">
@@ -253,85 +230,6 @@
                                         <li><a href="#">تاهيل مزودي الخدمة</a></li>
                                         <li><a href="#">الدلائل والنماذج</a></li>
                                         <li><a href="{{ route('login_page') }}">تسجيل الدخول</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="footer-top-links">
-                                    <div class="footer-top-title">تواصل معنا</div>
-                                    <ul class="links">
-                                        <li class="mb-2"><a href="https://wa.me/+966599720750" target="_blank" class="d-flex align-items-center">
-                                            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-                                            <svg version="1.1" width="30" class="ps-2" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;" xml:space="preserve">
-                                            <g>
-                                            <path
-                                            style="fill: #2cb742;"
-                                            d="M0,58l4.988-14.963C2.457,38.78,1,33.812,1,28.5C1,12.76,13.76,0,29.5,0S58,12.76,58,28.5
-                                                    S45.24,57,29.5,57c-4.789,0-9.299-1.187-13.26-3.273L0,58z"
-                                            />
-                                            <path
-                                            style="fill: #ffffff;"
-                                            d="M47.683,37.985c-1.316-2.487-6.169-5.331-6.169-5.331c-1.098-0.626-2.423-0.696-3.049,0.42
-                                                    c0,0-1.577,1.891-1.978,2.163c-1.832,1.241-3.529,1.193-5.242-0.52l-3.981-3.981l-3.981-3.981c-1.713-1.713-1.761-3.41-0.52-5.242
-                                                    c0.272-0.401,2.163-1.978,2.163-1.978c1.116-0.627,1.046-1.951,0.42-3.049c0,0-2.844-4.853-5.331-6.169
-                                                    c-1.058-0.56-2.357-0.364-3.203,0.482l-1.758,1.758c-5.577,5.577-2.831,11.873,2.746,17.45l5.097,5.097l5.097,5.097
-                                                    c5.577,5.577,11.873,8.323,17.45,2.746l1.758-1.758C48.048,40.341,48.243,39.042,47.683,37.985z"
-                                            />
-                                            </g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            </svg>
-                                             العملاء : 0599720750
-                                            </a></li>
-                                            <li><a href="https://wa.me/+966583392323" target="_blank" class="d-flex align-items-center">
-                                            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-                                            <svg version="1.1" width="30" class="ps-2" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 58 58" style="enable-background: new 0 0 58 58;" xml:space="preserve">
-                                            <g>
-                                            <path
-                                            style="fill: #2cb742;"
-                                            d="M0,58l4.988-14.963C2.457,38.78,1,33.812,1,28.5C1,12.76,13.76,0,29.5,0S58,12.76,58,28.5
-                                                    S45.24,57,29.5,57c-4.789,0-9.299-1.187-13.26-3.273L0,58z"
-                                            />
-                                            <path
-                                            style="fill: #ffffff;"
-                                            d="M47.683,37.985c-1.316-2.487-6.169-5.331-6.169-5.331c-1.098-0.626-2.423-0.696-3.049,0.42
-                                                    c0,0-1.577,1.891-1.978,2.163c-1.832,1.241-3.529,1.193-5.242-0.52l-3.981-3.981l-3.981-3.981c-1.713-1.713-1.761-3.41-0.52-5.242
-                                                    c0.272-0.401,2.163-1.978,2.163-1.978c1.116-0.627,1.046-1.951,0.42-3.049c0,0-2.844-4.853-5.331-6.169
-                                                    c-1.058-0.56-2.357-0.364-3.203,0.482l-1.758,1.758c-5.577,5.577-2.831,11.873,2.746,17.45l5.097,5.097l5.097,5.097
-                                                    c5.577,5.577,11.873,8.323,17.45,2.746l1.758-1.758C48.048,40.341,48.243,39.042,47.683,37.985z"
-                                            />
-                                            </g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            <g></g>
-                                            </svg>
-                                            الدعم الفني  : 0583392323
-                                            </a></li>
                                     </ul>
                                 </div>
                             </div>
