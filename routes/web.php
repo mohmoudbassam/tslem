@@ -4,7 +4,6 @@ use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
 use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
-use App\Http\Controllers\CP\Licenses\LicenseController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
@@ -97,6 +96,22 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('view_html/{order}/license', [LicenseController::class, 'view_html'])
                 ->name('.view_html');
         });
+
+    Route::prefix('news_articles')
+     ->name('news_articles')
+     ->middleware([ 'user_type:admin' ])
+     ->group(function() {
+         Route::get('', [ NewsArticleController::class, 'index' ]);
+         Route::get('add', [ NewsArticleController::class, 'add' ])->name('.add');
+         Route::get('edit/{news_article}', [ NewsArticleController::class, 'edit' ])->name('.edit');
+         Route::get('form', [ NewsArticleController::class, 'form' ])->name('.form');
+         Route::get('list', [ NewsArticleController::class, 'list' ])->name('.list');
+         Route::post('update/{news_article}', [ NewsArticleController::class, 'update' ])->name('.update');
+         Route::post('delete/{news_article}', [ NewsArticleController::class, 'delete' ])->name('.delete');
+         Route::post('store', [ NewsArticleController::class, 'store' ])->name('.store');
+         Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
+         Route::get('toggle_publish/{news_article}', [NewsArticleController::class,'togglePublish'])->name('.toggle_publish');
+     });
 
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
