@@ -18,5 +18,5 @@ return [
     ],
     "raft_company_name" => ":name",
     "no_parent_name" => "المجلس التنسيقي لحجاج الداخل",
-    "download_for_service_provider" => "اصدار رخصة الإضافات",
+    "download_for_service_provider" => "عرض رخصة الإضافات",
 ];

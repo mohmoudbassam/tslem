@@ -331,20 +331,31 @@ class ConsultingOfficeController extends Controller
     {
 
         $order = Order::query()->findOrFail($request->id);
-        if ($order->status == 2) {
-            $order->status = Order::DESIGN_APPROVED;
-            $order->contractor_id = $request->contractor_id;
-            $order->consulting_office_id = $request->consulting_office_id;
+
+        if($order->contractor_id && $order->consulting_office_id){
+            $order->status = Order::ORDER_APPROVED;
+            $NotificationText = 'تم اعتماد الطلب #'.$order->identifier.' من المقاول والمشرف وبإنتظار اصدار الرخصة';
             $order->save();
+            save_logs($order, auth()->user()->id,  $NotificationText);
+            optional($order->service_provider)->notify(new OrderNotification($NotificationText,auth()->user()->id));
 
-            save_logs($order, auth()->user()->id, 'تم اعتماد الطلب  من مكتب التسليم ');
-
-            optional($order->service_provider)->notify(new OrderNotification('تم اعتماد الطلب #'.$order->identifier.' من مكتب التسليم', $order->designer_id));
+            $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
+            foreach($getTasleemUsers as $taslemUser){
+                optional($taslemUser)->notify(new OrderNotification($NotificationText, auth()->user()->id));
+            }
             return response()->json([
                 'success' => true,
                 'message' => 'تمت اعتماد الطلب بنجاح'
             ]);
+    
+        }else {
+            return response()->json([
+                'success' => false,
+                'message' => 'لم يتم إختيار مقاول او مشرف, يجب عليك الاختيار اولاً ثم اعتماد الطلب'
+            ]);
         }
+
+
     }
 
     public function complete(Request $request)

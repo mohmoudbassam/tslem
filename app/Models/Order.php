@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $guarded = [];
 
@@ -17,6 +19,7 @@ class Order extends Model
     public const DESIGN_APPROVED = 4;
     public const DESIGN_AWAITING_GOV_APPROVE = 8;
     public const ORDER_APPROVED = 9;
+    public const PENDING_OPERATION = 10;
     public const PROCESSING = 5;
     public const COMPLETED = 6;
     public const PENDING_LICENSE_ISSUED = 7;
@@ -147,7 +150,8 @@ class Order extends Model
             '5' => 'الطلب تحت الإجراء',
             '6' => 'الطلب مكتمل',
             '7' => 'بإنتظار اصدار الرخصة',
-            '9' => 'تمت الموافقة النهائية'
+            '9' => 'تمت الموافقة النهائية',
+            '10' => 'الطلب تحت التنفيذ',
         ];
         if(isset($orderStatus[$this->status])){
             return $orderStatus[$this->status];
@@ -226,7 +230,7 @@ class Order extends Model
     public function licenseNeededForServiceProvider(): bool
     {
 
-        return $this->status === static::PENDING_LICENSE_ISSUED && $this->hasLicense() &&
+        return $this->status === static::PENDING_OPERATION && $this->hasLicense() &&
             $this->is_accepted($this->contractor_id) && $this->is_accepted($this->consulting_office_id);
     }
 
