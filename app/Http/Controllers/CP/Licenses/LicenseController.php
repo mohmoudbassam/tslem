@@ -404,7 +404,7 @@ HTML;
 
         // Send notification to service provider
 
-        $notificationText = 'تم اصدار الرخصة للطلب #' . $order->identifier . ' وبإنتظار اختيارك للمشرف والمقاول';
+        $notificationText = 'الرخصة جاهزة للإصدار للطلب #' . $order->identifier . ' وبإنتظار اختيارك للمشرف والمقاول';
         save_logs($order, auth()->user()->id, $notificationText);
         optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
 
