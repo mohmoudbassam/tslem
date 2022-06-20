@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ SiteController::class, 'getHome' ])->name('public');
 Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
+Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
 
 Route::get('login', [ LoginController::class, 'index' ])->name('login_page');
 Route::Post('login', [ LoginController::class, 'login' ])->name('login');
@@ -112,6 +113,14 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
          Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
      });
 
+    Route::prefix('NewsArticles')
+        ->name('NewsArticles')
+        ->group(function() {
+            Route::get('NewsArticles', [ NewsArticleController::class, 'Mainlist' ])
+                ->name('.Mainlist');
+            Route::get('article/{news_article}', [ NewsArticleController::class, 'article' ])
+                ->name('.article');
+        });
     Route::prefix('users')->name('users')->middleware('admin')->group(function() {
         Route::get('users', [ UserController::class, 'index' ]);
         Route::get('add', [ UserController::class, 'add' ])->name('.add');

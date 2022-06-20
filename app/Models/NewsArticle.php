@@ -14,13 +14,12 @@ class NewsArticle extends Model
 {
     use HasFactory;
     use TModelTranslation;
-
     /**
      * @var \string[][]
      */
     public static $RULES = [
          'title'        => ['required'],
-         'body'         => ['required','textarea'],
+         'body'         => ['required'],
          'is_published' => ['nullable'],
          'user_id'      => ['nullable'],
     ];
