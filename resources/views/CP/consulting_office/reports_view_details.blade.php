@@ -295,11 +295,7 @@ file-drop-zone clearfix {}
 
                             </div>
                             <div class="tab-pane" id="reports" role="tabpanel">
-
-
-
                                 <!-- start page title -->
-
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="row mt-4">

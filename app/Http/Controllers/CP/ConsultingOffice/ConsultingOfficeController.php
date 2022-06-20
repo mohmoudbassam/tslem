@@ -347,7 +347,7 @@ class ConsultingOfficeController extends Controller
                 'success' => true,
                 'message' => 'تمت اعتماد الطلب بنجاح'
             ]);
-    
+
         }else {
             return response()->json([
                 'success' => false,
