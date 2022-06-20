@@ -12,6 +12,7 @@ return [
         'add'            => "إضافة",
         'delete'         => "حذف :model",
         'delete_confirm' => "هل انت متاكد من حذف :model؟",
+        'are_you_sure' => "هل انت متاكد؟",
     ],
     'datatable'            => [
         'fields' => [

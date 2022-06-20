@@ -37,6 +37,13 @@
                         >{{$label}}</option>
                     @endforeach
                 </select>
+            @elseif($type === 'textarea')
+                <textarea
+                    id="{!! $id !!}"
+                    name="{!! $name !!}"
+                    rows="6"
+                    class="form-control {{$id}}_textarea {!! $class ?? '' !!}"
+                    {!! $attributes ?? '' !!}>{!! $value ?? old($name) !!}</textarea>
             @elseif ($type === 'file')
                 <input
                     id="{!! $id !!}"
