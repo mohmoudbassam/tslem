@@ -379,14 +379,29 @@ CODE;
         return $this->designer()->value('name');
     }
 
+    public function getDesignerCompanyNameAttribute()
+    {
+        return $this->designer()->value('company_name');
+    }
+
     public function getConsultingOfficeNameAttribute()
     {
         return $this->consulting_office()->value('name');
     }
 
+    public function getConsultingOfficeCompanyNameAttribute()
+    {
+        return $this->consulting_office()->value('company_name');
+    }
+
     public function getContractorNameAttribute()
     {
         return $this->contractor()->value('name');
+    }
+
+    public function getContractorCompanyNameAttribute()
+    {
+        return $this->contractor()->value('company_name');
     }
 
     public function getWasteContractorNameAttribute()
