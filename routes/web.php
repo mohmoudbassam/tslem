@@ -307,18 +307,10 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         ->group(function () {
             Route::get('orders', [ConsultingOfficeController::class, 'orders']);
             Route::get('', [ConsultingOfficeController::class, 'list'])->name('.list');
-            Route::get('/{order}/reports', [ConsultingOfficeController::class, 'reports_view'])->name(
-                '.reports_view'
-            );
-            Route::get('/{order}/reports/list', [ConsultingOfficeController::class, 'reports_list'])->name(
-                '.reports_list'
-            );
-            Route::get('/reports/edit/{report}', [ConsultingOfficeController::class, 'edit_report_page'])->name(
-                '.report_edit_form'
-            );
-            Route::get('add-report', [ConsultingOfficeController::class, 'add_report_page'])->name(
-                '.report_add_form'
-            );
+            Route::get('/{order}/reports', [ConsultingOfficeController::class, 'reports_view'])->name('.reports_view');
+            Route::get('/{order}/reports/list', [ConsultingOfficeController::class, 'reports_list'])->name('.reports_list');
+            Route::get('/reports/edit/{report}', [ConsultingOfficeController::class, 'edit_report_page'])->name('.report_edit_form');
+            Route::get('{order}/add-report', [ConsultingOfficeController::class, 'add_report_page'])->name('.report_add_form');
             Route::get('accept_form', [ConsultingOfficeController::class, 'accept_form'])->name('.accept_form');
             Route::post('accept', [ConsultingOfficeController::class, 'accept'])->name('.accept');
             Route::post('reject', [ConsultingOfficeController::class, 'reject'])->name('.reject');
@@ -329,7 +321,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 '.delete_file'
             );
             Route::post('edit_report', [ConsultingOfficeController::class, 'edit_report'])->name('.edit_report');
-            Route::post('add_report', [ConsultingOfficeController::class, 'add_report'])->name('.add_report');
+            Route::post('{Order}/add_report', [ConsultingOfficeController::class, 'add_report'])->name('.add_report');
             Route::get(
                 'view_contractor_report/{order_id}',
                 [ConsultingOfficeController::class, 'view_contractor_report']
@@ -347,7 +339,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name(
                 '.reports_all_list'
             );
-            Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name(
+            Route::get('/{Order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name(
                 '.reports_view_details'
             );
             Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])
