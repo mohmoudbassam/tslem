@@ -146,7 +146,7 @@ class LoginController extends Controller
       ///order per designer office
        $data['order_count_per_designer'] = Order::query()->whereNotNull('designer_id')->count();
        $data['order_count_per_taslem'] = Order::query()->where('status','>',Order::DESIGN_REVIEW)->count();
-       $data['license_number']=License::query()->count();
+       $data['license_number']=License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
 
         return view('CP.dashboard', $data);
 
