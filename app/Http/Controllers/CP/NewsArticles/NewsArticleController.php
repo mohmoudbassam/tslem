@@ -114,6 +114,21 @@ class NewsArticleController extends Controller
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\NewsArticle  $news_article
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function article(NewsArticle $news_article)
+    {
+        $news_articles = [];
+        if($news_article&&$news_article->body) $news_article->body = nl2br($news_article->body);
+        $news_articles['model']= $news_article;
+        $news_articles['news']=  \App\Models\News::query()->latest()->get();
+        $news_articles['pageTitle'] = $news_article&&$news_article->title?'الأخبار - '.$news_article->title:trans('general.something_went_wrong');
+        return view("news_article_show",$news_articles);
+    }
+    /**
      * @param $value
      *
      * @return mixed
@@ -170,6 +185,25 @@ HTML;
                          ->make(true);
     }
 
+    /**
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function Mainlist(Request $request)
+    {
+        $articles = NewsArticle::query()
+            ->where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        if(!$articles){$articles=[];}
+
+        $news_articles = [];
+        $news_articles['links']=$articles;
+        $news_articles['news']=  \App\Models\News::query()->latest()->get();
+        $news_articles['pageTitle'] = 'المركز الإعلامي - الأخبار';
+        return view("news_articles",$news_articles);
+    }
     /**
      * @post
      *

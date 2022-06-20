@@ -113,6 +113,14 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
          Route::get('toggle_publish/{news_article}', [NewsArticleController::class,'togglePublish'])->name('.toggle_publish');
      });
 
+    Route::prefix('NewsArticles')
+        ->name('NewsArticles')
+        ->group(function() {
+            Route::get('NewsArticles', [ NewsArticleController::class, 'Mainlist' ])
+                ->name('.Mainlist');
+            Route::get('article/{news_article}', [ NewsArticleController::class, 'article' ])
+                ->name('.article');
+        });
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::get('add', [UserController::class, 'add'])->name('.add');
