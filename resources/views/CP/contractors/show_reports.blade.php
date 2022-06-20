@@ -3,13 +3,9 @@
     التقارير
 @endsection
 @section('content')
-
-    <!-- start page title -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-
-
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">التقارير</a></li>
@@ -67,11 +63,9 @@
         </div>
 
     </div>
-
     <div class="modal  bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </div>
-
 @endsection
 
 @section('scripts')
@@ -198,5 +192,4 @@
 
 
     </script>
-
 @endsection
