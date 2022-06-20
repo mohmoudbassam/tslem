@@ -10,6 +10,7 @@ use App\Models\ContractorSpecialtiesPivot;
 use App\Models\Order;
 use App\Models\ReportComment;
 use App\Models\User;
+use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -333,6 +334,19 @@ class ContractorController extends Controller
             'order_id' => $order->id,
             'user_id' => auth()->user()->id,
         ]);
+
+        if ( ConsultingOrders::where('order_id', $order->id)->count() == 2 ) {
+            $order->status = Order::ORDER_APPROVED;
+            $NotificationText = 'تم اعتماد الطلب #'.$order->identifier.' من المقاول والمشرف وبإنتظار اصدار الرخصة';
+            $order->save();
+            save_logs($order, auth()->user()->id,  $NotificationText);
+            optional($order->service_provider)->notify(new OrderNotification($NotificationText,auth()->user()->id));
+
+            $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
+            foreach($getTasleemUsers as $taslemUser){
+                optional($taslemUser)->notify(new OrderNotification($NotificationText, auth()->user()->id));
+            }
+        }
 
         return redirect()->back()->with(['success' => 'تم قبول الطلب بنجاح']);
     }

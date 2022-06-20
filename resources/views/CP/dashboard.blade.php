@@ -985,8 +985,9 @@
                     distributed: true
                 }
             },
-            colors: ['#A0522D', '#e5eb34', '#3CB371',
-                '#4169E1', '#A52A2A', '#D3D3D3', '#FFC0CB'],
+            // colors: ['#A0522D', '#e5eb34', '#3CB371', '#4169E1', '#A52A2A', '#D3D3D3', '#FFC0CB'],
+            colors: ['#4169E1', '#e5eb34', '#A0522D', '#f17a29',
+                '#bb0000', 'rgba(20,187,110,0.65)', '#d76e80'],
             series: [{
                 data: @json($bar)
             }],

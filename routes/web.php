@@ -38,7 +38,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ SiteController::class, 'getHome' ])->name('public');
 Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
-Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
 
 Route::get('login', [ LoginController::class, 'index' ])->name('login_page');
 Route::Post('login', [ LoginController::class, 'login' ])->name('login');
@@ -111,6 +110,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
          Route::post('delete/{news_article}', [ NewsArticleController::class, 'delete' ])->name('.delete');
          Route::post('store', [ NewsArticleController::class, 'store' ])->name('.store');
          Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
+         Route::get('toggle_publish/{news_article}', [NewsArticleController::class,'togglePublish'])->name('.toggle_publish');
      });
 
     Route::prefix('NewsArticles')
@@ -160,6 +160,19 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
         Route::get('',[\App\Http\Controllers\CP\admin\OrdersController::class,'index']);
         Route::get('list',[\App\Http\Controllers\CP\admin\OrdersController::class,'list'])->name('.list');
         Route::get('export',[\App\Http\Controllers\CP\admin\OrdersController::class,'export'])->name('.export');
+    });
+
+    Route::group(['as' => 'Admin.', 'prefix' => 'Admin'], function () {
+        Route::group(['as' => 'Order.', 'prefix' => 'Order'], function () {
+            // List view
+            Route::get('Trashed', [\App\Http\Controllers\CP\admin\OrdersController::class, 'trashedIndex'])->name('trashed');
+            // List of datatable
+            Route::get('Trashed-List', [\App\Http\Controllers\CP\admin\OrdersController::class, 'trashedList'])->name('trashedList');
+            // Soft Delete orders
+            Route::get('Soft-Delete', [\App\Http\Controllers\CP\admin\OrdersController::class, 'softDelete'])->name('softDelete');
+            // Restore soft deleted order
+            Route::get('Restore', [\App\Http\Controllers\CP\admin\OrdersController::class, 'restore'])->name('restore');
+        });
     });
 
     Route::prefix('service-providers')->name('services_providers')->middleware([ 'service_provider' ])->group(

@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Models;
 
 use App\Traits\TModelTranslation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+
 /**
  * Class CarPart
  *
@@ -14,14 +16,15 @@ class NewsArticle extends Model
 {
     use HasFactory;
     use TModelTranslation;
+
     /**
      * @var \string[][]
      */
     public static $RULES = [
-         'title'        => ['required'],
-         'body'         => ['required'],
-         'is_published' => ['nullable'],
-         'user_id'      => ['nullable'],
+        'title' => [ 'required' ],
+        'body' => [ 'required' ],
+        'is_published' => [ 'nullable' ],
+        'user_id' => [ 'nullable' ],
     ];
     /**
      * @var string
@@ -30,12 +33,21 @@ class NewsArticle extends Model
     /**
      * @var mixed
      */
-    protected static $LIST_COLUMNS = [
+    public static $LIST_COLUMNS = [
         'id',
         'title',
         'user_id',
         'created_at',
-        'sort_order',
+        'is_published',
+    ];
+    /**
+     * @var mixed
+     */
+    protected static $LIST_COLUMNS_ORDERABLE = [
+        'id',
+        'title',
+        'user_id',
+        'created_at',
         'is_published',
     ];
     /**
@@ -62,6 +74,7 @@ class NewsArticle extends Model
         'sort_order' => 'integer',
         'user_id' => 'integer',
     ];
+
     /**
      * @param $with_extras
      *
@@ -77,8 +90,10 @@ class NewsArticle extends Model
                 $results[] = $field;
             }
         }
+
         return $results;
     }
+
     /**
      * @param $as_json
      * @param $with_extras
@@ -97,19 +112,24 @@ class NewsArticle extends Model
             if( !is_null($render) ) {
                 $result[ 'render' ] = $render;
             }
+
             return $result;
         };
         $columns = [];
         foreach( static::getIndexColumns() as $column => $label ) {
-            $columns[] = $makeColumn($column);
+            $orderable = in_array($column, static::$LIST_COLUMNS_ORDERABLE);
+            $columns[] = $makeColumn($column, $orderable);
         }
         if( $with_extras ) {
             foreach( __('general.datatable.fields') as $field => $label ) {
-                $columns[] = $makeColumn($field);
+                $orderable = in_array($field, static::$LIST_COLUMNS_ORDERABLE);
+                $columns[] = $makeColumn($field,$orderable);
             }
         }
+
         return $as_json ? json_encode($columns) : $columns;
     }
+
     /**
      * @param $column
      *
@@ -119,10 +139,12 @@ class NewsArticle extends Model
     {
         $column = value($column);
         if( $column === 'is_published' ) {
-            return [0=>trans('general.no'),1=>trans('general.yes')];
+            return [ 0 => trans('general.no'), 1 => trans('general.yes') ];
         }
+
         return [];
     }
+
     /**
      * @return array
      */
@@ -138,8 +160,10 @@ class NewsArticle extends Model
                 $rules[ $column ][ 'required' ] = false;
             }
         }
+
         return $rules;
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -147,6 +171,7 @@ class NewsArticle extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     /**
      * @param      $file
      * @param bool $save
@@ -158,8 +183,10 @@ class NewsArticle extends Model
         if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             return $full_path ? static::disk()->url($full_path) : "";
         }
+
         return $this;
     }
+
     /**
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
@@ -167,6 +194,7 @@ class NewsArticle extends Model
     {
         return Storage::disk(static::$DISK);
     }
+
     /**
      * @return mixed
      */
@@ -174,11 +202,28 @@ class NewsArticle extends Model
     {
         return $this->user()->value('name');
     }
+
     /**
      * @return bool
      */
     public function isPublished(): bool
     {
         return $this->is_published;
+    }
+
+    /**
+     * @param bool $save
+     *
+     * @return $this
+     */
+    public function togglePublish(bool $save = false)
+    {
+        $this->is_published = !$this->isPublished();
+        if( $save ) {
+            $this->save();
+            $this->refresh();
+        }
+
+        return $this;
     }
 }
