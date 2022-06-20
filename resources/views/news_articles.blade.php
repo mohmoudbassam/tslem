@@ -50,8 +50,7 @@
                     </div>
                     <div class="menu-container mx-auto menu-nav">
                         <ul class="main-menu">
-                            <li class="menu_item"><a class="menu_link" href="{{ url('/') }}">الرئيسية<a/>
-                            </li>
+                            <li class="menu_item"><a class="menu_link" href="{{ url('/') }}">الرئيسية</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-about">عن المركز</a></li>
                             <li class="menu_item"><a class="menu_link" data-scroll="section-guidelines">الدلائل واللوائح</a></li>
                             <li class="menu_item"><a class="menu_link">تأهيل مزودي الخدمات</a>
