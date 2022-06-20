@@ -228,7 +228,7 @@ class Order extends Model
     public function licenseNeededForServiceProvider(): bool
     {
 
-        return $this->status === static::PENDING_LICENSE_ISSUED && $this->hasLicense() &&
+        return $this->status === static::PENDING_OPERATION && $this->hasLicense() &&
             $this->is_accepted($this->contractor_id) && $this->is_accepted($this->consulting_office_id);
     }
 
