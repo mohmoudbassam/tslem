@@ -174,7 +174,7 @@
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h4 class="card-title">{{$_specialties[0]->service->specialties->name_ar}}</h4>
+                                                <h4 class="card-title">{{$_specialties[0]->service->specialties->name_ar??null}}</h4>
                                             </div>
 
                                             <div class="card-body">
@@ -186,7 +186,7 @@
                                                                     الخدمة</label>
                                                                 <input type="text" disabled name="" id="service_id"
                                                                        class="form-control req "
-                                                                       value="{{$service->service->name}}"
+                                                                       value="{{$service->service->name??null}}"
                                                                        placeholder="">
 
                                                             </div>
@@ -194,7 +194,7 @@
                                                         <div class="col-md-6">
                                                             <div class="mb-3 unit_hide">
                                                                 <label
-                                                                    class="form-label" for="service_id">{{$service->service->unit}}</label>
+                                                                    class="form-label" for="service_id">{{$service->service->unit??null}}</label>
                                                                 <input type="text" disabled name="" id="service_id"
                                                                        class="form-control req "
                                                                        value="{{$service->unit}}"
@@ -209,7 +209,7 @@
                                                     @endif
                                                 @endforeach
                                                 <div class="row mt-5">
-                                                    @foreach($filess->where('specialties.name_en',$_specialties[0]->service->specialties->name_en) as $files)
+                                                    @foreach($filess->where('specialties.name_en',$_specialties[0]->service->specialties->name_en??'none') as $files)
 
                                                         @if($files->type ==1)
                                                             <div class="col-md-offset-3 col-md-2">
