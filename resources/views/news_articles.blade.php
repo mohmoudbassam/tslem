@@ -131,6 +131,12 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="guide-links">
+                        @if($links->isEmpty())
+                            <p>
+                                لا يوجد أخبار منشورة حالياً...
+                            </p>
+                        @endif
+
                         @foreach($links as $linkItem)
                             <div style="display: inline-block;margin-bottom: 5px;" class="col-sm-12 col-md-6 col-lg-6">
                                 <a style="margin-bottom: 0;" href="{{ route('NewsArticles.article', ['news_article' => $linkItem->id]) }}" >{{ $linkItem['title'] }}</a>
@@ -138,7 +144,9 @@
                             <div style="display: inline-block;" class="col-sm-12 col-md-4 col-lg-4">
                                 تاريخ الإنشاء : {{ $linkItem['created_at'] }}
                             </div>
+
                         @endforeach
+
                     </div>
                 </div>
             </div>

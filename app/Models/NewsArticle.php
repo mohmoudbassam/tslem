@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Class CarPart
+ * Class NewsArticle
  *
  * @package App\Models
  */
