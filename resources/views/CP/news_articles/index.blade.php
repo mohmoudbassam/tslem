@@ -162,5 +162,49 @@
                 }
             });
         }
+
+        function publish_model(id, url, callback = null) {
+            Swal.fire({
+                title: '{{\App\Models\NewsArticle::crudTrans('are_you_sure')}}',
+                text: "",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#84dc61',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '@lang('general.yes')',
+                cancelButtonText: '@lang('general.no')',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        data: {},
+                        beforeSend() {
+                            KTApp.blockPage({
+                                overlayColor: '#000000',
+                                type: 'v2',
+                                state: 'success',
+                                message: '@lang('general.please_wait')',
+                            });
+                        },
+                        success: function (data) {
+                            if (callback && typeof callback === "function") {
+                                callback(data);
+                            } else {
+                                if (data.success) {
+                                    $('#items_table').DataTable().ajax.reload(null, false);
+                                    showAlertMessage('success', data.message);
+                                } else {
+                                    showAlertMessage('error', '@lang('general.something_went_wrong')');
+                                }
+                                KTApp.unblockPage();
+                            }
+                        },
+                        error: function (data) {
+                        },
+                    });
+                }
+            });
+        }
     </script>
 @endsection

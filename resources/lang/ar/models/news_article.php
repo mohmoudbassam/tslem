@@ -10,4 +10,8 @@ return [
         'user_id' => 'أضيف بواسطة',
         'is_published' => 'تم النشر',
     ],
+    'unpublish' => 'الغاء النشر',
+    'publish' => 'نشر',
+    'published' => 'تم النشر',
+    'not_published' => 'غير منشور',
 ];

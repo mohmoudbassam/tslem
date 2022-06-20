@@ -110,6 +110,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
          Route::post('delete/{news_article}', [ NewsArticleController::class, 'delete' ])->name('.delete');
          Route::post('store', [ NewsArticleController::class, 'store' ])->name('.store');
          Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
+         Route::get('toggle_publish/{news_article}', [NewsArticleController::class,'togglePublish'])->name('.toggle_publish');
      });
 
     Route::prefix('users')->name('users')->middleware('admin')->group(function() {
