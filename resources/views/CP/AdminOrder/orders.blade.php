@@ -1,7 +1,7 @@
 @extends('CP.master')
-@section('title')
-    الطلبات
-@endsection
+
+@section('title', ($pageTitle ?? 'الطلبات'))
+
 @section('content')
 
     <!-- start page title -->
@@ -222,6 +222,7 @@
 
         $.fn.dataTable.ext.errMode = 'none'
         $(function () {
+            const listUrl = '{{ isset($trashedOnly) && $trashedOnly ? route('Admin.Order.trashedList') : route('orders.list')  }}'
             $('#items_table').DataTable({
                 'dom': 'tpi',
                 'searching': false,
@@ -229,10 +230,10 @@
                 'stateSave': true,
                 'serverSide': true,
                 ajax: {
-                    url: '{{route('orders.list')}}?params=' + '{{request('params')}}',
+                    url: `${listUrl}?params={{request('params')}}`,
                     type: 'GET',
                     'data': function (d) {
-                        d.order_identifierentifier = $('#order_identifier').val()
+                        d.order_identifier = $('#order_identifier').val()
                         d.designer_id = $('#designer_id').val()
                         d.consulting_id = $('#consulting_id').val()
                         d.contractor_id = $('#contractor_id').val()
@@ -292,12 +293,15 @@
         })
     </script>
     <script>
-        $(document).on('click', '.btn--soft-delete', function (e) {
-            const elm = $(this)
-            // console.log(elm.data('url'))
+        $(document).on('click', '.btn--ajax-request', function (e) {
             e.preventDefault()
+            const elm = $(this)
+            const method = elm.data('method') || 'get'
+            const url = elm.data('url')
+            if (!url) return
+
             confirmMessage({
-                preConfirm: () => $.get(elm.data('url')).catch(e => {
+                preConfirm: () => $[method](url).catch(e => {
                     Swal.showValidationMessage(`حدث خطأ!!!`)
                     Swal.hideLoading()
                     return e

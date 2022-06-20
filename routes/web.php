@@ -139,7 +139,14 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::group(['as' => 'Admin.', 'prefix' => 'Admin'], function () {
         Route::group(['as' => 'Order.', 'prefix' => 'Order'], function () {
-            Route::get('soft-delete', [\App\Http\Controllers\CP\admin\OrdersController::class, 'softDelete'])->name('softDelete');
+            // List view
+            Route::get('Trashed', [\App\Http\Controllers\CP\admin\OrdersController::class, 'trashedIndex'])->name('trashed');
+            // List of datatable
+            Route::get('Trashed-List', [\App\Http\Controllers\CP\admin\OrdersController::class, 'trashedList'])->name('trashedList');
+            // Soft Delete orders
+            Route::get('Soft-Delete', [\App\Http\Controllers\CP\admin\OrdersController::class, 'softDelete'])->name('softDelete');
+            // Restore soft deleted order
+            Route::get('Restore', [\App\Http\Controllers\CP\admin\OrdersController::class, 'restore'])->name('restore');
         });
     });
 
@@ -213,7 +220,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         Route::get('accept/{order}', [DesignerOrderController::class, 'accept'])->name('.accept');
         Route::post('reject/{order}', [DesignerOrderController::class, 'reject'])->name('.reject');
     });
-  
+
     Route::prefix('delivery')->name('delivery')->middleware(['delivery'])->group(function () {
         Route::get('orders', [DeliveryController::class, 'orders']);
         Route::get('', [DeliveryController::class, 'list'])->name('.list');

@@ -1,23 +1,42 @@
 <div class="cp-right-menu">
-    <a href="#" class="cp-right-menu-logo">
+    <a
+        href="#"
+        class="cp-right-menu-logo"
+    >
         <div class="close-menu d-lg-none p-2">
             <i class="far fa-times"></i>
         </div>
-        <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="38">
+        <img
+            src="{{ asset('assets/images/logo-dark.png') }}"
+            alt=""
+            height="38"
+        >
     </a>
-    <div data-simplebar class="h-100">
+    <div
+        data-simplebar
+        class="h-100"
+    >
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
-            <ul class="metismenu list-unstyled" id="side-menu">
+            <ul
+                class="metismenu list-unstyled"
+                id="side-menu"
+            >
                 @if(auth()->user()->isAdmin())
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow">
+                        <a
+                            href="javascript: void(0);"
+                            class="has-arrow"
+                        >
                             <i data-feather="users"></i>
                             <span data-key="t-apps">المستخدمين</span>
                         </a>
-                        <ul class="sub-menu" aria-expanded="false">
+                        <ul
+                            class="sub-menu"
+                            aria-expanded="false"
+                        >
                             <li>
                                 <a href="{{route('users')}}">
                                     <span data-key="t-calendar">إدارة المستخدمين</span>
@@ -40,11 +59,17 @@
                     @include('CP.licenses.menu')
 
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow">
+                        <a
+                            href="javascript: void(0);"
+                            class="has-arrow"
+                        >
                             <i data-feather="settings"></i>
                             <span data-key="t-apps">الإعدادت</span>
                         </a>
-                        <ul class="sub-menu" aria-expanded="false">
+                        <ul
+                            class="sub-menu"
+                            aria-expanded="false"
+                        >
                             <li>
                                 <a href="{{route('const.index')}}">
                                     <span data-key="t-calendar">الثوابت</span>
@@ -86,12 +111,15 @@
                             <span data-key="t-authentication">الطلبات</span>
                         </a>
                     </li>
-                        <li>
-                            <a href="{{ asset("storage/المكتبة_الهندسية.rar") }}" download="">
-                                <i data-feather="file"></i>
-                                <span>المكتبة الهندسية</span>
-                            </a>
-                        </li>
+                    <li>
+                        <a
+                            href="{{ asset("storage/المكتبة_الهندسية.rar") }}"
+                            download=""
+                        >
+                            <i data-feather="file"></i>
+                            <span>المكتبة الهندسية</span>
+                        </a>
+                    </li>
                     @if(auth()->user()->is_designer_consulting() )
                         <li>
                             <a href="{{route('design_office.consulting.orders')}}">
@@ -110,11 +138,17 @@
                     </li>
 
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow">
+                        <a
+                            href="javascript: void(0);"
+                            class="has-arrow"
+                        >
                             <i data-feather="layers"></i>
                             <span data-key="t-apps">الزيارات الميدانية</span>
                         </a>
-                        <ul class="sub-menu" aria-expanded="false">
+                        <ul
+                            class="sub-menu"
+                            aria-expanded="false"
+                        >
                             <li>
                                 <a href="{{route('delivery.reports')}}">
                                     <span data-key="t-calendar">إدارة الزيارات الميدانية</span>
@@ -168,14 +202,20 @@
                     </li>
 
                     <li>
-                        <a href="javascript: void(0);" class="has-arrow">
+                        <a
+                            href="javascript: void(0);"
+                            class="has-arrow"
+                        >
                             <i data-feather="layers"></i>
-                            <span data-key="t-apps">تقارير الإشراف </span>
+                            <span data-key="t-apps">تقارير الإشراف</span>
                         </a>
-                        <ul class="sub-menu" aria-expanded="false">
+                        <ul
+                            class="sub-menu"
+                            aria-expanded="false"
+                        >
                             <li>
                                 <a href="{{route('consulting_office.reports')}}">
-                                    <span data-key="t-calendar">إدارة تقارير الإشراف  </span>
+                                    <span data-key="t-calendar">إدارة تقارير الإشراف</span>
                                 </a>
                             </li>
 
@@ -194,16 +234,21 @@
                     <li>
                         <a href="{{route('dashboard')}}">
                             <i data-feather="pie-chart"></i>
-                            <span data-key="t-dashboard">الإحصائيات </span>
+                            <span data-key="t-dashboard">الإحصائيات</span>
                         </a>
                     </li>
                 @endif
-                  @if(auth()->user()->isAdmin())
-
+                @if(auth()->user()->isAdmin())
                     <li>
                         <a href="{{route('orders')}}">
                             <i data-feather="pie-chart"></i>
-                            <span data-key="t-dashboard">الطلبات </span>
+                            <span data-key="t-dashboard">الطلبات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('Admin.Order.trashed')}}">
+                            <i class="mdi mdi-list font-size-16 align-middle me-1"></i>
+                            <span data-key="t-dashboard">@lang('attributes.deleted_order')</span>
                         </a>
                     </li>
                 @endif
@@ -219,15 +264,12 @@
                 @endif
                 <li>
                     <a href="{{route('logout')}}">
-
                         <i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
                         <span data-key="t-authentication">تسجيل الخروج</span>
                     </a>
                 </li>
 
-
             </ul>
-
 
         </div>
         <!-- Sidebar -->
