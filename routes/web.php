@@ -175,6 +175,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
             );
         }
     );
+
     Route::prefix('design-office')->name('design_office')->group(function() {
         Route::get('download/{id}', [ DesignerOrderController::class, 'download' ])->name('.download');
     });
@@ -206,6 +207,7 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
         Route::get('accept/{order}', [ DesignerOrderController::class, 'accept' ])->name('.accept');
         Route::post('reject/{order}', [ DesignerOrderController::class, 'reject' ])->name('.reject');
     });
+
     Route::prefix('delivery')->name('delivery')->middleware([ 'delivery' ])->group(function() {
         Route::get('orders', [ DeliveryController::class, 'orders' ]);
         Route::get('', [ DeliveryController::class, 'list' ])->name('.list');
