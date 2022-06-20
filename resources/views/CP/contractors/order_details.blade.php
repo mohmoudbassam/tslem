@@ -333,7 +333,7 @@
 
                 </div>
 
-                @if($order->is_accepted(auth()->user()))
+                    @if($order->is_accepted(auth()->user()))
                     <div
                         class="tab-pane"
                         id="reports"
