@@ -232,7 +232,7 @@
                     url: '{{route('services_providers.list')}}',
                     type: 'GET',
                     "data": function (d) {
-                        d.order_identifierentifier = $('#order_identifier').val();
+                        d.order_identifier = $('#order_identifier').val();
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
