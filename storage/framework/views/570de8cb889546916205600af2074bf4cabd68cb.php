@@ -80,9 +80,10 @@
                                     <span data-key="t-calendar">الخدمات</span>
                                 </a>
                             </li>
+                            <?php echo $__env->make('CP.news_articles.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                             <li>
                                 <a href="<?php echo e(route('news')); ?>">
-                                    <span data-key="t-calendar">الاخبار</span>
+                                    <span data-key="t-calendar">شريط الاخبار</span>
                                 </a>
                             </li>
                             <li>
