@@ -454,7 +454,7 @@ HTML;
     {
         $raft_company_box = RaftCompanyBox::where('id', $rf_id)->firstOrFail();
 
-     $test=Storage::exists(Storage::disk('public')->path('service_provider/'.$raft_company_box->{$file_type}));
+
 
         $path = Storage::disk('public')->path($raft_company_box->{$file_type});
 
