@@ -120,7 +120,7 @@
                         <div class="col-sm-auto ms-auto text-end" style="margin-top:1.9rem;">
                             <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
                             </button>
-                            <button type="button" class="btn btn-secondary reset_btn px-4"><i class="fa fa-window-close me-1"></i>إلغاء
+                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
                             </button>
                         </div>
                     </form>
@@ -246,13 +246,13 @@
                 },
                 columns: [
                     {className: 'text-right', data: 'identifier', name: 'identifier'},
-                    {className: 'text-right', data: 'date', name: 'date', orderable: false},
+                    {className: 'text-right space-nowrap', data: 'date', name: 'date', orderable: false},
                     {className: 'text-right', data: 'designer.company_name', name: 'designer', orderable: false},
                     {className: 'text-right', data: 'order_status', name: 'order_status', orderable: false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
                     {className: 'text-right', data: 'consulting.company_name', name: 'consulting', orderable: false},
                     {className: 'text-right', data: 'waste_contractor', name: 'waste_contractor', orderable: false},
-                    {className: 'text-right', data: 'date', name: 'date'},
+                    {className: 'text-right space-nowrap', data: 'date', name: 'date'},
                     {className: 'text-right', data: 'actions', name: 'actions', orderable: false},
                 ]
             });

@@ -991,11 +991,11 @@
             series: [{
                 data: @json($bar)
             }],
-            xaxis: {
-                labels: {
-                    rotate: 0
-                }
-            }
+            // xaxis: {
+            //     labels: {
+            //         rotate: 0
+            //     }
+            // }
         }
         new ApexCharts(document.querySelector("#barchart-1"), barchart1).render();
 

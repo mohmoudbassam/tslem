@@ -28,10 +28,10 @@
     <div class="row mb-3"><div class="col-sm-12">
         <a href="{{route('delivery.report_add_form')}}" class = "btn btn-primary">إنشاء تقرير</a>
     </div></div>
-   
+
 
     <div class="card">
-  
+
         <div class="card-body">
 
             <div class="row">
@@ -43,7 +43,7 @@
                            aria-describedby="DataTables_Table_0_info">
                         <thead>
                         <th>
-                            عنوان  الزيارة 
+                            عنوان  الزيارة
                         </th>
                         <th>
                             وصف الزيارة
@@ -101,7 +101,7 @@
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
                     {className: 'text-center', data: 'description', name: 'description'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],

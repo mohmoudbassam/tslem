@@ -186,7 +186,7 @@ body {
 
 
             <div class="col-md-6 mb-3">
-                <p class="details_p"> <span class="bold">  تاريخ الإنشاء : </span>{{$report->created_at}}</p>
+                <p class="details_p space-nowrap"> <span class="bold">  تاريخ الإنشاء : </span>{{$report->created_at}}</p>
             </div>
 
 
@@ -195,7 +195,7 @@ body {
         <div class="row">
             @if(!empty($report->files))
                 <h2 class = "mt-5">المرفقات</h2>
-               
+
             @foreach($report->files as $file)
             <div class="col-md-offset-3 col-md-2">
                                                     <div class="panel panel-default bootcards-file">
@@ -213,7 +213,7 @@ body {
                                                                 </h5>
 
                                                             </div>
-                                                            
+
                                                         </div>
                                                         <br>
                                                         <div class="panel-footer">
@@ -233,8 +233,8 @@ body {
                                                 </div>
             @endforeach
             @endif
-        </div>      
-        
+        </div>
+
         <hr>
 
 

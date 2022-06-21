@@ -83,25 +83,25 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header pb-0">
                     <ul class="nav nav-tabs-custom  border-bottom" id="pills-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link px-3 active" data-bs-toggle="tab"
+                            <a class="nav-link px-3 active pb-3" data-bs-toggle="tab"
                                href="#details"
                                role="tab">تفاصيل الطلب</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab"
+                            <a class="nav-link px-3  pb-3" data-bs-toggle="tab"
                                href="#obligations"
                                role="tab">ملفات التعهدات</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" data-bs-toggle="tab"
+                            <a class="nav-link px-3 pb-3" data-bs-toggle="tab"
                                href="#fire_protections_files"
                                role="tab">ملفات الوقاية والحماية من الحريق</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3 " data-bs-toggle="tab"
+                            <a class="nav-link px-3 pb-3 " data-bs-toggle="tab"
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
@@ -113,7 +113,7 @@
                             <div class="row">
 
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  تاريخ الإنشاء :</span> {{$order->created_at->format("Y-m-d")}}</p>
+                                    <p class="details_p space-nowrap"><span class="bold">  تاريخ الإنشاء :</span> {{$order->created_at->format("Y-m-d")}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">
