@@ -493,3 +493,5 @@ Route::get('test', function () {
 Route::get('qr_download_files/{order}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
 Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController::class, 'download_raft_company_file'])->name('download_raft_company_file');
 Route::get('showWest', [LoginController::class, 'showWest'])->name('showWest');
+Route::get('west_list', [LoginController::class, 'west_list'])->name('west_list');
+Route::get('ex', [LoginController::class, 'ex'])->name('ex');
