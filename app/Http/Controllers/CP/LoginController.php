@@ -155,4 +155,10 @@ class LoginController extends Controller
         return view('CP.dashboard', $data);
 
     }
+    public function showWest(){
+        return response()->json([
+           'success'=>true,
+           'page'=>view('CP.wasteContractorModal',['data'=>wasteContractorsList()])->render()
+        ]);
+    }
 }
