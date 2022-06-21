@@ -14,4 +14,7 @@ class DeliveryReport extends Model
     public function attchments() {
         return $this->hasMany(DeliveryReportAttchment::class, 'report_id');
     }
+    public function order(){
+        return $this->belongsTo(Order::class)->withDefault();
+    }
 }
