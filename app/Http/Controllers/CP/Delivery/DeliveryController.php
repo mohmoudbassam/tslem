@@ -4,22 +4,20 @@ namespace App\Http\Controllers\CP\Delivery;
 
 use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
-use App\Models\ConsultingReport;
-use App\Models\ConsultingReportAttchment;
 use App\Models\DeliveryReport;
 use App\Models\DeliveryReportAttchment;
 use App\Models\Order;
+use App\Models\OrderService;
 use App\Models\OrderSharer;
-use App\Models\OrderSharerReject;
+use App\Models\OrderSpecilatiesFiles;
 use App\Models\User;
 use App\Notifications\OrderNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
-use App\Models\OrderService;
-use App\Models\OrderSpecilatiesFiles;
 
 class DeliveryController extends Controller
 {
@@ -33,6 +31,7 @@ class DeliveryController extends Controller
         $data['services_providers'] = User::query()->where('type', 'service_provider')->where('verified', 1)->get();
         return view('CP.delivery.orders', $data);
     }
+
 
     public function list(Request $request, $flag = false)
     {
@@ -111,10 +110,11 @@ class DeliveryController extends Controller
             ->make(true);
     }
 
+
     public function reports_view(Order $order)
     {
         return view('CP.delivery.reports_view', [
-            'order' => $order
+            'order' => $order,
         ]);
     }
 
@@ -127,11 +127,11 @@ class DeliveryController extends Controller
     {
         $reports = DeliveryReport::query()->with(['attchments'])
             ->where('user_id', '=', auth()->user()->id)
-            ->where('order_id', $order->id);
+            ->where('order_id', $order->id)->latest();
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) use ($order) {
-                $delete = '<a class="dropdown-item" onclick="deleteReport(' . $report->id . ')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
-                $edit = '<a class="dropdown-item" href="' . route('delivery.report_edit_form', ['report' => $report->id]) . '"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
+                $delete = '<a class="dropdown-item" onclick="deleteReport('.$report->id.')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
+                $edit = '<a class="dropdown-item" href="'.route('delivery.report_edit_form', ['report' => $report->id]).'"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
 
                 if ($order->status >= 4) {
                     $delete = '';
@@ -143,8 +143,8 @@ class DeliveryController extends Controller
                                                 عرض<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                               ' . $delete . '
-                                               ' . $edit . '
+                                               '.$delete.'
+                                               '.$edit.'
                                             </div>
                                         </div>';
                 return $element;
@@ -153,22 +153,23 @@ class DeliveryController extends Controller
             ->addColumn('description', function ($report) {
                 return Str::substr($report->description, 0, 50);
             })
-            ->addColumn('created_at', function ($order) {
-                return $order->created_at->format('Y-m-d');
-            })->addColumn('order_status', function ($order) {
-                return $order->order_status;
-            })->rawColumns(['actions'])
+            ->addColumn('created_at', function ($report) {
+                return $report->created_at->format('Y-m-d');
+            })->addColumn('order_status', function ($report) {
+                return $report->order_status;
+            })
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
     public function reports_list_all()
     {
-        $reports = DeliveryReport::query()->with(['attchments'])
-            ->where('user_id', '=', auth()->user()->id);
+        $reports = DeliveryReport::query()->with(['attchments', 'order'])
+            ->where('user_id', '=', auth()->user()->id)->latest('order_id')->latest();
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) {
-                $delete = '<a class="dropdown-item" onclick="deleteReport(' . $report->id . ')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
-                $edit = '<a class="dropdown-item" href="' . route('delivery.report_edit_form', ['report' => $report->id]) . '"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
+                $delete = '<a class="dropdown-item" onclick="deleteReport('.$report->id.')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
+                $edit = '<a class="dropdown-item" href="'.route('delivery.report_edit_form', ['report' => $report->id]).'"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
 
 
                 $element = '<div class="btn-group me-1 mt-2">
@@ -176,8 +177,8 @@ class DeliveryController extends Controller
                                                 خيارات<i class="mdi mdi-chevron-down"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                               ' . $delete . '
-                                               ' . $edit . '
+                                               '.$delete.'
+                                               '.$edit.'
                                             </div>
                                         </div>';
                 return $element;
@@ -190,34 +191,74 @@ class DeliveryController extends Controller
                 return $order->created_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
                 return $order->order_status;
-            })->rawColumns(['actions'])
+            })
+            //->addColumn('identifier', fn($e) => ($e->order->identifier ?? ''))
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
     public function add_report_page(Order $order)
     {
-        $order_ids = DeliveryReport::where('user_id', '=', auth()->user()->id)
-            ->pluck('order_id');
-        $orders = Order::select('id', 'title')->whereIn('id', $order_ids)->get();
+        //$order_ids = DeliveryReport::where('user_id', '=', auth()->user()->id)
+        //    ->pluck('order_id');
+        //$orders = Order::select('id', 'title')->whereIn('id', $order_ids)->get();
+        $orders = $this->getOrdersQuery()->pluck('id', 'identifier')->toArray();
         return view('CP.delivery.report_add_form', [
             'orders' => $orders,
         ]);
     }
 
+    protected function getOrdersQuery(): Builder
+    {
+        $request = request();
+        return Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
+            ->with(['service_provider', 'designer'])
+            ->select("orders.*")
+            ->whereOrderId($request->order_id)
+            ->whereDesignerId($request->designer_id)
+            ->whereConsultingId($request->consulting_id)
+            ->whereContractorId($request->contractor_id)
+            ->whereDate($request->from_date, $request->to_date)
+            ->where('status', '>=', '3')
+            ->latest();
+    }
+
     public function add_report(Request $request)
     {
+        //dd($request->all());
         $report = DeliveryReport::create([
-            'title' => $request->title,
+            'title'       => $request->title,
             'description' => $request->description,
-            'order_id' => $request->order_id,
-            'user_id' => auth()->user()->id,
+            'order_id'    => $request->order_id,
+            'user_id'     => auth()->user()->id,
         ]);
         $this->upload_files($report, $request);
 
         return response()->json([
             'success' => true,
-            'message' => 'تمت اضافة التقرير بنجاح'
+            'message' => 'تمت إضافة التقرير بنجاح',
         ]);
+    }
+
+    public function upload_files($report, $request)
+    {
+        foreach ((array) $request->file('files') as $file) {
+            $path = Storage::disk('public')->put('orders/'.$report->order_id.'/delivery_report/', $file);
+            $file_name = $file->getClientOriginalName();
+            $report->attchments()->create([
+                'file_path' => $path,
+                'real_name' => $file_name,
+            ]);
+        }
     }
 
     public function delete_report(Request $request)
@@ -227,7 +268,7 @@ class DeliveryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تمت حذف التقرير بنجاح'
+            'message' => 'تمت حذف التقرير بنجاح',
         ]);
     }
 
@@ -237,15 +278,17 @@ class DeliveryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم حذف المرفق بنجاح'
+            'message' => 'تم حذف المرفق بنجاح',
         ]);
     }
 
     public function edit_report_page(Request $request, DeliveryReport $report)
     {
         $report->load('attchments');
+        $orders = $this->getOrdersQuery()->pluck('id', 'identifier')->toArray();
         return view('CP.delivery.report_edit_form', [
             'report' => $report,
+            'orders' => $orders,
         ]);
     }
 
@@ -260,7 +303,7 @@ class DeliveryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'تم تعديل التقرير بنجاح'
+            'message' => 'تم تعديل التقرير بنجاح',
         ]);
     }
 
@@ -271,11 +314,11 @@ class DeliveryController extends Controller
         $order = Order::query()->find($request->id);
         return response()->json([
             'success' => true,
-            'page' => view('CP.delivery.accept_form', [
-                'order' => $order,
-                'contractors' => $contractors,
+            'page'    => view('CP.delivery.accept_form', [
+                'order'              => $order,
+                'contractors'        => $contractors,
                 'consulting_offices' => $consulting_offices,
-            ])->render()
+            ])->render(),
         ]);
     }
 
@@ -288,10 +331,10 @@ class DeliveryController extends Controller
 
         return response()->json([
             'success' => true,
-            'page' => view('CP.delivery.reject_form', [
-                'order' => $order,
-                'order_starer_last_notes' => $order_starer_last_notes
-            ])->render()
+            'page'    => view('CP.delivery.reject_form', [
+                'order'                   => $order,
+                'order_starer_last_notes' => $order_starer_last_notes,
+            ])->render(),
         ]);
     }
 
@@ -310,18 +353,18 @@ class DeliveryController extends Controller
 
             // Todo: [A.F] Don't use inline text, use laravel localisation instead
             $notificationText = 'تم اعتماد الطلب #'.$order->identifier.' من مكتب تسليم وبإنتظار باقي الجهات الحكومية';
-            save_logs($order, auth()->user()->id,$notificationText);
+            save_logs($order, auth()->user()->id, $notificationText);
 
             optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
             optional($order->designer)->notify(new OrderNotification($notificationText, auth()->user()->id));
             return response()->json([
                 'success' => true,
-                'message' => 'تمت اعتماد الطلب بنجاح'
+                'message' => 'تمت اعتماد الطلب بنجاح',
             ]);
         }
         return response()->json([
             'success' => false,
-            'message' => 'تمت اعتماد الطلب مسبقا'
+            'message' => 'تمت اعتماد الطلب مسبقا',
         ]);
     }
 
@@ -332,8 +375,8 @@ class DeliveryController extends Controller
             $order->delivery_notes = 1;
             $order->deliverRejectReson()->create([
                 'order_id' => $order->id,
-                'user_id' => auth()->user()->id,
-                'note' => $request->note,
+                'user_id'  => auth()->user()->id,
+                'note'     => $request->note,
             ]);
             $order->save();
 
@@ -342,25 +385,13 @@ class DeliveryController extends Controller
             optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
             return response()->json([
                 'success' => true,
-                'message' => 'تمت رفض الطلب بنجاح'
+                'message' => 'تمت رفض الطلب بنجاح',
             ]);
         }
         return response()->json([
             'success' => false,
-            'message' => 'تمت رفض الطلب مسبقا'
+            'message' => 'تمت رفض الطلب مسبقا',
         ]);
-    }
-
-    public function upload_files($report, $request)
-    {
-        foreach ((array)$request->file('files') as $file) {
-            $path = Storage::disk('public')->put('orders/' . $report->order_id . '/delivery_report/', $file);
-            $file_name = $file->getClientOriginalName();
-            $report->attchments()->create([
-                'file_path' => $path,
-                'real_name' => $file_name
-            ]);
-        }
     }
 
     public function view_file(Order $order)
@@ -373,11 +404,11 @@ class DeliveryController extends Controller
 
 
         return view('CP.delivery.view_file', [
-            'order' => $order,
+            'order'             => $order,
             'order_specialties' => $order_specialties,
-            'filess' => $files,
-            'rejects' => $rejects,
-            'order_sharers' => $order_sharers
+            'filess'            => $files,
+            'rejects'           => $rejects,
+            'order_sharers'     => $order_sharers,
         ]);
 
     }
@@ -389,8 +420,8 @@ class DeliveryController extends Controller
 
         $order->deliverRejectReson()->create([
             'order_id' => $order->id,
-            'user_id' => auth()->user()->id,
-            'note' => $request->note,
+            'user_id'  => auth()->user()->id,
+            'note'     => $request->note,
 
         ]);
 
@@ -400,14 +431,72 @@ class DeliveryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => "تم التحويل بنجاح"
+            'message' => "تم التحويل بنجاح",
         ]);
     }
 
     public function export(Request $request)
     {
 
-        $orders =$this->list($request,true);
+        $orders = $this->list($request, true);
         return Excel::download(new OrdersExport($orders), 'orders.xlsx');
+    }
+
+    public function list(Request $request, $flag = false)
+    {
+        $order = $this->gitOrdersQuery();
+        if ($flag) {
+            return $order->get();
+        }
+        return DataTables::of($order)
+            ->addColumn('actions', function ($order) {
+                // $accept = '';
+
+                // $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
+                // $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
+                // $reports_view = '<a class="dropdown-item" href="' . route('delivery.reports_view', ['order' => $order->id]) . '"><i class="fa fa-check"></i>عرض التقارير </a>';
+                // $reports_add = '<a class="dropdown-item" href="' . route('delivery.report_add_form', ['order' => $order->id]) . '"><i class="fa fa-plus"></i>انشاء التقارير </a>';
+
+                // if ($order->status > 2) {
+                //     $accept = '';
+                // }
+                // if ($order->status > 2) {
+                //     $reject = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_view = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_add = '';
+                // }
+                if ($order->status == Order::ORDER_APPROVED) {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-success btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
+                                                إصدار الرخصة
+                                            </a>
+                                        </div>';
+                }
+                else {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-info btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
+                                                عرض التفاصيل
+                                            </a>
+                                        </div>';
+                }
+
+                return $element;
+
+            })
+            ->addColumn('created_at', function ($order) {
+
+                return $order->created_at->format('Y-m-d');
+            })
+            ->addColumn('updated_at', function ($order) {
+                return $order->updated_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
     }
 }

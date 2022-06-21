@@ -198,6 +198,46 @@
             /*font-size: 12px;*/
             /*text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);*/
         }
+
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px;
+        }
+
+        .select2-container--default .select2-selection--single {
+            line-height: 1.5;
+            height: 40px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.25rem;
+            -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            color: var(--bs-body-color);
+            background-color: var(--bs-input-bg);
+            background-clip: padding-box;
+            border: 1px solid var(--bs-input-border);
+        }
+
+        select.select2 {
+            width: 100%;
+            padding: 0.47rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--bs-body-color);
+            background-color: var(--bs-input-bg);
+            background-clip: padding-box;
+            border: 1px solid var(--bs-input-border);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.25rem;
+            -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        }
     </style>
 
     @yield('style')
