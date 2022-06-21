@@ -10,11 +10,11 @@
                 </tr>
                 <tr>
                     <td>{{$model->hijri_date}}</td>
-                    <td>تاريخها:</td>
+                    <td class="space-nowrap">تاريخها:</td>
                 </tr>
                 <tr>
                     <td>{{$model->hijri_expiry_date}}</td>
-                    <td>تاريخ الإنتهاء:</td>
+                    <td class="space-nowrap">تاريخ الإنتهاء:</td>
                 </tr>
                 </tbody>
             </table>

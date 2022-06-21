@@ -14,8 +14,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active">الرئيسية</li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
+                        <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
 
@@ -167,10 +167,10 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'identifier', name: 'identifier'},
-                    {className: 'text-center', data: 'service_provider.company_name', name: 'service_provider.company_name'},
-                    {className: 'text-center', data: 'date', name: 'date'},
+                    {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
+                    {className: 'text-center space-nowrap', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],

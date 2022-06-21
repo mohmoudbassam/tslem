@@ -71,6 +71,7 @@ class License extends Model
             'nullable',
             'file',
         ],
+
     ];
 
     /**
@@ -379,14 +380,29 @@ CODE;
         return $this->designer()->value('name');
     }
 
+    public function getDesignerCompanyNameAttribute()
+    {
+        return $this->designer()->value('company_name');
+    }
+
     public function getConsultingOfficeNameAttribute()
     {
         return $this->consulting_office()->value('name');
     }
 
+    public function getConsultingOfficeCompanyNameAttribute()
+    {
+        return $this->consulting_office()->value('company_name');
+    }
+
     public function getContractorNameAttribute()
     {
         return $this->contractor()->value('name');
+    }
+
+    public function getContractorCompanyNameAttribute()
+    {
+        return $this->contractor()->value('company_name');
     }
 
     public function getWasteContractorNameAttribute()
@@ -434,7 +450,7 @@ CODE;
         $data = "";
         if( $raft = $this->service_provider->getRaftCompanyBox() ) {
 
-            return QrCode::generate(route('qr_download_files',['raft_company_box_id'=>$raft->id]));
+            return QrCode::generate(route('qr_download_files',['order'=>$this->order->id]));
         }
 
        return false;

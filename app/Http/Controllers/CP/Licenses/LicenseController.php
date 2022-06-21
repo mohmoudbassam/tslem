@@ -399,10 +399,15 @@ HTML;
      */
     public function order_license_create(StoreLicenseOrderApprovedRequest $request, Order $order)
     {
-        $order->saveLicense($request->validated());
+        $license = $order->saveLicense($request->validated());
 
 
         // Send notification to service provider
+        if ($request->attachment) {
+            $path = Storage::disk('public')->put('license_attachment/', $request->file('attachment'));
+            $license->attachment = $path;
+            $license->save();
+        }
 
         $notificationText = 'الرخصة جاهزة للإصدار للطلب #' . $order->identifier . ' وبإنتظار اختيارك للمشرف والمقاول';
         save_logs($order, auth()->user()->id, $notificationText);
@@ -430,6 +435,11 @@ HTML;
     {
         $license->update($request->validated());
 
+        if ($request->attachment) {
+            $path = Storage::disk('public')->put('license_attachment/', $request->file('attachment'));
+            $license->attachment = $path;
+            $license->save();
+        }
         return back()->with('success', __('general.success'));
     }
 
@@ -443,17 +453,22 @@ HTML;
         ]);
     }
 
-    public function qr_download_files($raft_company_box_id)
+    public function qr_download_files(Order $order)
     {
-        $raft_company_box = RaftCompanyBox::where('id', $raft_company_box_id)->firstOrFail();
+//        $raft_company_box = RaftCompanyBox::where('id', $raft_company_box_id)->firstOrFail();
+        if ($order->license->attachment) {
+            $path = Storage::disk('public')->path($order->license->attachment);
+            return Response::download($path, 'attachment.pdf');
+        } else {
+            $rf = $order->service_provider->getRaftCompanyBox();
+            return view('CP.download_box_files', ['rf' => $rf]);
+        }
 
-        return view('CP.download_box_files', ['rf' => $raft_company_box]);
     }
 
     public function download_raft_company_file($rf_id, $file_type)
     {
         $raft_company_box = RaftCompanyBox::where('id', $rf_id)->firstOrFail();
-
 
 
         $path = Storage::disk('public')->path($raft_company_box->{$file_type});

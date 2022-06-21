@@ -40,7 +40,7 @@
                             <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
+                            <button type="button" class="btn btn-danger reset_btn"><i class="fa fa-times me-1"></i>إلغاء</button>
                         </div>
                     </form>
                 </div>
@@ -123,9 +123,9 @@
                 columns: [
                     {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'service_provider.company_name',orderable : false},
-                    {className: 'text-center', data: 'date', name: 'date'},
+                    {className: 'text-center space-nowrap', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status',orderable : false},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions',orderable : false},
 
                 ],

@@ -4,7 +4,7 @@ use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
 use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
-use App\Http\Controllers\CP\Licenses\LicenseController;
+use App\Http\Controllers\CP\Kdana\KdanaController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
@@ -19,6 +19,8 @@ use App\Http\Controllers\CP\SystemConfig\SystemConstController;
 use App\Http\Controllers\CP\TaslemMaintenance\TaslemMaintenance;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Users\UserRequestController;
+use App\Http\Controllers\CP\Licenses\LicenseController;
+use App\Http\Controllers\CP\NewsArticles\NewsArticleController;
 use App\Http\Controllers\CP\VerificationController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SiteController;
@@ -96,6 +98,30 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 ->name('.view_html');
         });
 
+    Route::prefix('news_articles')
+     ->name('news_articles')
+     ->middleware([ 'user_type:admin' ])
+     ->group(function() {
+         Route::get('', [ NewsArticleController::class, 'index' ]);
+         Route::get('add', [ NewsArticleController::class, 'add' ])->name('.add');
+         Route::get('edit/{news_article}', [ NewsArticleController::class, 'edit' ])->name('.edit');
+         Route::get('form', [ NewsArticleController::class, 'form' ])->name('.form');
+         Route::get('list', [ NewsArticleController::class, 'list' ])->name('.list');
+         Route::post('update/{news_article}', [ NewsArticleController::class, 'update' ])->name('.update');
+         Route::post('delete/{news_article}', [ NewsArticleController::class, 'delete' ])->name('.delete');
+         Route::post('store', [ NewsArticleController::class, 'store' ])->name('.store');
+         Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
+         Route::get('toggle_publish/{news_article}', [NewsArticleController::class,'togglePublish'])->name('.toggle_publish');
+     });
+
+    Route::prefix('NewsArticles')
+        ->name('NewsArticles')
+        ->group(function() {
+            Route::get('NewsArticles', [ NewsArticleController::class, 'Mainlist' ])
+                ->name('.Mainlist');
+            Route::get('article/{news_article}', [ NewsArticleController::class, 'article' ])
+                ->name('.article');
+        });
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::get('add', [UserController::class, 'add'])->name('.add');
@@ -446,6 +472,11 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
 
 });
+Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () {
+    Route::get('', [KdanaController::class, 'index']);
+
+
+});
 //Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
@@ -465,5 +496,8 @@ Route::get('raft_company/get_camp_by_box/{box}', [RaftCompanyController::class, 
 Route::get('test', function () {
     dd(order_services(4));
 });
-Route::get('qr_download_files/{raft_company_box_id}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
+Route::get('qr_download_files/{order}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
 Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController::class, 'download_raft_company_file'])->name('download_raft_company_file');
+Route::get('showWest', [LoginController::class, 'showWest'])->name('showWest');
+Route::get('west_list', [LoginController::class, 'west_list'])->name('west_list');
+Route::get('ex', [LoginController::class, 'ex'])->name('ex');

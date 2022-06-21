@@ -124,7 +124,7 @@
                 columns: [
                     {className: 'text-center', data: 'title', name: 'title'},
                     {className: 'text-center', data: 'description', name: 'description'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],

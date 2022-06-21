@@ -386,7 +386,7 @@
                         name: 'description'
                     },
                     {
-                        className: 'text-center',
+                        className: 'text-center space-nowrap',
                         data: 'created_at',
                         name: 'created_at'
                     },

@@ -57,7 +57,7 @@
 {{--                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>--}}
 {{--                        </div>--}}
 {{--                        <div class="col-sm-auto" style="margin-top:1.9rem;">--}}
-{{--                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>--}}
+{{--                            <button type="button" class="btn btn-danger reset_btn"><i class="fa fa-times me-1"></i>إلغاء</button>--}}
 {{--                        </div>--}}
 {{--                    </form>--}}
 {{--                </div>--}}
@@ -151,7 +151,7 @@
                     {className: 'text-center', data: 'service_provider.phone', name: 'service_provider.phone',orderable : false},
                     {className: 'text-center', data: 'service_provider.box_number', name: 'service_provider.box_number',orderable : false},
                     {className: 'text-center', data: 'service_provider.camp_number', name: 'service_provider.camp_number',orderable : false},
-                    {className: 'text-center', data: 'start_at', name: 'start_at'},
+                    {className: 'text-center space-nowrap', data: 'start_at', name: 'start_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
                     // {className: 'text-center', data: 'actions', name: 'actions'},
 

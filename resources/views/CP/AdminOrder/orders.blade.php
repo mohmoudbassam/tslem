@@ -71,10 +71,10 @@
                             </button>
                             <button
                                 type="button"
-                                class="btn btn-secondary reset_btn px-4"
+                                class="btn btn-danger reset_btn px-4"
                             >
                                 <i
-                                    class="fa fa-window-close me-1"
+                                    class="fa fa-times me-1"
                                 ></i>
                                 إلغاء
                             </button>
@@ -255,7 +255,7 @@
                     { className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false },
                     { className: 'text-right', data: 'consulting.company_name', name: 'consulting', orderable: false },
                     { className: 'text-right', data: 'waste_contractor', name: 'waste_contractor', orderable: false },
-                    { className: 'text-right', data: 'date', name: 'date' },
+                    { className: 'text-right space-nowrap', data: 'date', name: 'date' },
                     { className: 'text-left', data: 'actions', name: 'actions' }
 
                 ]

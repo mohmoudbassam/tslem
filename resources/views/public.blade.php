@@ -60,7 +60,11 @@
                                     <li><a>مقاولين</a></li>
                                 </ul>
                             </li>
-                            <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
+                            <li class="menu_item"><a class="menu_link">المركز الاعلامي</a>
+                                <ul class="main-menu-sub">
+                                    <li><a href="{{ route('NewsArticles.Mainlist') }}">الأخبار</a></li>
+                                </ul>
+                            </li>
                             <li class="menu_item"><a class="menu_link">الخدمات الألكترونية</a>
                                 <ul class="main-menu-sub">
                                     <li><a>تسليم مخيمات</a></li>

@@ -77,7 +77,7 @@
                              role="tabpanel">
                             <div class="row">
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
+                                    <p class="details_p space-nowrap"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
 
                                 </div>
 

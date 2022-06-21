@@ -17,12 +17,13 @@ class Order extends Model
     public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
     public const DESIGN_APPROVED = 4;
-    public const DESIGN_AWAITING_GOV_APPROVE = 8;
-    public const ORDER_APPROVED = 9;
-    public const PENDING_OPERATION = 10;
     public const PROCESSING = 5;
     public const COMPLETED = 6;
     public const PENDING_LICENSE_ISSUED = 7;
+    public const DESIGN_AWAITING_GOV_APPROVE = 8;
+    public const ORDER_APPROVED = 9;
+    public const PENDING_OPERATION = 10;
+    public const FINAL_REPORT_ATTACHED = 11;
 
     public function license()
     {
@@ -152,6 +153,7 @@ class Order extends Model
             '7' => 'بإنتظار اصدار الرخصة',
             '9' => 'تمت الموافقة النهائية',
             '10' => 'الطلب تحت التنفيذ',
+            '11' => 'تم ارفاق التقرير النهائي',
         ];
         if(isset($orderStatus[$this->status])){
             return $orderStatus[$this->status];
@@ -241,6 +243,7 @@ class Order extends Model
 
     public function hasLicense(): bool
     {
+
         return $this->license()->whereNotNull('created_at')->count();
     }
 
@@ -269,9 +272,9 @@ class Order extends Model
             $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
         }
 
-        $license->fill($attributes)
-                ->forceFill(compact('created_at'))
-                ->save();
+//        $license->fill($attributes)
+//                ->forceFill(compact('created_at'))
+//                ->save();
 
         return $license->refresh();
     }

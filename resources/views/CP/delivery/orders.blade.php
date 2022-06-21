@@ -27,12 +27,21 @@
             <div class="row mt-4">
                 <div class="col-lg-12">
 
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 row-cols-md-4 row-cols-sm-3 row-cols-lg-4 row-cols-2">
-                        <div class="col">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+                        <div class="col-12 ms-auto text-end mb-2">
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
+                            </button>
+                            <button type="button" class="btn btn-primary  px-4 me-2" onclick="exportExcel()"><i
+                                    class="fa fa-file-excel me-1" ></i>تصدير
+                            </button>
+                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
+                            </button>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
                             <label for="order_identifier">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="service_provider_id">شركات حجاج الداخل</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
@@ -42,7 +51,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="designer_,orderable : falseid">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
@@ -52,7 +61,7 @@
 
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="consulting_id">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
@@ -62,7 +71,7 @@
 
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="contractor_id">المقاول </label>
                             <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
@@ -71,25 +80,17 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
 
 
-                        <div class="col-sm-auto ms-auto text-end" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search ms-1"></i>بحث
-                            </button>
-                            <button type="button" class="btn btn-primary  px-4 me-2" onclick="exportExcel()"><i
-                                    class="fa fa-file-excel me-1" ></i>تصدير
-                            </button>
-                            <button type="button" class="btn btn-secondary reset_btn px-4"><i class="fa fa-window-close ms-1"></i>إلغاء
-                            </button>
-                        </div>
+
                     </form>
                 </div>
 
@@ -181,7 +182,7 @@
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name',orderable : false},
                     {className: 'text-center', data: 'designer.company_name', name: 'company_name',orderable : false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
-                    {className: 'text-center', data: 'updated_at', name: 'updated_at',orderable : false},
+                    {className: 'text-center space-nowrap', data: 'updated_at', name: 'updated_at',orderable : false},
                     {className: 'text-center', data: 'order_status', name: 'order_status',orderable : false},
                     {className: 'text-center', data: 'actions', name: 'actions',orderable : false},
 

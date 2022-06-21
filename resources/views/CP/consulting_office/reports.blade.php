@@ -51,7 +51,7 @@
                             <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
+                            <button type="button" class="btn btn-danger reset_btn"><i class="fa fa-times me-1"></i>إلغاء</button>
                         </div>
 
 
@@ -134,7 +134,7 @@
                     {className: 'text-center', data: 'id', name: 'id'},
                     {className: 'text-center', data: 'title', name: 'title'},
                     {className: 'text-center', data: 'description', name: 'description'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],

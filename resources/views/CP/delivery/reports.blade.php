@@ -28,7 +28,6 @@
         </div>
     </div>
 
-
     <div class="row mb-3">
         <div class="col-sm-12">
             <a
@@ -38,7 +37,6 @@
             </a>
         </div>
     </div>
-
 
     <div class="card">
 
@@ -123,6 +121,7 @@
             })
 
         })
+        
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false)
         })

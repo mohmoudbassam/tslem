@@ -32,6 +32,85 @@ class DeliveryController extends Controller
         return view('CP.delivery.orders', $data);
     }
 
+
+    public function list(Request $request, $flag = false)
+    {
+
+        $order = Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                $query->where("identifier", "LIKE", "%" . $request->query("order_identifier") . "%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
+            ->with(['service_provider', 'designer'])
+            ->select("orders.*")
+            ->whereOrderId($request->order_id)
+            ->whereDesignerId($request->designer_id)
+            ->whereConsultingId($request->consulting_id)
+            ->whereContractorId($request->contractor_id)
+            ->whereDate($request->from_date, $request->to_date)
+            ->where('status', '>=', '3')
+        ->latest();
+
+        if ($flag) {
+            return $order->get();
+        }
+        return DataTables::of($order)
+            ->addColumn('actions', function ($order) {
+                // $accept = '';
+
+                // $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
+                // $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
+                // $reports_view = '<a class="dropdown-item" href="' . route('delivery.reports_view', ['order' => $order->id]) . '"><i class="fa fa-check"></i>عرض التقارير </a>';
+                // $reports_add = '<a class="dropdown-item" href="' . route('delivery.report_add_form', ['order' => $order->id]) . '"><i class="fa fa-plus"></i>انشاء التقارير </a>';
+
+                // if ($order->status > 2) {
+                //     $accept = '';
+                // }
+                // if ($order->status > 2) {
+                //     $reject = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_view = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_add = '';
+                // }
+                if ( $order->status == Order::ORDER_APPROVED ) {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-success btn-sm  type="button"  href="' . route('delivery.view_file', ['order' => $order->id]) . '">
+                                                إصدار الرخصة
+                                            </a>
+                                        </div>';
+                } else {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-info btn-sm  type="button"  href="' . route('delivery.view_file', ['order' => $order->id]) . '">
+                                                عرض التفاصيل
+                                            </a>
+                                        </div>';
+                }
+
+                return $element;
+
+            })
+            ->addColumn('created_at', function ($order) {
+
+                return $order->created_at->format('Y-m-d');
+            })
+            ->addColumn('updated_at', function ($order) {
+                return $order->updated_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
+    }
+
+
     public function reports_view(Order $order)
     {
         return view('CP.delivery.reports_view', [

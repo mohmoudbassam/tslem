@@ -172,6 +172,7 @@ class User extends Authenticatable
 
     public function main_route()
     {
+
         if ($this->type == 'admin') {
             return route('dashboard');
         }
@@ -207,6 +208,10 @@ class User extends Authenticatable
         }
         if ($this->type == 'raft_center') {
             return route('raft_center');
+        }
+
+        elseif ($this->type == 'Kdana'){
+            return route('kdana');
         }
 
     }
@@ -283,7 +288,11 @@ class User extends Authenticatable
     public function raft_company(){
        return $this->belongsTo(User::class,'parent_id','id');
     }
-    public function raft_company_locations(){
-       return $this->belongsTo(RaftCompanyLocation::class,'raft_company_type','id');
+    public function raft_company_service_providers(){
+       return $this->hasMany(User::class,'parent_id','id');
+    }
+    public function raft_location()
+    {
+        return $this->belongsTo(RaftCompanyLocation::class, 'raft_company_type', 'id');
     }
 }
