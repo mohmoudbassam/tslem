@@ -172,6 +172,7 @@ class User extends Authenticatable
 
     public function main_route()
     {
+
         if ($this->type == 'admin') {
             return route('dashboard');
         }
@@ -207,6 +208,10 @@ class User extends Authenticatable
         }
         if ($this->type == 'raft_center') {
             return route('raft_center');
+        }
+
+        elseif ($this->type == 'Kdana'){
+            return route('kdana');
         }
 
     }

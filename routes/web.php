@@ -4,6 +4,7 @@ use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
 use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
+use App\Http\Controllers\CP\Kdana\KdanaController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
@@ -469,6 +470,11 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         '.download_file'
     );
     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
+
+});
+Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () {
+    Route::get('', [KdanaController::class, 'index']);
+
 
 });
 //Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
