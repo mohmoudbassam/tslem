@@ -168,9 +168,17 @@ class LoginController extends Controller
         ]);
     }
 
-    public function west_list()
+    public function west_list(Request $request)
     {
-        return DataTables::of(wasteContractorsList())
+        $collection = wasteContractorsList();
+        if ($request->name) {
+            $collection = wasteContractorsList()->filter(function ($item) use ($request) {
+
+
+                return strstr($item['name'], $request->name);
+            });
+        }
+        return DataTables::of($collection)
             ->make(true);
     }
 
