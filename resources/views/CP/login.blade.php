@@ -99,7 +99,7 @@
                 text-align: start;
             }
             .login-body{
-                background-color: var(--second-color) !important;
+                background-color: #c0946f !important;
                 padding: 30px;
             }
             .bg{
