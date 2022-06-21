@@ -46,7 +46,7 @@
 
         :root {
             --main-color: #122b76;
-            --second-color: #c0946f;
+            --second-color: #0A2373;
         }
 
         body {

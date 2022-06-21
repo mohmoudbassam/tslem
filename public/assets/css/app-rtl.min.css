@@ -4956,7 +4956,7 @@ body .flatpickr-current-month {
 
 
 table tr th{
-    color: #c0946f;
+    color: #0A2373;
     font-size: 0.8rem;
     font-weight: 600 !important;
 }
@@ -4986,7 +4986,7 @@ div.dataTables_wrapper div.dataTables_info {
 
 
 #items_table_wrapper{
-    background-color: #c0946f0f;
+    background-color: #0A23730f;
     padding: 20px;
     border-radius: 5px;
 }
