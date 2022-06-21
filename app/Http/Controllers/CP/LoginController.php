@@ -174,7 +174,6 @@ class LoginController extends Controller
         if ($request->name) {
             $collection = wasteContractorsList()->filter(function ($item) use ($request) {
 
-
                 return strstr($item['name'], $request->name);
             });
         }

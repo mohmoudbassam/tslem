@@ -75,7 +75,7 @@
                 "url": "{{url('/')}}/assets/datatables/Arabic.json"
             },
             columns: [
-                {className: 'text-center', data: 'name', name: 'name'},
+                {className: 'text-right', data: 'name', name: 'name'},
 
 
             ],
