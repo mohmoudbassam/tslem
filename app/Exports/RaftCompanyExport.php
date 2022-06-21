@@ -35,6 +35,8 @@ class RaftCompanyExport implements FromCollection, WithEvents, WithHeadings, Wit
             'شركة الطوافة',
             'المربع ',
             'المخيم',
+            'البريد الإلكتروني',
+            'الجوال',
 
 
         ];
