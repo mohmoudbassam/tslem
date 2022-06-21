@@ -22,4 +22,8 @@ class ConsultingReport extends Model
             $q->whereBetween('created_at',[$from_date,$to_date]);
         });
     }
+
+    public function order(){
+        return $this->belongsTo(Order::class)->withDefault();
+    }
 }
