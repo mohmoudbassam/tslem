@@ -176,7 +176,7 @@ class LoginController extends Controller
 
     public function ex()
     {
-        $rf = User::query()->with(['raft_company_service_providers'])->where('type', 'raft_company')->get();
+        $rf = User::query()->with(['raft_company_service_providers','raft_location'])->where('type', 'raft_company')->get();
         $_data = [];
         $i = 0;
         foreach ($rf as $_rf) {
@@ -184,7 +184,7 @@ class LoginController extends Controller
             foreach ($_rf->raft_company_service_providers as $service_providers) {
 
                 $_data[$i]['name'] = $service_providers->company_name;
-                $_data[$i]['raft_company_name'] = $service_providers->raft_company_location->name ?? '';
+                $_data[$i]['raft_company_name'] = $service_providers->raft_location->name ?? '';
                 $_data[$i]['box'] = $service_providers->box;
                 $_data[$i]['camp'] = $service_providers->camp;
                     $i++;

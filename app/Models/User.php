@@ -286,4 +286,8 @@ class User extends Authenticatable
     public function raft_company_service_providers(){
        return $this->hasMany(User::class,'parent_id','id');
     }
+    public function raft_location()
+    {
+        return $this->belongsTo(RaftCompanyLocation::class, 'raft_company_type', 'id');
+    }
 }
