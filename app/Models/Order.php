@@ -24,10 +24,32 @@ class Order extends Model
     public const ORDER_APPROVED = 9;
     public const PENDING_OPERATION = 10;
     public const FINAL_REPORT_ATTACHED = 11;
+    public const FINAL_REPORT_APPROVED = 12;
+    public const FINAL_LICENSE_GENERATED = 13;
 
     public function license()
     {
         return $this->hasOne(License::class);
+    }
+
+    public function addon_license()
+    {
+        return $this->license()->byType(License::ADDON_TYPE);
+    }
+
+    public function execution_license()
+    {
+        return $this->license()->byType(License::EXECUTION_TYPE);
+    }
+
+    public function final_reports()
+    {
+        return $this->hasMany(FinalReport::class);
+    }
+
+    public function final_report()
+    {
+        return $this->hasOne(FinalReport::class);
     }
 
     public function specialties_file()
@@ -103,7 +125,7 @@ class Order extends Model
 
     public function orderSharerRegected()
     {
-        return $this->orderSharer()->where('status',OrderSharer::REJECT);
+        return $this->orderSharer()->where('status', OrderSharer::REJECT);
     }
 
     public function orderSharerAccepts()
@@ -154,10 +176,12 @@ class Order extends Model
             '9' => 'تمت الموافقة النهائية',
             '10' => 'الطلب تحت التنفيذ',
             '11' => 'تم ارفاق التقرير النهائي',
+            '12' => 'تم اعتماد التقارير النهائية',
+            '13' => 'تم اصدار رخصة التنفيذ',
         ];
-        if(isset($orderStatus[$this->status])){
-            return $orderStatus[$this->status];
-        }else {
+        if( isset($orderStatus[ $this->status ]) ) {
+            return $orderStatus[ $this->status ];
+        } else {
             return null;
         }
     }
@@ -278,9 +302,56 @@ class Order extends Model
         return $license->refresh();
     }
 
+    public function hasFinalReport(): bool
+    {
+        return $this->final_report()->count();
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return \App\Models\FinalReport
+     */
+    public function getFinalReportOrCreate(array $attributes = [])
+    {
+        $final_report = $this->final_report()->firstOrNew([ 'order_id' => $this->id ?? -1 ], $attributes);
+
+        if( !$final_report->exists ) {
+            $final_report->save();
+
+            return $final_report->refresh();
+        }
+
+        return $final_report;
+    }
+
+    public function saveFinalReport(array $attributes = [])
+    {
+        $final_report = $this->getFinalReportOrCreate([ 'order_id' => $this->id ]);
+
+        $final_report
+            ->fill($attributes)
+            ->save();
+
+        return $final_report->refresh();
+    }
+
     public function isDesignApproved()
     {
         return $this->status === static::ORDER_APPROVED;
+    }
+
+    public function shouldPostFinalReports()
+    {
+        return in_array($this->status, [ static::PENDING_OPERATION, static::FINAL_REPORT_ATTACHED ]);
+    }
+
+    public function shouldUserPostFinalReports()
+    {
+        return (
+            in_array(currentUser()->type, [ User::CONTRACTOR_TYPE, User::CONSULTNG_OFFICE_TYPE ]) ||
+            in_array(currentUser()->id, [ $this->contractor_id, $this->consulting_office_id ])
+        );
     }
 
 //    public function raft_company(){

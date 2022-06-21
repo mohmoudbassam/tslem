@@ -120,6 +120,11 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-12 my-3">
+                                    @include('CP.order.final_report_button', ['order' => $order])
+                                </div>
+                            </div>
+                            <div class="row">
                                 @if($order_specialties)
                                     @foreach($order_specialties as $_specialties)
                                         <div class="row">

@@ -143,6 +143,10 @@
                                 </span>{{$order->designer->company_name}}</p>
                         </div>
 
+                        <div class="col-md-12 my-3">
+                            @include('CP.order.final_report_button', ['order' => $order])
+                        </div>
+
                     </div>
 
                     <div class="row">
@@ -346,14 +350,15 @@
                         ])
                     </div>
                 @endif
+
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('scripts')
     <script>
-
         $.fn.dataTable.ext.errMode = 'none'
         $(function () {
             $('#items_table').DataTable({
@@ -404,5 +409,4 @@
             $('#items_table').DataTable().ajax.reload(null, false)
         })
     </script>
-
 @endsection

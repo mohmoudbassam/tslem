@@ -15,8 +15,15 @@ return [
         'person_count' => 'عدد الحجاج',
         'camp_space' => 'مساحة المخيم',
         'map_path' => 'خريطة الموقع',
+        'final_attachment_path' => 'التقرير النهائي',
+        'final_report_path' => 'التقرير النهائي',
+        'final_report_note' => 'سبب الرفض',
     ],
     "raft_company_name" => ":name",
     "no_parent_name" => "المجلس التنسيقي لحجاج الداخل",
     "download_for_service_provider" => "عرض رخصة الإضافات",
+    "types" => [
+        1 => "رخصة الاضافات",
+        2 => "رخصة التنفيذ",
+    ],
 ];

@@ -4,18 +4,20 @@ namespace App\Http\Controllers\CP\Licenses;
 
 use App\Helpers\Calendar;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CP\License\StoreLicenseFinalAttachmentReportRequest;
+use App\Http\Requests\CP\License\StoreLicenseFinalReportRequest;
 use App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest;
 use App\Http\Requests\CP\License\StoreLicenseRequest;
+use App\Models\FinalReport;
 use App\Models\License;
 use App\Models\Order;
 use App\Models\RaftCompanyBox;
-use Barryvdh\Snappy\Facades\SnappyPdf;
+use App\Notifications\OrderNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
-use App\Notifications\OrderNotification;
 
 class LicenseController extends Controller
 {
@@ -31,15 +33,15 @@ class LicenseController extends Controller
 
     public static function makeTable($value)
     {
-        if (is_array($value)) {
-            $table_content = ["", ""];
+        if( is_array($value) ) {
+            $table_content = [ "", "" ];
 
-            foreach ($value as $k => $v) {
-                $table_content[0] .= static::makeTd($k);
-                $table_content[1] .= static::makeTd($v);
+            foreach( $value as $k => $v ) {
+                $table_content[ 0 ] .= static::makeTd($k);
+                $table_content[ 1 ] .= static::makeTd($v);
             }
 
-            return static::makeTable(static::makeTr($table_content[0]) . static::makeTr($table_content[1]));
+            return static::makeTable(static::makeTr($table_content[ 0 ]) . static::makeTr($table_content[ 1 ]));
         }
 
         return static::makeTable($value);
@@ -122,12 +124,12 @@ class LicenseController extends Controller
     public function store(StoreLicenseRequest $request)
     {
         $data = $request->validated();
-        $data['order_id'] ??= 0;
+        $data[ 'order_id' ] ??= 0;
         $license = License::create($data);
 
         return redirect()
             ->route('licenses')
-            ->with(['success' => __('general.success')]);
+            ->with([ 'success' => __('general.success') ]);
     }
 
     public function edit(Request $request, License $license)
@@ -141,7 +143,7 @@ class LicenseController extends Controller
 
     public function show_print(Request $request, License $license)
     {
-        if (request()->has('print')) {
+        if( request()->has('print') ) {
             return $this->print($request, $license);
         }
 
@@ -154,7 +156,7 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License $license
+     * @param \App\Models\License      $license
      *
      * @return \Illuminate\Http\Response|string
      */
@@ -166,16 +168,16 @@ class LicenseController extends Controller
             'model' => $license,
         ])->render();
 
-        if ($request->has('html')) {
+        if( $request->has('html') ) {
             return $reportHtml;
         }
 
         $Arabic = new \ArPHP\I18N\Arabic();
         $p = $Arabic->arIdentify($reportHtml);
 
-        for ($i = count($p) - 1; $i >= 0; $i -= 2) {
-            $utf8ar = $Arabic->utf8Glyphs(substr($reportHtml, $p[$i - 1], $p[$i] - $p[$i - 1]));
-            $reportHtml = substr_replace($reportHtml, $utf8ar, $p[$i - 1], $p[$i] - $p[$i - 1]);
+        for( $i = count($p) - 1; $i >= 0; $i -= 2 ) {
+            $utf8ar = $Arabic->utf8Glyphs(substr($reportHtml, $p[ $i - 1 ], $p[ $i ] - $p[ $i - 1 ]));
+            $reportHtml = substr_replace($reportHtml, $utf8ar, $p[ $i - 1 ], $p[ $i ] - $p[ $i - 1 ]);
         }
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($reportHtml, 'UTF-8');
@@ -186,13 +188,13 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License $license
+     * @param \App\Models\License      $license
      *
      * @return \Illuminate\Http\Response|string
      */
     public function download(Request $request, Order $order)
     {
-        $request->merge(['print' => 1]);
+        $request->merge([ 'print' => 1 ]);
         /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
         $pdf = app()->make('snappy.pdf.wrapper');
 
@@ -217,13 +219,13 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License $license
+     * @param \App\Models\License      $license
      *
      * @return \Illuminate\Http\Response|string
      */
     public function view_pdf(Request $request, Order $order)
     {
-        $request->merge(['print' => 1]);
+        $request->merge([ 'print' => 1 ]);
         /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
         $pdf = app()->make('snappy.pdf.wrapper');
         $service = order_services($order->id);
@@ -232,14 +234,13 @@ class LicenseController extends Controller
         $half = ceil($servicesLimit / 2);
         $chunks = $service->chunk($half);
 
-
         return $pdf
             ->loadView('CP.licenses.print', [
                 'mode' => 'print',
                 'mode_form' => 'print',
                 'model' => $order->license,
-                'first_services' => $chunks[0] ?? [],
-                'second_services' => $chunks[1] ?? [],
+                'first_services' => $chunks[ 0 ] ?? [],
+                'second_services' => $chunks[ 1 ] ?? [],
             ])
             ->setPaper('a4')
             ->setOrientation('portrait')
@@ -256,7 +257,45 @@ class LicenseController extends Controller
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License $license
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\Response|string
+     */
+    public function view_pdf_execution_license(Request $request, Order $order)
+    {
+        $request->merge([ 'print' => 1 ]);
+        /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
+        $pdf = app()->make('snappy.pdf.wrapper');
+        $service = order_services($order->id);
+        $limit = 8;
+        $servicesLimit = $service->count() > $limit ? $limit : $service->count();
+        $half = ceil($servicesLimit / 2);
+        $chunks = $service->chunk($half);
+
+        return $pdf
+            ->loadView('CP.licenses.print_execution_license', [
+                'mode' => 'print',
+                'mode_form' => 'print',
+                'model' => $order->license,
+                'first_services' => $chunks[ 0 ] ?? [],
+                'second_services' => $chunks[ 1 ] ?? [],
+            ])
+            ->setPaper('a4')
+            ->setOrientation('portrait')
+            ->setOption('margin-bottom', 0)
+            ->setOption('enable-forms', true)
+            //->setOption('grayscale', true)
+            //->setOption('debug-javascript', true)
+            //->setOption('page-offset', 8)
+            ->setOption('encoding', 'utf-8')
+            //->setOption('header-font-name', 'msyh')
+            ->setOption('enable-external-links', true)
+            ->inline("License-{$order->license()->value('id')}.pdf");
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
      *
      * @return \Illuminate\Http\Response|string
      */
@@ -268,7 +307,7 @@ class LicenseController extends Controller
             'model' => $order->license,
         ])->render();
 
-        if ($request->has('html')) {
+        if( $request->has('html') ) {
             return $reportHtml;
         }
 
@@ -292,56 +331,56 @@ class LicenseController extends Controller
     public function list(Request $request)
     {
         $licenses = License::query()
-            ->onlyFullyCreated()
-            ->orderBy('created_at', data_get(collect($request->get('order', ['desc']))->first(), 'dir', 'desc'))
-            ->when(request('name'), function ($query) {
-                return $query->where(function (Builder $q) {
-                    $columns = [
-                        'id',
-                        'tents_count',
-                        'person_count',
-                        'camp_space',
-                    ];
-                    foreach ($columns as $column) {
-                        $q = $q->orWhere($column, 'like', '%' . request('name') . '%');
-                    }
+                           ->onlyFullyCreated()
+                           ->orderBy('created_at', data_get(collect($request->get('order', [ 'desc' ]))->first(), 'dir', 'desc'))
+                           ->when(request('name'), function($query) {
+                               return $query->where(function(Builder $q) {
+                                   $columns = [
+                                       'id',
+                                       'tents_count',
+                                       'person_count',
+                                       'camp_space',
+                                   ];
+                                   foreach( $columns as $column ) {
+                                       $q = $q->orWhere($column, 'like', '%' . request('name') . '%');
+                                   }
 
-                    return $q;
-                });
-            });
+                                   return $q;
+                               });
+                           });
 
         return DataTables::of($licenses)
-            ->addColumn('id', fn(License $license) => $license->id)
-            ->addColumn('order_id', fn(License $license) => $license->order()->value('identifier'))
-            ->addColumn(
-                'date',
-                fn(License $license) => $license->date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->date) : "-"
-            )
-            ->addColumn(
-                'expiry_date',
-                fn(License $license) => $license->expiry_date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->expiry_date) : "-"
-            )
-            ->addColumn('raft_company', fn(License $license) => $license->raft_company_name ?? "")
-            ->addColumn('box_raft_company_box_id', fn(License $license) => $license->box()->value('box'))
-            ->addColumn('camp_raft_company_box_id', fn(License $license) => $license->camp()->value('camp'))
-            ->addColumn('actions', function ($license) {
-                $title = __('general.datatable.fields.actions');
-                $delete_title = License::crudTrans('delete');
-                $delete_route = route('licenses.delete', ['license' => $license->id]);
-                $update_title = License::crudTrans('update');
-                $update_route = route('licenses.edit', ['license' => $license->id]);
+                         ->addColumn('id', fn(License $license) => $license->id)
+                         ->addColumn('order_id', fn(License $license) => $license->order()->value('identifier'))
+                         ->addColumn(
+                             'date',
+                             fn(License $license) => $license->date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->date) : "-"
+                         )
+                         ->addColumn(
+                             'expiry_date',
+                             fn(License $license) => $license->expiry_date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->expiry_date) : "-"
+                         )
+                         ->addColumn('raft_company', fn(License $license) => $license->raft_company_name ?? "")
+                         ->addColumn('box_raft_company_box_id', fn(License $license) => $license->box()->value('box'))
+                         ->addColumn('camp_raft_company_box_id', fn(License $license) => $license->camp()->value('camp'))
+                         ->addColumn('actions', function($license) {
+                             $title = __('general.datatable.fields.actions');
+                             $delete_title = License::crudTrans('delete');
+                             $delete_route = route('licenses.delete', [ 'license' => $license->id ]);
+                             $update_title = License::crudTrans('update');
+                             $update_route = route('licenses.edit', [ 'license' => $license->id ]);
 
-                if ($license->isFullyCreated() && $license->order_id) {
-                    $print_title = License::trans('download_for_service_provider');
-                    $print_route = route('licenses.view_pdf', ['order' => $license->order_id]);
-                    $print_license = <<<HTML
+                             if( $license->isFullyCreated() && $license->order_id ) {
+                                 $print_title = License::trans('download_for_service_provider');
+                                 $print_route = route('licenses.view_pdf', [ 'order' => $license->order_id ]);
+                                 $print_license = <<<HTML
 <a class="dropdown-item" target="_blank" href="{$print_route}">{$print_title}</a>
 HTML;
-                } else {
-                    $print_license = "";
-                }
+                             } else {
+                                 $print_license = "";
+                             }
 
-                return <<<HTML
+                             return <<<HTML
 <div class="btn-group me-1 mt-2">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         {$title}<i class="mdi mdi-chevron-down"></i>
@@ -354,16 +393,16 @@ HTML;
     </div>
 </div>
 HTML;
-            })
-            ->rawColumns(['actions'])
-            ->make(true);
+                         })
+                         ->rawColumns([ 'actions' ])
+                         ->make(true);
     }
 
     /**
      * @post
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\License $license
+     * @param \App\Models\License      $license
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -372,35 +411,34 @@ HTML;
         $license->delete();
 
         return response()->json([
-            'message' => __('general.success'),
-            'success' => true,
-        ]);
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
     }
 
     public function order_license_form(Request $request, Order $order)
     {
         return response()->json([
-            'page' => view('CP.licenses.form_modal', [
-                'model' => $order,
-                'license' => $order->getLicenseOrCreate(),
-            ])->render(),
-            'message' => __('general.success'),
-            'success' => true,
-        ]);
+                                    'page' => view('CP.licenses.form_modal', [
+                                        'model' => $order,
+                                        'license' => $order->getLicenseOrCreate(),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
     }
 
     /**
      * @post
      *
      * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
-     * @param \App\Models\Order $order
+     * @param \App\Models\Order                                              $order
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function order_license_create(StoreLicenseOrderApprovedRequest $request, Order $order)
     {
         $order->saveLicense($request->validated());
-
 
         // Send notification to service provider
 
@@ -412,9 +450,209 @@ HTML;
         $order->save();
 
         return response()->json([
-            'message' => __('general.success'),
-            'success' => true,
-        ]);
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+
+    }
+
+    public function order_license_final_report_form(Request $request, Order $order)
+    {
+        return response()->json([
+                                    'page' => view('CP.licenses.final_report_form', [
+                                        'model' => $order,
+                                        'license' => $order->getLicenseOrCreate(),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
+     * @param \App\Models\Order                                              $order
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function order_license_final_report(StoreLicenseFinalReportRequest $request, Order $order)
+    {
+        if( !$order->hasLicense() ) {
+            return response()->json([
+                                        'message' => __('general.something_went_wrong'),
+                                        'success' => false,
+                                    ]);
+        }
+
+        $data = $request->validated();
+        $user_type = currentUser()->isContractor() ? 'contractor' : (
+        currentUser()->isConsultngOffice() ? 'consulting_office' : ""
+        );
+        if( !$user_type ) {
+            if( currentUser()->id === $order->contractor_id ) {
+                $user_type = 'contractor';
+            } elseif( currentUser()->id === $order->consulting_office_id ) {
+                $user_type = 'consulting_office';
+            }
+        }
+        throw_unless($user_type, "Only Contractor & Consulting Office Are Allowed To Attach!");
+
+        $path_column = "{$user_type}_final_report_path";
+        $data[ $path_column ] = array_pull($data, 'final_report_path');
+
+        $order->getFinalReportOrCreate()
+              ->fill($data)
+              ->save();
+
+        $order->status = Order::FINAL_REPORT_ATTACHED;
+        $order->save();
+
+        return response()->json([
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    public function order_license_attach_final_report_form(Request $request, Order $order)
+    {
+        return response()->json([
+                                    'page' => view('CP.licenses.attach_final_report_form', [
+                                        'model' => $order,
+                                        'license' => $order->getLicenseOrCreate(),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
+     * @param \App\Models\Order                                              $order
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function order_license_attach_final_report(StoreLicenseFinalAttachmentReportRequest $request, Order $order)
+    {
+        if( !$order->hasLicense() ) {
+            return response()->json([
+                                        'message' => __('general.something_went_wrong'),
+                                        'success' => false,
+                                    ]);
+        }
+
+        $data = $request->validated();
+        $data[ 'type' ] = License::EXECUTION_TYPE;
+        $order->getLicenseOrCreate()
+              ->fill($data)
+              ->save();
+
+        $order->status = Order::FINAL_LICENSE_GENERATED;
+        $order->save();
+
+        // $request->session()->flash('success', __('general.success'));
+
+        return response()->json([
+                                    'url' => route('licenses.view_pdf_execution_license', [ 'order' => $order->id ]),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    public function reject_form(Request $request, Order $order, $type = null)
+    {
+        $type = $type ?: 'contractor';
+        $note = "";
+        $final_report = $order->getFinalReportOrCreate();
+        if( $type ) {
+            $note = $final_report->getAttribute("{$type}_final_report_note");
+        }
+
+        return response()->json([
+                                    'page' => view('CP.order.reject_form', [
+                                        'order' => $order,
+                                        'type' => $type,
+
+                                        'title' => 'رفض تقرير نهائي',
+                                        'label' => 'سبب الرفض',
+                                        'note' => $note,
+                                        'url' => route('licenses.reject', [ 'order' => $order->id, 'type' => $type ]),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    public function reject(Request $request, Order $order, $type)
+    {
+        $type = $type ?: 'contractor';
+        $final_report = $order->getFinalReportOrCreate();
+
+        if( $type === 'contractor' ) {
+            $final_report->contractor_reject($request->note, true);
+        } elseif( $type === 'consulting_office' ) {
+            $final_report->consulting_office_reject($request->note, true);
+        }
+
+        return $request->wantsJson() ?
+            response()->json([
+                                 'message' => __('general.success'),
+                                 'success' => true,
+                             ]) :
+            back();
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Order        $order
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function order_final_report_contractor_approve(Request $request, Order $order)
+    {
+        tap($order->getFinalReportOrCreate(), function(FinalReport $final_report) {
+            $final_report->contractor_approve(true, true);
+            if( $final_report->isFullyApproved() ) {
+                $final_report
+                    ->order()
+                    ->update([ 'status' => Order::FINAL_REPORT_APPROVED ]);
+            }
+        });
+
+        return $request->wantsJson() ?
+            response()->json([
+                                 'message' => __('general.success'),
+                                 'success' => true,
+                             ]) :
+            back();
+
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Order        $order
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function order_final_report_consulting_office_approve(Request $request, Order $order)
+    {
+        tap($order->getFinalReportOrCreate(), function(FinalReport $final_report) {
+            $final_report->consulting_office_approve(true, true);
+            if( $final_report->isFullyApproved() ) {
+                $final_report
+                    ->order()
+                    ->update([ 'status' => Order::FINAL_REPORT_APPROVED ]);
+            }
+        });
+
+        return $request->wantsJson() ?
+            response()->json([
+                                 'message' => __('general.success'),
+                                 'success' => true,
+                             ]) :
+            back();
 
     }
 
@@ -422,7 +660,7 @@ HTML;
      * @post
      *
      * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
-     * @param \App\Models\License $license
+     * @param \App\Models\License                               $license
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -438,23 +676,31 @@ HTML;
         $license->deleteMapPathFile(true);
 
         return response()->json([
-            'success' => true,
-            'message' => 'تم حذف المرفق بنجاح',
-        ]);
+                                    'success' => true,
+                                    'message' => 'تم حذف المرفق بنجاح',
+                                ]);
+    }
+
+    public function delete_final_attachment_path(Request $request, License $license)
+    {
+        $license->deleteFinalAttachmentPath(true);
+
+        return response()->json([
+                                    'success' => true,
+                                    'message' => 'تم حذف المرفق بنجاح',
+                                ]);
     }
 
     public function qr_download_files($raft_company_box_id)
     {
         $raft_company_box = RaftCompanyBox::where('id', $raft_company_box_id)->firstOrFail();
 
-        return view('CP.download_box_files', ['rf' => $raft_company_box]);
+        return view('CP.download_box_files', [ 'rf' => $raft_company_box ]);
     }
 
     public function download_raft_company_file($rf_id, $file_type)
     {
         $raft_company_box = RaftCompanyBox::where('id', $rf_id)->firstOrFail();
-
-
 
         $path = Storage::disk('public')->path($raft_company_box->{$file_type});
 

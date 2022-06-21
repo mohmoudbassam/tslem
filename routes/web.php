@@ -95,6 +95,27 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 ->name('.view_pdf');
             Route::get('view_html/{order}/license', [LicenseController::class, 'view_html'])
                 ->name('.view_html');
+
+            Route::get('view_pdf/{order}/execution_license', [LicenseController::class, 'view_pdf_execution_license'])
+                 ->name('.view_pdf_execution_license');
+
+            Route::get('order/{order}/attach-final-report-form', [LicenseController::class, 'order_license_attach_final_report_form'])
+                ->name('.attach_final_report_form');
+            Route::post('order/{order}/attach-final-report', [LicenseController::class, 'order_license_attach_final_report'])
+                 ->name('.attach_final_report');
+
+            Route::get('order/{order}/final-report-contractor-approve', [LicenseController::class, 'order_final_report_contractor_approve'])
+                ->name('.final_report_contractor_approve');
+            Route::get('order/{order}/final-report-consulting-office-approve', [LicenseController::class, 'order_final_report_consulting_office_approve'])
+                ->name('.final_report_consulting_office_approve');
+
+            Route::get('order/{order}/final-report-form', [LicenseController::class, 'order_license_final_report_form'])
+                ->name('.final_report_form');
+            Route::post('order/{order}/final-report', [LicenseController::class, 'order_license_final_report'])
+                 ->name('.final_report');
+
+            Route::get('order/{order}/reject_form/{type}', [LicenseController::class, 'reject_form'])->name('.reject_form');
+            Route::post('order/{order}/reject_form/{type}', [LicenseController::class, 'reject'])->name('.reject');
         });
 
     Route::prefix('news_articles')

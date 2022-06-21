@@ -17,6 +17,7 @@
         .file-view-wrapper:hover {
             box-shadow: var(--bs-box-shadow) !important;
         }
+
         .file-view-icon {
             height: 180px;
             background-size: 50%;
@@ -24,10 +25,11 @@
             background-repeat: no-repeat;
         }
 
-        .file-view-wrapper{
+        .file-view-wrapper {
             position: relative;
         }
-        .file-view-download{
+
+        .file-view-download {
             position: absolute;
             top: 9px;
             left: 11px;
@@ -56,9 +58,11 @@
         .bold {
             font-weight: bold;
         }
+
         .modal-backdrop.show {
             display: initial !important;
         }
+
         .modal-backdrop.fade {
             display: initial !important;
         }
@@ -105,12 +109,30 @@
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               data-bs-toggle="tab"
+                               href="#final_reports"
+                               role="tab"
+                            >
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block">التقارير النهائية</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="details" role="tabpanel">
                             <div class="row">
+                                @if(in_array($order->status,[$order::FINAL_REPORT_APPROVED]))
+                                    <div class="col-md-12 my-3">
+                                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button show-modal" href="{{route('licenses.attach_final_report_form', ['order'=>$order->id])}}">
+                                            <i class="fa fa-arrow-down pe-2"></i>
+                                            اصدار رخصة التنفيذ
+                                        </a>
+                                    </div>
+                                @endif
 
                                 <div class="col-md-6 my-3">
                                     <p class="details_p"><span class="bold">  تاريخ الإنشاء :</span> {{$order->created_at->format("Y-m-d")}}</p>
@@ -333,19 +355,19 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                            @foreach($obligation as $obligationFile)
-                                                <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
-                                                    <a href="{{ asset("storage/".$obligationFile->path) }}" download="">
-                                                        <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
-                                                            <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
-                                                            <div class="file-view-download"><i class="fas fa-download"></i></div>
-                                                            <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
-                                                                <small class="text-muted" style="font-size: 12px;">{{ get_obligation_name_by_type($obligationFile->type) }}</small>
+                                                @foreach($obligation as $obligationFile)
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
+                                                        <a href="{{ asset("storage/".$obligationFile->path) }}" download="">
+                                                            <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
+                                                                <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
+                                                                <div class="file-view-download"><i class="fas fa-download"></i></div>
+                                                                <div class="justify-content-center d-flex flex-column text-center border-top" style="height: 40px; background-color: #eeeeee;">
+                                                                    <small class="text-muted" style="font-size: 12px;">{{ get_obligation_name_by_type($obligationFile->type) }}</small>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            @endforeach
+                                                        </a>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -406,6 +428,14 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div
+                            class="tab-pane"
+                            id="final_reports"
+                            role="tabpanel"
+                        >
+                            @include('CP.delivery.final_reports')
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -436,14 +466,28 @@
 
 @section('scripts')
     <script>
+        $(() => {
+            if (location.hash) {
+                let activeTab = document.querySelector("[href='" + location.hash + "']")
+                if (activeTab && activeTab.classList.contains('nav-link')) {
+                    document.querySelectorAll('.nav-link.active, .tab-pane.active')
+                        .forEach(x => x.classList.remove('active'))
+                    activeTab.classList.add('active')
+                    if ((activeTab = document.querySelector(location.hash))) {
+                        activeTab.classList.add('active')
+                    }
+                }
+            }
+        })
+
         /**
          * Show create license modal
          * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form
          */
         @if($order->licenseNeededForDelivery())
-            $(()=>{
-                showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}',null,'#view-user-files-modal')
-            })
+        $(() => {
+            showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}', null, '#view-user-files-modal')
+        })
         @endif
 
         function reject() {
@@ -467,8 +511,8 @@
                     if (data.success) {
                         showAlertMessage('success', data.message);
                         setTimeout(function () {
-                             window.location.reload();
-                        },500)
+                            window.location.reload();
+                        }, 500)
                     } else {
                         showAlertMessage('error', data.message);
                     }

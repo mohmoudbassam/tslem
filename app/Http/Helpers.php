@@ -555,7 +555,7 @@ if (!function_exists('currentUser')) {
      *
      * @param mixed $default
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|mixed
+     * @return \Illuminate\Contracts\Auth\Authenticatable|\App\Models\User|mixed
      */
     function currentUser($default = null)
     {
