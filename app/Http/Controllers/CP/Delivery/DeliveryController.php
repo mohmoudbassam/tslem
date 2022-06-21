@@ -33,7 +33,7 @@ class DeliveryController extends Controller
     }
 
 
-    public function list(Request $request, $flag = false)
+    public function list2(Request $request, $flag = false)
     {
 
         $order = Order::query()
