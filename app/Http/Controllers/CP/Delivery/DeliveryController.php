@@ -33,7 +33,7 @@ class DeliveryController extends Controller
     }
 
 
-    public function list2(Request $request, $flag = false)
+    public function list(Request $request, $flag = false)
     {
 
         $order = Order::query()
@@ -442,7 +442,7 @@ class DeliveryController extends Controller
         return Excel::download(new OrdersExport($orders), 'orders.xlsx');
     }
 
-    public function list(Request $request, $flag = false)
+    public function list2(Request $request, $flag = false)
     {
         $order = $this->gitOrdersQuery();
         if ($flag) {
