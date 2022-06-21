@@ -15,8 +15,10 @@
                 <h4 class="mb-sm-0 font-size-18"></h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{\App\Models\License::crudTrans($mode)}}</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('licenses')}}">{{\App\Models\License::crudTrans('index')}}</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="javascript: void(0);">{{\App\Models\License::crudTrans($mode)}}</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{route('licenses')}}">{{\App\Models\License::crudTrans('index')}}</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
                     </ol>
                 </div>
@@ -47,7 +49,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id="form" method="post" action="{{route("licenses.{$mode_form}", ['license'=>$model->id])}}" enctype="multipart/form-data">
+                    <form id="form" method="post" action="{{route("licenses.{$mode_form}", ['license'=>$model->id])}}"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             @foreach(\App\Models\License::$RULES as $input => $rules)
@@ -67,6 +70,19 @@
                                     'model' => $model,
                                 ])
                             @endforeach
+                            <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="attachment">المرفقات</label>
+                                            <input type="file" class="form-control"
+                                                   id="attachment"
+                                                   name="attachment">
+                                            <div class="col-12 text-danger"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -114,16 +130,16 @@
             $('#form').submit()
         });
 
-        $(()=>{
+        $(() => {
             @foreach(\App\Models\License::$RULES as $column => $rules)
-                @if(isDateAttribute(\App\Models\License::class, $column))
+            @if(isDateAttribute(\App\Models\License::class, $column))
 
-                flatpickr(".{{$column}}_input", {
-                    locale: "{{currentLocale()}}",
-                    typeCalendar: "Umm al-Qura"
-                });
+            flatpickr(".{{$column}}_input", {
+                locale: "{{currentLocale()}}",
+                typeCalendar: "Umm al-Qura"
+            });
 
-                @endif
+            @endif
             @endforeach
         })
     </script>

@@ -435,6 +435,11 @@ HTML;
     {
         $license->update($request->validated());
 
+        if ($request->attachment) {
+            $path = Storage::disk('public')->put('license_attachment/', $request->file('attachment'));
+            $license->attachment = $path;
+            $license->save();
+        }
         return back()->with('success', __('general.success'));
     }
 

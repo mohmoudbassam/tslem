@@ -78,7 +78,7 @@
                             <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-danger reset_btn"><i class="fa fa-times me-1"></i>إلغاء</button>
+                            <button type="button" class="btn btn-secondary reset_btn"><i class="fa fa-window-close"></i>إلغاء</button>
                         </div>
 
 
