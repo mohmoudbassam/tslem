@@ -437,12 +437,7 @@ class DesignerOrderController extends Controller
     {
         $file = OrderSpecilatiesFiles::query()->where('id', $id)->first();
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Content-Disposition' => "attachment; filename=$file->real_name",
-        ];
-
-        return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
+        return Storage::disk('public')->download($file->path,$file->real_name);
 
     }
 
