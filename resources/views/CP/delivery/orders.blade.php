@@ -174,7 +174,7 @@
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
-                        d.status = $('#status').val();
+                        d.order_status = $('#order_status').val();
                     }
                 },
                 language: {
