@@ -576,7 +576,7 @@ class DeliveryController extends Controller
             'Content-Disposition' => "attachment; filename=".get_obligation_name_by_type($file->type).".pdf",
         ];
 
-        return (new Response(Storage::get($file->path), 200, $headers));
+        return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
 
     }
 }
