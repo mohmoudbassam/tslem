@@ -51,7 +51,7 @@ class DeliveryController extends Controller
                       ->when(!is_null($request->query("to_date")), function($query) use ($request) {
                           $query->whereDate("created_at", "<=", $request->query("to_date"));
                       })
-                      ->with([ 'service_provider', 'designer' ])
+                      ->with([ 'service_provider', 'designer','contractor' ])
                       ->select("orders.*")
                       ->whereOrderId($request->order_id)
                       ->whereDesignerId($request->designer_id)
