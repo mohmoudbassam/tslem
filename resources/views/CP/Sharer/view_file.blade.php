@@ -213,7 +213,7 @@
                                     <div class="col-12">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h4 class="card-title">{{ ($_specialties[0]->service) ? $_specialties[0]->service->specialties->name_ar : ''}}</h4>
+                                                <h4 class="card-title">{{$_specialties[0]->service->specialties->name_ar}}</h4>
                                             </div>
 
                                             <div class="card-body">
@@ -247,7 +247,6 @@
                                                         <hr>
                                                     @endif
                                                 @endforeach
-                                                @if($_specialties[0]->service->specialties)
                                                 <div class="row mt-5">
                                                     @foreach($filess->where('specialties.name_en',$_specialties[0]->service->specialties->name_en) as $files)
 
@@ -357,7 +356,6 @@
                                                         @endif
                                                     @endforeach
                                                 </div>
-                                                @endif
                                             </div>
                                         </div>
                                     </div>
