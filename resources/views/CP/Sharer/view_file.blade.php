@@ -375,7 +375,7 @@
                                             <div class="row">
                                                 @foreach($obligation as $obligationFile)
                                                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
-                                                        <a href="{{ asset("storage/".$obligationFile->path) }}" download="">
+                                                        <a href="{{ route('obligation.download',['id'=>$obligationFile->id]) }}">
                                                             <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                                                 <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
                                                                 <div class="file-view-download"><i class="fas fa-download"></i></div>

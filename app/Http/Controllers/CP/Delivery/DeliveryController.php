@@ -566,4 +566,17 @@ class DeliveryController extends Controller
             })->rawColumns(['actions'])
             ->make(true);
     }
+
+    public function download_obligation($id)
+    {
+        $file = OrderSpecialtyObligation::query()->where('id', $id)->first();
+
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => "attachment; filename=".get_obligation_name_by_type($file->type).".pdf",
+        ];
+
+        return (new Response(Storage::get($file->path), 200, $headers));
+
+    }
 }
