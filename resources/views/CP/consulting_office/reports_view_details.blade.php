@@ -471,7 +471,7 @@ file-drop-zone clearfix {}
                     name: 'company_name'
                 },
                 {
-                    className: 'text-center',
+                    className: 'text-center  space-nowrap',
                     data: 'date',
                     name: 'date'
                 },
@@ -481,7 +481,7 @@ file-drop-zone clearfix {}
                     name: 'order_status'
                 },
                 {
-                    className: 'text-center',
+                    className: 'text-center space-nowrap',
                     data: 'created_at',
                     name: 'created_at'
                 },

@@ -341,7 +341,7 @@
 
                 </div>
 
-                @if($order->is_accepted(auth()->user()))
+                    @if($order->is_accepted(auth()->user()))
                     <div
                         class="tab-pane"
                         id="reports"
@@ -395,7 +395,7 @@
                         name: 'description'
                     },
                     {
-                        className: 'text-center',
+                        className: 'text-center space-nowrap',
                         data: 'created_at',
                         name: 'created_at'
                     },

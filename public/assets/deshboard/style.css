@@ -32,7 +32,6 @@
 
   .card.card-chart__filled a {
     color: #fff;
-    float: left;
   }
 
   .card.card-chart__filled a:after {

@@ -168,9 +168,9 @@
                 columns: [
                     {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name'},
-                    {className: 'text-center', data: 'date', name: 'date'},
+                    {className: 'text-center space-nowrap', data: 'date', name: 'date'},
                     {className: 'text-center', data: 'order_status', name: 'order_status'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
                     {className: 'text-center', data: 'actions', name: 'actions'},
 
                 ],

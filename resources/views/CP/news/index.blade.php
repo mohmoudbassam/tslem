@@ -102,7 +102,7 @@
                 },
                 columns: [
                     {className: 'text-center', data: 'news', name: 'news'},
-                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className: 'text-center space-nowrap', data: 'created_at', name: 'created_at'},
 
                     {className: 'text-center', data: 'actions', name: 'actions'},
 

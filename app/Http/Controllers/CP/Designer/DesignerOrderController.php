@@ -10,7 +10,6 @@ use App\Models\OrderSharer;
 use App\Models\OrderSpecialtyObligation;
 use App\Models\OrderSpecilatiesFiles;
 use App\Models\Service;
-use App\Models\ServiceFileType;
 use App\Models\Specialties;
 use App\Models\User;
 use App\Notifications\OrderNotification;
@@ -52,7 +51,8 @@ class DesignerOrderController extends Controller
                       ->whereDesigner(auth()->user()->id)
                       ->with('designer');
 
-        return DataTables::of($order)
+        return
+            DataTables::of($order)
                          ->addColumn('identifier', function(Order $order) {
                              return ($order->final_report()->value('consulting_office_final_report_note') ?
                                      '<i class="fa fa-star-of-life mx-2 text-danger" style="font-size: 8px !important;"></i>' : '') .
@@ -68,7 +68,7 @@ class DesignerOrderController extends Controller
                              }
 
                              if( $order->lastDesignerNote()->where('status', 0)->exists()
-                                 || ($order->orderSharerRegected()->exists() && $order->delivery_notes == 1)
+                             || ($order->orderSharerRegected()->exists()  && $order->delivery_notes == 1)
                              ) {
                                  $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>تعديل الملفات </a>';
                              }
@@ -95,6 +95,7 @@ class DesignerOrderController extends Controller
                              return $order->order_status;
                          })
                          ->rawColumns([ 'actions', 'identifier' ])
+                         ->setRowClass(fn($o) => $o->lastDesignerNote()->where('status', 0)->exists() ? 'alert-warning' : '')
                          ->make(true);
     }
 
@@ -104,8 +105,8 @@ class DesignerOrderController extends Controller
         if( $order->status == Order::PENDING ) {
             $order->status = Order::REQUEST_BEGIN_CREATED;
             $order->save();
-            save_logs($order, $order->designer_id, 'تهانينا, تم قبول طلبك #' . $order->identifier . ' من مكتب التصميم ');
-            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #' . $order->identifier . ' من مكتب التصميم', $order->designer_id));
+            save_logs($order, $order->designer_id, 'تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم ');
+            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
 
             return redirect()->route('design_office.orders');
         }
@@ -127,8 +128,8 @@ class DesignerOrderController extends Controller
 
         if( $order->status == Order::PENDING ) {
             $order->status = Order::PENDING;
-            save_logs($order, $order->designer_id, 'تم رفض الطلب #' . $order->identifier . ' من مكتب التصميم بسبب' . $request->input("rejection_note"));
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #' . $order->identifier . ' بسبب ' . $request->input("rejection_note"), $order->designer_id));
+            save_logs($order, $order->designer_id, 'تم رفض الطلب #'.$order->identifier.' من مكتب التصميم بسبب'.$request->input("rejection_note"));
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #'.$order->identifier.' بسبب '.$request->input("rejection_note"), $order->designer_id));
             $order->designer_id = null;
             DesignerRejected::query()->create([
                                                   'order_id' => $order->id,
@@ -155,14 +156,14 @@ class DesignerOrderController extends Controller
         if( $request->has('validate') ) {
             $file_validation = $this->validate_file($request);
             if( !$file_validation[ 'success' ] ) {
-                $file_validation[ '_token' ] = csrf_token();
+                $file_validation['_token'] = csrf_token();
 
                 return response()->json($file_validation);
             }
 
             $obligation_file_validation = $this->validate_obligation_file($request);
             if( !$obligation_file_validation[ 'success' ] ) {
-                $obligation_file_validation[ '_token' ] = csrf_token();
+                $obligation_file_validation['_token'] = csrf_token();
 
                 return response()->json($obligation_file_validation);
             }
@@ -286,6 +287,77 @@ class DesignerOrderController extends Controller
 
     }
 
+    private function validate_file($request)
+    {
+        if (!(request('souls_safety_file'))) {
+            return [
+                'success' => false,
+                'message' => "الرجاء إرفاق ملف سلامة الارواح ",
+            ];
+        }
+
+        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
+        $specialties = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
+            if (in_array($key, $specialties_names)) {
+                return $item;
+            }
+
+            return null;
+        })->filter()->keys();
+        foreach ($specialties as $key => $_specialties) {
+
+            if (!(request($_specialties.'_pdf_file') && request($_specialties.'_cad_file'))) {
+                $name = Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
+
+                return [
+                    'success' => false,
+                    'message' => " الرجاء إدخال جميع ملفات $name",
+                ];
+            }
+
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
+    private function validate_obligation_file(Request $request)
+    {
+        $specialties = Specialties::pluck('name_en')->toArray();
+        $rules = [
+            'obligations'   => ['required', 'array', 'max:'.count($specialties), 'min:1'],
+            'obligations.*' => [Rule::in($specialties)],
+        ];
+
+        foreach ($specialties as $specialty) {
+            $obligationFilesTypes = get_specialty_obligation_files_types($specialty);
+            $rules["obligations.$specialty"] = ["sometimes", "array", "size:".count($obligationFilesTypes)];
+            if ($request->has('validate')) {
+                $rules["obligations.$specialty.*"] = ["required", "numeric", "in:1"];
+                $rules["types.obligations.$specialty.*"] = ["required", "string", "in:application/pdf"];
+                $rules["sizes.obligations.$specialty.*"] = ["required", "string", "lte:3000"];
+            }
+            else {
+                $rules["obligations.$specialty.*"] = ["required", "file", "mimetypes:application/pdf", "max:3000"];
+            }
+        }
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'message' => "الرجاء رفع كافة ملفات التعهدات",
+                'errors'  => $validator->errors(),
+                'data'    => $request["obligations"],
+            ];
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
     public function upload_files($order, $specialties, $file, $type)
     {
 
@@ -326,6 +398,7 @@ class DesignerOrderController extends Controller
         $order->delivery_notes = 0;
         $order->save();
 
+
         return view('CP.designer.edit_files', [
             'order' => $order,
             'specialties' => $specialties,
@@ -338,7 +411,7 @@ class DesignerOrderController extends Controller
 
     public function view_file(Order $order)
     {
-
+        $designerNote = $order->lastDesignerNote()->latest()->first();
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $last_note = $order->lastDesignerNote()->where('status', 0)->first();
@@ -354,7 +427,8 @@ class DesignerOrderController extends Controller
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'last_note' => $tex,
-            'order_sharers' => $order_sharers,
+            'order_sharers'     => $order_sharers,
+            'designerNote'      => $designerNote,
         ]);
 
     }
@@ -438,6 +512,7 @@ class DesignerOrderController extends Controller
                 })->where('order_id', $order->id)->first();
                 if( $order_pdf_file )
                     $order_pdf_file->delete();
+                }
 
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_pdf_file'), 1);
             }
@@ -447,6 +522,7 @@ class DesignerOrderController extends Controller
                 })->where('order_id', $order->id)->where('type', 2)->first();
                 if( $order_pdf_file )
                     $order_pdf_file->delete();
+                }
 
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_cad_file',), 2);
             }
@@ -457,6 +533,7 @@ class DesignerOrderController extends Controller
                 })->where('order_id', $order->id)->where('type', 3)->delete();
                 if( $order_pdf_file )
                     $order_pdf_file->delete();
+                }
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
             }
         }
@@ -521,85 +598,15 @@ class DesignerOrderController extends Controller
         //                                  'status' => OrderSharer::PENDING,
         //                              ]);
 
-        $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
-        foreach( $getTasleemUsers as $taslemUser ) {
-            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #' . $order->identifier . ' من مكتب التصميم الهندسي', $order->designer_id));
+        $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
+        foreach($getTasleemUsers as $taslemUser){
+            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #'.$order->identifier.' من مكتب التصميم الهندسي', $order->designer_id));
         }
 
         return response()->json([
                                     'success' => true,
                                     'message' => 'تمت اضافة التعديل  بنجاح',
                                 ]);
-    }
-
-    private function validate_file($request)
-    {
-        if( !(request('souls_safety_file')) ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء إرفاق ملف سلامة الارواح ",
-            ];
-        }
-
-        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
-        $specialties = collect($request->except('_token', 'order_id'))->map(function($item, $key) use ($specialties_names) {
-            if( in_array($key, $specialties_names) ) {
-                return $item;
-            }
-
-            return null;
-        })->filter()->keys();
-        foreach( $specialties as $key => $_specialties ) {
-
-            if( !(request($_specialties . '_pdf_file') && request($_specialties . '_cad_file')) ) {
-                $name = Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
-
-                return [
-                    'success' => false,
-                    'message' => " الرجاء إدخال جميع ملفات $name",
-                ];
-            }
-
-        }
-
-        return [
-            'success' => true,
-        ];
-    }
-
-    private function validate_obligation_file(Request $request)
-    {
-        $specialties = Specialties::pluck('name_en')->toArray();
-        $rules = [
-            'obligations' => [ 'required', 'array', 'max:' . count($specialties), 'min:1' ],
-            'obligations.*' => [ Rule::in($specialties) ],
-        ];
-
-        foreach( $specialties as $specialty ) {
-            $obligationFilesTypes = get_specialty_obligation_files_types($specialty);
-            $rules[ "obligations.$specialty" ] = [ "sometimes", "array", "size:" . count($obligationFilesTypes) ];
-            if( $request->has('validate') ) {
-                $rules[ "obligations.$specialty.*" ] = [ "required", "numeric", "in:1" ];
-                $rules[ "types.obligations.$specialty.*" ] = [ "required", "string", "in:application/pdf" ];
-                $rules[ "sizes.obligations.$specialty.*" ] = [ "required", "string", "lte:3000" ];
-            } else {
-                $rules[ "obligations.$specialty.*" ] = [ "required", "file", "mimetypes:application/pdf", "max:3000" ];
-            }
-        }
-        $validator = Validator::make($request->all(), $rules);
-
-        if( $validator->fails() ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء رفع كافة ملفات التعهدات",
-                'errors' => $validator->errors(),
-                'data' => $request[ "obligations" ],
-            ];
-        }
-
-        return [
-            'success' => true,
-        ];
     }
 
     public function validate_update_file(Request $request, $order)

@@ -142,6 +142,7 @@ function get_designer_type_name($tpe)
         "fire" => "الحماية والوقاية من الحريق",
     ][$tpe];
 }
+
 // function ends_with($string, $substring) {
 //    $length = strlen($substring);
 //    if ( substr_compare($string, $substring, -$length) === 0 ) {
@@ -486,14 +487,14 @@ function sms($number, $body)
 
 function order_services($id)
 {
-   $order= Order::query()->find($id);
-   $order_services= OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get();
-  $services=  $order_services->map(function($service){
-      return [
-         'name'=> $service->service->name,
-          'quantity'=> $service->unit,
-          'quantity_label'=> $service->service->unit,
-      ];
+    $order = Order::query()->find($id);
+    $order_services = OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get();
+    $services = $order_services->map(function ($service) {
+        return [
+            'name' => $service->service->name,
+            'quantity' => $service->unit,
+            'quantity_label' => $service->service->unit,
+        ];
     });
     return $services;
 }

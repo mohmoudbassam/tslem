@@ -19,6 +19,42 @@
             background-position: center;
             background-repeat: no-repeat;
         }
+        .lds-ring {
+            display: inline-block;
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+        .lds-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            margin: 8px;
+            border: 4px solid #0a2373;
+            border-radius: 50%;
+            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: #0a2373 transparent transparent transparent;
+        }
+        .lds-ring div:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+        .lds-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+        .lds-ring div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+        @keyframes lds-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         /*.blockOverlay{*/
         /*    po*/
         /*}*/
@@ -274,6 +310,16 @@
             </div>
         </div>
     </div>
+
+
+    <div class="" id="loader-wrapper" style="width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(153,153,153,0.64); z-index: 10000000; overflow: hidden;">
+        <div class="" style=" width: 110px; height: 110px; background-color: #c0946f; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px;">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            <span style="font-size: 11px; font-weight: bold; margin-top: 10px;">
+                جاري إنشاء الطلب
+            </span>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -384,14 +430,17 @@
                 processData: false,
                 contentType: false,
                 beforeSend(){
-                    KTApp.block('#page_modal', {
-                        overlayColor: '#000000',
-                        type: 'v2',
-                        state: 'success',
-                        message: 'الرجاء الانتظار..........'
-                    });
+                    showLoader();
+                    // KTApp.block('#page_modal', {
+                    //     overlayColor: '#000000',
+                    //     type: 'v2',
+                    //     state: 'success',
+                    //     message: 'الرجاء الانتظار..........'
+                    // });
                 },
-                success:function(data) {
+                success:async function(data) {
+                    await sleep(3000);
+                    hideLoader();
                     if (data.success) {
                         $('#page_modal').modal('hide');
                         window.location='{{route('design_office.orders')}}'
@@ -405,14 +454,32 @@
                     }
                     KTApp.unblockPage();
                 },
-                error:function(data) {
+                error: async function(data) {
                     KTApp.unblock('#page_modal');
                     KTApp.unblockPage();
+                    await sleep(3000);
+                    hideLoader();
                 },
             });
             $('#page_modal').appendTo('body').modal('show');
             $(".blockUI").remove();
         });
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        function showLoader() {
+            $("#loader-wrapper").fadeIn("slow").css({
+                display: "flex"
+            });
+        }
+
+        function hideLoader() {
+            $("#loader-wrapper").fadeOut("slow").css({
+                display: "none"
+            });
+        }
+
         function file_input_cu(selector, options,type) {
             let defaults = {
                 theme: "fas",//gly

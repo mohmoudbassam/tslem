@@ -74,6 +74,7 @@ class License extends Model
             'nullable',
             'file',
         ],
+
     ];
 
     public static $FINAL_ATTACHMENT_REPORT_RULES = [
@@ -567,7 +568,7 @@ CODE;
         if( $type === static::EXECUTION_TYPE ) {
             $data = $this->getFinalAttachmentPathUrlAttribute();
         } else if( $raft = $this->service_provider->getRaftCompanyBox() ) {
-            $data = route('qr_download_files', [ 'raft_company_box_id' => $raft->id ]);
+            $data = route('qr_download_files', [ 'order'=>$this->order->id ]);
         }
 
         return $data ? QrCode::generate($data) : $data;

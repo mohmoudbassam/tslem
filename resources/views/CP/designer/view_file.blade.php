@@ -55,8 +55,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
                     </ol>
                 </div>
 
@@ -78,9 +78,13 @@
                         <div class="tab-pane active" id="details"
                              role="tabpanel">
                             <div class="row">
+                                @if($designerNote && $order->isDesignReviewStatus())
+                                    <div class="col-12">
+                                        <p class="text-danger details_p space-nowrap"><span class="bold">سبب الرفض:&nbsp;</span>{!! nl2br($designerNote->note) !!}</p>
+                                    </div>
+                                @endif
                                 <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
-
+                                    <p class="details_p space-nowrap"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
                                 </div>
 
                                 <div class="col-md-6 my-3">

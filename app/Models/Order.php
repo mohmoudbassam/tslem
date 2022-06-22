@@ -11,8 +11,6 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = [];
-
     public const PENDING = 1;
     public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
@@ -26,6 +24,7 @@ class Order extends Model
     public const FINAL_REPORT_ATTACHED = 11;
     public const FINAL_REPORT_APPROVED = 12;
     public const FINAL_LICENSE_GENERATED = 13;
+    protected $guarded = [];
 
     public function license()
     {
@@ -60,7 +59,7 @@ class Order extends Model
     public function service()
     {
         return $this->belongsToMany(Service::class, 'order_service', 'order_id', 'service_id')
-                    ->withPivot('service_id', 'order_id', 'unit');
+            ->withPivot('service_id', 'order_id', 'unit');
     }
 
     public function obligations()
@@ -118,14 +117,14 @@ class Order extends Model
         return $this->hasMany(DeliverRejectReson::class, 'order_id');
     }
 
-    public function orderSharer()
-    {
-        return $this->hasMany(OrderSharer::class, 'order_id');
-    }
-
     public function orderSharerRegected()
     {
         return $this->orderSharer()->where('status', OrderSharer::REJECT);
+    }
+
+    public function orderSharer()
+    {
+        return $this->hasMany(OrderSharer::class, 'order_id');
     }
 
     public function orderSharerAccepts()
@@ -133,10 +132,10 @@ class Order extends Model
         return $this->hasManyThrough(
             OrderSharerAccept::class,
             OrderSharer::class,
-            'order_id', // Foreign key on the environments table...
+            'order_id',        // Foreign key on the environments table...
             'order_sharer_id', // Foreign key on the deployments table...
-            'id', // Local key on the projects table...
-            'id' // Local key on the environments table...
+            'id',              // Local key on the projects table...
+            'id'               // Local key on the environments table...
         );
     }
 
@@ -164,26 +163,32 @@ class Order extends Model
 
     public function getOrderStatusAttribute()
     {
-        $orderStatus = [
-            '1' => 'معلق',
-            '2' => 'قيد انشاء الطلب',
-            '3' => 'مراجعة التصاميم',
-            '4' => 'معتمد التصاميم',
-            '8' => 'بإنتظار اعتماد الجهات الحكومية',
-            '5' => 'الطلب تحت الإجراء',
-            '6' => 'الطلب مكتمل',
-            '7' => 'بإنتظار اصدار الرخصة',
-            '9' => 'تمت الموافقة النهائية',
-            '10' => 'الطلب تحت التنفيذ',
-            '11' => 'تم ارفاق التقرير النهائي',
-            '12' => 'تم اعتماد التقارير النهائية',
-            '13' => 'تم اصدار رخصة التنفيذ',
-        ];
-        if( isset($orderStatus[ $this->status ]) ) {
-            return $orderStatus[ $this->status ];
-        } else {
+        $orderStatus = static::getOrderStatuses();
+        if (isset($orderStatus[$this->status])) {
+            return $orderStatus[$this->status];
+        }
+        else {
             return null;
         }
+    }
+
+    public static function getOrderStatuses(): array
+    {
+        return [
+            static::PENDING                     => 'معلق',
+            static::REQUEST_BEGIN_CREATED       => 'قيد إنشاء الطلب',
+            static::DESIGN_REVIEW               => 'مراجعة التصاميم',
+            static::DESIGN_APPROVED             => 'معتمد التصاميم',
+            static::DESIGN_AWAITING_GOV_APPROVE => 'بانتظار اعتماد الجهات الحكومية',
+            static::PROCESSING                  => 'الطلب تحت الإجراء',
+            static::COMPLETED                   => 'الطلب مكتمل',
+            static::PENDING_LICENSE_ISSUED      => 'بانتظار إصدار الرخصة',
+            static::ORDER_APPROVED              => 'تمت الموافقة النهائية',
+            static::PENDING_OPERATION           => 'الطلب تحت التنفيذ',
+            static::FINAL_REPORT_ATTACHED       => 'تم ارفاق التقرير النهائي',
+            static::FINAL_REPORT_APPROVED       => 'تم اعتماد التقارير النهائية',
+            static::FINAL_LICENSE_GENERATED     => 'تم اصدار رخصة التنفيذ',
+        ];
     }
 
     public function lastDesignerNote()

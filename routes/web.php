@@ -5,6 +5,7 @@ use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
 use App\Http\Controllers\CP\GeneralController;
+use App\Http\Controllers\CP\Kdana\KdanaController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
@@ -335,18 +336,10 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
         ->group(function () {
             Route::get('orders', [ConsultingOfficeController::class, 'orders']);
             Route::get('', [ConsultingOfficeController::class, 'list'])->name('.list');
-            Route::get('/{order}/reports', [ConsultingOfficeController::class, 'reports_view'])->name(
-                '.reports_view'
-            );
-            Route::get('/{order}/reports/list', [ConsultingOfficeController::class, 'reports_list'])->name(
-                '.reports_list'
-            );
-            Route::get('/reports/edit/{report}', [ConsultingOfficeController::class, 'edit_report_page'])->name(
-                '.report_edit_form'
-            );
-            Route::get('add-report', [ConsultingOfficeController::class, 'add_report_page'])->name(
-                '.report_add_form'
-            );
+            Route::get('/{order}/reports', [ConsultingOfficeController::class, 'reports_view'])->name('.reports_view');
+            Route::get('/{order}/reports/list', [ConsultingOfficeController::class, 'reports_list'])->name('.reports_list');
+            Route::get('/reports/edit/{report}', [ConsultingOfficeController::class, 'edit_report_page'])->name('.report_edit_form');
+            Route::get('{order}/add-report', [ConsultingOfficeController::class, 'add_report_page'])->name('.report_add_form');
             Route::get('accept_form', [ConsultingOfficeController::class, 'accept_form'])->name('.accept_form');
             Route::post('accept', [ConsultingOfficeController::class, 'accept'])->name('.accept');
             Route::post('reject', [ConsultingOfficeController::class, 'reject'])->name('.reject');
@@ -357,7 +350,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 '.delete_file'
             );
             Route::post('edit_report', [ConsultingOfficeController::class, 'edit_report'])->name('.edit_report');
-            Route::post('add_report', [ConsultingOfficeController::class, 'add_report'])->name('.add_report');
+            Route::post('{Order}/add_report', [ConsultingOfficeController::class, 'add_report'])->name('.add_report');
             Route::get(
                 'view_contractor_report/{order_id}',
                 [ConsultingOfficeController::class, 'view_contractor_report']
@@ -507,6 +500,11 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
 
 });
+Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () {
+    Route::get('', [KdanaController::class, 'index']);
+
+
+});
 //Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
@@ -526,6 +524,9 @@ Route::get('raft_company/get_camp_by_box/{box}', [RaftCompanyController::class, 
 Route::get('test', function () {
     dd(order_services(4));
 });
-Route::get('qr_download_files/{raft_company_box_id}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
+Route::get('qr_download_files/{order}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
 Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController::class, 'download_raft_company_file'])->name('download_raft_company_file');
+Route::get('showWest', [LoginController::class, 'showWest'])->name('showWest');
+Route::get('west_list', [LoginController::class, 'west_list'])->name('west_list');
+Route::get('ex', [LoginController::class, 'ex'])->name('ex');
 Route::get('download_file/{model}/{id}/{attribute}', [GeneralController::class, 'download_file'])->name('download_file');

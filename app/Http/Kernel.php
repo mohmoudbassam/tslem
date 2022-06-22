@@ -84,5 +84,6 @@ class Kernel extends HttpKernel
         'MaintenanceAuth' => \App\Http\Middleware\API\MaintenanceAuth::class,
         'RaftCompanyAuth' => \App\Http\Middleware\API\RaftCompanyAuth::class,
         'user_type' => \App\Http\Middleware\CP\CheckUserType::class,
+        'kdana' => \App\Http\Middleware\CP\Kdana::class,
     ];
 }
