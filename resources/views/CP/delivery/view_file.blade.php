@@ -17,6 +17,7 @@
         .file-view-wrapper:hover {
             box-shadow: var(--bs-box-shadow) !important;
         }
+
         .file-view-icon {
             height: 180px;
             background-size: 50%;
@@ -24,10 +25,11 @@
             background-repeat: no-repeat;
         }
 
-        .file-view-wrapper{
+        .file-view-wrapper {
             position: relative;
         }
-        .file-view-download{
+
+        .file-view-download {
             position: absolute;
             top: 9px;
             left: 11px;
@@ -56,9 +58,11 @@
         .bold {
             font-weight: bold;
         }
+
         .modal-backdrop.show {
             display: initial !important;
         }
+
         .modal-backdrop.fade {
             display: initial !important;
         }
@@ -147,6 +151,17 @@
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               data-bs-toggle="tab"
+                               href="#final_reports"
+                               onclick="location.hash=this.getAttribute('href')"
+                               role="tab"
+                            >
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block">التقارير النهائية</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -207,6 +222,7 @@
                                     @endforeach
                                 </ul>
                             </div>
+                                </div>
                         </div>
 
                         @if(auth()->user()->type == \App\Models\User::DELIVERY_TYPE && $order->status == \App\Models\Order::DESIGN_REVIEW && $order->delivery_notes == 0)
@@ -290,7 +306,9 @@
                                                                     <div class="py-3 d-block">
                                                                         <img src="{{ asset("assets/images/pdf.png") }}" class="img-fluid" style="height:70px" alt="">
                                                                     </div>
+                                                                            <h5 class="list-group-item-heading">
                                                                     <h5 class="list-group-item-heading ">
+                                                                                    {{$files->real_name}}
                                                                         {{$files->real_name}}
                                                                     </h5>
 
@@ -301,6 +319,7 @@
                                                                             <i class="fa fa-arrow-down"></i>
                                                                             تنزيل
                                                                         </a>
+                                                                                </a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -315,17 +334,21 @@
                                                                     <div class="py-3 d-block">
                                                                         <img src="{{ asset("assets/images/autocad.png") }}" class="img-fluid" style="height:70px" alt="">
                                                                     </div>
+                                                                            <h5 class="list-group-item-heading">
                                                                     <h5 class="list-group-item-heading ">
+                                                                                    {{$files->real_name}}
                                                                             {{$files->real_name}}
                                                                     </h5>
 
                                                                 </div>
                                                                 <div class="list-group-item">
+                                                                        <div class="list-group-item">
                                                                     <a class="btn btn-success"
                                                                             href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                             <i class="fa fa-arrow-down"></i>
                                                                             تنزيل
                                                                         </a>
+                                                                                </a>
                                                                 </div>
                                                             </div>
 
@@ -341,7 +364,9 @@
                                                                     <div class="py-3 d-block">
                                                                         <img src="{{ asset("assets/images/docx.png") }}" class="img-fluid" style="height:70px" alt="">
                                                                     </div>
+                                                                            <h5 class="list-group-item-heading">
                                                                     <h5 class="list-group-item-heading ">
+                                                                                    {{$files->real_name}}
                                                                             {{$files->real_name}}
                                                                     </h5>
 
@@ -352,6 +377,7 @@
                                                                             <i class="fa fa-arrow-down"></i>
                                                                             تنزيل
                                                                         </a>
+                                                                                </a>
                                                                 </div>
                                                             </div>
 
@@ -371,6 +397,7 @@
                 </div>
                 <div class="tab-pane" id="obligations" role="tabpanel">
 
+                            @foreach($order->obligations->groupBy("specialties_id") as $obligation)
                     @foreach($order->obligations->groupBy("specialties_id") as $obligation)
                             <div class="card">
                                 <div class="card-header">
@@ -394,6 +421,7 @@
                                     </div>
                                 </div>
                             </div>
+                                    </div>
                     @endforeach
                 </div>
                 <div class="tab-pane" id="fire_protections_files" role="tabpanel">
@@ -439,6 +467,7 @@
                                         ">
                                         <p class="mb-3 p-0 card-custom-title" style="font-size: 20px; font-weight: bolder;">{{ $order_sharer->user->company_name }}</p>
                                         <p class="text-muted card-custom-text">( {{$order_sharer->order_sharer_status}} )</p>
+                                            </div>
                                     </div>
                                     @if($order_sharer->status == 2)
                                         <div class="card-custom-body p-3 border-top">
@@ -447,12 +476,14 @@
                                     @endif
                                 </div>
                             </div>
+                                        </div>
                         @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
+            </div>
 
     <div class="modal fade bd-example-modal-lg" id="page_modal" data-backdrop="static" data-keyboard="false"
          role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -478,6 +509,20 @@
 
 @section('scripts')
     <script>
+        $(() => {
+            if (location.hash) {
+                let activeTab = document.querySelector("[href='" + location.hash + "']")
+                if (activeTab && activeTab.classList.contains('nav-link')) {
+                    document.querySelectorAll('.nav-link.active, .tab-pane.active')
+                        .forEach(x => x.classList.remove('active'))
+                    activeTab.classList.add('active')
+                    if ((activeTab = document.querySelector(location.hash))) {
+                        activeTab.classList.add('active')
+                    }
+                }
+            }
+        })
+
         /**
          * Show create license modal
          * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form

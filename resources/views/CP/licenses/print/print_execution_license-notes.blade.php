@@ -1,12 +1,11 @@
-<div align="right">
-    <h4>ملاحظات</h4>
-</div>
-<table style='width: 100%;' cellspacing="0" cellpadding="0">
+
+<table style='width: 100%;padding-top: 30px;' cellspacing="0" cellpadding="0">
     <tbody align="right">
     <tr>
         <td>
             <p>
-                يلزم تنفيذ الأعمال بموجب الادلة الخاصة بالأعمال الاضافية والمتابعة من قبل الاستشاري المشرف بموجب ماتم اعتماده من قبل مركز تسليم ، وان تكون مطابقة للمخططات المعتمدة والمرفقة على QR
+تمت الأعمال بموجب رخصة الاضافات رقم (.......................)، وتاريخ
+&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;14 هـ، والتقرير النهائي للمكتب الاستشاري المشرف على التنفيذ .....................
             </p>
         </td>
     </tr>
@@ -16,7 +15,7 @@
                 <tbody align="center">
                 <tr>
                     <td rowspan="2" width="30%" style="margin: 0" class="qr-image">
-                        {!! $model->getQRElement(\App\Models\License::ADDON_TYPE) !!}
+                        {!! $model->getQRElement(\App\Models\License::EXECUTION_TYPE) !!}
                     </td>
                     <td width="30%">تاريخ الطباعة</td>
                     <td rowspan="2" width="30%" ><img class="my-2 stamp-image img" src="{{public_path('images/licenses/Stamp.png')}}" width="150" alt=""></td>

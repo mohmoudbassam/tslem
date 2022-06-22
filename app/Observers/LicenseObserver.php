@@ -15,7 +15,7 @@ class LicenseObserver
      */
     public function saving(License $license)
     {
-        if( $license->exists && $license->wasChanged('map_path') ) {
+        if( $license->exists && $license->wasChanged('map_path') && $license->getOriginal('map_path') ) {
             $license->deleteMapPathFile();
         }
     }
