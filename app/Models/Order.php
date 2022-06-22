@@ -394,4 +394,9 @@ class Order extends Model
 //    public function raft_company(){
 //        return $this->service_provider()->belongsTo(User::class,'parent_id','id');
 //    }
+
+    public function isDesignReviewStatus(): bool
+    {
+        return $this->status == static::DESIGN_REVIEW;
+    }
 }
