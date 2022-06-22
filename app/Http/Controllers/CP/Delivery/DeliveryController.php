@@ -441,7 +441,7 @@ class DeliveryController extends Controller
         $orders = $this->list($request, true);
         return Excel::download(new OrdersExport($orders), 'orders.xlsx');
     }
-
+  
     public function list2(Request $request, $flag = false)
     {
         $order = $this->gitOrdersQuery();
