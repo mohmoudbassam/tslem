@@ -17,13 +17,17 @@ trait THasPathAttribute
 
     public static function disk($disk = null)
     {
-        return Storage::disk(static::getDiskName($disk));
+        return Storage::disk($disk??static::getDiskName($disk));
     }
 
     public function addPathAttribute($attribute, $file, bool $save = false)
     {
         if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             $this->$attribute = $full_path;
+
+            if( $this->isFillable("{$attribute}_label") ) {
+                $this->{"{$attribute}_label"} = $file->getClientOriginalName();
+            }
 
             if( $save ) {
                 $this->save();
@@ -41,6 +45,11 @@ trait THasPathAttribute
         }
 
         $this->$attribute = null;
+
+        if( $this->isFillable("{$attribute}_label") ) {
+            $this->{"{$attribute}_label"} = null;
+        }
+
         if( $save ) {
             $this->save();
 
@@ -68,5 +77,10 @@ trait THasPathAttribute
         } else {
             $this->attributes[ $attribute ] = $value;
         }
+    }
+
+    public function getPathLabelAttribute($attribute)
+    {
+        return $this->{str_finish($attribute, "_label")};
     }
 }

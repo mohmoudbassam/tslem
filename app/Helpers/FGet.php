@@ -29,3 +29,28 @@ if( !function_exists('hijriDate') ) {
         return Calendar::make($format ?? 'Y/m/d')->hijriDate($timestamp ?? now());
     }
 }
+
+if( !function_exists('downloadFileFrom') ) {
+    /**
+     * @param $model
+     * @param $id
+     * @param $attribute
+     *
+     * @return string
+     * @throws \Throwable
+     */
+    function downloadFileFrom($model, $id, $attribute = null)
+    {
+        if( is_null($attribute) ) {
+            $class = is_object($model) ? get_class($model) : $model;
+            throw_unless(isModel($model), "The given object [{$class}] is not Model!");
+
+            $attribute = $id;
+            $id = $model->id;
+        }
+
+        $model = isModel($model) ? str_after(get_class($model), 'App\\Models\\') : $model;
+
+        return route('download_file', compact('model', 'id', 'attribute'));
+    }
+}

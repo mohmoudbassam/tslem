@@ -24,21 +24,27 @@ class FinalReport extends Model
     protected $fillable = [
         'order_id',
         'contractor_final_report_path',
+        'contractor_final_report_path_label',
         'contractor_final_report_note',
         'contractor_final_report_approved',
         'consulting_office_final_report_path',
+        'consulting_office_final_report_path_label',
         'consulting_office_final_report_note',
         'consulting_office_final_report_approved',
+        'meta',
     ];
 
     protected $casts = [
         'order_id' => 'integer',
         'contractor_final_report_path' => 'string',
+        'contractor_final_report_path_label' => 'string',
         'contractor_final_report_note' => 'string',
         'contractor_final_report_approved' => 'boolean',
         'consulting_office_final_report_path' => 'string',
+        'consulting_office_final_report_path_label' => 'string',
         'consulting_office_final_report_note' => 'string',
         'consulting_office_final_report_approved' => 'boolean',
+        'meta' => 'array',
     ];
 
     public function order()
@@ -126,11 +132,11 @@ class FinalReport extends Model
 
     public function hasContractorReport(): bool
     {
-        return (bool)$this->contractor_final_report_path;
+        return (bool) $this->contractor_final_report_path;
     }
 
     public function hasConsultingOfficeReport(): bool
     {
-        return (bool)$this->consulting_office_final_report_path;
+        return (bool) $this->consulting_office_final_report_path;
     }
 }

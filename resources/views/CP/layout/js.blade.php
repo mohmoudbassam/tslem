@@ -207,6 +207,7 @@
                 }
             },
             error: function (data) {
+                console.error(data)
                 KTApp.unblockPage()
             }
         })

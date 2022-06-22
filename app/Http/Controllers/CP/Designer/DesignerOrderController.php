@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\DesignerRejected;
 use App\Models\Order;
 use App\Models\OrderService;
-use App\Models\OrderSpecialtyObligation;
-use Illuminate\Support\Facades\Validator;
 use App\Models\OrderSharer;
+use App\Models\OrderSpecialtyObligation;
 use App\Models\OrderSpecilatiesFiles;
 use App\Models\Service;
 use App\Models\ServiceFileType;
@@ -16,10 +15,11 @@ use App\Models\Specialties;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
-use Illuminate\Http\Response;
 
 class DesignerOrderController extends Controller
 {
@@ -53,6 +53,11 @@ class DesignerOrderController extends Controller
                       ->with('designer');
 
         return DataTables::of($order)
+                         ->addColumn('identifier', function(Order $order) {
+                             return ($order->final_report()->value('consulting_office_final_report_note') ?
+                                     '<i class="fa fa-star-of-life mx-2 text-danger" style="font-size: 8px !important;"></i>' : '') .
+                                 $order->identifier;
+                         })
                          ->addColumn('actions', function(Order $order) {
                              $add_file_design = '';
                              $edit_files = '';
@@ -63,7 +68,7 @@ class DesignerOrderController extends Controller
                              }
 
                              if( $order->lastDesignerNote()->where('status', 0)->exists()
-                             || ($order->orderSharerRegected()->exists()  && $order->delivery_notes == 1)
+                                 || ($order->orderSharerRegected()->exists() && $order->delivery_notes == 1)
                              ) {
                                  $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>تعديل الملفات </a>';
                              }
@@ -89,7 +94,7 @@ class DesignerOrderController extends Controller
                          ->addColumn('order_status', function($order) {
                              return $order->order_status;
                          })
-                         ->rawColumns([ 'actions' ])
+                         ->rawColumns([ 'actions', 'identifier' ])
                          ->make(true);
     }
 
@@ -99,8 +104,8 @@ class DesignerOrderController extends Controller
         if( $order->status == Order::PENDING ) {
             $order->status = Order::REQUEST_BEGIN_CREATED;
             $order->save();
-            save_logs($order, $order->designer_id, 'تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم ');
-            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
+            save_logs($order, $order->designer_id, 'تهانينا, تم قبول طلبك #' . $order->identifier . ' من مكتب التصميم ');
+            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #' . $order->identifier . ' من مكتب التصميم', $order->designer_id));
 
             return redirect()->route('design_office.orders');
         }
@@ -122,8 +127,8 @@ class DesignerOrderController extends Controller
 
         if( $order->status == Order::PENDING ) {
             $order->status = Order::PENDING;
-            save_logs($order, $order->designer_id, 'تم رفض الطلب #'.$order->identifier.' من مكتب التصميم بسبب'.$request->input("rejection_note"));
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #'.$order->identifier.' بسبب '.$request->input("rejection_note"), $order->designer_id));
+            save_logs($order, $order->designer_id, 'تم رفض الطلب #' . $order->identifier . ' من مكتب التصميم بسبب' . $request->input("rejection_note"));
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #' . $order->identifier . ' بسبب ' . $request->input("rejection_note"), $order->designer_id));
             $order->designer_id = null;
             DesignerRejected::query()->create([
                                                   'order_id' => $order->id,
@@ -140,6 +145,7 @@ class DesignerOrderController extends Controller
     {
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
+
         //dd($service);
         return view('CP.designer.add_files', [ 'order' => $order, 'specialties' => $specialties, 'services' => $service ]);
     }
@@ -149,13 +155,15 @@ class DesignerOrderController extends Controller
         if( $request->has('validate') ) {
             $file_validation = $this->validate_file($request);
             if( !$file_validation[ 'success' ] ) {
-                $file_validation['_token'] = csrf_token();
+                $file_validation[ '_token' ] = csrf_token();
+
                 return response()->json($file_validation);
             }
 
             $obligation_file_validation = $this->validate_obligation_file($request);
             if( !$obligation_file_validation[ 'success' ] ) {
-                $obligation_file_validation['_token'] = csrf_token();
+                $obligation_file_validation[ '_token' ] = csrf_token();
+
                 return response()->json($obligation_file_validation);
             }
 
@@ -318,8 +326,6 @@ class DesignerOrderController extends Controller
         $order->delivery_notes = 0;
         $order->save();
 
-
-
         return view('CP.designer.edit_files', [
             'order' => $order,
             'specialties' => $specialties,
@@ -348,7 +354,7 @@ class DesignerOrderController extends Controller
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'last_note' => $tex,
-            'order_sharers' => $order_sharers
+            'order_sharers' => $order_sharers,
         ]);
 
     }
@@ -515,11 +521,10 @@ class DesignerOrderController extends Controller
         //                                  'status' => OrderSharer::PENDING,
         //                              ]);
 
-        $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
-        foreach($getTasleemUsers as $taslemUser){
-            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #'.$order->identifier.' من مكتب التصميم الهندسي', $order->designer_id));
+        $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
+        foreach( $getTasleemUsers as $taslemUser ) {
+            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #' . $order->identifier . ' من مكتب التصميم الهندسي', $order->designer_id));
         }
-
 
         return response()->json([
                                     'success' => true,

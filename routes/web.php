@@ -4,6 +4,7 @@ use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
 use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
+use App\Http\Controllers\CP\GeneralController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
@@ -69,21 +70,27 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('licenses')
         ->name('licenses')
+        ->middleware(['user_type:admin'])
+        ->group(function () {
+            Route::get('add', [LicenseController::class, 'add'])->name('.add');
+            Route::post('store', [LicenseController::class, 'store'])->name('.store');
+            Route::get('edit/{license}', [LicenseController::class, 'edit'])->name('.edit');
+            Route::post('update/{license}', [LicenseController::class, 'update'])->name('.update');
+            Route::post('delete/{license}', [LicenseController::class, 'delete'])->name('.delete');
+            Route::post('delete_map_path/{license}', [LicenseController::class, 'delete_map_path'])->name('.delete_map_path');
+        });
+
+    Route::prefix('licenses')
+        ->name('licenses')
         ->middleware(['user_type:admin,Delivery'])
         ->group(function () {
             Route::get('', [LicenseController::class, 'index']);
-            Route::get('add', [LicenseController::class, 'add'])->name('.add');
-            Route::get('edit/{license}', [LicenseController::class, 'edit'])->name('.edit');
-            Route::get('print/{license}', [LicenseController::class, 'show_print'])->name('.show_print');
-            Route::post('print/{license}', [LicenseController::class, 'print'])->name('.print');
             Route::get('form', [LicenseController::class, 'form'])->name('.form');
             Route::get('list', [LicenseController::class, 'list'])->name('.list');
-            Route::post('update/{license}', [LicenseController::class, 'update'])->name('.update');
-            Route::post('delete/{license}', [LicenseController::class, 'delete'])->name('.delete');
-            Route::post('store', [LicenseController::class, 'store'])->name('.store');
+            Route::get('print/{license}', [LicenseController::class, 'show_print'])->name('.show_print');
+            Route::post('print/{license}', [LicenseController::class, 'print'])->name('.print');
             Route::get('order/{order}/form', [LicenseController::class, 'order_license_form'])->name('.order_license_form');
             Route::post('order/{order}/create', [LicenseController::class, 'order_license_create'])->name('.order_license_create');
-            Route::post('delete_map_path/{license}', [LicenseController::class, 'delete_map_path'])->name('.delete_map_path');
         });
 
     Route::prefix('licenses')
@@ -521,3 +528,4 @@ Route::get('test', function () {
 });
 Route::get('qr_download_files/{raft_company_box_id}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
 Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController::class, 'download_raft_company_file'])->name('download_raft_company_file');
+Route::get('download_file/{model}/{id}/{attribute}', [GeneralController::class, 'download_file'])->name('download_file');

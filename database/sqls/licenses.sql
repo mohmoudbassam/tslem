@@ -24,3 +24,6 @@ ALTER TABLE `licenses` DROP `raft_company_id`;
 ALTER TABLE `licenses` ADD `type` TINYINT(1) NOT NULL DEFAULT '1' AFTER `map_path`;
 ALTER TABLE `licenses` ADD `final_attachment_path` VARCHAR(255) NULL DEFAULT NULL AFTER `type`;
 
+
+
+ALTER TABLE `licenses` ADD `map_path_label` VARCHAR(255) NULL DEFAULT NULL AFTER `map_path`;

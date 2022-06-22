@@ -10,7 +10,7 @@
     </tr>
 
     <tr>
-        <td width="55%">خريطة Gis</td>
+        <td width="55%">خريطة GIS</td>
         <td width="30%">{{$model->service_provider()->value('users.id') ?? ""}}</td>
         <td width="15%">رقم المركز</td>
     </tr>

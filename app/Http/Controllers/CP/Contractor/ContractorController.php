@@ -62,6 +62,11 @@ class ContractorController extends Controller
             ->whereContractor(auth()->user()->id);
 
         return DataTables::of($order)
+             ->addColumn('identifier', function(Order $order) {
+                 return ($order->final_report()->value('contractor_final_report_note') ?
+                         '<i class="fa fa-star-of-life mx-2 text-danger" style="font-size: 8px !important;"></i>' : '') .
+                     $order->identifier;
+             })
             ->addColumn('actions', function ($order) {
                 $add_report = '';
                 $show_reports = '';
@@ -108,7 +113,7 @@ html;
                 return $order->created_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
                 return $order->order_status;
-            })->rawColumns(['actions'])
+            })->rawColumns(['actions', 'identifier'])
             ->make(true);
     }
 

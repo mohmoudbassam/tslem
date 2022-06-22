@@ -113,6 +113,7 @@
                             <a class="nav-link"
                                data-bs-toggle="tab"
                                href="#final_reports"
+                               onclick="location.hash=this.getAttribute('href')"
                                role="tab"
                             >
                                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
@@ -129,7 +130,7 @@
                                     <div class="col-md-12 my-3">
                                         <a id="license-type-2-button" class="btn btn-primary license-type-2-button show-modal" href="{{route('licenses.attach_final_report_form', ['order'=>$order->id])}}">
                                             <i class="fa fa-arrow-down pe-2"></i>
-                                            اصدار رخصة التنفيذ
+                                            عرض رخصة التنفيذ
                                         </a>
                                     </div>
                                 @endif

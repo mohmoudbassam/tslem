@@ -35,9 +35,11 @@
         .bold {
             font-weight: bold;
         }
+
         .modal-backdrop.show {
             display: initial !important;
         }
+
         .modal-backdrop.fade {
             display: initial !important;
         }
@@ -85,10 +87,10 @@
                                     <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
                                 </div>
                                 @if($order->service_provider->raft_company_name)
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span
-                                            class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</p>
-                                </div>
+                                    <div class="col-md-6 my-3">
+                                        <p class="details_p"><span
+                                                class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</p>
+                                    </div>
                                 @endif
 
                                 <div class="col-md-6 my-3">
@@ -110,20 +112,27 @@
                                 <div class="col-12">
                                     @if($order->status == \App\Models\Order::PENDING)
 
-                                            <a class="btn btn-primary"
-                                               href="{{route('design_office.accept',['order'=>$order->id])}}">قبول
-                                                الطلب</a>
-                                            <a class="btn btn-danger" id="reject-order-btn" data-order="{{ $order->id }}" href="#">
-                                                رفض الطلب
-                                            </a>
+                                        <a class="btn btn-primary"
+                                           href="{{route('design_office.accept',['order'=>$order->id])}}">قبول
+                                            الطلب</a>
+                                        <a class="btn btn-danger" id="reject-order-btn" data-order="{{ $order->id }}" href="#">
+                                            رفض الطلب
+                                        </a>
                                     @endif
                                 </div>
                             </div>
+                            @if(!$order->final_report()->value('consulting_office_final_report_approved'))
                             <div class="row">
-                                <div class="col-md-12 my-3">
-                                    @include('CP.order.final_report_button', ['order' => $order])
+                                <div class="col-md-12 my-3 text-end">
+                                    <div class="bold border col-md-12 my-3 p-2 rounded-start {{$order->final_report()->value('consulting_office_final_report_note') ? "bg-soft-danger border-danger text-danger " : ""}}">
+                                        <span class="float-start">
+                                            {{$order->final_report()->value('consulting_office_final_report_note', '-')}}
+                                        </span>
+                                        @include('CP.order.final_report_button', ['order' => $order])
+                                    </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="row">
                                 @if($order_specialties)
                                     @foreach($order_specialties as $_specialties)
@@ -336,32 +345,32 @@
 
     @if($order->status == \App\Models\Order::PENDING)
         <div class="modal fade" id="rejection-note-modal" tabindex="-1" role="dialog" aria-labelledby="rejection-note" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rejection-note-modal-title">ملاحظات رفض الطلب</h5>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="{{ route("design_office.reject", [$order->id]) }}" id="rejection-order-form">
-                        @csrf
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="col-form-label required-field" for="rejection-note">ملاحظات رفض الطلب</label>
-                                    <textarea class="form-control mb-1" id="rejection-note" name="rejection_note" placeholder="ملاحظات رفض الطلب" rows="10" style="resize: none;" required></textarea>
-                                    <span class="text-danger" id="rejection-note-error"></span>
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rejection-note-modal-title">ملاحظات رفض الطلب</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route("design_office.reject", [$order->id]) }}" id="rejection-order-form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label class="col-form-label required-field" for="rejection-note">ملاحظات رفض الطلب</label>
+                                        <textarea class="form-control mb-1" id="rejection-note" name="rejection_note" placeholder="ملاحظات رفض الطلب" rows="10" style="resize: none;" required></textarea>
+                                        <span class="text-danger" id="rejection-note-error"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="submit" id="submit-rejection-note" class="btn btn-danger" form="rejection-order-form" data-dismiss="modal">رفض</button>
-                    <button type="button" id="close-rejection-note-modal" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="submit" id="submit-rejection-note" class="btn btn-danger" form="rejection-order-form" data-dismiss="modal">رفض</button>
+                        <button type="button" id="close-rejection-note-modal" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 @endsection
 

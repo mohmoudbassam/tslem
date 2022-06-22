@@ -72,6 +72,7 @@
                 }
             }
             KTApp.unblock('#final-report-modal');
+            setTimeout(() => location.reload(), 800)
         });
     });
 

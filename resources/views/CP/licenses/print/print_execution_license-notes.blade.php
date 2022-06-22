@@ -15,16 +15,14 @@
                 <tbody align="center">
                 <tr>
                     <td rowspan="2" width="30%" style="margin: 0" class="qr-image">
-                        {!! $model->getQRElement() !!}
+                        {!! $model->getQRElement(\App\Models\License::EXECUTION_TYPE) !!}
                     </td>
                     <td width="30%">تاريخ الطباعة</td>
                     <td rowspan="2" width="30%" ><img class="my-2 stamp-image img" src="{{public_path('images/licenses/Stamp.png')}}" width="150" alt=""></td>
-                    <td width="30%">اعتماد مدير المركز</td>
                 </tr>
 
                 <tr>
                     <td>{{hijriDateTime()}}</td>
-                    <td style="border-bottom: 0 solid" width="30%"><img class="my-2 segnuture-image img" src="{{public_path('images/licenses/segnuture.jpeg')}}"  width="150" alt=""> </td>
                 </tr>
                 </tbody>
             </table>

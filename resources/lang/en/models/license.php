@@ -15,6 +15,7 @@ return [
         'person_count' => 'Person Count',
         'camp_space' => 'Camp Space',
         'map_path' => 'Location Map',
+        'map_path_label' => 'Location Map File',
         'final_attachment_path' => 'Final Report',
         'final_report_path' => 'Final Report',
         'final_report_note' => 'Reason',
@@ -22,6 +23,7 @@ return [
     "raft_company_name" => ":name",
     "no_parent_name" => "المجلس التنسيقي لحجاج الداخل",
     "download_for_service_provider" => "عرض رخصة الإضافات",
+    "download_execution_license_for_service_provider" => "عرض رخصة التنفيذ",
     "types" => [
         1 => "Add-on license",
         2 => "Execution license",

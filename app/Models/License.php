@@ -123,6 +123,7 @@ class License extends Model
         'person_count',
         'camp_space',
         'map_path',
+        'map_path_label',
         'final_attachment_path',
         'type',
         // 'created_at',
@@ -144,6 +145,7 @@ class License extends Model
         'type' => 'integer',
         'camp_space' => 'double',
         'map_path' => 'string',
+        'map_path_label' => 'string',
         'final_attachment_path' => 'string',
     ];
 
@@ -338,6 +340,7 @@ CODE;
     {
         if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             $this->map_path = $full_path;
+            $this->map_path_label = $file->getFilename();
 
             if( $save ) {
                 $this->save();
@@ -355,6 +358,7 @@ CODE;
         }
 
         $this->map_path = null;
+        $this->map_path_label = null;
         if( $save ) {
             $this->save();
 
@@ -366,9 +370,9 @@ CODE;
 
     // endregion: map_path
 
-    public static function disk()
+    public static function disk($disk = null)
     {
-        return Storage::disk(static::$DISK);
+        return Storage::disk($disk??static::$DISK);
     }
 
     // region: final_attachment_path
@@ -503,7 +507,7 @@ CODE;
 
     public function getIdLabelAttribute()
     {
-        return $this->order_id;
+        return str_pad($this->order_id,4,"0",STR_PAD_LEFT);
     }
 
     public function getMapPathUrlAttribute()
@@ -556,10 +560,11 @@ CODE;
     /**
      * @return void|\Illuminate\Support\HtmlString|string
      */
-    public function getQRElement()
+    public function getQRElement($type = null)
     {
+        $type ??= $this->type;
         $data = false;
-        if( $this->type === static::EXECUTION_TYPE ) {
+        if( $type === static::EXECUTION_TYPE ) {
             $data = $this->getFinalAttachmentPathUrlAttribute();
         } else if( $raft = $this->service_provider->getRaftCompanyBox() ) {
             $data = route('qr_download_files', [ 'raft_company_box_id' => $raft->id ]);

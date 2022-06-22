@@ -114,24 +114,6 @@ class LicenseController extends Controller
         ]);
     }
 
-    /**
-     * @post
-     *
-     * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(StoreLicenseRequest $request)
-    {
-        $data = $request->validated();
-        $data[ 'order_id' ] ??= 0;
-        $license = License::create($data);
-
-        return redirect()
-            ->route('licenses')
-            ->with([ 'success' => __('general.success') ]);
-    }
-
     public function edit(Request $request, License $license)
     {
         return view('CP.licenses.form', [
@@ -380,6 +362,12 @@ HTML;
                                  $print_license = "";
                              }
 
+                             $crud_options_tpl = <<<HTML
+        <a class="dropdown-item" href="#" onclick="delete_model({$license->id}, '{$delete_route}')" >{$delete_title}</a>
+        <a class="dropdown-item" href="{$update_route}">{$update_title}</a>
+HTML;
+                             $crud_options = currentUser()->isAdmin() ? $crud_options_tpl : "";
+
                              return <<<HTML
 <div class="btn-group me-1 mt-2">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -387,9 +375,8 @@ HTML;
     </button>
 
     <div class="dropdown-menu" style="">
-        <a class="dropdown-item" href="#" onclick="delete_model({$license->id}, '{$delete_route}')" >{$delete_title}</a>
-        <a class="dropdown-item" href="{$update_route}">{$update_title}</a>
-        {$print_license}
+{$crud_options}
+{$print_license}
     </div>
 </div>
 HTML;
@@ -426,6 +413,24 @@ HTML;
                                     'message' => __('general.success'),
                                     'success' => true,
                                 ]);
+    }
+
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreLicenseRequest $request)
+    {
+        $data = $request->validated();
+        $data[ 'order_id' ] ??= 0;
+        $license = License::create($data);
+
+        return redirect()
+            ->route('licenses')
+            ->with([ 'success' => __('general.success') ]);
     }
 
     /**
@@ -476,7 +481,7 @@ HTML;
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function order_license_final_report(StoreLicenseFinalReportRequest $request, Order $order)
+    public function order_license_final_report(Request $request, Order $order)
     {
         if( !$order->hasLicense() ) {
             return response()->json([
@@ -485,7 +490,7 @@ HTML;
                                     ]);
         }
 
-        $data = $request->validated();
+        $data = $request->validate(License::$FINAL_REPORT_RULES);
         $user_type = currentUser()->isContractor() ? 'contractor' : (
         currentUser()->isConsultngOffice() ? 'consulting_office' : ""
         );
@@ -500,6 +505,8 @@ HTML;
 
         $path_column = "{$user_type}_final_report_path";
         $data[ $path_column ] = array_pull($data, 'final_report_path');
+        $data[ "{$user_type}_final_report_note" ] = "";
+        $data[ "{$user_type}_final_report_approved" ] = false;
 
         $order->getFinalReportOrCreate()
               ->fill($data)

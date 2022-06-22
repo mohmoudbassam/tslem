@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="row">
                 @foreach(($final_reports ?? []) as $final_report)
-                <div class="col-md-3 col-sm-12">
+                <div class="col-md-6 col-sm-12">
                     @include('CP.order.final_report_card', $final_report ?? [])
                 </div>
                 @endforeach

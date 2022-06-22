@@ -346,6 +346,38 @@ class Order extends Model
         return in_array($this->status, [ static::PENDING_OPERATION, static::FINAL_REPORT_ATTACHED ]);
     }
 
+    public function userCanAttachFinalReport($user = null)
+    {
+        $user ??= currentUser();
+        $user_type = $user->isContractor() ? 'contractor' : (
+        $user->isConsultngOffice() ? 'consulting_office' : ""
+        );
+        if( !$user_type ) {
+            if( $user->id === $this->contractor_id ) {
+                $user_type = 'contractor';
+            } elseif( $user->id === $this->consulting_office_id ) {
+                $user_type = 'consulting_office';
+            }
+        }
+
+        if( !$user_type ) {
+            return false;
+        }
+
+        $path_column = "{$user_type}_final_report_path";
+
+        $final_report = optional($this->final_report());
+
+        return (
+                blank($final_report->value($path_column)) &&
+                !$final_report->value("{$user_type}_final_report_approved")
+            )
+            ||
+            (
+                filled($final_report->value("{$user_type}_final_report_note"))
+            );
+    }
+
     public function shouldUserPostFinalReports()
     {
         return (

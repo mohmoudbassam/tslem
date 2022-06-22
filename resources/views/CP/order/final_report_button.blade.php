@@ -1,3 +1,4 @@
+@if($order->userCanAttachFinalReport())
 <div class="btn-group btn-group-justified">
     @if(in_array($order->status,[$order::PENDING_OPERATION, $order::FINAL_REPORT_ATTACHED]) && ($pass ?? true))
         <a id="final-report-button" class="btn btn-primary final-report-button" href="#">
@@ -6,6 +7,7 @@
         </a>
     @endif
 </div>
+@endif
 
 <div class="modal fade" id="final-report-modal" tabindex="-1" role="dialog" aria-labelledby="final-report-modal-title" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -32,7 +34,9 @@
 
             $('.final-report-button').click(function (e) {
                 e.preventDefault()
-                showModal('{{route('licenses.final_report_form', ['order'=>$order->id])}}',null,'#final-report-modal')
+                showModal('{{route('licenses.final_report_form', ['order'=>$order->id])}}', null, '#final-report-modal')
+
+                return false;
             })
         })
     </script>

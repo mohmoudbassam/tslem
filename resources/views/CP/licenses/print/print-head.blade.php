@@ -5,7 +5,7 @@
             <table class="no-border" width="100%">
                 <tbody align="center">
                 <tr>
-                    <td>{{$model->id}}1</td>
+                    <td>{{$model->id_label}}</td>
                     <td>رقم الرخصة:</td>
                 </tr>
                 <tr>

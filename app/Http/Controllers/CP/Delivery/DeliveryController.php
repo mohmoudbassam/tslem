@@ -86,7 +86,7 @@ class DeliveryController extends Controller
                              if( $order->status == Order::ORDER_APPROVED ) {
                                  $element = '<div class="btn-group me-1 mt-2">
                                             <a class="btn btn-success btn-sm  type="button"  href="' . route('delivery.view_file', [ 'order' => $order->id ]) . '">
-                                                إصدار الرخصة
+                                                عرض رخصة الإضافات
                                             </a>
                                         </div>';
                              } else {
@@ -383,18 +383,19 @@ class DeliveryController extends Controller
         $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
 
         /** @var FinalReport $final_report */
-        $final_report = optional($order->final_report);
+        $final_report = $order->final_report ?? optional();
 
         $final_reports = $order->hasFinalReport() ? [
             $final_report->hasContractorReport() ? [
                 'title' => "المقاول",
-                'url' => $final_report->getContractorFinalReportPathUrlAttribute(),
+                'url' => downloadFileFrom($final_report, 'contractor_final_report_path'),
+                'label' => $final_report->contractor_final_report_path_label,
                 'buttons' => [
                     [
                         'type' => 'success',
                         'url' => route('licenses.final_report_contractor_approve', [ 'order' => $order->id ]),
                         'text' => 'اعتماد',
-                        'status' => $order->shouldPostFinalReports() && (!$final_report->contractor_final_report_approved || $final_report->contractor_final_report_note),
+                        'status' => $order->shouldPostFinalReports() && ( !$final_report->contractor_final_report_approved || $final_report->contractor_final_report_note),
                     ],
                     [
                         'type' => 'danger',
@@ -404,16 +405,22 @@ class DeliveryController extends Controller
                         'status' => $order->shouldPostFinalReports() && ($final_report->contractor_final_report_approved || !$final_report->contractor_final_report_note),
                     ],
                 ],
+                'info' => [
+                    'note' => ($note = data_get($final_report->meta, 'contractor_final_report_note')) ?
+                        __('models/final_report.last_note', compact('note')) :
+                        null,
+                ],
             ] : null,
             $final_report->hasConsultingOfficeReport() ? [
                 'title' => "مكتب استشاري",
-                'url' => $final_report->getConsultingOfficeFinalReportPathUrlAttribute(),
+                'url' => downloadFileFrom($final_report, 'consulting_office_final_report_path'),
+                'label' => $final_report->consulting_office_final_report_path_label,
                 'buttons' => [
                     [
                         'type' => 'success',
                         'url' => route('licenses.final_report_consulting_office_approve', [ 'order' => $order->id ]),
                         'text' => 'اعتماد',
-                        'status' => $order->shouldPostFinalReports() && (!$final_report->consulting_office_final_report_approved || $final_report->consulting_office_final_report_note),
+                        'status' => $order->shouldPostFinalReports() && ( !$final_report->consulting_office_final_report_approved || $final_report->consulting_office_final_report_note),
                     ],
                     [
                         'type' => 'danger',
@@ -423,12 +430,17 @@ class DeliveryController extends Controller
                         'status' => $order->shouldPostFinalReports() && ($final_report->consulting_office_final_report_approved || !$final_report->consulting_office_final_report_note),
                     ],
                 ],
+                'info' => [
+                    'note' => ($note = data_get($final_report->meta, 'consulting_office_final_report_note')) ?
+                        __('models/final_report.last_note', compact('note')) :
+                        null,
+                ],
             ] : null,
         ] : [];
 
         return view('CP.delivery.view_file', [
             'order' => $order,
-            'final_reports' => array_filter($final_reports,'filled'),
+            'final_reports' => array_filter($final_reports, 'filled'),
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'rejects' => $rejects,
