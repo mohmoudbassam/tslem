@@ -184,7 +184,7 @@ class Order extends Model
             static::COMPLETED                   => 'الطلب مكتمل',
             static::PENDING_LICENSE_ISSUED      => 'بانتظار إصدار الرخصة',
             static::ORDER_APPROVED              => 'تمت الموافقة النهائية',
-            static::PENDING_OPERATION           => 'الطلب تحت التنفيذ',
+            static::PENDING_OPERATION           => 'تم اصدار رخصة الاضافات',
             static::FINAL_REPORT_ATTACHED       => 'تم ارفاق التقرير النهائي',
             static::FINAL_REPORT_APPROVED       => 'تم اعتماد التقارير النهائية',
             static::FINAL_LICENSE_GENERATED     => 'تم اصدار رخصة التنفيذ',
