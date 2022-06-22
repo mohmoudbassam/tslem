@@ -477,7 +477,7 @@ Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->
 Route::prefix('obligation')->name('obligation')->group(function () {
     Route::get('download/{id}', [DeliveryController::class, 'download_obligation'])->name('.download');
 });
-Route::prefix('order_speciality_file')->name('speciality_file')->group(function () {
+Route::prefix('order_speciality_file')->name('order_speciality_file')->group(function () {
     Route::get('download/{id}', [DeliveryController::class, 'download_speciality_file'])->name('.download');
 });
 Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
