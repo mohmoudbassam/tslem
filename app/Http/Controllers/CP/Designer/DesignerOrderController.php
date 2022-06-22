@@ -510,7 +510,7 @@ class DesignerOrderController extends Controller
 
                     $q->where('name_en', $specialties->name_en);
                 })->where('order_id', $order->id)->first();
-                if( $order_pdf_file )
+                if( $order_pdf_file ) {
                     $order_pdf_file->delete();
                 }
 
@@ -520,7 +520,7 @@ class DesignerOrderController extends Controller
                 $order_pdf_file = OrderSpecilatiesFiles::query()->whereHas('specialties', function($q) use ($specialties) {
                     $q->where('name_en', $specialties);
                 })->where('order_id', $order->id)->where('type', 2)->first();
-                if( $order_pdf_file )
+                if( $order_pdf_file ) {
                     $order_pdf_file->delete();
                 }
 
@@ -531,7 +531,7 @@ class DesignerOrderController extends Controller
                     $q->where('name_en', $specialties);
 
                 })->where('order_id', $order->id)->where('type', 3)->delete();
-                if( $order_pdf_file )
+                if( $order_pdf_file ) {
                     $order_pdf_file->delete();
                 }
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
