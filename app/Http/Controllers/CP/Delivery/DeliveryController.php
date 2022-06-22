@@ -579,4 +579,27 @@ class DeliveryController extends Controller
         return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
 
     }
+
+    public function download_speciality_file($id)
+    {
+        $file = \App\Models\OrderSpecilatiesFiles::query()->where('id', $id)->first();
+
+
+        if($file->type == 5){
+            $fileName = 'سلامة ارواح';
+        }elseif($file->type == 6){
+            $fileName = 'انذار';
+        }elseif($file->type == 7){
+            $fileName = 'اطفاء';
+        }else {
+            $fileName = 'اخرى';
+        }
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => "attachment; filename=".$fileName.".pdf",
+        ];
+
+        return (new Response(Storage::disk('public')->get($file->path), 200, $headers));
+
+    }
 }

@@ -396,7 +396,7 @@
                             <div class="row">
                                 @foreach($order->specialties_file->whereIn("type", [5,6,7,8]) as $file)
                                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 my-2 file-view" style="cursor:pointer; height: 180px; width: 180px;">
-                                        <a href="{{ asset("storage/".$file->path) }}" download="">
+                                        <a href="{{ route('order_speciality_file.download',['id'=>$file->id]) }}">
                                             <div class="h-100 w-100 rounded border overflow-hidden file-view-wrapper d-block">
                                                 <div class="file-view-icon" style="background-image: url('{{ asset("assets/images/pdf-file.png") }}'); height: 140px;"></div>
                                                 <div class="file-view-download"><i class="fas fa-download"></i></div>
