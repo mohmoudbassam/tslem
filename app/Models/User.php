@@ -250,7 +250,21 @@ class User extends Authenticatable
         return $this;
     }
 
+    /**
+     * $this->raft_company_name
+     * @return string
+     */
     public function getRaftCompanyNameAttribute()
+    {
+        $raft_company_location_name = $this->raft_name_only;
+        return "{$this->company_name} / {$raft_company_location_name}";
+    }
+
+    /**
+     * $this->raft_name_only
+     * @return string
+     */
+    public function getRaftNameOnlyAttribute()
     {
         if (!$this->parent_id) {
             $raft_company_location_name = License::trans("no_parent_name");
@@ -260,7 +274,7 @@ class User extends Authenticatable
             ]);
         }
 
-        return "{$this->company_name} / {$raft_company_location_name}";
+        return $raft_company_location_name ?:'';
     }
 
     public function getRaftCompanyBox($default = null)
