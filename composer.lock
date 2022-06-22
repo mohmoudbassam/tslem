@@ -12013,5 +12013,5 @@
         "php": "^7.4|^8.0|^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.0.0"
 }

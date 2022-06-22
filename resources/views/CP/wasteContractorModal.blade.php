@@ -23,10 +23,6 @@
                         </form>
 
                     </div>
-
-
-
-
                 </div>
             </div>
             <div class="row">
@@ -47,14 +43,15 @@
 
         </div>
         <div class="modal-footer">
-            <button type="button" id="close-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
         </div>
     </div>
 </div>
 <script>
     "use strict";
-    $('#close-modal').on('click', function () {
-        $('#page_model').modal("hide")
+    $('#close').on('click', function () {
+
+        $('#page_modal').modal("hide")
     })
 
     $(function () {

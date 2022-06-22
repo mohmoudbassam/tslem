@@ -508,6 +508,12 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
 });
 Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () {
     Route::get('', [KdanaController::class, 'index']);
+    Route::get('orders', [KdanaController::class, 'orders'])->name('.orders');
+    Route::get('orders_list', [KdanaController::class, 'orders_list'])->name('.orders_list');
+    Route::get('users', [KdanaController::class, 'show_users'])->name('.show_users');
+    Route::get('users_list', [KdanaController::class, 'users_list'])->name('.users_list');
+    Route::get('show_license', [KdanaController::class, 'show_license'])->name('.show_license');
+    Route::get('license_list', [KdanaController::class, 'license_list'])->name('.license_list');
 
 
 });
@@ -527,9 +533,7 @@ Route::post('import', [\App\Http\Controllers\ImportExcelController::class, 'impo
 Route::get('raft_company/get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name(
     'raft_company.get_camp_by_box'
 );
-Route::get('test', function () {
-    dd(order_services(4));
-});
+
 Route::get('qr_download_files/{order}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
 Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController::class, 'download_raft_company_file'])->name('download_raft_company_file');
 Route::get('showWest', [LoginController::class, 'showWest'])->name('showWest');
