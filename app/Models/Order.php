@@ -11,8 +11,6 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = [];
-
     public const PENDING = 1;
     public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
@@ -24,11 +22,7 @@ class Order extends Model
     public const ORDER_APPROVED = 9;
     public const PENDING_OPERATION = 10;
     public const FINAL_REPORT_ATTACHED = 11;
-
-    public function license()
-    {
-        return $this->hasOne(License::class);
-    }
+    protected $guarded = [];
 
     public function specialties_file()
     {
@@ -38,7 +32,7 @@ class Order extends Model
     public function service()
     {
         return $this->belongsToMany(Service::class, 'order_service', 'order_id', 'service_id')
-                    ->withPivot('service_id', 'order_id', 'unit');
+            ->withPivot('service_id', 'order_id', 'unit');
     }
 
     public function obligations()
@@ -96,14 +90,14 @@ class Order extends Model
         return $this->hasMany(DeliverRejectReson::class, 'order_id');
     }
 
+    public function orderSharerRegected()
+    {
+        return $this->orderSharer()->where('status', OrderSharer::REJECT);
+    }
+
     public function orderSharer()
     {
         return $this->hasMany(OrderSharer::class, 'order_id');
-    }
-
-    public function orderSharerRegected()
-    {
-        return $this->orderSharer()->where('status',OrderSharer::REJECT);
     }
 
     public function orderSharerAccepts()
@@ -111,10 +105,10 @@ class Order extends Model
         return $this->hasManyThrough(
             OrderSharerAccept::class,
             OrderSharer::class,
-            'order_id', // Foreign key on the environments table...
+            'order_id',        // Foreign key on the environments table...
             'order_sharer_id', // Foreign key on the deployments table...
-            'id', // Local key on the projects table...
-            'id' // Local key on the environments table...
+            'id',              // Local key on the projects table...
+            'id'               // Local key on the environments table...
         );
     }
 
@@ -123,10 +117,10 @@ class Order extends Model
         return $this->hasManyThrough(
             OrderSharerReject::class,
             OrderSharer::class,
-            'order_id', // Foreign key on the environments table...
+            'order_id',        // Foreign key on the environments table...
             'order_sharer_id', // Foreign key on the deployments table...
-            'id', // Local key on the projects table...
-            'id' // Local key on the environments table...
+            'id',              // Local key on the projects table...
+            'id'               // Local key on the environments table...
         );
     }
 
@@ -142,24 +136,30 @@ class Order extends Model
 
     public function getOrderStatusAttribute()
     {
-        $orderStatus = [
-            '1' => 'معلق',
-            '2' => 'قيد انشاء الطلب',
-            '3' => 'مراجعة التصاميم',
-            '4' => 'معتمد التصاميم',
-            '8' => 'بإنتظار اعتماد الجهات الحكومية',
-            '5' => 'الطلب تحت الإجراء',
-            '6' => 'الطلب مكتمل',
-            '7' => 'بإنتظار اصدار الرخصة',
-            '9' => 'تمت الموافقة النهائية',
-            '10' => 'الطلب تحت التنفيذ',
-            '11' => 'تم ارفاق التقرير النهائي',
-        ];
-        if(isset($orderStatus[$this->status])){
+        $orderStatus = static::getOrderStatuses();
+        if (isset($orderStatus[$this->status])) {
             return $orderStatus[$this->status];
-        }else {
+        }
+        else {
             return null;
         }
+    }
+
+    public static function getOrderStatuses(): array
+    {
+        return [
+            static::PENDING                     => 'معلق',
+            static::REQUEST_BEGIN_CREATED       => 'قيد إنشاء الطلب',
+            static::DESIGN_REVIEW               => 'مراجعة التصاميم',
+            static::DESIGN_APPROVED             => 'معتمد التصاميم',
+            static::DESIGN_AWAITING_GOV_APPROVE => 'بانتظار اعتماد الجهات الحكومية',
+            static::PROCESSING                  => 'الطلب تحت الإجراء',
+            static::COMPLETED                   => 'الطلب مكتمل',
+            static::PENDING_LICENSE_ISSUED      => 'بانتظار إصدار الرخصة',
+            static::ORDER_APPROVED              => 'تمت الموافقة النهائية',
+            static::PENDING_OPERATION           => 'الطلب تحت التنفيذ',
+            static::FINAL_REPORT_ATTACHED       => 'تم ارفاق التقرير النهائي',
+        ];
     }
 
     public function lastDesignerNote()
@@ -172,27 +172,22 @@ class Order extends Model
         return $this->hasMany(ConsultingOrders::class, 'order_id');
     }
 
-    public function is_accepted($user)
+    public function scopeWhereOrderId($q, $order_id)
     {
-        return $this->consulting_orders->where('user_id', isModel($user) ? $user->id : $user)->count();
+
+        return $q->when($order_id, function ($q) use ($order_id) {
+            $q->where('id', $order_id);
+        });
     }
 
     //////////////////
     /// filters     //
     /// //////////////
 
-    public function scopeWhereOrderId($q, $order_id)
-    {
-
-        return $q->when($order_id, function($q) use ($order_id) {
-            $q->where('id', $order_id);
-        });
-    }
-
     public function scopeWhereDesignerId($q, $designer_id)
     {
 
-        return $q->when($designer_id, function($q) use ($designer_id) {
+        return $q->when($designer_id, function ($q) use ($designer_id) {
             $q->where('designer_id', $designer_id);
         });
     }
@@ -200,7 +195,7 @@ class Order extends Model
     public function scopeWhereConsultingId($q, $consulting_id)
     {
 
-        return $q->when($consulting_id, function($q) use ($consulting_id) {
+        return $q->when($consulting_id, function ($q) use ($consulting_id) {
             $q->where('consulting_office_id', $consulting_id);
         });
     }
@@ -208,7 +203,7 @@ class Order extends Model
     public function scopeWhereContractorId($q, $contractor_id)
     {
 
-        return $q->when($contractor_id, function($q) use ($contractor_id) {
+        return $q->when($contractor_id, function ($q) use ($contractor_id) {
             $q->where('contractor_id', $contractor_id);
         });
     }
@@ -216,15 +211,15 @@ class Order extends Model
     public function scopeWhereDate($q, $from_date, $to_date)
     {
 
-        return $q->when($from_date && $to_date, function($q) use ($from_date, $to_date) {
-            $q->whereBetween('date', [ $from_date, $to_date ]);
+        return $q->when($from_date && $to_date, function ($q) use ($from_date, $to_date) {
+            $q->whereBetween('date', [$from_date, $to_date]);
         });
     }
 
     public function scopeWhereServiceProviderId($q, $service_provider_id)
     {
 
-        return $q->when($service_provider_id, function($q) use ($service_provider_id) {
+        return $q->when($service_provider_id, function ($q) use ($service_provider_id) {
             $q->where('owner_id', $service_provider_id);
         });
     }
@@ -236,47 +231,25 @@ class Order extends Model
             $this->is_accepted($this->contractor_id) && $this->is_accepted($this->consulting_office_id);
     }
 
-    public function licenseNeededForDelivery(): bool
-    {
-        return $this->isDesignApproved() && !$this->hasLicense();
-    }
-
     public function hasLicense(): bool
     {
 
         return $this->license()->whereNotNull('created_at')->count();
     }
 
-    public function getLicenseOrCreate(array $attributes = [])
+    public function license()
     {
-        $attributes[ 'created_at' ] ??= null;
-        $license = $this->license()->firstOrNew([], $attributes);
-
-        if( !$license->exists ) {
-            $license->forceFill([ 'created_at' => data_get($attributes, 'created_at') ])
-                    ->save();
-
-            return $license->refresh();
-        }
-
-        return $license;
+        return $this->hasOne(License::class);
     }
 
-    public function saveLicense(array $attributes = [])
+    public function is_accepted($user)
     {
-        $license = $this->getLicenseOrCreate([ 'order_id' => $this->id ]);
-        $created_at = ($attributes[ 'created_at' ] ??= data_get($attributes, 'created_at', $license->created_at ?: now()));
-        $attributes[ 'date' ] = data_get($attributes, 'date', $created_at ? ($license->date ?: now()) : null);
-        if( $raft_company_box = $this->service_provider->getRaftCompanyBox() ) {
-            $attributes[ 'box_raft_company_box_id' ] = data_get($raft_company_box, 'id');
-            $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
-        }
+        return $this->consulting_orders->where('user_id', isModel($user) ? $user->id : $user)->count();
+    }
 
-//        $license->fill($attributes)
-//                ->forceFill(compact('created_at'))
-//                ->save();
-
-        return $license->refresh();
+    public function licenseNeededForDelivery(): bool
+    {
+        return $this->isDesignApproved() && !$this->hasLicense();
     }
 
     public function isDesignApproved()
@@ -284,7 +257,44 @@ class Order extends Model
         return $this->status === static::ORDER_APPROVED;
     }
 
-//    public function raft_company(){
-//        return $this->service_provider()->belongsTo(User::class,'parent_id','id');
-//    }
+    public function saveLicense(array $attributes = [])
+    {
+        $license = $this->getLicenseOrCreate(['order_id' => $this->id]);
+        $created_at = ($attributes['created_at'] ??= data_get($attributes, 'created_at', $license->created_at ?: now()));
+        $attributes['date'] = data_get($attributes, 'date', $created_at ? ($license->date ?: now()) : null);
+        if ($raft_company_box = $this->service_provider->getRaftCompanyBox()) {
+            $attributes['box_raft_company_box_id'] = data_get($raft_company_box, 'id');
+            $attributes['camp_raft_company_box_id'] = data_get($raft_company_box, 'id');
+        }
+
+        //        $license->fill($attributes)
+        //                ->forceFill(compact('created_at'))
+        //                ->save();
+
+        return $license->refresh();
+    }
+
+    //    public function raft_company(){
+    //        return $this->service_provider()->belongsTo(User::class,'parent_id','id');
+    //    }
+
+    public function getLicenseOrCreate(array $attributes = [])
+    {
+        $attributes['created_at'] ??= null;
+        $license = $this->license()->firstOrNew([], $attributes);
+
+        if (!$license->exists) {
+            $license->forceFill(['created_at' => data_get($attributes, 'created_at')])
+                ->save();
+
+            return $license->refresh();
+        }
+
+        return $license;
+    }
+
+    public function isDesignReviewStatus(): bool
+    {
+        return $this->status == static::DESIGN_REVIEW;
+    }
 }
