@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="col-lg-3 col-sm-6">
-                            <label for="contractor_id">حالة الطلب</label>
+                            <label for="status">حالة الطلب</label>
                             <select class="form-control" id="status" name="status">
                                 <option value="">اختر...</option>
                                 @foreach($orderStatuses as $id => $val)
