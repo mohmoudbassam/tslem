@@ -41,7 +41,7 @@ class DeliveryController extends Controller
     {
 
         $order = Order::query()
-            ->when(!is_null(($v = $request->input("status"))), fn($q) => $q->where("status", $v))
+            ->when(!is_null(($v = $request->input("order_status"))), fn($q) => $q->where("status", $v))
                       ->when(!is_null($request->query("order_identifier")), function($query) use ($request) {
                           $query->where("identifier", "LIKE", "%" . $request->query("order_identifier") . "%");
                       })
