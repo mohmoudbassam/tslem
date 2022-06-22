@@ -161,6 +161,11 @@
                         <div class="card-body">
 
                         <div class="row  mb-4 gx-0">
+                            @if($designerNote && $order->isDesignReviewStatus())
+                            <div class="col-12">
+                                <p class="text-danger mb-0 space-nowrap p-3 border-bottom border-end fs-7"><span class="bold">سبب الرفض:</span> {!! nl2br($designerNote->note) !!}</p>
+                            </div>
+                            @endif
                             <div class="col-md-6">
                                 <p class="mb-0 space-nowrap p-3 border-bottom border-end fs-7"><span class="bold">  تاريخ الإنشاء :</span> {{$order->created_at->format("Y-m-d")}}</p>
                             </div>

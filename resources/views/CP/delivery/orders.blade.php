@@ -11,14 +11,12 @@
                 <h4 class="mb-sm-0 font-size-18">
 
                 </h4>
-
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
                     </ol>
                 </div>
-
             </div>
         </div>
     </div>
@@ -26,7 +24,6 @@
         <div class="card-header">
             <div class="row mt-4">
                 <div class="col-lg-12">
-
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-12 ms-auto text-end mb-2">
                             <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
@@ -89,12 +86,17 @@
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
 
-
-
+                        <div class="col-lg-3 col-sm-6">
+                            <label for="contractor_id">حالة الطلب</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="">اختر...</option>
+                                @foreach($orderStatuses as $id => $val)
+                                    <option value="{!! $id !!}">{!! $val !!}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
         <div class="card-body">
@@ -172,6 +174,7 @@
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
+                        d.status = $('#status').val();
                     }
                 },
                 language: {
