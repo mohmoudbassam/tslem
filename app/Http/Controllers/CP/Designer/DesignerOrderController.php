@@ -22,6 +22,7 @@ use Yajra\DataTables\DataTables;
 
 class DesignerOrderController extends Controller
 {
+    
     public function orders()
     {
         $data[ 'services_providers' ] = User::query()->whereHas('orders', function($q) {

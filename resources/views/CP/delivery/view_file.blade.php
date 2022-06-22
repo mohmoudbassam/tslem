@@ -203,15 +203,13 @@
                                     <p class="mb-0  p-3  border-bottom border-end fs-7"><span
                                             class="bold">مركز الخدمة :</span> {{ (isset($order->service_provider)) ? $order->service_provider->company_name : ''}}</p>
                                 </div>
-
                                 <div class="col-md-6">
                                     <p class="mb-0  p-3  border-bottom fs-7"><span
                                             class="bold"> اسم مكتب التصميم :  </span>{{ (isset($order->designer)) ? $order->designer->company_name : ''}}</p>
                                 </div>
-
                                 <div class="col-md-6 border-bottom border-end">
                                     <p class="mb-0  p-3 fs-7"><span
-                                            class="bold">المقاول :  </span>{{ $order->contractor->company_name }}</p>
+                                            class="bold">المقاول :  </span>{{ ($order->contractor) ? $order->contractor->company_name : '' }}</p>
                                 </div>
                                 <div class="col-md-6 border-bottom">
                                 <p class="mb-0  p-3 fs-7"><span
