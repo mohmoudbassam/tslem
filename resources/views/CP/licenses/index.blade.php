@@ -95,7 +95,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('kdana.license_list')}}',
+                    url: '{{route('licenses.list')}}',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();
