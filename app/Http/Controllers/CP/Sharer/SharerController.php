@@ -166,7 +166,7 @@ class SharerController extends Controller
     public function view_file(Order $order)
     {
 
-        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $order_sharer = OrderSharer::query()->where('order_id', $order->id)->where('user_id', auth()->user()->id)->first();
 

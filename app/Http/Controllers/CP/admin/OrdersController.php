@@ -62,10 +62,10 @@ class OrdersController extends Controller
             ->with('service_provider')
             ->with(['designer', 'contractor', 'consulting']);
         $order->when($request->params == 'designe_office_orders', function ($q) {
-            $q->whereNotNull('designer_id');
+            $q->where('status','!=',Order::PENDING)->whereNotNull('designer_id');
         });
         $order->when($request->params == 'tasleem', function ($q) {
-            $q->where('status', '>', 3);
+            $q->where('status', '>=', Order::DESIGN_REVIEW);
         });
         if ($request->waste_contractor) {
             $order = $order->whereWasteContractor($request->waste_contractor);

@@ -39,7 +39,7 @@
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <label for="service_provider_id">الشركات</label>
+                            <label for="service_provider_id">مركز الخدمة</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
@@ -113,7 +113,10 @@
                             رقم الطلب
                         </th>
                         <th>
-                            اسم الشركة
+                            مركز الخدمة
+                        </th>
+                        <th>
+                            الشركة
                         </th>
                         <th>
                             المكتب الهندسي
@@ -183,6 +186,7 @@
                 columns: [
                     {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name',orderable : false},
+                    {className: 'text-center', data: 'raft_name_only', name: 'raft_name_only',orderable : false},
                     {className: 'text-center', data: 'designer.company_name', name: 'company_name',orderable : false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
                     {className: 'text-center space-nowrap', data: 'updated_at', name: 'updated_at',orderable : false},
