@@ -39,13 +39,13 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 row-cols-md-4 row-cols-sm-3 row-cols-lg-4 row-cols-2">
 
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <label for="order_identifier">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
 
 
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <label for="service_provider_id">شركات حجاج الداخل</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
@@ -55,7 +55,7 @@
 
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <label for="designer_id"> المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
@@ -64,7 +64,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <label for="consulting_id">المشرف</label>
                             <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
@@ -75,11 +75,11 @@
                             </select>
                         </div>
 
-                        <div class="col-lg-1">
+                        <div class="col-lg-3">
                             <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-3">
                             <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
@@ -88,7 +88,7 @@
                             <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
                         </div> -->
                         <div class="col-sm-auto ms-auto text-end" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search ms-1"></i>بحث
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
                             </button>
                             <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
                             </button>

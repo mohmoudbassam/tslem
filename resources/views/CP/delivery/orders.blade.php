@@ -29,13 +29,11 @@
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
                         <div class="col-12 ms-auto text-end mb-2">
-                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
-                            </button>
+
                             <button type="button" class="btn btn-primary  px-4 me-2" onclick="exportExcel()"><i
                                     class="fa fa-file-excel me-1" ></i>تصدير
                             </button>
-                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
-                            </button>
+
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="order_identifier">رقم الطلب </label>
@@ -87,6 +85,14 @@
                         <div class="col-lg-3 col-sm-6">
                             <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 mt-4 ms-auto text-end pt-2">
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
+                            </button>
+
+                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
+                            </button>
                         </div>
 
 
