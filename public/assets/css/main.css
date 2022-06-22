@@ -277,7 +277,7 @@ body {
   display: none;
 }
 .main-header.fixed-header .header-top {
-  
+
 margin-top: 0;margin-bottom: 0;}
 
 .bg-primary {
@@ -518,7 +518,7 @@ margin-bottom: 24px;}
   .main-menu-sub > li > a {
       display: block;
       padding: 10px 50px;
-      color: #c0946f !important;
+      color: #0A2373 !important;
       cursor: pointer;
   }
 
@@ -752,7 +752,7 @@ margin-bottom: 24px;}
 }
 
 .section-about:after {
-  background-color: #c0946f;
+  background-color: #0A2373;
   position: absolute;
   width: 50%;
   height: 100%;
@@ -764,7 +764,7 @@ margin-bottom: 24px;}
 .section-about-desc {
   margin: 30px 0 30px;
   font-size: 20px;
-  color: #c0946f;
+  color: #0A2373;
 padding-left: 50px;}
 
 .section-home {
@@ -774,7 +774,7 @@ padding-left: 50px;}
 }
 
 .section-home h1 {
-  color: #C0946F;
+  color: #0A2373;
 }
 
 .section-sub-page .page-title {
@@ -802,7 +802,7 @@ color: #fff;}
 
   .section-home h1 {
       font-size: 55px;
-      color: #C0946F;
+      color: #0A2373;
   }
 
   .section-home h3 {
@@ -859,7 +859,7 @@ color: #fff;}
       font-size: 30px;
   }
 
-  
+
   .section-home .home-content::before {
       width: 280px;
       height: 280px;
@@ -950,7 +950,7 @@ color: #fff;}
 .widget__item-downlaod {
   /* margin-bottom: 15px; */
   display: block;
-  
+
   box-shadow: 0px 0px 10px rgba(0, 0, 0 , .02);
   padding: 12px 5px 10px;
   color: #fff;border-radius: 5px;
@@ -1123,7 +1123,7 @@ padding-top: 100px;}
 .footer-top-title {
   font-size: 20px;
   position: relative;
-  color: #c0946f;
+  color: #0A2373;
   height: 55px;
 }
 
@@ -1142,11 +1142,11 @@ padding-top: 100px;}
   display: block;
 }
 .footer-top-links li a:hover{
-  color: #c0946f;
+  color: #0A2373;
 }
 
 .footer-bottom {
-  background-color: #c0946f;
+  background-color: #0A2373;
   padding: 20px 0px;
 }
 
@@ -1272,8 +1272,8 @@ padding-top: 100px;}
     padding-bottom: 600px;
   padding-right: 20px !important;padding-top: 100px !important;}
   .section-about:before {
-      
-  height: 500px;position: absolute;width: 100%;background-color: #c0946f;bottom: 0;top: auto;background-size: 717px;background-position: center;}
+
+  height: 500px;position: absolute;width: 100%;background-color: #0A2373;bottom: 0;top: auto;background-size: 717px;background-position: center;}
   .section-about:after {
       display: none;
   }
@@ -1376,10 +1376,10 @@ padding-top: 100px;}
   height: 50px;margin-bottom: 25px;transition: all .2s ease;padding-right: 70px;position: relative;
 }
 .guide-links a:hover {
-  color: #c0946f;
+  color: #0A2373;
 }
 .guide-links a:hover:before {
-  background-color: #c0946f;
+  background-color: #0A2373;
 }
 .guide-links a:before {
   background: url('../images/download-icon-1.png') no-repeat center top 13px;

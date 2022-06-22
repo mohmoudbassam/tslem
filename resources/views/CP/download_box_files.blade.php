@@ -47,7 +47,7 @@
 
         :root {
             --main-color: #122b76;
-            --second-color: #c0946f;
+            --second-color: #0A2373;
         }
 
         body {
@@ -147,7 +147,7 @@
         }
 
         .login-body {
-            background-color: var(--second-color) !important;
+            background-color: #c0946f !important;
             padding: 30px;
         }
 

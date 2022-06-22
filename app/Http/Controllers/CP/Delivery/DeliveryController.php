@@ -441,5 +441,62 @@ class DeliveryController extends Controller
         $orders = $this->list($request, true);
         return Excel::download(new OrdersExport($orders), 'orders.xlsx');
     }
+  
+    public function list2(Request $request, $flag = false)
+    {
+        $order = $this->gitOrdersQuery();
+        if ($flag) {
+            return $order->get();
+        }
+        return DataTables::of($order)
+            ->addColumn('actions', function ($order) {
+                // $accept = '';
 
+                // $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
+                // $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
+                // $reports_view = '<a class="dropdown-item" href="' . route('delivery.reports_view', ['order' => $order->id]) . '"><i class="fa fa-check"></i>عرض التقارير </a>';
+                // $reports_add = '<a class="dropdown-item" href="' . route('delivery.report_add_form', ['order' => $order->id]) . '"><i class="fa fa-plus"></i>انشاء التقارير </a>';
+
+                // if ($order->status > 2) {
+                //     $accept = '';
+                // }
+                // if ($order->status > 2) {
+                //     $reject = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_view = '';
+                // }
+                // if ($order->status == 2) {
+                //     $reports_add = '';
+                // }
+                if ($order->status == Order::ORDER_APPROVED) {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-success btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
+                                                إصدار الرخصة
+                                            </a>
+                                        </div>';
+                }
+                else {
+                    $element = '<div class="btn-group me-1 mt-2">
+                                            <a class="btn btn-info btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
+                                                عرض التفاصيل
+                                            </a>
+                                        </div>';
+                }
+
+                return $element;
+
+            })
+            ->addColumn('created_at', function ($order) {
+
+                return $order->created_at->format('Y-m-d');
+            })
+            ->addColumn('updated_at', function ($order) {
+                return $order->updated_at->format('Y-m-d');
+            })->addColumn('order_status', function ($order) {
+
+                return $order->order_status;
+            })->rawColumns(['actions'])
+            ->make(true);
+    }
 }
