@@ -24,7 +24,7 @@
         <div class="card-header">
             <div class="row mt-4">
                 <div class="col-lg-12">
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
                         <div class="col-12 ms-auto text-end mb-2">
                             <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
                             </button>
