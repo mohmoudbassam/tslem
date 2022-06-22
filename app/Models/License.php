@@ -508,7 +508,7 @@ CODE;
 
     public function getIdLabelAttribute()
     {
-        return str_pad($this->order_id,4,"0",STR_PAD_LEFT);
+        return str_pad($this->id,4,"0",STR_PAD_LEFT);
     }
 
     public function getMapPathUrlAttribute()
