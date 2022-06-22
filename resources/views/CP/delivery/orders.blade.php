@@ -39,7 +39,7 @@
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <label for="service_provider_id">شركات حجاج الداخل</label>
+                            <label for="service_provider_id">الشركات</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
@@ -49,7 +49,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <label for="designer_,orderable : falseid">المكتب الهندسي</label>
+                            <label for="designer_id">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
@@ -87,8 +87,8 @@
                         </div>
 
                         <div class="col-lg-3 col-sm-6">
-                            <label for="status">حالة الطلب</label>
-                            <select class="form-control" id="status" name="status">
+                            <label for="order_status">حالة الطلب</label>
+                            <select class="form-control" id="order_status" name="order_status">
                                 <option value="">اختر...</option>
                                 @foreach($orderStatuses as $id => $val)
                                     <option value="{!! $id !!}">{!! $val !!}</option>
