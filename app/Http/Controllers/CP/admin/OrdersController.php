@@ -39,7 +39,7 @@ class OrdersController extends Controller
      * @return mixed
      * @throws \Exception
      */
-    public function list(Request $request)
+    public function list(Request $request, bool $trashed = !1)
     {
         //dd($request->all());
         $order = Order::query()
