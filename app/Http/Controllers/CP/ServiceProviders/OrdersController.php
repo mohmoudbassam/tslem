@@ -144,7 +144,7 @@ class OrdersController extends Controller
             ->addColumn('actions', function (Order $order) {
                 $add_designer = '';
                 $add_contractor_and_consulting_office = '';
-                $add_generate_license = '';
+                $actions = '';
                 if ($order->designer_id == null) {
                     $add_designer = '<a class="dropdown-item" href="' . route('services_providers.edit_order', ['order' => $order->id]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة مكتب تصميم </a>';
                 }
@@ -154,10 +154,14 @@ class OrdersController extends Controller
                 }
 
                 if ($order->licenseNeededForServiceProvider()) {
-                    $add_generate_license = '<a class="dropdown-item" href="' . route('licenses.view_pdf', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_for_service_provider') . '</a>';
+                    $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_for_service_provider') . '</a>';
                 }
 
-                if (empty($add_designer) && empty($add_contractor_and_consulting_office) && empty($add_generate_license)) {
+                if ( $order->execution_license()->exists() ) {
+                    $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf_execution_license', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_execution_license_for_service_provider') . '</a>';
+                }
+
+                if (empty($add_designer) && empty($add_contractor_and_consulting_office) && empty($actions)) {
                     $element = '';
                 } else {
 
@@ -168,7 +172,7 @@ class OrdersController extends Controller
                                             <div class="dropdown-menu" style="">
                                                ' . $add_designer . '
                                                ' . $add_contractor_and_consulting_office . '
-                                               ' . $add_generate_license . '
+                                               ' . $actions . '
                                                 </div>
                               </div>';
                 }
@@ -232,7 +236,7 @@ class OrdersController extends Controller
             ->get();
         $wasteContractors = wasteContractorsList();
 
-        
+
 
         return response()->json([
             'success' => true,

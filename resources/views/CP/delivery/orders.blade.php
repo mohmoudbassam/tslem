@@ -11,14 +11,12 @@
                 <h4 class="mb-sm-0 font-size-18">
 
                 </h4>
-
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
                         <li class="breadcrumb-item active">الرئيسية</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">الطلبات</a></li>
                     </ol>
                 </div>
-
             </div>
         </div>
     </div>
@@ -26,21 +24,22 @@
         <div class="card-header">
             <div class="row mt-4">
                 <div class="col-lg-12">
-
-                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
+                    <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
                         <div class="col-12 ms-auto text-end mb-2">
-
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
+                            </button>
                             <button type="button" class="btn btn-primary  px-4 me-2" onclick="exportExcel()"><i
                                     class="fa fa-file-excel me-1" ></i>تصدير
                             </button>
-
+                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
+                            </button>
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="order_identifier">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <label for="service_provider_id">شركات حجاج الداخل</label>
+                            <label for="service_provider_id">الشركات</label>
                             <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
@@ -50,7 +49,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <label for="designer_,orderable : falseid">المكتب الهندسي</label>
+                            <label for="designer_id">المكتب الهندسي</label>
                             <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
@@ -87,20 +86,17 @@
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
 
-                        <div class="col-lg-3 col-sm-6 mt-4 ms-auto text-end pt-2">
-                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث
-                            </button>
-
-                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء
-                            </button>
+                        <div class="col-lg-3 col-sm-6">
+                            <label for="order_status">حالة الطلب</label>
+                            <select class="form-control" id="order_status" name="order_status">
+                                <option value="">اختر...</option>
+                                @foreach($orderStatuses as $id => $val)
+                                    <option value="{!! $id !!}">{!! $val !!}</option>
+                                @endforeach
+                            </select>
                         </div>
-
-
-
                     </form>
                 </div>
-
-
             </div>
         </div>
         <div class="card-body">
@@ -117,7 +113,7 @@
                             رقم الطلب
                         </th>
                         <th>
-                            شركات حجاج الداخل
+                            اسم الشركة
                         </th>
                         <th>
                             المكتب الهندسي
@@ -178,6 +174,7 @@
                         d.designer_id = $('#designer_id').val();
                         d.consulting_id = $('#consulting_id').val();
                         d.contractor_id = $('#contractor_id').val();
+                        d.order_status = $('#order_status').val();
                     }
                 },
                 language: {

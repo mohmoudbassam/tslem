@@ -1,6 +1,7 @@
-<li>
+@if(currentUser()->isAdmin())
+    <li>
     <a href="javascript: void(0);" class="has-arrow">
-        <i data-feather="licenses"></i>
+        <i data-feather="pocket"></i>
         <span data-key="t-apps">{{\App\Models\License::trans('group')}}</span>
     </a>
     <ul class="sub-menu" aria-expanded="false">
@@ -23,3 +24,12 @@
         @endif
     </ul>
 </li>
+@else
+    <li>
+        <a href="{{route('licenses')}}">
+
+            <i data-feather="pocket"></i>
+            <span data-key="t-calendar">{{\App\Models\License::trans('group')}}</span>
+        </a>
+    </li>
+@endif

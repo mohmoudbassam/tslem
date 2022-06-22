@@ -190,9 +190,9 @@ class NewsArticle extends Model
     /**
      * @return \Illuminate\Contracts\Filesystem\Filesystem
      */
-    public static function disk()
+    public static function disk($disk = null)
     {
-        return Storage::disk(static::$DISK);
+        return Storage::disk($disk??static::$DISK);
     }
 
     /**

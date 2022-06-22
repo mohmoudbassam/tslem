@@ -51,6 +51,21 @@ class User extends Authenticatable
         return $this->type == 'admin';
     }
 
+    public function isContractor()
+    {
+        return $this->type === static::CONTRACTOR_TYPE;
+    }
+
+    public function isConsultngOffice()
+    {
+        return $this->type === static::CONSULTNG_OFFICE_TYPE;
+    }
+
+    public function isDelivery()
+    {
+        return $this->type === static::DELIVERY_TYPE;
+    }
+
     public function getImageAttribute($file)
     {
 

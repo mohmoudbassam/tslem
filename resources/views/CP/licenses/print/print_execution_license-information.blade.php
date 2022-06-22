@@ -1,6 +1,3 @@
-<div align="right">
-    <h4>معلومات المستفيد:</h4>
-</div>
 
 <table style='width: 100%;' cellspacing="0" cellpadding="0">
     <tbody align="center">
@@ -10,9 +7,9 @@
     </tr>
 
     <tr>
-        <td width="55%">خريطة GIS</td>
+        <td width="55%">الموقع</td>
         <td width="30%">{{$model->service_provider()->value('users.id') ?? ""}}</td>
-        <td width="15%">رقم المركز</td>
+        <td width="15%">مركز الخدمة</td>
     </tr>
 
     <tr>

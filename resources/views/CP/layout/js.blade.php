@@ -207,6 +207,7 @@
                 }
             },
             error: function (data) {
+                console.error(data)
                 KTApp.unblockPage()
             }
         })
@@ -435,4 +436,19 @@
     window.alertSuccess = function (title, text) {
         return alertMessage({ title, text, icon: 'success' })
     }
+    $('.reset_btn').click(function (ev) {
+        const self = $(this)
+        const formId = self.data('form-id') || 'form_data'
+        const datatableId = self.data('data-table-id') || 'items_table'
+        try {
+            $(`#${formId}`).trigger('reset')
+        } catch (e) {
+
+        }
+        try {
+            $(`#${datatableId}`).DataTable().ajax.reload(null, false)
+        } catch (e) {
+
+        }
+    })
 </script>

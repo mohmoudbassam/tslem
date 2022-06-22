@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\FinalReport;
 use App\Models\License;
 use App\Models\NewsArticle;
 use App\Models\Order;
+use App\Observers\FinalReportObserver;
 use App\Observers\LicenseObserver;
 use App\Observers\NewsArticleObserver;
 use App\Observers\NotifcationObserver;
@@ -25,5 +27,6 @@ class ObserverServiceProvider extends ServiceProvider
         License::observe(LicenseObserver::class);
         NewsArticle::observe(NewsArticleObserver::class);
         DatabaseNotification::observe(NotifcationObserver::class);
+        FinalReport::observe(FinalReportObserver::class);
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\CP\ConsultingOffice\ConsultingOfficeController;
 use App\Http\Controllers\CP\Contractor\ContractorController;
 use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Http\Controllers\CP\Designer\DesignerOrderController;
+use App\Http\Controllers\CP\GeneralController;
 use App\Http\Controllers\CP\Kdana\KdanaController;
 use App\Http\Controllers\CP\LoginController;
 use App\Http\Controllers\CP\NewsController;
@@ -70,21 +71,27 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('licenses')
         ->name('licenses')
+        ->middleware(['user_type:admin'])
+        ->group(function () {
+            Route::get('add', [LicenseController::class, 'add'])->name('.add');
+            Route::post('store', [LicenseController::class, 'store'])->name('.store');
+            Route::get('edit/{license}', [LicenseController::class, 'edit'])->name('.edit');
+            Route::post('update/{license}', [LicenseController::class, 'update'])->name('.update');
+            Route::post('delete/{license}', [LicenseController::class, 'delete'])->name('.delete');
+            Route::post('delete_map_path/{license}', [LicenseController::class, 'delete_map_path'])->name('.delete_map_path');
+        });
+
+    Route::prefix('licenses')
+        ->name('licenses')
         ->middleware(['user_type:admin,Delivery'])
         ->group(function () {
             Route::get('', [LicenseController::class, 'index']);
-            Route::get('add', [LicenseController::class, 'add'])->name('.add');
-            Route::get('edit/{license}', [LicenseController::class, 'edit'])->name('.edit');
-            Route::get('print/{license}', [LicenseController::class, 'show_print'])->name('.show_print');
-            Route::post('print/{license}', [LicenseController::class, 'print'])->name('.print');
             Route::get('form', [LicenseController::class, 'form'])->name('.form');
             Route::get('list', [LicenseController::class, 'list'])->name('.list');
-            Route::post('update/{license}', [LicenseController::class, 'update'])->name('.update');
-            Route::post('delete/{license}', [LicenseController::class, 'delete'])->name('.delete');
-            Route::post('store', [LicenseController::class, 'store'])->name('.store');
+            Route::get('print/{license}', [LicenseController::class, 'show_print'])->name('.show_print');
+            Route::post('print/{license}', [LicenseController::class, 'print'])->name('.print');
             Route::get('order/{order}/form', [LicenseController::class, 'order_license_form'])->name('.order_license_form');
             Route::post('order/{order}/create', [LicenseController::class, 'order_license_create'])->name('.order_license_create');
-            Route::post('delete_map_path/{license}', [LicenseController::class, 'delete_map_path'])->name('.delete_map_path');
         });
 
     Route::prefix('licenses')
@@ -96,6 +103,27 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 ->name('.view_pdf');
             Route::get('view_html/{order}/license', [LicenseController::class, 'view_html'])
                 ->name('.view_html');
+
+            Route::get('view_pdf/{order}/execution_license', [LicenseController::class, 'view_pdf_execution_license'])
+                 ->name('.view_pdf_execution_license');
+
+            Route::get('order/{order}/attach-final-report-form', [LicenseController::class, 'order_license_attach_final_report_form'])
+                ->name('.attach_final_report_form');
+            Route::post('order/{order}/attach-final-report', [LicenseController::class, 'order_license_attach_final_report'])
+                 ->name('.attach_final_report');
+
+            Route::get('order/{order}/final-report-contractor-approve', [LicenseController::class, 'order_final_report_contractor_approve'])
+                ->name('.final_report_contractor_approve');
+            Route::get('order/{order}/final-report-consulting-office-approve', [LicenseController::class, 'order_final_report_consulting_office_approve'])
+                ->name('.final_report_consulting_office_approve');
+
+            Route::get('order/{order}/final-report-form', [LicenseController::class, 'order_license_final_report_form'])
+                ->name('.final_report_form');
+            Route::post('order/{order}/final-report', [LicenseController::class, 'order_license_final_report'])
+                 ->name('.final_report');
+
+            Route::get('order/{order}/reject_form/{type}', [LicenseController::class, 'reject_form'])->name('.reject_form');
+            Route::post('order/{order}/reject_form/{type}', [LicenseController::class, 'reject'])->name('.reject');
         });
 
     Route::prefix('news_articles')
@@ -340,7 +368,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('/reports/list', [ConsultingOfficeController::class, 'reports_all_list'])->name(
                 '.reports_all_list'
             );
-            Route::get('/{Order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name(
+            Route::get('/{order}/report-details', [ConsultingOfficeController::class, 'reports_view_details'])->name(
                 '.reports_view_details'
             );
             Route::get('/{order}/contractor-reports/list', [ConsultingOfficeController::class, 'contractor_list'])
@@ -446,6 +474,12 @@ Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->
     Route::get('', [RaftCenterController::class, 'index']);
 
 });
+Route::prefix('obligation')->name('obligation')->group(function () {
+    Route::get('download/{id}', [DeliveryController::class, 'download_obligation'])->name('.download');
+});
+Route::prefix('order_speciality_file')->name('order_speciality_file')->group(function () {
+    Route::get('download/{id}', [DeliveryController::class, 'download_speciality_file'])->name('.download');
+});
 Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
     Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
     Route::prefix('sessions')->name(".sessions")->group(function () {
@@ -501,3 +535,4 @@ Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController:
 Route::get('showWest', [LoginController::class, 'showWest'])->name('showWest');
 Route::get('west_list', [LoginController::class, 'west_list'])->name('west_list');
 Route::get('ex', [LoginController::class, 'ex'])->name('ex');
+Route::get('download_file/{model}/{id}/{attribute}', [GeneralController::class, 'download_file'])->name('download_file');

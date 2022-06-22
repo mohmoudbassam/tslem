@@ -6,23 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\DesignerRejected;
 use App\Models\Order;
 use App\Models\OrderService;
-use App\Models\OrderSpecialtyObligation;
-use Illuminate\Support\Facades\Validator;
 use App\Models\OrderSharer;
+use App\Models\OrderSpecialtyObligation;
 use App\Models\OrderSpecilatiesFiles;
 use App\Models\Service;
-use App\Models\ServiceFileType;
 use App\Models\Specialties;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\DataTables;
-use Illuminate\Http\Response;
 
 class DesignerOrderController extends Controller
 {
+    
     public function orders()
     {
         $data[ 'services_providers' ] = User::query()->whereHas('orders', function($q) {
@@ -52,7 +52,13 @@ class DesignerOrderController extends Controller
                       ->whereDesigner(auth()->user()->id)
                       ->with('designer');
 
-        return DataTables::of($order)
+        return
+            DataTables::of($order)
+                         ->addColumn('identifier', function(Order $order) {
+                             return ($order->final_report()->value('consulting_office_final_report_note') ?
+                                     '<i class="fa fa-star-of-life mx-2 text-danger" style="font-size: 8px !important;"></i>' : '') .
+                                 $order->identifier;
+                         })
                          ->addColumn('actions', function(Order $order) {
                              $add_file_design = '';
                              $edit_files = '';
@@ -89,7 +95,8 @@ class DesignerOrderController extends Controller
                          ->addColumn('order_status', function($order) {
                              return $order->order_status;
                          })
-                         ->rawColumns([ 'actions' ])
+                         ->rawColumns([ 'actions', 'identifier' ])
+                         ->setRowClass(fn($o) => $o->lastDesignerNote()->where('status', 0)->exists() ? 'alert-warning' : '')
                          ->make(true);
     }
 
@@ -140,6 +147,7 @@ class DesignerOrderController extends Controller
     {
         $specialties = Specialties::with('service')->get();
         $service = Service::all();
+
         //dd($service);
         return view('CP.designer.add_files', [ 'order' => $order, 'specialties' => $specialties, 'services' => $service ]);
     }
@@ -150,12 +158,14 @@ class DesignerOrderController extends Controller
             $file_validation = $this->validate_file($request);
             if( !$file_validation[ 'success' ] ) {
                 $file_validation['_token'] = csrf_token();
+
                 return response()->json($file_validation);
             }
 
             $obligation_file_validation = $this->validate_obligation_file($request);
             if( !$obligation_file_validation[ 'success' ] ) {
                 $obligation_file_validation['_token'] = csrf_token();
+
                 return response()->json($obligation_file_validation);
             }
 
@@ -278,6 +288,77 @@ class DesignerOrderController extends Controller
 
     }
 
+    private function validate_file($request)
+    {
+        if (!(request('souls_safety_file'))) {
+            return [
+                'success' => false,
+                'message' => "الرجاء إرفاق ملف سلامة الارواح ",
+            ];
+        }
+
+        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
+        $specialties = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
+            if (in_array($key, $specialties_names)) {
+                return $item;
+            }
+
+            return null;
+        })->filter()->keys();
+        foreach ($specialties as $key => $_specialties) {
+
+            if (!(request($_specialties.'_pdf_file') && request($_specialties.'_cad_file'))) {
+                $name = Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
+
+                return [
+                    'success' => false,
+                    'message' => " الرجاء إدخال جميع ملفات $name",
+                ];
+            }
+
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
+    private function validate_obligation_file(Request $request)
+    {
+        $specialties = Specialties::pluck('name_en')->toArray();
+        $rules = [
+            'obligations'   => ['required', 'array', 'max:'.count($specialties), 'min:1'],
+            'obligations.*' => [Rule::in($specialties)],
+        ];
+
+        foreach ($specialties as $specialty) {
+            $obligationFilesTypes = get_specialty_obligation_files_types($specialty);
+            $rules["obligations.$specialty"] = ["sometimes", "array", "size:".count($obligationFilesTypes)];
+            if ($request->has('validate')) {
+                $rules["obligations.$specialty.*"] = ["required", "numeric", "in:1"];
+                $rules["types.obligations.$specialty.*"] = ["required", "string", "in:application/pdf"];
+                $rules["sizes.obligations.$specialty.*"] = ["required", "string", "lte:3000"];
+            }
+            else {
+                $rules["obligations.$specialty.*"] = ["required", "file", "mimetypes:application/pdf", "max:3000"];
+            }
+        }
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return [
+                'success' => false,
+                'message' => "الرجاء رفع كافة ملفات التعهدات",
+                'errors'  => $validator->errors(),
+                'data'    => $request["obligations"],
+            ];
+        }
+
+        return [
+            'success' => true,
+        ];
+    }
+
     public function upload_files($order, $specialties, $file, $type)
     {
 
@@ -319,7 +400,6 @@ class DesignerOrderController extends Controller
         $order->save();
 
 
-
         return view('CP.designer.edit_files', [
             'order' => $order,
             'specialties' => $specialties,
@@ -332,7 +412,7 @@ class DesignerOrderController extends Controller
 
     public function view_file(Order $order)
     {
-
+        $designerNote = $order->lastDesignerNote()->latest()->first();
         $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $last_note = $order->lastDesignerNote()->where('status', 0)->first();
@@ -348,7 +428,8 @@ class DesignerOrderController extends Controller
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'last_note' => $tex,
-            'order_sharers' => $order_sharers
+            'order_sharers'     => $order_sharers,
+            'designerNote'      => $designerNote,
         ]);
 
     }
@@ -430,8 +511,9 @@ class DesignerOrderController extends Controller
 
                     $q->where('name_en', $specialties->name_en);
                 })->where('order_id', $order->id)->first();
-                if( $order_pdf_file )
+                if( $order_pdf_file ) {
                     $order_pdf_file->delete();
+                }
 
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_pdf_file'), 1);
             }
@@ -439,8 +521,9 @@ class DesignerOrderController extends Controller
                 $order_pdf_file = OrderSpecilatiesFiles::query()->whereHas('specialties', function($q) use ($specialties) {
                     $q->where('name_en', $specialties);
                 })->where('order_id', $order->id)->where('type', 2)->first();
-                if( $order_pdf_file )
+                if( $order_pdf_file ) {
                     $order_pdf_file->delete();
+                }
 
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_cad_file',), 2);
             }
@@ -449,8 +532,9 @@ class DesignerOrderController extends Controller
                     $q->where('name_en', $specialties);
 
                 })->where('order_id', $order->id)->where('type', 3)->delete();
-                if( $order_pdf_file )
+                if( $order_pdf_file ) {
                     $order_pdf_file->delete();
+                }
                 $this->upload_files($order, $specialties, request($specialties->name_en . '_docs_file'), 3);
             }
         }
@@ -520,81 +604,10 @@ class DesignerOrderController extends Controller
             optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #'.$order->identifier.' من مكتب التصميم الهندسي', $order->designer_id));
         }
 
-
         return response()->json([
                                     'success' => true,
                                     'message' => 'تمت اضافة التعديل  بنجاح',
                                 ]);
-    }
-
-    private function validate_file($request)
-    {
-        if( !(request('souls_safety_file')) ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء إرفاق ملف سلامة الارواح ",
-            ];
-        }
-
-        $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
-        $specialties = collect($request->except('_token', 'order_id'))->map(function($item, $key) use ($specialties_names) {
-            if( in_array($key, $specialties_names) ) {
-                return $item;
-            }
-
-            return null;
-        })->filter()->keys();
-        foreach( $specialties as $key => $_specialties ) {
-
-            if( !(request($_specialties . '_pdf_file') && request($_specialties . '_cad_file')) ) {
-                $name = Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
-
-                return [
-                    'success' => false,
-                    'message' => " الرجاء إدخال جميع ملفات $name",
-                ];
-            }
-
-        }
-
-        return [
-            'success' => true,
-        ];
-    }
-
-    private function validate_obligation_file(Request $request)
-    {
-        $specialties = Specialties::pluck('name_en')->toArray();
-        $rules = [
-            'obligations' => [ 'required', 'array', 'max:' . count($specialties), 'min:1' ],
-            'obligations.*' => [ Rule::in($specialties) ],
-        ];
-
-        foreach( $specialties as $specialty ) {
-            $obligationFilesTypes = get_specialty_obligation_files_types($specialty);
-            $rules[ "obligations.$specialty" ] = [ "sometimes", "array", "size:" . count($obligationFilesTypes) ];
-            if( $request->has('validate') ) {
-                $rules[ "obligations.$specialty.*" ] = [ "required", "numeric", "in:1" ];
-                $rules[ "types.obligations.$specialty.*" ] = [ "required", "string", "in:application/pdf" ];
-                $rules[ "sizes.obligations.$specialty.*" ] = [ "required", "string", "lte:3000" ];
-            } else {
-                $rules[ "obligations.$specialty.*" ] = [ "required", "file", "mimetypes:application/pdf", "max:3000" ];
-            }
-        }
-        $validator = Validator::make($request->all(), $rules);
-
-        if( $validator->fails() ) {
-            return [
-                'success' => false,
-                'message' => "الرجاء رفع كافة ملفات التعهدات",
-                'errors' => $validator->errors(),
-                'data' => $request[ "obligations" ],
-            ];
-        }
-
-        return [
-            'success' => true,
-        ];
     }
 
     public function validate_update_file(Request $request, $order)

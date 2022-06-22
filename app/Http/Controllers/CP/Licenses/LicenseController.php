@@ -4,18 +4,20 @@ namespace App\Http\Controllers\CP\Licenses;
 
 use App\Helpers\Calendar;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CP\License\StoreLicenseFinalAttachmentReportRequest;
+use App\Http\Requests\CP\License\StoreLicenseFinalReportRequest;
 use App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest;
 use App\Http\Requests\CP\License\StoreLicenseRequest;
+use App\Models\FinalReport;
 use App\Models\License;
 use App\Models\Order;
 use App\Models\RaftCompanyBox;
-use Barryvdh\Snappy\Facades\SnappyPdf;
+use App\Notifications\OrderNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
-use App\Notifications\OrderNotification;
 
 class LicenseController extends Controller
 {
@@ -110,24 +112,6 @@ class LicenseController extends Controller
             'mode_form' => 'store',
             'model' => null,
         ]);
-    }
-
-    /**
-     * @post
-     *
-     * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(StoreLicenseRequest $request)
-    {
-        $data = $request->validated();
-        $data['order_id'] ??= 0;
-        $license = License::create($data);
-
-        return redirect()
-            ->route('licenses')
-            ->with(['success' => __('general.success')]);
     }
 
     public function edit(Request $request, License $license)
@@ -232,7 +216,6 @@ class LicenseController extends Controller
         $half = ceil($servicesLimit / 2);
         $chunks = $service->chunk($half);
 
-
         return $pdf
             ->loadView('CP.licenses.print', [
                 'mode' => 'print',
@@ -240,6 +223,44 @@ class LicenseController extends Controller
                 'model' => $order->license,
                 'first_services' => $chunks[0] ?? [],
                 'second_services' => $chunks[1] ?? [],
+            ])
+            ->setPaper('a4')
+            ->setOrientation('portrait')
+            ->setOption('margin-bottom', 0)
+            ->setOption('enable-forms', true)
+            //->setOption('grayscale', true)
+            //->setOption('debug-javascript', true)
+            //->setOption('page-offset', 8)
+            ->setOption('encoding', 'utf-8')
+            //->setOption('header-font-name', 'msyh')
+            ->setOption('enable-external-links', true)
+            ->inline("License-{$order->license()->value('id')}.pdf");
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\License      $license
+     *
+     * @return \Illuminate\Http\Response|string
+     */
+    public function view_pdf_execution_license(Request $request, Order $order)
+    {
+        $request->merge([ 'print' => 1 ]);
+        /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
+        $pdf = app()->make('snappy.pdf.wrapper');
+        $service = order_services($order->id);
+        $limit = 8;
+        $servicesLimit = $service->count() > $limit ? $limit : $service->count();
+        $half = ceil($servicesLimit / 2);
+        $chunks = $service->chunk($half);
+
+        return $pdf
+            ->loadView('CP.licenses.print_execution_license', [
+                'mode' => 'print',
+                'mode_form' => 'print',
+                'model' => $order->license,
+                'first_services' => $chunks[ 0 ] ?? [],
+                'second_services' => $chunks[ 1 ] ?? [],
             ])
             ->setPaper('a4')
             ->setOrientation('portrait')
@@ -341,6 +362,12 @@ HTML;
                     $print_license = "";
                 }
 
+                             $crud_options_tpl = <<<HTML
+        <a class="dropdown-item" href="#" onclick="delete_model({$license->id}, '{$delete_route}')" >{$delete_title}</a>
+        <a class="dropdown-item" href="{$update_route}">{$update_title}</a>
+HTML;
+                             $crud_options = currentUser()->isAdmin() ? $crud_options_tpl : "";
+
                 return <<<HTML
 <div class="btn-group me-1 mt-2">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -348,9 +375,8 @@ HTML;
     </button>
 
     <div class="dropdown-menu" style="">
-        <a class="dropdown-item" href="#" onclick="delete_model({$license->id}, '{$delete_route}')" >{$delete_title}</a>
-        <a class="dropdown-item" href="{$update_route}">{$update_title}</a>
-        {$print_license}
+{$crud_options}
+{$print_license}
     </div>
 </div>
 HTML;
@@ -392,15 +418,32 @@ HTML;
     /**
      * @post
      *
+     * @param \App\Http\Requests\CP\License\StoreLicenseRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(StoreLicenseRequest $request)
+    {
+        $data = $request->validated();
+        $data[ 'order_id' ] ??= 0;
+        $license = License::create($data);
+
+        return redirect()
+            ->route('licenses')
+            ->with([ 'success' => __('general.success') ]);
+    }
+
+    /**
+     * @post
+     *
      * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
-     * @param \App\Models\Order $order
+     * @param \App\Models\Order                                              $order
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function order_license_create(StoreLicenseOrderApprovedRequest $request, Order $order)
     {
         $license = $order->saveLicense($request->validated());
-
 
         // Send notification to service provider
         if ($request->attachment) {
@@ -420,6 +463,208 @@ HTML;
             'message' => __('general.success'),
             'success' => true,
         ]);
+
+    }
+
+    public function order_license_final_report_form(Request $request, Order $order)
+    {
+        return response()->json([
+                                    'page' => view('CP.licenses.final_report_form', [
+                                        'model' => $order,
+                                        'license' => $order->getLicenseOrCreate(),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
+     * @param \App\Models\Order                                              $order
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function order_license_final_report(Request $request, Order $order)
+    {
+        if( !$order->hasLicense() ) {
+            return response()->json([
+                                        'message' => __('general.something_went_wrong'),
+                                        'success' => false,
+                                    ]);
+        }
+
+        $data = $request->validate(License::$FINAL_REPORT_RULES);
+        $user_type = currentUser()->isContractor() ? 'contractor' : (
+        currentUser()->isConsultngOffice() ? 'consulting_office' : ""
+        );
+        if( !$user_type ) {
+            if( currentUser()->id === $order->contractor_id ) {
+                $user_type = 'contractor';
+            } elseif( currentUser()->id === $order->consulting_office_id ) {
+                $user_type = 'consulting_office';
+            }
+        }
+        throw_unless($user_type, "Only Contractor & Consulting Office Are Allowed To Attach!");
+
+        $path_column = "{$user_type}_final_report_path";
+        $data[ $path_column ] = array_pull($data, 'final_report_path');
+        $data[ "{$user_type}_final_report_note" ] = "";
+        $data[ "{$user_type}_final_report_approved" ] = false;
+
+        $order->getFinalReportOrCreate()
+              ->fill($data)
+              ->save();
+
+        $order->status = Order::FINAL_REPORT_ATTACHED;
+        $order->save();
+
+        return response()->json([
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    public function order_license_attach_final_report_form(Request $request, Order $order)
+    {
+        return response()->json([
+                                    'page' => view('CP.licenses.attach_final_report_form', [
+                                        'model' => $order,
+                                        'license' => $order->getLicenseOrCreate(),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    /**
+     * @post
+     *
+     * @param \App\Http\Requests\CP\License\StoreLicenseOrderApprovedRequest $request
+     * @param \App\Models\Order                                              $order
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function order_license_attach_final_report(StoreLicenseFinalAttachmentReportRequest $request, Order $order)
+    {
+        if( !$order->hasLicense() ) {
+            return response()->json([
+                                        'message' => __('general.something_went_wrong'),
+                                        'success' => false,
+                                    ]);
+        }
+
+        $data = $request->validated();
+        $data[ 'type' ] = License::EXECUTION_TYPE;
+        $order->getLicenseOrCreate()
+              ->fill($data)
+              ->save();
+
+        $order->status = Order::FINAL_LICENSE_GENERATED;
+        $order->save();
+
+        // $request->session()->flash('success', __('general.success'));
+
+        return response()->json([
+                                    'url' => route('licenses.view_pdf_execution_license', [ 'order' => $order->id ]),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    public function reject_form(Request $request, Order $order, $type = null)
+    {
+        $type = $type ?: 'contractor';
+        $note = "";
+        $final_report = $order->getFinalReportOrCreate();
+        if( $type ) {
+            $note = $final_report->getAttribute("{$type}_final_report_note");
+        }
+
+        return response()->json([
+                                    'page' => view('CP.order.reject_form', [
+                                        'order' => $order,
+                                        'type' => $type,
+
+                                        'title' => 'رفض تقرير نهائي',
+                                        'label' => 'سبب الرفض',
+                                        'note' => $note,
+                                        'url' => route('licenses.reject', [ 'order' => $order->id, 'type' => $type ]),
+                                    ])->render(),
+                                    'message' => __('general.success'),
+                                    'success' => true,
+                                ]);
+    }
+
+    public function reject(Request $request, Order $order, $type)
+    {
+        $type = $type ?: 'contractor';
+        $final_report = $order->getFinalReportOrCreate();
+
+        if( $type === 'contractor' ) {
+            $final_report->contractor_reject($request->note, true);
+        } elseif( $type === 'consulting_office' ) {
+            $final_report->consulting_office_reject($request->note, true);
+        }
+
+        return $request->wantsJson() ?
+            response()->json([
+                                 'message' => __('general.success'),
+                                 'success' => true,
+                             ]) :
+            back();
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Order        $order
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function order_final_report_contractor_approve(Request $request, Order $order)
+    {
+        tap($order->getFinalReportOrCreate(), function(FinalReport $final_report) {
+            $final_report->contractor_approve(true, true);
+            if( $final_report->isFullyApproved() ) {
+                $final_report
+                    ->order()
+                    ->update([ 'status' => Order::FINAL_REPORT_APPROVED ]);
+            }
+        });
+
+        return $request->wantsJson() ?
+            response()->json([
+                                 'message' => __('general.success'),
+                                 'success' => true,
+                             ]) :
+            back();
+
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Order        $order
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function order_final_report_consulting_office_approve(Request $request, Order $order)
+    {
+        tap($order->getFinalReportOrCreate(), function(FinalReport $final_report) {
+            $final_report->consulting_office_approve(true, true);
+            if( $final_report->isFullyApproved() ) {
+                $final_report
+                    ->order()
+                    ->update([ 'status' => Order::FINAL_REPORT_APPROVED ]);
+            }
+        });
+
+        return $request->wantsJson() ?
+            response()->json([
+                                 'message' => __('general.success'),
+                                 'success' => true,
+                             ]) :
+            back();
 
     }
 
@@ -446,6 +691,16 @@ HTML;
     public function delete_map_path(Request $request, License $license)
     {
         $license->deleteMapPathFile(true);
+
+        return response()->json([
+                                    'success' => true,
+                                    'message' => 'تم حذف المرفق بنجاح',
+                                ]);
+    }
+
+    public function delete_final_attachment_path(Request $request, License $license)
+    {
+        $license->deleteFinalAttachmentPath(true);
 
         return response()->json([
             'success' => true,

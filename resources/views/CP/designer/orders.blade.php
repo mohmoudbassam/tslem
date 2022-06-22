@@ -33,7 +33,6 @@
                                 @foreach($services_providers as $services_provider)
                                     <option value="{{$services_provider->id}}">{{$services_provider->company_name}}</option>
                                 @endforeach
-
                             </select>
                         </div>
                         <div class="col-lg-3 col-sm-6">
@@ -52,8 +51,6 @@
                         </div>
                     </form>
                 </div>
-
-
             </div>
         </div>
         <div class="card-body">

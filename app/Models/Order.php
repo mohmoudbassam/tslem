@@ -11,8 +11,6 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = [];
-
     public const PENDING = 1;
     public const REQUEST_BEGIN_CREATED = 2;
     public const DESIGN_REVIEW = 3;
@@ -24,10 +22,33 @@ class Order extends Model
     public const ORDER_APPROVED = 9;
     public const PENDING_OPERATION = 10;
     public const FINAL_REPORT_ATTACHED = 11;
+    public const FINAL_REPORT_APPROVED = 12;
+    public const FINAL_LICENSE_GENERATED = 13;
+    protected $guarded = [];
 
     public function license()
     {
         return $this->hasOne(License::class);
+    }
+
+    public function addon_license()
+    {
+        return $this->license()->byType(License::ADDON_TYPE);
+    }
+
+    public function execution_license()
+    {
+        return $this->license()->byType(License::EXECUTION_TYPE);
+    }
+
+    public function final_reports()
+    {
+        return $this->hasMany(FinalReport::class);
+    }
+
+    public function final_report()
+    {
+        return $this->hasOne(FinalReport::class);
     }
 
     public function specialties_file()
@@ -38,7 +59,7 @@ class Order extends Model
     public function service()
     {
         return $this->belongsToMany(Service::class, 'order_service', 'order_id', 'service_id')
-                    ->withPivot('service_id', 'order_id', 'unit');
+            ->withPivot('service_id', 'order_id', 'unit');
     }
 
     public function obligations()
@@ -96,14 +117,14 @@ class Order extends Model
         return $this->hasMany(DeliverRejectReson::class, 'order_id');
     }
 
+    public function orderSharerRegected()
+    {
+        return $this->orderSharer()->where('status', OrderSharer::REJECT);
+    }
+
     public function orderSharer()
     {
         return $this->hasMany(OrderSharer::class, 'order_id');
-    }
-
-    public function orderSharerRegected()
-    {
-        return $this->orderSharer()->where('status',OrderSharer::REJECT);
     }
 
     public function orderSharerAccepts()
@@ -111,10 +132,10 @@ class Order extends Model
         return $this->hasManyThrough(
             OrderSharerAccept::class,
             OrderSharer::class,
-            'order_id', // Foreign key on the environments table...
+            'order_id',        // Foreign key on the environments table...
             'order_sharer_id', // Foreign key on the deployments table...
-            'id', // Local key on the projects table...
-            'id' // Local key on the environments table...
+            'id',              // Local key on the projects table...
+            'id'               // Local key on the environments table...
         );
     }
 
@@ -142,24 +163,32 @@ class Order extends Model
 
     public function getOrderStatusAttribute()
     {
-        $orderStatus = [
-            '1' => 'معلق',
-            '2' => 'قيد انشاء الطلب',
-            '3' => 'مراجعة التصاميم',
-            '4' => 'معتمد التصاميم',
-            '8' => 'بإنتظار اعتماد الجهات الحكومية',
-            '5' => 'الطلب تحت الإجراء',
-            '6' => 'الطلب مكتمل',
-            '7' => 'بإنتظار اصدار الرخصة',
-            '9' => 'تمت الموافقة النهائية',
-            '10' => 'الطلب تحت التنفيذ',
-            '11' => 'تم ارفاق التقرير النهائي',
-        ];
-        if(isset($orderStatus[$this->status])){
+        $orderStatus = static::getOrderStatuses();
+        if (isset($orderStatus[$this->status])) {
             return $orderStatus[$this->status];
-        }else {
+        }
+        else {
             return null;
         }
+    }
+
+    public static function getOrderStatuses(): array
+    {
+        return [
+            static::PENDING                     => 'معلق',
+            static::REQUEST_BEGIN_CREATED       => 'قيد إنشاء الطلب',
+            static::DESIGN_REVIEW               => 'مراجعة التصاميم',
+            static::DESIGN_APPROVED             => 'معتمد التصاميم',
+            static::DESIGN_AWAITING_GOV_APPROVE => 'بانتظار اعتماد الجهات الحكومية',
+            static::PROCESSING                  => 'الطلب تحت الإجراء',
+            static::COMPLETED                   => 'الطلب مكتمل',
+            static::PENDING_LICENSE_ISSUED      => 'بانتظار إصدار الرخصة',
+            static::ORDER_APPROVED              => 'تمت الموافقة النهائية',
+            static::PENDING_OPERATION           => 'تم اصدار رخصة الاضافات',
+            static::FINAL_REPORT_ATTACHED       => 'تم ارفاق التقرير النهائي',
+            static::FINAL_REPORT_APPROVED       => 'تم اعتماد التقارير النهائية',
+            static::FINAL_LICENSE_GENERATED     => 'تم اصدار رخصة التنفيذ',
+        ];
     }
 
     public function lastDesignerNote()
@@ -243,7 +272,6 @@ class Order extends Model
 
     public function hasLicense(): bool
     {
-
         return $this->license()->whereNotNull('created_at')->count();
     }
 
@@ -272,11 +300,45 @@ class Order extends Model
             $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
         }
 
-//        $license->fill($attributes)
-//                ->forceFill(compact('created_at'))
-//                ->save();
+        $license->fill($attributes)
+                ->forceFill(compact('created_at'))
+                ->save();
 
         return $license->refresh();
+    }
+
+    public function hasFinalReport(): bool
+    {
+        return $this->final_report()->count();
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return \App\Models\FinalReport
+     */
+    public function getFinalReportOrCreate(array $attributes = [])
+    {
+        $final_report = $this->final_report()->firstOrNew([ 'order_id' => $this->id ?? -1 ], $attributes);
+
+        if( !$final_report->exists ) {
+            $final_report->save();
+
+            return $final_report->refresh();
+        }
+
+        return $final_report;
+    }
+
+    public function saveFinalReport(array $attributes = [])
+    {
+        $final_report = $this->getFinalReportOrCreate([ 'order_id' => $this->id ]);
+
+        $final_report
+            ->fill($attributes)
+            ->save();
+
+        return $final_report->refresh();
     }
 
     public function isDesignApproved()
@@ -284,7 +346,57 @@ class Order extends Model
         return $this->status === static::ORDER_APPROVED;
     }
 
+    public function shouldPostFinalReports()
+    {
+        return in_array($this->status, [ static::PENDING_OPERATION, static::FINAL_REPORT_ATTACHED ]);
+    }
+
+    public function userCanAttachFinalReport($user = null)
+    {
+        $user ??= currentUser();
+        $user_type = $user->isContractor() ? 'contractor' : (
+        $user->isConsultngOffice() ? 'consulting_office' : ""
+        );
+        if( !$user_type ) {
+            if( $user->id === $this->contractor_id ) {
+                $user_type = 'contractor';
+            } elseif( $user->id === $this->consulting_office_id ) {
+                $user_type = 'consulting_office';
+            }
+        }
+
+        if( !$user_type ) {
+            return false;
+        }
+
+        $path_column = "{$user_type}_final_report_path";
+
+        $final_report = optional($this->final_report());
+
+        return (
+                blank($final_report->value($path_column)) &&
+                !$final_report->value("{$user_type}_final_report_approved")
+            )
+            ||
+            (
+                filled($final_report->value("{$user_type}_final_report_note"))
+            );
+    }
+
+    public function shouldUserPostFinalReports()
+    {
+        return (
+            in_array(currentUser()->type, [ User::CONTRACTOR_TYPE, User::CONSULTNG_OFFICE_TYPE ]) ||
+            in_array(currentUser()->id, [ $this->contractor_id, $this->consulting_office_id ])
+        );
+    }
+
 //    public function raft_company(){
 //        return $this->service_provider()->belongsTo(User::class,'parent_id','id');
 //    }
+
+    public function isDesignReviewStatus(): bool
+    {
+        return $this->status == static::DESIGN_REVIEW;
+    }
 }

@@ -17,6 +17,9 @@ class License extends Model
     use HasFactory;
     use TModelTranslation;
 
+    const ADDON_TYPE = 1;
+    const EXECUTION_TYPE = 2;
+
     public static $RULES = [
         // 'order_id'          => [
         //     'required',
@@ -74,6 +77,24 @@ class License extends Model
 
     ];
 
+    public static $FINAL_ATTACHMENT_REPORT_RULES = [
+        'final_attachment_path' => [
+            'nullable',
+            'file',
+        ],
+    ];
+
+    public static $FINAL_REPORT_RULES = [
+        'final_report_path' => [
+            'nullable',
+            'file',
+        ],
+        'final_report_note' => [
+            'nullable',
+            'text',
+        ],
+    ];
+
     /**
      * @var mixed
      */
@@ -103,6 +124,9 @@ class License extends Model
         'person_count',
         'camp_space',
         'map_path',
+        'map_path_label',
+        'final_attachment_path',
+        'type',
         // 'created_at',
     ];
 
@@ -119,8 +143,11 @@ class License extends Model
         'camp_raft_company_box_id' => 'integer',
         'tents_count' => 'integer',
         'person_count' => 'integer',
+        'type' => 'integer',
         'camp_space' => 'double',
         'map_path' => 'string',
+        'map_path_label' => 'string',
+        'final_attachment_path' => 'string',
     ];
 
     protected $dates = [
@@ -202,11 +229,40 @@ CODE;
         return [];
     }
 
-    public static function getRules()
+    public static function getRules(?string $constant = null)
+    {
+        $constant = str_ireplace('$', '', $constant ?: '$RULES');
+        $rules = [];
+        $_rules = static::$$constant ?? static::$RULES;
+
+        foreach( $_rules as $column => $_rules ) {
+            $rules[ $column ] = [];
+            if( in_array('required', $_rules) ) {
+                $rules[ $column ][ 'required' ] = true;
+            }
+            if( in_array('nullable', $_rules) ) {
+                $rules[ $column ][ 'required' ] = false;
+            }
+        }
+
+        return $rules;
+    }
+
+    public static function getFinalReportRules($model = null)
     {
         $rules = [];
+        $_rules = static::$FINAL_REPORT_RULES;
 
-        foreach( static::$RULES as $column => $_rules ) {
+        if(
+            !in_array(currentUser()->type, [ User::CONTRACTOR_TYPE, User::CONSULTNG_OFFICE_TYPE ]) &&
+            ($model && get_class($model) === Order::class && !in_array(currentUser()->id, [$model->contractor_id, $model->consulting_office_id]))
+        ) {
+            $_rules = array_except($_rules, [ 'final_report_path' ]);
+        } else {
+            $_rules = array_except($_rules, [ 'final_report_note' ]);
+        }
+
+        foreach( $_rules as $column => $_rules ) {
             $rules[ $column ] = [];
             if( in_array('required', $_rules) ) {
                 $rules[ $column ][ 'required' ] = true;
@@ -273,6 +329,11 @@ CODE;
         return $builder->whereNotNull('created_at');
     }
 
+    public function scopeByType(Builder $builder, $type)
+    {
+        return $builder->whereIn('type', (array) $type);
+    }
+
     // endregion: scopes
 
     // region: map_path
@@ -280,6 +341,7 @@ CODE;
     {
         if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             $this->map_path = $full_path;
+            $this->map_path_label = $file->getFilename();
 
             if( $save ) {
                 $this->save();
@@ -297,6 +359,7 @@ CODE;
         }
 
         $this->map_path = null;
+        $this->map_path_label = null;
         if( $save ) {
             $this->save();
 
@@ -306,11 +369,44 @@ CODE;
         return $this;
     }
 
-    public static function disk()
-    {
-        return Storage::disk(static::$DISK);
-    }
     // endregion: map_path
+
+    public static function disk($disk = null)
+    {
+        return Storage::disk($disk??static::$DISK);
+    }
+
+    // region: final_attachment_path
+    public function addFinalAttachmentPath($file, bool $save = false)
+    {
+        if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
+            $this->final_attachment_path = $full_path;
+
+            if( $save ) {
+                $this->save();
+            }
+        }
+
+        return $this;
+    }
+
+    public function deleteFinalAttachmentPath(bool $save = false)
+    {
+        $storage = static::disk();
+        if( $storage->exists($this->final_attachment_path) ) {
+            $storage->delete($this->final_attachment_path);
+        }
+
+        $this->final_attachment_path = null;
+        if( $save ) {
+            $this->save();
+
+            return $this->refresh();
+        }
+
+        return $this;
+    }
+    // endregion: final_attachment_path
 
     // public function getMapPathFullAttribute()
     // {
@@ -412,7 +508,7 @@ CODE;
 
     public function getIdLabelAttribute()
     {
-        return $this->order_id;
+        return str_pad($this->id,4,"0",STR_PAD_LEFT);
     }
 
     public function getMapPathUrlAttribute()
@@ -435,6 +531,26 @@ CODE;
         }
     }
 
+    public function getFinalAttachmentPathUrlAttribute()
+    {
+        return $this->final_attachment_path ? static::disk()->url($this->final_attachment_path) : "";
+    }
+
+    public function setFinalAttachmentPathAttribute($value)
+    {
+        if(
+            $value &&
+            (
+                is_subclass_of($value, UploadedFile::class) ||
+                is_a($value, UploadedFile::class)
+            )
+        ) {
+            $this->addFinalAttachmentPath($value);
+        } else {
+            $this->attributes[ 'final_attachment_path' ] = $value;
+        }
+    }
+
     // endregion: attributes
 
     public function isFullyCreated(): bool
@@ -445,14 +561,16 @@ CODE;
     /**
      * @return void|\Illuminate\Support\HtmlString|string
      */
-    public function getQRElement()
+    public function getQRElement($type = null)
     {
-        $data = "";
-        if( $raft = $this->service_provider->getRaftCompanyBox() ) {
-
-            return QrCode::generate(route('qr_download_files',['order'=>$this->order->id]));
+        $type ??= $this->type;
+        $data = false;
+        if( $type === static::EXECUTION_TYPE ) {
+            $data = $this->getFinalAttachmentPathUrlAttribute();
+        } else if( $raft = $this->service_provider->getRaftCompanyBox() ) {
+            $data = route('qr_download_files', [ 'order'=>$this->order->id ]);
         }
 
-       return false;
+        return $data ? QrCode::generate($data) : $data;
     }
 }
