@@ -39,8 +39,8 @@
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <label for="service_provider_id">الشركات</label>
-                            <select class="form-control form-select" id="service_provider_id" name="service_provider_id">
+                            <label for="service_provider_id">مركز الخدمة</label>
+                            <select class="form-control" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
                                     <option
@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="designer_id">المكتب الهندسي</label>
-                            <select class="form-control form-select" id="designer_id" name="designer_id">
+                            <select class="form-control" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
                                     <option value="{{$designer->id}}">{{$designer->company_name}}</option>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="consulting_id">المشرف</label>
-                            <select class="form-control form-select" id="consulting_id" name="consulting_id">
+                            <select class="form-control" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 @foreach($consulting as $_consulting)
                                     <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="contractor_id">المقاول </label>
-                            <select class="form-control form-select" id="contractor_id" name="contractor_id">
+                            <select class="form-control" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
                                     <option value="{{$_contractor->id}}">{{$_contractor->company_name}}</option>
@@ -88,7 +88,7 @@
 
                         <div class="col-lg-3 col-sm-6">
                             <label for="order_status">حالة الطلب</label>
-                            <select class="form-control form-select" id="order_status" name="order_status">
+                            <select class="form-control" id="order_status" name="order_status">
                                 <option value="">اختر...</option>
                                 @foreach($orderStatuses as $id => $val)
                                     <option value="{!! $id !!}">{!! $val !!}</option>
@@ -113,7 +113,10 @@
                             رقم الطلب
                         </th>
                         <th>
-                            اسم الشركة
+                            مركز الخدمة
+                        </th>
+                        <th>
+                            الشركة
                         </th>
                         <th>
                             المكتب الهندسي
@@ -183,6 +186,7 @@
                 columns: [
                     {className: 'text-center', data: 'identifier', name: 'identifier'},
                     {className: 'text-center', data: 'service_provider.company_name', name: 'company_name',orderable : false},
+                    {className: 'text-center', data: 'raft_name_only', name: 'raft_name_only',orderable : false},
                     {className: 'text-center', data: 'designer.company_name', name: 'company_name',orderable : false},
                     {className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false},
                     {className: 'text-center space-nowrap', data: 'updated_at', name: 'updated_at',orderable : false},
