@@ -180,7 +180,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title mb-0">التفاضيل</h4>
+                            <h4 class="card-title mb-0">التفاصيل</h4>
                         </div>
 
                         <div class="card-body">
@@ -211,10 +211,11 @@
 
                                 <div class="col-md-6 border-bottom border-end">
                                     <p class="mb-0  p-3 fs-7"><span
-                                            class="bold"> مقاول النفايات :  </span>{{ $order->waste_contractor }}</p>
+                                            class="bold">المقاول :  </span>{{ $order->contractor->company_name }}</p>
                                 </div>
                                 <div class="col-md-6 border-bottom">
-
+                                <p class="mb-0  p-3 fs-7"><span
+                                            class="bold"> مقاول النفايات :  </span>{{ $order->waste_contractor }}</p>
                                 </div>
                             </div>
                             <div class="row pt-3">
