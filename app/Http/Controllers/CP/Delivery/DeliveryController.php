@@ -569,7 +569,7 @@ class DeliveryController extends Controller
 
     public function download_obligation($id)
     {
-        $file = OrderSpecialtyObligation::query()->where('id', $id)->first();
+        $file = \App\Models\OrderSpecialtyObligation::query()->where('id', $id)->first();
 
         $headers = [
             'Content-Type' => 'application/json',
