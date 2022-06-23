@@ -21,6 +21,7 @@ use App\Http\Controllers\CP\TaslemMaintenance\TaslemMaintenance;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use App\Http\Controllers\CP\Licenses\LicenseController;
+use App\Http\Controllers\CP\Media\MediaController;
 use App\Http\Controllers\CP\NewsArticles\NewsArticleController;
 use App\Http\Controllers\CP\VerificationController;
 use App\Http\Controllers\PDFController;
@@ -61,6 +62,29 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
 });
 
+Route::prefix('NewsArticles')
+    ->name('NewsArticles')
+    ->group(function () {
+        Route::get('NewsArticles', [NewsArticleController::class, 'Mainlist'])
+            ->name('.Mainlist');
+        Route::get('article/{news_article}', [NewsArticleController::class, 'article'])
+            ->name('.article');
+    });
+
+Route::prefix('Photoes')
+    ->name('Photoes')
+    ->group(function () {
+        Route::get('Photoes', [SiteController::class, 'getPhotos'])
+            ->name('.Photoes');
+    });
+
+Route::prefix('Videos')
+    ->name('Videos')
+    ->group(function () {
+        Route::get('Videos', [SiteController::class, 'getVideos'])
+            ->name('.Videos');
+    });
+
 //,'is-verified'
 Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
@@ -68,6 +92,17 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
     Route::post('save_profile', [UserController::class, 'save_profile'])->name('save_profile');
     Route::post('after_reject', [UserController::class, 'after_reject'])->name('after_reject');
     Route::get('notifications', [NotificationController::class, 'notifications'])->name('notifications');
+
+    Route::prefix('media')
+        ->name('media')
+        ->middleware(['user_type:admin'])
+        ->group(function () {
+            Route::get('', [MediaController::class, 'index']);
+            Route::get('list', [MediaController::class, 'list'])->name('.list');
+            Route::get('form/{media?}', [MediaController::class, 'form'])->name('.form');
+            Route::post('form/{media?}', [MediaController::class, 'add_edit'])->name('.add_edit');
+            Route::post('delete', [MediaController::class, 'delete'])->name('.delete');
+        });
 
     Route::prefix('licenses')
         ->name('licenses')
@@ -105,12 +140,12 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 ->name('.view_html');
 
             Route::get('view_pdf/{order}/execution_license', [LicenseController::class, 'view_pdf_execution_license'])
-                 ->name('.view_pdf_execution_license');
+                ->name('.view_pdf_execution_license');
 
             Route::get('order/{order}/attach-final-report-form', [LicenseController::class, 'order_license_attach_final_report_form'])
                 ->name('.attach_final_report_form');
             Route::post('order/{order}/attach-final-report', [LicenseController::class, 'order_license_attach_final_report'])
-                 ->name('.attach_final_report');
+                ->name('.attach_final_report');
 
             Route::get('order/{order}/final-report-contractor-approve', [LicenseController::class, 'order_final_report_contractor_approve'])
                 ->name('.final_report_contractor_approve');
@@ -120,36 +155,36 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('order/{order}/final-report-form', [LicenseController::class, 'order_license_final_report_form'])
                 ->name('.final_report_form');
             Route::post('order/{order}/final-report', [LicenseController::class, 'order_license_final_report'])
-                 ->name('.final_report');
+                ->name('.final_report');
 
             Route::get('order/{order}/reject_form/{type}', [LicenseController::class, 'reject_form'])->name('.reject_form');
             Route::post('order/{order}/reject_form/{type}', [LicenseController::class, 'reject'])->name('.reject');
         });
 
     Route::prefix('news_articles')
-     ->name('news_articles')
-     ->middleware([ 'user_type:admin' ])
-     ->group(function() {
-         Route::get('', [ NewsArticleController::class, 'index' ]);
-         Route::get('add', [ NewsArticleController::class, 'add' ])->name('.add');
-         Route::get('edit/{news_article}', [ NewsArticleController::class, 'edit' ])->name('.edit');
-         Route::get('form', [ NewsArticleController::class, 'form' ])->name('.form');
-         Route::get('list', [ NewsArticleController::class, 'list' ])->name('.list');
-         Route::post('update/{news_article}', [ NewsArticleController::class, 'update' ])->name('.update');
-         Route::post('delete/{news_article}', [ NewsArticleController::class, 'delete' ])->name('.delete');
-         Route::post('store', [ NewsArticleController::class, 'store' ])->name('.store');
-         Route::post('upload', [NewsArticleController::class,'upload'])->name('.upload');
-         Route::get('toggle_publish/{news_article}', [NewsArticleController::class,'togglePublish'])->name('.toggle_publish');
-     });
-
-    Route::prefix('NewsArticles')
-        ->name('NewsArticles')
-        ->group(function() {
-            Route::get('NewsArticles', [ NewsArticleController::class, 'Mainlist' ])
-                ->name('.Mainlist');
-            Route::get('article/{news_article}', [ NewsArticleController::class, 'article' ])
-                ->name('.article');
+        ->name('news_articles')
+        ->middleware(['user_type:admin'])
+        ->group(function () {
+            Route::get('', [NewsArticleController::class, 'index']);
+            Route::get('add', [NewsArticleController::class, 'add'])->name('.add');
+            Route::get('edit/{news_article}', [NewsArticleController::class, 'edit'])->name('.edit');
+            Route::get('form', [NewsArticleController::class, 'form'])->name('.form');
+            Route::get('list', [NewsArticleController::class, 'list'])->name('.list');
+            Route::post('update/{news_article}', [NewsArticleController::class, 'update'])->name('.update');
+            Route::post('delete/{news_article}', [NewsArticleController::class, 'delete'])->name('.delete');
+            Route::post('store', [NewsArticleController::class, 'store'])->name('.store');
+            Route::post('upload', [NewsArticleController::class, 'upload'])->name('.upload');
+            Route::get('toggle_publish/{news_article}', [NewsArticleController::class, 'togglePublish'])->name('.toggle_publish');
         });
+
+    // Route::prefix('NewsArticles')
+    //     ->name('NewsArticles')
+    //     ->group(function() {
+    //         Route::get('NewsArticles', [ NewsArticleController::class, 'Mainlist' ])
+    //             ->name('.Mainlist');
+    //         Route::get('article/{news_article}', [ NewsArticleController::class, 'article' ])
+    //             ->name('.article');
+    //     });
     Route::prefix('users')->name('users')->middleware('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::get('add', [UserController::class, 'add'])->name('.add');
@@ -181,7 +216,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::post('accept', [UserRequestController::class, 'accept'])->name('.accept');
             Route::get('reject_form', [UserRequestController::class, 'reject_form'])->name('.reject_form');
             Route::post('reject', [UserRequestController::class, 'reject'])->name('.reject');
-
         });
     });
 
@@ -226,7 +260,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                     );
                     Route::get('docx_file/{fileType}', [OrdersController::class, 'docx_file'])->name('.docx_file');
                     Route::get('create_order', [OrdersController::class, 'create_order'])->name('.create_order');
-
                 });
             Route::post("update-licence-number", [UserController::class, "update_licence_number"])
                 ->name(".update_licence_number");
@@ -328,7 +361,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
         Route::post("update_specialty", [ContractorController::class, "update_specialty"])
             ->name(".update_specialty");
-
     });
     Route::prefix('consulting-office')
         ->name('consulting_office')
@@ -380,7 +412,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('reject_order/{order}', [ConsultingOfficeController::class, 'reject_order'])->name(
                 '.reject_order'
             );
-
         });
     Route::prefix('Sharer')->name('Sharer')->middleware(['sharer'])->group(function () {
         Route::get('orders', [SharerController::class, 'orders'])->name('.order');
@@ -461,7 +492,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('list', [\App\Http\Controllers\CP\Session\SessionController::class, 'list'])->name('.list');
             Route::get('add', [\App\Http\Controllers\CP\Session\SessionController::class, 'add'])->name('.add');
             Route::post('save', [\App\Http\Controllers\CP\Session\SessionController::class, 'save'])->name('.save');
-
         });
         Route::get(
             'get_camp_by_box/{box}',
@@ -472,7 +502,6 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 });
 Route::prefix('raft_center')->name('raft_center')->middleware(['raft_center'])->group(function () {
     Route::get('', [RaftCenterController::class, 'index']);
-
 });
 Route::prefix('obligation')->name('obligation')->group(function () {
     Route::get('download/{id}', [DeliveryController::class, 'download_obligation'])->name('.download');
@@ -496,7 +525,6 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::get('/toDaySessions', [TaslemMaintenance::class, 'index'])->name('.toDaySessions');
         Route::get('/export', [TaslemMaintenance::class, 'export'])->name('.export');
         Route::post('send_sms', [TaslemMaintenance::class, 'send_sms'])->name('.send_sms');
-
     });
     Route::get('/add_files/{session_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');
     Route::post('/upload_file/{session_id}/{type}', [TaslemMaintenance::class, 'upload_file'])->name('.upload_file');
@@ -504,7 +532,6 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         '.download_file'
     );
     Route::post('/save_note', [TaslemMaintenance::class, 'save_note'])->name('.save_note');
-
 });
 Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () {
     Route::get('', [KdanaController::class, 'index']);
@@ -514,8 +541,6 @@ Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () 
     Route::get('users_list', [KdanaController::class, 'users_list'])->name('.users_list');
     Route::get('show_license', [KdanaController::class, 'show_license'])->name('.show_license');
     Route::get('license_list', [KdanaController::class, 'license_list'])->name('.license_list');
-
-
 });
 //Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth','order_id_middleware']], function () {
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
