@@ -8,11 +8,11 @@
     background: linear-gradient(0deg, #0a2373, #324ea3);
   }
   .card.card-chart__filled--brown {
-    background: linear-gradient(0deg, #b78560, #dba47e);
+    background: #b78560;
   }
 
   .card.card-chart__filled--lighbrown {
-    background: linear-gradient(0deg, #e3ba9c, #ebccb7);
+    background: #b78560;
   }
 
   .card.card-chart__filled h3 {
@@ -34,7 +34,7 @@
     color: #fff;
   }
 
-  .card.card-chart__filled a:after {
+  /* .card.card-chart__filled a:after {
     content: "\f0142";
     font-family: "Material Design Icons";
     display: inline-block;
@@ -49,7 +49,7 @@
     border-radius: 50%;
     vertical-align: middle;
     transform: rotate(180deg);
-  }
+  } */
   .card.card-chart__filled svg {
     position: absolute;
     top: 38px;

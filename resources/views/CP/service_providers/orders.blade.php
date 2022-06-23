@@ -14,15 +14,15 @@
                             <div class="btn-group" role="group">
                                 <a href="{{route('services_providers.create_order')}}"
                                    class="btn btn-primary dropdown-toggle">
-                                    انشاء الطلب <i class="fa fa-clipboard-check"></i>
+                                   <i class="fa fa-clipboard-check me-1"></i> انشاء الطلب
                                 </a>
-
                             </div>
                             @if(isset($box->file_first) or isset($box->file_second) or isset($box->file_third))
                                 <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="filesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-download me-1"></i>
                                     ملفات الاستلام
-                                    <i class="fa fa-download"></i>
+
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="filesDropdown">
                                     @if(isset($box->file_first))
@@ -71,7 +71,7 @@
                         </div>
                         <div class="col">
                             <label for="designer_id">المكتب الهندسي</label>
-                            <select class="form-control" id="designer_id" name="designer_id">
+                            <select class="form-control form-select" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
                                     <option value="{{$designer->id}}">{{$designer->company_name}}</option>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col">
                             <label for="consulting_id">المشرف</label>
-                            <select class="form-control" id="consulting_id" name="consulting_id">
+                            <select class="form-control form-select" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 @foreach($consulting as $_consulting)
                                     <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="col">
                             <label for="contractor_id">المقاول </label>
-                            <select class="form-control" id="contractor_id" name="contractor_id">
+                            <select class="form-control form-select" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
                                     <option value="{{$_contractor->id}}">{{$_contractor->company_name}}</option>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="col">
                             <label for="waste_contractor">مقاول النفايات </label>
-                            <select class="form-control" id="waste_contractor" name="waste_contractor">
+                            <select class="form-control form-select" id="waste_contractor" name="waste_contractor">
                                 <option value="">اختر...</option>
                             @foreach(wasteContractorsList() as $wasteContractor)
                                     <option value="{{$wasteContractor['name']}}">{{$wasteContractor['name']}}</option>

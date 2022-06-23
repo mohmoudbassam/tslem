@@ -57,6 +57,18 @@
             font-size: 18px;
             color: #0b2473;
         }
+        .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center, .apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+            justify-content: flex-start !important;
+        }
+        .apexcharts-legend-marker {
+            margin-left: 3px !important;
+        }
+        .apexcharts-tooltip-marker {
+            margin-left: 10px !important;
+        }
+        .apexcharts-tooltip-text-y-value, .apexcharts-tooltip-text-goals-value, .apexcharts-tooltip-text-z-value {
+            margin-right: 5px !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -814,13 +826,14 @@
             colors: ['#4169E1', '#e5eb34', '#A0522D', '#f17a29',
                 '#bb0000', 'rgba(20,187,110,0.65)', '#d76e80'],
             series: [{
+                name: "عدد المخيمات",
                 data: @json($bar)
             }],
-            // xaxis: {
-            //     labels: {
-            //         rotate: 0
-            //     }
-            // }
+            xaxis: {
+                labels: {
+                    show: false
+                }
+            }
         }
         new ApexCharts(document.querySelector("#barchart-1"), barchart1).render();
 
