@@ -228,7 +228,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image' && $item->files->first())
-                                <img id="myImg{{$key}}" onclick='viewImage("myImg{{$key}}")' style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                <img style="cursor: pointer;" id="myImg{{$key}}" onclick='viewImage("myImg{{$key}}")' style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
                                 @if($item['type'] == 'video' && $item->files->first())
                                 <video width="100%" height="200" controls>
@@ -362,7 +362,7 @@
         <!-- The Modal -->
         <div id="myModal" class="modal">
             <!-- Modal Content (The Image) -->
-            <img class="modal-content" id="img01">
+            <img style="cursor: pointer;" class="modal-content" id="img01">
         </div>
 
 
