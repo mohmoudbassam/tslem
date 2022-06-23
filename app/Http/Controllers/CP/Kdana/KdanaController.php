@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CP\Kdana;
 
 use App\Helpers\Calendar;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Models\License;
 use App\Models\LoginNumber;
 use App\Models\Order;
@@ -104,7 +105,7 @@ class KdanaController extends Controller
             });
         ///order per designer office
         $data['order_count_per_designer'] = Order::query()->whereNotNull('designer_id')->count();
-        $data['order_count_per_taslem'] = Order::taslemDashboardOrders()->count();
+        $data['order_count_per_taslem'] =DeliveryController::getOrdersQuery()->count();
         $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
         $data['wasteContractors'] = wasteContractorsList()->count();
 
