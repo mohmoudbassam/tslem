@@ -123,16 +123,18 @@
             <div class="container">
                 <div class=" justify-content-center">
                     <div class="col-lg-12 row">
-                    @foreach($photos as $item)
+                        @foreach($photos as $item)
 
                         <div class="guide-links col-md-3 mb-2">
-                            <div class="card" >
+                            <div class="card">
                                 @if($item['type'] == 'image')
-                                <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item['file']) }}" class="card-img-top" alt="...">
+                                <a target="_blank" href="{{ asset('storage/'.$item['file']) }}">
+                                    <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item['file']) }}" class="card-img-top" alt="...">
+                                </a>
                                 @endif
                                 @if($item['type'] == 'video')
                                 <video width="100%" height="200" controls>
-                                <source src="{{asset('storage/' . $item['file'])}}" >
+                                    <source src="{{asset('storage/' . $item['file'])}}">
                                 </video>
                                 @endif
                                 <div class="card-body">
