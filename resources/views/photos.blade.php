@@ -223,7 +223,7 @@
             <div class="container">
                 <div class=" justify-content-center">
                     <div class="col-lg-12 row">
-                        @foreach($photos as $item)
+                        @foreach($photos as $key => $item)
 
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
