@@ -1,0 +1,80 @@
+@font-face {
+    font-family: Janna;
+    src: url(../JannaLT-Bold.ttf);
+    font-weight: bold;
+}
+
+
+@font-face {
+    font-family: Janna;
+    src: url(../fonts/JannaLT-Regular.ttf);
+    font-weight: normal;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+input,
+button,
+label,
+input::placeholder,
+p {
+    font-family: Janna !important;
+    font-weight: normal;
+}
+
+label {
+    direction: rtl !important;
+}
+
+input {
+    direction: rtl !important;
+}
+
+.login-page-form-container,
+.login-page-form-container input {
+    text-align: right !important;
+}
+
+
+
+.btn-primary {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+}
+
+
+
+.btn-outline-primary {
+    border-color: var(--main-color) !important;
+    color: var(--main-color) !important;
+}
+
+
+.btn-outline-primary:hover {
+    background-color: var(--main-color) !important;
+    color: white !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--second-color) !important;
+}
+
+.btn-secondary {
+    background-color: var(--second-color) !important;
+    border-color: var(--second-color) !important;
+}
+
+.auth-content.my-auto{
+    margin-top: 10px !important;
+    margin-bottom: 0!important;
+}
+
+.auth-full-page-content {
+    min-height: 0px !important;
+}

@@ -1,0 +1,4687 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)https://tsleem.com.sa/dashboard -->
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  <title> المستخدمين
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="Premium Multipurpose Admin &amp; Dashboard Template" name="description">
+  <meta content="Themesbrand" name="author">
+  <meta name="csrf-token" content="oTDLXFcBTDnpHODcbsv0BaRyu51E6zpaIXiKDLH2">
+  <!-- App favicon -->
+  <link href="./index_files/all.min.css" rel="stylesheet">
+  <!-- plugin css -->
+  <link href="./index_files/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
+
+  <!-- preloader css -->
+  <link rel="stylesheet" href="./index_files/preloader.min.css" type="text/css">
+  <link rel="stylesheet" href="./index_files/custom-panel.css" type="text/css">
+
+  <!-- Bootstrap Css -->
+  <link href="./index_files/bootstrap-rtl.min.css" id="bootstrap-style" rel="stylesheet" type="text/css">
+  <!-- Icons Css -->
+  <link href="./index_files/icons.min.css" rel="stylesheet" type="text/css">
+  <!-- App Css-->
+  <link href="./index_files/app-rtl-3.min.css" id="app-style" rel="stylesheet" type="text/css">
+  <link href="./index_files/fileinput.min.css" rel="stylesheet" type="text/css">
+  <link href="./index_files/alertify.min.css" rel="stylesheet" type="text/css">
+
+  <!-- alertifyjs default themes  Css -->
+  <link href="./index_files/default.min.css" rel="stylesheet" type="text/css">
+
+  <script src="./index_files/sweetalert2.all.min.js.download"></script>
+  <style>
+    .swal2-popup.swal2-toast {
+      box-sizing: border-box;
+      grid-column: 1/4 !important;
+      grid-row: 1/4 !important;
+      grid-template-columns: 1fr 99fr 1fr;
+      padding: 1em;
+      overflow-y: hidden;
+      background: #fff;
+      box-shadow: 0 0 .625em #d9d9d9
+    }
+
+    .swal2-popup.swal2-toast>* {
+      grid-column: 2
+    }
+
+    .swal2-popup.swal2-toast .swal2-title {
+      margin: 1em;
+      padding: 0;
+      font-size: 1em;
+      text-align: initial
+    }
+
+    .swal2-popup.swal2-toast .swal2-loading {
+      justify-content: center
+    }
+
+    .swal2-popup.swal2-toast .swal2-input {
+      height: 2em;
+      margin: .5em;
+      font-size: 1em
+    }
+
+    .swal2-popup.swal2-toast .swal2-validation-message {
+      font-size: 1em
+    }
+
+    .swal2-popup.swal2-toast .swal2-footer {
+      margin: .5em 0 0;
+      padding: .5em 0 0;
+      font-size: .8em
+    }
+
+    .swal2-popup.swal2-toast .swal2-close {
+      grid-column: 3/3;
+      grid-row: 1/99;
+      align-self: center;
+      width: .8em;
+      height: .8em;
+      margin: 0;
+      font-size: 2em
+    }
+
+    .swal2-popup.swal2-toast .swal2-html-container {
+      margin: 1em;
+      padding: 0;
+      font-size: 1em;
+      text-align: initial
+    }
+
+    .swal2-popup.swal2-toast .swal2-html-container:empty {
+      padding: 0
+    }
+
+    .swal2-popup.swal2-toast .swal2-loader {
+      grid-column: 1;
+      grid-row: 1/99;
+      align-self: center;
+      width: 2em;
+      height: 2em;
+      margin: .25em
+    }
+
+    .swal2-popup.swal2-toast .swal2-icon {
+      grid-column: 1;
+      grid-row: 1/99;
+      align-self: center;
+      width: 2em;
+      min-width: 2em;
+      height: 2em;
+      margin: 0 .5em 0 0
+    }
+
+    .swal2-popup.swal2-toast .swal2-icon .swal2-icon-content {
+      display: flex;
+      align-items: center;
+      font-size: 1.8em;
+      font-weight: 700
+    }
+
+    .swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring {
+      width: 2em;
+      height: 2em
+    }
+
+    .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+      top: .875em;
+      width: 1.375em
+    }
+
+    .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+      left: .3125em
+    }
+
+    .swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+      right: .3125em
+    }
+
+    .swal2-popup.swal2-toast .swal2-actions {
+      justify-content: flex-start;
+      height: auto;
+      margin: 0;
+      margin-top: .3125em;
+      padding: 0
+    }
+
+    .swal2-popup.swal2-toast .swal2-styled {
+      margin: .25em .5em;
+      padding: .4em .6em;
+      font-size: 1em
+    }
+
+    .swal2-popup.swal2-toast .swal2-styled:focus {
+      box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgba(100, 150, 200, .5)
+    }
+
+    .swal2-popup.swal2-toast .swal2-success {
+      border-color: #a5dc86
+    }
+
+    .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line] {
+      position: absolute;
+      width: 1.6em;
+      height: 3em;
+      transform: rotate(45deg);
+      border-radius: 50%
+    }
+
+    .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left] {
+      top: -.8em;
+      left: -.5em;
+      transform: rotate(-45deg);
+      transform-origin: 2em 2em;
+      border-radius: 4em 0 0 4em
+    }
+
+    .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right] {
+      top: -.25em;
+      left: .9375em;
+      transform-origin: 0 1.5em;
+      border-radius: 0 4em 4em 0
+    }
+
+    .swal2-popup.swal2-toast .swal2-success .swal2-success-ring {
+      width: 2em;
+      height: 2em
+    }
+
+    .swal2-popup.swal2-toast .swal2-success .swal2-success-fix {
+      top: 0;
+      left: .4375em;
+      width: .4375em;
+      height: 2.6875em
+    }
+
+    .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line] {
+      height: .3125em
+    }
+
+    .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip] {
+      top: 1.125em;
+      left: .1875em;
+      width: .75em
+    }
+
+    .swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long] {
+      top: .9375em;
+      right: .1875em;
+      width: 1.375em
+    }
+
+    .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip {
+      -webkit-animation: swal2-toast-animate-success-line-tip .75s;
+      animation: swal2-toast-animate-success-line-tip .75s
+    }
+
+    .swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long {
+      -webkit-animation: swal2-toast-animate-success-line-long .75s;
+      animation: swal2-toast-animate-success-line-long .75s
+    }
+
+    .swal2-popup.swal2-toast.swal2-show {
+      -webkit-animation: swal2-toast-show .5s;
+      animation: swal2-toast-show .5s
+    }
+
+    .swal2-popup.swal2-toast.swal2-hide {
+      -webkit-animation: swal2-toast-hide .1s forwards;
+      animation: swal2-toast-hide .1s forwards
+    }
+
+    .swal2-container {
+      display: grid;
+      position: fixed;
+      z-index: 1060;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      box-sizing: border-box;
+      grid-template-areas: "top-start     top            top-end""center-start  center         center-end""bottom-start  bottom-center  bottom-end""gap gap gap";
+      grid-template-rows: auto auto auto .625em;
+      height: 100%;
+      padding: .625em .625em 0;
+      overflow-x: hidden;
+      transition: background-color .1s;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .swal2-container::after {
+      content: "";
+      grid-column: 1/4;
+      grid-row: 4;
+      height: .625em
+    }
+
+    .swal2-container.swal2-backdrop-show,
+    .swal2-container.swal2-noanimation {
+      background: rgba(0, 0, 0, .4)
+    }
+
+    .swal2-container.swal2-backdrop-hide {
+      background: 0 0 !important
+    }
+
+    .swal2-container.swal2-bottom-start,
+    .swal2-container.swal2-center-start,
+    .swal2-container.swal2-top-start {
+      grid-template-columns: minmax(0, 1fr) auto auto
+    }
+
+    .swal2-container.swal2-bottom,
+    .swal2-container.swal2-center,
+    .swal2-container.swal2-top {
+      grid-template-columns: auto minmax(0, 1fr) auto
+    }
+
+    .swal2-container.swal2-bottom-end,
+    .swal2-container.swal2-center-end,
+    .swal2-container.swal2-top-end {
+      grid-template-columns: auto auto minmax(0, 1fr)
+    }
+
+    .swal2-container.swal2-top-start>.swal2-popup {
+      align-self: start
+    }
+
+    .swal2-container.swal2-top>.swal2-popup {
+      grid-column: 2;
+      align-self: start;
+      justify-self: center
+    }
+
+    .swal2-container.swal2-top-end>.swal2-popup,
+    .swal2-container.swal2-top-right>.swal2-popup {
+      grid-column: 3;
+      align-self: start;
+      justify-self: end
+    }
+
+    .swal2-container.swal2-center-left>.swal2-popup,
+    .swal2-container.swal2-center-start>.swal2-popup {
+      grid-row: 2;
+      align-self: center
+    }
+
+    .swal2-container.swal2-center>.swal2-popup {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: center;
+      justify-self: center
+    }
+
+    .swal2-container.swal2-center-end>.swal2-popup,
+    .swal2-container.swal2-center-right>.swal2-popup {
+      grid-column: 3;
+      grid-row: 2;
+      align-self: center;
+      justify-self: end
+    }
+
+    .swal2-container.swal2-bottom-left>.swal2-popup,
+    .swal2-container.swal2-bottom-start>.swal2-popup {
+      grid-column: 1;
+      grid-row: 3;
+      align-self: end
+    }
+
+    .swal2-container.swal2-bottom>.swal2-popup {
+      grid-column: 2;
+      grid-row: 3;
+      justify-self: center;
+      align-self: end
+    }
+
+    .swal2-container.swal2-bottom-end>.swal2-popup,
+    .swal2-container.swal2-bottom-right>.swal2-popup {
+      grid-column: 3;
+      grid-row: 3;
+      align-self: end;
+      justify-self: end
+    }
+
+    .swal2-container.swal2-grow-fullscreen>.swal2-popup,
+    .swal2-container.swal2-grow-row>.swal2-popup {
+      grid-column: 1/4;
+      width: 100%
+    }
+
+    .swal2-container.swal2-grow-column>.swal2-popup,
+    .swal2-container.swal2-grow-fullscreen>.swal2-popup {
+      grid-row: 1/4;
+      align-self: stretch
+    }
+
+    .swal2-container.swal2-no-transition {
+      transition: none !important
+    }
+
+    .swal2-popup {
+      display: none;
+      position: relative;
+      box-sizing: border-box;
+      width: 32em;
+      max-width: 100%;
+      padding: 0 0 1.25em;
+      border: none;
+      border-radius: 5px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 1rem
+    }
+
+    .swal2-popup:focus {
+      outline: 0
+    }
+
+    .swal2-popup.swal2-loading {
+      overflow-y: hidden
+    }
+
+    .swal2-title {
+      position: relative;
+      max-width: 100%;
+      margin: 0;
+      padding: .8em 1em 0;
+      color: #595959;
+      font-size: 1.875em;
+      font-weight: 600;
+      text-align: center;
+      text-transform: none;
+      word-wrap: break-word
+    }
+
+    .swal2-actions {
+      display: flex;
+      z-index: 1;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 1.25em auto 0;
+      padding: 0
+    }
+
+    .swal2-actions:not(.swal2-loading) .swal2-styled[disabled] {
+      opacity: .4
+    }
+
+    .swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+      background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1))
+    }
+
+    .swal2-actions:not(.swal2-loading) .swal2-styled:active {
+      background-image: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .2))
+    }
+
+    .swal2-loader {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 2.2em;
+      height: 2.2em;
+      margin: 0 1.875em;
+      -webkit-animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+      animation: swal2-rotate-loading 1.5s linear 0s infinite normal;
+      border-width: .25em;
+      border-style: solid;
+      border-radius: 100%;
+      border-color: #2778c4 transparent #2778c4 transparent
+    }
+
+    .swal2-styled {
+      margin: .3125em;
+      padding: .625em 1.1em;
+      transition: box-shadow .1s;
+      box-shadow: 0 0 0 3px transparent;
+      font-weight: 500
+    }
+
+    .swal2-styled:not([disabled]) {
+      cursor: pointer
+    }
+
+    .swal2-styled.swal2-confirm {
+      border: 0;
+      border-radius: .25em;
+      background: initial;
+      background-color: #7367f0;
+      color: #fff;
+      font-size: 1em
+    }
+
+    .swal2-styled.swal2-confirm:focus {
+      box-shadow: 0 0 0 3px rgba(115, 103, 240, .5)
+    }
+
+    .swal2-styled.swal2-deny {
+      border: 0;
+      border-radius: .25em;
+      background: initial;
+      background-color: #ea5455;
+      color: #fff;
+      font-size: 1em
+    }
+
+    .swal2-styled.swal2-deny:focus {
+      box-shadow: 0 0 0 3px rgba(234, 84, 85, .5)
+    }
+
+    .swal2-styled.swal2-cancel {
+      border: 0;
+      border-radius: .25em;
+      background: initial;
+      background-color: #6e7d88;
+      color: #fff;
+      font-size: 1em
+    }
+
+    .swal2-styled.swal2-cancel:focus {
+      box-shadow: 0 0 0 3px rgba(110, 125, 136, .5)
+    }
+
+    .swal2-styled.swal2-default-outline:focus {
+      box-shadow: 0 0 0 3px rgba(100, 150, 200, .5)
+    }
+
+    .swal2-styled:focus {
+      outline: 0
+    }
+
+    .swal2-styled::-moz-focus-inner {
+      border: 0
+    }
+
+    .swal2-footer {
+      justify-content: center;
+      margin: 1em 0 0;
+      padding: 1em 1em 0;
+      border-top: 1px solid #eee;
+      color: #545454;
+      font-size: 1em
+    }
+
+    .swal2-timer-progress-bar-container {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      grid-column: auto !important;
+      height: .25em;
+      overflow: hidden;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px
+    }
+
+    .swal2-timer-progress-bar {
+      width: 100%;
+      height: .25em;
+      background: rgba(0, 0, 0, .2)
+    }
+
+    .swal2-image {
+      max-width: 100%;
+      margin: 2em auto 1em
+    }
+
+    .swal2-close {
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      width: 1.2em;
+      height: 1.2em;
+      margin-top: 0;
+      margin-right: 0;
+      margin-bottom: -1.2em;
+      padding: 0;
+      overflow: hidden;
+      transition: color .1s, box-shadow .1s;
+      border: none;
+      border-radius: 5px;
+      background: 0 0;
+      color: #ccc;
+      font-family: serif;
+      font-family: monospace;
+      font-size: 2.5em;
+      cursor: pointer;
+      justify-self: end
+    }
+
+    .swal2-close:hover {
+      transform: none;
+      background: 0 0;
+      color: #f27474
+    }
+
+    .swal2-close:focus {
+      outline: 0;
+      box-shadow: inset 0 0 0 3px rgba(100, 150, 200, .5)
+    }
+
+    .swal2-close::-moz-focus-inner {
+      border: 0
+    }
+
+    .swal2-html-container {
+      z-index: 1;
+      justify-content: center;
+      margin: 0;
+      padding: 1em 1.6em .3em;
+      color: #545454;
+      font-size: 1.125em;
+      font-weight: 400;
+      line-height: normal;
+      text-align: center;
+      word-wrap: break-word;
+      word-break: break-word
+    }
+
+    .swal2-checkbox,
+    .swal2-file,
+    .swal2-input,
+    .swal2-radio,
+    .swal2-select,
+    .swal2-textarea {
+      margin: 1em 2em 0
+    }
+
+    .swal2-file,
+    .swal2-input,
+    .swal2-textarea {
+      box-sizing: border-box;
+      width: auto;
+      transition: border-color .1s, box-shadow .1s;
+      border: 1px solid #d9d9d9;
+      border-radius: .1875em;
+      background: inherit;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .06), 0 0 0 3px transparent;
+      color: inherit;
+      font-size: 1.125em
+    }
+
+    .swal2-file.swal2-inputerror,
+    .swal2-input.swal2-inputerror,
+    .swal2-textarea.swal2-inputerror {
+      border-color: #f27474 !important;
+      box-shadow: 0 0 2px #f27474 !important
+    }
+
+    .swal2-file:focus,
+    .swal2-input:focus,
+    .swal2-textarea:focus {
+      border: 1px solid #b4dbed;
+      outline: 0;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .06), 0 0 0 3px rgba(100, 150, 200, .5)
+    }
+
+    .swal2-file::-moz-placeholder,
+    .swal2-input::-moz-placeholder,
+    .swal2-textarea::-moz-placeholder {
+      color: #ccc
+    }
+
+    .swal2-file:-ms-input-placeholder,
+    .swal2-input:-ms-input-placeholder,
+    .swal2-textarea:-ms-input-placeholder {
+      color: #ccc
+    }
+
+    .swal2-file::placeholder,
+    .swal2-input::placeholder,
+    .swal2-textarea::placeholder {
+      color: #ccc
+    }
+
+    .swal2-range {
+      margin: 1em 2em 0;
+      background: #fff
+    }
+
+    .swal2-range input {
+      width: 80%
+    }
+
+    .swal2-range output {
+      width: 20%;
+      color: inherit;
+      font-weight: 600;
+      text-align: center
+    }
+
+    .swal2-range input,
+    .swal2-range output {
+      height: 2.625em;
+      padding: 0;
+      font-size: 1.125em;
+      line-height: 2.625em
+    }
+
+    .swal2-input {
+      height: 2.625em;
+      padding: 0 .75em
+    }
+
+    .swal2-input[type=number] {
+      max-width: 10em
+    }
+
+    .swal2-file {
+      width: 75%;
+      margin-right: auto;
+      margin-left: auto;
+      background: inherit;
+      font-size: 1.125em
+    }
+
+    .swal2-textarea {
+      height: 6.75em;
+      padding: .75em
+    }
+
+    .swal2-select {
+      min-width: 50%;
+      max-width: 100%;
+      padding: .375em .625em;
+      background: inherit;
+      color: inherit;
+      font-size: 1.125em
+    }
+
+    .swal2-checkbox,
+    .swal2-radio {
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: inherit
+    }
+
+    .swal2-checkbox label,
+    .swal2-radio label {
+      margin: 0 .6em;
+      font-size: 1.125em
+    }
+
+    .swal2-checkbox input,
+    .swal2-radio input {
+      flex-shrink: 0;
+      margin: 0 .4em
+    }
+
+    .swal2-input-label {
+      display: flex;
+      justify-content: center;
+      margin: 1em auto 0
+    }
+
+    .swal2-validation-message {
+      align-items: center;
+      justify-content: center;
+      margin: 1em 0 0;
+      padding: .625em;
+      overflow: hidden;
+      background: #f0f0f0;
+      color: #666;
+      font-size: 1em;
+      font-weight: 300
+    }
+
+    .swal2-validation-message::before {
+      content: "!";
+      display: inline-block;
+      width: 1.5em;
+      min-width: 1.5em;
+      height: 1.5em;
+      margin: 0 .625em;
+      border-radius: 50%;
+      background-color: #f27474;
+      color: #fff;
+      font-weight: 600;
+      line-height: 1.5em;
+      text-align: center
+    }
+
+    .swal2-icon {
+      position: relative;
+      box-sizing: content-box;
+      justify-content: center;
+      width: 5em;
+      height: 5em;
+      margin: 2.5em auto .6em;
+      border: .25em solid transparent;
+      border-radius: 50%;
+      border-color: #000;
+      font-family: inherit;
+      line-height: 5em;
+      cursor: default;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none
+    }
+
+    .swal2-icon .swal2-icon-content {
+      display: flex;
+      align-items: center;
+      font-size: 3.75em
+    }
+
+    .swal2-icon.swal2-error {
+      border-color: #f27474;
+      color: #f27474
+    }
+
+    .swal2-icon.swal2-error .swal2-x-mark {
+      position: relative;
+      flex-grow: 1
+    }
+
+    .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+      display: block;
+      position: absolute;
+      top: 2.3125em;
+      width: 2.9375em;
+      height: .3125em;
+      border-radius: .125em;
+      background-color: #f27474
+    }
+
+    .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+      left: 1.0625em;
+      transform: rotate(45deg)
+    }
+
+    .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+      right: 1em;
+      transform: rotate(-45deg)
+    }
+
+    .swal2-icon.swal2-error.swal2-icon-show {
+      -webkit-animation: swal2-animate-error-icon .5s;
+      animation: swal2-animate-error-icon .5s
+    }
+
+    .swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark {
+      -webkit-animation: swal2-animate-error-x-mark .5s;
+      animation: swal2-animate-error-x-mark .5s
+    }
+
+    .swal2-icon.swal2-warning {
+      border-color: #facea8;
+      color: #f8bb86
+    }
+
+    .swal2-icon.swal2-info {
+      border-color: #9de0f6;
+      color: #3fc3ee
+    }
+
+    .swal2-icon.swal2-question {
+      border-color: #c9dae1;
+      color: #87adbd
+    }
+
+    .swal2-icon.swal2-success {
+      border-color: #a5dc86;
+      color: #a5dc86
+    }
+
+    .swal2-icon.swal2-success [class^=swal2-success-circular-line] {
+      position: absolute;
+      width: 3.75em;
+      height: 7.5em;
+      transform: rotate(45deg);
+      border-radius: 50%
+    }
+
+    .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left] {
+      top: -.4375em;
+      left: -2.0635em;
+      transform: rotate(-45deg);
+      transform-origin: 3.75em 3.75em;
+      border-radius: 7.5em 0 0 7.5em
+    }
+
+    .swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right] {
+      top: -.6875em;
+      left: 1.875em;
+      transform: rotate(-45deg);
+      transform-origin: 0 3.75em;
+      border-radius: 0 7.5em 7.5em 0
+    }
+
+    .swal2-icon.swal2-success .swal2-success-ring {
+      position: absolute;
+      z-index: 2;
+      top: -.25em;
+      left: -.25em;
+      box-sizing: content-box;
+      width: 100%;
+      height: 100%;
+      border: .25em solid rgba(165, 220, 134, .3);
+      border-radius: 50%
+    }
+
+    .swal2-icon.swal2-success .swal2-success-fix {
+      position: absolute;
+      z-index: 1;
+      top: .5em;
+      left: 1.625em;
+      width: .4375em;
+      height: 5.625em;
+      transform: rotate(-45deg)
+    }
+
+    .swal2-icon.swal2-success [class^=swal2-success-line] {
+      display: block;
+      position: absolute;
+      z-index: 2;
+      height: .3125em;
+      border-radius: .125em;
+      background-color: #a5dc86
+    }
+
+    .swal2-icon.swal2-success [class^=swal2-success-line][class$=tip] {
+      top: 2.875em;
+      left: .8125em;
+      width: 1.5625em;
+      transform: rotate(45deg)
+    }
+
+    .swal2-icon.swal2-success [class^=swal2-success-line][class$=long] {
+      top: 2.375em;
+      right: .5em;
+      width: 2.9375em;
+      transform: rotate(-45deg)
+    }
+
+    .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip {
+      -webkit-animation: swal2-animate-success-line-tip .75s;
+      animation: swal2-animate-success-line-tip .75s
+    }
+
+    .swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long {
+      -webkit-animation: swal2-animate-success-line-long .75s;
+      animation: swal2-animate-success-line-long .75s
+    }
+
+    .swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right {
+      -webkit-animation: swal2-rotate-success-circular-line 4.25s ease-in;
+      animation: swal2-rotate-success-circular-line 4.25s ease-in
+    }
+
+    .swal2-progress-steps {
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 100%;
+      margin: 1.25em auto;
+      padding: 0;
+      background: inherit;
+      font-weight: 600
+    }
+
+    .swal2-progress-steps li {
+      display: inline-block;
+      position: relative
+    }
+
+    .swal2-progress-steps .swal2-progress-step {
+      z-index: 20;
+      flex-shrink: 0;
+      width: 2em;
+      height: 2em;
+      border-radius: 2em;
+      background: #2778c4;
+      color: #fff;
+      line-height: 2em;
+      text-align: center
+    }
+
+    .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
+      background: #2778c4
+    }
+
+    .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step {
+      background: #add8e6;
+      color: #fff
+    }
+
+    .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line {
+      background: #add8e6
+    }
+
+    .swal2-progress-steps .swal2-progress-step-line {
+      z-index: 10;
+      flex-shrink: 0;
+      width: 2.5em;
+      height: .4em;
+      margin: 0 -1px;
+      background: #2778c4
+    }
+
+    [class^=swal2] {
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .swal2-show {
+      -webkit-animation: swal2-show .3s;
+      animation: swal2-show .3s
+    }
+
+    .swal2-hide {
+      -webkit-animation: swal2-hide .15s forwards;
+      animation: swal2-hide .15s forwards
+    }
+
+    .swal2-noanimation {
+      transition: none
+    }
+
+    .swal2-scrollbar-measure {
+      position: absolute;
+      top: -9999px;
+      width: 50px;
+      height: 50px;
+      overflow: scroll
+    }
+
+    .swal2-rtl .swal2-close {
+      margin-right: initial;
+      margin-left: 0
+    }
+
+    .swal2-rtl .swal2-timer-progress-bar {
+      right: 0;
+      left: auto
+    }
+
+    @-webkit-keyframes swal2-toast-show {
+      0% {
+        transform: translateY(-.625em) rotateZ(2deg)
+      }
+
+      33% {
+        transform: translateY(0) rotateZ(-2deg)
+      }
+
+      66% {
+        transform: translateY(.3125em) rotateZ(2deg)
+      }
+
+      100% {
+        transform: translateY(0) rotateZ(0)
+      }
+    }
+
+    @keyframes swal2-toast-show {
+      0% {
+        transform: translateY(-.625em) rotateZ(2deg)
+      }
+
+      33% {
+        transform: translateY(0) rotateZ(-2deg)
+      }
+
+      66% {
+        transform: translateY(.3125em) rotateZ(2deg)
+      }
+
+      100% {
+        transform: translateY(0) rotateZ(0)
+      }
+    }
+
+    @-webkit-keyframes swal2-toast-hide {
+      100% {
+        transform: rotateZ(1deg);
+        opacity: 0
+      }
+    }
+
+    @keyframes swal2-toast-hide {
+      100% {
+        transform: rotateZ(1deg);
+        opacity: 0
+      }
+    }
+
+    @-webkit-keyframes swal2-toast-animate-success-line-tip {
+      0% {
+        top: .5625em;
+        left: .0625em;
+        width: 0
+      }
+
+      54% {
+        top: .125em;
+        left: .125em;
+        width: 0
+      }
+
+      70% {
+        top: .625em;
+        left: -.25em;
+        width: 1.625em
+      }
+
+      84% {
+        top: 1.0625em;
+        left: .75em;
+        width: .5em
+      }
+
+      100% {
+        top: 1.125em;
+        left: .1875em;
+        width: .75em
+      }
+    }
+
+    @keyframes swal2-toast-animate-success-line-tip {
+      0% {
+        top: .5625em;
+        left: .0625em;
+        width: 0
+      }
+
+      54% {
+        top: .125em;
+        left: .125em;
+        width: 0
+      }
+
+      70% {
+        top: .625em;
+        left: -.25em;
+        width: 1.625em
+      }
+
+      84% {
+        top: 1.0625em;
+        left: .75em;
+        width: .5em
+      }
+
+      100% {
+        top: 1.125em;
+        left: .1875em;
+        width: .75em
+      }
+    }
+
+    @-webkit-keyframes swal2-toast-animate-success-line-long {
+      0% {
+        top: 1.625em;
+        right: 1.375em;
+        width: 0
+      }
+
+      65% {
+        top: 1.25em;
+        right: .9375em;
+        width: 0
+      }
+
+      84% {
+        top: .9375em;
+        right: 0;
+        width: 1.125em
+      }
+
+      100% {
+        top: .9375em;
+        right: .1875em;
+        width: 1.375em
+      }
+    }
+
+    @keyframes swal2-toast-animate-success-line-long {
+      0% {
+        top: 1.625em;
+        right: 1.375em;
+        width: 0
+      }
+
+      65% {
+        top: 1.25em;
+        right: .9375em;
+        width: 0
+      }
+
+      84% {
+        top: .9375em;
+        right: 0;
+        width: 1.125em
+      }
+
+      100% {
+        top: .9375em;
+        right: .1875em;
+        width: 1.375em
+      }
+    }
+
+    @-webkit-keyframes swal2-show {
+      0% {
+        transform: scale(.7)
+      }
+
+      45% {
+        transform: scale(1.05)
+      }
+
+      80% {
+        transform: scale(.95)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @keyframes swal2-show {
+      0% {
+        transform: scale(.7)
+      }
+
+      45% {
+        transform: scale(1.05)
+      }
+
+      80% {
+        transform: scale(.95)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    @-webkit-keyframes swal2-hide {
+      0% {
+        transform: scale(1);
+        opacity: 1
+      }
+
+      100% {
+        transform: scale(.5);
+        opacity: 0
+      }
+    }
+
+    @keyframes swal2-hide {
+      0% {
+        transform: scale(1);
+        opacity: 1
+      }
+
+      100% {
+        transform: scale(.5);
+        opacity: 0
+      }
+    }
+
+    @-webkit-keyframes swal2-animate-success-line-tip {
+      0% {
+        top: 1.1875em;
+        left: .0625em;
+        width: 0
+      }
+
+      54% {
+        top: 1.0625em;
+        left: .125em;
+        width: 0
+      }
+
+      70% {
+        top: 2.1875em;
+        left: -.375em;
+        width: 3.125em
+      }
+
+      84% {
+        top: 3em;
+        left: 1.3125em;
+        width: 1.0625em
+      }
+
+      100% {
+        top: 2.8125em;
+        left: .8125em;
+        width: 1.5625em
+      }
+    }
+
+    @keyframes swal2-animate-success-line-tip {
+      0% {
+        top: 1.1875em;
+        left: .0625em;
+        width: 0
+      }
+
+      54% {
+        top: 1.0625em;
+        left: .125em;
+        width: 0
+      }
+
+      70% {
+        top: 2.1875em;
+        left: -.375em;
+        width: 3.125em
+      }
+
+      84% {
+        top: 3em;
+        left: 1.3125em;
+        width: 1.0625em
+      }
+
+      100% {
+        top: 2.8125em;
+        left: .8125em;
+        width: 1.5625em
+      }
+    }
+
+    @-webkit-keyframes swal2-animate-success-line-long {
+      0% {
+        top: 3.375em;
+        right: 2.875em;
+        width: 0
+      }
+
+      65% {
+        top: 3.375em;
+        right: 2.875em;
+        width: 0
+      }
+
+      84% {
+        top: 2.1875em;
+        right: 0;
+        width: 3.4375em
+      }
+
+      100% {
+        top: 2.375em;
+        right: .5em;
+        width: 2.9375em
+      }
+    }
+
+    @keyframes swal2-animate-success-line-long {
+      0% {
+        top: 3.375em;
+        right: 2.875em;
+        width: 0
+      }
+
+      65% {
+        top: 3.375em;
+        right: 2.875em;
+        width: 0
+      }
+
+      84% {
+        top: 2.1875em;
+        right: 0;
+        width: 3.4375em
+      }
+
+      100% {
+        top: 2.375em;
+        right: .5em;
+        width: 2.9375em
+      }
+    }
+
+    @-webkit-keyframes swal2-rotate-success-circular-line {
+      0% {
+        transform: rotate(-45deg)
+      }
+
+      5% {
+        transform: rotate(-45deg)
+      }
+
+      12% {
+        transform: rotate(-405deg)
+      }
+
+      100% {
+        transform: rotate(-405deg)
+      }
+    }
+
+    @keyframes swal2-rotate-success-circular-line {
+      0% {
+        transform: rotate(-45deg)
+      }
+
+      5% {
+        transform: rotate(-45deg)
+      }
+
+      12% {
+        transform: rotate(-405deg)
+      }
+
+      100% {
+        transform: rotate(-405deg)
+      }
+    }
+
+    @-webkit-keyframes swal2-animate-error-x-mark {
+      0% {
+        margin-top: 1.625em;
+        transform: scale(.4);
+        opacity: 0
+      }
+
+      50% {
+        margin-top: 1.625em;
+        transform: scale(.4);
+        opacity: 0
+      }
+
+      80% {
+        margin-top: -.375em;
+        transform: scale(1.15)
+      }
+
+      100% {
+        margin-top: 0;
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    @keyframes swal2-animate-error-x-mark {
+      0% {
+        margin-top: 1.625em;
+        transform: scale(.4);
+        opacity: 0
+      }
+
+      50% {
+        margin-top: 1.625em;
+        transform: scale(.4);
+        opacity: 0
+      }
+
+      80% {
+        margin-top: -.375em;
+        transform: scale(1.15)
+      }
+
+      100% {
+        margin-top: 0;
+        transform: scale(1);
+        opacity: 1
+      }
+    }
+
+    @-webkit-keyframes swal2-animate-error-icon {
+      0% {
+        transform: rotateX(100deg);
+        opacity: 0
+      }
+
+      100% {
+        transform: rotateX(0);
+        opacity: 1
+      }
+    }
+
+    @keyframes swal2-animate-error-icon {
+      0% {
+        transform: rotateX(100deg);
+        opacity: 0
+      }
+
+      100% {
+        transform: rotateX(0);
+        opacity: 1
+      }
+    }
+
+    @-webkit-keyframes swal2-rotate-loading {
+      0% {
+        transform: rotate(0)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes swal2-rotate-loading {
+      0% {
+        transform: rotate(0)
+      }
+
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+      overflow: hidden
+    }
+
+    body.swal2-height-auto {
+      height: auto !important
+    }
+
+    body.swal2-no-backdrop .swal2-container {
+      background-color: transparent !important;
+      pointer-events: none
+    }
+
+    body.swal2-no-backdrop .swal2-container .swal2-popup {
+      pointer-events: all
+    }
+
+    body.swal2-no-backdrop .swal2-container .swal2-modal {
+      box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+    }
+
+    @media print {
+      body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+        overflow-y: scroll !important
+      }
+
+      body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true] {
+        display: none
+      }
+
+      body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container {
+        position: static !important
+      }
+    }
+
+    body.swal2-toast-shown .swal2-container {
+      box-sizing: border-box;
+      width: 360px;
+      max-width: 100%;
+      background-color: transparent
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-top {
+      top: 0;
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translateX(-50%)
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-top-end,
+    body.swal2-toast-shown .swal2-container.swal2-top-right {
+      top: 0;
+      right: 0;
+      bottom: auto;
+      left: auto
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-top-left,
+    body.swal2-toast-shown .swal2-container.swal2-top-start {
+      top: 0;
+      right: auto;
+      bottom: auto;
+      left: 0
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-center-left,
+    body.swal2-toast-shown .swal2-container.swal2-center-start {
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      left: 0;
+      transform: translateY(-50%)
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-center {
+      top: 50%;
+      right: auto;
+      bottom: auto;
+      left: 50%;
+      transform: translate(-50%, -50%)
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-center-end,
+    body.swal2-toast-shown .swal2-container.swal2-center-right {
+      top: 50%;
+      right: 0;
+      bottom: auto;
+      left: auto;
+      transform: translateY(-50%)
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-bottom-left,
+    body.swal2-toast-shown .swal2-container.swal2-bottom-start {
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 0
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-bottom {
+      top: auto;
+      right: auto;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%)
+    }
+
+    body.swal2-toast-shown .swal2-container.swal2-bottom-end,
+    body.swal2-toast-shown .swal2-container.swal2-bottom-right {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      left: auto
+    }
+  </style>
+
+  <link href="./index_files/select2.min.css" rel="stylesheet">
+  <link href="./index_files/choices.min.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="./index_files/flatpickr.min.css">
+  <style>
+    .required-field:after {
+      position: relative;
+      top: 3px;
+      right: 6px;
+      content: "*";
+      color: #fd625e;
+    }
+
+    .modal-backdrop.show {
+      display: initial !important;
+    }
+
+    .modal-backdrop.fade {
+      display: initial !important;
+    }
+
+    /* @font-face {
+            font-family: JannaLT;
+            src: url('https://tsleem.com.sa/assets/fonts/JannaLT-Regular.woff');
+        } */
+
+    /* body {
+            font-family: JannaLT !important;
+        } */
+    .container {
+      position: fixed;
+      right: 0;
+      top: 0;
+    }
+
+    [dir=rtl] input {
+      text-align: right;
+    }
+
+
+    /* When the body has the loading class, we turn
+            the scrollbar off with overflow:hidden */
+    body.loading .modal {
+      overflow: hidden;
+    }
+
+    /* Anytime the body has the loading class, our
+            modal element will be visible */
+    body.loading .modal {
+      display: block;
+    }
+
+    .modal-header {
+      --bs-bg-opacity: 1;
+      background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .modal-header h5 {
+      color: white !important;
+    }
+
+    .modal-content {
+      -webkit-box-shadow: 0 2px 8px 0 rgb(81 86 190 / 30%);
+      box-shadow: 0 2px 8px 0 rgb(81 86 190 / 30%);
+    }
+
+    .alert-danger {
+      color: #e9ecef;
+      background-color: #db1c19;
+      border-color: #e21a13;
+      font-size: 16px;
+      /* font-family: JannaLT !important; */
+    }
+
+    .alert-success {
+      font-size: 16px;
+      /* font-family: JannaLT !important; */
+      color: #e9ecef;
+      background-color: #126a47;
+      border-color: #126a47;
+
+    }
+  </style>
+
+  <style>
+    .apexcharts-canvas {
+      width: 100% !important;
+    }
+
+    .apexcharts-tooltip-marker {
+      margin-left: 10px;
+      margin-right: 0px;
+    }
+
+    .legend-info {
+      font-family: JannaLT !important;
+      display: flex;
+      align-items: center;
+    }
+
+    .apexcharts-legend-series {
+      display: flex;
+      align-items: center;
+    }
+
+    .apexcharts-legend-marker {
+      margin-left: 7px;
+      margin-right: 0;
+    }
+
+    .apexcharts-datalabels-group * {
+      font-family: JannaLT !important;
+    }
+
+    .card.card-chart {
+      border-radius: 10px;
+      box-shadow: 0px 0px 20px #0A237338;
+    }
+  </style>
+
+  <style type="text/css">
+    .apexcharts-canvas {
+      position: relative;
+      user-select: none;
+      /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+    }
+
+
+    /* scrollbar is not visible by default for legend, hence forcing the visibility */
+    .apexcharts-canvas ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 6px;
+    }
+
+    .apexcharts-canvas ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, .5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    }
+
+
+    .apexcharts-inner {
+      position: relative;
+    }
+
+    .apexcharts-text tspan {
+      font-family: inherit;
+    }
+
+    .legend-mouseover-inactive {
+      transition: 0.15s ease all;
+      opacity: 0.20;
+    }
+
+    .apexcharts-series-collapsed {
+      opacity: 0;
+    }
+
+    .apexcharts-tooltip {
+      border-radius: 5px;
+      box-shadow: 2px 2px 6px -4px #999;
+      cursor: default;
+      font-size: 14px;
+      left: 62px;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      white-space: nowrap;
+      z-index: 12;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-tooltip.apexcharts-active {
+      opacity: 1;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light {
+      border: 1px solid #e3e3e3;
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-dark {
+      color: #fff;
+      background: rgba(30, 30, 30, 0.8);
+    }
+
+    .apexcharts-tooltip * {
+      font-family: inherit;
+    }
+
+
+    .apexcharts-tooltip-title {
+      padding: 6px;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+      background: #ECEFF1;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid #333;
+    }
+
+    .apexcharts-tooltip-text-value,
+    .apexcharts-tooltip-text-z-value {
+      display: inline-block;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    .apexcharts-tooltip-text-z-label:empty,
+    .apexcharts-tooltip-text-z-value:empty {
+      display: none;
+    }
+
+    .apexcharts-tooltip-text-value,
+    .apexcharts-tooltip-text-z-value {
+      font-weight: 600;
+    }
+
+    .apexcharts-tooltip-marker {
+      min-width: 12px;
+      min-height: 12px;
+      position: relative;
+      top: 0px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .apexcharts-tooltip-series-group {
+      padding: 0 10px;
+      display: none;
+      text-align: left;
+      justify-content: left;
+      align-items: center;
+    }
+
+    .apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+      opacity: 1;
+    }
+
+    .apexcharts-tooltip-series-group.apexcharts-active,
+    .apexcharts-tooltip-series-group:last-child {
+      padding-bottom: 4px;
+    }
+
+    .apexcharts-tooltip-series-group-hidden {
+      opacity: 0;
+      height: 0;
+      line-height: 0;
+      padding: 0 !important;
+    }
+
+    .apexcharts-tooltip-y-group {
+      padding: 6px 0 5px;
+    }
+
+    .apexcharts-tooltip-box,
+    .apexcharts-custom-tooltip {
+      padding: 4px 8px;
+    }
+
+    .apexcharts-tooltip-boxPlot {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .apexcharts-tooltip-box>div {
+      margin: 4px 0;
+    }
+
+    .apexcharts-tooltip-box span.value {
+      font-weight: bold;
+    }
+
+    .apexcharts-tooltip-rangebar {
+      padding: 5px 8px;
+    }
+
+    .apexcharts-tooltip-rangebar .category {
+      font-weight: 600;
+      color: #777;
+    }
+
+    .apexcharts-tooltip-rangebar .series-name {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .apexcharts-xaxistooltip {
+      opacity: 0;
+      padding: 9px 10px;
+      pointer-events: none;
+      color: #373d3f;
+      font-size: 13px;
+      text-align: center;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 10;
+      background: #ECEFF1;
+      border: 1px solid #90A4AE;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-xaxistooltip.apexcharts-theme-dark {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+
+    .apexcharts-xaxistooltip:after,
+    .apexcharts-xaxistooltip:before {
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .apexcharts-xaxistooltip:after {
+      border-color: rgba(236, 239, 241, 0);
+      border-width: 6px;
+      margin-left: -6px;
+    }
+
+    .apexcharts-xaxistooltip:before {
+      border-color: rgba(144, 164, 174, 0);
+      border-width: 7px;
+      margin-left: -7px;
+    }
+
+    .apexcharts-xaxistooltip-bottom:after,
+    .apexcharts-xaxistooltip-bottom:before {
+      bottom: 100%;
+    }
+
+    .apexcharts-xaxistooltip-top:after,
+    .apexcharts-xaxistooltip-top:before {
+      top: 100%;
+    }
+
+    .apexcharts-xaxistooltip-bottom:after {
+      border-bottom-color: #ECEFF1;
+    }
+
+    .apexcharts-xaxistooltip-bottom:before {
+      border-bottom-color: #90A4AE;
+    }
+
+    .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+      border-bottom-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+      border-bottom-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip-top:after {
+      border-top-color: #ECEFF1
+    }
+
+    .apexcharts-xaxistooltip-top:before {
+      border-top-color: #90A4AE;
+    }
+
+    .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+      border-top-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+      border-top-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip.apexcharts-active {
+      opacity: 1;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-yaxistooltip {
+      opacity: 0;
+      padding: 4px 10px;
+      pointer-events: none;
+      color: #373d3f;
+      font-size: 13px;
+      text-align: center;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 10;
+      background: #ECEFF1;
+      border: 1px solid #90A4AE;
+    }
+
+    .apexcharts-yaxistooltip.apexcharts-theme-dark {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+
+    .apexcharts-yaxistooltip:after,
+    .apexcharts-yaxistooltip:before {
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .apexcharts-yaxistooltip:after {
+      border-color: rgba(236, 239, 241, 0);
+      border-width: 6px;
+      margin-top: -6px;
+    }
+
+    .apexcharts-yaxistooltip:before {
+      border-color: rgba(144, 164, 174, 0);
+      border-width: 7px;
+      margin-top: -7px;
+    }
+
+    .apexcharts-yaxistooltip-left:after,
+    .apexcharts-yaxistooltip-left:before {
+      left: 100%;
+    }
+
+    .apexcharts-yaxistooltip-right:after,
+    .apexcharts-yaxistooltip-right:before {
+      right: 100%;
+    }
+
+    .apexcharts-yaxistooltip-left:after {
+      border-left-color: #ECEFF1;
+    }
+
+    .apexcharts-yaxistooltip-left:before {
+      border-left-color: #90A4AE;
+    }
+
+    .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+      border-left-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+      border-left-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip-right:after {
+      border-right-color: #ECEFF1;
+    }
+
+    .apexcharts-yaxistooltip-right:before {
+      border-right-color: #90A4AE;
+    }
+
+    .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+      border-right-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+      border-right-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip.apexcharts-active {
+      opacity: 1;
+    }
+
+    .apexcharts-yaxistooltip-hidden {
+      display: none;
+    }
+
+    .apexcharts-xcrosshairs,
+    .apexcharts-ycrosshairs {
+      pointer-events: none;
+      opacity: 0;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-xcrosshairs.apexcharts-active,
+    .apexcharts-ycrosshairs.apexcharts-active {
+      opacity: 1;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-ycrosshairs-hidden {
+      opacity: 0;
+    }
+
+    .apexcharts-selection-rect {
+      cursor: move;
+    }
+
+    .svg_select_boundingRect,
+    .svg_select_points_rot {
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .apexcharts-selection-rect+g .svg_select_boundingRect,
+    .apexcharts-selection-rect+g .svg_select_points_rot {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .apexcharts-selection-rect+g .svg_select_points_l,
+    .apexcharts-selection-rect+g .svg_select_points_r {
+      cursor: ew-resize;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .svg_select_points {
+      fill: #efefef;
+      stroke: #333;
+      rx: 2;
+    }
+
+    .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+      cursor: crosshair
+    }
+
+    .apexcharts-svg.apexcharts-zoomable.hovering-pan {
+      cursor: move
+    }
+
+    .apexcharts-zoom-icon,
+    .apexcharts-zoomin-icon,
+    .apexcharts-zoomout-icon,
+    .apexcharts-reset-icon,
+    .apexcharts-pan-icon,
+    .apexcharts-selection-icon,
+    .apexcharts-menu-icon,
+    .apexcharts-toolbar-custom-icon {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      line-height: 24px;
+      color: #6E8192;
+      text-align: center;
+    }
+
+    .apexcharts-zoom-icon svg,
+    .apexcharts-zoomin-icon svg,
+    .apexcharts-zoomout-icon svg,
+    .apexcharts-reset-icon svg,
+    .apexcharts-menu-icon svg {
+      fill: #6E8192;
+    }
+
+    .apexcharts-selection-icon svg {
+      fill: #444;
+      transform: scale(0.76)
+    }
+
+    .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+    .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+    .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+    .apexcharts-theme-dark .apexcharts-reset-icon svg,
+    .apexcharts-theme-dark .apexcharts-pan-icon svg,
+    .apexcharts-theme-dark .apexcharts-selection-icon svg,
+    .apexcharts-theme-dark .apexcharts-menu-icon svg,
+    .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+      fill: #f3f4f5;
+    }
+
+    .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+    .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+    .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+      fill: #008FFB;
+    }
+
+    .apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+    .apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+    .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+    .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+    .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+    .apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+      fill: #333;
+    }
+
+    .apexcharts-selection-icon,
+    .apexcharts-menu-icon {
+      position: relative;
+    }
+
+    .apexcharts-reset-icon {
+      margin-left: 5px;
+    }
+
+    .apexcharts-zoom-icon,
+    .apexcharts-reset-icon,
+    .apexcharts-menu-icon {
+      transform: scale(0.85);
+    }
+
+    .apexcharts-zoomin-icon,
+    .apexcharts-zoomout-icon {
+      transform: scale(0.7)
+    }
+
+    .apexcharts-zoomout-icon {
+      margin-right: 3px;
+    }
+
+    .apexcharts-pan-icon {
+      transform: scale(0.62);
+      position: relative;
+      left: 1px;
+      top: 0px;
+    }
+
+    .apexcharts-pan-icon svg {
+      fill: #fff;
+      stroke: #6E8192;
+      stroke-width: 2;
+    }
+
+    .apexcharts-pan-icon.apexcharts-selected svg {
+      stroke: #008FFB;
+    }
+
+    .apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+      stroke: #333;
+    }
+
+    .apexcharts-toolbar {
+      position: absolute;
+      z-index: 11;
+      max-width: 176px;
+      text-align: right;
+      border-radius: 3px;
+      padding: 0px 6px 2px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .apexcharts-menu {
+      background: #fff;
+      position: absolute;
+      top: 100%;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 3px;
+      right: 10px;
+      opacity: 0;
+      min-width: 110px;
+      transition: 0.15s ease all;
+      pointer-events: none;
+    }
+
+    .apexcharts-menu.apexcharts-menu-open {
+      opacity: 1;
+      pointer-events: all;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-menu-item {
+      padding: 6px 7px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .apexcharts-theme-light .apexcharts-menu-item:hover {
+      background: #eee;
+    }
+
+    .apexcharts-theme-dark .apexcharts-menu {
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    @media screen and (min-width: 768px) {
+      .apexcharts-canvas:hover .apexcharts-toolbar {
+        opacity: 1;
+      }
+    }
+
+    .apexcharts-datalabel.apexcharts-element-hidden {
+      opacity: 0;
+    }
+
+    .apexcharts-pie-label,
+    .apexcharts-datalabels,
+    .apexcharts-datalabel,
+    .apexcharts-datalabel-label,
+    .apexcharts-datalabel-value {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .apexcharts-pie-label-delay {
+      opacity: 0;
+      animation-name: opaque;
+      animation-duration: 0.3s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease;
+    }
+
+    .apexcharts-canvas .apexcharts-element-hidden {
+      opacity: 0;
+    }
+
+    .apexcharts-hide .apexcharts-series-points {
+      opacity: 0;
+    }
+
+    .apexcharts-gridline,
+    .apexcharts-annotation-rect,
+    .apexcharts-tooltip .apexcharts-marker,
+    .apexcharts-area-series .apexcharts-area,
+    .apexcharts-line,
+    .apexcharts-zoom-rect,
+    .apexcharts-toolbar svg,
+    .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+    .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+    .apexcharts-radar-series path,
+    .apexcharts-radar-series polygon {
+      pointer-events: none;
+    }
+
+
+    /* markers */
+
+    .apexcharts-marker {
+      transition: 0.15s ease all;
+    }
+
+    @keyframes opaque {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+
+    /* Resize generated styles */
+
+    @keyframes resizeanim {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    .resize-triggers {
+      animation: 1ms resizeanim;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .resize-triggers,
+    .resize-triggers>div,
+    .contract-trigger:before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .resize-triggers>div {
+      background: #eee;
+      overflow: auto;
+    }
+
+    .contract-trigger:before {
+      width: 200%;
+      height: 200%;
+    }
+  </style>
+  <style id="apexcharts-css">
+    .apexcharts-canvas {
+      position: relative;
+      user-select: none;
+      /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+    }
+
+
+    /* scrollbar is not visible by default for legend, hence forcing the visibility */
+    .apexcharts-canvas ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 6px;
+    }
+
+    .apexcharts-canvas ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, .5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+      -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    }
+
+
+    .apexcharts-inner {
+      position: relative;
+    }
+
+    .apexcharts-text tspan {
+      font-family: inherit;
+    }
+
+    .legend-mouseover-inactive {
+      transition: 0.15s ease all;
+      opacity: 0.20;
+    }
+
+    .apexcharts-series-collapsed {
+      opacity: 0;
+    }
+
+    .apexcharts-tooltip {
+      border-radius: 5px;
+      box-shadow: 2px 2px 6px -4px #999;
+      cursor: default;
+      font-size: 14px;
+      left: 62px;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      white-space: nowrap;
+      z-index: 12;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-tooltip.apexcharts-active {
+      opacity: 1;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light {
+      border: 1px solid #e3e3e3;
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-dark {
+      color: #fff;
+      background: rgba(30, 30, 30, 0.8);
+    }
+
+    .apexcharts-tooltip * {
+      font-family: inherit;
+    }
+
+
+    .apexcharts-tooltip-title {
+      padding: 6px;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+      background: #ECEFF1;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid #333;
+    }
+
+    .apexcharts-tooltip-text-y-value,
+    .apexcharts-tooltip-text-goals-value,
+    .apexcharts-tooltip-text-z-value {
+      display: inline-block;
+      font-weight: 600;
+      margin-left: 5px;
+    }
+
+    .apexcharts-tooltip-title:empty,
+    .apexcharts-tooltip-text-y-label:empty,
+    .apexcharts-tooltip-text-y-value:empty,
+    .apexcharts-tooltip-text-goals-label:empty,
+    .apexcharts-tooltip-text-goals-value:empty,
+    .apexcharts-tooltip-text-z-value:empty {
+      display: none;
+    }
+
+    .apexcharts-tooltip-text-y-value,
+    .apexcharts-tooltip-text-goals-value,
+    .apexcharts-tooltip-text-z-value {
+      font-weight: 600;
+    }
+
+    .apexcharts-tooltip-text-goals-label,
+    .apexcharts-tooltip-text-goals-value {
+      padding: 6px 0 5px;
+    }
+
+    .apexcharts-tooltip-goals-group,
+    .apexcharts-tooltip-text-goals-label,
+    .apexcharts-tooltip-text-goals-value {
+      display: flex;
+    }
+
+    .apexcharts-tooltip-text-goals-label:not(:empty),
+    .apexcharts-tooltip-text-goals-value:not(:empty) {
+      margin-top: -6px;
+    }
+
+    .apexcharts-tooltip-marker {
+      width: 12px;
+      height: 12px;
+      position: relative;
+      top: 0px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .apexcharts-tooltip-series-group {
+      padding: 0 10px;
+      display: none;
+      text-align: left;
+      justify-content: left;
+      align-items: center;
+    }
+
+    .apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+      opacity: 1;
+    }
+
+    .apexcharts-tooltip-series-group.apexcharts-active,
+    .apexcharts-tooltip-series-group:last-child {
+      padding-bottom: 4px;
+    }
+
+    .apexcharts-tooltip-series-group-hidden {
+      opacity: 0;
+      height: 0;
+      line-height: 0;
+      padding: 0 !important;
+    }
+
+    .apexcharts-tooltip-y-group {
+      padding: 6px 0 5px;
+    }
+
+    .apexcharts-tooltip-box,
+    .apexcharts-custom-tooltip {
+      padding: 4px 8px;
+    }
+
+    .apexcharts-tooltip-boxPlot {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .apexcharts-tooltip-box>div {
+      margin: 4px 0;
+    }
+
+    .apexcharts-tooltip-box span.value {
+      font-weight: bold;
+    }
+
+    .apexcharts-tooltip-rangebar {
+      padding: 5px 8px;
+    }
+
+    .apexcharts-tooltip-rangebar .category {
+      font-weight: 600;
+      color: #777;
+    }
+
+    .apexcharts-tooltip-rangebar .series-name {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .apexcharts-xaxistooltip {
+      opacity: 0;
+      padding: 9px 10px;
+      pointer-events: none;
+      color: #373d3f;
+      font-size: 13px;
+      text-align: center;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 10;
+      background: #ECEFF1;
+      border: 1px solid #90A4AE;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-xaxistooltip.apexcharts-theme-dark {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+
+    .apexcharts-xaxistooltip:after,
+    .apexcharts-xaxistooltip:before {
+      left: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .apexcharts-xaxistooltip:after {
+      border-color: rgba(236, 239, 241, 0);
+      border-width: 6px;
+      margin-left: -6px;
+    }
+
+    .apexcharts-xaxistooltip:before {
+      border-color: rgba(144, 164, 174, 0);
+      border-width: 7px;
+      margin-left: -7px;
+    }
+
+    .apexcharts-xaxistooltip-bottom:after,
+    .apexcharts-xaxistooltip-bottom:before {
+      bottom: 100%;
+    }
+
+    .apexcharts-xaxistooltip-top:after,
+    .apexcharts-xaxistooltip-top:before {
+      top: 100%;
+    }
+
+    .apexcharts-xaxistooltip-bottom:after {
+      border-bottom-color: #ECEFF1;
+    }
+
+    .apexcharts-xaxistooltip-bottom:before {
+      border-bottom-color: #90A4AE;
+    }
+
+    .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+      border-bottom-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+      border-bottom-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip-top:after {
+      border-top-color: #ECEFF1
+    }
+
+    .apexcharts-xaxistooltip-top:before {
+      border-top-color: #90A4AE;
+    }
+
+    .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+      border-top-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+      border-top-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-xaxistooltip.apexcharts-active {
+      opacity: 1;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-yaxistooltip {
+      opacity: 0;
+      padding: 4px 10px;
+      pointer-events: none;
+      color: #373d3f;
+      font-size: 13px;
+      text-align: center;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 10;
+      background: #ECEFF1;
+      border: 1px solid #90A4AE;
+    }
+
+    .apexcharts-yaxistooltip.apexcharts-theme-dark {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+
+    .apexcharts-yaxistooltip:after,
+    .apexcharts-yaxistooltip:before {
+      top: 50%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .apexcharts-yaxistooltip:after {
+      border-color: rgba(236, 239, 241, 0);
+      border-width: 6px;
+      margin-top: -6px;
+    }
+
+    .apexcharts-yaxistooltip:before {
+      border-color: rgba(144, 164, 174, 0);
+      border-width: 7px;
+      margin-top: -7px;
+    }
+
+    .apexcharts-yaxistooltip-left:after,
+    .apexcharts-yaxistooltip-left:before {
+      left: 100%;
+    }
+
+    .apexcharts-yaxistooltip-right:after,
+    .apexcharts-yaxistooltip-right:before {
+      right: 100%;
+    }
+
+    .apexcharts-yaxistooltip-left:after {
+      border-left-color: #ECEFF1;
+    }
+
+    .apexcharts-yaxistooltip-left:before {
+      border-left-color: #90A4AE;
+    }
+
+    .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+      border-left-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+      border-left-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip-right:after {
+      border-right-color: #ECEFF1;
+    }
+
+    .apexcharts-yaxistooltip-right:before {
+      border-right-color: #90A4AE;
+    }
+
+    .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+      border-right-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+      border-right-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .apexcharts-yaxistooltip.apexcharts-active {
+      opacity: 1;
+    }
+
+    .apexcharts-yaxistooltip-hidden {
+      display: none;
+    }
+
+    .apexcharts-xcrosshairs,
+    .apexcharts-ycrosshairs {
+      pointer-events: none;
+      opacity: 0;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-xcrosshairs.apexcharts-active,
+    .apexcharts-ycrosshairs.apexcharts-active {
+      opacity: 1;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-ycrosshairs-hidden {
+      opacity: 0;
+    }
+
+    .apexcharts-selection-rect {
+      cursor: move;
+    }
+
+    .svg_select_boundingRect,
+    .svg_select_points_rot {
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .apexcharts-selection-rect+g .svg_select_boundingRect,
+    .apexcharts-selection-rect+g .svg_select_points_rot {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .apexcharts-selection-rect+g .svg_select_points_l,
+    .apexcharts-selection-rect+g .svg_select_points_r {
+      cursor: ew-resize;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .svg_select_points {
+      fill: #efefef;
+      stroke: #333;
+      rx: 2;
+    }
+
+    .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+      cursor: crosshair
+    }
+
+    .apexcharts-svg.apexcharts-zoomable.hovering-pan {
+      cursor: move
+    }
+
+    .apexcharts-zoom-icon,
+    .apexcharts-zoomin-icon,
+    .apexcharts-zoomout-icon,
+    .apexcharts-reset-icon,
+    .apexcharts-pan-icon,
+    .apexcharts-selection-icon,
+    .apexcharts-menu-icon,
+    .apexcharts-toolbar-custom-icon {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      line-height: 24px;
+      color: #6E8192;
+      text-align: center;
+    }
+
+    .apexcharts-zoom-icon svg,
+    .apexcharts-zoomin-icon svg,
+    .apexcharts-zoomout-icon svg,
+    .apexcharts-reset-icon svg,
+    .apexcharts-menu-icon svg {
+      fill: #6E8192;
+    }
+
+    .apexcharts-selection-icon svg {
+      fill: #444;
+      transform: scale(0.76)
+    }
+
+    .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+    .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+    .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+    .apexcharts-theme-dark .apexcharts-reset-icon svg,
+    .apexcharts-theme-dark .apexcharts-pan-icon svg,
+    .apexcharts-theme-dark .apexcharts-selection-icon svg,
+    .apexcharts-theme-dark .apexcharts-menu-icon svg,
+    .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+      fill: #f3f4f5;
+    }
+
+    .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+    .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+    .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+      fill: #008FFB;
+    }
+
+    .apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+    .apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+    .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+    .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+    .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+    .apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+      fill: #333;
+    }
+
+    .apexcharts-selection-icon,
+    .apexcharts-menu-icon {
+      position: relative;
+    }
+
+    .apexcharts-reset-icon {
+      margin-left: 5px;
+    }
+
+    .apexcharts-zoom-icon,
+    .apexcharts-reset-icon,
+    .apexcharts-menu-icon {
+      transform: scale(0.85);
+    }
+
+    .apexcharts-zoomin-icon,
+    .apexcharts-zoomout-icon {
+      transform: scale(0.7)
+    }
+
+    .apexcharts-zoomout-icon {
+      margin-right: 3px;
+    }
+
+    .apexcharts-pan-icon {
+      transform: scale(0.62);
+      position: relative;
+      left: 1px;
+      top: 0px;
+    }
+
+    .apexcharts-pan-icon svg {
+      fill: #fff;
+      stroke: #6E8192;
+      stroke-width: 2;
+    }
+
+    .apexcharts-pan-icon.apexcharts-selected svg {
+      stroke: #008FFB;
+    }
+
+    .apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+      stroke: #333;
+    }
+
+    .apexcharts-toolbar {
+      position: absolute;
+      z-index: 11;
+      max-width: 176px;
+      text-align: right;
+      border-radius: 3px;
+      padding: 0px 6px 2px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .apexcharts-menu {
+      background: #fff;
+      position: absolute;
+      top: 100%;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 3px;
+      right: 10px;
+      opacity: 0;
+      min-width: 110px;
+      transition: 0.15s ease all;
+      pointer-events: none;
+    }
+
+    .apexcharts-menu.apexcharts-menu-open {
+      opacity: 1;
+      pointer-events: all;
+      transition: 0.15s ease all;
+    }
+
+    .apexcharts-menu-item {
+      padding: 6px 7px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .apexcharts-theme-light .apexcharts-menu-item:hover {
+      background: #eee;
+    }
+
+    .apexcharts-theme-dark .apexcharts-menu {
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    @media screen and (min-width: 768px) {
+      .apexcharts-canvas:hover .apexcharts-toolbar {
+        opacity: 1;
+      }
+    }
+
+    .apexcharts-datalabel.apexcharts-element-hidden {
+      opacity: 0;
+    }
+
+    .apexcharts-pie-label,
+    .apexcharts-datalabels,
+    .apexcharts-datalabel,
+    .apexcharts-datalabel-label,
+    .apexcharts-datalabel-value {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .apexcharts-pie-label-delay {
+      opacity: 0;
+      animation-name: opaque;
+      animation-duration: 0.3s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease;
+    }
+
+    .apexcharts-canvas .apexcharts-element-hidden {
+      opacity: 0;
+    }
+
+    .apexcharts-hide .apexcharts-series-points {
+      opacity: 0;
+    }
+
+    .apexcharts-gridline,
+    .apexcharts-annotation-rect,
+    .apexcharts-tooltip .apexcharts-marker,
+    .apexcharts-area-series .apexcharts-area,
+    .apexcharts-line,
+    .apexcharts-zoom-rect,
+    .apexcharts-toolbar svg,
+    .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+    .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+    .apexcharts-radar-series path,
+    .apexcharts-radar-series polygon {
+      pointer-events: none;
+    }
+
+
+    /* markers */
+
+    .apexcharts-marker {
+      transition: 0.15s ease all;
+    }
+
+    @keyframes opaque {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+
+    /* Resize generated styles */
+
+    @keyframes resizeanim {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    .resize-triggers {
+      animation: 1ms resizeanim;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .resize-triggers,
+    .resize-triggers>div,
+    .contract-trigger:before {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .resize-triggers>div {
+      background: #eee;
+      overflow: auto;
+    }
+
+    .contract-trigger:before {
+      width: 200%;
+      height: 200%;
+    }
+  </style>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body lang="en" dir="rtl" class="pace-running">
+  <div class="pace pace-inactive">
+    <div class="pace-progress" data-progress-text="100%" data-progress="99"
+      style="transform: translate3d(100%, 0px, 0px);">
+      <div class="pace-progress-inner"></div>
+    </div>
+    <div class="pace-activity"></div>
+  </div>
+
+  <!-- <body data-layout="horizontal"> -->
+
+  <!-- Begin page -->
+  <div id="layout-wrapper">
+
+
+    <header id="page-topbar">
+      <div class="navbar-header">
+        <div class="d-flex">
+          <!-- LOGO -->
+
+          <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
+            <i class="fa fa-fw fa-bars"></i>
+          </button>
+
+
+        </div>
+
+        <!-- <div>
+                    </div> -->
+        <div class="d-flex">
+          <div class="dropdown d-inline-block d-lg-block ms-2">
+            <button type="button" class="btn header-item" id="page-header-search-dropdown" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-search icon-lg">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+              aria-labelledby="page-header-search-dropdown">
+
+              <form class="p-3">
+                <div class="form-group m-0">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="بحث" aria-label="Search Result">
+
+                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+          <div class="dropdown d-inline-block">
+            <button type="button" class="btn header-item" id="mode-setting-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-moon icon-lg layout-mode-dark">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-sun icon-lg layout-mode-light">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div class="dropdown d-inline-block">
+            <button type="button" onclick="read_message()" class="btn header-item noti-icon position-relative"
+              id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-bell icon-lg">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </button>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+              aria-labelledby="page-header-notifications-dropdown">
+              <div class="p-3">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h6 class="m-0"> الإشعارات </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div data-simplebar="init" style="max-height: 230px;">
+                <div class="simplebar-wrapper" style="margin: 0px;">
+                  <div class="simplebar-height-auto-observer-wrapper">
+                    <div class="simplebar-height-auto-observer"></div>
+                  </div>
+                  <div class="simplebar-mask">
+                    <div class="simplebar-offset" style="left: 0px; bottom: 0px;">
+                      <div class="simplebar-content-wrapper" style="height: auto; overflow: hidden;">
+                        <div class="simplebar-content" style="padding: 0px;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="simplebar-placeholder" style="width: 0px; height: 0px;"></div>
+                </div>
+                <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                  <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+                </div>
+                <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+                  <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+                </div>
+              </div>
+              <div class="p-2 border-top d-grid">
+                <a class="btn btn-sm btn-link font-size-14 text-center" href="https://tsleem.com.sa/notifications">
+                  <i class="mdi mdi-arrow-right-circle me-1"></i> <span>إستعراض المزيد</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="dropdown d-inline-block">
+            <button type="button" class="btn header-item" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <img class="rounded-circle header-profile-user" src="./index_files/profile_placeholder.jpg"
+                alt="Header Avatar">
+              <span class="d-none d-xl-inline-block ms-1 fw-medium">admin</span>
+              <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end">
+              <!-- item-->
+
+              <a class="dropdown-item" href="https://tsleem.com.sa/logout"><i
+                  class="mdi mdi-logout font-size-16 align-middle me-1"></i> تسجيل الخروج</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="cp-right-menu mm-active">
+      <a href="https://tsleem.com.sa/dashboard#" class="cp-right-menu-logo">
+        <div class="close-menu d-lg-none p-2">
+          <i class="far fa-times"></i>
+        </div>
+        <img src="./index_files/logo-dark.png" alt="" height="38">
+      </a>
+      <div data-simplebar="init" class="h-100 mm-show">
+        <div class="simplebar-wrapper" style="margin: 0px;">
+          <div class="simplebar-height-auto-observer-wrapper">
+            <div class="simplebar-height-auto-observer"></div>
+          </div>
+          <div class="simplebar-mask">
+            <div class="simplebar-offset" style="left: 0px; bottom: 0px;">
+              <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;">
+                <div class="simplebar-content" style="padding: 0px;">
+
+                  <!--- Sidemenu -->
+                  <div id="sidebar-menu" class="mm-active">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled mm-show" id="side-menu">
+                      <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-users">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                          </svg>
+                          <span data-key="t-apps">المستخدمين</span>
+                        </a>
+                        <ul class="sub-menu mm-collapse" aria-expanded="false">
+                          <li>
+                            <a href="https://tsleem.com.sa/users/users">
+                              <span data-key="t-calendar">إدارة المستخدمين</span>
+                            </a>
+                          </li>
+
+                          <li>
+                            <a href="https://tsleem.com.sa/users/add">
+                              <span data-key="t-chat">إضافة مستخدم</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://tsleem.com.sa/users/request">
+                              <span data-key="t-chat">طلبات المستخدمين</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                          <i data-feather="licenses"></i>
+                          <span data-key="t-apps">إدارة الرخص</span>
+                        </a>
+                        <ul class="sub-menu mm-collapse" aria-expanded="false">
+                          <li>
+                            <a href="https://tsleem.com.sa/licenses">
+                              <span data-key="t-calendar">الرخص</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://tsleem.com.sa/licenses/add">
+                              <span data-key="t-chat">إضافة</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                          <i data-feather="settings"></i>
+                          <span data-key="t-apps">الإعدادت</span>
+                        </a>
+                        <ul class="sub-menu mm-collapse" aria-expanded="false">
+                          <li>
+                            <a href="https://tsleem.com.sa/system-config/const">
+                              <span data-key="t-calendar">الثوابت</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://tsleem.com.sa/system-config/service">
+                              <span data-key="t-calendar">الخدمات</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://tsleem.com.sa/system-config/news">
+                              <span data-key="t-calendar">الاخبار</span>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="https://tsleem.com.sa/system-config/specialties">
+                              <span data-key="t-calendar">التخصصات</span>
+                            </a>
+                          </li>
+
+                        </ul>
+                      </li>
+
+
+
+
+
+
+
+                      <li class="mm-active">
+                        <a href="https://tsleem.com.sa/dashboard" class="active">
+                          <i data-feather="pie-chart"></i>
+                          <span data-key="t-dashboard">الإحصائيات </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a href="https://tsleem.com.sa/logout">
+
+                          <i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
+                          <span data-key="t-authentication">تسجيل الخروج</span>
+                        </a>
+                      </li>
+
+
+                    </ul>
+
+
+                  </div>
+                  <!-- Sidebar -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="simplebar-placeholder" style="width: auto; height: 251px;"></div>
+        </div>
+        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+          <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+        </div>
+        <div class="simplebar-track simplebar-vertical" style="visibility: hidden;">
+          <div class="simplebar-scrollbar" style="transform: translate3d(0px, 0px, 0px); display: none;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Left Sidebar End -->
+
+
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content" style="margin-right: 200px;">
+
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+
+            <div class="col-xl-4 col-md-6">
+              <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--blue">
+                <div class="card-body px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="_x3C_Layer_x3E_" version="1.1" xml:space="preserve"><g id="clipboard"><g><g><g><path d="M26.5,3h-5.958v1H26.5C26.776,4,27,4.225,27,4.5v25c0,0.275-0.224,0.5-0.5,0.5h-21      C5.224,30,5,29.775,5,29.5v-25C5,4.225,5.224,4,5.5,4h6V3h-6C4.673,3,4,3.673,4,4.5v25C4,30.327,4.673,31,5.5,31h21      c0.827,0,1.5-0.673,1.5-1.5v-25C28,3.673,27.327,3,26.5,3z" fill="currentColor"/></g></g><g><path d="M25.5,22c-0.276,0-0.5-0.224-0.5-0.5V6h-2.5C22.224,6,22,5.776,22,5.5S22.224,5,22.5,5h3     C25.776,5,26,5.224,26,5.5v16C26,21.776,25.776,22,25.5,22z" fill="currentColor"/></g><g><path d="M20.5,29h-14C6.224,29,6,28.776,6,28.5v-23C6,5.224,6.224,5,6.5,5h3C9.776,5,10,5.224,10,5.5     S9.776,6,9.5,6H7v22h13.5c0.276,0,0.5,0.224,0.5,0.5S20.776,29,20.5,29z" fill="currentColor"/></g><g><path d="M20.5,29c-0.064,0-0.129-0.013-0.191-0.038C20.122,28.885,20,28.702,20,28.5v-5     c0-0.276,0.224-0.5,0.5-0.5h5c0.202,0,0.385,0.122,0.462,0.309c0.078,0.187,0.035,0.402-0.108,0.545l-5,5     C20.758,28.949,20.63,29,20.5,29z M21,24v3.293L24.293,24H21z" fill="currentColor"/></g><g id="customer_survey_questionnaire_2_"><g><g><path d="M9.653,18.016c-0.004,0-0.007,0-0.011,0c-0.142-0.003-0.276-0.066-0.368-0.174l-1.153-1.346       c-0.18-0.209-0.156-0.525,0.054-0.705c0.21-0.18,0.526-0.154,0.705,0.055l0.791,0.922l1.59-1.693       c0.189-0.201,0.505-0.211,0.707-0.021s0.211,0.506,0.022,0.707l-1.972,2.099C9.923,17.959,9.791,18.016,9.653,18.016z" fill="currentColor"/></g></g><g><g><path d="M9.653,13.016c-0.004,0-0.007,0-0.011,0c-0.142-0.003-0.276-0.066-0.368-0.174l-1.153-1.346       c-0.18-0.209-0.156-0.525,0.054-0.705c0.21-0.18,0.526-0.154,0.705,0.055l0.791,0.922l1.59-1.693       c0.189-0.201,0.505-0.211,0.707-0.021s0.211,0.506,0.022,0.707l-1.972,2.099C9.923,12.959,9.791,13.016,9.653,13.016z" fill="currentColor"/></g></g><g><g><path d="M17.5,23h-4c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h4c0.276,0,0.5,0.224,0.5,0.5       S17.776,23,17.5,23z" fill="currentColor"/></g></g><g><g><path d="M22.5,21h-9c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h9c0.276,0,0.5,0.224,0.5,0.5       S22.776,21,22.5,21z" fill="currentColor"/></g></g><g><g><path d="M22.5,16h-3c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h3c0.276,0,0.5,0.224,0.5,0.5       S22.776,16,22.5,16z" fill="currentColor"/></g></g><g><g><path d="M20.5,18h-7c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h7c0.276,0,0.5,0.224,0.5,0.5       S20.776,18,20.5,18z" fill="currentColor"/></g></g><g><g><path d="M17.5,16h-4c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h4c0.276,0,0.5,0.224,0.5,0.5       S17.776,16,17.5,16z" fill="currentColor"/></g></g><g><g><path d="M22.5,11h-9c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h9c0.276,0,0.5,0.224,0.5,0.5       S22.776,11,22.5,11z" fill="currentColor"/></g></g><g><g><path d="M18.5,13h-5c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h5c0.276,0,0.5,0.224,0.5,0.5       S18.776,13,18.5,13z" fill="currentColor"/></g></g><g><g><path d="M10.5,23h-2C8.224,23,8,22.776,8,22.5v-2C8,20.224,8.224,20,8.5,20h2c0.276,0,0.5,0.224,0.5,0.5v2       C11,22.776,10.776,23,10.5,23z M9,22h1v-1H9V22z" fill="currentColor"/></g></g></g></g><g><path d="M20.5,7h-9C11.224,7,11,6.776,11,6.5v-3C11,2.673,11.673,2,12.5,2C12.776,2,13,2.224,13,2.5    S12.776,3,12.5,3C12.224,3,12,3.225,12,3.5V6h8V3.5C20,3.225,19.776,3,19.5,3C19.224,3,19,2.776,19,2.5S19.224,2,19.5,2    C20.327,2,21,2.673,21,3.5v3C21,6.776,20.776,7,20.5,7z" fill="currentColor"/></g><g><path d="M17.5,3C17.224,3,17,2.776,17,2.5C17,2.225,16.776,2,16.5,2h-1c-0.108,0-0.211,0.033-0.296,0.097    C15.074,2.192,15,2.339,15,2.5C15,2.776,14.776,3,14.5,3S14,2.776,14,2.5c0-0.475,0.228-0.926,0.609-1.207    C14.867,1.102,15.176,1,15.5,1h1C17.327,1,18,1.673,18,2.5C18,2.776,17.776,3,17.5,3z" fill="currentColor"/></g></g></svg>
+                  <h3>عدد الطلبات</h3>
+                  <p>250 طلب</p>
+                  <a href="#">عرض الطلبات</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+              <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--brown">
+                <div class="card-body px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="Layer_1" version="1.1" xml:space="preserve"><g id="communication"><path d="M21.504,17c-0.056,0-0.112-0.01-0.167-0.029c-0.2-0.07-0.333-0.259-0.333-0.471V13h-5   c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h5.5c0.276,0,0.5,0.224,0.5,0.5v2.592l2.362-2.907   C24.461,12.067,24.604,12,24.754,12h4.75c0.275,0,0.5-0.225,0.5-0.5v-9c0-0.275-0.225-0.5-0.5-0.5h-25c-0.275,0-0.5,0.225-0.5,0.5   v9c0,0.275,0.225,0.5,0.5,0.5h1.5c0.276,0,0.5,0.224,0.5,0.5S6.28,13,6.004,13h-1.5c-0.827,0-1.5-0.673-1.5-1.5v-9   c0-0.827,0.673-1.5,1.5-1.5h25c0.827,0,1.5,0.673,1.5,1.5v9c0,0.827-0.673,1.5-1.5,1.5h-4.512l-3.101,3.815   C21.795,16.935,21.651,17,21.504,17z" fill="currentColor"/><g><g><path d="M18.644,17.674l-4.762-1.652l-0.295-2.355c-0.239,0.106-0.516,0.168-0.833,0.168     c-0.056,0-0.103-0.012-0.155-0.016l0.329,2.635c0.023,0.189,0.152,0.349,0.332,0.41l5.055,1.756     c0.9,0.314,1.689,1.427,1.689,2.381v4.493c0,0.276,0.224,0.5,0.5,0.5s0.5-0.224,0.5-0.5V21     C21.004,19.621,19.945,18.129,18.644,17.674z" fill="currentColor"/></g><g><path d="M1.504,25.993c-0.276,0-0.5-0.224-0.5-0.5V21c0-1.379,1.059-2.871,2.359-3.326l4.762-1.641l0.063-0.512     c0.034-0.274,0.289-0.465,0.559-0.434c0.273,0.034,0.468,0.284,0.434,0.559l-0.103,0.82c-0.023,0.189-0.153,0.348-0.333,0.41     l-5.054,1.742C2.793,18.934,2.004,20.047,2.004,21v4.493C2.004,25.77,1.78,25.993,1.504,25.993z" fill="currentColor"/></g><g><path d="M11.004,30.961c-0.083,0-0.167-0.021-0.242-0.063l-6.5-3.591c-0.16-0.089-0.259-0.257-0.258-0.44     l0.019-3.346c0.002-0.275,0.229-0.543,0.503-0.496c0.276,0.001,0.499,0.227,0.497,0.502l-0.017,3.049l6.007,3.319l5.991-3.06     v-3.313c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v3.619c0,0.188-0.105,0.36-0.272,0.445l-6.5,3.319     C11.16,30.943,11.082,30.961,11.004,30.961z" fill="currentColor"/></g><g><g><path d="M11.004,7c-0.943,0-1.68-0.172-2.131-0.317C8.609,6.598,8.465,6.316,8.549,6.054      C8.634,5.791,8.914,5.647,9.178,5.73C9.562,5.854,10.189,6,11.004,6c1.808,0,2.774-0.446,2.784-0.451      c0.248-0.115,0.547-0.014,0.666,0.236c0.118,0.248,0.016,0.545-0.232,0.664C14.176,6.473,13.063,7,11.004,7z" fill="currentColor"/></g><g><path d="M11.004,15c-2.779,0-4.192-2.344-4.201-6.969C6.801,6.857,6.926,5.168,8.029,4.063      C8.733,3.357,9.733,3,11.004,3s2.271,0.357,2.975,1.063c1.104,1.105,1.229,2.795,1.227,3.969C15.196,12.656,13.783,15,11.004,15      z M11.004,4c-1.009,0-1.75,0.252-2.267,0.769C8.105,5.401,7.8,6.469,7.803,8.029C7.811,12.047,8.857,14,11.004,14      s3.193-1.953,3.201-5.971c0.003-1.561-0.303-2.628-0.935-3.261C12.754,4.252,12.013,4,11.004,4z" fill="currentColor"/></g></g></g><path d="M22.504,9h-4c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h4c0.276,0,0.5,0.224,0.5,0.5S22.78,9,22.504,9z   " fill="currentColor"/><path d="M27.504,6h-9c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h9c0.276,0,0.5,0.224,0.5,0.5S27.78,6,27.504,6z   " fill="currentColor"/></g></svg>
+                  <h3>عدد الرخص الصادرة</h3>
+                  <p>390 رخصة</p>
+                  <a href="#">عرض الرخص</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6">
+              <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--lighbrown">
+                <div class="card-body px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="_x3C_Layer_x3E_" version="1.1" xml:space="preserve"><g id="folder"><g><path d="M29.5,7h-18c-0.167,0-0.323-0.084-0.416-0.223L9.639,4.609C9.426,4.29,8.884,4,8.5,4h-5    C3.224,4,3,4.225,3,4.5v2C3,6.776,2.776,7,2.5,7S2,6.776,2,6.5v-2C2,3.673,2.673,3,3.5,3h5c0.723,0,1.571,0.453,1.971,1.055    L11.768,6H29.5C29.776,6,30,6.224,30,6.5S29.776,7,29.5,7z" fill="currentColor"/></g><g><g><path d="M29.5,30h-27C1.673,30,1,29.327,1,28.5v-19C1,8.673,1.673,8,2.5,8h27C30.327,8,31,8.673,31,9.5v19     C31,29.327,30.327,30,29.5,30z M2.5,9C2.224,9,2,9.225,2,9.5v19C2,28.775,2.224,29,2.5,29h27c0.276,0,0.5-0.225,0.5-0.5v-19     C30,9.225,29.776,9,29.5,9H2.5z" fill="currentColor"/></g></g><g><g><path d="M25.5,28h-24C1.224,28,1,27.776,1,27.5S1.224,27,1.5,27h24c0.276,0,0.5,0.224,0.5,0.5S25.776,28,25.5,28z     " fill="currentColor"/></g></g><g><g><path d="M13.5,13h-9C4.224,13,4,12.776,4,12.5S4.224,12,4.5,12h9c0.276,0,0.5,0.224,0.5,0.5S13.776,13,13.5,13z" fill="currentColor"/></g></g><g><g><path d="M9.5,15h-5C4.224,15,4,14.776,4,14.5S4.224,14,4.5,14h5c0.276,0,0.5,0.224,0.5,0.5S9.776,15,9.5,15z" fill="currentColor"/></g></g><g><circle cx="27.5" cy="27.5" fill="currentColor" r="0.5"/></g></g></svg>
+                  <h3>المخيمات تحت التنفيد</h3>
+                  <p>390 مخيم</p>
+                  <a href="#">عرض المخيمات</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-md-12">
+              <div class="card card-chart">
+                <div class="card-body px-2">
+                  <h3 class="custom-stats-title">احصائيات المخيمات</h3>
+                  <ul class="custom-stats">
+                    <li>
+                      <p>
+                        <label><i class="bg-blue-dark"></i>المخيمات تحت التنفيد</label>
+                        <span>360 مخيم</span>
+                      </p>
+                      <p>
+                        <label><i class="bg-blue-light"></i>المخيمات تم تنفيذها</label>
+                        <span>960 مخيم</span>
+                      </p>
+                      <div class="progress">
+                        <div class="progress-bar bg-blue-dark" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+                        <div class="progress-bar bg-blue-light" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
+                      </div>
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="card card-chart">
+                <div class="card-body px-2">
+                  <h3 class="custom-stats-title">احصائيات الرخص</h3>
+                  <ul class="custom-stats">
+                    <li>
+                      <p>
+                        <label><i class="bg-brown-dark"></i>عدد الرخص الصادرة - التنفيذ</label>
+                        <span>1500 رخصة</span>
+                      </p>
+                      <p>
+                        <label><i class="bg-brown-light"></i>عدد الرخص الصادرة - التشغيل</label>
+                        <span>182 رخصة</span>
+                      </p>
+                      <div class="progress">
+                        <div class="progress-bar bg-brown-dark" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+                        <div class="progress-bar bg-brown-light" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                      </div>
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-xl-6 col-md-12">
+              <div class="card card-h-100 card-chart">
+                <div class="card-body px-2">
+                  <h3 class="custom-stats-title">المخيمات التى تم استلامها</h3>
+                  <div id="barchart-1" style="min-height: 160px;">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row justify-content-center">
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                  <div id="chart-1" style="min-height: 160px;">
+
+                  </div>
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                  <div id="chart-2" style="min-height: 160px;">
+
+                  </div>
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                  <div id="chart-3" style="min-height: 160px;">
+
+                  </div>
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div>
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div>
+
+            <!-- end col -->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                  <div id="chart-4" style="min-height: 160px;">
+
+                  </div>
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col -->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                  <div id="chart-5" style="min-height: 160px;">
+
+                  </div>
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col -->
+          </div>
+          <div class="row">
+            <div class="col-xl-12 col-xxl-12 col-md-12">
+              <!-- card -->
+              <div class="card card-h-100 card-chart">
+                <!-- card body -->
+                <div class="card-body px-2">
+                  <div id="chart-6" style="min-height: 252.7px;">
+
+                  </div>
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col -->
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="casrd card-sh-100">
+                <!-- card body -->
+                <div class="card-body">
+                  <!-- <div class="d-flex align-items-center py-3">
+                        <div class="col-auto me-3">
+                            <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<polygon points="0 0 24 0 24 24 0 24"></polygon>
+																		<path d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+																		<path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero"></path>
+																	</g>
+																</svg>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h2><span class="counter-value" data-target="542"></span></h2>
+                            <h6 class="text-muted mb-0">عدد المسجلين</h6>
+                        </div>
+                    </div> -->
+
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col -->
+
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="casrd card-sh-100">
+                <!-- card body -->
+                <div class="card-body">
+                  <!-- <div class="d-flex align-items-center py-3">
+                        <div class="col-auto me-3">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon points="0 0 24 0 24 24 0 24"/>
+        <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+        <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+    </g>
+</svg>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h2><span class="counter-value" data-target=""></span></h2>
+                            <h6 class="text-muted mb-0">عدد المستخدمين تحت الإعتماد</h6>
+                        </div>
+                    </div> -->
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col-->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="casrd card-sh-100">
+                <!-- card body -->
+                <div class="card-body">
+                  <!-- <div class="d-flex align-items-center py-3">
+                        <div class="col-auto me-3">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon points="0 0 24 0 24 24 0 24"/>
+        <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+        <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero"/>
+    </g>
+</svg>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h2><span class="counter-value" data-target=""></span></h2>
+                            <h6 class="text-muted mb-0">عدد المستخدمين المعتمدين</h6>
+                        </div>
+                    </div> -->
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col-->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="casrd card-sh-100">
+                <!-- card body -->
+                <div class="card-body">
+                  <!-- <div class="d-flex align-items-center py-3">
+                        <div class="col-auto me-3">
+                            <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<polygon points="0 0 24 0 24 24 0 24"></polygon>
+																		<path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" fill="#000000" fill-rule="nonzero"></path>
+																		<path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" fill="#000000" opacity="0.3"></path>
+																	</g>
+																</svg>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h2><span class="counter-value" data-target=""></span></h2>
+                            <h6 class="text-muted mb-0">عدد مراكز الخدمة</h6>
+                        </div>
+                    </div> -->
+
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col-->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="casrd card-sh-100">
+                <!-- card body -->
+                <div class="card-body">
+                  <!-- <div class="d-flex align-items-center py-3">
+                        <div class="col-auto me-3">
+                            <div class="icon">
+                                <svg width="30" height="30" viewBox="0 0 512 512" enable-background="new 0 0 512 512" id="Layer_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M484.582,319.536c-26.98-11.333-51.265-27.472-72.175-47.954c-12.721-12.472-34.628-12.472-47.391,0   c-6.171,6.046-12.721,11.588-19.462,16.863c-10.022-4.112-66.687-17.029-73.118-19.023c-12.745-3.964-23.117-13.665-28.077-25.858   c39.327-17.106,60.172-61.317,63.494-105.77v-6.657h16.715c5.038,0,9.114-4.082,9.114-9.114c0-5.032-4.076-9.114-9.114-9.114   h-11.392l-1.264-12.816c-2.985-30.166-23.692-55.217-52.755-63.833l-16.614-4.925v-6.218c0-5.032-4.076-9.114-9.114-9.114h-51.871   c-5.026,0-9.102,4.07-9.114,9.09l-0.012,6.183l-16.994,5.043c-28.944,8.58-49.634,33.524-52.719,63.524l-1.347,13.066H90.212   c-5.032,0-9.114,4.082-9.114,9.114c0,5.032,4.082,9.114,9.114,9.114h17.148l0.012,7.346c3.287,43.647,23.894,87.483,62.77,104.78   c-4.907,12.454-14.798,22.162-27.828,26.185c-11.072,3.418-54.054,12.828-54.054,12.828c-0.006,0-0.012,0-0.012,0   c-5.939,1.317-58.196,14.051-64.224,56.273c-3.637,25.395-7.88,49.497-7.886,49.545c-0.469,2.646,0.267,5.376,1.994,7.441   c1.733,2.065,4.29,3.252,6.984,3.252h279.23c10.336,20.672,22.791,40.265,37.411,58.54l20.951,26.179   c6.349,7.939,15.831,12.496,26.001,12.496c10.176,0,19.652-4.557,26.007-12.496l20.963-26.202   c27.466-34.343,47.521-73.196,59.602-115.478C497.873,332.756,493.269,323.179,484.582,319.536z M327.321,301.32   c-10.947,6.96-22.399,13.143-34.491,18.216c-3.459,1.46-6.028,4.017-7.992,6.948l8.111-33.032   C293.802,293.654,324.431,300.46,327.321,301.32z M253.977,53.727c21.924,6.503,37.541,25.407,39.796,48.168l1.092,11.013h-52.322   V50.339L253.977,53.727z M224.315,34.23v78.678h-33.833l0.172-78.678H224.315z M120.853,101.717   c2.326-22.642,17.937-41.451,39.772-47.931l11.766-3.489l-0.136,62.61h-52.553L120.853,101.717z M125.576,137.793v-6.657h164.061   l0.012,5.969c-3.584,47.658-30.344,95.731-82.048,95.731S129.136,184.762,125.576,137.793z M207.6,251.063   c6.847,0,13.267-0.777,19.397-2.029c3.323,8.817,8.503,16.602,15.107,22.969l-34.26,27.822l-34.812-28.119   c6.456-6.331,11.505-14.033,14.745-22.743C194.031,250.268,200.593,251.063,207.6,251.063z M121.891,293.458l22.168,87.098H86.308   v-78.868C89.56,300.685,113.744,295.339,121.891,293.458z M42.062,341.134c2.189-15.308,14.264-25.473,26.018-31.863v71.285H35.915   C37.505,371.003,39.902,356.24,42.062,341.134z M162.868,380.556l-23.271-91.429c2.99-0.783,14.863-4.794,18.044-6.408   l44.495,35.927c1.667,1.341,3.697,2.017,5.726,2.017c2.035,0,4.07-0.676,5.744-2.041l43.961-35.696   c3.032,1.507,14.65,5.394,17.676,6.183l-22.446,91.447H162.868z M271.564,380.556c0,0,10.277-39.772,10.579-38.722   c3.792,13.273,8.461,26.161,13.801,38.722H271.564z M421.444,445.907l-20.963,26.202c-5.75,7.191-17.789,7.191-23.544,0   l-20.945-26.179c-25.953-32.432-44.905-69.149-56.095-109.592c39.603-16.09,70.383-44.394,77.883-51.74   c2.943-2.884,6.824-4.474,10.941-4.474c4.106,0,7.986,1.59,10.924,4.474c22.571,22.096,48.767,39.505,78.103,52.227   C466.336,376.77,447.391,413.463,421.444,445.907z"></path><path d="M359.658,370.338c-3.56-3.56-9.327-3.56-12.888,0c-3.56,3.56-3.56,9.327,0,12.888l24.535,24.529   c2.035,2.053,4.753,3.18,7.642,3.18c2.89,0,5.601-1.127,7.619-3.157l50.286-50.292c3.56-3.56,3.56-9.327,0-12.888   c-3.554-3.56-9.327-3.56-12.888,0l-45.017,45.023L359.658,370.338z"></path></g></svg>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h2><span class="counter-value" data-target=""></span></h2>
+                            <h6 class="text-muted mb-0">عدد المقاولون</h6>
+                        </div>
+                    </div> -->
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col-->
+            <div class="col-xl-4 col-md-6">
+              <!-- card -->
+              <div class="casrd card-sh-100">
+                <!-- card body -->
+                <div class="card-body">
+                  <!-- <div class="d-flex align-items-center py-3">
+                        <div class="col-auto me-3">
+                            <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M20,8 L18.173913,8 C17.0693435,8 16.173913,8.8954305 16.173913,10 L16.173913,12 C16.173913,12.5522847 15.7261978,13 15.173913,13 L8.86956522,13 C8.31728047,13 7.86956522,12.5522847 7.86956522,12 L7.86956522,10 C7.86956522,8.8954305 6.97413472,8 5.86956522,8 L4,8 L4,6 C4,4.34314575 5.34314575,3 7,3 L17,3 C18.6568542,3 20,4.34314575 20,6 L20,8 Z" fill="#000000" opacity="0.3"/>
+        <path d="M6.15999985,21.0604779 L8.15999985,17.5963763 C8.43614222,17.1180837 9.04773263,16.9542085 9.52602525,17.2303509 C10.0043179,17.5064933 10.168193,18.1180837 9.89205065,18.5963763 L7.89205065,22.0604779 C7.61590828,22.5387706 7.00431787,22.7026457 6.52602525,22.4265033 C6.04773263,22.150361 5.88385747,21.5387706 6.15999985,21.0604779 Z M17.8320512,21.0301278 C18.1081936,21.5084204 17.9443184,22.1200108 17.4660258,22.3961532 C16.9877332,22.6722956 16.3761428,22.5084204 16.1000004,22.0301278 L14.1000004,18.5660262 C13.823858,18.0877335 13.9877332,17.4761431 14.4660258,17.2000008 C14.9443184,16.9238584 15.5559088,17.0877335 15.8320512,17.5660262 L17.8320512,21.0301278 Z" fill="#000000" opacity="0.3"/>
+        <path d="M20,10 L20,15 C20,16.6568542 18.6568542,18 17,18 L7,18 C5.34314575,18 4,16.6568542 4,15 L4,10 L5.86956522,10 L5.86956522,12 C5.86956522,13.6568542 7.21271097,15 8.86956522,15 L15.173913,15 C16.8307673,15 18.173913,13.6568542 18.173913,12 L18.173913,10 L20,10 Z" fill="#000000"/>
+    </g>
+</svg>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <h2><span class="counter-value" data-target=""></span></h2>
+                            <h6 class="text-muted mb-0">عدد المكاتب الإستشارية</h6>
+                        </div>
+                    </div> -->
+
+                </div><!-- end card body -->
+              </div><!-- end card -->
+            </div><!-- end col-->
+
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+      <footer class="footer">
+        <div class="container-fluid">
+          1443 © جميع الحقوق محفوظة.
+          <!-- <div class="row">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                <div class="text-sm-end d-none d-sm-block">
+                     <a href="#!" class="text-decoration-underline"></a>
+                </div>
+            </div>
+        </div> -->
+        </div>
+      </footer>
+    </div>
+
+
+  </div>
+
+
+  <div class="rightbar-overlay"></div>
+
+  <script src="./index_files/jquery.min.js.download"></script>
+  <script src="./index_files/bootstrap.bundle.min.js.download"></script>
+  <script src="./index_files/metisMenu.min.js.download"></script>
+  <script src="./index_files/simplebar.min.js.download"></script>
+  <script src="./index_files/waves.min.js.download"></script>
+  <script src="./index_files/feather.min.js.download"></script>
+  <!-- pace js -->
+  <script src="./index_files/pace.min.js.download"></script>
+
+  <!-- apexcharts -->
+  <script src="./index_files/apexcharts.min.js.download"></script>
+
+  <!-- Plugins js-->
+  <script src="./index_files/jquery-jvectormap-1.2.2.min.js.download"></script>
+  <script src="./index_files/jquery-jvectormap-world-mill-en.js.download"></script>
+  <!-- dashboard init -->
+  <script src="./index_files/dashboard.init.js.download"></script>
+
+  <script src="./index_files/app.js.download"></script>
+  <script src="./index_files/jquery.validate.min.js.download"></script>
+  <script src="./index_files/messages_ar.min.js.download" type="text/javascript"></script>
+  <script scr="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+  <script src="./index_files/fileinput.min.js.download" type="text/javascript"></script>
+  <script src="./index_files/fileinput-theme.js.download" type="text/javascript"></script>
+  <script src="./index_files/datatables.bundle.js.download"></script>
+  <script src="./index_files/jquery.blockUI.js.download"></script>
+  <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1400 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#3699FF", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#E4E6EF", "dark": "#181C32" }, "light": { "white": "#ffffff", "primary": "#E1F0FF", "secondary": "#EBEDF3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#3F4254", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#EBEDF3", "gray-300": "#E4E6EF", "gray-400": "#D1D3E0", "gray-500": "#B5B5C3", "gray-600": "#7E8299", "gray-700": "#5E6278", "gray-800": "#3F4254", "gray-900": "#181C32" } }, "font-family": "Poppins" };</script>
+  <script src="./index_files/scripts.bundle.js.download"></script>
+  <script src="./index_files/alertify.min.js.download"></script>
+  <script src="./index_files/sweetalert.min.js.download"></script>
+  <script src="./index_files/jquery.repeater.min.js.download"></script>
+  <script src="./index_files/pickr.min.js.download"></script>
+  <script src="./index_files/pickr.es5.min.js.download"></script>
+
+  <!-- datepicker js -->
+  <script src="./index_files/flatpickr.min.js.download"></script>
+  <script src="./index_files/select2.min.js.download"></script>
+  <script src="./index_files/feather-icons"></script>
+
+
+  <script>
+
+
+    function file_input(selector, options) {
+      let defaults = {
+        theme: "fas",//gly
+        showDrag: false,
+        deleteExtraData: {
+          '_token': 'oTDLXFcBTDnpHODcbsv0BaRyu51E6zpaIXiKDLH2',
+        },
+        // hideThumbnailContent: true,
+        browseClass: "btn btn-info",
+        browseLabel: "اضغط للاستعراض",
+        browseIcon: "<i class='la la-file'></i>",
+        removeClass: "btn btn-danger",
+        removeLabel: "حذف",
+        removeIcon: "<i class='la la-trash-o'></i>",
+        showRemove: false,
+        showCancel: false,
+        showUpload: false,
+        showPreview: true,
+        msgPlaceholder: "اختر ملف",
+        msgSelected: "تم الاختيار ",
+        fileSingle: "ملف واحد",
+        filePlural: "اكثر من ملف",
+        dropZoneTitle: "سحب وافلات",
+        msgZoomModalHeading: "معلومات الملف",
+        dropZoneClickTitle: '<br> اضغط للاستعراض',
+        initialPreview: [],
+        initialPreviewShowDelete: options,
+        initialPreviewAsData: true,
+        initialPreviewConfig: [],
+        initialPreviewFileType: 'image',
+        overwriteInitial: true,
+        browseOnZoneClick: true,
+        captionClass: true,
+        maxFileCount: 6,
+        allowedFileExtensions: ["jpg", "png", "gif", "pdf"],
+        slugCallback: function (filename) {
+          return filename.replace('(', '_');
+        }
+      };
+      let settings = $.extend({}, defaults, options);
+      $(selector).fileinput(settings);
+    }
+
+    function file_input_register(selector, options) {
+      let defaults = {
+        theme: "fas",//gly
+        showDrag: false,
+        deleteExtraData: {
+          '_token': 'oTDLXFcBTDnpHODcbsv0BaRyu51E6zpaIXiKDLH2',
+        },
+        // hideThumbnailContent: true,
+        browseClass: "btn btn-info",
+        browseLabel: "اضغط للاستعراض",
+        browseIcon: "<i class='la la-file'></i>",
+        removeClass: "btn btn-danger",
+        removeLabel: "delete",
+        removeIcon: "<i class='la la-trash-o'></i>",
+        showRemove: false,
+        showCancel: false,
+        showUpload: false,
+        showPreview: true,
+        msgPlaceholder: "اختر ملف",
+        msgSelected: "تم الاختيار ",
+        fileSingle: "ملف واحد",
+        filePlural: "اكثر من ملف",
+        dropZoneTitle: "سحب وافلات",
+        msgZoomModalHeading: "معلومات الملف",
+        dropZoneClickTitle: '<br> اضغط للاستعراض',
+        initialPreview: [],
+        initialPreviewShowDelete: options,
+        initialPreviewAsData: true,
+        initialPreviewConfig: [],
+        initialPreviewFileType: 'image',
+        overwriteInitial: true,
+        browseOnZoneClick: true,
+        captionClass: true,
+        maxFileCount: 6,
+        allowedFileExtensions: ["pdf"],
+        slugCallback: function (filename) {
+          console.log(filename);
+          return filename.replace('(', '_');
+        }
+      };
+      let settings = $.extend({}, defaults, options);
+      $(selector).fileinput(settings);
+    }
+
+    function file_input_all(selector, options) {
+      let defaults = {
+        theme: "fas",//gly
+        showDrag: false,
+        deleteExtraData: {
+          '_token': 'oTDLXFcBTDnpHODcbsv0BaRyu51E6zpaIXiKDLH2',
+        },
+        // hideThumbnailContent: true,
+        browseClass: "btn btn-info",
+        browseLabel: "اضغط للاستعراض",
+        browseIcon: "<i class='la la-file'></i>",
+        removeClass: "btn btn-danger",
+        removeLabel: "delete",
+        removeIcon: "<i class='la la-trash-o'></i>",
+        showRemove: false,
+        showCancel: false,
+        showUpload: false,
+        showPreview: true,
+        msgPlaceholder: "اختر ملف",
+        msgSelected: "تم الاختيار ",
+        fileSingle: "ملف واحد",
+        filePlural: "اكثر من ملف",
+        dropZoneTitle: "سحب وافلات",
+        msgZoomModalHeading: "معلومات الملف",
+        dropZoneClickTitle: '<br> اضغط للاستعراض',
+        initialPreview: [],
+        initialPreviewShowDelete: options,
+        initialPreviewAsData: true,
+        initialPreviewConfig: [],
+        initialPreviewFileType: 'image',
+        overwriteInitial: true,
+        browseOnZoneClick: true,
+        captionClass: true,
+        maxFileCount: 6,
+        slugCallback: function (filename) {
+          console.log(filename);
+          return filename.replace('(', '_');
+        }
+      };
+      let settings = $.extend({}, defaults, options);
+      $(selector).fileinput(settings);
+    }
+
+    function change_status(id, url, status = null, callback = null) {
+      $.ajax({
+        url: url,
+        data: { id: id, status: status, _token: 'oTDLXFcBTDnpHODcbsv0BaRyu51E6zpaIXiKDLH2' },
+        type: "POST",
+        beforeSend() {
+          KTApp.blockPage({
+            overlayColor: '#000000',
+            type: 'v2',
+            state: 'success',
+            message: 'الرجاء الانتظار'
+          });
+        },
+        success: function (data) {
+          if (callback && typeof callback === "function") {
+            callback(data);
+          } else {
+            if (data.success) {
+              showAlertMessage('success', data.message);
+              $('#items_table').DataTable().ajax.reload(null, false);
+            } else {
+              showAlertMessage('error', data.message);
+            }
+            KTApp.unblockPage();
+          }
+        },
+        error: function (data, textStatus, jqXHR) {
+          console.log(data);
+        },
+      });
+    }
+    function showAlertMessage(type, message) {
+      if (type === 'success') {
+        alertify.success(message)
+      } else if (type === 'warning') {
+        alertify.warning(message);
+      } else if (type === 'error' || type === 'danger') {
+        alertify.error(message);
+      } else {
+        alertify.message(message);
+      }
+    }
+    function showModal(url, callback = null, id = null) {
+      $.ajax({
+        url: url,
+        type: "GET",
+        beforeSend() {
+          // KTApp.blockPage({
+          //     overlayColor: '#000000',
+          //     type: 'v2',
+          //     state: 'success',
+          //     message: 'please wait'
+          // });
+        },
+        success: function (data) {
+          if (callback && typeof callback === "function") {
+            callback(data);
+          } else {
+            if (data.success) {
+
+              if (id == null) {
+
+                $('#page_modal').html(data.page).modal('show', { backdrop: 'static', keyboard: false });
+              } else {
+
+                $(id).html(data.page).modal('show', { backdrop: 'static', keyboard: false })
+              }
+
+            } else {
+              showAlertMessage('error', 'constants.unknown_error');
+            }
+            KTApp.unblockPage();
+          }
+        },
+        error: function (data) {
+          KTApp.unblockPage();
+        },
+      });
+    }
+
+    function postData(data, url, callback = null) {
+      $.ajax({
+        url: url,
+        data: data,
+        type: "POST",
+        processData: false,
+        contentType: false,
+        beforeSend() {
+          KTApp.block('#page_modal', {
+            overlayColor: '#000000',
+            type: 'v2',
+            state: 'success',
+            message: 'مكتب تصميم'
+          });
+        },
+        success: function (data) {
+          if (callback && typeof callback === "function") {
+            callback(data);
+          } else {
+            if (data.success) {
+              $('#page_modal').modal('hide');
+              $('#items_table').DataTable().ajax.reload(null, false);
+              showAlertMessage('success', data.message);
+            } else {
+              if (data.message) {
+                showAlertMessage('error', data.message);
+              } else {
+                showAlertMessage('error', 'حدث خطأ في النظام');
+              }
+            }
+            KTApp.unblock('#page_modal');
+          }
+          KTApp.unblockPage();
+        },
+        error: function (data) {
+          console.log(data);
+          KTApp.unblock('#page_modal');
+          KTApp.unblockPage();
+        },
+      });
+    }
+    function delete_items(id, url, callback = null) {
+      let data = [];
+      if (id) {
+        data = [id];
+      } else {
+        if ($('input.select:checked').length > 0) {
+          $.each($("input.select:checked"), function () {
+            data.push($(this).val());
+          });
+        }
+      }
+      if (data.length <= 0) {
+        showAlertMessage('error', 'constants.noSelectedItems');
+      } else {
+        Swal.fire({
+          title: data.length === 1 ? 'constants.deleteItem' : 'constants.delete ' + data.length + ' constants.items',
+          text: "constants.sure",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#84dc61',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'constants.yes',
+          cancelButtonText: 'constants.no'
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              url: url,
+              type: "POST",
+              data: {
+                "_token": "oTDLXFcBTDnpHODcbsv0BaRyu51E6zpaIXiKDLH2",
+                'ids': data
+              },
+              beforeSend() {
+                KTApp.blockPage({
+                  overlayColor: '#000000',
+                  type: 'v2',
+                  state: 'success',
+                  message: 'constants.please_wait ...'
+                });
+              },
+              success: function (data) {
+                if (callback && typeof callback === "function") {
+                  callback(data);
+                } else {
+                  if (data.success) {
+                    $('#items_table').DataTable().ajax.reload(null, false);
+                    showAlertMessage('success', data.message);
+                  } else {
+                    showAlertMessage('error', 'constants.unknown_error');
+                  }
+                  KTApp.unblockPage();
+                }
+              },
+              error: function (data) {
+                console.log(data);
+              },
+            });
+          }
+        });
+      }
+    }
+    function request_file_input_attributes() {
+      return {
+        theme: "explorer",
+        uploadUrl: "/file-upload-batch/2",
+        minFileCount: 2,
+        maxFileCount: 5,
+        maxFileSize: 10000,
+        removeFromPreviewOnError: true,
+        overwriteInitial: false,
+        previewFileIcon: '<i class="fas fa-file"></i>',
+        initialPreview: [
+
+        ],
+        showRemove: false,
+        showCancel: false,
+        showUpload: false,
+        showPreview: true,
+        msgPlaceholder: "اختر ملف",
+        msgSelected: "تم الاختيار ",
+        fileSingle: "ملف واحد",
+        filePlural: "اكثر من ملف",
+        dropZoneTitle: "سحب وافلات",
+        msgZoomModalHeading: "معلومات الملف",
+        dropZoneClickTitle: '<br> اضغط للاستعراض',
+        initialPreviewAsData: true, // defaults markup,
+        browseLabel: "اضغط للاستعراض",
+        initialPreviewConfig: [
+
+        ],
+        uploadExtraData: {
+          img_key: "1000",
+          img_keywords: "happy, nature"
+        },
+        preferIconicPreview: true, // this will force thumbnails to display icons for following file extensions
+        previewFileIconSettings: { // configure your icon file extensions
+          'doc': '<i class="fas fa-file-word text-primary"></i>',
+          'xls': '<i class="fas fa-file-excel text-success"></i>',
+          'ppt': '<i class="fas fa-file-powerpoint text-danger"></i>',
+          'pdf': '<i class="fas fa-file-pdf text-danger"></i>',
+          'zip': '<i class="fas fa-file-archive text-muted"></i>',
+          'htm': '<i class="fas fa-file-code text-info"></i>',
+          'txt': '<i class="fas fa-file-text text-info"></i>',
+          'mov': '<i class="fas fa-file-video text-warning"></i>',
+          'mp3': '<i class="fas fa-file-audio text-warning"></i>',
+          'jpg': '<i class="fas fa-file-image text-danger"></i>',
+          'gif': '<i class="fas fa-file-image text-muted"></i>',
+          'png': '<i class="fas fa-file-image text-primary"></i>'
+        },
+        previewFileExtSettings: { // configure the logic for determining icon file extensions
+          'doc': function (ext) {
+            return ext.match(/(doc|docx)$/i);
+          },
+          'xls': function (ext) {
+            return ext.match(/(xls|xlsx)$/i);
+          },
+          'ppt': function (ext) {
+            return ext.match(/(ppt|pptx)$/i);
+          },
+          'zip': function (ext) {
+            return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+          },
+          'htm': function (ext) {
+            return ext.match(/(htm|html)$/i);
+          },
+          'txt': function (ext) {
+            return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
+          },
+          'mov': function (ext) {
+            return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+          },
+          'mp3': function (ext) {
+            return ext.match(/(mp3|wav)$/i);
+          }
+        }
+      }
+    }
+  </script>
+
+
+  <script>
+    $('.close-menu').click(function () {
+      $('body').removeClass('sidebar-enable')
+    })
+  </script>
+  <script src="./index_files/apexcharts"></script>
+  <script>
+var barchart1 = {
+  chart: {
+    type: 'bar'
+  },
+  plotOptions: {
+    bar: {
+      distributed: true
+    }
+  } ,
+  colors: ['#b78560', '#cd9b76', '#dfb08e', '#edc7ac', '#fbe0ce', '#f5e3d6', '#d9c7bb'],
+  series: [{
+    data: [{
+      x: 'المجلس التنسيقي',
+      y: 10
+    }, {
+      x: 'حجاج جنوب شرق اسيا',
+      y: 18
+    }, {
+      x: 'حجاج جنوب اسيا',
+      y: 13
+    },
+    {
+      x: 'تركيا ',
+      y: 25
+    },
+    {
+      x: 'ايران',
+      y: 18
+    },
+    {
+      x: 'افريقيا الدول الغير عربية',
+      y: 16
+    },
+    {
+      x: 'الدول العربية',
+      y: 12
+    }]
+  }]
+}
+    new ApexCharts(document.querySelector("#barchart-1"), barchart1).render();
+
+    var chart1 = {
+      chart: {
+        type: 'area',
+        height: 160,
+        sparkline: {
+          enabled: true
+        },
+      },
+
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'المجوع',
+        data: [11, 25, 20]
+      }],
+      labels: ["June-13", "June-12", "June-14"],
+      yaxis: {
+        min: 0
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      colors: ['#0A2373'],
+      title: {
+        text: '56',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+        }
+      },
+      subtitle: {
+        text: ' المحاضر المسلمة لشركات حجاج الداخل',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+          padding: "0px 20px"
+        }
+      }
+    }
+    new ApexCharts(document.querySelector("#chart-1"), chart1).render();
+
+    //
+
+
+
+
+    var chart2 = {
+      chart: {
+        type: 'area',
+        height: 160,
+        sparkline: {
+          enabled: true
+        },
+      },
+
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'المجوع',
+        data: [7, 19]
+      }],
+      labels: ["June-12", "June-13"],
+      yaxis: {
+        min: 0
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      colors: ['#0A2373'],
+      title: {
+        text: 26,
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+        }
+      },
+      subtitle: {
+        text: 'المحاضر المسلمة لشركات حجاج الخارج',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+          padding: "0px 20px"
+        }
+      }
+    }
+    new ApexCharts(document.querySelector("#chart-2"), chart2).render();
+
+
+    //
+
+
+
+
+
+
+
+    var chart3 = {
+      chart: {
+        type: 'area',
+        height: 160,
+        sparkline: {
+          enabled: true
+        },
+      },
+
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'المجوع',
+        data: []
+      }],
+      labels: [],
+      yaxis: {
+        min: 0
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      colors: ['#0A2373'],
+      title: {
+        text: 0,
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+        }
+      },
+      subtitle: {
+        text: 'عدد الإجراءات المنفذة',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+          padding: "0px 20px"
+        }
+      }
+    }
+    new ApexCharts(document.querySelector("#chart-3"), chart3).render();
+
+
+    //
+
+
+
+    var chart4 = {
+      chart: {
+        type: 'area',
+        height: 160,
+        sparkline: {
+          enabled: true
+        },
+      },
+
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'المجوع',
+        data: [55, 1, 22, 1, 69, 12, 18, 1]
+      }],
+      labels: ["June-08", "June-30", "June-09", "June-11", "June-12", "June-13", "June-14", "June-15"],
+      yaxis: {
+        min: 0
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      colors: ['#0A2373'],
+      title: {
+        text: '179',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+        }
+      },
+      subtitle: {
+        text: 'المواعيد التي تم اطلاقها لإستلام المخيمات',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+          padding: "0px 20px"
+        }
+      }
+    }
+    new ApexCharts(document.querySelector("#chart-4"), chart4).render();
+
+
+
+    //
+
+
+
+
+
+
+
+
+    var chart5 = {
+      chart: {
+        type: 'area',
+        height: 160,
+        sparkline: {
+          enabled: true
+        },
+      },
+
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'المجوع',
+        data: [49, 396, 431, 224]
+      }],
+      labels: ["June-11", "June-12", "June-13", "June-14"],
+      yaxis: {
+        min: 0
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      colors: ['#0A2373'],
+      title: {
+        text: '1100',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+        }
+      },
+      subtitle: {
+        text: 'مرات الدخول الى المنصة',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+          padding: "0px 20px"
+        }
+      }
+    }
+    new ApexCharts(document.querySelector("#chart-5"), chart5).render();
+
+    var chart7 = {
+      chart: {
+        type: 'area',
+        height: 160,
+        sparkline: {
+          enabled: true
+        },
+      },
+
+      stroke: {
+        curve: 'straight'
+      },
+      fill: {
+        opacity: 1,
+      },
+      series: [{
+        name: 'المجوع',
+        data: []
+      }],
+      labels: [],
+      yaxis: {
+        min: 0
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      colors: ['#0A2373'],
+      title: {
+        text: '0',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '24px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+        }
+      },
+      subtitle: {
+        text: 'عدد الطلبات الصادرة',
+        offsetX: 0 + '%',
+        style: {
+          fontSize: '14px',
+          cssClass: 'apexcharts-yaxis-title px-4',
+          fontFamily: 'JannaLT',
+          padding: "0px 20px"
+        }
+      }
+    }
+    new ApexCharts(document.querySelector("#chart-7"), chart7).render();
+
+
+
+
+    //
+
+
+
+
+    var optionDonut = {
+      chart: {
+        type: 'donut',
+        width: '100%',
+        height: 250,
+      },
+      colors: ['#bf9370', '#8e6f50', '#615036', '#745931', '#663e00'],
+      legend: {
+        fontWeight: 400,
+        formatter: function (seriesName, opts) {
+          return '<div class="legend-info">' + '<span class="pe-2">' + seriesName + '</span>' + '<span class="text-dark font-size-18">' + opts.w.globals.series[opts.seriesIndex] + '</span>' + '</div>'
+        }
+      },
+      series: [199, 63, 19, 38],
+      dataLabels: {
+        enabled: false,
+      },
+      labels: ['شركات الطوافة (حجاج الخارج) المسجلة', 'عدد شركات حجاج الداخل المسجلين', 'عدد المكاتب الهندسية المسجلة', 'عدد المقاولين المسجلين'],
+
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              show: true,
+              name: {
+                show: true,
+                color: '#dfsda',
+                offsetY: -10
+              },
+              value: {
+                show: true,
+                color: undefined,
+                offsetY: 16,
+                formatter: function (val) {
+                  return val
+                }
+              },
+              total: {
+                show: true,
+                label: 'المجموع',
+                color: '#373d3f',
+                formatter: function (w) {
+                  return w.globals.seriesTotals.reduce((a, b) => {
+                    return a + b
+                  }, 0)
+                }
+              }
+            }
+          }
+        }
+      },
+    }
+
+    var donut = new ApexCharts(
+      document.querySelector("#chart-6"),
+      optionDonut
+    )
+    donut.render();
+
+  </script>
+  <script>
+    $(function () {
+      feather.replace();
+    });
+    function read_message() {
+
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        url: 'https://tsleem.com.sa/read_message',
+        data: {},
+        type: "POST",
+        processData: false,
+        contentType: false,
+        beforeSend() {
+          KTApp.block('#page_modal', {
+            overlayColor: '#000000',
+            type: 'v2',
+            state: 'success',
+            message: 'مكتب تصميم'
+          });
+        },
+        success: function (data) {
+          $('#notifcation_count').text('')
+          $('#unreade_meassage').text('')
+          KTApp.unblockPage();
+        },
+        error: function (data) {
+          console.log(data);
+          KTApp.unblock('#page_modal');
+          KTApp.unblockPage();
+        },
+      });
+    }
+  </script>
+
+
+
+
+  <div class="hs-dummy-scrollbar-size">
+    <div style="height: 200%; width: 200%; margin: 10px 0;"></div>
+  </div><svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+    style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
+    <defs id="SvgjsDefs1002"></defs>
+    <polyline id="SvgjsPolyline1003" points="0,0"></polyline>
+    <path id="SvgjsPath1004" d="M0 0 "></path>
+  </svg><svg id="SvgjsSvg1418" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev"
+    style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
+    <defs id="SvgjsDefs1419"></defs>
+    <polyline id="SvgjsPolyline1420" points="0,0"></polyline>
+    <path id="SvgjsPath1421" d="M-1 69L-1 69L166.66666666666666 69L333.3333333333333 69L500 69C500 69 500 69 500 69 ">
+    </path>
+  </svg>
+</body>
+
+</html>
