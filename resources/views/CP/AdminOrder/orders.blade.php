@@ -106,6 +106,9 @@
                                 <th>
                                     مركز الخدمة
                                 </th>
+                                {{--<th>
+                                    الشركة
+                                </th>--}}
                                 <th>
                                     المكتب الهندسي
                                 </th>
@@ -250,6 +253,7 @@
                 columns: [
                     { className: 'text-right', data: 'identifier', name: 'identifier' },
                     { className: 'text-right', data: 'service_provider.company_name', name: 'service_provider', orderable: false },
+                    // {className: 'text-center', data: 'raft_name_only', name: 'raft_name_only',orderable : false},
                     { className: 'text-right', data: 'designer.company_name', name: 'designer', orderable: false },
                     { className: 'text-right', data: 'order_status', name: 'order_status', orderable: false },
                     { className: 'text-right', data: 'contractor.company_name', name: 'contractor', orderable: false },

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -398,5 +399,22 @@ class Order extends Model
     public function isDesignReviewStatus(): bool
     {
         return $this->status == static::DESIGN_REVIEW;
+    }
+
+    public function scopeTaslemDashboardOrders(Builder $builder){
+        return $builder->where('status', static::DESIGN_REVIEW)->doesntHave('orderSharerRejects')->doesntHave('orderSharerAccepts')->doesntHave('deliverRejectReson');
+    }
+
+    public function isNewForTaslem():bool{
+        return $this->isDesignReviewStatus() && !$this->orderSharerRejects()->exists() && !$this->orderSharerAccepts()->exists() && !$this->deliverRejectReson()->exists();
+    }
+
+    public function hasDesignerWarning():bool{
+        return $this->isDesignReviewStatus() && ($this->lastDesignerNote()->where('status', 0)->exists() || ($this->orderSharerRegected()->exists()  && $this->delivery_notes == 1));
+    }
+
+    public function isBackFromWarning():bool{
+        return( $this->isDesignReviewStatus() && !$this->delivery_notes && !$this->lastDesignerNote()->where('status',0)->exists());
+            //&&( (!$this->lastDesignerNote()->exists() && $this->orderSharerRegected()->exists()) || $this->lastDesignerNote()->where('status', 1)->exists()&&!$this->delivery_notes );
     }
 }

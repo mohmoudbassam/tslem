@@ -153,7 +153,7 @@ class LoginController extends Controller
             });
         ///order per designer office
         $data['order_count_per_designer'] = Order::query()->where('status','!=',Order::PENDING)->whereNotNull('designer_id')->count();
-        $data['order_count_per_taslem'] = DeliveryController::getOrdersQuery()->count();
+        $data['order_count_per_taslem'] = Order::taslemDashboardOrders()->count();
         $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
         $data['wasteContractors'] = wasteContractorsList()->count();
 

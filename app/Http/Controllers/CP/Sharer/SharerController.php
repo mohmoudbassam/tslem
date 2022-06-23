@@ -128,7 +128,7 @@ class SharerController extends Controller
             $order->allow_deliver = 0;
             $order->save();
             // [A.F] Delete all deliver reject reasons
-            $order->deliverRejectReson()->delete();
+            //$order->deliverRejectReson()->delete();
         } elseif($getCountOrderSharer->count() == $getCountOrderSharer->where('status',OrderSharer::ACCEPT)->count()){
             // [A.F] All users already accepted
             $order->allow_deliver = 1;
