@@ -30,7 +30,7 @@
         "niklasravnsborg/laravel-pdf": "^4.1",
         "phpoffice/phpword": "^0.18.3",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "spatie/laravel-backup": "^7.0",
+        "spatie/laravel-backup": "^6.16",
         "unisharp/laravel-filemanager": "^2.4",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
         "yajra/laravel-datatables-oracle": "~9.0"
