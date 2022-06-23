@@ -128,9 +128,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image')
-                                <a target="_blank" href="{{ asset('storage/'.$item['file']) }}">
                                     <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item['file']) }}" class="card-img-top" alt="...">
-                                </a>
                                 @endif
                                 @if($item['type'] == 'video')
                                 <video width="100%" height="200" controls>
