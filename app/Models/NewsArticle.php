@@ -22,6 +22,7 @@ class NewsArticle extends Model
      */
     public static $RULES = [
         'title' => [ 'required' ],
+        'image' => ['required'],
         'body' => [ 'required' ],
         'is_published' => [ 'nullable' ],
         'user_id' => [ 'nullable' ],
@@ -36,6 +37,7 @@ class NewsArticle extends Model
     public static $LIST_COLUMNS = [
         'id',
         'title',
+        'image',
         'user_id',
         'created_at',
         'is_published',
@@ -46,6 +48,7 @@ class NewsArticle extends Model
     protected static $LIST_COLUMNS_ORDERABLE = [
         'id',
         'title',
+        'image',
         'user_id',
         'created_at',
         'is_published',
@@ -58,6 +61,7 @@ class NewsArticle extends Model
     protected $fillable = [
         'title',
         'body',
+        'image',
         'is_published',
         'sort_order',
         'user_id',
@@ -105,7 +109,7 @@ class NewsArticle extends Model
         $makeColumn = function($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
             $result = [
                 'name' => $name = value($name),
-                'data' => is_null($data = value($data)) ? $name : $data,
+                'data' =>  is_null($data = value($data)) ? $name : $data,
                 'className' => $className = value($className),
                 'orderable' => value($orderable) ?? false//ends_with($name, '_id'),
             ];
