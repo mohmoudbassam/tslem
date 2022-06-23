@@ -327,7 +327,7 @@ class DeliveryController extends Controller
     {
         $designerNote = $order->lastDesignerNote()->latest()->first();
         $rejects = $order->orderSharerRejects()->with('orderSharer')->get();
-        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
 
