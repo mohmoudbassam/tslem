@@ -488,7 +488,7 @@ function sms($number, $body)
 function order_services($id)
 {
     $order = Order::query()->find($id);
-    $order_services = OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get();
+    $order_services = OrderService::query()->with('service.specialties.service')->whereHas('service')->where('order_id', $order->id)->get();
     $services = $order_services->map(function ($service) {
         return [
             'name' => $service->service->name,
