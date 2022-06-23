@@ -377,9 +377,10 @@
             $('#js-news').ticker();
         });
 
+        var modal = document.getElementById("myModal");
+
         function viewImage(id) {
             // Get the modal
-            var modal = document.getElementById("myModal");
 
             // Get the image and insert it inside the modal - use its "alt" text as a caption
             var img = document.getElementById(id);
