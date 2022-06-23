@@ -228,7 +228,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image' && $item->files->first())
-                                <img id="myImg"  style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                <img id="myImg{{$key}}" onclick='viewImage("myImg{{$key}}")' style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
                                 @if($item['type'] == 'video' && $item->files->first())
                                 <video width="100%" height="200" controls>
@@ -377,19 +377,20 @@
             $('#js-news').ticker();
         });
 
-        // Get the modal
-        var modal = document.getElementById("myModal");
+        function viewImage(id) {
+            // Get the modal
+            var modal = document.getElementById("myModal");
 
-        // Get the image and insert it inside the modal - use its "alt" text as a caption
-        var img = document.getElementById("myImg");
-        var modalImg = document.getElementById("img01");
-        var captionText = document.getElementById("caption");
-        img.onclick = function() {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById(id);
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
         }
-
         // Get the <span> element that closes the modal
         var span = document.getElementById("img01");
 
