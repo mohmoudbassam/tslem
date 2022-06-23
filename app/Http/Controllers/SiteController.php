@@ -11,6 +11,20 @@ class SiteController extends Controller
         $data['news']=  \App\Models\News::query()->latest()->get();
         return $data;
     }
+    
+    public function getPhotos()
+    {
+        $data['photos'] =  \App\Models\Media::query()->where('type', 'image')->latest()->take(12)->get();
+        $data['pageTitle'] =  'المركز الاعلامي - الصور';
+        return view("photos", $data);
+    }
+
+    public function getVideos()
+    {
+        $data['photos'] =  \App\Models\Media::query()->where('type', 'video')->latest()->take(12)->get();
+        $data['pageTitle'] =  'المركز الاعلامي - الفيديوهات';
+        return view("photos", $data);
+    }
 
     public function getHome(){
         return view("public",$this->getMainData());
