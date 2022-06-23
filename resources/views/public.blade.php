@@ -127,7 +127,7 @@
                 <div class="col-lg-4 col-xl-3 mb-4 mx-auto">
                     <div class="home-content">
                         <h2 class="wow fadeInUp font-bold text-white mb-lg-3" data-wow-delay="0.2s">البوابة الرقمية</h2>
-                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #0A2373">تسليم</h3>
+                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #c0946f">تسليم</h3>
                         <h3 class="wow fadeInUp font-bold text-white" data-wow-delay="0.4s">مركز ريــادي متكامل</h3>
                     </div>
                 </div>
