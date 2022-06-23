@@ -128,7 +128,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image')
-                                    <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item['file']) }}" class="card-img-top" alt="...">
+                                    <img onclick="goTo({{ asset('storage/'.$item['file']) }})" style="width: 100%;height:200px" src="{{ asset('storage/'.$item['file']) }}" class="card-img-top" alt="...">
                                 @endif
                                 @if($item['type'] == 'video')
                                 <video width="100%" height="200" controls>
@@ -267,6 +267,10 @@
         $(function() {
             $('#js-news').ticker();
         });
+
+        function goTo(src){
+            window.open(src, '_blank');
+        }
     </script>
 
 </body>
