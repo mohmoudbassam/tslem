@@ -86,6 +86,13 @@
                                     <span data-key="t-calendar">شريط الاخبار</span>
                                 </a>
                             </li>
+
+                            <li>
+                                <a href="{{route('media')}}">
+                                    <span data-key="t-calendar"> المركز الاعلامي</span>
+                                </a>
+                            </li>
+                            
                             <li>
                                 <a href="{{route('specialties.index')}}">
                                     <span data-key="t-calendar">التخصصات</span>

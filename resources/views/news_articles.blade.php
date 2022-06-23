@@ -62,6 +62,8 @@
                             <li class="menu_item"><a class="menu_link active">المركز الاعلامي</a>
                                 <ul class="main-menu-sub">
                                     <li><a href="{{ route('NewsArticles.Mainlist') }}">الأخبار</a></li>
+                                        <li><a href="{{ route('Photoes.Photoes') }}">الصور</a></li>
+<li><a href="{{ route('Videos.Videos') }}">الفيديوهات</a></li>
                                 </ul>
                             </li>
                             <li class="menu_item"><a class="menu_link">الخدمات الألكترونية</a>
