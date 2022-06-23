@@ -487,7 +487,7 @@ class DeliveryController extends Controller
 
                 return $order->order_status;
             })
-            ->setRowClass(fn(Order $o) => $o->isDesignReviewStatus() && $o->lastDesignerNote()->exists() ? 'alert-warning' : '')
+            ->setRowClass(fn(Order $o) => $o->isNewForTaslem() ? 'alert-info' : ($o->isBackFromWarning() ? 'alert-warning' : ''))
             ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_only ?? ''))
             ->rawColumns(['actions'])
             ->make(true);

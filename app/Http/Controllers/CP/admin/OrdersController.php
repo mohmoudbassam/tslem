@@ -64,9 +64,10 @@ class OrdersController extends Controller
         $order->when($request->params == 'designe_office_orders', function ($q) {
             $q->where('status','!=',Order::PENDING)->whereNotNull('designer_id');
         });
-        $order->when($request->params == 'tasleem', function ($q) {
-            $q->where('status', '>=', Order::DESIGN_REVIEW);
-        });
+        //$order->when($request->params == 'tasleem', function ($q) {
+        //    $q->where('status', '>=', Order::DESIGN_REVIEW);
+        //});
+        $order->when($request->params == 'tasleem', fn ($q) => $q->taslemDashboardOrders());
         if ($request->waste_contractor) {
             $order = $order->whereWasteContractor($request->waste_contractor);
         }
@@ -107,6 +108,7 @@ btn;
                 }
                 return "<div>$html</div>";
             })
+            ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_only ?? ''))
             ->rawColumns(['actions'])
             ->make(true);
     }
