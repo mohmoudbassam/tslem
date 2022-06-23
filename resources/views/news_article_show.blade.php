@@ -135,16 +135,21 @@
                     <div class="col-lg-10">
                         <div class="guide-links">
 
-                            <div class="col-lg-12">
-                                <img src="{{ asset('storage/'.$model['image']) }}" class="card-img-top" alt="...">
+                            <div class="col-lg-12 row pb-4">
+
+                                @foreach($model->files as $item)
+                                <div class="col-lg-6">
+                                    <img style="width: 600px;height:300px" src="{{ asset('storage/'.$item->file) }}" class="card-img-top" alt="...">
+                                </div>
+                                @endforeach
 
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-12 pb-2">
                                 العنوان: {{ $model->title }}
                             </div>
-                            <div class="col-lg-12">
-                                تاريخ الإنشاء: {{ $model->created_at }}
+                            <div class="col-lg-12 pb-4">
+                                تاريخ الإنشاء: {{ date('Y/m/d',strtotime($model['created_at'])) }}
                             </div>
                             <div class="col-lg-12">
                                 {!! $model->body !!}

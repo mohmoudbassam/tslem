@@ -137,7 +137,9 @@
                         @foreach($links as $item)
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
-                                <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item['image']) }}" class="card-img-top" alt="...">
+                                @if($item->files->first())
+                                <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                @endif
                                 <div class="card-body">
                                     <a href="{{ route('NewsArticles.article', ['news_article' => $item->id]) }}">
                                         <h5 class="card-title">{{ $item['title'] }}</h5>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CP\Media;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -42,18 +43,17 @@ class MediaController extends Controller
                 return $order->title;
             })
             ->addColumn('type', function ($order) {
-                return $order->type;
+                return $order->type ? $order->type : null;
             })
             ->addColumn('file', function ($order) {
-
-                if ($order->file) {
-                    if ($order->type == 'video') {
+                if ($order->files->first()) {
+                    if ($order->files->first()->type == 'video') {
                         return '<video width="200" height="100" controls>
-                                <source src="' . asset('storage/' . $order->file) . '" type="video/mp4">
+                                <source src="' . asset('storage/' . $order->files->first()->file) . '" type="video/mp4">
                                 </video>';
                     }
-                    return $order->file ? '
-                    <img style="width:200px;height:100px" src="' . asset('storage/' . $order->file) . '">
+                    return $order->files->first() ? '
+                    <img style="width:200px;height:100px" src="' . asset('storage/' . $order->files->first()->file) . '">
                     ' : null;
                 } else {
                     return null;
@@ -87,22 +87,29 @@ class MediaController extends Controller
         ]);
         if ($request->type == 'image') {
             $request->validate([
-                'file' => 'required|image|mimes:png,jpg,jpeg|max:3000'
+                'file' => 'array',
+                'file.*' => 'required|image|mimes:png,jpg,jpeg|max:3000'
             ]);
         } else {
             $request->validate([
-                'file' => 'required|mimes:mp4,amv|max:5000'
+                'file' => 'array',
+                'file.*' => 'required|mimes:mp4,amv|max:5000'
             ]);
         }
         $id = isset($request['id']) ? $request['id'] : null;
-        $data = $request->except('_token');
+        
+        $data = $request->only('title', 'type');
+        $media = Media::query()->updateOrCreate(['id' => $id], $data);
 
-        $data['file'] = $request->file('file')->store(
-            'avatars',
-            'public'
-        );
-        Media::query()->updateOrCreate(['id' => $id], $data);
-
+        if ($request->file('file')) {
+            foreach ($request->file('file') as $value) {
+                $item['file']    = $value->store('avatars', 'public');
+                $item['type']    = $request->type;
+                $item['item_id'] = $media->id;
+                File::create($item);
+            }
+        }
+    
         return response()->json([
             'success' => True,
             'message' => $id ? 'تم تعديل الخبر بنجاح' : 'تمت إضافة الخبر بنجاح'
@@ -112,7 +119,9 @@ class MediaController extends Controller
     public function delete()
     {
 
-        Media::query()->findOrFail(request('id'))->delete();
+        $media = Media::query()->findOrFail(request('id'))->first();
+        File::where('item_id', $media->id)->whereIn('type', ['image', 'video'])->delete();
+        $media->delete();
         return response()->json([
             'message' => 'تمت عمليه الحذف  بنجاح',
             'success' => true
