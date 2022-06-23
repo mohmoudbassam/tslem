@@ -51,7 +51,7 @@
                         @csrf
                         <div class="row">
                             @foreach(\App\Models\NewsArticle::$RULES as $input => $rules)
-                                @if($input!=='user_id')
+                                @if($input!=='user_id' && $input!=='image')
                                 @include('CP.helpers.form_input', [
                                     'col' => 12,
                                     'id' => $input,
@@ -68,6 +68,18 @@
                                     'model' => $model,
                                 ])
                                 @endif
+
+                                @if($input == 'image')
+                                <div class="row">
+                    <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                        <div class="row">
+                                <label class="col-12" for="media">الصوره</label>
+                                <input type="file" name="image" class="form-control">
+                        </div>
+                    </div>
+                                </div>
+                                @endif
+
                             @endforeach
                         </div>
                     </form>

@@ -91,6 +91,10 @@ class NewsArticleController extends Controller
     {
         $data = $request->validated();
         $data[ 'order_id' ] ??= 0;
+        $data['image'] = $request->file('image')->store(
+            'news_articles',
+            'public'
+        );
         $news_article = NewsArticle::create($data);
 
         return redirect()
@@ -157,6 +161,11 @@ class NewsArticleController extends Controller
                          ->addColumn('title', fn(NewsArticle $news_article) => $news_article->title)
                          ->addColumn('user_id', fn(NewsArticle $news_article) => $news_article->user()->value('name') ?: '-')
                          ->addColumn('is_published', fn(NewsArticle $news_article) => $news_article::trans($news_article->is_published ? 'published' : 'not_published'))
+                         ->addColumn('image', function ($order) {
+                            return $order->image ? '
+                            <img style="width:50px" src="' . asset('storage/' . $order->image) . '">
+                            ' : null;
+                        })
                          ->addColumn('actions', function($news_article) {
                              $title = __('general.datatable.fields.actions');
                              $delete_title = NewsArticle::crudTrans('delete');
@@ -181,7 +190,7 @@ class NewsArticleController extends Controller
 </div>
 HTML;
                          })
-                         ->rawColumns([ 'actions' ])
+                         ->rawColumns([ 'actions' , 'image' ])
                          ->make(true);
     }
 
@@ -232,7 +241,12 @@ HTML;
      */
     public function update(StoreNewsArticleRequest $request, NewsArticle $news_article)
     {
-        $news_article->update($request->validated());
+        $data =$request->validated();
+        $data['image'] = $request->file('image')->store(
+            'news_articles',
+            'public'
+        );
+        $news_article->update($data);
 
         return back()->with('success', __('general.success'));
     }
