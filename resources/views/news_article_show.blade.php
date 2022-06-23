@@ -138,7 +138,7 @@
                             <div class="col-lg-12 row pb-4">
 
                                 @foreach($model->files as $item)
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 pb-2">
                                     <img style="width: 600px;height:300px" src="{{ asset('storage/'.$item->file) }}" class="card-img-top" alt="...">
                                 </div>
                                 @endforeach
