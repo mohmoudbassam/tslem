@@ -188,6 +188,11 @@ class Order extends Model
         return $query->where('owner_id', $service_provider_id);
     }
 
+    public function scopeByStatus(Builder $query, $status)
+    {
+        return $query->whereIn('status', (array)$status);
+    }
+
     public function getOrderStatusAttribute()
     {
         $orderStatus = static::getOrderStatuses();
