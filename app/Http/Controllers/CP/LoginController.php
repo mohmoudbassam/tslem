@@ -152,10 +152,30 @@ class LoginController extends Controller
                 ];
             });
         ///order per designer office
-        $data['order_count_per_designer'] = Order::query()->where('status','!=',Order::PENDING)->whereNotNull('designer_id')->count();
+        $data['order_count_per_designer'] = Order::query()->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id')->count();
         $data['order_count_per_taslem'] = Order::taslemDashboardOrders()->count();
         $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
         $data['wasteContractors'] = wasteContractorsList()->count();
+        // Orders count by status
+        $getOrdersCountByStatus = Order::selectRaw('COUNT(id) AS count,status')->groupBy('status')->get();
+        $orderStatusChartData = [
+            'seriesData' => [],
+            'seriesCategories' => [],
+            'statusList' => []
+        ];
+        $data['countOrders'] = 0;
+        foreach(Order::getOrderStatuses() as $ItemStatus => $ItemName){
+            $getCount =  $getOrdersCountByStatus->where('status',$ItemStatus)->first();
+            if($getCount){
+                $data['countOrders'] += $getCount->count;
+                $orderStatusChartData['seriesData'][] = $getCount->count;
+            }else {
+                $orderStatusChartData['seriesData'][] = 0;
+            }
+            $orderStatusChartData['statusList'][] = $ItemStatus;
+            $orderStatusChartData['seriesCategories'][] = $ItemName;
+        }
+        $data['orderStatusChartData'] = $orderStatusChartData;
 
         return view('CP.dashboard', $data);
 

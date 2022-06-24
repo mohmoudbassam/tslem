@@ -61,9 +61,12 @@ class OrdersController extends Controller
             ->with('designer')
             ->with('service_provider')
             ->with(['designer', 'contractor', 'consulting']);
-        $order->when($request->params == 'designe_office_orders', function ($q) {
-            $q->where('status','!=',Order::PENDING)->whereNotNull('designer_id');
-        });
+            $order->when($request->params == 'designe_office_orders', function ($q) {
+                $q->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id');
+            });
+            if($request->order_status){
+                $order = $order->where('status',$request->order_status);
+            }
         //$order->when($request->params == 'tasleem', function ($q) {
         //    $q->where('status', '>=', Order::DESIGN_REVIEW);
         //});
