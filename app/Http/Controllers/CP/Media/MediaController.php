@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Storage;
 
 class MediaController extends Controller
 {
@@ -97,11 +98,18 @@ class MediaController extends Controller
             ]);
         }
         $id = isset($request['id']) ? $request['id'] : null;
-        
+
         $data = $request->only('title', 'type');
         $media = Media::query()->updateOrCreate(['id' => $id], $data);
 
         if ($request->file('file')) {
+            $old = File::where('item_id', $media->id)->whereIn('type', ['image', 'video'])->get();
+
+            foreach ($old as $key => $value) {
+                Storage::delete($value->file);
+                $value->delete();
+            }
+
             foreach ($request->file('file') as $value) {
                 $item['file']    = $value->store('avatars', 'public');
                 $item['type']    = $request->type;
@@ -109,7 +117,7 @@ class MediaController extends Controller
                 File::create($item);
             }
         }
-    
+
         return response()->json([
             'success' => True,
             'message' => $id ? 'تم تعديل الخبر بنجاح' : 'تمت إضافة الخبر بنجاح'

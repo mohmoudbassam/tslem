@@ -30,105 +30,134 @@
     <link rel="stylesheet" href="{{ asset('assets/css/plugin.min.css?v='.config('app.asset_ver')) }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css?v='.config('app.asset_ver')) }}" />
 
-
     <style>
-        /* Style the Image Used to Trigger the Modal */
-        #myImg {
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
+        .row>.column {
+            padding: 0 8px;
         }
 
-        #myImg:hover {
-            opacity: 0.7;
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Create four equal columns that floats next to eachother */
+        .column {
+            float: left;
+            width: 25%;
         }
 
         /* The Modal (background) */
         .modal {
             display: none;
-            /* Hidden by default */
             position: fixed;
-            /* Stay in place */
             z-index: 1;
-            /* Sit on top */
             padding-top: 100px;
-            /* Location of the box */
             left: 0;
             top: 0;
             width: 100%;
-            /* Full width */
             height: 100%;
-            /* Full height */
             overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.9);
-            /* Black w/ opacity */
+            background-color: black;
         }
 
-        /* Modal Content (Image) */
+        /* Modal Content */
         .modal-content {
+            position: relative;
+            background-color: #fefefe;
             margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
-
-        /* Caption of Modal Image (Image Text) - Same Width as the Image */
-        #caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px;
-        }
-
-        /* Add Animation - Zoom in the Modal */
-        .modal-content,
-        #caption {
-            animation-name: zoom;
-            animation-duration: 0.6s;
-        }
-
-        @keyframes zoom {
-            from {
-                transform: scale(0)
-            }
-
-            to {
-                transform: scale(1)
-            }
+            padding: 0;
+            width: 90%;
+            max-width: 1200px;
         }
 
         /* The Close Button */
         .close {
+            color: white;
             position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
             font-weight: bold;
-            transition: 0.3s;
         }
 
         .close:hover,
-        .close {
-            color: #bbb;
+        .close:focus {
+            color: #999;
             text-decoration: none;
             cursor: pointer;
         }
 
-        /* 100% Image Width on Smaller Screens */
-        @media only screen and (max-width: 700px) {
-            .modal-content {
-                width: 100%;
-            }
+        /* Hide the slides by default */
+        .mySlides {
+            display: none;
+        }
+
+        /* Next & previous buttons */
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* Caption text */
+        .caption-container {
+            text-align: center;
+            background-color: black;
+            padding: 2px 16px;
+            color: white;
+        }
+
+        img.demo {
+            opacity: 0.6;
+        }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+
+        img.hover-shadow {
+            transition: 0.3s;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
     </style>
+
 </head>
 
 <body>
@@ -228,7 +257,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image' && $item->files->first())
-                                <img style="cursor: pointer;" id="myImg{{$key}}" onclick='viewImage("myImg{{$key}}")' style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                <img style="cursor: pointer;width: 100%;height:200px" id="myImg{{$key}}" onclick='openModal("{{$key}}")'  src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
                                 @if($item['type'] == 'video' && $item->files->first())
                                 <video width="100%" height="200" controls>
@@ -359,12 +388,31 @@
         <!-- end:: footer -->
 
 
+        @foreach($photos as $key => $item)
         <!-- The Modal -->
-        <div id="myModal" class="modal">
+        <div id="{{$key}}" class="modal">
             <!-- Modal Content (The Image) -->
-            <img style="cursor: pointer;" class="modal-content" id="img01">
+            <!-- <img style="cursor: pointer;" class="modal-content" id="img01"> -->
+
+            <div class="modal-content">
+
+                @foreach($item->files as $key2 => $item)
+
+                <div class="mySlides{{$key}}">
+                    <img onclick="closeModal('{{$key}}')" src="{{asset('storage/' . $item->file)}}" style="width:2000px;height:500px">
+                </div>
+
+                @endforeach
+
+                <span class="close cursor" onclick="closeModal('{{$key}}')" style="color: red;">X</span>
+
+                <!-- Next/previous controls -->
+                <a class="prev" style="float: left;color:red" onclick="plusSlides(-1 ,'{{$key}}')">&#10094;</a>
+                <a class="next" style="float: right; right:1150px;color:red" onclick="plusSlides(1 , '{{$key}}')">&#10095;</a>
+            </div>
         </div>
 
+        @endforeach
 
     </div>
     <!-- end:: Page -->
@@ -401,6 +449,49 @@
         }
     </script>
 
+    <script>
+        var slideIndex = 1;
+
+        // Open the Modal
+        function openModal(id) {
+            showSlides(1, id);
+            document.getElementById(id).style.display = "block";
+
+        }
+
+        // Close the Modal
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // var slideIndex = 1;
+        // showSlides(slideIndex , '');
+
+        // Next/previous controls
+        function plusSlides(n, id) {
+            showSlides(slideIndex += n, id);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n, id) {
+            showSlides(slideIndex = n, id);
+        }
+
+        function showSlides(n, id) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides" + id);
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+    </script>
 </body>
 
 </html>

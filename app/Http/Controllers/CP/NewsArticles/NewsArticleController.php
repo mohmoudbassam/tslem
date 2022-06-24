@@ -254,6 +254,14 @@ class NewsArticleController extends Controller
         $news_article->update($data);
 
         if ($request->file('image')) {
+
+            $old = File::where('item_id', $news_article->id)->where('type', 'news')->get();
+
+            foreach ($old as $key => $value) {
+                Storage::delete($value->file);
+                $value->delete();
+            }
+
             foreach ($request->file('image') as $value) {
                 $item['file']    = $value->store('news_articles', 'public');
                 $item['type']    = 'news';
