@@ -74,7 +74,12 @@ class LoginController extends Controller
         $data['number_of_user'] = User::query()->count();
         $data['number_of_user_under_approve'] = User::query()->where('verified', 0)->count();
         $data['number_of_approve_user'] = User::query()->where('verified', 1)->count();
-        $data['donat']['number_of_service_providers_out'] = User::query()->where('type', 'service_provider')->whereNotNull('parent_id')->count();
+        $data['donat']['number_of_service_providers_out'] = User::query()
+            ->where('type', 'service_provider')
+            ->whereNotNull('parent_id')->get()
+            ->filter(function ($item){
+                return optional($item->getRaftCompanyBox())->seen_notes ;
+            })->count();
         $data['donat']['number_of_service_providers_in'] = User::query()->where('type', 'service_provider')->where('verified', 1)->whereNull('parent_id')->count();
         $data['donat']['design_office'] = User::query()->where('type', 'design_office')->where('verified', 1)->count();
         $data['donat']['number_of_contractors'] = User::query()->where('type', 'contractor')->where('verified', 1)->count();
@@ -153,7 +158,7 @@ class LoginController extends Controller
             });
         ///order per designer office
         $data['order_count_per_designer'] = Order::query()->where('status','!=',Order::PENDING)->whereNotNull('designer_id')->count();
-        $data['order_count_per_taslem'] = DeliveryController::getOrdersQuery()->count();
+        $data['order_count_per_taslem'] = hp ;
         $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
         $data['wasteContractors'] = wasteContractorsList()->count();
 
