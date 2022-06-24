@@ -143,11 +143,11 @@
                                 </span>{{$order->designer->company_name}}</p>
                         </div>
 
-                        @if(!$order->final_report()->value('contractor_final_report_approved') && $order->userCanAttachFinalReport())
-                        <div class="bold border col-md-12 my-3 p-2 rounded-start text-start {{$order->final_report()->value('contractor_final_report_note') ? "bg-soft-danger border-danger text-danger " : ""}}">
-                            {{$order->final_report()->value('contractor_final_report_note', '-')}}
+                        @if(!$order->isContractorFinalReportApproved() && $order->userCanAttachFinalReport())
+                        <div class="bold border col-md-12 my-3 p-2 rounded-start text-start {{($contractor_note = $order->getContractorFinalReportNote()) ? "bg-soft-danger border-danger text-danger " : " "}}">
+                            {{$contractor_note ?: '-'}}
                             <span class="float-end">
-                                @include('CP.order.final_report_button', ['order' => $order])
+                                @include('CP.order.final_report_button', ['order' => $order, 'has_file' => $order->hasContractorFinalReportPath()])
                             </span>
                         </div>
                         @endif

@@ -7,6 +7,7 @@ use App\Models\ConsultingOrders;
 use App\Models\ContractorReport;
 use App\Models\ContractorReportFile;
 use App\Models\ContractorSpecialtiesPivot;
+use App\Models\License;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderSpecilatiesFiles;
@@ -91,6 +92,14 @@ class ContractorController extends Controller
                   رفض الطلب
                 </a>';
                 }
+                $actions = '';
+                if ($order->hasLicense()) {
+                    $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_for_service_provider') . '</a>';
+                }
+
+                if ( $order->execution_license()->exists() ) {
+                    $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf_execution_license', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_execution_license_for_service_provider') . '</a>';
+                }
 
                 return <<<html
  <div class="btn-group me-1 mt-2">
@@ -104,6 +113,7 @@ class ContractorController extends Controller
        $reject_order
        $add_report
        $show_reports
+       {$actions}
    </div>
 </div>
 html;
@@ -214,23 +224,26 @@ html;
     public function report_list(Order $order)
     {
         $reports = ContractorReport::query()
+            ->with('order')
             ->where('order_id', $order->id)
             ->where('contractor_id', auth()->user()->id);
-        //dd($reports->count());
+
         $reports->latest();
         return DataTables::of($reports)
             ->addColumn('actions', function ($report) {
-                $edit_report = '<a class="dropdown-item"  href="'.route('contractor.edit_report_form', ['report' => $report->id]).'" ><i class="fa fa-plus me-1"></i>تعديل التقرير  </a>';
-                $delete_report = '<a class="dropdown-item" onclick="delete_report('.$report->id.' )" href="javascript:;"><i class="fa fa-times me-1"></i>حذف التقرير   </a>';
                 //$show_report = '<a class="dropdown-item"  href="'.route('contractor.show', ['report' => $report->id]).'" ><i class="fa fa-plus me-1"></i>تعديل التقرير  </a>';
                 //$show_comments = '<a class="dropdown-item" href="'.route('contractor.show_comments', ['report' => $report->id]).'"><i class="fa fa-times"></i>التعليقات  </a>';
-                if ($report->order->status > 4) {
+                // if ($report->order->status > 4) {
                     //$edit_report = '';
                     //$delete_report = '';
+                // }
+                $order = $report->order;
+                if(!$order->userCanAddReport()) {
+                    return "";
                 }
-                //$edit_report = '';
-                //$delete_report = '';
                 $show_report = '';
+                $edit_report = '<a class="dropdown-item"  href="'.route('contractor.edit_report_form', ['report' => $report->id]).'" ><i class="fa fa-plus me-1"></i>تعديل التقرير  </a>';
+                $delete_report = '<a class="dropdown-item" onclick="delete_report('.$report->id.' )" href="javascript:;"><i class="fa fa-times me-1"></i>حذف التقرير   </a>';
 
                 return <<<html
 <div>

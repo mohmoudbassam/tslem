@@ -125,14 +125,14 @@
                                     @endif
                                 </div>
                             </div>
-                            @if(!$order->final_report()->value('consulting_office_final_report_approved'))
+                            @if(!$order->isConsultingOfficeFinalReportApproved() && $order->userCanAttachFinalReport())
                             <div class="row">
                                 <div class="col-md-12 my-3 text-end">
-                                    <div class="bold border col-md-12 my-3 p-2 rounded-start {{$order->final_report()->value('consulting_office_final_report_note') ? "bg-soft-danger border-danger text-danger " : ""}}">
+                                    <div class="bold border col-md-12 my-3 p-2 rounded-start {{($consulting_office_note = $order->getConsultingOfficeFinalReportNote()) ? "bg-soft-danger border-danger text-danger " : ""}}">
                                         <span class="float-start">
-                                            {{$order->final_report()->value('consulting_office_final_report_note', '-')}}
+                                            {{$consulting_office_note ?: '-'}}
                                         </span>
-                                        @include('CP.order.final_report_button', ['order' => $order])
+                                        @include('CP.order.final_report_button', ['order' => $order, 'has_file' => $order->hasConsultingOfficeFinalReportPath()])
                                     </div>
                                 </div>
                             </div>

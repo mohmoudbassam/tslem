@@ -19,9 +19,7 @@ class FinalReportObserver
             $data = array_only($final_report->getOriginal(), array_keys($final_report->getDirty()));
             $meta = array_merge(
                 $final_report->meta ?: [],
-                array_filter($data, function($val) {
-                    return !is_null($val) && $val !== "";
-                })
+                $data
             );
 
             $final_report->meta = $meta;

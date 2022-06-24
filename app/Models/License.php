@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -127,6 +128,7 @@ class License extends Model
         'map_path_label',
         'final_attachment_path',
         'type',
+        'attachment',
         // 'created_at',
     ];
 
@@ -255,7 +257,7 @@ CODE;
 
         if(
             !in_array(currentUser()->type, [ User::CONTRACTOR_TYPE, User::CONSULTNG_OFFICE_TYPE ]) &&
-            ($model && get_class($model) === Order::class && !in_array(currentUser()->id, [$model->contractor_id, $model->consulting_office_id]))
+            ($model && get_class($model) === Order::class && !in_array(currentUser()->id, [ $model->contractor_id, $model->consulting_office_id ]))
         ) {
             $_rules = array_except($_rules, [ 'final_report_path' ]);
         } else {
@@ -341,7 +343,7 @@ CODE;
     {
         if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             $this->map_path = $full_path;
-            $this->map_path_label = $file->getFilename();
+            $this->map_path_label = $file->getClientOriginalName();
 
             if( $save ) {
                 $this->save();
@@ -373,7 +375,7 @@ CODE;
 
     public static function disk($disk = null)
     {
-        return Storage::disk($disk??static::$DISK);
+        return Storage::disk($disk ?? static::$DISK);
     }
 
     // region: final_attachment_path
@@ -508,7 +510,7 @@ CODE;
 
     public function getIdLabelAttribute()
     {
-        return str_pad($this->id,4,"0",STR_PAD_LEFT);
+        return str_pad($this->id, 4, "0", STR_PAD_LEFT);
     }
 
     public function getMapPathUrlAttribute()
@@ -525,7 +527,7 @@ CODE;
                 is_a($value, UploadedFile::class)
             )
         ) {
-            $this->addMapPath($value);
+            $this->addMapPath($value, false);
         } else {
             $this->attributes[ 'map_path' ] = $value;
         }
@@ -566,9 +568,9 @@ CODE;
         $type ??= $this->type;
         $data = false;
         if( $type === static::EXECUTION_TYPE ) {
-            $data = $this->getFinalAttachmentPathUrlAttribute();
-        } else if( $raft = $this->service_provider->getRaftCompanyBox() ) {
-            $data = route('qr_download_files', [ 'order'=>$this->order->id ]);
+            $data = route('licenses.license_final_attachment_file', [ 'license' => $this ]);
+        } elseif( $raft = $this->service_provider->getRaftCompanyBox() ) {
+            $data = route('qr_download_files', [ 'order' => $this->order->id ]);
         }
 
         return $data ? QrCode::generate($data) : $data;

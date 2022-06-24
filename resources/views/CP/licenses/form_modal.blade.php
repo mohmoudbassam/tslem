@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label class="col-form-label" for="attachment">المرفقات</label>
+                                        <label class="col-form-label" for="attachment">إرفاق الملف</label>
                                         <input type="file" class="form-control"
                                                id="attachment"
                                                name="attachment">

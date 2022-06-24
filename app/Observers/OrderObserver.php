@@ -16,6 +16,17 @@ class OrderObserver
      */
     public function saving(Order $order)
     {
+        if( $order->isDirty('status') && !$order->originalIsEquivalent('status') ) {
+            if( in_array($order->status,[
+                Order::FINAL_REPORT_ATTACHED,
+                Order::FINAL_REPORT_APPROVED,
+                Order::FINAL_LICENSE_GENERATED,
+            ]) )
+            {
+                $order->notifyChanges($order->order_status);
+            }
+        }
+
         // todo: https://trello.com/c/iuKT8Uhh/14-add-modal-for-tslem-3
         // if( !$order->originalIsEquivalent('contractor_id') || !$order->originalIsEquivalent('consulting_office_id') ) {
         //     if( $order->contractor_id && $order->consulting_office_id ) {
@@ -33,7 +44,6 @@ class OrderObserver
      */
     public function saved(Order $order)
     {
-
     }
 
     /**
