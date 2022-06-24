@@ -16,7 +16,7 @@ return [
         'camp_space' => 'Camp Space',
         'map_path' => 'Location Map',
         'map_path_label' => 'Location Map File',
-        'final_attachment_path' => 'Final Report',
+        'final_attachment_path' => 'File',
         'final_report_path' => 'Final Report',
         'final_report_note' => 'Reason',
     ],

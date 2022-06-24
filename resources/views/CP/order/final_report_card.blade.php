@@ -27,7 +27,7 @@
             @isset($info)
             @isset($info['note'])
                 <div class="col-md-12 my-3 text-start">
-                    <div class="bold border col-md-12 my-3 p-2 rounded-start bg-soft-danger border-danger text-danger">
+                    <div class="bold border col-md-12 my-3 p-2 rounded-start {{($info['has_file'] ?? false) ? "bg-soft-light border-light " : "bg-soft-danger border-danger text-danger "}}">
                         {!! $info['note'] !!}
                     </div>
                 </div>

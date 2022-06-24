@@ -1,9 +1,13 @@
+@php
+    $_title = __('models/final_report.' . (($has_file ?? false) ? 'reattach_final_report' : 'attach_final_report'));
+@endphp
+
 @if($order->userCanAttachFinalReport())
 <div class="btn-group btn-group-justified">
     @if(in_array($order->status,[$order::PENDING_OPERATION, $order::FINAL_REPORT_ATTACHED]) && ($pass ?? true))
         <a id="final-report-button" class="btn btn-primary final-report-button" href="#">
             <i class="fa fa-plus pe-2"></i>
-            ارفاق التقرير النهائي
+            {{$_title}}
         </a>
     @endif
 </div>
@@ -13,7 +17,9 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="final-report-modal-title">ارفاق التقرير النهائي</h5>
+                <h5 class="modal-title" id="final-report-modal-title">
+                    {{$_title}}
+                </h5>
             </div>
             <div class="modal-body">
                 <div class="row my-4" id="file-view-row"></div>

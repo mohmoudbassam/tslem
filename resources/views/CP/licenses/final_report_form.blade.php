@@ -2,7 +2,9 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title"
-                id="exampleModalLongTitle">ارفاق التقرير النهائي</h5>
+                id="exampleModalLongTitle">
+                @lang('models/final_report.' . (($note_exist??$model->final_report()->value('contractor_final_report_note')) ? 'reattach_final_report' : 'attach_final_report'))
+            </h5>
 
         </div>
         <form action="'{{route('licenses.final_report', ['order'=>$model->id])}}'" method="post" id="form_modal" enctype="multipart/form-data">
