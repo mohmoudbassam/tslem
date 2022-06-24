@@ -939,7 +939,11 @@
             chart: {
                 events: {
                     dataPointSelection: (event, chartContext, config) => {
-                return window.location.href = '{{ route('orders') }}?order_status='+orderStatus[config.dataPointIndex]
+                        if(orderStatus[config.dataPointIndex] == {{ \App\Models\Order::PENDING_OPERATION }}){
+                            return window.location.href = '{{ route('licenses') }}';
+                        }else {
+                            return window.location.href = '{{ route('orders') }}?order_status='+orderStatus[config.dataPointIndex]
+                        }
     }
     },
                 type: 'bar'
