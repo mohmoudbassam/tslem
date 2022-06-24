@@ -95,7 +95,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('media')
         ->name('media')
-        ->middleware(['user_type:admin'])
+        ->middleware(['user_type:admin,multi_media'])
         ->group(function () {
             Route::get('', [MediaController::class, 'index']);
             Route::get('list', [MediaController::class, 'list'])->name('.list');
@@ -163,7 +163,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('news_articles')
         ->name('news_articles')
-        ->middleware(['user_type:admin'])
+        ->middleware(['user_type:admin,multi_media'])
         ->group(function () {
             Route::get('', [NewsArticleController::class, 'index']);
             Route::get('add', [NewsArticleController::class, 'add'])->name('.add');
