@@ -11,7 +11,7 @@
     @endsection
 
 @section('content')
-    @if( !request()->has('print') )
+    @if( !($print ?? true) )
         <div class="row">
             <div class="my-2 col-12">
                 <div class="d-flex flex-wrap gap-3">

@@ -38,6 +38,9 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             optional($order->contractor)->company_name ?? '',
             optional($order->consulting)->company_name,
             $order->waste_contractor ?? '',
+            $order->comp ?? '',
+            $order->box ?? '',
+            $order->license_number ?? '',
 
         ];
     }
@@ -54,7 +57,9 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             ' المقاول',
             'المكتب الإستشاري',
             ' مقاول النفايات',
-
+            'رقم المخيم',
+            'رقم المربع',
+            'رقم الترخيص',
         ];
     }
 

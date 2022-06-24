@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\OrderNotification;
+use App\Traits\THasPathAttribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,12 @@ class Order extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use THasPathAttribute;
+
+    /**
+     * @var string
+     */
+    public static $DISK = 'licenses';
 
     public const PENDING = 1;
     public const REQUEST_BEGIN_CREATED = 2;
@@ -25,7 +33,25 @@ class Order extends Model
     public const FINAL_REPORT_ATTACHED = 11;
     public const FINAL_REPORT_APPROVED = 12;
     public const FINAL_LICENSE_GENERATED = 13;
-    protected $guarded = [];
+    protected $fillable = [
+        'identifier',
+        'title',
+        'description',
+        'date',
+        'status',
+        'owner_id',
+        'designer_id',
+        'delivery_notes',
+        'allow_deliver',
+        'contractor_id',
+        'consulting_office_id',
+        'waste_contractor',
+        'license_paths',
+    ];
+
+    protected $casts = [
+        'license_paths' => 'array',
+    ];
 
     public function license()
     {
@@ -60,7 +86,7 @@ class Order extends Model
     public function service()
     {
         return $this->belongsToMany(Service::class, 'order_service', 'order_id', 'service_id')
-            ->withPivot('service_id', 'order_id', 'unit');
+                    ->withPivot('service_id', 'order_id', 'unit');
     }
 
     public function obligations()
@@ -162,33 +188,53 @@ class Order extends Model
         return $query->where('owner_id', $service_provider_id);
     }
 
+    public function scopeByStatus(Builder $query, $status)
+    {
+        return $query->whereIn('status', (array)$status);
+    }
+
     public function getOrderStatusAttribute()
     {
         $orderStatus = static::getOrderStatuses();
-        if (isset($orderStatus[$this->status])) {
-            return $orderStatus[$this->status];
+        $status = null;
+
+        if( isset($orderStatus[ $this->status ]) ) {
+            $status = $orderStatus[ $this->status ];
+            if( $this->status === static::FINAL_REPORT_ATTACHED ) {
+                $hasConsultingOfficeFinalReportPath = $this->hasConsultingOfficeFinalReportPath() && !$this->hasConsultingOfficeFinalReportNote();
+                $hasContractorFinalReportPath = $this->hasContractorFinalReportPath() && !$this->hasContractorFinalReportNote();
+
+                if( $hasContractorFinalReportPath && $hasConsultingOfficeFinalReportPath ) {
+                    $status = __("models/order.final_report_attached_status.ready");
+                } elseif( $hasConsultingOfficeFinalReportPath ) {
+                    $status = __("models/order.final_report_attached_status.contractor");
+                } elseif( $hasContractorFinalReportPath ) {
+                    $status = __("models/order.final_report_attached_status.consulting_office");
+                } else {
+                    $status = __("models/order.final_report_attached_status.new");
+                }
+            }
         }
-        else {
-            return null;
-        }
+
+        return $status;
     }
 
     public static function getOrderStatuses(): array
     {
         return [
-            static::PENDING                     => 'معلق',
-            static::REQUEST_BEGIN_CREATED       => 'قيد إنشاء الطلب',
-            static::DESIGN_REVIEW               => 'مراجعة التصاميم',
-            static::DESIGN_APPROVED             => 'معتمد التصاميم',
+            static::PENDING => 'معلق',
+            static::REQUEST_BEGIN_CREATED => 'قيد إنشاء الطلب',
+            static::DESIGN_REVIEW => 'مراجعة التصاميم',
+            static::DESIGN_APPROVED => 'معتمد التصاميم',
             static::DESIGN_AWAITING_GOV_APPROVE => 'بانتظار اعتماد الجهات الحكومية',
-            static::PROCESSING                  => 'الطلب تحت الإجراء',
-            static::COMPLETED                   => 'الطلب مكتمل',
-            static::PENDING_LICENSE_ISSUED      => 'بانتظار إصدار الرخصة',
-            static::ORDER_APPROVED              => 'تمت الموافقة النهائية',
-            static::PENDING_OPERATION           => 'تم اصدار رخصة الاضافات',
-            static::FINAL_REPORT_ATTACHED       => 'تم ارفاق التقرير النهائي',
-            static::FINAL_REPORT_APPROVED       => 'تم اعتماد التقارير النهائية',
-            static::FINAL_LICENSE_GENERATED     => 'تم اصدار رخصة التنفيذ',
+            static::PROCESSING => 'الطلب تحت الإجراء',
+            static::COMPLETED => 'الطلب مكتمل',
+            static::PENDING_LICENSE_ISSUED => 'بانتظار إصدار الرخصة',
+            static::ORDER_APPROVED => 'تمت الموافقة النهائية',
+            static::PENDING_OPERATION => 'تم اصدار رخصة الإضافات',
+            static::FINAL_REPORT_ATTACHED => 'تم ارفاق التقرير النهائي',
+            static::FINAL_REPORT_APPROVED => 'تم اعتماد التقارير النهائية',
+            static::FINAL_LICENSE_GENERATED => 'تم إصدار رخصة التنفيذ',
         ];
     }
 
@@ -347,6 +393,51 @@ class Order extends Model
         return $this->status === static::ORDER_APPROVED;
     }
 
+    public function hasContractorFinalReportNote(): bool
+    {
+        return (bool) $this->getContractorFinalReportNote();
+    }
+
+    public function hasConsultingOfficeFinalReportNote(): bool
+    {
+        return (bool) $this->getConsultingOfficeFinalReportNote();
+    }
+
+    public function getContractorFinalReportNote($default = null): ?string
+    {
+        return $this->final_report()->value('contractor_final_report_note') ?? value($default);
+    }
+
+    public function getConsultingOfficeFinalReportNote($default = null): ?string
+    {
+        return $this->final_report()->value('consulting_office_final_report_note') ?? value($default);
+    }
+
+    public function isConsultingOfficeFinalReportApproved(): bool
+    {
+        return (bool) $this->final_report()->value('consulting_office_final_report_approved');
+    }
+
+    public function isContractorFinalReportApproved(): bool
+    {
+        return (bool) $this->final_report()->value('contractor_final_report_approved');
+    }
+
+    public function isFinalReportFullyApproved(): bool
+    {
+        return $this->isContractorFinalReportApproved() && $this->isConsultingOfficeFinalReportApproved();
+    }
+
+    public function hasConsultingOfficeFinalReportPath(): bool
+    {
+        return (bool) $this->final_report()->value('consulting_office_final_report_path');
+    }
+
+    public function hasContractorFinalReportPath(): bool
+    {
+        return (bool) $this->final_report()->value('contractor_final_report_path');
+    }
+
     public function shouldPostFinalReports()
     {
         return in_array($this->status, [ static::PENDING_OPERATION, static::FINAL_REPORT_ATTACHED ]);
@@ -355,6 +446,10 @@ class Order extends Model
     public function userCanAttachFinalReport($user = null)
     {
         $user ??= currentUser();
+        if( $user && !isModel($user) ) {
+            $user = User::find($user);
+        }
+
         $user_type = $user->isContractor() ? 'contractor' : (
         $user->isConsultngOffice() ? 'consulting_office' : ""
         );
@@ -380,7 +475,7 @@ class Order extends Model
             )
             ||
             (
-                filled($final_report->value("{$user_type}_final_report_note"))
+            filled($final_report->value("{$user_type}_final_report_note"))
             );
     }
 
@@ -401,20 +496,207 @@ class Order extends Model
         return $this->status == static::DESIGN_REVIEW;
     }
 
-    public function scopeTaslemDashboardOrders(Builder $builder){
+    public function scopeTaslemDashboardOrders(Builder $builder)
+    {
         return $builder->where('status', static::DESIGN_REVIEW)->doesntHave('orderSharerRejects')->doesntHave('orderSharerAccepts')->doesntHave('deliverRejectReson');
     }
 
-    public function isNewForTaslem():bool{
+    public function isNewForTaslem(): bool
+    {
         return $this->isDesignReviewStatus() && !$this->orderSharerRejects()->exists() && !$this->orderSharerAccepts()->exists() && !$this->deliverRejectReson()->exists();
     }
 
-    public function hasDesignerWarning():bool{
-        return $this->isDesignReviewStatus() && ($this->lastDesignerNote()->where('status', 0)->exists() || ($this->orderSharerRegected()->exists()  && $this->delivery_notes == 1));
+    public function hasDesignerWarning(): bool
+    {
+        return $this->isDesignReviewStatus() && ($this->lastDesignerNote()->where('status', 0)->exists() || ($this->orderSharerRegected()->exists() && $this->delivery_notes == 1));
     }
 
-    public function isBackFromWarning():bool{
-        return( $this->isDesignReviewStatus() && !$this->delivery_notes && !$this->lastDesignerNote()->where('status',0)->exists());
-            //&&( (!$this->lastDesignerNote()->exists() && $this->orderSharerRegected()->exists()) || $this->lastDesignerNote()->where('status', 1)->exists()&&!$this->delivery_notes );
+    public function isBackFromWarning(): bool
+    {
+        return ($this->isDesignReviewStatus() && !$this->delivery_notes && !$this->lastDesignerNote()->where('status', 0)->exists());
+        //&&( (!$this->lastDesignerNote()->exists() && $this->orderSharerRegected()->exists()) || $this->lastDesignerNote()->where('status', 1)->exists()&&!$this->delivery_notes );
+    }
+
+    /**
+     * @param int   $type
+     * @param int   $limit
+     * @param array $pdf_options
+     *
+     * @return \Barryvdh\Snappy\PdfWrapper
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    public function loadSnappyLicense(
+        int $type = 1,
+        int $limit = 8,
+        array $pdf_options = [
+            'page-size' => 'a4',
+            'orientation' => 'portrait',
+            'margin-bottom' => 0,
+            'enable-forms' => true,
+            'encoding' => 'utf-8',
+            'enable-external-links' => true,
+        ]
+    ) {
+        /** @var \Barryvdh\Snappy\Facades\SnappyPdf $pdf */
+        $pdf = app()->make('snappy.pdf.wrapper');
+        $service = order_services($this->id);
+        $servicesLimit = ($service_count = $service->count()) > $limit ? $limit : $service_count;
+        $half = ceil($servicesLimit / 2);
+        $chunks = $service->chunk($half);
+        $license = $this->license;
+        $view = $type === 1 ? 'CP.licenses.print' : 'CP.licenses.print_execution_license';
+
+        return $pdf->loadView($view, [
+            'mode' => 'print',
+            'mode_form' => 'print',
+            'model' => $license,
+            'print' => (bool) request()->get('print', true),
+            'first_services' => $chunks[ 0 ] ?? [],
+            'second_services' => $chunks[ 1 ] ?? [],
+        ])
+                   ->setOptions($pdf_options);
+    }
+
+    /**
+     * @param int  $type
+     * @param bool $full_path
+     *
+     * @return string|null
+     */
+    public function getLicenseFilename(int $type = 1, bool $full_path = false): ?string
+    {
+        $license_paths = $this->license_paths ?: [];
+        $filename = $license_paths[ $type ] ?? '';
+
+        return $full_path ? static::diskPath($filename) : $filename;
+    }
+
+    /**
+     * @param string|null $filename
+     * @param int         $type
+     * @param int         $limit
+     * @param bool        $save
+     * @param bool        $overwrite overwrite license file if exists
+     * @param array       $pdf_options
+     *
+     * @return string
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function generateLicenseFile(
+        ?string &$filename = null,
+        int $type = 1,
+        bool $save = true,
+        bool $overwrite = false,
+        int $limit = 8,
+        array $pdf_options = [
+            'page-size' => 'a4',
+            'orientation' => 'portrait',
+            'margin-bottom' => 0,
+            'enable-forms' => true,
+            'encoding' => 'utf-8',
+            'enable-external-links' => true,
+        ]
+    ) {
+        $license = $this->license;
+        $disk = static::disk();
+        $filename ??= "License-{$license->id}-{$type}.pdf";
+
+        $license_paths = $this->license_paths ?: [];
+        $license_paths[ $type ] ??= '';
+        $license_path = &$license_paths[ $type ];
+
+        if( $license_path && !$save ) {
+            $filename = $license_path;
+
+            return $disk->get(($filename));
+        }
+
+        $pdf = $this->loadSnappyLicense($type, $limit, $pdf_options);
+
+        $pdfShouldBeSaved = false;
+        $oldFileExists = $disk->exists(($filename));
+        if( $save ) {
+            if( $typeExist = ($type === 1 || $license->type === 2) ) {
+                $license_path = $filename;
+                $this->license_paths = $license_paths;
+            }
+
+            if( $pdfShouldBeSaved = ($typeExist && ( !$oldFileExists || ($oldFileExists && $overwrite))) ) {
+                $pdf->save($disk->path($filename), $overwrite);
+            }
+
+            $this->isDirty() && $this->save();
+        }
+
+        return $pdfShouldBeSaved || $oldFileExists ? $disk->get(($filename)) : $pdf->output();
+    }
+
+    /**
+     * @param string|null $filename
+     * @param int         $type
+     * @param int         $limit
+     * @param bool        $save
+     * @param bool        $overwrite overwrite license file if exists
+     * @param array       $pdf_options
+     *
+     * @return string
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function regenerateLicenseFile(
+        ?string &$filename = null,
+        int $type = 1,
+        bool $save = true,
+        int $limit = 8,
+        array $pdf_options = [
+            'page-size' => 'a4',
+            'orientation' => 'portrait',
+            'margin-bottom' => 0,
+            'enable-forms' => true,
+            'encoding' => 'utf-8',
+            'enable-external-links' => true,
+        ],
+        bool $overwrite = true
+    ) {
+        return $this->generateLicenseFile($filename, $type, $save, $overwrite, $limit, $pdf_options);
+    }
+
+    /**
+     * Returns response to show the license
+     *
+     * @param int         $type
+     * @param string|null $filename
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function licenseResponse(int $type = 1, ?string $filename = null): \Illuminate\Http\Response
+    {
+        $filename = $this->getLicenseFilename($type);
+        $content = $filename ? static::disk()->get($filename) : '';
+
+        return new \Illuminate\Http\Response($content ?? '', 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        ]);
+    }
+
+    public function userCanAddReport(): bool
+    {
+        return intval($this->status) < intval(static::FINAL_REPORT_APPROVED);
+    }
+
+    public function notifyChanges($changes, bool $add_order_identifier = true)
+    {
+        $NotificationText = $changes . ($add_order_identifier ? ' لطلب  #' . $this->identifier : '');
+        save_logs($this, $user_id = currentUser()->id, $NotificationText);
+        optional($this->service_provider)->notify(new OrderNotification($NotificationText, $user_id));
+
+        $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
+        foreach( $getTasleemUsers as $taslemUser ) {
+            optional($taslemUser)->notify(new OrderNotification($NotificationText, $user_id->id));
+        }
+
+        return $this;
     }
 }

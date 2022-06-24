@@ -16,7 +16,7 @@ return [
         'camp_space' => 'مساحة المخيم',
         'map_path' => 'خريطة الموقع',
         'map_path_label' => 'ملف خريطة الموقع',
-        'final_attachment_path' => 'التقرير النهائي',
+        'final_attachment_path' => 'الملف',
         'final_report_path' => 'التقرير النهائي',
         'final_report_note' => 'سبب الرفض',
     ],

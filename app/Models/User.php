@@ -204,8 +204,8 @@ class User extends Authenticatable
             return route('design_office.orders');
         }
 
-        if ($this->type == 'design_office') {
-            return route('design_office.orders');
+        if ($this->type == 'consulting_office') {
+            return route('consulting_office');
         }
         if ($this->type == 'contractor') {
             return route('contractor.orders');
@@ -224,11 +224,12 @@ class User extends Authenticatable
         if ($this->type == 'raft_center') {
             return route('raft_center');
         }
-
-        elseif ($this->type == 'Kdana'){
+        if ($this->type == 'Kdana'){
             return route('kdana');
         }
-
+        if ($this->type == 'multi_media'){
+            return route('news_articles');
+        }
     }
 
     public function is_designer_consulting()

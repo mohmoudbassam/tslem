@@ -161,8 +161,9 @@
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
+                        @if($order->hasFinalReport())
                         <li class="nav-item">
-                            <a class="nav-link"
+                            <a class="nav-link px-3"
                                data-bs-toggle="tab"
                                href="#final_reports"
                                onclick="location.hash=this.getAttribute('href')"
@@ -172,6 +173,7 @@
                                 <span class="d-none d-sm-block">التقارير النهائية</span>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -191,6 +193,28 @@
                                         <p class="text-danger mb-0 space-nowrap p-3 border-bottom border-end fs-7"><span class="bold">سبب الرفض:</span> {!! nl2br($designerNote->note) !!}</p>
                                     </div>
                                 @endif
+
+                                @if(intval($order->status) >= intval($order::PENDING_OPERATION))
+                                    <div class="col-md-12 my-3 text-end">
+                                        <a id="license-type-2-button" class="btn btn-primary license-type-1-button mx-1" target="_blank" href="{{route('licenses.view_pdf', ['order' => $order->id])}}">
+                                            <i class="fa fa-arrow-down pe-2"></i>
+                                            {{\App\Models\License::trans('download_for_service_provider')}}
+                                        </a>
+                                        @if(in_array($order->status,[$order::FINAL_REPORT_APPROVED]))
+                                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1 show-modal" href="{{route('licenses.attach_final_report_form', ['order'=>$order->id])}}">
+                                            <i class="fa fa-arrow-down pe-2"></i>
+                                            {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
+                                        </a>
+                                        @endif
+                                        @if(intval($order->status) >= intval($order::FINAL_LICENSE_GENERATED))
+                                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1" target="_blank" href="{{route('licenses.view_pdf_execution_license', ['order'=>$order->id])}}">
+                                            <i class="fa fa-arrow-down pe-2"></i>
+                                            {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
+                                        </a>
+                                        @endif
+                                    </div>
+                                @endif
+
                                 <div class="col-md-6">
                                     <p class="mb-0 space-nowrap p-3 border-bottom border-end fs-7"><span class="bold">  تاريخ الإنشاء :</span> {{$order->created_at->format("Y-m-d")}}</p>
                                 </div>
@@ -475,6 +499,15 @@
             @endforeach
         </div>
     </div>
+                @if($order->hasFinalReport())
+                <div
+                    class="tab-pane"
+                    id="final_reports"
+                    role="tabpanel"
+                >
+                    @include('CP.delivery.final_reports')
+                </div>
+                @endif
     </div>
     </div>
     </div>

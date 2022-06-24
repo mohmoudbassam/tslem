@@ -147,7 +147,7 @@ class KdanaController extends Controller
                 ->with('service_provider')
                 ->with(['designer', 'contractor', 'consulting']);
             $order->when($request->params == 'designe_office_orders', function ($q) {
-                $q->whereNotNull('designer_id');
+                $q->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id');
             });
         }
 

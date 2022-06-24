@@ -15,7 +15,7 @@
                         class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 row-cols-md-4 row-cols-sm-3 row-cols-lg-4 row-cols-2"
                         id="form_data"
                     >
-                        <div class="col">
+                        <div class="col-lg-2 col-md-6">
                             <label for="order_identifier">رقم الطلب</label>
                             <input
                                 type="text"
@@ -24,8 +24,16 @@
                                 placeholder="رقم الطلب"
                             >
                         </div>
-
-                        <div class="col">
+                        <div class="col-lg-3 col-md-6">
+                            <label for="order_status">حالة الطلب</label>
+                            <select class="form-control form-select" id="order_status" name="order_status">
+                                <option value="">اختر...</option>
+                                @foreach(\App\Models\Order::getOrderStatuses() as $id => $val)
+                                    <option {{ (request()->order_status == $id) ? 'selected' : '' }} value="{!! $id !!}">{!! $val !!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-2 col-md-6">
                             <label for="from_date">من</label>
                             <input
                                 type="text"
@@ -34,7 +42,7 @@
                                 placeholder=""
                             >
                         </div>
-                        <div class="col">
+                        <div class="col-lg-2 col-md-6">
                             <label for="to_date">الى</label>
                             <input
                                 type="text"
@@ -43,9 +51,7 @@
                                 placeholder=""
                             >
                         </div>
-                        <!-- <div class="col-sm-auto" style="margin-top:1.9rem;">
 
-                        </div> -->
                         <div
                             class="col-sm-auto ms-auto text-end"
                             style="margin-top:1.9rem;"
@@ -233,7 +239,7 @@
                 'stateSave': true,
                 'serverSide': true,
                 ajax: {
-                    url: `${listUrl}?params={{request('params')}}`,
+                    url: `${listUrl}?params={{request('params')}}&order_status={{ request('status') }}`,
                     type: 'GET',
                     'data': function (d) {
                         d.order_identifier = $('#order_identifier').val()
@@ -244,6 +250,7 @@
                         d.to_date = $('#to_date').val()
                         d.waste_contractor = $('#waste_contractor').val()
                         d.waste_contractor = $('#waste_contractor').val()
+                        d.order_status = $('#order_status').val()
 
                     }
                 },
