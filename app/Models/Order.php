@@ -205,13 +205,13 @@ class Order extends Model
                 $hasContractorFinalReportPath = $this->hasContractorFinalReportPath() && !$this->hasContractorFinalReportNote();
 
                 if( $hasContractorFinalReportPath && $hasConsultingOfficeFinalReportPath ) {
-                    $status = "تم ارفاق التقارير النهائية";
+                    $status = __("models/order.final_report_attached_status.ready");
                 } elseif( $hasConsultingOfficeFinalReportPath ) {
-                    $status = "تم ارفاق التقارير النهائية من مكتب استشاري";
+                    $status = __("models/order.final_report_attached_status.contractor");
                 } elseif( $hasContractorFinalReportPath ) {
-                    $status = "تم ارفاق التقارير النهائية من مقاول";
+                    $status = __("models/order.final_report_attached_status.consulting_office");
                 } else {
-                    $status = "ارفاق التقارير النهائية";
+                    $status = __("models/order.final_report_attached_status.new");
                 }
             }
         }
