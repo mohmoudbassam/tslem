@@ -161,6 +161,7 @@
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
+                        @if($order->hasFinalReport())
                         <li class="nav-item">
                             <a class="nav-link px-3"
                                data-bs-toggle="tab"
@@ -172,6 +173,7 @@
                                 <span class="d-none d-sm-block">التقارير النهائية</span>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -497,6 +499,7 @@
             @endforeach
         </div>
     </div>
+                @if($order->hasFinalReport())
                 <div
                     class="tab-pane"
                     id="final_reports"
@@ -504,6 +507,7 @@
                 >
                     @include('CP.delivery.final_reports')
                 </div>
+                @endif
     </div>
     </div>
     </div>
