@@ -4,12 +4,14 @@
             @isset($title)
                 <div class="h3">{!! $title !!}</h4></div>
             @endisset
+            @if($order->userCanAddReport())
             <div>
                 <a class="btn btn-primary btn-sm" href="{!! route('contractor.add_report_form', ['order' => $order->id]) !!}">
                     <i class="fa fa-plus"></i>
                     @lang('attributes.add')
                 </a>
             </div>
+            @endif
         </div>
     </div>
     <div class="card-body">
@@ -34,9 +36,11 @@
                         <th>
                             تاريخ الإنشاء
                         </th>
+                        @if($order->userCanAddReport())
                         <th>
                             الخيارات
                         </th>
+                        @endif
                     </tr>
                     </thead>
                 </table>
@@ -83,7 +87,9 @@
 
                     { className: 'text-center', data: 'description', name: 'description' },
                     { className: 'text-center space-nowrap', data: 'created_at', name: 'created_at' },
-                    { className: 'text-center', data: 'actions', name: 'actions' }
+                    @if($order->userCanAddReport())
+                    { className: 'text-center', data: 'actions', name: 'actions' },
+                    @endif
                 ]
 
             })

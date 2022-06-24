@@ -29,6 +29,135 @@
     <meta name="copyright" content=" " />
     <link rel="stylesheet" href="{{ asset('assets/css/plugin.min.css?v='.config('app.asset_ver')) }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css?v='.config('app.asset_ver')) }}" />
+
+    <style>
+        .row>.column {
+            padding: 0 8px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Create four equal columns that floats next to eachother */
+        .column {
+            float: left;
+            width: 25%;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: black;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        /* The Close Button */
+        .close {
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Hide the slides by default */
+        .mySlides {
+            display: none;
+        }
+
+        /* Next & previous buttons */
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* Caption text */
+        .caption-container {
+            text-align: center;
+            background-color: black;
+            padding: 2px 16px;
+            color: white;
+        }
+
+        img.demo {
+            opacity: 0.6;
+        }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+
+        img.hover-shadow {
+            transition: 0.3s;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+
 </head>
 
 <body>
@@ -123,16 +252,16 @@
             <div class="container">
                 <div class=" justify-content-center">
                     <div class="col-lg-12 row">
-                        @foreach($photos as $item)
+                        @foreach($photos as $key => $item)
 
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
-                                @if($item['type'] == 'image')
-                                    <img onclick='goTo("{{ asset('storage/'.$item['file']) }}")' style="width: 100%;height:200px" src="{{ asset('storage/'.$item['file']) }}" class="card-img-top" alt="...">
+                                @if($item['type'] == 'image' && $item->files->first())
+                                <img style="cursor: pointer;width: 100%;height:200px" id="myImg{{$key}}" onclick='openModal("{{$key}}")'  src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
-                                @if($item['type'] == 'video')
+                                @if($item['type'] == 'video' && $item->files->first())
                                 <video width="100%" height="200" controls>
-                                    <source src="{{asset('storage/' . $item['file'])}}">
+                                    <source src="{{asset('storage/' . $item->files->first()->file)}}">
                                 </video>
                                 @endif
                                 <div class="card-body">
@@ -257,6 +386,34 @@
             </div>
         </footer>
         <!-- end:: footer -->
+
+
+        @foreach($photos as $key => $item)
+        <!-- The Modal -->
+        <div id="{{$key}}" class="modal">
+            <!-- Modal Content (The Image) -->
+            <!-- <img style="cursor: pointer;" class="modal-content" id="img01"> -->
+
+            <div class="modal-content">
+
+                @foreach($item->files as $key2 => $item)
+
+                <div class="mySlides{{$key}}">
+                    <img onclick="closeModal('{{$key}}')" src="{{asset('storage/' . $item->file)}}" style="width:2000px;height:500px">
+                </div>
+
+                @endforeach
+
+                <span class="close cursor" onclick="closeModal('{{$key}}')" style="color: red;">X</span>
+
+                <!-- Next/previous controls -->
+                <a class="prev" style="float: left;color:red" onclick="plusSlides(-1 ,'{{$key}}')">&#10094;</a>
+                <a class="next" style="float: right; right:1150px;color:red" onclick="plusSlides(1 , '{{$key}}')">&#10095;</a>
+            </div>
+        </div>
+
+        @endforeach
+
     </div>
     <!-- end:: Page -->
     <script src="{{ asset('assets/js/script.min.js') }}"></script>
@@ -268,11 +425,73 @@
             $('#js-news').ticker();
         });
 
-        function goTo(src){
-            window.open(src, '_blank');
+        var modal = document.getElementById("myModal");
+
+        function viewImage(id) {
+            // Get the modal
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById(id);
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function() {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+        }
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("img01");
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
         }
     </script>
 
+    <script>
+        var slideIndex = 1;
+
+        // Open the Modal
+        function openModal(id) {
+            showSlides(1, id);
+            document.getElementById(id).style.display = "block";
+
+        }
+
+        // Close the Modal
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // var slideIndex = 1;
+        // showSlides(slideIndex , '');
+
+        // Next/previous controls
+        function plusSlides(n, id) {
+            showSlides(slideIndex += n, id);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n, id) {
+            showSlides(slideIndex = n, id);
+        }
+
+        function showSlides(n, id) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides" + id);
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+    </script>
 </body>
 
 </html>

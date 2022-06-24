@@ -33,7 +33,7 @@
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                             <label class="col-12" for="media">الملف</label>
-                            <input type="file" name="file" class="form-control">
+                            <input type="file" name="file[]" multiple class="form-control">
                             <div class="col-12 text-danger" id="media_error"></div>
                         </div>
                     </div>

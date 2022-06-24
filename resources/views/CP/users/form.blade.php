@@ -135,7 +135,7 @@
                                             <option value="">اختر التخصص</option>
                                             <option value="capital_municipality">أمانة العاصمة</option>
                                             <option value="ministry_of_hajj">وزارة الحج</option>
-                                            <option value="electricity_company">شركة الكهرباء</option>
+                                            <option value="electricity_company">الفريق الفني</option>
                                             <option value="civil_defense">الدفاع المدني</option>
                                             <option value="water_company">شركة المياه</option>
                                         </select>

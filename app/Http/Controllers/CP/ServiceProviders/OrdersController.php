@@ -153,7 +153,7 @@ class OrdersController extends Controller
                     $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus mx-2"></i>إضافة استشاري ومقاول</a>';
                 }
 
-                if ($order->licenseNeededForServiceProvider()) {
+                if ($order->hasLicense()) {
                     $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_for_service_provider') . '</a>';
                 }
 

@@ -95,7 +95,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('media')
         ->name('media')
-        ->middleware(['user_type:admin'])
+        ->middleware(['user_type:admin,multi_media'])
         ->group(function () {
             Route::get('', [MediaController::class, 'index']);
             Route::get('list', [MediaController::class, 'list'])->name('.list');
@@ -142,6 +142,9 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('view_pdf/{order}/execution_license', [LicenseController::class, 'view_pdf_execution_license'])
                 ->name('.view_pdf_execution_license');
 
+            Route::get('view_final_attachment/{license}/file', [LicenseController::class, 'license_final_attachment_file'])
+                ->name('.license_final_attachment_file');
+
             Route::get('order/{order}/attach-final-report-form', [LicenseController::class, 'order_license_attach_final_report_form'])
                 ->name('.attach_final_report_form');
             Route::post('order/{order}/attach-final-report', [LicenseController::class, 'order_license_attach_final_report'])
@@ -163,7 +166,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
 
     Route::prefix('news_articles')
         ->name('news_articles')
-        ->middleware(['user_type:admin'])
+        ->middleware(['user_type:admin,multi_media'])
         ->group(function () {
             Route::get('', [NewsArticleController::class, 'index']);
             Route::get('add', [NewsArticleController::class, 'add'])->name('.add');

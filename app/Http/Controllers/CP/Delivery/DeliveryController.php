@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DeliveryReport;
 use App\Models\DeliveryReportAttchment;
 use App\Models\FinalReport;
+use App\Models\License;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderSharer;
@@ -327,7 +328,7 @@ class DeliveryController extends Controller
     {
         $designerNote = $order->lastDesignerNote()->latest()->first();
         $rejects = $order->orderSharerRejects()->with('orderSharer')->get();
-        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
 
@@ -355,12 +356,13 @@ class DeliveryController extends Controller
                     ],
                 ],
                 'info'    => [
-                    'note' => ($note = data_get($final_report->meta, 'contractor_final_report_note')) ?
+                    'has_file' => $final_report->hasContractorReport() && !$final_report->contractor_final_report_note,
+                    'note' => ($note = data_get($final_report->meta, 'contractor_final_report_note') ?: $final_report->contractor_final_report_note) ?
                         __('models/final_report.last_note', compact('note')) :
                         null,
                 ],
             ] : null,
-            $final_report->hasConsultingOfficeReport() ? [
+            $final_report->hasConsultingOfficeFinalReport() ? [
                 'title'   => "مكتب استشاري",
                 'url'     => downloadFileFrom($final_report, 'consulting_office_final_report_path'),
                 'label'   => $final_report->consulting_office_final_report_path_label,
@@ -380,7 +382,8 @@ class DeliveryController extends Controller
                     ],
                 ],
                 'info'    => [
-                    'note' => ($note = data_get($final_report->meta, 'consulting_office_final_report_note')) ?
+                    'has_file' => $final_report->hasConsultingOfficeFinalReport() && !$final_report->consulting_office_final_report_note,
+                    'note' => ($note = data_get($final_report->meta, 'consulting_office_final_report_note') ?: $final_report->consulting_office_final_report_note) ?
                         __('models/final_report.last_note', compact('note')) :
                         null,
                 ],
@@ -459,19 +462,24 @@ class DeliveryController extends Controller
                 // if ($order->status == 2) {
                 //     $reports_add = '';
                 // }
-                if ($order->status == Order::ORDER_APPROVED) {
-                    $element = '<div class="btn-group me-1 mt-2">
-                                            <a class="btn btn-success btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
-                                                عرض رخصة الإضافات
-                                            </a>
-                                        </div>';
+
+                if ($order->status == Order::PENDING_OPERATION) {
+                    $license_title = License::trans('download_for_service_provider');
+                    $license_route = route('delivery.view_file', ['order' => $order->id]);
+                    $element = <<<HTML
+<div class="btn-group me-1 mt-2">
+    <a class="btn btn-success btn-sm  type="button"  href="{$license_route}">
+        {$license_title}
+    </a>
+</div>
+HTML;
                 }
                 else {
                     $element = '<div class="btn-group me-1 mt-2">
-                                            <a class="btn btn-info btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
-                                                عرض التفاصيل
-                                            </a>
-                                        </div>';
+                                    <a class="btn btn-info btn-sm  type="button"  href="'.route('delivery.view_file', ['order' => $order->id]).'">
+                                        عرض التفاصيل
+                                    </a>
+                                </div>';
                 }
 
                 return $element;
@@ -484,11 +492,10 @@ class DeliveryController extends Controller
             ->addColumn('updated_at', function ($order) {
                 return $order->updated_at->format('Y-m-d');
             })->addColumn('order_status', function ($order) {
-
                 return $order->order_status;
             })
             ->setRowClass(fn(Order $o) => $o->isNewForTaslem() ? 'alert-info' : ($o->isBackFromWarning() ? 'alert-warning' : ''))
-            ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_only ?? ''))
+            ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_onlyraft_name_only ?? ''))
             ->rawColumns(['actions'])
             ->make(true);
     }

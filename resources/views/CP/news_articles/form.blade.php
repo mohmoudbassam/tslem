@@ -74,7 +74,7 @@
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                                 <label class="col-12" for="media">الصوره</label>
-                                <input type="file" name="image" class="form-control">
+                                <input type="file" name="image[]" multiple class="form-control">
                         </div>
                     </div>
                                 </div>

@@ -10,22 +10,85 @@ use Illuminate\Support\Facades\Storage;
  */
 trait THasPathAttribute
 {
-    public static function getDiskName($disk = null)
+    /**
+     * @param string|\Closure|null $disk
+     *
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
+    public static function disk($disk = null): \Illuminate\Contracts\Filesystem\Filesystem
     {
-        return static::$DISK ?? (value($disk ?? '') ?: 'public');
+        return Storage::disk(value($disk) ?: static::getDiskName($disk));
     }
 
-    public static function disk($disk = null)
+    /**
+     * @param string|\Closure|null $filename
+     * @param string|\Closure|null $disk
+     *
+     * @return string
+     */
+    public static function diskPath($filename = null, $disk = null): string
     {
-        return Storage::disk($disk??static::getDiskName($disk));
+        return static::disk($disk)->path(value($filename));
     }
 
-    public function addPathAttribute($attribute, $file, bool $save = false)
+    /**
+     * @param string|\Closure|null $disk
+     *
+     * @return string
+     */
+    public static function getDiskName($disk = null): string
+    {
+        return (string) ((static::$DISK ?? value($disk ?? '')) ?: 'public');
+    }
+
+    /**
+     * @return string
+     */
+    public static function getFileLabelSuffix(): string
+    {
+        return static::hasFileLabel() ? (static::$FILE_LABEL_SUFFIX ?? '') : '';
+    }
+
+    public static function hasFileLabel(): bool
+    {
+        return (bool) (static::$FILE_LABEL_SUFFIX ?? '');
+    }
+
+    /**
+     * @param string|\Closure $attribute
+     *
+     * @return string
+     */
+    public function getFileLabelAttributeName($attribute): string
+    {
+        return static::hasFileLabel() ? str_finish($attribute, static::getFileLabelSuffix()) : $attribute;
+    }
+
+    /**
+     * @param string|\Closure|null $attribute
+     *
+     * @return mixed
+     */
+    public function getPathLabelAttributeValue($attribute)
+    {
+        $attribute = $this->getFileLabelAttributeName($attribute);
+
+        return $this->$attribute;
+    }
+
+    /**
+     * @param      $attribute
+     * @param      $file
+     * @param bool $save
+     *
+     * @return \Illuminate\Database\Eloquent\Model|self
+     */
+    public function addPathAttribute($attribute, $file, bool $save = false): self
     {
         if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             $this->$attribute = $full_path;
 
-            if( $this->isFillable("{$attribute}_label") ) {
+            if( static::hasFileLabel() && $this->isFillable("{$attribute}_label") ) {
                 $this->{"{$attribute}_label"} = $file->getClientOriginalName();
             }
 
@@ -37,7 +100,13 @@ trait THasPathAttribute
         return $this;
     }
 
-    public function deletePathAttribute($attribute, bool $save = false)
+    /**
+     * @param      $attribute
+     * @param bool $save
+     *
+     * @return \Illuminate\Database\Eloquent\Model|self
+     */
+    public function deletePathAttribute($attribute, bool $save = false): self
     {
         $storage = static::disk();
         if( $storage->exists($this->$attribute) ) {
@@ -46,7 +115,7 @@ trait THasPathAttribute
 
         $this->$attribute = null;
 
-        if( $this->isFillable("{$attribute}_label") ) {
+        if( static::hasFileLabel() && $this->isFillable("{$attribute}_label") ) {
             $this->{"{$attribute}_label"} = null;
         }
 
@@ -59,13 +128,27 @@ trait THasPathAttribute
         return $this;
     }
 
-    public function getPathUrlAttribute($attribute)
+    /**
+     * @param string|\Closure $attribute
+     *
+     * @return string
+     */
+    public function getPathUrlAttributeValue($attribute): string
     {
+        $attribute = value($attribute);
+
         return $this->$attribute ? static::disk()->url($this->$attribute) : "";
     }
 
-    public function setPathAttribute($attribute, $value)
+    /**
+     * @param string|\Closure                           $attribute
+     * @param \Illuminate\Http\UploadedFile|string|null $value
+     *
+     * @return \Illuminate\Database\Eloquent\Model|self
+     */
+    public function setPathAttributeValue($attribute, $value): self
     {
+        $attribute = value($attribute);
         if(
             $value &&
             (
@@ -77,10 +160,7 @@ trait THasPathAttribute
         } else {
             $this->attributes[ $attribute ] = $value;
         }
-    }
 
-    public function getPathLabelAttribute($attribute)
-    {
-        return $this->{str_finish($attribute, "_label")};
+        return $this;
     }
 }

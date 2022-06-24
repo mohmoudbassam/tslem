@@ -32,12 +32,15 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             $order->identifier ?? '',
             $order->date ?? '',
             $order->service_provider->name ?? '',
-            $order->service_provider->raft_company->raft_company_locations->name ?? 'المجلس التنسيقي لمؤسسات وشركات خدمة حجاج الداخل',
+            $order->service_provider->raft_name_only ?? 'المجلس التنسيقي لمؤسسات وشركات خدمة حجاج الداخل',
             optional($order->designer)->company_name ?? '',
             $order->order_status ?? '',
             optional($order->contractor)->company_name ?? '',
             optional($order->consulting)->company_name,
             $order->waste_contractor ?? '',
+            $order->comp ?? '',
+            $order->box ?? '',
+            $order->license_number ?? '',
 
         ];
     }
@@ -54,7 +57,9 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             ' المقاول',
             'المكتب الإستشاري',
             ' مقاول النفايات',
-
+            'رقم المخيم',
+            'رقم المربع',
+            'رقم الترخيص',
         ];
     }
 

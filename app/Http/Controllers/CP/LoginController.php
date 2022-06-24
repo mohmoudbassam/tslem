@@ -80,7 +80,11 @@ class LoginController extends Controller
             ->filter(function ($item){
                 return optional($item->getRaftCompanyBox())->seen_notes ;
             })->count();
-        $data['donat']['number_of_service_providers_in'] = User::query()->where('type', 'service_provider')->where('verified', 1)->whereNull('parent_id')->count();
+        $data['donat']['number_of_service_providers_in'] = User::query()->where('type', 'service_provider')->where('verified', 1)
+            ->whereNull('parent_id')->get()
+            ->filter(function ($item){
+                return optional($item->getRaftCompanyBox())->seen_notes ;
+            })->count();
         $data['donat']['design_office'] = User::query()->where('type', 'design_office')->where('verified', 1)->count();
         $data['donat']['number_of_contractors'] = User::query()->where('type', 'contractor')->where('verified', 1)->count();
         $data['number_of_consulting_office'] = User::query()->where('type', 'consulting_office')->where('verified', 1)->count();
@@ -157,10 +161,33 @@ class LoginController extends Controller
                 ];
             });
         ///order per designer office
-        $data['order_count_per_designer'] = Order::query()->where('status','!=',Order::PENDING)->whereNotNull('designer_id')->count();
-        $data['order_count_per_taslem'] = hp ;
+
+
+        $data['order_count_per_designer'] = Order::query()->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id')->count();
+        $data['order_count_per_taslem'] = Order::taslemDashboardOrders()->count();
         $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
         $data['wasteContractors'] = wasteContractorsList()->count();
+        // Orders count by status
+        $getOrdersCountByStatus = Order::selectRaw('COUNT(id) AS count,status')->groupBy('status')->get();
+        $orderStatusChartData = [
+            'seriesData' => [],
+            'seriesCategories' => [],
+            'statusList' => []
+        ];
+        $data['countOrders'] = 0;
+        foreach(Order::getOrderStatuses() as $ItemStatus => $ItemName){
+            if($ItemStatus == Order::PENDING_OPERATION){
+                $count = $data['license_number'];
+            }else {
+                $getCount =  $getOrdersCountByStatus->where('status',$ItemStatus)->first();
+                $count = ($getCount) ? $getCount->count : 0;
+            }
+            $data['countOrders'] += $count;
+            $orderStatusChartData['seriesData'][] = $count;
+            $orderStatusChartData['statusList'][] = $ItemStatus;
+            $orderStatusChartData['seriesCategories'][] = $ItemName;
+        }
+        $data['orderStatusChartData'] = $orderStatusChartData;
 
         return view('CP.dashboard', $data);
 

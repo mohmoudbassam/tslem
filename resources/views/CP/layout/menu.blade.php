@@ -92,7 +92,7 @@
                                     <span data-key="t-calendar"> المركز الاعلامي</span>
                                 </a>
                             </li>
-                            
+
                             <li>
                                 <a href="{{route('specialties.index')}}">
                                     <span data-key="t-calendar">التخصصات</span>
@@ -101,6 +101,30 @@
 
                         </ul>
                     </li>
+                @endif
+
+                @if(auth()->user()->type == "multi_media")
+                        <li>
+                            <a
+                                href="javascript: void(0);"
+                                class="has-arrow"
+                            >
+                                <i data-feather="settings"></i>
+                                <span data-key="t-apps">الإعدادت</span>
+                            </a>
+                            <ul
+                                class="sub-menu"
+                                aria-expanded="false"
+                            >
+                        @include('CP.news_articles.menu')
+
+                        <li>
+                            <a href="{{route('media')}}">
+                                <span data-key="t-calendar"> المركز الاعلامي</span>
+                            </a>
+                        </li>
+                            </ul>
+                        </li>
                 @endif
 
                 @if(auth()->user()->type=='service_provider' )
@@ -137,6 +161,7 @@
                         </li>
                     @endif
                 @endif
+
                 @if(auth()->user()->type=='Delivery')
                     <li>
                         <a href="{{route('delivery')}}">
@@ -237,6 +262,7 @@
                     </li>
 
                 @endif
+
                 @if(auth()->user()->isAdmin())
 
                     <li>
@@ -246,6 +272,7 @@
                         </a>
                     </li>
                 @endif
+
                 @if(auth()->user()->isAdmin())
                     <li>
                         <a href="{{route('orders')}}">
@@ -261,7 +288,7 @@
                     </li>
                 @endif
 
-                @if(!auth()->user()->isAdmin())
+                @if(!auth()->user()->isAdmin() and auth()->user()->type != "multi_media")
                     <li>
                         <a href="{{route('edit_profile')}}">
 

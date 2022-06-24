@@ -388,7 +388,7 @@ class DesignerOrderController extends Controller
         //$service = Service::all();
         $order->with('service.specialties');
 
-        $order_specialties = OrderService::query()->with('service.specialties.service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties.service')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $system_specialties_services = Specialties::query()->with('service')->get();
         $order_designer_files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get()->groupBy('specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->with('specialties')->where('order_id', $order->id)->get();
@@ -413,7 +413,7 @@ class DesignerOrderController extends Controller
     public function view_file(Order $order)
     {
         $designerNote = $order->lastDesignerNote()->latest()->first();
-        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         $last_note = $order->lastDesignerNote()->where('status', 0)->first();
         $tex = null;

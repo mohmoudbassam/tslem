@@ -4,7 +4,6 @@ namespace App\Http\Controllers\CP\admin;
 
 use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,34 +41,36 @@ class OrdersController extends Controller
      */
     public function list(Request $request, bool $trashed = !1)
     {
-        if (request('params') == 'tasleem') {
-            $order = DeliveryController::getOrdersQuery();
-
-        } else {
-            $order = Order::query()
-                ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
-                    $query->where("identifier", "LIKE", "%" . $request->query("order_identifier") . "%");
-                })
-                ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
-                    $query->whereDate("created_at", ">=", $request->query("from_date"));
-                })
-                ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
-                    $query->whereDate("created_at", "<=", $request->query("to_date"));
-                })
-                ->whereOrderId($request->order_id)
-                ->whereDesignerId($request->designer_id)
-                ->whereConsultingId($request->consulting_id)
-                ->whereContractorId($request->contractor_id)
-                ->whereDate($request->from_date, $request->to_date)
-                ->orderByDesc('created_at')
-                ->with('designer')
-                ->with('service_provider')
-                ->with(['designer', 'contractor', 'consulting']);
+        //dd($request->all());
+        $order = Order::query()
+            ->when(!is_null($request->query("order_identifier")), function ($query) use ($request) {
+                $query->where("identifier", "LIKE", "%".$request->query("order_identifier")."%");
+            })
+            ->when(!is_null($request->query("from_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", ">=", $request->query("from_date"));
+            })
+            ->when(!is_null($request->query("to_date")), function ($query) use ($request) {
+                $query->whereDate("created_at", "<=", $request->query("to_date"));
+            })
+            ->whereOrderId($request->order_id)
+            ->whereDesignerId($request->designer_id)
+            ->whereConsultingId($request->consulting_id)
+            ->whereContractorId($request->contractor_id)
+            ->whereDate($request->from_date, $request->to_date)
+            ->orderByDesc('created_at')
+            ->with('designer')
+            ->with('service_provider')
+            ->with(['designer', 'contractor', 'consulting']);
             $order->when($request->params == 'designe_office_orders', function ($q) {
-                $q->whereNotNull('designer_id');
+                $q->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id');
             });
-        }
-
+            if($request->order_status){
+                $order = $order->where('status',$request->order_status);
+            }
+        //$order->when($request->params == 'tasleem', function ($q) {
+        //    $q->where('status', '>=', Order::DESIGN_REVIEW);
+        //});
+        $order->when($request->params == 'tasleem', fn ($q) => $q->taslemDashboardOrders());
         if ($request->waste_contractor) {
             $order = $order->whereWasteContractor($request->waste_contractor);
         }
