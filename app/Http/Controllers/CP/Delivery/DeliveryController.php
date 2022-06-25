@@ -495,7 +495,7 @@ HTML;
                 return $order->order_status;
             })
             ->setRowClass(fn(Order $o) => $o->isNewForTaslem() ? 'alert-info' : ($o->isBackFromWarning() ? 'alert-warning' : ''))
-            ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_only ?? ''))
+            ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_onlyraft_name_only ?? ''))
             ->rawColumns(['actions'])
             ->make(true);
     }

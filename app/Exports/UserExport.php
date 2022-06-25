@@ -30,6 +30,7 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
         return [
             $user->company_name,
             $user->company_owner_name,
+            optional($user->raft_company_location())->first()->name ?? '',
             $user->email,
             $user->phone,
             $user->commercial_record,
@@ -45,6 +46,7 @@ class UserExport implements FromCollection, WithEvents, WithHeadings, WithColumn
         return [
             'اسم المكتب',
             'اسم المالك',
+            'الشركة',
             'البريد الإلكتروني',
             'الجوال',
             ' السجل التجاري',
