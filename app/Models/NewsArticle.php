@@ -23,7 +23,7 @@ class NewsArticle extends Model
     public static $RULES = [
         'title' => ['required'],
         'image' => ['array'],
-        // 'image.*' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:3000'],
+        // 'image.*' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:5000'],
         'body' => ['required'],
         'is_published' => ['nullable'],
         'user_id' => ['nullable'],

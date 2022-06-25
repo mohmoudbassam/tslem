@@ -89,12 +89,12 @@ class MediaController extends Controller
         if ($request->type == 'image') {
             $request->validate([
                 'file' => 'array',
-                'file.*' => 'required|image|mimes:png,jpg,jpeg|max:3000'
+                'file.*' => 'required|image|mimes:png,jpg,jpeg|max:5000'
             ]);
         } else {
             $request->validate([
                 'file' => 'array',
-                'file.*' => 'required|mimes:mp4,amv|max:5000'
+                'file.*' => 'required|mimes:mp4,amv|max:10000'
             ]);
         }
         $id = isset($request['id']) ? $request['id'] : null;
