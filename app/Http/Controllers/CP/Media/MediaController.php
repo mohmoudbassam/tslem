@@ -81,7 +81,7 @@ class MediaController extends Controller
     }
 
     public function add_edit(Request $request)
-    {
+    { 
         $request->validate([
             'title' => 'required',
             'type' => 'required|in:image,video'
@@ -94,7 +94,7 @@ class MediaController extends Controller
         } else {
             $request->validate([
                 'file' => 'array',
-                'file.*' => 'required|mimes:mp4,amv|max:10000'
+                'file.*' => 'required|mimes:mp4,amv'
             ]);
         }
         $id = isset($request['id']) ? $request['id'] : null;
