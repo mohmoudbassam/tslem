@@ -257,7 +257,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image' && $item->files->first())
-                                <img style="cursor: pointer;width: 100%;height:200px" id="myImg{{$key}}" onclick='openModal("{{$key}}")'  src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                <img style="cursor: pointer;width: 100%" id="myImg{{$key}}" onclick='openModal("{{$key}}")'  src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
                                 @if($item['type'] == 'video' && $item->files->first())
                                 <video width="100%" height="200" controls>
@@ -404,11 +404,11 @@
 
                 @endforeach
 
-                <span class="close cursor" onclick="closeModal('{{$key}}')" style="color: red;">X</span>
+                <span class="close cursor" onclick="closeModal('{{$key}}')" style="color: white;">X</span>
 
                 <!-- Next/previous controls -->
-                <a class="prev" style="float: left;color:red" onclick="plusSlides(-1 ,'{{$key}}')">&#10094;</a>
-                <a class="next" style="float: right; right:1150px;color:red" onclick="plusSlides(1 , '{{$key}}')">&#10095;</a>
+                <a class="prev" style="float: left;color:white" onclick="plusSlides(-1 ,'{{$key}}')">&#10094;</a>
+                <a class="next" style="float: right; right:1150px;color:white" onclick="plusSlides(1 , '{{$key}}')">&#10095;</a>
             </div>
         </div>
 
