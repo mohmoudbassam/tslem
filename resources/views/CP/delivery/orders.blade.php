@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="service_provider_id">مركز الخدمة</label>
-                            <select class="form-control form-select" id="service_provider_id" name="service_provider_id">
+                            <select class="form-control form-select" data-trigger id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
                                     <option
@@ -299,7 +299,14 @@
 
             window.location = ExcelUrl;
         }
-
+        var e = document.querySelectorAll("[data-trigger]");
+        for (i = 0; i < e.length; ++i) {
+            var a = e[i];
+            new Choices(a, {
+                placeholderValue: "This is a placeholder set in the config", searchPlaceholderValue:
+                    "بحث"
+            })
+        }
     </script>
 
 @endsection

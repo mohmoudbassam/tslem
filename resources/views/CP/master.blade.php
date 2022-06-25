@@ -125,6 +125,7 @@
 <script src="{{ asset('assets/libs/flatpickr/flatpickr.min.js?v=2') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://unpkg.com/feather-icons"></script>
+<script src="{{url('/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
 
 
 @include('CP.layout.js')
