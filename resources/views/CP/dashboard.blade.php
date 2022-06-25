@@ -74,7 +74,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="row justify-content-center">
-        <div class="col-xl-3 col-md-6">
+        {{--<div class="col-xl col-md-6">
                 <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--blue">
                     <div class="card-body px-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px"
@@ -192,9 +192,9 @@
                         <a href="{{route('orders')}}">عرض الطلبات</a>
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl col-md-6">
                 <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--blue">
                     <div class="card-body px-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px"
@@ -314,7 +314,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl col-md-6">
                 <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--blue">
                     <div class="card-body px-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px"
@@ -434,7 +434,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl col-md-6">
                 <div class="card card-h-100 card-chart card-chart__filled card-chart__filled--blue">
                     <div class="card-body px-2">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px"
