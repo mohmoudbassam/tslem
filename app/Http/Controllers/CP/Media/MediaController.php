@@ -83,7 +83,7 @@ class MediaController extends Controller
     public function add_edit(Request $request)
     { 
         $request->validate([
-            'title' => 'required',
+            'title' => 'nullable',
             'type' => 'required|in:image,video'
         ]);
         if ($request->type == 'image') {
