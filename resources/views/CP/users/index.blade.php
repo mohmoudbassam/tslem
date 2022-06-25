@@ -98,6 +98,8 @@
                         <th>#</th>
                         <th>
                             الشركة
+                        </th> <th>
+                            شركة الطوافة
                         </th>
                         <th>
                             الترخيص
@@ -230,6 +232,8 @@
                 columns: [
                     {className: 'text-center', data: 'id', name: 'id'},
                     {className: 'text-center', data: 'company_name', name: 'company_name'},
+                    {className: 'text-center', data: 'raft_name_only', name: 'raft_name_only'},
+
                     {className: 'text-center', data: 'license_number', name: 'license_number'},
                     {className: 'text-center', data: 'commercial_record', name: 'commercial_record'},
                     {className: 'text-center', data: 'type', name: 'type'},

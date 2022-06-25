@@ -81,22 +81,22 @@ class MediaController extends Controller
     }
 
     public function add_edit(Request $request)
-    {
+    { 
         $request->validate([
-            'title' => 'required',
+            'title' => 'nullable',
             'type' => 'required|in:image,video'
         ]);
-        if ($request->type == 'image') {
-            $request->validate([
-                'file' => 'array',
-                'file.*' => 'required|image|mimes:png,jpg,jpeg|max:3000'
-            ]);
-        } else {
-            $request->validate([
-                'file' => 'array',
-                'file.*' => 'required|mimes:mp4,amv|max:5000'
-            ]);
-        }
+        // if ($request->type == 'image') {
+        //     $request->validate([
+        //         'file' => 'array',
+        //         'file.*' => 'required|image|mimes:png,jpg,jpeg|max:5000'
+        //     ]);
+        // } else {
+        //     $request->validate([
+        //         'file' => 'array',
+        //         'file.*' => 'required|mimes:mp4,amv'
+        //     ]);
+        // }
         $id = isset($request['id']) ? $request['id'] : null;
 
         $data = $request->only('title', 'type');

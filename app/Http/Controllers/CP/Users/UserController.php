@@ -8,6 +8,7 @@ use App\Http\Requests\CP\User\StoreUserRequest;
 use App\Http\Requests\CP\User\UpdateUserRequest;
 use App\Models\BeneficiresCoulumns;
 use App\Models\LoginNumber;
+use App\Models\Order;
 use App\Models\RaftCompanyLocation;
 use App\Models\User;
 use Carbon\Carbon;
@@ -169,6 +170,7 @@ class UserController extends Controller
 
     public function list(Request $request, $flag = false)
     {
+
         $users = User::query()
             ->where('verified', 1)
             ->where('type', '!=', 'admin')
@@ -226,6 +228,8 @@ class UserController extends Controller
             ->addColumn('type', function ($user) {
                 return ($user->type == "service_provider" and !is_null($user->parent_id)) ? "شركات حجاج الخارج": $user->user_type;
             })
+            ->addColumn('raft_name_only', fn( $user) => (optional($user->raft_company_location())->first()->name ?? ''))
+
             ->addColumn('enabled', function ($user) {
                 if ($user->enabled) {
                     $element =
