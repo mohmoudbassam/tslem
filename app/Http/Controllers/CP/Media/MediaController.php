@@ -103,13 +103,6 @@ class MediaController extends Controller
         $media = Media::query()->updateOrCreate(['id' => $id], $data);
 
         if ($request->file('file')) {
-            $old = File::where('item_id', $media->id)->whereIn('type', ['image', 'video'])->get();
-
-            foreach ($old as $key => $value) {
-                Storage::delete($value->file);
-                $value->delete();
-            }
-
             foreach ($request->file('file') as $value) {
                 $item['file']    = $value->store('avatars', 'public');
                 $item['type']    = $request->type;
