@@ -6,8 +6,8 @@
             @endisset
             @if($order->userCanAddReport())
             <div>
-                <a class="btn btn-primary btn-sm" href="{!! route('contractor.add_report_form', ['order' => $order->id]) !!}">
-                    <i class="fa fa-plus"></i>
+                <a class="btn btn-primary px-4" href="{!! route('contractor.add_report_form', ['order' => $order->id]) !!}">
+                    <i class="fa fa-plus me-1"></i>
                     @lang('attributes.add')
                 </a>
             </div>

@@ -5,43 +5,42 @@
 @section('content')
 
     <!-- start page title -->
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">
-                    <h4>الطلبات</h4>
-                </h4>
-
-                <div class="page-title-left">
-
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active">الطلبات</li>
+                    </ol>
                 </div>
-
             </div>
         </div>
     </div>
+
+
     <div class="card">
         <div class="card-header">
             <div class="row mt-4">
                 <div class="col-lg-12">
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0">
-                        <div class="col">
+                        <div class="col-lg-3">
                             <label for="order_identifier">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3">
                             <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3">
                             <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                        <div class="col-sm-auto ms-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn px-4 me-2"><i class="fa fa-search me-1"></i>بحث</button>
+                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء</button>
                         </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-danger reset_btn"><i class="fa fa-times me-1"></i>إلغاء</button>
-                        </div>
+
                     </form>
                 </div>
 
