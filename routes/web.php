@@ -78,7 +78,7 @@ Route::prefix('Photoes')
             ->name('.Photoes');
     });
 
-Route::get('delete_img', [MediaController::class, 'delete'])->name('delete_img');
+Route::get('delete_img', [MediaController::class, 'delete_img'])->name('delete_img');
 
 Route::prefix('Videos')
     ->name('Videos')
