@@ -38,6 +38,16 @@
                         </div>
                     </div>
                 </div>
+
+                @if($media->files->first())
+                @foreach($media->files as $item)
+                <div class="row">
+                    <div class="col-lg-3">
+                        <img src="{{asset('storage/' . $item->file)}}" style="width: 50px;">
+                    </div>
+                </div>
+                @endforeach
+                @endif
             </div>
             @if($media)
             <input type="hidden" name="id" value="{{$media->id}}">
