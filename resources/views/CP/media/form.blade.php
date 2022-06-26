@@ -105,9 +105,8 @@
             }
         });
         $.ajax({
-            url: "{{route('delete_img')}}",
-            data: {'id' : id},
-            type: "POST",
+            url: "{{route('delete_img')}}?id="+id,
+            type: "GET",
             processData: false,
             contentType: false,
             success: function (data) {
