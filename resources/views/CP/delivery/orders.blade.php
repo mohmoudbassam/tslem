@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="service_provider_id">مركز الخدمة</label>
-                            <select class="form-control" id="service_provider_id" name="service_provider_id">
+                            <select class="form-control form-select" data-trigger id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
                                     <option
@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="designer_id">المكتب الهندسي</label>
-                            <select class="form-control" id="designer_id" name="designer_id">
+                            <select class="form-control form-select" id="designer_id" name="designer_id">
                                 <option value="">اختر...</option>
                                 @foreach($designers as $designer)
                                     <option value="{{$designer->id}}">{{$designer->company_name}}</option>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="consulting_id">المشرف</label>
-                            <select class="form-control" id="consulting_id" name="consulting_id">
+                            <select class="form-control form-select" id="consulting_id" name="consulting_id">
                                 <option value="">اختر...</option>
                                 @foreach($consulting as $_consulting)
                                     <option value="{{$_consulting->id}}">{{$_consulting->company_name}}</option>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <label for="contractor_id">المقاول </label>
-                            <select class="form-control" id="contractor_id" name="contractor_id">
+                            <select class="form-control form-select" id="contractor_id" name="contractor_id">
                                 <option value="">اختر...</option>
                                 @foreach($contractors as $_contractor)
                                     <option value="{{$_contractor->id}}">{{$_contractor->company_name}}</option>
@@ -88,7 +88,7 @@
 
                         <div class="col-lg-3 col-sm-6">
                             <label for="order_status">حالة الطلب</label>
-                            <select class="form-control" id="order_status" name="order_status">
+                            <select class="form-control form-select" id="order_status" name="order_status">
                                 <option value="">اختر...</option>
                                 @foreach($orderStatuses as $id => $val)
                                     <option value="{!! $id !!}">{!! $val !!}</option>
@@ -299,7 +299,14 @@
 
             window.location = ExcelUrl;
         }
-
+        var e = document.querySelectorAll("[data-trigger]");
+        for (i = 0; i < e.length; ++i) {
+            var a = e[i];
+            new Choices(a, {
+                placeholderValue: "This is a placeholder set in the config", searchPlaceholderValue:
+                    "بحث"
+            })
+        }
     </script>
 
 @endsection

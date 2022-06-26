@@ -22,32 +22,32 @@
                 <div class="col-lg-12">
 
                     <form class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0" id="form_data">
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="order_identifier">رقم الطلب </label>
                             <input type="text" class="form-control" id="order_identifier" placeholder="رقم الطلب">
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="service_provider_id">شركات حجاج الداخل</label>
-                            <select class="form-control" id="service_provider_id" name="service_provider_id">
+                            <select class="form-control form-select" id="service_provider_id" name="service_provider_id">
                                 <option value="">اختر...</option>
                                 @foreach($services_providers as $services_provider)
                                     <option value="{{$services_provider->id}}">{{$services_provider->company_name}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="from_date">من </label>
                             <input type="text" class="form-control datepicker" id="from_date" placeholder="">
                         </div>
-                        <div class="col">
+                        <div class="col-lg-3 col-sm-6">
                             <label for="to_date">الى </label>
                             <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                         </div>
-                        <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-primary search_btn"><i class="fa fa-search"></i>بحث</button>
+                        <div class="col-sm-auto ms-auto" style="margin-top:1.9rem;">
+                            <button type="button" class="btn btn-primary search_btn px-4"><i class="fa fa-search me-1"></i>بحث</button>
                         </div>
                         <div class="col-sm-auto" style="margin-top:1.9rem;">
-                            <button type="button" class="btn btn-danger reset_btn"><i class="fa fa-times me-1"></i>إلغاء</button>
+                            <button type="button" class="btn btn-danger reset_btn px-4"><i class="fa fa-times me-1"></i>إلغاء</button>
                         </div>
                     </form>
                 </div>

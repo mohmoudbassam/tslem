@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\CP\Media;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Storage;
 
 class MediaController extends Controller
 {
@@ -42,18 +44,17 @@ class MediaController extends Controller
                 return $order->title;
             })
             ->addColumn('type', function ($order) {
-                return $order->type;
+                return $order->type ? $order->type : null;
             })
             ->addColumn('file', function ($order) {
-
-                if ($order->file) {
-                    if ($order->type == 'video') {
+                if ($order->files->first()) {
+                    if ($order->files->first()->type == 'video') {
                         return '<video width="200" height="100" controls>
-                                <source src="' . asset('storage/' . $order->file) . '" type="video/mp4">
+                                <source src="' . asset('storage/' . $order->files->first()->file) . '" type="video/mp4">
                                 </video>';
                     }
-                    return $order->file ? '
-                    <img style="width:200px;height:100px" src="' . asset('storage/' . $order->file) . '">
+                    return $order->files->first() ? '
+                    <img style="width:200px;height:100px" src="' . asset('storage/' . $order->files->first()->file) . '">
                     ' : null;
                 } else {
                     return null;
@@ -80,28 +81,42 @@ class MediaController extends Controller
     }
 
     public function add_edit(Request $request)
-    {
+    { 
         $request->validate([
-            'title' => 'required',
+            'title' => 'nullable',
             'type' => 'required|in:image,video'
         ]);
-        if ($request->type == 'image') {
-            $request->validate([
-                'file' => 'required|image|mimes:png,jpg,jpeg|max:3000'
-            ]);
-        } else {
-            $request->validate([
-                'file' => 'required|mimes:mp4,amv|max:5000'
-            ]);
-        }
+        // if ($request->type == 'image') {
+        //     $request->validate([
+        //         'file' => 'array',
+        //         'file.*' => 'required|image|mimes:png,jpg,jpeg|max:5000'
+        //     ]);
+        // } else {
+        //     $request->validate([
+        //         'file' => 'array',
+        //         'file.*' => 'required|mimes:mp4,amv'
+        //     ]);
+        // }
         $id = isset($request['id']) ? $request['id'] : null;
-        $data = $request->except('_token');
 
-        $data['file'] = $request->file('file')->store(
-            'avatars',
-            'public'
-        );
-        Media::query()->updateOrCreate(['id' => $id], $data);
+        $data = $request->only('title', 'type');
+        $media = Media::query()->updateOrCreate(['id' => $id], $data);
+
+        if ($request->file('file')) {
+            $old = File::where('item_id', $media->id)->whereIn('type', ['image', 'video'])->get();
+
+            foreach ($old as $key => $value) {
+                Storage::delete($value->file);
+                $value->delete();
+            }
+
+            foreach ($request->file('file') as $value) {
+                $item['file']    = $value->store('avatars', 'public');
+                $item['type']    = $request->type;
+                $item['item_id'] = $media->id;
+                File::create($item);
+            }
+        }
 
         return response()->json([
             'success' => True,
@@ -112,7 +127,9 @@ class MediaController extends Controller
     public function delete()
     {
 
-        Media::query()->findOrFail(request('id'))->delete();
+        $media = Media::query()->findOrFail(request('id'))->first();
+        File::where('item_id', $media->id)->whereIn('type', ['image', 'video'])->delete();
+        $media->delete();
         return response()->json([
             'message' => 'تمت عمليه الحذف  بنجاح',
             'success' => true

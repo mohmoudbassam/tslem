@@ -302,10 +302,8 @@
                         <input type="hidden" name="order_id" value="{{$order->id}}">
                     </form>
                 </div>
-                <div class="card-footer">
-                    <div class="d-flex flex-wrap gap-3">
-                        <button type="button" class="btn btn-lg btn-primary submit_btn" form="add_edit_form">إنشاء طلب</button>
-                    </div>
+                <div class="card-footer text-end">
+                    <button type="button" class="btn btn-lg btn-primary submit_btn" form="add_edit_form">إنشاء طلب</button>
                 </div>
             </div>
         </div>
@@ -571,11 +569,9 @@
                                         </h1>
                                     </div>
                                     <div class="card-body" id="">
-                                        <div class="row">
                                             ${dt['files'].map((file) => {
-                                                return `<div class="col-4"><div class="form-group"><label class="col-form-label">${file['name']}</label><a href="${file['path']}" download="" class="btn btn-block col-12 btn-primary">تحميل ملف التعهد</a> </div></div>  <div class="col-8"><div class="form-group"><label class="col-form-label required-field">${file['name']} ( بعد التعديل )</label> <input type="file" class="form-control pdf-file" name="obligations[${dt['name_en']}][${file['type']}]" accept="application/pdf" required></div> </div>`;
+                                                return `<div class="row pb-4 mb-3 border-bottom"><div class="col-4"><div class="form-group"><label class="col-form-label">${file['name']}</label><a href="${file['path']}" download="" class="btn btn-block col-12 btn-primary">تحميل ملف التعهد</a> </div></div>  <div class="col-8"><div class="form-group"><label class="col-form-label required-field">${file['name']} ( بعد التعديل )</label> <input type="file" class="form-control pdf-file" name="obligations[${dt['name_en']}][${file['type']}]" accept="application/pdf" required></div> </div></div>`;
                                             }).join(" ")}
-                                        </div>
                                     </div>
                                 </div>
                             </div>

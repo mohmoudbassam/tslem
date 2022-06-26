@@ -149,7 +149,7 @@ class ConsultingOfficeController extends Controller
     public function reports_view_details(Order $order)
     {
 
-        $order_specialties = OrderService::query()->with('service.specialties')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
         return view('CP.consulting_office.reports_view_details', [
             'order'             => $order,

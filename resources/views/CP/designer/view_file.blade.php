@@ -43,6 +43,12 @@
         .modal-backdrop.fade {
             display: initial !important;
         }
+        .fs-7{
+            font-size: 1rem;
+        }
+        .nav-link {
+            padding: 0.6rem 1rem 0.8rem;
+        }
     </style>
 @endsection
 @section('content')
@@ -67,53 +73,47 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <ul class="nav nav-tabs-custom border-bottom" id="pills-tab" role="tablist">
+                    <ul class="nav nav-pills justify-content-start" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link px-3 active" data-bs-toggle="tab" href="#details" role="tab">تفاصيل الطلب</a>
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">التفاضيل</h4>
+                </div>
+
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="details"
                              role="tabpanel">
-                            <div class="row">
-                                @if($designerNote && $order->isDesignReviewStatus())
-                                    <div class="col-12">
-                                        <p class="text-danger details_p space-nowrap"><span class="bold">سبب الرفض:&nbsp;</span>{!! nl2br($designerNote->note) !!}</p>
-                                    </div>
-                                @endif
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p space-nowrap"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
-                                </div>
-                                @if($order->service_provider->raft_company_name)
-                                    <div class="col-md-6 my-3">
-                                        <p class="details_p"><span
-                                                class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</p>
-                                    </div>
-                                @endif
-
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span
-                                            class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span
-                                            class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</p>
-                                </div>
-
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span
-                                            class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</p>
-                                </div>
-                            </div>
+                             <table class="table table-bordered">
+                                <tbody>
+                                    @if($designerNote && $order->isDesignReviewStatus())
+                                    <tr>
+                                        <td width="50%"><span class="bold">  سبب الرفض :</span> {!! nl2br($designerNote->note) !!}</td>
+                                    </tr>
+                                    @endif
+                                    <tr>
+                                        <td width="50%"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</td>
+                                        <td width="50%"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</td>
+                                    </tr>
+                                    <tr>
+                                        @if($order->service_provider->raft_company_name)
+                                        <td width="50%"><span  class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</td>
+                                        @endif
+                                        <td width="50%"><span class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%"><span class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</td>
+                                        <td width="50%"><span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</td>
+                                    </tr>
+                                </tbody>
+                             </table>
                             <div class="row mt-5">
-                                <div class="col-12">
+                                <div class="col-12 text-end">
                                     @if($order->status == \App\Models\Order::PENDING)
 
                                         <a class="btn btn-primary"
@@ -125,14 +125,14 @@
                                     @endif
                                 </div>
                             </div>
-                            @if(!$order->final_report()->value('consulting_office_final_report_approved'))
+                            @if(!$order->isConsultingOfficeFinalReportApproved() && $order->userCanAttachFinalReport())
                             <div class="row">
                                 <div class="col-md-12 my-3 text-end">
-                                    <div class="bold border col-md-12 my-3 p-2 rounded-start {{$order->final_report()->value('consulting_office_final_report_note') ? "bg-soft-danger border-danger text-danger " : ""}}">
+                                    <div class="bold border col-md-12 my-3 p-2 rounded-start {{($consulting_office_note = $order->getConsultingOfficeFinalReportNote()) ? "bg-soft-danger border-danger text-danger " : ""}}">
                                         <span class="float-start">
-                                            {{$order->final_report()->value('consulting_office_final_report_note', '-')}}
+                                            {{$consulting_office_note ?: '-'}}
                                         </span>
-                                        @include('CP.order.final_report_button', ['order' => $order])
+                                        @include('CP.order.final_report_button', ['order' => $order, 'has_file' => $order->hasConsultingOfficeFinalReportPath()])
                                     </div>
                                 </div>
                             </div>
@@ -187,104 +187,77 @@
                                                         <div class="row mt-5">
                                                             @foreach($filess->where('specialties.name_en',$_specialties[0]->service->specialties->name_en) as $files)
                                                                 @if($files->type ==1)
-                                                                    <div class="col-md-offset-3 col-md-2">
+                                                                    <div class="col-md-6 col-lg-3">
                                                                         <div class="panel panel-default bootcards-file">
 
                                                                             <div class="list-group">
-                                                                                <div class="list-group-item">
-                                                                                    <a href="#">
+                                                                                <div class="list-group-item text-center">
+                                                                                    <div class="py-4">
                                                                                         <i class="fa fa-file-pdf fa-4x"></i>
-                                                                                    </a>
+                                                                                    </div>
                                                                                     <h5 class="list-group-item-heading">
-                                                                                        <a href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                                             {{$files->real_name}}
-                                                                                        </a>
                                                                                     </h5>
 
                                                                                 </div>
                                                                                 <div class="list-group-item">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="panel-footer">
-                                                                                <div class="btn-group btn-group-justified">
-                                                                                    <div class="btn-group">
-                                                                                        <a class="btn btn-success"
+                                                                                    <a class="btn btn-success w-100"
                                                                                            href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                                             <i class="fa fa-arrow-down"></i>
                                                                                             تنزيل
                                                                                         </a>
-                                                                                    </div>
-
-
                                                                                 </div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 @endif
                                                                 @if($files->type ==2)
-                                                                    <div class="col-md-offset-3 col-md-2">
+                                                                    <div class="col-md-6 col-lg-3">
                                                                         <div class="panel panel-default bootcards-file">
 
                                                                             <div class="list-group">
-                                                                                <div class="list-group-item">
-                                                                                    <a href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                                <div class="list-group-item text-center">
+                                                                                    <div class="py-4">
                                                                                         <i class="fa fa-file-pdf fa-4x"></i>
-                                                                                    </a>
+                                                                                    </div>
                                                                                     <h5 class="list-group-item-heading">
-                                                                                        <a href="#">
                                                                                             {{$files->real_name}}
-                                                                                        </a>
                                                                                     </h5>
 
                                                                                 </div>
                                                                                 <div class="list-group-item">
+                                                                                    <a class="btn btn-success w-100"
+                                                                                        href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                                        <i class="fa fa-arrow-down"></i>
+                                                                                        تنزيل
+                                                                                    </a>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="panel-footer">
-                                                                                <div class="btn-group btn-group-justified">
-                                                                                    <div class="btn-group">
-                                                                                        <a class="btn btn-success"
-                                                                                           href="{{route('design_office.download',['id'=>$files->id])}}">
-                                                                                            <i class="fa fa-arrow-down"></i>
-                                                                                            تنزيل
-                                                                                        </a>
-                                                                                    </div>
 
-                                                                                </div>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 @endif
                                                                 @if($files->type ==3)
-                                                                    <div class="col-md-offset-3 col-md-2">
+                                                                    <div class="col-md-6 col-lg-3">
                                                                         <div class="panel panel-default bootcards-file">
 
                                                                             <div class="list-group">
-                                                                                <div class="list-group-item">
-                                                                                    <a href="#">
+                                                                                <div class="list-group-item text-center">
+                                                                                    <div class="py-4">
                                                                                         <i class="fa fa-file-pdf fa-4x"></i>
-                                                                                    </a>
+                                                                                    </div>
                                                                                     <h5 class="list-group-item-heading">
-                                                                                        <a href="#">
                                                                                             {{$files->real_name}}
-                                                                                        </a>
                                                                                     </h5>
 
                                                                                 </div>
                                                                                 <div class="list-group-item">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="panel-footer">
-                                                                                <div class="btn-group btn-group-justified">
-                                                                                    <div class="btn-group">
-                                                                                        <a class="btn btn-success"
+                                                                                    <a class="btn btn-success w-100"
                                                                                            href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                                             <i class="fa fa-arrow-down"></i>
                                                                                             تنزيل
                                                                                         </a>
-                                                                                    </div>
-
-
                                                                                 </div>
                                                                             </div>
                                                                         </div>

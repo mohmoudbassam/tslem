@@ -21,11 +21,12 @@ class NewsArticle extends Model
      * @var \string[][]
      */
     public static $RULES = [
-        'title' => [ 'required' ],
-        'image' => ['required'],
-        'body' => [ 'required' ],
-        'is_published' => [ 'nullable' ],
-        'user_id' => [ 'nullable' ],
+        'title' => ['required'],
+        'image' => ['array'],
+        // 'image.*' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:5000'],
+        'body' => ['required'],
+        'is_published' => ['nullable'],
+        'user_id' => ['nullable'],
     ];
     /**
      * @var string
@@ -37,7 +38,6 @@ class NewsArticle extends Model
     public static $LIST_COLUMNS = [
         'id',
         'title',
-        'image',
         'user_id',
         'created_at',
         'is_published',
@@ -48,7 +48,6 @@ class NewsArticle extends Model
     protected static $LIST_COLUMNS_ORDERABLE = [
         'id',
         'title',
-        'image',
         'user_id',
         'created_at',
         'is_published',
@@ -61,7 +60,6 @@ class NewsArticle extends Model
     protected $fillable = [
         'title',
         'body',
-        'image',
         'is_published',
         'sort_order',
         'user_id',
@@ -87,10 +85,10 @@ class NewsArticle extends Model
     public static function getIndexColumns($with_extras = false)
     {
         $results = collect(\App\Models\NewsArticle::trans('fields'))
-            ->reject(fn($v, $k) => !in_array($k, static::$LIST_COLUMNS))
+            ->reject(fn ($v, $k) => !in_array($k, static::$LIST_COLUMNS))
             ->all();
-        if( $with_extras ) {
-            foreach( __('general.datatable.fields') as $field ) {
+        if ($with_extras) {
+            foreach (__('general.datatable.fields') as $field) {
                 $results[] = $field;
             }
         }
@@ -106,28 +104,28 @@ class NewsArticle extends Model
      */
     public static function getDatatableColumns($as_json = false, $with_extras = false)
     {
-        $makeColumn = function($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
+        $makeColumn = function ($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
             $result = [
                 'name' => $name = value($name),
                 'data' =>  is_null($data = value($data)) ? $name : $data,
                 'className' => $className = value($className),
-                'orderable' => value($orderable) ?? false//ends_with($name, '_id'),
+                'orderable' => value($orderable) ?? false //ends_with($name, '_id'),
             ];
-            if( !is_null($render) ) {
-                $result[ 'render' ] = $render;
+            if (!is_null($render)) {
+                $result['render'] = $render;
             }
 
             return $result;
         };
         $columns = [];
-        foreach( static::getIndexColumns() as $column => $label ) {
+        foreach (static::getIndexColumns() as $column => $label) {
             $orderable = in_array($column, static::$LIST_COLUMNS_ORDERABLE);
             $columns[] = $makeColumn($column, $orderable);
         }
-        if( $with_extras ) {
-            foreach( __('general.datatable.fields') as $field => $label ) {
+        if ($with_extras) {
+            foreach (__('general.datatable.fields') as $field => $label) {
                 $orderable = in_array($field, static::$LIST_COLUMNS_ORDERABLE);
-                $columns[] = $makeColumn($field,$orderable);
+                $columns[] = $makeColumn($field, $orderable);
             }
         }
 
@@ -142,8 +140,8 @@ class NewsArticle extends Model
     public static function optionsFor($column)
     {
         $column = value($column);
-        if( $column === 'is_published' ) {
-            return [ 0 => trans('general.no'), 1 => trans('general.yes') ];
+        if ($column === 'is_published') {
+            return [0 => trans('general.no'), 1 => trans('general.yes')];
         }
 
         return [];
@@ -155,13 +153,13 @@ class NewsArticle extends Model
     public static function getRules()
     {
         $rules = [];
-        foreach( static::$RULES as $column => $_rules ) {
-            $rules[ $column ] = [];
-            if( in_array('required', $_rules) ) {
-                $rules[ $column ][ 'required' ] = true;
+        foreach (static::$RULES as $column => $_rules) {
+            $rules[$column] = [];
+            if (in_array('required', $_rules)) {
+                $rules[$column]['required'] = true;
             }
-            if( in_array('nullable', $_rules) ) {
-                $rules[ $column ][ 'required' ] = false;
+            if (in_array('nullable', $_rules)) {
+                $rules[$column]['required'] = false;
             }
         }
 
@@ -184,7 +182,7 @@ class NewsArticle extends Model
      */
     public function addImagePath($file, bool $save = false)
     {
-        if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
+        if ($full_path = $file->store('', ['disk' => static::$DISK])) {
             return $full_path ? static::disk()->url($full_path) : "";
         }
 
@@ -196,7 +194,7 @@ class NewsArticle extends Model
      */
     public static function disk($disk = null)
     {
-        return Storage::disk($disk??static::$DISK);
+        return Storage::disk($disk ?? static::$DISK);
     }
 
     /**
@@ -223,11 +221,16 @@ class NewsArticle extends Model
     public function togglePublish(bool $save = false)
     {
         $this->is_published = !$this->isPublished();
-        if( $save ) {
+        if ($save) {
             $this->save();
             $this->refresh();
         }
 
         return $this;
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class, 'item_id')->where('type', 'news');
     }
 }

@@ -20,6 +20,10 @@ class FinalReport extends Model
      * @var string
      */
     public static $DISK = 'order_final_reports';
+    /**
+     * @var string
+     */
+    public static $FILE_LABEL_SUFFIX = '_label';
 
     protected $fillable = [
         'order_id',
@@ -55,24 +59,24 @@ class FinalReport extends Model
     // region: contractor_final_report_path
     public function getContractorFinalReportPathUrlAttribute()
     {
-        return $this->getPathUrlAttribute('contractor_final_report_path');
+        return $this->getPathUrlAttributeValue('contractor_final_report_path');
     }
 
     public function setContractorFinalReportPathAttribute($value)
     {
-        $this->setPathAttribute('contractor_final_report_path', $value);
+        $this->setPathAttributeValue('contractor_final_report_path', $value);
     }
     // endregion: contractor_final_report_path
 
     // region: consulting_office_final_report_path
     public function getConsultingOfficeFinalReportPathUrlAttribute()
     {
-        return $this->getPathUrlAttribute('consulting_office_final_report_path');
+        return $this->getPathUrlAttributeValue('consulting_office_final_report_path');
     }
 
     public function setConsultingOfficeFinalReportPathAttribute($value)
     {
-        $this->setPathAttribute('consulting_office_final_report_path', $value);
+        $this->setPathAttributeValue('consulting_office_final_report_path', $value);
     }
 
     // endregion: consulting_office_final_report_path
@@ -135,7 +139,7 @@ class FinalReport extends Model
         return (bool) $this->contractor_final_report_path;
     }
 
-    public function hasConsultingOfficeReport(): bool
+    public function hasConsultingOfficeFinalReport(): bool
     {
         return (bool) $this->consulting_office_final_report_path;
     }

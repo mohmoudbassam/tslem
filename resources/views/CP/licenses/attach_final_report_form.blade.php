@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title"
-                id="exampleModalLongTitle">ارفاق التقرير النهائي</h5>
+                id="exampleModalLongTitle">إرفاق الملف</h5>
 
         </div>
         <form action="'{{route('licenses.attach_final_report', ['order'=>$model->id])}}'" method="post" id="form_modal" enctype="multipart/form-data">
