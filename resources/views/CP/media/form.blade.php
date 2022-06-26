@@ -42,8 +42,8 @@
                 @if($media->files->first())
                 <div class="row pt-3">
                 @foreach($media->files as $item)
-                    <div class="col-lg-3">
-                        <img src="{{asset('storage/' . $item->file)}}" style="width: 50px;">
+                    <div class="col-lg-2">
+                        <img src="{{asset('storage/' . $item->file)}}" style="width: 150px;">
                     </div>
                 @endforeach
                 </div>
