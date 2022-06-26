@@ -42,8 +42,8 @@
                 @if($media->files->first())
                 <div class="row pt-3  col-sm-12">
                 @foreach($media->files as $item)
-                    <div class="col-lg-2 p-2 m-2">
-                        <a href="#" style="position: fixed; margin: 5px"><i class="fa fa-trash"></i></a>
+                    <div class="col-lg-2 p-2 m-2" id="img{{$item->id}}">
+                        <a href="#" onclick="deleteImg('{{$item->id}}')" style="position: fixed; margin: 5px"><i class="fa fa-trash"></i></a>
                         <img src="{{asset('storage/' . $item->file)}}" style="width: 130px;">
                     </div>
                 @endforeach
@@ -97,4 +97,10 @@
         postData(new FormData($('#add_edit_form').get(0)), "{{route('media.add_edit')}}");
 
     });
+
+    function deleteImg(id){
+        $('img'+id).hide();
+        
+
+    }
 </script>
