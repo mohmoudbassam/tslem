@@ -99,8 +99,23 @@
     });
 
     function deleteImg(id){
-        $('#img'+id).hide();
-
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{route('delete_img')}}",
+            data: {'id' : id},
+            type: "POST",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('#img'+id).hide();
+            },
+            error: function (data) {
+                console.log(data);
+            },
+        });
     }
 </script>

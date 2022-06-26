@@ -126,7 +126,6 @@ class MediaController extends Controller
 
     public function delete()
     {
-
         $media = Media::query()->findOrFail(request('id'))->first();
         File::where('item_id', $media->id)->whereIn('type', ['image', 'video'])->delete();
         $media->delete();
