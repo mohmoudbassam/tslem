@@ -137,7 +137,7 @@ class MediaController extends Controller
 
     public function delete_img()
     {
-        File::where('item_id', request('id'))->whereIn('type', ['image', 'video'])->delete();
+        File::where('id', request('id'))->whereIn('type', ['image', 'video'])->delete();
         return true;
     }
 }
