@@ -140,7 +140,7 @@
                                 <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item['image']) }}" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="{{ route('NewsArticles.article', ['news_article' => $item->id]) }}">
-                                        <h5 class="card-title">{{ $item['title'] }}</h5>
+                                        <h5 class="card-title pt-2">{{ $item['title'] }}</h5>
                                     </a>
                                     <p class="card-text"> {{ date('Y/m/d',strtotime($item['created_at'])) }}</p>
                                 </div>
