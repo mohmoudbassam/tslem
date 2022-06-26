@@ -74,17 +74,20 @@ class LoginController extends Controller
         $data['number_of_user'] = User::query()->count();
         $data['number_of_user_under_approve'] = User::query()->where('verified', 0)->count();
         $data['number_of_approve_user'] = User::query()->where('verified', 1)->count();
-        $data['donat']['number_of_service_providers_out'] = User::query()
+        //raft_center
+        $data['donat']['number_of_service_providers_out'] = User::query()->where('verified', 1)
             ->where('type', 'service_provider')
             ->whereNotNull('parent_id')->get()
-            ->filter(function ($item){
-                return optional($item->getRaftCompanyBox())->seen_notes ;
-            })->count();
+            ->filter(fn ($item) => optional($item->getRaftCompanyBox())->seen_notes)
+            ->count();
+
+        //service_provider
         $data['donat']['number_of_service_providers_in'] = User::query()->where('type', 'service_provider')->where('verified', 1)
-            ->whereNull('parent_id')->get()
-            ->filter(function ($item){
-                return optional($item->getRaftCompanyBox())->seen_notes ;
-            })->count();
+            ->whereNull('parent_id')
+            ->get()
+            ->filter(fn ($item) => optional($item->getRaftCompanyBox())->seen_notes)
+            ->count();
+        
         $data['donat']['design_office'] = User::query()->where('type', 'design_office')->where('verified', 1)->count();
         $data['donat']['number_of_contractors'] = User::query()->where('type', 'contractor')->where('verified', 1)->count();
         $data['number_of_consulting_office'] = User::query()->where('type', 'consulting_office')->where('verified', 1)->count();
