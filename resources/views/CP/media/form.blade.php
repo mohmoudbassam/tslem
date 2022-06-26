@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                @if($media->files->first())
+                @if(isset($media) && $media->files->first())
                 <div class="row pt-3  col-sm-12">
                 @foreach($media->files as $item)
                     <div class="col-lg-2 p-2 m-2" id="img{{$item->id}}">
