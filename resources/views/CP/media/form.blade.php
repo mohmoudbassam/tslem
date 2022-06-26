@@ -99,8 +99,8 @@
     });
 
     function deleteImg(id){
-        $('img'+id).hide();
-        
+        $('#img'+id).hide();
+
 
     }
 </script>
