@@ -56,14 +56,9 @@ class OrdersController extends Controller
             ->whereDesignerId($request->designer_id)
             ->whereConsultingId($request->consulting_id)
             ->whereContractorId($request->contractor_id)
-            ->whereDate($request->from_date, $request->to_date)
             ->orderByDesc('created_at')
-            ->with('designer')
-            ->with('service_provider')
-            ->with(['designer', 'contractor', 'consulting']);
-            $order->when($request->params == 'designe_office_orders', function ($q) {
-                $q->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id');
-            });
+            ->with(['designer', 'contractor', 'consulting','service_provider'])
+            ->when($request->params == 'designe_office_orders', fn ($q) => $q->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id'));
             if($request->order_status){
                 $order = $order->where('status',$request->order_status);
             }
