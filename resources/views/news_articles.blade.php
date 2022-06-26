@@ -142,7 +142,7 @@
                                 @endif
                                 <div class="card-body">
                                     <a href="{{ route('NewsArticles.article', ['news_article' => $item->id]) }}">
-                                        <h5 class="card-title pt-2">{{ $item['title'] }}</h5>
+                                        <h5 class="card-title pt-4">{{ $item['title'] }}</h5>
                                     </a>
                                     <p class="card-text"> {{ date('Y/m/d',strtotime($item['created_at'])) }}</p>
                                 </div>
