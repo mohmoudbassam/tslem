@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pt-3">
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                             <label class="col-12" for="media">العنوان</label>
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pt-3">
                     <div class="form-group col-lg-12 col-md-6 col-sm-12">
                         <div class="row">
                             <label class="col-12" for="media">الملف</label>
@@ -40,13 +40,13 @@
                 </div>
 
                 @if($media->files->first())
+                <div class="row pt-3">
                 @foreach($media->files as $item)
-                <div class="row">
                     <div class="col-lg-3">
                         <img src="{{asset('storage/' . $item->file)}}" style="width: 50px;">
                     </div>
-                </div>
                 @endforeach
+                </div>
                 @endif
             </div>
             @if($media)
