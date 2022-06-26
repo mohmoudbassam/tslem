@@ -218,7 +218,7 @@
                 'stateSave': true,
                 "serverSide": true,
                 ajax: {
-                    url: '{{route('users.list')}}',
+                    url: '{{route('users.list',request()->all())}}',
                     type: 'GET',
                     "data": function (d) {
                         d.name = $('#name').val();

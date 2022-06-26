@@ -212,17 +212,24 @@ class UserController extends Controller
             })
             ->when(request('type'), function ($q) {
                 if ( request('type') == "service_provider" ) {
-                    $q->where('type', request('type'))
-                        ->whereNull("parent_id");
+                    //raft_in
+                    $q->where('type', "service_provider")->whereNull("parent_id");
                 } elseif ( request('type') == "raft_center" ) {
-                    $q->where('type', "service_provider")
-                        ->whereNotNull("parent_id");
+                    //raft_out
+                    $q->where('type', "service_provider")->whereNotNull("parent_id");
                 } else {
                     $q->where('type', request('type'));
                 }
             });
+        //dd($users->toSql());
+        //->when($request->input('params') == 'raft_in', fn($q) => $q->where('type', 'service_provider')->whereNotNull('parent_id'));
+
         if ($flag) {
             return $users->get();
+        }
+
+        if($request->input('params') == 'raft_out' ||$request->input('params') == 'raft_in'){
+            $users = $users->get()->filter(fn ($item) => optional($item->getRaftCompanyBox())->seen_notes)->values();
         }
         return DataTables::of($users)
             ->addColumn('type', function ($user) {

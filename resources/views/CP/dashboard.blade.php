@@ -547,7 +547,7 @@
                                     </g></svg>
                                 <h3>عدد شركات حجاج الداخل </h3>
                                 <p>{{$donat['number_of_service_providers_in']}} شركة </p>
-                                <a href="{{route('users')}}?params=raft_in">عرض الشركات</a>
+                                <a href="{{route('users',['params' => 'raft_in', 'type' => 'service_provider'])}}">عرض الشركات</a>
                             </div>
                         </div>
             </div>
@@ -668,7 +668,7 @@
                                     </g></svg>
                                 <h3>عدد شركات حجاج الخارج</h3>
                                 <p> {{$donat['number_of_service_providers_out']}} شركة </p>
-                                <a href="{{route('users')}}?params=raft_out">عرض الشركات</a>
+                                <a href="{{route('users',['params' => 'raft_out', 'type' => 'raft_center'])}}">عرض الشركات</a>
                             </div>
                         </div>
             </div>
