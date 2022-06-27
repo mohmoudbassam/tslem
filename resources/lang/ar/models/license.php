@@ -23,9 +23,9 @@ return [
     "raft_company_name" => ":name",
     "no_parent_name" => "المجلس التنسيقي لحجاج الداخل",
     "download_for_service_provider" => "عرض رخصة الإضافات",
-    "download_execution_license_for_service_provider" => "عرض رخصة التنفيذ",
+    "download_execution_license_for_service_provider" => "عرض رخصة الجاهزية",
     "types" => [
         1 => "رخصة الاضافات",
-        2 => "رخصة التنفيذ",
+        2 => "رخصة الجاهزية",
     ],
 ];
