@@ -117,66 +117,64 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <ul class="nav nav-tabs-custom  border-bottom" id="pills-tab" role="tablist">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link px-3 active" data-bs-toggle="tab"
-                               href="#details"
-                               role="tab">تفاصيل الطلب</a>
+                            href="#details"
+                            role="tab">تفاصيل الطلب</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3" data-bs-toggle="tab"
-                               href="#obligations"
-                               role="tab">ملفات التعهدات</a>
+                            href="#obligations"
+                            role="tab">ملفات التعهدات</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link px-3" data-bs-toggle="tab"
-                               href="#fire_protections_files"
-                               role="tab">ملفات الوقاية والحماية من الحريق</a>
+                            href="#fire_protections_files"
+                            role="tab">ملفات الوقاية والحماية من الحريق</a>
                         </li>
                     </ul>
                 </div>
+            </div>
+            <div class="card">
+
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane active" id="details" role="tabpanel">
-                            <div class="row">
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</p>
-                                </div>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="bold">  التاريخ : </span> {{$order->created_at->format("Y-m-d")}}</td>
+                                        <td><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span
+                                            class="bold">مركز الخدمة : </span> {{isset($order->service_provider) ? $order->service_provider->company_name: ''}}</td>
+                                        <td><span
+                                            class="bold"> اسم مكتب التصميم :  </span>{{isset($order->designer) ? $order->designer->company_name: ''}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</p>
-                                </div>
+                            <h6 class="mb-3">
+                                <span>
+                                    تخصصات المكتب الهندسي:
+                                </span>
+                            </h6>
+                            <ul class="m-0 list-unstyled list-group">
+                                @if (isset($order->designer))
+                                    @foreach($order->designer->designer_types as $designType)
+                                    <li style="font-size: 18px;" class="list-group-item">
+                                        - {{ $designType->type }}
+                                    </li>
+                                    @endforeach
+                                @endif
+                            </ul>
 
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span
-                                            class="bold">مركز الخدمة :</span> {{isset($order->service_provider) ? $order->service_provider->company_name: ''}}</p>
-                                </div>
 
-                                <div class="col-md-6 my-3">
-                                    <p class="details_p"><span
-                                            class="bold"> اسم مكتب التصميم :  </span>{{isset($order->designer) ? $order->designer->company_name: ''}}</p>
-                                </div>
-
-                                <div class="col-12">
-                                    <p class="details_p">
-                                        <span>
-                                            تخصصات المكتب الهندسي:
-                                        </span>
-                                    </p>
-                                    <ul class="m-0">
-                                        @if (isset($order->designer))
-                                            @foreach($order->designer->designer_types as $designType)
-                                                <li style="font-size: 20px;">
-                                                    {{ $designType->type }}
-                                                </li>
-                                            @endforeach
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
 
                             @if(auth()->user()->type == \App\Models\User::SHARER_TYPE )
-                                <div class="offset-md-9 col-md-3 mb-3">
+                                <div class="col-12 text-end mb-3">
                                     @if( isset($order_sharer->status) )
                                         @if($order_sharer->status ==0)
                                             <button class="btn btn-primary" id="accept_order">اعتماد الطلب</button>
