@@ -95,7 +95,7 @@ class NewsArticleController extends Controller
         $news_article = NewsArticle::create($data);
         if ($request->file('image')) {
             foreach ($request->file('image') as $value) {
-                $item['file']    = $value->store('news_articles', 'public');
+                $item['file']    = resize_upload_image($value);
                 $item['type']    = 'news';
                 $item['item_id'] = $news_article->id;
                 File::create($item);
@@ -168,7 +168,7 @@ class NewsArticleController extends Controller
             ->addColumn('is_published', fn (NewsArticle $news_article) => $news_article::trans($news_article->is_published ? 'published' : 'not_published'))
             ->addColumn('image', function ($order) {
                 return $order->image ? '
-                            <img style="width:50px" src="' . asset('storage/' . $order->image) . '">
+                            <img style="width:50px" src="' . asset('storage/thump/' . $order->image) . '">
                             ' : null;
             })
             ->addColumn('actions', function ($news_article) {
@@ -231,7 +231,7 @@ class NewsArticleController extends Controller
     public function delete(Request $request, NewsArticle $news_article)
     {
         File::where('item_id', $news_article->id)->where('type', 'news')->delete();
-        
+
         $news_article->delete();
 
         return response()->json([
@@ -263,7 +263,7 @@ class NewsArticleController extends Controller
             }
 
             foreach ($request->file('image') as $value) {
-                $item['file']    = $value->store('news_articles', 'public');
+                $item['file']    = resize_upload_image($value);
                 $item['type']    = 'news';
                 $item['item_id'] = $news_article->id;
                 File::create($item);

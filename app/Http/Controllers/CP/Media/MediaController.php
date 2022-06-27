@@ -54,7 +54,7 @@ class MediaController extends Controller
                                 </video>';
                     }
                     return $order->files->first() ? '
-                    <img style="width:200px;height:100px" src="' . asset('storage/' . $order->files->first()->file) . '">
+                    <img style="width:200px;height:100px" src="' . asset('storage/thump/' . $order->files->first()->file) . '">
                     ' : null;
                 } else {
                     return null;
@@ -81,22 +81,22 @@ class MediaController extends Controller
     }
 
     public function add_edit(Request $request)
-    { 
+    {
         $request->validate([
             'title' => 'nullable',
             'type' => 'required|in:image,video'
         ]);
-        // if ($request->type == 'image') {
-        //     $request->validate([
-        //         'file' => 'array',
-        //         'file.*' => 'required|image|mimes:png,jpg,jpeg|max:5000'
-        //     ]);
-        // } else {
-        //     $request->validate([
-        //         'file' => 'array',
-        //         'file.*' => 'required|mimes:mp4,amv'
-        //     ]);
-        // }
+        if ($request->type == 'image') {
+            $request->validate([
+                'file' => 'array',
+                'file.*' => 'required|image|mimes:png,jpg,jpeg|max:5000'
+            ]);
+        } else {
+            //     $request->validate([
+            //         'file' => 'array',
+            //         'file.*' => 'required|mimes:mp4,amv'
+            //     ]);
+        }
         $id = isset($request['id']) ? $request['id'] : null;
 
         $data = $request->only('title', 'type');
@@ -104,7 +104,7 @@ class MediaController extends Controller
 
         if ($request->file('file')) {
             foreach ($request->file('file') as $value) {
-                $item['file']    = $value->store('avatars', 'public');
+                $item['file']    = $request->type == 'image' ? resize_upload_image($value) : $value->store('avatars', 'public');
                 $item['type']    = $request->type;
                 $item['item_id'] = $media->id;
                 File::create($item);

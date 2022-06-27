@@ -45,7 +45,7 @@
                     <div class="col-lg-2 p-2 m-2" id="img{{$item->id}}">
                         <a href="#" onclick="deleteImg('{{$item->id}}')" style="position: absolute; margin: 5px"><i class="fa fa-trash"></i></a>
                         @if($item->type == 'image')
-                        <img src="{{asset('storage/' . $item->file)}}" style="width: 130px;">
+                        <img src="{{asset('storage/thump/' . $item->file)}}" style="width: 130px;">
                         @else
                         <video style="width: 130px;" controls>
                             <source src="' . asset('storage/' . $item->file) . '" type="video/mp4">
