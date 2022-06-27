@@ -234,7 +234,7 @@ class Order extends Model
             static::PENDING_OPERATION => 'تم اصدار رخصة الإضافات',
             static::FINAL_REPORT_ATTACHED => 'تم ارفاق التقرير النهائي',
             static::FINAL_REPORT_APPROVED => 'تم اعتماد التقارير النهائية',
-            static::FINAL_LICENSE_GENERATED => 'تم إصدار رخصة التنفيذ',
+            static::FINAL_LICENSE_GENERATED => 'تم إصدار رخصة الجاهزية',
         ];
     }
 
