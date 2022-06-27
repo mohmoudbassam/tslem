@@ -27,20 +27,19 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
 
     public function map($order): array
     {
-
         return [
             $order->identifier ?? '',
             $order->date ?? '',
-            $order->service_provider->name ?? '',
-            $order->service_provider->raft_name_only ?? 'المجلس التنسيقي لمؤسسات وشركات خدمة حجاج الداخل',
+            $order->service_provider->company_name ?? '',
+            is_null($order->service_provider->parent_id) ? 'المجلس التنسيقي لمؤسسات وشركات خدمة حجاج الداخل': "مؤسسات وشركات خدمة حجاج الخارج",
             optional($order->designer)->company_name ?? '',
             $order->order_status ?? '',
             optional($order->contractor)->company_name ?? '',
             optional($order->consulting)->company_name,
             $order->waste_contractor ?? '',
-            $order->comp ?? '',
-            $order->box ?? '',
-            $order->license_number ?? '',
+            $order->service_provider->camp_number ?? '',
+            $order->service_provider->box_number ?? '',
+            $order->service_provider->license_number ?? '',
 
         ];
     }
@@ -72,9 +71,11 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             'D' => 30,
             'E' => 30,
             'F' => 30,
-            'J' => 30,
+            'G' => 30,
             'H' => 30,
-            'I' => 30,
+            'J' => 30,
+            'K' => 30,
+            'L' => 30,
 
         ];
     }
@@ -89,7 +90,7 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->setRightToLeft(true);
-                $cellRange = 'A1:I1';
+                $cellRange = 'A1:L1';
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
                 // $event->sheet->setMergeColumn(  ['columns' => array('A','B','C','D')]);
                 //$event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setUnderline(true);
