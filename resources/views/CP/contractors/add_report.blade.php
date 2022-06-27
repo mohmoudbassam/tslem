@@ -1,5 +1,25 @@
 @extends('CP.master')
 @section('title', __("attributes.add_reports"))
+
+@section('style')
+    <style>
+       .file-preview .fileinput-remove {
+            display: none;
+        }
+        .file-preview {
+            margin-bottom: 20px;
+        }
+        .close.kv-error-close {
+            border: 0;
+            margin: 0px 5px;
+            background-color: transparent;
+        }
+        .file-caption.icon-visible .file-caption-icon {
+            display: none;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -56,8 +76,8 @@
                     <input type="hidden" name="order_id" value="{{$order->id}}">
                 </div>
             </form>
-            <div class="d-flex flex-wrap gap-3">
-                <button type="button" class="btn btn-primary submit_btn">@lang("attributes.add")</button>
+            <div class="text-center mt-3 flex-wrap gap-3">
+                <button type="button" class="btn btn-primary submit_btn px-4">@lang("attributes.add")</button>
             </div>
         </div>
     </div>
