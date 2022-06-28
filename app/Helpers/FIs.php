@@ -31,13 +31,13 @@ function resize_old_images($name)
     //     $ext = explode('.', $image);
     //     $ext = end($ext);
     //     if (in_array($ext, ['png', 'jpg'])) {
-            // $original = Image::make(storage_path('app/public/avatars/'.$name));
+            $original = Image::make(storage_path('app/public/or_avatars/'.$name));
             // // $name = explode('/', $image);
             // // $name = end($name);
-            // $original = $original->resize(1200, null, function ($constraint) {
-            //     $constraint->aspectRatio();
-            // });
-            // $original->save(storage_path('app/public/avatars/' . $name));
+            $original = $original->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $original->save(storage_path('app/public/avatars/' . $name));
 
             $thumb = Image::make(storage_path('app/public/or_avatars/'.$name));
             $thumb = $thumb->resize(300, null, function ($constraint) {
