@@ -58,10 +58,10 @@
                                     'name' => $input,
                                     'label' => \App\Models\NewsArticle::trans($input),
                                     'required' => in_array('required', $rules) ?? false,
-                                    'type' => ends_with($input, '_id') ? 'select' : (
+                                    'type' => ends_with($input, '_at') ? 'date' : (ends_with($input, '_id') ? 'select' : (
                                         ends_with($input, '_path') ? 'file' :
                                             (in_array('numeric', $rules) ? 'number' : ($input=='body'?'textarea':($input=='is_published'?'select':'text')))
-                                        ),
+                                        )),
                                     'options' => ends_with($input, '_id') ? \App\Models\NewsArticle::optionsFor($input) : ($input=='is_published' ? \App\Models\NewsArticle::optionsFor($input) :[]),
                                     'value' => $model->$input,
                                     'selected' => $model->$input,
