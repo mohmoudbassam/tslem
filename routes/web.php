@@ -38,6 +38,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('t',function(){
+    return resize_old_images();
+});
 
 Route::get('/', [SiteController::class, 'getHome'])->name('public');
 Route::get('guide/{guideType}', [SiteController::class, 'getGuide'])->name('guide');

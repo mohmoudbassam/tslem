@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 function resize_upload_image($image, $folder = 'avatars')
@@ -8,11 +10,40 @@ function resize_upload_image($image, $folder = 'avatars')
     $image_name = $folder . '/' . time() . rand(1, 100000) . '.' . $image->getClientOriginalExtension();
 
     $original = Image::make($image->getRealPath());
-    $original = $original->resize(1200);
+    $original = $original->resize(1200, null, function ($constraint) {
+        $constraint->aspectRatio();
+    });
     $original->save(storage_path('app/public/' . $image_name));
 
     $thumb = Image::make($image->getRealPath());
-    $thumb = $thumb->resize(300, 200);
+    $thumb = $thumb->resize(300, null, function ($constraint) {
+        $constraint->aspectRatio();
+    });
     $thumb->save(storage_path('app/public/thump/' . $image_name));
     return $image_name;
+}
+
+
+function resize_old_images()
+{
+    $files = File::allFiles(storage_path('app/public/avatars'));
+    foreach ($files as $key => $image) {
+        $ext = explode('.', $image);
+        $ext = end($ext);
+        if (in_array($ext, ['png', 'jpg'])) {
+            $original = Image::make($image);
+            $name = explode('/', $image);
+            $name = end($name);
+            $original = $original->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $original->save(storage_path('app/public/avatars/' . $name));
+
+            $thumb = Image::make($image);
+            $thumb = $thumb->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $thumb->save(storage_path('app/public/thump/' . $name));
+        }
+    }
 }

@@ -257,7 +257,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item['type'] == 'image' && $item->files->first())
-                                <img style="cursor: pointer;width: 100%;height:215px" id="myImg{{$key}}" onclick='openModal("{{$key}}")'  src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                <img style="cursor: pointer;width: 100%;height:215px" id="myImg{{$key}}" onclick='openModal("{{$key}}")'  src="{{ asset('storage/thump/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
                                 @if($item['type'] == 'video' && $item->files->first())
                                 <video width="100%" height="215" style="cursor: pointer;width: 100%;height:215px" controls>
@@ -399,7 +399,7 @@
                 @foreach($item->files as $key2 => $item)
 
                 <div class="mySlides{{$key}}">
-                    <img onclick="closeModal('{{$key}}')" src="{{asset('storage/' . $item->file)}}" style="width:2000px;height:500px">
+                    <img onclick="closeModal('{{$key}}')" src="{{asset('storage/' . $item->file)}}">
                 </div>
 
                 @endforeach
