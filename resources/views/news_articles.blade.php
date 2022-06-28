@@ -138,7 +138,7 @@
                         <div class="guide-links col-md-3 mb-2">
                             <div class="card">
                                 @if($item->files->first())
-                                <img style="width: 100%;height:200px" src="{{ asset('storage/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
+                                <img style="width: 100%;height:200px" src="{{ asset('storage/thump/'.$item->files->first()->file) }}" class="card-img-top" alt="...">
                                 @endif
                                 <div class="card-body">
                                     <a href="{{ route('NewsArticles.article', ['news_article' => $item->id]) }}">
