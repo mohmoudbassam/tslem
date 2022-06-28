@@ -24,26 +24,26 @@ function resize_upload_image($image, $folder = 'avatars')
 }
 
 
-function resize_old_images()
+function resize_old_images($name)
 {
-    $files = File::allFiles(storage_path('app/public/avatars'));
-    foreach ($files as $key => $image) {
-        $ext = explode('.', $image);
-        $ext = end($ext);
-        if (in_array($ext, ['png', 'jpg'])) {
-            $original = Image::make($image);
-            $name = explode('/', $image);
-            $name = end($name);
-            $original = $original->resize(1200, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $original->save(storage_path('app/public/avatars/' . $name));
+    // $files = File::allFiles(storage_path('app/public/avatars'));
+    // foreach ($files as $key => $image) {
+    //     $ext = explode('.', $image);
+    //     $ext = end($ext);
+    //     if (in_array($ext, ['png', 'jpg'])) {
+            // $original = Image::make(storage_path('app/public/avatars/'.$name));
+            // // $name = explode('/', $image);
+            // // $name = end($name);
+            // $original = $original->resize(1200, null, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            // $original->save(storage_path('app/public/avatars/' . $name));
 
-            $thumb = Image::make($image);
+            $thumb = Image::make(storage_path('app/public/avatars/'.$name));
             $thumb = $thumb->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $thumb->save(storage_path('app/public/thump/' . $name));
-        }
-    }
+        // }
+    // }
 }

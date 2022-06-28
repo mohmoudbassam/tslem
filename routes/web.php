@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('t',function(){
-    return resize_old_images();
+    return resize_old_images(request('name'));
 });
 
 Route::get('/', [SiteController::class, 'getHome'])->name('public');
