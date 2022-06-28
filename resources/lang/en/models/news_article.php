@@ -12,4 +12,5 @@ return [
     ],
     'published' => 'Published',
     'not_published' => 'Not Published',
+    'published_at' => 'Published At'
 ];

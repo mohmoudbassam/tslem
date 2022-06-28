@@ -14,4 +14,5 @@ return [
     'publish' => 'نشر',
     'published' => 'تم النشر',
     'not_published' => 'غير منشور',
+    'published_at' => 'تم النشر في تاريخ'
 ];
