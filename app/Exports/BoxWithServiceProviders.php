@@ -34,6 +34,7 @@ class BoxWithServiceProviders implements  FromCollection, WithEvents, WithHeadin
             'المربع',
             'المخيم',
             'اسم الشركة',
+            'اسم شركة الطوافة',
             'البريد الإلكتروني',
             'الجوال',
 
@@ -45,7 +46,9 @@ class BoxWithServiceProviders implements  FromCollection, WithEvents, WithHeadin
         return [
             $user->box,
             $user->camp,
+
             $user->company_name?? '',
+            $user->raft_company_name,
             $user->email,
             $user->phone,
 
