@@ -43,7 +43,7 @@ function resize_old_images($name)
             $thumb = $thumb->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            $thumb->save(storage_path('app/public/thump/' . $name));
+            $thumb->save(storage_path('app/public/thump/avatars/' . $name));
         // }
     // }
 }
