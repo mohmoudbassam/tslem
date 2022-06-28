@@ -569,4 +569,5 @@ Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController:
 Route::get('showWest', [LoginController::class, 'showWest'])->name('showWest');
 Route::get('west_list', [LoginController::class, 'west_list'])->name('west_list');
 Route::get('ex', [LoginController::class, 'ex'])->name('ex');
+Route::get('ex_boxes_users', [LoginController::class, 'ex_boxes_users'])->name('ex_boxes_users');
 Route::get('download_file/{model}/{id}/{attribute}', [GeneralController::class, 'download_file'])->name('download_file');

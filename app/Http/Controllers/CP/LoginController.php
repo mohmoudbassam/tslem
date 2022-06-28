@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\CP;
 
+use App\Exports\BoxWithServiceProviders;
 use App\Exports\OrderExportInoiceReport;
 use App\Exports\RaftCompanyExport;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\CP\Delivery\DeliveryController;
 use App\Models\License;
 use App\Models\LoginNumber;
 use App\Models\Order;
@@ -78,16 +78,16 @@ class LoginController extends Controller
         $data['donat']['number_of_service_providers_out'] = User::query()->where('verified', 1)
             ->where('type', 'service_provider')
             ->whereNotNull('parent_id')->get()
-            ->filter(fn ($item) => optional($item->getRaftCompanyBox())->seen_notes)
+            ->filter(fn($item) => optional($item->getRaftCompanyBox())->seen_notes)
             ->count();
 
         //service_provider
         $data['donat']['number_of_service_providers_in'] = User::query()->where('type', 'service_provider')->where('verified', 1)
             ->whereNull('parent_id')
             ->get()
-            ->filter(fn ($item) => optional($item->getRaftCompanyBox())->seen_notes)
+            ->filter(fn($item) => optional($item->getRaftCompanyBox())->seen_notes)
             ->count();
-        
+
         $data['donat']['design_office'] = User::query()->where('type', 'design_office')->where('verified', 1)->count();
         $data['donat']['number_of_contractors'] = User::query()->where('type', 'contractor')->where('verified', 1)->count();
         $data['number_of_consulting_office'] = User::query()->where('type', 'consulting_office')->where('verified', 1)->count();
@@ -166,7 +166,7 @@ class LoginController extends Controller
         ///order per designer office
 
 
-        $data['order_count_per_designer'] = Order::query()->whereIn('status',[Order::DESIGN_REVIEW,Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id')->count();
+        $data['order_count_per_designer'] = Order::query()->whereIn('status', [Order::DESIGN_REVIEW, Order::REQUEST_BEGIN_CREATED])->whereNotNull('designer_id')->count();
         $data['order_count_per_taslem'] = Order::taslemDashboardOrders()->count();
         $data['license_number'] = License::query()->whereNotNull('box_raft_company_box_id')->whereNotNull('camp_raft_company_box_id')->count();
         $data['wasteContractors'] = wasteContractorsList()->count();
@@ -178,11 +178,11 @@ class LoginController extends Controller
             'statusList' => []
         ];
         $data['countOrders'] = 0;
-        foreach(Order::getOrderStatuses() as $ItemStatus => $ItemName){
-            if($ItemStatus == Order::PENDING_OPERATION){
+        foreach (Order::getOrderStatuses() as $ItemStatus => $ItemName) {
+            if ($ItemStatus == Order::PENDING_OPERATION) {
                 $count = $data['license_number'];
-            }else {
-                $getCount =  $getOrdersCountByStatus->where('status',$ItemStatus)->first();
+            } else {
+                $getCount = $getOrdersCountByStatus->where('status', $ItemStatus)->first();
                 $count = ($getCount) ? $getCount->count : 0;
             }
             $data['countOrders'] += $count;
@@ -237,5 +237,17 @@ class LoginController extends Controller
         }
         return Excel::download(new RaftCompanyExport($_data), 'raft_company.xlsx');
 
+    }
+
+    public function ex_boxes_users()
+    {
+        $raft_company = RaftCompanyBox::query()->LeftJoin('users', function ($join) {
+            $join->on(function ($query) {
+                $query->on('users.camp_number', '=', 'raft_company_box.camp')
+                    ->whereColumn('users.box_number', '=', 'raft_company_box.box');
+            });
+        })->get();
+
+        return Excel::download(new BoxWithServiceProviders($raft_company), 'boxes.xlsx');
     }
 }
