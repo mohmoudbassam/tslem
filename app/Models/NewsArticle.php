@@ -27,6 +27,7 @@ class NewsArticle extends Model
         'body' => ['required'],
         'is_published' => ['nullable'],
         'user_id' => ['nullable'],
+        'published_at' => ['nullable']
     ];
     /**
      * @var string
@@ -41,6 +42,7 @@ class NewsArticle extends Model
         'user_id',
         'created_at',
         'is_published',
+        'published_at'
     ];
     /**
      * @var mixed
@@ -51,6 +53,7 @@ class NewsArticle extends Model
         'user_id',
         'created_at',
         'is_published',
+        'published_at'
     ];
     /**
      * The attributes that are mass assignable.
@@ -63,6 +66,7 @@ class NewsArticle extends Model
         'is_published',
         'sort_order',
         'user_id',
+        'published_at'
     ];
     /**
      * The attributes that should be cast.
@@ -75,6 +79,7 @@ class NewsArticle extends Model
         'is_published' => 'boolean',
         'sort_order' => 'integer',
         'user_id' => 'integer',
+        'published_at' => 'date'
     ];
 
     /**
