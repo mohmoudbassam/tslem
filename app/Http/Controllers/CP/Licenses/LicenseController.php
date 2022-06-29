@@ -640,6 +640,12 @@ HTML;
             $license->save();
         }
 
+        /** @var Order $order */
+        $order = optional($license->order);
+        if( $order->status >= Order::PENDING_OPERATION ) {
+            $order->generateLicenseFile($filename, $license->type, true, true);
+        }
+
         return back()->with('success', __('general.success'));
     }
 
