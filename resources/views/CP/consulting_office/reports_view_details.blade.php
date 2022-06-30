@@ -121,9 +121,9 @@ file-drop-zone clearfix {}
                                             </span>{{$order->designer->name}}</p>
                                     </div>
 
-                                    <div class="offset-md-9 col-md-3 mb-3">
-                                        <button class="btn btn-success" id="complete_order">اتمام الطلب</button>
-                                    </div>
+{{--                                    <div class="offset-md-9 col-md-3 mb-3">--}}
+{{--                                        <button class="btn btn-success" id="complete_order">اتمام الطلب</button>--}}
+{{--                                    </div>--}}
 
                                 </div>
 

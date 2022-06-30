@@ -690,13 +690,13 @@ class Order extends Model
     {
         $NotificationText = $changes . ($add_order_identifier ? ' لطلب  #' . $this->identifier : '');
         save_logs($this, $user_id = currentUser()->id, $NotificationText);
+        $user_id = currentUser()->id;
         optional($this->service_provider)->notify(new OrderNotification($NotificationText, $user_id));
 
         $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
         foreach( $getTasleemUsers as $taslemUser ) {
-            optional($taslemUser)->notify(new OrderNotification($NotificationText, $user_id->id));
+            optional($taslemUser)->notify(new OrderNotification($NotificationText, $user_id));
         }
-
         return $this;
     }
 }
