@@ -452,6 +452,7 @@ class Order extends Model
             $user = User::find($user);
         }
 
+        $user ??= optional($user);
         $user_type = $user->isContractor() ? 'contractor' : (
         $user->isConsultngOffice() ? 'consulting_office' : ""
         );
