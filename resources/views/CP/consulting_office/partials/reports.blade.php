@@ -4,12 +4,14 @@
             @isset($title)
                 <div class="h3">{!! $title !!}</h4></div>
             @endisset
+            @if($order->userCanAddReport())
             <div>
                 <a class="btn btn-primary btn-sm" href="{!! route('consulting_office.report_add_form',$order->id) !!}">
                     <i class="fa fa-plus"></i>
                     @lang('attributes.add')
                 </a>
             </div>
+            @endif
         </div>
     </div>
     <div class="card-body">
@@ -30,9 +32,11 @@
                         <th>
                             تاريخ الإنشاء
                         </th>
+                        @if($order->userCanAddReport())
                         <th>
                             الخيارات
                         </th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -71,8 +75,9 @@
                 {className: 'text-center', data: 'title', name: 'title'},
                 {className: 'text-center', data: 'description', name: 'description'},
                 {className: 'text-center', data: 'created_at', name: 'created_at'},
+                @if($order->userCanAddReport())
                 {className: 'text-center', data: 'actions', name: 'actions'},
-
+                @endif
             ],
         });
     });

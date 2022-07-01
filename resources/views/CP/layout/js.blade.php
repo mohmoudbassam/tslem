@@ -451,4 +451,39 @@
 
         }
     })
+
+    $(()=>{
+        // to change hash in link when tab clicked
+        $(window).on('hashchange', function (e) {
+            e.preventDefault()
+            document.querySelectorAll('.nav-link.active, .tab-pane.active')
+                .forEach(x => x.classList.remove('active'))
+
+            if (location.hash) {
+                let activeTab = document.querySelector("[href='" + location.hash + "']")
+                if (activeTab && activeTab.classList.contains('nav-link')) {
+                    activeTab.classList.add('active')
+                    if ((activeTab = document.querySelector(location.hash))) {
+                        activeTab.classList.add('active')
+                    }
+                }
+            } else {
+                document.querySelector('.nav-link').classList.add('active')
+                document.querySelector('.tab-pane').classList.add('active')
+            }
+
+            return false
+        });
+
+        document.body.addEventListener('click', function (e) {
+            let elm = e.target.matches('a[role="tab"]') ? e.target : undefined
+            if (elm = (elm || e.target.closest('a[role="tab"]'))) {
+                if (elm.matches('a[role="tab"]')) {
+                    e.preventDefault()
+                    location.hash = elm.getAttribute('href');
+                    return false
+                }
+            }
+        })
+    });
 </script>
