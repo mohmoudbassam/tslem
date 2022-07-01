@@ -37,7 +37,7 @@ class OrderLogsController extends Controller
 
         $orderMethod = $column !== 'order_id' ? "orderBy" : "orderByOrderIdentifier";
         $orderMethodArgs = $column !== 'order_id' ? [ $column, $dir ] : [ $dir ];
-        dump(compact('column', 'orderMethod', 'orderMethodArgs', 'dir'));
+
         $order_logs = OrderLogs::query()
                                ->$orderMethod(
                                    ...$orderMethodArgs
