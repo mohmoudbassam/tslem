@@ -7,6 +7,7 @@ use App\Models\OrderService;
 
 function save_logs($order, $user_id, $data)
 {
+    /** @var \App\Models\Order $order */
     $order->logs()->create([
         'data' => $data,
         'user_id' => $user_id,
@@ -564,6 +565,24 @@ if (!function_exists('currentUser')) {
             auth()->user() ??
             auth('web')->user() ??
             auth('users')->user() ??
+            value($default);
+    }
+}
+
+if (!function_exists('currentUserId')) {
+    /**
+     * Returns current logged in user id
+     *
+     * @param mixed $default
+     *
+     * @return int|null|mixed
+     */
+    function currentUserId($default = null)
+    {
+        return
+            auth()->id() ??
+            auth('web')->id() ??
+            auth('users')->id() ??
             value($default);
     }
 }

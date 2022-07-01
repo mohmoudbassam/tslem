@@ -356,9 +356,9 @@ class ConsultingOfficeController extends Controller
 
         if ($order->contractor_id && $order->consulting_office_id) {
             $order->status = Order::ORDER_APPROVED;
-            $NotificationText = 'تم اعتماد الطلب #'.$order->identifier.' من المقاول والمشرف وبإنتظار اصدار الرخصة';
             $order->save();
-            save_logs($order, auth()->user()->id, $NotificationText);
+            $order->saveLog("approved-all");
+            $NotificationText = "تم اعتماد الطلب من المقاول والمشرف";
             optional($order->service_provider)->notify(new OrderNotification($NotificationText, auth()->user()->id));
 
             $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
@@ -388,8 +388,7 @@ class ConsultingOfficeController extends Controller
         if ($order->status == 2) {
             $order->status = Order::COMPLETED;
             $order->save();
-
-            save_logs($order, auth()->user()->id, 'تم اتمام الطلب  من المشرف');
+            $order->saveLog("completed");
 
             optional($order->service_provider)->notify(new OrderNotification('تم اتمام الطلب #'.$order->identifier.' من المشرف', $order->consulting_office_id));
             return response()->json([
@@ -406,8 +405,8 @@ class ConsultingOfficeController extends Controller
         if ($order->status == 2) {
             $order->status = Order::DESIGN_REVIEW;
             $order->save();
+            $order->saveLog("rejected-tsleem");
 
-            save_logs($order, auth()->user()->id, 'تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم');
             optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
             optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم', auth()->user()->id));
             return response()->json([
@@ -502,9 +501,9 @@ class ConsultingOfficeController extends Controller
 
         if (ConsultingOrders::where('order_id', $order->id)->count() == 2) {
             $order->status = Order::ORDER_APPROVED;
-            $NotificationText = 'تم اعتماد الطلب #'.$order->identifier.' من المقاول والمشرف وبإنتظار اصدار الرخصة';
             $order->save();
-            save_logs($order, auth()->user()->id, $NotificationText);
+            $order->saveLog("approved-all");
+            $NotificationText = "تم اعتماد الطلب من المقاول والمشرف";
             optional($order->service_provider)->notify(new OrderNotification($NotificationText, auth()->user()->id));
 
             $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();

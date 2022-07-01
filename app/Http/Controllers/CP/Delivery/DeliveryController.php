@@ -276,11 +276,9 @@ class DeliveryController extends Controller
             //    'status' => OrderSharer::PENDING
             //]);
             $order->orderSharerRegected()->update(['status' => OrderSharer::PENDING]);
-
             // Todo: [A.F] Don't use inline text, use laravel localisation instead
-            $notificationText = 'تم اعتماد الطلب #'.$order->identifier.' من مكتب تسليم وبإنتظار باقي الجهات الحكومية';
-            save_logs($order, auth()->user()->id, $notificationText);
-
+            $order->saveLog("approved-tsleem");
+            $notificationText = "تم اعتماد الطلب من مكتب تسليم";
             optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
             optional($order->designer)->notify(new OrderNotification($notificationText, auth()->user()->id));
 
@@ -307,8 +305,8 @@ class DeliveryController extends Controller
                 'note'     => $request->note,
             ]);
             $order->save();
+            $order->saveLog("rejected-tsleem");
 
-            save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
             optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
             optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
 
@@ -413,8 +411,8 @@ class DeliveryController extends Controller
             'note'     => $request->note,
 
         ]);
+        $order->saveLog("rejected-tsleem");
 
-        save_logs($order, auth()->user()->id, 'تم رفض التصاميم من مكتب التسليم');
         optional($order->service_provider)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
         optional($order->designer)->notify(new OrderNotification('تم رفض التصاميم للطلب #'.$order->identifier.' من مكتب التسليم بسبب '.$request->note, auth()->user()->id));
 
