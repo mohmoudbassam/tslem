@@ -912,7 +912,7 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card card-h-100 card-chart">
                     <div class="card-body px-2">
-                        <h3 class="custom-stats-title">المخيمات التى تم استلامها</h3>
+                        <h3 class="custom-stats-title">المخيمات التى تم تسليمها</h3>
                         <div id="barchart-1" style="min-height: 160px;">
 
                         </div>

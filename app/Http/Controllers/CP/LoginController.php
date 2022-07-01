@@ -179,16 +179,21 @@ class LoginController extends Controller
         ];
         $data['countOrders'] = 0;
         foreach (Order::getOrderStatuses() as $ItemStatus => $ItemName) {
-            if ($ItemStatus == Order::PENDING_OPERATION) {
-                $count = $data['license_number'];
-            } else {
-                $getCount = $getOrdersCountByStatus->where('status', $ItemStatus)->first();
-                $count = ($getCount) ? $getCount->count : 0;
+            if(!in_array($ItemStatus,[Order::FINAL_REPORT_ATTACHED,Order::COMPLETED,Order::FINAL_REPORT_APPROVED,Order::PROCESSING])){
+                if ($ItemStatus == Order::PENDING_OPERATION) {
+                    $count = $data['license_number'];
+                } else {
+                    $getCount = $getOrdersCountByStatus->where('status', $ItemStatus)->first();
+                    $count = ($getCount) ? $getCount->count : 0;
+                }
+                $data['countOrders'] += $count;
+                $orderStatusChartData['seriesData'][] = $count;
+                $orderStatusChartData['statusList'][] = $ItemStatus;
+                if($ItemStatus == Order::DESIGN_REVIEW){
+                    $ItemName = 'تصاميم معادة';
+                }
+                $orderStatusChartData['seriesCategories'][] = $ItemName;
             }
-            $data['countOrders'] += $count;
-            $orderStatusChartData['seriesData'][] = $count;
-            $orderStatusChartData['statusList'][] = $ItemStatus;
-            $orderStatusChartData['seriesCategories'][] = $ItemName;
         }
         $data['orderStatusChartData'] = $orderStatusChartData;
 

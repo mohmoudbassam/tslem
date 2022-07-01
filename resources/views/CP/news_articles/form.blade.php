@@ -79,7 +79,6 @@
                     </div>
                                 </div>
                                 @endif
-
                             @endforeach
                         </div>
                     </form>
@@ -130,5 +129,17 @@
             filebrowserUploadUrl: "{{route('news_articles.upload', ['_token' => csrf_token() ])}}",
             filebrowserUploadMethod: 'form'
         });
+        $(() => {
+            @foreach(\App\Models\NewsArticle::$RULES as $column => $rules)
+            @if(isDateAttribute(\App\Models\NewsArticle::class, $column))
+
+            flatpickr(".{{$column}}_input", {
+                locale: "{{currentLocale()}}",
+                typeCalendar: "Umm al-Qura"
+            });
+
+            @endif
+            @endforeach
+        })
     </script>
 @endpush

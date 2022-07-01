@@ -242,7 +242,7 @@
                                 <div class="footer-top-links">
                                     <div class="footer-top-title">مواقع صديقة</div>
                                     <ul class="links">
-                                        <li><a href="https://kidana.com.sa" target="_blank">مواقع شركة كدانة</a></li>
+                                        <li><a href="https://kidana.com.sa" target="_blank">موقع شركة كدانة</a></li>
                                         <li><a href="https://www.haj.gov.sa"  target="_blank">موقع وزارة الحج</a></li>
                                     </ul>
                                 </div>
@@ -296,7 +296,7 @@
                                             <g></g>
                                             <g></g>
                                             </svg>
-                                             العملاء : 0599720750
+                                             خدمة العملاء : 0599720750
                                             </a></li>
                                             <li><a href="https://wa.me/+966583392323" target="_blank" class="d-flex align-items-center">
                                             <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">

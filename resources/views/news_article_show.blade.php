@@ -149,7 +149,7 @@
                                 العنوان: {{ $model->title }}
                             </div>
                             <div class="col-lg-12 pb-4">
-                                تاريخ الإنشاء: {{ date('Y/m/d',strtotime($model['created_at'])) }}
+                                تاريخ النشر: {{ date('Y/m/d',strtotime($model['published_at'])) }}
                             </div>
                             <div class="col-lg-12">
                                 {!! $model->body !!}
