@@ -280,6 +280,9 @@
                             <span data-key="t-dashboard">الطلبات</span>
                         </a>
                     </li>
+
+                    @include('CP.order_logs.menu')
+
                     <li>
                         <a href="{{route('Admin.Order.trashed')}}">
                             <i class="mdi mdi-list font-size-16 align-middle me-1"></i>
