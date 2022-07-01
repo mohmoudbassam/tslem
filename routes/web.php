@@ -12,6 +12,7 @@ use App\Http\Controllers\CP\Media\MediaController;
 use App\Http\Controllers\CP\NewsArticles\NewsArticleController;
 use App\Http\Controllers\CP\NewsController;
 use App\Http\Controllers\CP\NotificationController;
+use App\Http\Controllers\CP\OrderLogs\OrderLogsController;
 use App\Http\Controllers\CP\RaftCenter\RaftCenterController;
 use App\Http\Controllers\CP\RaftCompany\RaftCompanyController;
 use App\Http\Controllers\CP\RegisterController;
@@ -230,6 +231,15 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
              Route::post('update/{license}', [ LicenseController::class, 'update' ])->name('.update');
              Route::post('delete/{license}', [ LicenseController::class, 'delete' ])->name('.delete');
              Route::post('delete_map_path/{license}', [ LicenseController::class, 'delete_map_path' ])->name('.delete_map_path');
+         });
+
+    Route::prefix('order_logs')
+         ->name('order_logs')
+         ->middleware([ 'user_type:admin' ])
+         ->group(function() {
+             Route::get('', [ OrderLogsController::class, 'index' ]);
+             Route::get('list', [ OrderLogsController::class, 'list' ])->name('.list');
+             Route::get('export', [ OrderLogsController::class, 'export' ])->name('.export');
          });
 
     Route::prefix('licenses')
