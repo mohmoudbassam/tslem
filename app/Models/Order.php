@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\OrderNotification;
 use App\Traits\THasPathAttribute;
+use App\Traits\TModelTranslation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
     use THasPathAttribute;
+    use TModelTranslation;
 
     /**
      * @var string
@@ -190,7 +192,7 @@ class Order extends Model
 
     public function scopeByStatus(Builder $query, $status)
     {
-        return $query->whereIn('status', (array)$status);
+        return $query->whereIn('status', (array) $status);
     }
 
     public function getOrderStatusAttribute()
@@ -689,14 +691,31 @@ class Order extends Model
     public function notifyChanges($changes, bool $add_order_identifier = true)
     {
         $NotificationText = $changes . ($add_order_identifier ? ' لطلب  #' . $this->identifier : '');
-        save_logs($this, $user_id = currentUser()->id, $NotificationText);
-        $user_id = currentUser()->id;
-        optional($this->service_provider)->notify(new OrderNotification($NotificationText, $user_id));
+        $this->saveLog( $changes);
+        optional($this->service_provider)->notify(new OrderNotification($NotificationText, $user_id = currentUserId()));
 
         $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
         foreach( $getTasleemUsers as $taslemUser ) {
             optional($taslemUser)->notify(new OrderNotification($NotificationText, $user_id));
         }
+
+        return $this;
+    }
+
+    /**
+     * Save order logs using translations.
+     *
+     * @param \Closure|string $text
+     * @param int|null        $user_id
+     *
+     * @return self
+     */
+    public function saveLog($text, $user_id = null): self
+    {
+        $_text = static::trans("logs." . value($text));
+        $text = $_text === "logs.{$text}" ? static::trans($text) : $_text;
+        save_logs($this, $user_id ?? currentUserId(), $text);
+
         return $this;
     }
 }

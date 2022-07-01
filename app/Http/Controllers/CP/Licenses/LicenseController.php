@@ -404,12 +404,12 @@ HTML;
 
         // Send notification to service provider
         $notificationText = 'الرخصة جاهزة للإصدار للطلب #' . $order->identifier . ' وبإنتظار اختيارك للمشرف والمقاول';
-        save_logs($order, auth()->user()->id, $notificationText);
         optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
 
         $order->status = Order::PENDING_OPERATION;
         $order->generateLicenseFile($filename, 1, true, true);
         $order->save();
+        $order->saveLog("license-ready");
 
         return response()->json([
                                     'message' => __('general.success'),
@@ -643,6 +643,7 @@ HTML;
         /** @var Order $order */
         $order = optional($license->order);
         if( $order->status >= Order::PENDING_OPERATION ) {
+            $filename = null;
             $order->generateLicenseFile($filename, $license->type, true, true);
         }
 

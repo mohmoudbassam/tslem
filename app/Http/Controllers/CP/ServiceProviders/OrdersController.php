@@ -100,7 +100,7 @@ class OrdersController extends Controller
             return new OrderSharer(["user_id" => $item]);
         }));
 
-        save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
+        $order->saveLog("created", $request->designer_id);
         $user = User::query()->find($request->designer_id);
 
         $user->notify(new OrderNotification('تم إضافة الطلب #'.$order->identifier.' إلى قائمة طلباتك للمراجعة  ', auth()->user()->id));
@@ -211,7 +211,7 @@ class OrdersController extends Controller
         $order = tap($orderDetails)
             ->update($request->except('files', '_token', 'order_id'));
 
-        save_logs($order, $request->designer_id, 'تم انشاء الطلب ');
+        $order->saveLog("created", $request->designer_id);
         $user = User::query()->find($request->designer_id);
 
         $user->notify(new OrderNotification('يوجد لديك طلب #'.$orderDetails->identifier.' بإنتظار مراجعتك ', auth()->user()->id));
@@ -271,8 +271,8 @@ class OrdersController extends Controller
         }
 
         $order->update($update);
+        $order->saveLog("filled");
 
-        save_logs($order, auth()->user()->id, "تم اختيار المشرف ومكتب المقاولات");
         if($old_contractor_id != $request->contractor_id){
             optional($order->consulting)->notify(new OrderNotification('تم اختيارك كمكتب استشاري على الطلب #'.$order->identifier.' تابع العملية من صفحة طلبات الإشراف في القائمة يميناً', auth()->user()->id));
         }
