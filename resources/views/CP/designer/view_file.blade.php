@@ -126,22 +126,20 @@
                                         </a>
                                     </div>
                                 @endif
-                                @if(intval($order->status) >= intval(\App\Models\Order::PENDING_OPERATION))
-                                    <div class="col-12 text-end">
+                                <div class="col-12 text-end">
+                                    @if(intval($order->status) >= intval(\App\Models\Order::PENDING_OPERATION))
                                         <a id="license-type-1-button" class="btn btn-primary license-type-1-button mx-1" target="_blank" href="{{route('licenses.view_pdf', ['order'=>$order->id])}}">
                                             <i class="fa fa-arrow-down pe-2"></i>
                                             {{\App\Models\License::trans('download_for_service_provider')}}
                                         </a>
-                                    </div>
-                                @endif
-                                @if(intval($order->status) >= intval(\App\Models\Order::FINAL_LICENSE_GENERATED))
-                                    <div class="col-12 text-end">
+                                    @endif
+                                    @if(intval($order->status) >= intval(\App\Models\Order::FINAL_LICENSE_GENERATED))
                                         <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1" target="_blank" href="{{route('licenses.view_pdf_execution_license', ['order'=>$order->id])}}">
                                             <i class="fa fa-arrow-down pe-2"></i>
                                             {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
                                         </a>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
 
                             <div class="row">
@@ -357,58 +355,13 @@
         </div>
     @endif
 
-    <div class="modal fade" id="agreement-modal" tabindex="-1" role="dialog" aria-labelledby="agreement-modal-title" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="agreement-modal-title">@lang('models/order.agreement_name')</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="row my-4" id="agreement-modal-row"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="close-agreement-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 
 
 @push("js")
     <script>
-        /**
-         * Show agreement modal
-         * @see \App\Http\Controllers\CP\Designer\DesignerOrderController::order_agreement_form
-         */
-        @if($order->isPendingOperation() && !$order->agreed)
-        $(() => {
-            showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
-                let modal = $('#agreement-modal');
-                if (data.success) {
-                    modal.html(data.page)
-                    modal.modal({backdrop: 'static', keyboard: false})
-                    modal.modal('show')
-                } else {
-                    showAlertMessage('error', '@lang('constants.unknown_error')')
-                }
-                KTApp.unblockPage()
-            }, '#agreement-modal')
-        })
-        @endif
-
         $(function () {
-
-            $(document).on("hide.bs.modal", function (e) {
-                if (document.querySelector('#agreed_checkbox').checked) {
-                    e.preventDefault();
-                    location.reload();
-                    return false;
-                }
-            });
-
             const rejectOrderButton = $("#reject-order-btn");
             rejectOrderButton.on("click", function (event) {
                 event.preventDefault();

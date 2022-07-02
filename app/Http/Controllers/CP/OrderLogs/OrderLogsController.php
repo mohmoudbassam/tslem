@@ -60,9 +60,10 @@ class OrderLogsController extends Controller
                                            $q = $q->orWhere($column, ...$columnQuery($value));
                                        }
 
-                                       if( is_numeric($value) ) {
-                                           $q = $q->byOrderIdentifier($value);
-                                       }
+                                       $q = $q->orWhereHas('order', fn($oq)=>$oq->where('identifier', $value));
+                                       // if( is_numeric($value) ) {
+                                       //     $q = $q->byOrderIdentifier($value);
+                                       // }
 
                                        return $q;
                                    });

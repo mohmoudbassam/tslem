@@ -107,8 +107,17 @@
                             {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
                         </a>
                     @endif
+
+                    @if($order->isPendingOperation() && !$order->agreed)
+                        <a id="agreement-button" class="btn btn-outline-info agreement-button" href="#">
+                            <i class="fa fa-plus pe-2"></i>
+                            {{\App\Models\Order::trans('agreement_name')}}
+                        </a>
+                    @endif
                 </div>
             @endif
+
+
             <div class="tab-content p-3 text-muted">
                 <div
                     class="tab-pane active"
@@ -337,28 +346,34 @@
          */
         @if($order->isPendingOperation() && !$order->agreed)
         $(() => {
-            showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
-                let modal = $('#agreement-modal');
-                if (data.success) {
-                    modal.html(data.page)
-                    modal.modal({backdrop: 'static', keyboard: false})
-                    modal.modal('show')
-                } else {
-                    showAlertMessage('error', '@lang('constants.unknown_error')')
-                }
-                KTApp.unblockPage()
-            }, '#agreement-modal')
+            $('.agreement-button').click(function (e) {
+                e.preventDefault()
+
+                showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
+                    let modal = $('#agreement-modal');
+                    if (data.success) {
+                        modal.html(data.page)
+                        modal.modal({backdrop: 'static', keyboard: false})
+                        modal.modal('show')
+                    } else {
+                        showAlertMessage('error', '@lang('constants.unknown_error')')
+                    }
+                    KTApp.unblockPage()
+                }, '#agreement-modal')
+
+                return false;
+            })
         })
         @endif
 
         $(function () {
-            $(document).on("hide.bs.modal", function (e) {
+            /*$(document).on("hide.bs.modal", function (e) {
+                console.log('-------------------- hide modal')
                 if (document.querySelector('#agreed_checkbox').checked) {
                     e.preventDefault();
-                    location.reload();
                     return false;
                 }
-            });
+            });*/
 
             $.fn.dataTable.ext.errMode = 'none'
             $('#items_table').DataTable({

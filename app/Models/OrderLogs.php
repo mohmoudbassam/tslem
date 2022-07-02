@@ -44,7 +44,6 @@ class OrderLogs extends Model
      */
     public static $LIST_COLUMNS_ORDERABLE = [
         'id',
-        'order_id',
         'user_id',
         'data',
         'created_at',

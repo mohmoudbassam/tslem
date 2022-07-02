@@ -224,6 +224,13 @@
                                                 {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
                                             </a>
                                         @endif
+
+                                        @if($order->isPendingOperation() && !$order->agreed)
+                                            <a id="agreement-button" class="btn btn-outline-info agreement-button" href="#">
+                                                <i class="fa fa-plus pe-2"></i>
+                                                {{\App\Models\Order::trans('agreement_name')}}
+                                            </a>
+                                        @endif
                                     </div>
                                 @endif
 
@@ -544,19 +551,45 @@
         </div>
     </div>
 
+    <div class="modal fade" id="agreement-modal" tabindex="-1" role="dialog" aria-labelledby="agreement-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agreement-modal-title">@lang('models/order.agreement_name')</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row my-4" id="agreement-modal-row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-agreement-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script>
         /**
-         * Show create license modal
-         * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form
+         * Show agreement modal
+         * @see \App\Http\Controllers\CP\Designer\DesignerOrderController::order_agreement_form
          */
-        @if($order->licenseNeededForDelivery())
+        @if($order->isPendingOperation() && !$order->agreed)
         $(() => {
             $('.agreement-button').click(function (e) {
                 e.preventDefault()
-                showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}', null, '#view-user-files-modal')
+
+                showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
+                    let modal = $('#agreement-modal');
+                    if (data.success) {
+                        modal.html(data.page)
+                        modal.modal({backdrop: 'static', keyboard: false})
+                        modal.modal('show')
+                    } else {
+                        showAlertMessage('error', '@lang('constants.unknown_error')')
+                    }
+                    KTApp.unblockPage()
+                }, '#agreement-modal')
 
                 return false;
             })
