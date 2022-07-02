@@ -613,6 +613,38 @@ class Order extends Model
      * @param string|null $filename
      * @param int         $type
      * @param int         $limit
+     * @param array       $pdf_options
+     *
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    public function makeLicenseFile(
+        ?string &$filename = null,
+        int $type = 1,
+        int $limit = 8,
+        array $pdf_options = [
+            'page-size' => 'a4',
+            'orientation' => 'portrait',
+            'margin-bottom' => 0,
+            'enable-forms' => true,
+            'encoding' => 'utf-8',
+            'enable-external-links' => true,
+        ]
+    )
+    {
+        $license = $this->license;
+        $filename ??= "License-{$license->id}-{$type}.pdf";
+        $pdf = $this->loadSnappyLicense($type, $limit, $pdf_options);
+
+        return $pdf->inline($filename);
+    }
+
+    /**
+     * @param string|null $filename
+     * @param int         $type
+     * @param int         $limit
      * @param bool        $save
      * @param bool        $overwrite overwrite license file if exists
      * @param array       $pdf_options
@@ -773,7 +805,7 @@ class Order extends Model
         if( $save ) {
             $this->save();
             $filename = null;
-            $this->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
+            $this->refresh()->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
 
             return $this->refresh();
         }

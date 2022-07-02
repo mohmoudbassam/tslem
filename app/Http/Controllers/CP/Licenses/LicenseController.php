@@ -208,7 +208,32 @@ class LicenseController extends Controller
      */
     public function view_pdf(Request $request, Order $order)
     {
-        return $order->licenseResponse(1);
+        return $this->pdf1($request,$order);
+        // return $order->licenseResponse(1);
+    }
+
+    public function pdf1(Request $request, Order $order)
+    {
+        $filename = null;
+        $license = $order->license;
+
+        return $order->makeLicenseFile($filename,1);
+    }
+
+    public function pdf2(Request $request, Order $order)
+    {
+        $filename = null;
+        $license = $order->license;
+
+        return $order->makeLicenseFile($filename,2);
+    }
+
+    public function pdf(Request $request, Order $order)
+    {
+        $filename = null;
+        $license = $order->license;
+
+        return $order->makeLicenseFile($filename,$license->type);
     }
 
     /**
@@ -219,7 +244,8 @@ class LicenseController extends Controller
      */
     public function view_pdf_execution_license(Request $request, Order $order)
     {
-        return $order->licenseResponse(2);
+        return $this->pdf2($request,$order);
+        // return $order->licenseResponse(2);
     }
 
     /**
@@ -275,7 +301,7 @@ class LicenseController extends Controller
                                    }
 
                                    return $q;
-                               })->orWhereHas('order', fn($q)=>$q->where('identifier', request('name')));
+                               })->orWhereHas('order', fn($q) => $q->where('identifier', request('name')));
                            });
 
         return DataTables::of($licenses)
@@ -706,6 +732,7 @@ HTML;
             'Content-Disposition' => 'inline; filename="' . "الملف." . File::extension($path) . '"',
         ]);
     }
+
     public function license_map_file(Request $request, License $license)
     {
         $filename = $license->map_path;

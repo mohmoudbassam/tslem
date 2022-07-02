@@ -263,6 +263,12 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
                   ->name('.download');
              Route::get('view_pdf/{order}/license', [ LicenseController::class, 'view_pdf' ])
                   ->name('.view_pdf');
+             Route::get('pdf/{order}/license1', [ LicenseController::class, 'pdf1' ])
+                  ->name('.pdf1');
+             Route::get('pdf/{order}/license2', [ LicenseController::class, 'pdf2' ])
+                  ->name('.pdf2');
+             Route::get('pdf/{order}/license', [ LicenseController::class, 'pdf' ])
+                  ->name('.pdf');
              Route::get('view_html/{order}/license', [ LicenseController::class, 'view_html' ])
                   ->name('.view_html');
 
