@@ -431,7 +431,8 @@ class DeliveryController extends Controller
     {
 
         $orders = $this->list($request, true);
-
+// dd(1);
+// dd($orders->service_provider->raft_name_only);
         return Excel::download(new OrdersExport($orders), 'orders.xlsx');
     }
 
@@ -489,12 +490,11 @@ HTML;
                                  $element .= $view;
                              }
 
-                             $element = !$element ? '<div class="btn-group me-1 mt-2">
-                                    <a class="btn btn-info btn-sm" type="button"  href="' . route('delivery.view_file', [ 'order' => $order->id ]) . '">
+                             $element .= '<a class="dropdown-item" type="button" href="' . route('delivery.view_file', [ 'order' => $order->id ]) . '">
                                         عرض التفاصيل
-                                    </a>
-                                </div>' :
-                                 <<<HTML
+                                    </a>';
+
+                             $element = <<<HTML
 <div class="btn-group me-1 mt-2">
     <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         خيارات<i class="mdi mdi-chevron-down"></i>

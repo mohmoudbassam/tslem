@@ -7,8 +7,10 @@ use App\Models\ConsultingOrders;
 use App\Models\ConsultingReport;
 use App\Models\ConsultingReportAttchment;
 use App\Models\ContractorReport;
+use App\Models\FinalReport;
 use App\Models\Order;
 use App\Models\OrderService;
+use App\Models\OrderSharer;
 use App\Models\OrderSpecilatiesFiles;
 use App\Models\ReportComment;
 use App\Models\User;
@@ -150,12 +152,94 @@ class ConsultingOfficeController extends Controller
     public function reports_view_details(Order $order)
     {
 
+        $designerNote = $order->lastDesignerNote()->latest()->first();
+        $rejects = $order->orderSharerRejects()->with('orderSharer')->get();
         $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
         $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
+
+        /** @var FinalReport $final_report */
+        $final_report = $order->final_report ?? optional();
+
+        $final_reports = $order->hasFinalReport() ? [
+            $final_report->hasContractorReport() ? [
+                'title' => "المقاول",
+                'url' => downloadFileFrom($final_report, 'contractor_final_report_path'),
+                'label' => $final_report->contractor_final_report_path_label,
+                'buttons' => [
+                    [
+                        'type' => 'success',
+                        'url' => route('licenses.final_report_contractor_approve', [ 'order' => $order->id ]),
+                        'text' => 'اعتماد',
+                        'status' => $order->shouldPostFinalReports() && ( !$final_report->contractor_final_report_approved || $final_report->contractor_final_report_note),
+                    ],
+                    [
+                        'type' => 'danger',
+                        'url' => route('licenses.reject_form', [ 'order' => $order->id, 'type' => 'contractor' ]),
+                        'text' => 'ارجاع ملاحظات',
+                        'modal' => true,
+                        'status' => $order->shouldPostFinalReports() && ($final_report->contractor_final_report_approved || !$final_report->contractor_final_report_note),
+                    ],
+                ],
+                'info' => [
+                    'has_file' => $final_report->hasContractorReport() && !$final_report->contractor_final_report_note,
+                    'note' => ($note = data_get($final_report->meta, 'contractor_final_report_note') ?: $final_report->contractor_final_report_note) ?
+                        __('models/final_report.last_note', compact('note')) :
+                        null,
+                ],
+            ] : null,
+            $final_report->hasConsultingOfficeFinalReport() ? [
+                'title' => "مكتب استشاري",
+                'url' => downloadFileFrom($final_report, 'consulting_office_final_report_path'),
+                'label' => $final_report->consulting_office_final_report_path_label,
+                'buttons' => [
+                    [
+                        'type' => 'success',
+                        'url' => route('licenses.final_report_consulting_office_approve', [ 'order' => $order->id ]),
+                        'text' => 'اعتماد',
+                        'status' => $order->shouldPostFinalReports() && ( !$final_report->consulting_office_final_report_approved || $final_report->consulting_office_final_report_note),
+                    ],
+                    [
+                        'type' => 'danger',
+                        'url' => route('licenses.reject_form', [ 'order' => $order->id, 'type' => 'consulting_office' ]),
+                        'modal' => true,
+                        'text' => 'ارجاع ملاحظات',
+                        'status' => $order->shouldPostFinalReports() && ($final_report->consulting_office_final_report_approved || !$final_report->consulting_office_final_report_note),
+                    ],
+                ],
+                'info' => [
+                    'has_file' => $final_report->hasConsultingOfficeFinalReport() && !$final_report->consulting_office_final_report_note,
+                    'note' => ($note = data_get($final_report->meta, 'consulting_office_final_report_note') ?: $final_report->consulting_office_final_report_note) ?
+                        __('models/final_report.last_note', compact('note')) :
+                        null,
+                ],
+            ] : null,
+        ] : [];
+
+        return view('CP.consulting_office.delivery_view_file', [
+            'order' => $order,
+            'final_reports' => array_filter($final_reports, 'filled'),
+            'order_specialties' => $order_specialties,
+            'filess' => $files,
+            'rejects' => $rejects,
+            'order_sharers' => $order_sharers,
+            'designerNote' => $designerNote,
+        ]);
+        $order_specialties = OrderService::query()->with('service.specialties')->whereHas('service')->where('order_id', $order->id)->get()->groupBy('service.specialties.name_en');
+        $files = OrderSpecilatiesFiles::query()->where('order_id', $order->id)->get();
+        $rejects = $order->orderSharerRejects()->with('orderSharer')->get();
+        $order_sharers = OrderSharer::query()->where('order_id', $order->id)->get();
+        $designerNote = $order->lastDesignerNote()->latest()->first();
+
         return view('CP.consulting_office.reports_view_details', [
             'order'             => $order,
             'order_specialties' => $order_specialties,
             'filess'            => $files,
+
+            'final_reports' => [],
+            'rejects' => $rejects,
+            'order_sharers' => $order_sharers,
+            'designerNote' => $designerNote,
         ]);
     }
 

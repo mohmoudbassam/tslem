@@ -57,6 +57,7 @@ Route::prefix('fix')->group(function() {
             "تم اصدار الرخصة للطلب وبإنتظار اختيارك للمشرف والمقاول" => "logs.license-ready",
             "تم اعتماد الطلب من المقاول والمشرف وبإنتظار اصدار الرخصة" => "logs.approved-all",
             "الرخصة جاهزة للإصدار للطلب وبإنتظار اختيارك للمشرف والمقاول" => "logs.license-ready",
+            "الرخصة جاهزة للإصدار" => "تم اصدار رخصة الإضافات",
         ];
         $orderTrans = Order::trans("logs");
         $orderFRTrans = Order::trans("final_report_attached_status");
