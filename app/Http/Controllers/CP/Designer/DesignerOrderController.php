@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CP\Designer;
 
 use App\Http\Controllers\Controller;
 use App\Models\DesignerRejected;
+use App\Models\License;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderSharer;
@@ -54,50 +55,76 @@ class DesignerOrderController extends Controller
 
         return
             DataTables::of($order)
-                         ->addColumn('identifier', function(Order $order) {
-                             return ($order->final_report()->value('consulting_office_final_report_note') ?
-                                     '<i class="fa fa-star-of-life mx-2 text-danger" style="font-size: 8px !important;"></i>' : '') .
-                                 $order->identifier;
-                         })
-                         ->addColumn('actions', function(Order $order) {
-                             $add_file_design = '';
-                             $edit_files = '';
-                             $view = '<a class="dropdown-item" href="' . route('design_office.view_file', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الطلب </a>';
+                      ->addColumn('identifier', function(Order $order) {
+                          return ($order->final_report()->value('consulting_office_final_report_note') ?
+                                  '<i class="fa fa-star-of-life mx-2 text-danger" style="font-size: 8px !important;"></i>' : '') .
+                              $order->identifier;
+                      })
+                      ->addColumn('actions', function(Order $order) {
+                          $add_file_design = '';
+                          $edit_files = '';
+                          $element = "";
 
-                             if( $order->status == Order::REQUEST_BEGIN_CREATED ) {
-                                 $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة تصاميم  </a>';
-                             }
+                          if( $order->status >= Order::PENDING_OPERATION ) {
+                              $_title = \App\Models\License::trans('download_for_service_provider');
+                              $_route = route('licenses.view_pdf', [ 'order' => $order->id ]);
+                              $view = <<<HTML
+    <a class="dropdown-item " type="button" target="_blank" href="{$_route}">
+        {$_title}
+    </a>
+HTML;
+                              $element .= $view;
+                          }
 
-                             if( $order->lastDesignerNote()->where('status', 0)->exists()
-                             || ($order->orderSharerRegected()->exists()  && $order->delivery_notes == 1)
-                             ) {
-                                 $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>تعديل الملفات </a>';
-                             }
+                          if( $order->status >= Order::FINAL_LICENSE_GENERATED ) {
+                              $_title = \App\Models\License::trans('download_execution_license_for_service_provider');
+                              $_route = route('licenses.view_pdf_execution_license', [ 'order' => $order->id ]);
+                              $view = <<<HTML
+    <a class="dropdown-item " type="button" target="_blank" href="{$_route}">
+        {$_title}
+    </a>
+HTML;
+                              $element .= $view;
+                          }
 
-                             $element = '<div class="btn-group me-1 mt-2">
-                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                خيارات<i class="mdi mdi-chevron-down"></i>
-                                            </button>
-                                            <div class="dropdown-menu" style="">
+                          $view = '<a class="dropdown-item" href="' . route('design_office.view_file', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-eye mx-2"></i>عرض الطلب </a>';
 
-                                               ' . $view . '
-                                               ' . $add_file_design . '
-                                               ' . $edit_files . '
+                          if( $order->status == Order::REQUEST_BEGIN_CREATED ) {
+                              $add_file_design = '<a class="dropdown-item" href="' . route('design_office.add_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>إضافة تصاميم  </a>';
+                          }
 
-                                                </div>
-                              </div>';
+                          if( $order->lastDesignerNote()->where('status', 0)->exists()
+                              || ($order->orderSharerRegected()->exists() && $order->delivery_notes == 1)
+                          ) {
+                              $edit_files = '<a class="dropdown-item" href="' . route('design_office.edit_files', [ 'order' => $order->id ]) . '" href="javascript:;"><i class="fa fa-file mx-2"></i>تعديل الملفات </a>';
+                          }
 
-                             return $element;
-                         })
-                         ->addColumn('created_at', function($order) {
-                             return $order->created_at->format('Y-m-d');
-                         })
-                         ->addColumn('order_status', function($order) {
-                             return $order->order_status;
-                         })
-                         ->rawColumns([ 'actions', 'identifier' ])
-                         ->setRowClass(fn(Order $o) => $o->hasDesignerWarning() ? 'alert-warning' : '')
-                         ->make(true);
+                          $element = $element ?: '
+   ' . $view . '
+   ' . $add_file_design . '
+   ' . $edit_files . '
+   ';
+                          return <<<HTML
+<div class="btn-group me-1 mt-2">
+    <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        خيارات<i class="mdi mdi-chevron-down"></i>
+    </button>
+    <div class="dropdown-menu" style="">
+    {$view}
+    {$element}
+    </div>
+</div>
+HTML;
+                      })
+                      ->addColumn('created_at', function($order) {
+                          return $order->created_at->format('Y-m-d');
+                      })
+                      ->addColumn('order_status', function($order) {
+                          return $order->order_status;
+                      })
+                      ->rawColumns([ 'actions', 'identifier' ])
+                      ->setRowClass(fn(Order $o) => $o->hasDesignerWarning() ? 'alert-warning' : '')
+                      ->make(true);
     }
 
     public function accept(Order $order)
@@ -108,7 +135,7 @@ class DesignerOrderController extends Controller
             $order->save();
             $order->saveLog("approved-designer");
 
-            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #'.$order->identifier.' من مكتب التصميم', $order->designer_id));
+            optional($order->service_provider)->notify(new OrderNotification('تهانينا, تم قبول طلبك #' . $order->identifier . ' من مكتب التصميم', $order->designer_id));
 
             return redirect()->route('design_office.orders');
         }
@@ -131,7 +158,7 @@ class DesignerOrderController extends Controller
         if( $order->status == Order::PENDING ) {
             $order->status = Order::PENDING;
             // save_logs($order, $order->designer_id, 'تم رفض الطلب #'.$order->identifier.' من مكتب التصميم بسبب'.$request->input("rejection_note"));
-            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #'.$order->identifier.' بسبب '.$request->input("rejection_note"), $order->designer_id));
+            optional($order->service_provider)->notify(new OrderNotification('تم رفض الطلب #' . $order->identifier . ' بسبب ' . $request->input("rejection_note"), $order->designer_id));
             $order->designer_id = null;
             DesignerRejected::query()->create([
                                                   'order_id' => $order->id,
@@ -159,14 +186,14 @@ class DesignerOrderController extends Controller
         if( $request->has('validate') ) {
             $file_validation = $this->validate_file($request);
             if( !$file_validation[ 'success' ] ) {
-                $file_validation['_token'] = csrf_token();
+                $file_validation[ '_token' ] = csrf_token();
 
                 return response()->json($file_validation);
             }
 
             $obligation_file_validation = $this->validate_obligation_file($request);
             if( !$obligation_file_validation[ 'success' ] ) {
-                $obligation_file_validation['_token'] = csrf_token();
+                $obligation_file_validation[ '_token' ] = csrf_token();
 
                 return response()->json($obligation_file_validation);
             }
@@ -292,7 +319,7 @@ class DesignerOrderController extends Controller
 
     private function validate_file($request)
     {
-        if (!(request('souls_safety_file'))) {
+        if( !(request('souls_safety_file')) ) {
             return [
                 'success' => false,
                 'message' => "الرجاء إرفاق ملف سلامة الارواح ",
@@ -300,16 +327,16 @@ class DesignerOrderController extends Controller
         }
 
         $specialties_names = Specialties::query()->get()->pluck('name_en')->toArray();
-        $specialties = collect($request->except('_token', 'order_id'))->map(function ($item, $key) use ($specialties_names) {
-            if (in_array($key, $specialties_names)) {
+        $specialties = collect($request->except('_token', 'order_id'))->map(function($item, $key) use ($specialties_names) {
+            if( in_array($key, $specialties_names) ) {
                 return $item;
             }
 
             return null;
         })->filter()->keys();
-        foreach ($specialties as $key => $_specialties) {
+        foreach( $specialties as $key => $_specialties ) {
 
-            if (!(request($_specialties.'_pdf_file') && request($_specialties.'_cad_file'))) {
+            if( !(request($_specialties . '_pdf_file') && request($_specialties . '_cad_file')) ) {
                 $name = Specialties::query()->where('name_en', $_specialties)->first()->name_ar;
 
                 return [
@@ -329,30 +356,29 @@ class DesignerOrderController extends Controller
     {
         $specialties = Specialties::pluck('name_en')->toArray();
         $rules = [
-            'obligations'   => ['required', 'array', 'max:'.count($specialties), 'min:1'],
-            'obligations.*' => [Rule::in($specialties)],
+            'obligations' => [ 'required', 'array', 'max:' . count($specialties), 'min:1' ],
+            'obligations.*' => [ Rule::in($specialties) ],
         ];
 
-        foreach ($specialties as $specialty) {
+        foreach( $specialties as $specialty ) {
             $obligationFilesTypes = get_specialty_obligation_files_types($specialty);
-            $rules["obligations.$specialty"] = ["sometimes", "array", "size:".count($obligationFilesTypes)];
-            if ($request->has('validate')) {
-                $rules["obligations.$specialty.*"] = ["required", "numeric", "in:1"];
-                $rules["types.obligations.$specialty.*"] = ["required", "string", "in:application/pdf"];
-                $rules["sizes.obligations.$specialty.*"] = ["required", "string", "lte:3000"];
-            }
-            else {
-                $rules["obligations.$specialty.*"] = ["required", "file", "mimetypes:application/pdf", "max:3000"];
+            $rules[ "obligations.$specialty" ] = [ "sometimes", "array", "size:" . count($obligationFilesTypes) ];
+            if( $request->has('validate') ) {
+                $rules[ "obligations.$specialty.*" ] = [ "required", "numeric", "in:1" ];
+                $rules[ "types.obligations.$specialty.*" ] = [ "required", "string", "in:application/pdf" ];
+                $rules[ "sizes.obligations.$specialty.*" ] = [ "required", "string", "lte:3000" ];
+            } else {
+                $rules[ "obligations.$specialty.*" ] = [ "required", "file", "mimetypes:application/pdf", "max:3000" ];
             }
         }
         $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
+        if( $validator->fails() ) {
             return [
                 'success' => false,
                 'message' => "الرجاء رفع كافة ملفات التعهدات",
-                'errors'  => $validator->errors(),
-                'data'    => $request["obligations"],
+                'errors' => $validator->errors(),
+                'data' => $request[ "obligations" ],
             ];
         }
 
@@ -401,7 +427,6 @@ class DesignerOrderController extends Controller
         $order->delivery_notes = 0;
         $order->save();
 
-
         return view('CP.designer.edit_files', [
             'order' => $order,
             'specialties' => $specialties,
@@ -430,8 +455,8 @@ class DesignerOrderController extends Controller
             'order_specialties' => $order_specialties,
             'filess' => $files,
             'last_note' => $tex,
-            'order_sharers'     => $order_sharers,
-            'designerNote'      => $designerNote,
+            'order_sharers' => $order_sharers,
+            'designerNote' => $designerNote,
         ]);
 
     }
@@ -601,9 +626,9 @@ class DesignerOrderController extends Controller
         //                                  'status' => OrderSharer::PENDING,
         //                              ]);
 
-        $getTasleemUsers = \App\Models\User::where('type','Delivery')->get();
-        foreach($getTasleemUsers as $taslemUser){
-            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #'.$order->identifier.' من مكتب التصميم الهندسي', $order->designer_id));
+        $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
+        foreach( $getTasleemUsers as $taslemUser ) {
+            optional($taslemUser)->notify(new OrderNotification('تم تعديل الطلب #' . $order->identifier . ' من مكتب التصميم الهندسي', $order->designer_id));
         }
 
         return response()->json([
@@ -668,6 +693,42 @@ class DesignerOrderController extends Controller
                                      "success" => true,
                                      "message" => "",
                                  ]);
+    }
+
+    public function order_agreement_form(Request $request, Order $order)
+    {
+        return \response()->json([
+                                     "page" => view('CP.designer.order_agreement_form', [
+                                         'model' => $order,
+                                     ])->render(),
+                                     "success" => true,
+                                     "message" => "",
+                                 ]);
+    }
+
+    public function order_agreement(Request $request, Order $order)
+    {
+        $order->agree();
+        $success = $order->agreed;
+        if( $success ) {
+            if( $request->expectsJson() ) {
+                return response()->json([
+                                            'success' => true,
+                                            'message' => 'تمت العملية بنجاح',
+                                        ]);
+            }
+
+            return redirect()->route('consulting_office.reports_view_details', $order)->with('success', 'تمت العملية بنجاح');
+        }
+
+        if( $request->expectsJson() ) {
+            return response()->json([
+                                        'success' => false,
+                                        'message' => 'فشل في اضافة التقرير',
+                                    ]);
+        }
+
+        return redirect()->route('consulting_office.reports_view_details', $order)->with('error', 'فشل في اضافة التقرير');
     }
 }
 

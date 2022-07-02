@@ -161,7 +161,7 @@
                                href="#notes"
                                role="tab">ملاحظات الجهات المشاركة</a>
                         </li>
-                        @if($order->hasFinalReport())
+                      {{--  @if($order->hasFinalReport())
                         <li class="nav-item">
                             <a class="nav-link px-3"
                                data-bs-toggle="tab"
@@ -173,7 +173,7 @@
                                 <span class="d-none d-sm-block">التقارير النهائية</span>
                             </a>
                         </li>
-                        @endif
+                        @endif--}}
                     </ul>
                 </div>
             </div>
@@ -200,12 +200,12 @@
                                             <i class="fa fa-arrow-down pe-2"></i>
                                             {{\App\Models\License::trans('download_for_service_provider')}}
                                         </a>
-                                        @if(in_array($order->status,[$order::FINAL_REPORT_APPROVED]))
+                                        {{--@if(in_array($order->status,[$order::FINAL_REPORT_APPROVED]))
                                         <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1 show-modal" href="{{route('licenses.attach_final_report_form', ['order'=>$order->id])}}">
                                             <i class="fa fa-arrow-down pe-2"></i>
                                             {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
                                         </a>
-                                        @endif
+                                        @endif--}}
                                         @if(intval($order->status) >= intval($order::FINAL_LICENSE_GENERATED))
                                         <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1" target="_blank" href="{{route('licenses.view_pdf_execution_license', ['order'=>$order->id])}}">
                                             <i class="fa fa-arrow-down pe-2"></i>
@@ -499,7 +499,7 @@
             @endforeach
         </div>
     </div>
-                @if($order->hasFinalReport())
+                {{--@if($order->hasFinalReport())
                 <div
                     class="tab-pane"
                     id="final_reports"
@@ -507,7 +507,7 @@
                 >
                     @include('CP.delivery.final_reports')
                 </div>
-                @endif
+                @endif--}}
     </div>
     </div>
     </div>
@@ -536,20 +536,6 @@
 
 @section('scripts')
     <script>
-        $(() => {
-            if (location.hash) {
-                let activeTab = document.querySelector("[href='" + location.hash + "']")
-                if (activeTab && activeTab.classList.contains('nav-link')) {
-                    document.querySelectorAll('.nav-link.active, .tab-pane.active')
-                        .forEach(x => x.classList.remove('active'))
-                    activeTab.classList.add('active')
-                    if ((activeTab = document.querySelector(location.hash))) {
-                        activeTab.classList.add('active')
-                    }
-                }
-            }
-        })
-
         /**
          * Show create license modal
          * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form

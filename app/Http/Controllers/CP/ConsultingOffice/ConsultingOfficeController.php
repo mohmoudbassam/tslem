@@ -51,6 +51,7 @@ class ConsultingOfficeController extends Controller
             ->whereOrderId($request->order_id)
             ->whereDate($request->from_date, $request->to_date)
             ->where('consulting_office_id', auth()->user()->id);
+
         return DataTables::of($order)
             ->addColumn('actions', function ($order) {
                 // $accept = '';
@@ -216,6 +217,30 @@ class ConsultingOfficeController extends Controller
             ->addColumn('actions', function ($report) {
                 $delete = '<a class="dropdown-item" onclick="deleteReport('.$report->id.')" href="javascript:;"><i class="fa fa-trash"></i>حذف  </a>';
                 $edit = '<a class="dropdown-item" href="'.route('consulting_office.report_edit_form', ['report' => $report->id]).'"><i class="fa fa-edit"></i>تعديل  التقرير  </a>';
+                $licenses = "";
+
+                $order = $report->order;
+                if( $order->status >= Order::PENDING_OPERATION ) {
+                    $_title = \App\Models\License::trans('download_for_service_provider');
+                    $_route = route('licenses.view_pdf', [ 'order' => $order->id ]);
+                    $view = <<<HTML
+    <a class="dropdown-item "  type="button"  href="{$_route}">
+        {$_title}
+    </a>
+HTML;
+                    $licenses .= $view;
+                }
+
+                if( $order->status >= Order::FINAL_LICENSE_GENERATED ) {
+                    $_title = \App\Models\License::trans('download_execution_license_for_service_provider');
+                    $_route = route('licenses.view_pdf_execution_license', [ 'order' => $order->id ]);
+                    $view = <<<HTML
+    <a class="dropdown-item "  type="button"  href="{$_route}">
+        {$_title}
+    </a>
+HTML;
+                    $licenses .= $view;
+                }
 
                 $element = '<div class="btn-group me-1 mt-2">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -225,6 +250,7 @@ class ConsultingOfficeController extends Controller
                                             <div class="dropdown-menu" style="">
                                                '.$delete.'
                                                '.$edit.'
+                                               '.$licenses.'
                                             </div>
                                         </div>';
                 return $element;
