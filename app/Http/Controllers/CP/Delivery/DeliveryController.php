@@ -151,7 +151,7 @@ class DeliveryController extends Controller
                     ->when(!is_null($request->query("to_date")), function($query) use ($request) {
                         $query->whereDate("created_at", "<=", $request->query("to_date"));
                     })
-                    ->with([ 'service_provider', 'designer' ])
+                    ->with([ 'service_provider', 'designer', 'contractor' ])
                     ->select("orders.*")
                     ->whereOrderId($request->order_id)
                     ->whereDesignerId($request->designer_id)
@@ -514,10 +514,10 @@ HTML;
                          ->addColumn('updated_at', function($order) {
                              return $order->updated_at->format('Y-m-d');
                          })->addColumn('order_status', function($order) {
-                return $order->order_status;
-            })
+                             return $order->order_status;
+                         })
                          ->setRowClass(fn(Order $o) => $o->isNewForTaslem() ? 'alert-info' : ($o->isBackFromWarning() ? 'alert-warning' : ''))
-                         ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_onlyraft_name_only ?? ''))
+                         ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_only ?? ''))
                          ->rawColumns([ 'actions' ])
                          ->make(true);
     }
