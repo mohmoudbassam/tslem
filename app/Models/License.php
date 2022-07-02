@@ -568,9 +568,9 @@ CODE;
         $type ??= $this->type;
         $data = false;
         if( $type === static::EXECUTION_TYPE ) {
-            $data = route('licenses.license_final_attachment_file', [ 'license' => $this ]);
+            $data = route('licenses.license_map_file', [ 'license' => $this ]);
         } elseif( $raft = $this->service_provider->getRaftCompanyBox() ) {
-            $data = route('qr_download_files', [ 'order' => $this->order->id ]);
+            $data = route('qr_download_files', [ 'order' => $this->order_id ]);
         }
 
         return $data ? QrCode::generate($data) : $data;

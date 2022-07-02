@@ -50,6 +50,7 @@ Route::prefix('fix')->group(function() {
             "تم رفض التصاميم من مكتب التسليم" => "logs.rejected-tsleem",
             "تم رفض الطلب من مكتب التصميم بسبب" => "logs.rejected-designer",
             "تهانينا, تم قبول طلبك من مكتب التصميم" => "logs.approved-designer",
+            "تهانينا، تم قبول طلبك من مكتب التصميم" => "logs.approved-designer",
             "تم اعتماد الطلب من مكتب التسليم" => "logs.approved-tsleem",
             "تم اعتماد الطلب من مكتب تسليم وبإنتظار باقي الجهات الحكومية" => "logs.approved-tsleem",
             "تم اخيار المشرف ومكتب المقاولات" => "logs.filled",
@@ -271,6 +272,9 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
              Route::get('view_final_attachment/{license}/file', [ LicenseController::class, 'license_final_attachment_file' ])
                   ->name('.license_final_attachment_file');
 
+             Route::get('view_map/{license}/file', [ LicenseController::class, 'license_map_file' ])
+                  ->name('.license_map_file');
+
              Route::get('order/{order}/attach-final-report-form', [ LicenseController::class, 'order_license_attach_final_report_form' ])
                   ->name('.attach_final_report_form');
              Route::post('order/{order}/attach-final-report', [ LicenseController::class, 'order_license_attach_final_report' ])
@@ -409,6 +413,8 @@ Route::middleware([ 'auth', 'is-file-uploaded' ])->group(function() {
     });
     Route::prefix('design-office')->name('design_office')->middleware([ 'design_office' ])->group(function() {
         Route::get('orders', [ DesignerOrderController::class, 'orders' ])->name('.orders');
+        Route::get('order_agreement_form/{order}', [ DesignerOrderController::class, 'order_agreement_form' ])->name('.order_agreement_form');
+        Route::post('order_agreement/{order}', [ DesignerOrderController::class, 'order_agreement' ])->name('.order_agreement');
         Route::get('', [ DesignerOrderController::class, 'list' ])->name('.list');
         Route::get('add-files/{order}', [ DesignerOrderController::class, 'add_files' ])->name('.add_files');
         Route::post('save_file', [ DesignerOrderController::class, 'save_file' ])->name('.save_file');

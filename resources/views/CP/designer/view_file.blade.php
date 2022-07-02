@@ -43,9 +43,11 @@
         .modal-backdrop.fade {
             display: initial !important;
         }
-        .fs-7{
+
+        .fs-7 {
             font-size: 1rem;
         }
+
         .nav-link {
             padding: 0.6rem 1rem 0.8rem;
         }
@@ -89,32 +91,32 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="details"
                              role="tabpanel">
-                             <table class="table table-bordered">
+                            <table class="table table-bordered">
                                 <tbody>
-                                    @if($designerNote && $order->isDesignReviewStatus())
+                                @if($designerNote && $order->isDesignReviewStatus())
                                     <tr>
                                         <td width="50%"><span class="bold">  سبب الرفض :</span> {!! nl2br($designerNote->note) !!}</td>
                                     </tr>
+                                @endif
+                                <tr>
+                                    <td width="50%"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</td>
+                                    <td width="50%"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</td>
+                                </tr>
+                                <tr>
+                                    @if($order->service_provider->raft_company_name)
+                                        <td width="50%"><span class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</td>
                                     @endif
-                                    <tr>
-                                        <td width="50%"><span class="bold">  التاريخ :</span> {{$order->created_at->format("Y-m-d")}}</td>
-                                        <td width="50%"><span class="bold">  رقم الطلب : </span>{{$order->identifier}}</td>
-                                    </tr>
-                                    <tr>
-                                        @if($order->service_provider->raft_company_name)
-                                        <td width="50%"><span  class="bold">مركز الخدمة :</span> {{ $order->service_provider->raft_company_name }}</td>
-                                        @endif
-                                        <td width="50%"><span class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td width="50%"><span class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</td>
-                                        <td width="50%"><span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</td>
-                                    </tr>
+                                    <td width="50%"><span class="bold">رقم هاتف مركز الخدمة :</span> {{$order->service_provider->phone}}</td>
+                                </tr>
+                                <tr>
+                                    <td width="50%"><span class="bold">البريد الإلكتروني بمركز الخدمة :</span> {{$order->service_provider->email}}</td>
+                                    <td width="50%"><span class="bold"> اسم مكتب التصميم :  </span>{{$order->designer->company_name}}</td>
+                                </tr>
                                 </tbody>
-                             </table>
+                            </table>
                             <div class="row mt-5">
-                                <div class="col-12 text-end">
-                                    @if($order->status == \App\Models\Order::PENDING)
+                                @if($order->status == \App\Models\Order::PENDING)
+                                    <div class="col-12 text-end">
 
                                         <a class="btn btn-primary"
                                            href="{{route('design_office.accept',['order'=>$order->id])}}">قبول
@@ -122,8 +124,24 @@
                                         <a class="btn btn-danger" id="reject-order-btn" data-order="{{ $order->id }}" href="#">
                                             رفض الطلب
                                         </a>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
+                                @if(intval($order->status) >= intval(\App\Models\Order::PENDING_OPERATION))
+                                    <div class="col-12 text-end">
+                                        <a id="license-type-1-button" class="btn btn-primary license-type-1-button mx-1" target="_blank" href="{{route('licenses.view_pdf', ['order'=>$order->id])}}">
+                                            <i class="fa fa-arrow-down pe-2"></i>
+                                            {{\App\Models\License::trans('download_for_service_provider')}}
+                                        </a>
+                                    </div>
+                                @endif
+                                @if(intval($order->status) >= intval(\App\Models\Order::FINAL_LICENSE_GENERATED))
+                                    <div class="col-12 text-end">
+                                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1" target="_blank" href="{{route('licenses.view_pdf_execution_license', ['order'=>$order->id])}}">
+                                            <i class="fa fa-arrow-down pe-2"></i>
+                                            {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="row">
@@ -185,16 +203,16 @@
                                                                                         <i class="fa fa-file-pdf fa-4x"></i>
                                                                                     </div>
                                                                                     <h5 class="list-group-item-heading">
-                                                                                            {{$files->real_name}}
+                                                                                        {{$files->real_name}}
                                                                                     </h5>
 
                                                                                 </div>
                                                                                 <div class="list-group-item">
                                                                                     <a class="btn btn-success w-100"
-                                                                                           href="{{route('design_office.download',['id'=>$files->id])}}">
-                                                                                            <i class="fa fa-arrow-down"></i>
-                                                                                            تنزيل
-                                                                                        </a>
+                                                                                       href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                                        <i class="fa fa-arrow-down"></i>
+                                                                                        تنزيل
+                                                                                    </a>
                                                                                 </div>
                                                                             </div>
 
@@ -211,13 +229,13 @@
                                                                                         <i class="fa fa-file-pdf fa-4x"></i>
                                                                                     </div>
                                                                                     <h5 class="list-group-item-heading">
-                                                                                            {{$files->real_name}}
+                                                                                        {{$files->real_name}}
                                                                                     </h5>
 
                                                                                 </div>
                                                                                 <div class="list-group-item">
                                                                                     <a class="btn btn-success w-100"
-                                                                                        href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                                       href="{{route('design_office.download',['id'=>$files->id])}}">
                                                                                         <i class="fa fa-arrow-down"></i>
                                                                                         تنزيل
                                                                                     </a>
@@ -237,16 +255,16 @@
                                                                                         <i class="fa fa-file-pdf fa-4x"></i>
                                                                                     </div>
                                                                                     <h5 class="list-group-item-heading">
-                                                                                            {{$files->real_name}}
+                                                                                        {{$files->real_name}}
                                                                                     </h5>
 
                                                                                 </div>
                                                                                 <div class="list-group-item">
                                                                                     <a class="btn btn-success w-100"
-                                                                                           href="{{route('design_office.download',['id'=>$files->id])}}">
-                                                                                            <i class="fa fa-arrow-down"></i>
-                                                                                            تنزيل
-                                                                                        </a>
+                                                                                       href="{{route('design_office.download',['id'=>$files->id])}}">
+                                                                                        <i class="fa fa-arrow-down"></i>
+                                                                                        تنزيل
+                                                                                    </a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -338,13 +356,59 @@
             </div>
         </div>
     @endif
+
+    <div class="modal fade" id="agreement-modal" tabindex="-1" role="dialog" aria-labelledby="agreement-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agreement-modal-title">@lang('models/order.agreement_name')</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row my-4" id="agreement-modal-row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-agreement-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 
 
-@section("scripts")
+@push("js")
     <script>
+        /**
+         * Show agreement modal
+         * @see \App\Http\Controllers\CP\Designer\DesignerOrderController::order_agreement_form
+         */
+        @if($order->isPendingOperation() && !$order->agreed)
+        $(() => {
+            showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
+                let modal = $('#agreement-modal');
+                if (data.success) {
+                    modal.html(data.page)
+                    modal.modal({backdrop: 'static', keyboard: false})
+                    modal.modal('show')
+                } else {
+                    showAlertMessage('error', '@lang('constants.unknown_error')')
+                }
+                KTApp.unblockPage()
+            }, '#agreement-modal')
+        })
+        @endif
+
         $(function () {
+
+            $(document).on("hide.bs.modal", function (e) {
+                if (document.querySelector('#agreed_checkbox').checked) {
+                    e.preventDefault();
+                    location.reload();
+                    return false;
+                }
+            });
+
             const rejectOrderButton = $("#reject-order-btn");
             rejectOrderButton.on("click", function (event) {
                 event.preventDefault();
@@ -391,4 +455,4 @@
             });
         });
     </script>
-@endsection
+@endpush

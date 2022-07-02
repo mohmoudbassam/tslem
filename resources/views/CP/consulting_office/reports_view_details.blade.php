@@ -70,7 +70,7 @@
                         <span class="d-none d-sm-block">تفاصيل الطلب</span>
                     </a>
                 </li>
-                @if($order->is_accepted(auth()->user()))
+                {{--@if($order->is_accepted(auth()->user()))
                     <li class="nav-item">
                         <a
                             class="nav-link"
@@ -85,7 +85,7 @@
                             <span class="d-none d-sm-block">@lang('attributes.reports')</span>
                         </a>
                     </li>
-                @endif
+                @endif--}}
             </ul>
 
             <!-- Tab panes -->
@@ -95,6 +95,20 @@
         <div class="card-body">
             <!-- Nav tabs -->
 
+            @if(intval($order->status) >= intval($order::PENDING_OPERATION))
+                <div class="col-md-12 my-3 text-end">
+                    <a id="license-type-2-button" class="btn btn-primary license-type-1-button mx-1" target="_blank" href="{{route('licenses.view_pdf', ['order' => $order->id])}}">
+                        <i class="fa fa-arrow-down pe-2"></i>
+                        {{\App\Models\License::trans('download_for_service_provider')}}
+                    </a>
+                    @if(intval($order->status) >= intval($order::FINAL_LICENSE_GENERATED))
+                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1" target="_blank" href="{{route('licenses.view_pdf_execution_license', ['order'=>$order->id])}}">
+                            <i class="fa fa-arrow-down pe-2"></i>
+                            {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
+                        </a>
+                    @endif
+                </div>
+            @endif
             <div class="tab-content p-3 text-muted">
                 <div
                     class="tab-pane active"
@@ -133,16 +147,16 @@
                         </body>
                     </table>
 
+                   {{-- @if(!$order->isContractorFinalReportApproved() && $order->userCanAttachFinalReport())
                     <div class="row">
-                        @if(!$order->isContractorFinalReportApproved() && $order->userCanAttachFinalReport())
                             <div class="bold border col-md-12 my-3 p-2 rounded-start text-start {{($contractor_note = $order->getContractorFinalReportNote()) ? "bg-soft-danger border-danger text-danger " : " "}}">
                                 {{$contractor_note ?: '-'}}
                                 <span class="float-end">
                                 @include('CP.order.final_report_button', ['order' => $order, 'has_file' => $order->hasContractorFinalReportPath()])
                                         </span>
                             </div>
-                        @endif
                     </div>
+                    @endif--}}
 
                     <div class="row">
 
@@ -281,7 +295,7 @@
                     </div>
 
                 </div>
-
+{{--
                 @if($order->is_accepted(auth()->user()))
                     <div
                         class="tab-pane"
@@ -290,19 +304,63 @@
                     >
                         @include('CP.consulting_office.partials.reports',['order' => $order,'title' => __('attributes.reports')])
                     </div>
-                @endif
+                @endif--}}
             </div>
         </div>
 
 
     </div>
 
+    <div class="modal fade" id="agreement-modal" tabindex="-1" role="dialog" aria-labelledby="agreement-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="agreement-modal-title">@lang('models/order.agreement_name')</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row my-4" id="agreement-modal-row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="close-agreement-modal" class="btn btn-secondary" data-dismiss="modal">إخفاء</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('js')
     <script>
-        $.fn.dataTable.ext.errMode = 'none'
+        /**
+         * Show agreement modal
+         * @see \App\Http\Controllers\CP\Designer\DesignerOrderController::order_agreement_form
+         */
+        @if($order->isPendingOperation() && !$order->agreed)
+        $(() => {
+            showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
+                let modal = $('#agreement-modal');
+                if (data.success) {
+                    modal.html(data.page)
+                    modal.modal({backdrop: 'static', keyboard: false})
+                    modal.modal('show')
+                } else {
+                    showAlertMessage('error', '@lang('constants.unknown_error')')
+                }
+                KTApp.unblockPage()
+            }, '#agreement-modal')
+        })
+        @endif
+
         $(function () {
+            $(document).on("hide.bs.modal", function (e) {
+                if (document.querySelector('#agreed_checkbox').checked) {
+                    e.preventDefault();
+                    location.reload();
+                    return false;
+                }
+            });
+
+            $.fn.dataTable.ext.errMode = 'none'
             $('#items_table').DataTable({
                 'dom': 'tpi',
                 'searching': false,

@@ -76,7 +76,7 @@
                         <span class="d-none d-sm-block">تفاصيل الطلب</span>
                     </a>
                 </li>
-                @if($order->is_accepted(auth()->user()))
+                {{--@if($order->is_accepted(auth()->user()))
                     <li class="nav-item">
                         <a
                             class="nav-link"
@@ -90,7 +90,7 @@
                             <span class="d-none d-sm-block">التقارير</span>
                         </a>
                     </li>
-                @endif
+                @endif--}}
             </ul>
             <!-- Tab panes -->
         </div>
@@ -98,6 +98,27 @@
     <div class="card">
         <div class="card-body">
             <!-- Nav tabs -->
+
+            @if(intval($order->status) >= intval($order::PENDING_OPERATION))
+                <div class="col-md-12 my-3 text-end">
+                    <a id="license-type-2-button" class="btn btn-primary license-type-1-button mx-1" target="_blank" href="{{route('licenses.view_pdf', ['order' => $order->id])}}">
+                        <i class="fa fa-arrow-down pe-2"></i>
+                        {{\App\Models\License::trans('download_for_service_provider')}}
+                    </a>
+                   {{-- @if(in_array($order->status,[$order::FINAL_REPORT_APPROVED]))
+                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1 show-modal" href="{{route('licenses.attach_final_report_form', ['order'=>$order->id])}}">
+                            <i class="fa fa-arrow-down pe-2"></i>
+                            {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
+                        </a>
+                    @endif--}}
+                    @if(intval($order->status) >= intval($order::FINAL_LICENSE_GENERATED))
+                        <a id="license-type-2-button" class="btn btn-primary license-type-2-button mx-1" target="_blank" href="{{route('licenses.view_pdf_execution_license', ['order'=>$order->id])}}">
+                            <i class="fa fa-arrow-down pe-2"></i>
+                            {{\App\Models\License::trans('download_execution_license_for_service_provider')}}
+                        </a>
+                    @endif
+                </div>
+            @endif
 
             <div class="tab-content p-3 text-muted">
                 <div
@@ -137,6 +158,7 @@
                     </body>
                 </table>
 
+{{--
                     <div class="row">
                         @if(!$order->isContractorFinalReportApproved() && $order->userCanAttachFinalReport())
                         <div class="bold border col-md-12 my-3 p-2 rounded-start text-start {{($contractor_note = $order->getContractorFinalReportNote()) ? "bg-soft-danger border-danger text-danger " : " "}}">
@@ -147,6 +169,7 @@
                         </div>
                         @endif
                     </div>
+--}}
 
                     <div class="row">
 
@@ -311,19 +334,19 @@
 
                 </div>
 
-                    @if($order->is_accepted(auth()->user()))
-                    <div
-                        class="tab-pane"
-                        id="reports"
-                        role="tabpanel"
-                    >
-                        @include('CP.contractors.reports_list', [
-                        'reports' => $order->contractor_report,
-                        'order'   => $order,
-                        'title'   => __("attributes.order_reports"),
-                        ])
-                    </div>
-                @endif
+                {{--@if($order->is_accepted(auth()->user()))
+                <div
+                    class="tab-pane"
+                    id="reports"
+                    role="tabpanel"
+                >
+                    @include('CP.contractors.reports_list', [
+                    'reports' => $order->contractor_report,
+                    'order'   => $order,
+                    'title'   => __("attributes.order_reports"),
+                    ])
+                </div>
+                @endif--}}
 
             </div>
         </div>

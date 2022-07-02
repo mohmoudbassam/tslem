@@ -153,12 +153,26 @@ class OrdersController extends Controller
                     $add_contractor_and_consulting_office = '<a class="dropdown-item" onclick="showModal(\'' . route('services_providers.add_constructor_form', ['order' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-plus mx-2"></i>إضافة استشاري ومقاول</a>';
                 }
 
-                if ($order->hasLicense()) {
-                    $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_for_service_provider') . '</a>';
+                if( $order->status >= Order::PENDING_OPERATION ) {
+                    $_title = \App\Models\License::trans('download_for_service_provider');
+                    $_route = route('licenses.view_pdf', [ 'order' => $order->id ]);
+                    $view = <<<HTML
+    <a class="dropdown-item "  type="button"  href="{$_route}">
+        {$_title}
+    </a>
+HTML;
+                    $actions .= $view;
                 }
 
-                if ( $order->execution_license()->exists() ) {
-                    $actions .= '<a class="dropdown-item" href="' . route('licenses.view_pdf_execution_license', ['order' => $order->id]) . '" target="_blank"><i class="fa fa-download mx-2"></i>' . License::trans('download_execution_license_for_service_provider') . '</a>';
+                if( $order->status >= Order::FINAL_LICENSE_GENERATED ) {
+                    $_title = \App\Models\License::trans('download_execution_license_for_service_provider');
+                    $_route = route('licenses.view_pdf_execution_license', [ 'order' => $order->id ]);
+                    $view = <<<HTML
+    <a class="dropdown-item "  type="button"  href="{$_route}">
+        {$_title}
+    </a>
+HTML;
+                    $actions .= $view;
                 }
 
                 if (empty($add_designer) && empty($add_contractor_and_consulting_office) && empty($actions)) {

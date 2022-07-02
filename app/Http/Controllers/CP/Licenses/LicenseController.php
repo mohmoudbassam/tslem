@@ -275,7 +275,7 @@ class LicenseController extends Controller
                                    }
 
                                    return $q;
-                               });
+                               })->orWhereHas('order', fn($q)=>$q->where('identifier', request('name')));
                            });
 
         return DataTables::of($licenses)
@@ -407,6 +407,7 @@ HTML;
         optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
 
         $order->status = Order::PENDING_OPERATION;
+        $filename = null;
         $order->generateLicenseFile($filename, 1, true, true);
         $order->save();
         $order->saveLog("license-ready");
@@ -515,6 +516,7 @@ HTML;
               ->save();
 
         $order->status = Order::FINAL_LICENSE_GENERATED;
+        $filename = null;
         $order->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
         $order->save();
 
@@ -702,6 +704,16 @@ HTML;
         return Response::file($path, [
             'Content-Type' => File::mimeType($path),
             'Content-Disposition' => 'inline; filename="' . "الملف." . File::extension($path) . '"',
+        ]);
+    }
+    public function license_map_file(Request $request, License $license)
+    {
+        $filename = $license->map_path;
+        $path = License::disk()->path($filename);
+
+        return Response::file($path, [
+            'Content-Type' => File::mimeType($path),
+            'Content-Disposition' => 'inline; filename="' . "الخريطة." . File::extension($path) . '"',
         ]);
     }
 }
