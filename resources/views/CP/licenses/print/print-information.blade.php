@@ -17,11 +17,10 @@
 
     <tr>
         <td rowspan="5">
-            @if($model->map_path)
-                <!-- <img src="{{$model->map_path}}" class="my-2 map-image img" width="300" height="300"> -->
-                <img src='{{public_path("/storage/orders/licenses/{$model->map_path}")}}' class="my-2 map-image img" width="300">
+           @if($model->map_path)
+                <img src="{{$model->map_path}}" class="my-2 map-image img" width="300" height="300">
+                <!-- <img src='{{public_path("/storage/orders/licenses/{$model->map_path}")}}' class="my-2 map-image img" width="300"> -->
             @endif
-            {{public_path("/storage/orders/licenses/{$model->map_path}")}}
         </td>
         <td>{{$model->box_name}}</td>
         <td>رقم المربع</td>
