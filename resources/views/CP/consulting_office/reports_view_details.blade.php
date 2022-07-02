@@ -109,7 +109,7 @@
                     @endif
 
                     @if($order->isPendingOperation() && !$order->agreed)
-                        <a id="agreement-button" class="btn btn-outline-info agreement-button" href="#">
+                        <a id="agreement-button" class="btn btn-outline-success agreement-button" href="#">
                             <i class="fa fa-plus pe-2"></i>
                             {{\App\Models\Order::trans('agreement_name')}}
                         </a>
