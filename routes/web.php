@@ -50,6 +50,7 @@ Route::prefix('fix')->group(function() {
             "تم رفض التصاميم من مكتب التسليم" => "logs.rejected-tsleem",
             "تم رفض الطلب من مكتب التصميم بسبب" => "logs.rejected-designer",
             "تهانينا, تم قبول طلبك من مكتب التصميم" => "logs.approved-designer",
+            "تهانينا، تم قبول طلبك من مكتب التصميم" => "logs.approved-designer",
             "تم اعتماد الطلب من مكتب التسليم" => "logs.approved-tsleem",
             "تم اعتماد الطلب من مكتب تسليم وبإنتظار باقي الجهات الحكومية" => "logs.approved-tsleem",
             "تم اخيار المشرف ومكتب المقاولات" => "logs.filled",
