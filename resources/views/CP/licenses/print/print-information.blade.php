@@ -5,7 +5,7 @@
 <table style='width: 100%;' cellspacing="0" cellpadding="0">
     <tbody align="center">
     <tr >
-{{--        <td colspan="2" width="85%">{{$model->raft_company_name}}</td>--}}
+        <td colspan="2" width="85%">{{$model->raft_company_name}}</td>
         <td width="15%">اسم الجهة</td>
     </tr>
 
