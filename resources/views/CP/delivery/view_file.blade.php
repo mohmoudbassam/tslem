@@ -554,9 +554,30 @@
          */
         @if($order->licenseNeededForDelivery())
         $(() => {
+            showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}', null, '#view-user-files-modal')
+        })
+        @endif
+
+        /**
+         * Show agreement modal
+         * @see \App\Http\Controllers\CP\Designer\DesignerOrderController::order_agreement_form
+         */
+        @if($order->isPendingOperation() && !$order->agreed)
+        $(() => {
             $('.agreement-button').click(function (e) {
                 e.preventDefault()
-                showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}', null, '#view-user-files-modal')
+
+                showModal('{{route('design_office.order_agreement_form', ['order'=>$order->id])}}', function (data) {
+                    let modal = $('#agreement-modal');
+                    if (data.success) {
+                        modal.html(data.page)
+                        modal.modal({backdrop: 'static', keyboard: false})
+                        modal.modal('show')
+                    } else {
+                        showAlertMessage('error', '@lang('constants.unknown_error')')
+                    }
+                    KTApp.unblockPage()
+                }, '#agreement-modal')
 
                 return false;
             })
