@@ -695,6 +695,7 @@ class Order extends Model
         ],
         bool $overwrite = true
     ) {
+        $filename = null;
         return $this->generateLicenseFile($filename, $type, $save, $overwrite, $limit, $pdf_options);
     }
 
@@ -771,6 +772,7 @@ class Order extends Model
 
         if( $save ) {
             $this->save();
+            $filename = null;
             $this->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
 
             return $this->refresh();

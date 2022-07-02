@@ -407,6 +407,7 @@ HTML;
         optional($order->service_provider)->notify(new OrderNotification($notificationText, auth()->user()->id));
 
         $order->status = Order::PENDING_OPERATION;
+        $filename = null;
         $order->generateLicenseFile($filename, 1, true, true);
         $order->save();
         $order->saveLog("license-ready");
@@ -515,6 +516,7 @@ HTML;
               ->save();
 
         $order->status = Order::FINAL_LICENSE_GENERATED;
+        $filename = null;
         $order->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
         $order->save();
 

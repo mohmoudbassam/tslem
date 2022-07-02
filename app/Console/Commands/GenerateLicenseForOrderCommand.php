@@ -56,6 +56,7 @@ class GenerateLicenseForOrderCommand extends Command
         if( $order_id ) {
             /** @var \App\Models\Order $order */
             $order = Order::findOrFail($order_id);
+            $filename = null;
             $order->generateLicenseFile($filename, $license_type, true, true);
             if( !$filename ) {
                 $this->error("Error!");
@@ -73,6 +74,7 @@ class GenerateLicenseForOrderCommand extends Command
                 try {
                     /** @var Order $order */
                     if( $order = $license->order ) {
+                        $filename = null;
                         $order->generateLicenseFile($filename, $license->type, true, true);
                     }
                 } catch(\Exception $exception) {

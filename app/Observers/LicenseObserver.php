@@ -33,10 +33,12 @@ class LicenseObserver
         /** @var \App\Models\Order $order */
         $order = optional($license->order);
         if( $order->status >= Order::PENDING_OPERATION ) {
+            $filename1 = null;
             $order->generateLicenseFile($filename1, License::ADDON_TYPE, true, true);
         }
 
         if( $order->status >= Order::FINAL_LICENSE_GENERATED ) {
+            $filename2 = null;
             $order->generateLicenseFile($filename2, License::EXECUTION_TYPE, true, true);
         }
     }

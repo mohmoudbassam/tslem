@@ -42,11 +42,13 @@ class RegenerateLicensesCommand extends Command
 
         $addons = Order::where('status', '>=', Order::PENDING_OPERATION)->get()
                        ->each(function(Order $order) {
+                           $filename = null;
                            $order->generateLicenseFile($filename, License::ADDON_TYPE, true, true);
                        });
 
         $ex = Order::where('status', '>=', Order::FINAL_LICENSE_GENERATED)->get()
                    ->each(function(Order $order) {
+                       $filename = null;
                        $order->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
                    });
         $this->info(
