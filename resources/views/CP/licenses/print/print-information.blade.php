@@ -5,7 +5,7 @@
 <table style='width: 100%;' cellspacing="0" cellpadding="0">
     <tbody align="center">
     <tr >
-        <td colspan="2" width="85%">{{$model->raft_company_name}}</td>
+{{--        <td colspan="2" width="85%">{{$model->raft_company_name}}</td>--}}
         <td width="15%">اسم الجهة</td>
     </tr>
 
@@ -17,10 +17,10 @@
 
     <tr>
         <td rowspan="5">
-            @if($model->map_path)
-                {{-- <img src="{{$model->map_path}}" class="my-2 map-image img" width="300" height="300"> --}}
+            {{--@if($model->map_path)
+                --}}{{-- <img src="{{$model->map_path}}" class="my-2 map-image img" width="300" height="300"> --}}{{--
                 <img src='{{public_path("/storage/orders/licenses/{$model->map_path}")}}' class="my-2 map-image img" width="300">
-            @endif
+            @endif--}}
         </td>
         <td>{{$model->box_name}}</td>
         <td>رقم المربع</td>

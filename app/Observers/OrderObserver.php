@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\License;
 use App\Models\Order;
 use App\Notifications\OrderNotification;
 
@@ -44,6 +45,14 @@ class OrderObserver
      */
     public function saved(Order $order)
     {
+        /** @var \App\Models\Order $order */
+        if( $order->status >= Order::PENDING_OPERATION ) {
+            $order->generateLicenseFile($filename1, License::ADDON_TYPE, true, true);
+        }
+
+        if( $order->status >= Order::FINAL_LICENSE_GENERATED ) {
+            $order->generateLicenseFile($filename2, License::EXECUTION_TYPE, true, true);
+        }
     }
 
     /**

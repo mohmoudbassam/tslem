@@ -49,10 +49,19 @@ class Order extends Model
         'consulting_office_id',
         'waste_contractor',
         'license_paths',
+        'agreed',
     ];
 
     protected $casts = [
         'license_paths' => 'array',
+        'agreed' => 'boolean',
+    ];
+
+    public static $RULES = [
+        'agreed' => [
+            'boolean',
+            'required',
+        ],
     ];
 
     public function license()
@@ -395,6 +404,30 @@ class Order extends Model
         return $this->status === static::ORDER_APPROVED;
     }
 
+    public function isPendingOperation()
+    {
+        return $this->status === static::PENDING_OPERATION;
+    }
+
+    public static function getRules(?string $constant = null)
+    {
+        $constant = str_ireplace('$', '', $constant ?: '$RULES');
+        $rules = [];
+        $_rules = static::$$constant ?? static::$RULES;
+
+        foreach( $_rules as $column => $_rules ) {
+            $rules[ $column ] = [];
+            if( in_array('required', $_rules) ) {
+                $rules[ $column ][ 'required' ] = true;
+            }
+            if( in_array('nullable', $_rules) ) {
+                $rules[ $column ][ 'required' ] = false;
+            }
+        }
+
+        return $rules;
+    }
+
     public function hasContractorFinalReportNote(): bool
     {
         return (bool) $this->getContractorFinalReportNote();
@@ -692,7 +725,7 @@ class Order extends Model
     public function notifyChanges($changes, bool $add_order_identifier = true)
     {
         $NotificationText = $changes . ($add_order_identifier ? ' لطلب  #' . $this->identifier : '');
-        $this->saveLog( $changes);
+        $this->saveLog($changes);
         optional($this->service_provider)->notify(new OrderNotification($NotificationText, $user_id = currentUserId()));
 
         $getTasleemUsers = \App\Models\User::where('type', 'Delivery')->get();
@@ -716,6 +749,32 @@ class Order extends Model
         $_text = static::trans("logs." . value($text));
         $text = $_text === "logs.{$text}" ? static::trans($text) : $_text;
         save_logs($this, $user_id ?? currentUserId(), $text);
+
+        return $this;
+    }
+
+    /**
+     * @param bool $save
+     *
+     * @return self
+     */
+    public function agree(bool $save = true): self
+    {
+        $this->getLicenseOrCreate()
+             ->fill([
+                        'type' => License::EXECUTION_TYPE,
+                    ])
+             ->save();
+
+        $this->agreed = true;
+        $this->status = Order::FINAL_LICENSE_GENERATED;
+
+        if( $save ) {
+            $this->save();
+            $this->generateLicenseFile($filename, License::EXECUTION_TYPE, true, true);
+
+            return $this->refresh();
+        }
 
         return $this;
     }

@@ -275,7 +275,7 @@ class LicenseController extends Controller
                                    }
 
                                    return $q;
-                               });
+                               })->orWhereHas('order', fn($q)=>$q->where('identifier', request('name')));
                            });
 
         return DataTables::of($licenses)
@@ -702,6 +702,16 @@ HTML;
         return Response::file($path, [
             'Content-Type' => File::mimeType($path),
             'Content-Disposition' => 'inline; filename="' . "الملف." . File::extension($path) . '"',
+        ]);
+    }
+    public function license_map_file(Request $request, License $license)
+    {
+        $filename = $license->map_path;
+        $path = License::disk()->path($filename);
+
+        return Response::file($path, [
+            'Content-Type' => File::mimeType($path),
+            'Content-Disposition' => 'inline; filename="' . "الخريطة." . File::extension($path) . '"',
         ]);
     }
 }
