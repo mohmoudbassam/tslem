@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Helpers\Calendar;
 use App\Traits\TModelTranslation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -21,13 +23,13 @@ class NewsArticle extends Model
      * @var \string[][]
      */
     public static $RULES = [
-        'title' => ['required'],
-        'image' => ['array'],
+        'title' => [ 'required' ],
+        'image' => [ 'array' ],
         // 'image.*' => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:5000'],
-        'body' => ['required'],
-        'is_published' => ['nullable'],
-        'user_id' => ['nullable'],
-        'published_at' => ['nullable']
+        'body' => [ 'required' ],
+        'is_published' => [ 'nullable' ],
+        'user_id' => [ 'nullable' ],
+        'published_at' => [ 'nullable' ],
     ];
     /**
      * @var string
@@ -42,7 +44,7 @@ class NewsArticle extends Model
         'user_id',
         'created_at',
         'is_published',
-        'published_at'
+        'published_at',
     ];
     /**
      * @var mixed
@@ -53,7 +55,7 @@ class NewsArticle extends Model
         'user_id',
         'created_at',
         'is_published',
-        'published_at'
+        'published_at',
     ];
     /**
      * The attributes that are mass assignable.
@@ -66,7 +68,7 @@ class NewsArticle extends Model
         'is_published',
         'sort_order',
         'user_id',
-        'published_at'
+        'published_at',
     ];
     /**
      * The attributes that should be cast.
@@ -79,7 +81,13 @@ class NewsArticle extends Model
         'is_published' => 'boolean',
         'sort_order' => 'integer',
         'user_id' => 'integer',
-        'published_at' => 'date'
+        'published_at' => 'date',
+    ];
+
+    protected $dateFormat = "Y/m/d H:i:s";
+
+    protected $dates = [
+        'published_at',
     ];
 
     /**
@@ -90,10 +98,10 @@ class NewsArticle extends Model
     public static function getIndexColumns($with_extras = false)
     {
         $results = collect(\App\Models\NewsArticle::trans('fields'))
-            ->reject(fn ($v, $k) => !in_array($k, static::$LIST_COLUMNS))
+            ->reject(fn($v, $k) => !in_array($k, static::$LIST_COLUMNS))
             ->all();
-        if ($with_extras) {
-            foreach (__('general.datatable.fields') as $field) {
+        if( $with_extras ) {
+            foreach( __('general.datatable.fields') as $field ) {
                 $results[] = $field;
             }
         }
@@ -109,26 +117,26 @@ class NewsArticle extends Model
      */
     public static function getDatatableColumns($as_json = false, $with_extras = false)
     {
-        $makeColumn = function ($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
+        $makeColumn = function($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
             $result = [
                 'name' => $name = value($name),
-                'data' =>  is_null($data = value($data)) ? $name : $data,
+                'data' => is_null($data = value($data)) ? $name : $data,
                 'className' => $className = value($className),
                 'orderable' => value($orderable) ?? false //ends_with($name, '_id'),
             ];
-            if (!is_null($render)) {
-                $result['render'] = $render;
+            if( !is_null($render) ) {
+                $result[ 'render' ] = $render;
             }
 
             return $result;
         };
         $columns = [];
-        foreach (static::getIndexColumns() as $column => $label) {
+        foreach( static::getIndexColumns() as $column => $label ) {
             $orderable = in_array($column, static::$LIST_COLUMNS_ORDERABLE);
             $columns[] = $makeColumn($column, $orderable);
         }
-        if ($with_extras) {
-            foreach (__('general.datatable.fields') as $field => $label) {
+        if( $with_extras ) {
+            foreach( __('general.datatable.fields') as $field => $label ) {
                 $orderable = in_array($field, static::$LIST_COLUMNS_ORDERABLE);
                 $columns[] = $makeColumn($field, $orderable);
             }
@@ -145,8 +153,8 @@ class NewsArticle extends Model
     public static function optionsFor($column)
     {
         $column = value($column);
-        if ($column === 'is_published') {
-            return [0 => trans('general.no'), 1 => trans('general.yes')];
+        if( $column === 'is_published' ) {
+            return [ 0 => trans('general.no'), 1 => trans('general.yes') ];
         }
 
         return [];
@@ -158,13 +166,13 @@ class NewsArticle extends Model
     public static function getRules()
     {
         $rules = [];
-        foreach (static::$RULES as $column => $_rules) {
-            $rules[$column] = [];
-            if (in_array('required', $_rules)) {
-                $rules[$column]['required'] = true;
+        foreach( static::$RULES as $column => $_rules ) {
+            $rules[ $column ] = [];
+            if( in_array('required', $_rules) ) {
+                $rules[ $column ][ 'required' ] = true;
             }
-            if (in_array('nullable', $_rules)) {
-                $rules[$column]['required'] = false;
+            if( in_array('nullable', $_rules) ) {
+                $rules[ $column ][ 'required' ] = false;
             }
         }
 
@@ -187,7 +195,7 @@ class NewsArticle extends Model
      */
     public function addImagePath($file, bool $save = false)
     {
-        if ($full_path = $file->store('', ['disk' => static::$DISK])) {
+        if( $full_path = $file->store('', [ 'disk' => static::$DISK ]) ) {
             return $full_path ? static::disk()->url($full_path) : "";
         }
 
@@ -210,6 +218,20 @@ class NewsArticle extends Model
         return $this->user()->value('name');
     }
 
+    public function getPublishedAtAttribute($value)
+    {
+        $value ??= data_get($this->attributes, 'published_at') ?? data_get($this->attributes, 'created_at');
+        $value = $value ? Carbon::parse($value) : null;
+
+        return $value ? $value->rawFormat(str_before($this->getDateFormat(), ' ') ?: 'Y-m-d') : null;
+    }
+
+    public function getHijriPublishedAtAttribute()
+    {
+        return Calendar::make(str_before($this->getDateFormat(), ' '))
+                       ->hijriDate($this->published_at ?: $this->created_at);
+    }
+
     /**
      * @return bool
      */
@@ -226,7 +248,7 @@ class NewsArticle extends Model
     public function togglePublish(bool $save = false)
     {
         $this->is_published = !$this->isPublished();
-        if ($save) {
+        if( $save ) {
             $this->save();
             $this->refresh();
         }

@@ -149,7 +149,7 @@
                                 العنوان: {{ $model->title }}
                             </div>
                             <div class="col-lg-12 pb-4">
-                                تاريخ النشر: {{ date('Y/m/d',strtotime($model['published_at'])) }}
+                                تاريخ النشر: {{ $model->hijri_published_at }}
                             </div>
                             <div class="col-lg-12">
                                 {!! $model->body !!}

@@ -144,7 +144,7 @@
                                     <a href="{{ route('NewsArticles.article', ['news_article' => $item->id]) }}">
                                         <h5 class="card-title pt-4">{{ $item['title'] }}</h5>
                                     </a>
-                                    <p class="card-text"> {{ date('Y/m/d',strtotime($item['published_at'])) }}</p>
+                                    <p class="card-text"> {{ $item->hijri_published_at }}</p>
                                 </div>
                             </div>
                         </div>
