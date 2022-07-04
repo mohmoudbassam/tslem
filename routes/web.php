@@ -158,6 +158,7 @@ Route::get('t', function() {
 
 Route::get('/', [ SiteController::class, 'getHome' ])->name('public');
 Route::get('guide/{guideType}', [ SiteController::class, 'getGuide' ])->name('guide');
+Route::get('page/{pageSlug}', [ SiteController::class, 'getPage' ])->name('page');
 
 Route::get('login', [ LoginController::class, 'index' ])->name('login_page');
 Route::Post('login', [ LoginController::class, 'login' ])->name('login');

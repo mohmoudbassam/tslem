@@ -114,4 +114,17 @@ class SiteController extends Controller
         return view("guide",$data);
     }
 
+    public function getPage($pageSlug){
+        $data = $this->getMainData();
+        switch($pageSlug){
+            case 'faq':
+                return view("page_faq",$data);
+            break;
+            default:
+                abort(404);
+            break;
+        }
+        
+    }
+
 }
