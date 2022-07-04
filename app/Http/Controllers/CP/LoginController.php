@@ -165,7 +165,7 @@ class LoginController extends Controller
                 'avg'                 => $avg = $location->avg,
                 'box_count_to_string' => __('replace.value_from', ['value' => $box, 'from' => $avg]),
                 'x'                   => $location->name,
-                'y'                   => $avg && $box ? (round($avg / $box,1) ?: 0.1) : 0.1,
+                'y'                   => $avg && $box ? (round(($box*100) / $avg ,1) ?: 0.1) : 0.1,
                 //'y'         => $box,
             ]);
         //dd($data['bar']);
