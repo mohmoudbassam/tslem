@@ -634,7 +634,8 @@ class Order extends Model
         ]
     )
     {
-        $license = $this->license;
+        $license = $this->getLicenseOrCreate();
+
         $filename ??= "License-{$license->id}-{$type}.pdf";
         $pdf = $this->loadSnappyLicense($type, $limit, $pdf_options);
 
