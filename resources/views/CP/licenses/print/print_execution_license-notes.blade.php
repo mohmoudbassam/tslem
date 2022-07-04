@@ -4,8 +4,13 @@
     <tr>
         <td>
             <p>
+<<<<<<< HEAD
 تمت الأعمال بموجب رخصة الاضافات رقم ({{$model->id_label}})، وتاريخ
 &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;14 هـ، والتقرير النهائي للمكتب الاستشاري المشرف على التنفيذ .....................
+=======
+تمت الأعمال بموجب رخصة الاضافات رقم ({{str_pad($model->id, 4, '0', STR_PAD_LEFT)}})، وتاريخ
+&nbsp;&nbsp;&nbsp;{{ Hijrian::hijri($model->date)->format('Y/m/d') }} هـ، والتقرير النهائي للمكتب الاستشاري المشرف على التنفيذ {{optional($model->order)->consulting->company_name ?? ''}}
+>>>>>>> 735c468d7fea5493ffbe0fea3c002f4e86ace68b
             </p>
         </td>
     </tr>

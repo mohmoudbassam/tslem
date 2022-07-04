@@ -3,6 +3,7 @@
     الطلبات
 @endsection
 @section('style')
+
     <style>
         .close {
             color: #fff !important;
