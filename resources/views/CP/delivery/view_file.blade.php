@@ -136,9 +136,9 @@
         </div>
     </div>
 
-    <div class="row">
+{{--    <div class="row">
         <div class="col-12">
-            @if($order->licenseNeededForDelivery())
+            @if($order->isDesignApproved())
                 <div class="btn-group btn-group-justified">
                     <a id="agreement-button" class="btn btn-primary agreement-button" href="#">
                         <i class="fa fa-plus pe-2"></i>
@@ -147,7 +147,7 @@
                 </div>
             @endif
         </div>
-    </div>
+    </div>--}}
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -552,7 +552,7 @@
          * Show create license modal
          * @see \App\Http\Controllers\CP\Licenses\LicenseController::order_license_form
          */
-        @if($order->licenseNeededForDelivery())
+        @if($order->isDesignApproved())
         $(() => {
             showModal('{{route('licenses.order_license_form', ['order'=>$order->id])}}', null, '#view-user-files-modal')
         })
