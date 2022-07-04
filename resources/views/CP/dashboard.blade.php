@@ -69,6 +69,14 @@
         .apexcharts-tooltip-text-y-value, .apexcharts-tooltip-text-goals-value, .apexcharts-tooltip-text-z-value {
             margin-right: 5px !important;
         }
+
+        .apexcharts-tooltip {
+            direction: rtl !important;
+        }
+        .card-chart-title{
+            font-size: 25px;
+            font-weight: bold;
+        }
     </style>
 @endsection
 @section('content')
@@ -912,9 +920,10 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card card-h-100 card-chart">
                     <div class="card-body px-2">
-                        <h3 class="custom-stats-title">المخيمات التى تم تسليمها</h3>
-                        <div id="barchart-1" style="min-height: 160px;">
-
+                        <span class="card-chart-title">المخيمات التى تم تسليمها</span>
+                        {{--<button class="btn btn-sm btn-primary" onclick="window.location.href = '{{ route('exportRaftCompanyLocationBar') }}'">تصدير</button>--}}
+                        <div style="direction: ltr">
+                            <div id="barchart-1" style="min-height: 350px;"></div>
                         </div>
                     </div>
                 </div>
@@ -985,29 +994,84 @@
         }
         new ApexCharts(document.querySelector("#order-by-status"), barchart2).render();
 
-
-
         var barchart1 = {
             chart: {
-                type: 'bar'
+                type: 'bar',
+                // height: 350,
             },
+            series: [
+                {
+                    name: "النسبة",
+                    data: @json($bar),
+                }
+            ],
             plotOptions: {
                 bar: {
-                    distributed: true
+                    distributed: !0,
+                    borderRadius: 4,
+                    horizontal: !0
                 }
             },
+            dataLabels: {
+                enabled: !0,
+                formatter: (val, opts) => `${val}%`,
+            },
             // colors: ['#A0522D', '#e5eb34', '#3CB371', '#4169E1', '#A52A2A', '#D3D3D3', '#FFC0CB'],
-            colors: ['#4169E1', '#e5eb34', '#A0522D', '#f17a29',
-                '#bb0000', 'rgba(20,187,110,0.65)', '#d76e80'],
-            series: [{
-                name: "عدد المخيمات",
-                data: @json($bar)
-            }],
+            colors: ['#4169E1', '#e5eb34', '#A0522D', '#f17a29','#bb0000', 'rgba(20,187,110,0.65)', '#d76e80'],
+            tooltip: {
+                y: {
+                    formatter: (value, { series, seriesIndex, dataPointIndex, w })  => {
+                        try{
+                            const data = barchart1.series[seriesIndex]?.data[dataPointIndex]
+                            return data?.box_count_to_string || value
+                        }
+                        catch (e) {
+
+                        }
+                        return value
+                    },
+                    title: {
+                        formatter: s => 'العدد: ',
+                    },
+                },
+            },
             xaxis: {
                 labels: {
-                    show: false
-                }
-            }
+                    show: !1,
+                },
+                tooltip: {
+                    enabled: true,
+                    offsetX: 60,
+                },
+            },
+            yaxis: {
+                // floating: !0,
+                // reversed: !0,
+                labels: {
+                    show: true,
+                    // align: 'left',
+                    minWidth: 0,
+                    maxWidth: 160,
+                    style: {
+                        colors: [],
+                        fontSize: '12px',
+                        fontFamily: 'Helvetica, Arial, sans-serif',
+                        fontWeight: 400,
+                        cssClass: 'apexcharts-yaxis-label',
+                    },
+                    // offsetX: '-100%',
+                    offsetY: 0,
+                    rotate: 0,
+                    // formatter: (value) => { return 's' },
+                },
+                tooltip: {
+                    enabled: true,
+                    // offsetX: -100,
+                },
+            },
+            legend: {
+                show: !1,
+            },
         }
         new ApexCharts(document.querySelector("#barchart-1"), barchart1).render();
 

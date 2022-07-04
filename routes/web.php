@@ -178,6 +178,7 @@ Route::middleware([ 'auth' ])->group(function() {
     Route::get('upload_files', [ VerificationController::class, 'upload_files' ])->name('upload_files');
     Route::post('upload_files', [ VerificationController::class, 'save_upload_files' ])->name('upload_files_action');
     Route::get('dashboard', [ LoginController::class, 'dashboard' ])->name('dashboard');
+    Route::get('ExportRaftCompanyLocationBar', [ LoginController::class, 'exportRaftCompanyLocationBar' ])->name('exportRaftCompanyLocationBar');
 });
 
 Route::prefix('NewsArticles')

