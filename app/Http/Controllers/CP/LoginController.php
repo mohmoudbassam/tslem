@@ -163,7 +163,7 @@ class LoginController extends Controller
             ])->get()->map(fn(RaftCompanyLocation $location) => [
                 'box_count'           => $box = $location->box_count,
                 'avg'                 => $avg = $location->avg,
-                'box_count_to_string' => __('replace.value_from', ['value' => $box, 'from' => $avg]),
+                'box_count_to_string' => __('replace.value_from', ['value' => $box, 'from' => $avg?:$box]),
                 'x'                   => $location->name,
                 'y'                   => $avg && $box ? (round(($box*100) / $avg ,1) ?: 0.1) : ( !$avg && !$box ? 0.1 : ($box && !$avg ? 100 : 0.1 )),
                 //'y'         => $box,
