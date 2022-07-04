@@ -309,7 +309,7 @@ class LicenseController extends Controller
                          ->addColumn('order_id', fn(License $license) => $license->order()->value('identifier'))
                          ->addColumn(
                              'date',
-                             fn(License $license) => $license->date ? Calendar::make(str_before($license->getDateFormat(), ' '))->hijriDate($license->date) : "-"
+                             fn(License $license) => ($license->type === License::ADDON_TYPE ? $license->hijri_date : $license->hijri_second_date) ?: "-"
                          )
                          ->addColumn(
                              'expiry_date',

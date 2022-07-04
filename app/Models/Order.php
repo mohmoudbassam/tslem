@@ -352,7 +352,10 @@ class Order extends Model
     {
         $license = $this->getLicenseOrCreate([ 'order_id' => $this->id ]);
         $created_at = ($attributes[ 'created_at' ] ??= data_get($attributes, 'created_at', $license->created_at ?: now()));
-        $attributes[ 'date' ] = data_get($attributes, 'date', $created_at ? ($license->date ?: now()) : null);
+        $is_execition_type = ($attributes[ 'type' ] ?? $license->type) === License::EXECUTION_TYPE;
+        $date_column = $is_execition_type ? 'second_date' : 'date';
+        $default_date = $is_execition_type ? null : ($created_at ? ($license->date ?: now()) : null);
+        $attributes[ $date_column ] = data_get($attributes, $date_column, $default_date);
         if( $raft_company_box = $this->service_provider->getRaftCompanyBox() ) {
             $attributes[ 'box_raft_company_box_id' ] = data_get($raft_company_box, 'id');
             $attributes[ 'camp_raft_company_box_id' ] = data_get($raft_company_box, 'id');
@@ -632,8 +635,7 @@ class Order extends Model
             'encoding' => 'utf-8',
             'enable-external-links' => true,
         ]
-    )
-    {
+    ) {
         $license = $this->getLicenseOrCreate();
 
         $filename ??= "License-{$license->id}-{$type}.pdf";
@@ -729,6 +731,7 @@ class Order extends Model
         bool $overwrite = true
     ) {
         $filename = null;
+
         return $this->generateLicenseFile($filename, $type, $save, $overwrite, $limit, $pdf_options);
     }
 

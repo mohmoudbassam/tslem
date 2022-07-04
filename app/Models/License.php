@@ -22,18 +22,68 @@ class License extends Model
     const EXECUTION_TYPE = 2;
 
     public static $RULES = [
-        // 'order_id'          => [
-        //     'required',
-        // ],
         'box_raft_company_box_id' => [
             'required',
         ],
         'camp_raft_company_box_id' => [
             'required',
         ],
-        // 'date' => [
-        //     'required',
-        // ],
+        'expiry_date' => [
+            'required',
+        ],
+        'tents_count' => [
+            'required',
+            'numeric',
+        ],
+        'person_count' => [
+            'required',
+            'numeric',
+        ],
+        'camp_space' => [
+            'required',
+            'numeric',
+        ],
+        'map_path' => [
+            'nullable',
+            'file',
+        ],
+    ];
+
+    public static $RULES_1 = [
+        'box_raft_company_box_id' => [
+            'required',
+        ],
+        'camp_raft_company_box_id' => [
+            'required',
+        ],
+        'expiry_date' => [
+            'required',
+        ],
+        'tents_count' => [
+            'required',
+            'numeric',
+        ],
+        'person_count' => [
+            'required',
+            'numeric',
+        ],
+        'camp_space' => [
+            'required',
+            'numeric',
+        ],
+        'map_path' => [
+            'nullable',
+            'file',
+        ],
+    ];
+
+    public static $RULES_2 = [
+        'box_raft_company_box_id' => [
+            'required',
+        ],
+        'camp_raft_company_box_id' => [
+            'required',
+        ],
         'expiry_date' => [
             'required',
         ],
@@ -111,6 +161,34 @@ class License extends Model
     ];
 
     /**
+     * @var mixed
+     */
+    protected static $LIST_COLUMNS_1 = [
+        'id',
+        'order_id',
+        'raft_company',
+        'date',
+        'expiry_date',
+        'raft_company',
+        'box_raft_company_box_id',
+        'camp_raft_company_box_id',
+    ];
+
+    /**
+     * @var mixed
+     */
+    protected static $LIST_COLUMNS_2 = [
+        'id',
+        'order_id',
+        'raft_company',
+        'second_date',
+        'expiry_date',
+        'raft_company',
+        'box_raft_company_box_id',
+        'camp_raft_company_box_id',
+    ];
+
+    /**
      * @var string
      */
     public static $DISK = 'order_licenses';
@@ -129,6 +207,7 @@ class License extends Model
         'final_attachment_path',
         'type',
         'attachment',
+        'second_date',
         // 'created_at',
     ];
 
@@ -140,6 +219,7 @@ class License extends Model
     protected $casts = [
         'date' => 'date',
         'expiry_date' => 'date',
+        'second_date' => 'date',
         'order_id' => 'integer',
         'box_raft_company_box_id' => 'integer',
         'camp_raft_company_box_id' => 'integer',
@@ -153,6 +233,7 @@ class License extends Model
     ];
 
     protected $dates = [
+        'second_date',
         'date',
         'expiry_date',
     ];
@@ -160,10 +241,13 @@ class License extends Model
     protected $dateFormat = "Y/m/d H:i:s";
 
     // region: datatable
-    public static function getIndexColumns($with_extras = false)
+    public static function getIndexColumns($with_extras = false, $custom_var = null)
     {
+        $custom_var = str_ireplace('$', '', value($custom_var) ?: '$LIST_COLUMNS');
+        $_columns = static::$$custom_var ?? static::$LIST_COLUMNS;
+
         $results = collect(\App\Models\License::trans('fields'))
-            ->reject(fn($v, $k) => !in_array($k, static::$LIST_COLUMNS))
+            ->reject(fn($v, $k) => !in_array($k, $_columns))
             ->all();
 
         if( $with_extras ) {
@@ -175,7 +259,7 @@ class License extends Model
         return $results;
     }
 
-    public static function getDatatableColumns($as_json = false, $with_extras = false)
+    public static function getDatatableColumns($as_json = false, $with_extras = false, $custom_var = null)
     {
         $makeColumn = function($name, $orderable = null, $render = null, $className = 'text-center', $data = null) {
             $result = [
@@ -200,7 +284,7 @@ CODE;
         $columns = [];
         // $columns[] = $makeColumn('id', true);
         // dd(($model = static::make())->getFillable());
-        foreach( static::getIndexColumns() as $column => $label ) {
+        foreach( static::getIndexColumns(false, $custom_var) as $column => $label ) {
             if( in_array($column, static::$LIST_COLUMNS) ) {
                 $columns[] = $makeColumn($column);
             }
@@ -231,20 +315,24 @@ CODE;
         return [];
     }
 
-    public static function getRules(?string $constant = null)
+    public static function getRules(?string $constant = null, bool $process_data = true)
     {
         $constant = str_ireplace('$', '', $constant ?: '$RULES');
         $rules = [];
         $_rules = static::$$constant ?? static::$RULES;
 
-        foreach( $_rules as $column => $_rules ) {
-            $rules[ $column ] = [];
-            if( in_array('required', $_rules) ) {
-                $rules[ $column ][ 'required' ] = true;
+        if( $process_data ) {
+            foreach( $_rules as $column => $_rules ) {
+                $rules[ $column ] = [];
+                if( in_array('required', $_rules) ) {
+                    $rules[ $column ][ 'required' ] = true;
+                }
+                if( in_array('nullable', $_rules) ) {
+                    $rules[ $column ][ 'required' ] = false;
+                }
             }
-            if( in_array('nullable', $_rules) ) {
-                $rules[ $column ][ 'required' ] = false;
-            }
+        } else {
+            $rules = $_rules;
         }
 
         return $rules;
@@ -433,6 +521,27 @@ CODE;
     public function date()
     {
         $value = data_get($this->attributes, 'date');
+
+        return $value ? Carbon::parse($value) : null;
+    }
+
+    public function getSecondDateAttribute($value)
+    {
+        $value ??= data_get($this->attributes, 'second_date');
+        $value = $value ? Carbon::parse($value) : null;
+
+        return $value ? $value->toDateString() : null;
+    }
+
+    public function getHijriSecondDateAttribute()
+    {
+        return Calendar::make(str_before($this->getDateFormat(), ' '))
+                       ->hijriDate($this->second_date);
+    }
+
+    public function second_date()
+    {
+        $value = data_get($this->attributes, 'second_date');
 
         return $value ? Carbon::parse($value) : null;
     }
