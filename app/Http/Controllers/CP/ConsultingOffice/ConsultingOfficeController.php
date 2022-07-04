@@ -235,7 +235,6 @@ class ConsultingOfficeController extends Controller
             'order'             => $order,
             'order_specialties' => $order_specialties,
             'filess'            => $files,
-
             'final_reports' => [],
             'rejects' => $rejects,
             'order_sharers' => $order_sharers,
