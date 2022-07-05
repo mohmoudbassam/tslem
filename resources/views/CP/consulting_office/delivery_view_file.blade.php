@@ -139,7 +139,7 @@
 
     <div class="row">
         <div class="col-12">
-            @if($order->licenseNeededForDelivery())
+            @if($order->isDesignApproved())
                 <div class="btn-group btn-group-justified">
                     <a id="agreement-button" class="btn btn-primary agreement-button" href="#">
                         <i class="fa fa-plus pe-2"></i>

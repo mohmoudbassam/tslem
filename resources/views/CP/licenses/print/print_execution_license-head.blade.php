@@ -9,7 +9,7 @@
                     <td>رقم الرخصة:</td>
                 </tr>
                 <tr>
-                    <td>{{$model->hijri_date}}</td>
+                    <td>{{$model->hijri_second_date}}</td>
                     <td>تاريخها:</td>
                 </tr>
                 <tr>

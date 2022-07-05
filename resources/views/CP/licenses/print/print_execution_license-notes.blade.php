@@ -15,7 +15,7 @@
                 <tbody align="center">
                 <tr>
                     <td rowspan="2" width="30%" style="margin: 0" class="qr-image">
-                        {!! $model->getQRElement(\App\Models\License::EXECUTION_TYPE) !!}
+                        {!! $model->getQRElement(\App\Models\License::ADDON_TYPE) !!}
                     </td>
                     <td width="30%">تاريخ الطباعة</td>
                     <td rowspan="2" width="30%" ><img class="my-2 stamp-image img" src="{{public_path('images/licenses/Stamp.png')}}" width="150" alt=""></td>

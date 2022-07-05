@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\DeliveryReport;
 use App\Models\DeliveryReportAttchment;
 use App\Models\FinalReport;
-use App\Models\License;
 use App\Models\Order;
 use App\Models\OrderService;
 use App\Models\OrderSharer;
@@ -446,9 +445,17 @@ class DeliveryController extends Controller
         }
 
         return DataTables::of($order)
-                         ->addColumn('actions', function($order) {
+                         ->addColumn('actions', function(Order $order) {
                              // $accept = '';
                              $element = "";
+
+                             if( $order->isDesignApproved() ) {
+                                 return '<div class="btn-group me-1 mt-2">
+                                        <a class="btn btn-success btn-sm  type="button"  href="' . route('delivery.view_file', [ 'order' => $order->id ]) . '">
+                                            إصدار رخصة الإضافات
+                                        </a>
+                                    </div>';
+                             }
 
                              // $accept = '<a class="dropdown-item" onclick="showModal(\'' . route('delivery.accept_form', ['id' => $order->id]) . '\')" href="javascript:;"><i class="fa fa-check"></i>إعتماد الطلب  </a>';
                              // $reject = '<a class="dropdown-item" onclick="reject(' . $order->id . ')" href="javascript:;"><i class="fa fa-times"></i>رفض  الطلب  </a>';
@@ -490,9 +497,12 @@ HTML;
                                  $element .= $view;
                              }
 
-                             $element .= '<a class="dropdown-item" type="button" href="' . route('delivery.view_file', [ 'order' => $order->id ]) . '">
-                                        عرض التفاصيل
-                                    </a>';
+                             $details_route = route('delivery.view_file', [ 'order' => $order->id ]);
+                             $view_order = <<<HTML
+    <a class="dropdown-item " type="button" href="{$details_route}">
+        عرض التفاصيل
+    </a>
+HTML;
 
                              $element = <<<HTML
 <div class="btn-group me-1 mt-2">
@@ -501,6 +511,7 @@ HTML;
     </button>
     <div class="dropdown-menu" style="">
     {$element}
+    {$view_order}
     </div>
 </div>
 HTML;
@@ -514,8 +525,8 @@ HTML;
                          ->addColumn('updated_at', function($order) {
                              return $order->updated_at->format('Y-m-d');
                          })->addColumn('order_status', function($order) {
-                             return $order->order_status;
-                         })
+                return $order->order_status;
+            })
                          ->setRowClass(fn(Order $o) => $o->isNewForTaslem() ? 'alert-info' : ($o->isBackFromWarning() ? 'alert-warning' : ''))
                          ->editColumn('raft_name_only', fn(Order $o) => ($o->service_provider->raft_name_only ?? ''))
                          ->rawColumns([ 'actions' ])

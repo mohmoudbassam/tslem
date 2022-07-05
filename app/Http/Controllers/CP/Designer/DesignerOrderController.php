@@ -100,7 +100,6 @@ HTML;
                           }
 
                           $element = $element ?: '
-   ' . $view . '
    ' . $add_file_design . '
    ' . $edit_files . '
    ';

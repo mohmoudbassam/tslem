@@ -53,7 +53,7 @@
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            @foreach(\App\Models\License::$RULES as $input => $rules)
+                            @foreach(\App\Models\License::getRules("RULES_{$model->type}",false) as $input => $rules)
                                 @include('CP.helpers.form_input', [
                                     'col' => 6,
                                     'id' => $input,

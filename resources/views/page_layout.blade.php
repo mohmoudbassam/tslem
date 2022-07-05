@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>بوابة تسليم الرقمية مركز ريادي متكامل</title>
+    <title>@yield('pageTitle') - بوابة تسليم الرقمية مركز ريادي متكامل</title>
     <meta property="og:type" content=""/>
     <meta property="og:title" content=""/>
     <meta property="og:description" content=" "/>
@@ -28,6 +28,7 @@
     <meta name="copyright" content=" "/>
     <link rel="stylesheet" href="{{ asset('assets/css/plugin.min.css?v='.config('app.asset_ver')) }}"/>
     <link rel="stylesheet" href="{{ asset('assets/css/main.css?v='.config('app.asset_ver')) }}"/>
+   
 </head>
 <body>
 <!-- start:: Page -->
@@ -60,13 +61,7 @@
                                     <li><a>مقاولين</a></li>
                                 </ul>
                             </li>
-                            <li class="menu_item"><a class="menu_link">المركز الاعلامي</a>
-                                <ul class="main-menu-sub">
-                                    <li><a href="{{ route('NewsArticles.Mainlist') }}">الأخبار</a></li>
-                                        <li><a href="{{ route('Photoes.Photoes') }}">الصور</a></li>
-<li><a href="{{ route('Videos.Videos') }}">الفيديوهات</a></li>
-                                </ul>
-                            </li>
+                            <li class="menu_item"><a class="menu_link" data-scroll="">المركز الاعلامي</a></li>
                             <li class="menu_item"><a class="menu_link">الخدمات الألكترونية</a>
                                 <ul class="main-menu-sub">
                                     <li><a>تسليم مخيمات</a></li>
@@ -120,56 +115,15 @@
     </header>
 
 
-    <section class="section section-home" id="section-home">
-        <div class="container">
+    <section class="section section-home section-sub-page" id="section-home">
+        <div class="container text-center">
 
-            <div class="row align-items-center">
-                <div class="col-lg-4 col-xl-3 mb-4 mx-auto">
-                    <div class="home-content">
-                        <h2 class="wow fadeInUp font-bold text-white mb-lg-3" data-wow-delay="0.2s">البوابة الرقمية</h2>
-                        <h3 class="wow fadeInUp font-bold" data-wow-delay="0.3s" style="color: #c0946f">تسليم</h3>
-                        <h3 class="wow fadeInUp font-bold text-white" data-wow-delay="0.4s">مركز ريــادي متكامل</h3>
-                    </div>
-                </div>
-            </div>
+            <div class="page-title">@yield('pageTitle')</div>
 
         </div>
 
     </section>
-    <!-- end:: section -->
-    <!-- start:: section -->
-    <section class="section section-about pt-5" id="section-about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="row">
-                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="section-title mb-3">
-                                <h2 class="font-bold bg bg-start">عن المركز</h2>
-                            </div>
-                            <div class="section-about-desc">مركز ريادي ومتكامل لتقديم الخدمات اللازمة لمقدمـي خدمات الحج؛ بغرض تسهيـل
-                                الاجـراءات من خلال العمل تحت مظلة واحدة لكافة الجهات، سيحقق هذا المركز الارتقاء</div>
-                            <div class="widget__item-serve-list row">
-                                <div class="col-6 widget__item-serve">
-                                خدمة مميزة
-                                </div>
-                                <div class="col-6 widget__item-serve">
-                                بيانات آمنة
-                                </div>
-                                <div class="col-6 widget__item-serve">
-                                متابعة مستمرة
-                                </div>
-                                <div class="col-6 widget__item-serve">
-                                سهولة الخدمات
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- end:: section -->
+    @yield('pageContent')
     <!-- start:: section -->
     <section class="section section-guidelines" id="section-guidelines">
         <div class="container">
@@ -371,6 +325,7 @@
 <script src="{{ asset('assets/js/script.min.js') }}"></script>
 <script src="{{ asset('assets/js/function.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+@yield('pageHead')
 <link href="jquery.simpleTicker.css" rel="stylesheet">
 <script type="text/javascript">
 
