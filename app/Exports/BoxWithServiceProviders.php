@@ -37,6 +37,8 @@ class BoxWithServiceProviders implements  FromCollection, WithEvents, WithHeadin
             'اسم شركة الطوافة',
             'البريد الإلكتروني',
             'الجوال',
+            'رقم الترخيص',
+            'الإطلاع',
 
 
         ];
@@ -51,6 +53,8 @@ class BoxWithServiceProviders implements  FromCollection, WithEvents, WithHeadin
             $user->raft_company_name,
             $user->email,
             $user->phone,
+            $user->license_number,
+            $user->seen_notes ?'تم الاطلاع':'لم يتم الاطلاع',
 
         ];
     }
