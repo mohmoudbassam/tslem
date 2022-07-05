@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CP;
 use App\Exports\BoxWithServiceProviders;
 use App\Exports\OrderExportInoiceReport;
 use App\Exports\RaftCompanyExport;
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Models\License;
 use App\Models\LoginNumber;
@@ -269,7 +270,7 @@ class LoginController extends Controller
     }
 
     public function exportRaftCompanyLocationBar(){
-
-        dd(2);
+        $users = User::query()->where('type',User::SERVICE_PROVIDER_TYPE)->latest('parent_id')->get();
+        return Excel::download(new UserExport($users), 'Export.xlsx');
     }
 }

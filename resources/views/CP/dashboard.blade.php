@@ -920,8 +920,17 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card card-h-100 card-chart">
                     <div class="card-body px-2">
-                        <span class="card-chart-title">المخيمات التى تم تسليمها</span>
-                        {{--<button class="btn btn-sm btn-primary" onclick="window.location.href = '{{ route('exportRaftCompanyLocationBar') }}'">تصدير</button>--}}
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex card-chart-title ps-3">
+                                المخيمات التى تم تسليمها
+                            </div>
+                            <div class="d-flex">
+                                <button class="btn btn-primary" id="export-barchart">
+                                    <i id="export-barchart-loading" class="d-none fas fa-spinner fa-spin" ></i>
+                                    <span>تصدير</span>
+                                </button>
+                            </div>
+                        </div>
                         <div style="direction: ltr">
                             <div id="barchart-1" style="min-height: 350px;"></div>
                         </div>
@@ -1478,6 +1487,14 @@
 
         $('#close').on('click', function () {
             $('#page_modal').modal("hide")
+        });
+
+        $('#export-barchart').on('click', function (e) {
+            e.preventDefault();
+            window.location.href = '{{ route('exportRaftCompanyLocationBar') }}'
+            $('#export-barchart-loading').removeClass('d-none');
+            window.alertMessage({title: 'جاري تصدير البيانات الرجاء الإنتظار'})
+            .then( () => $('#export-barchart-loading').addClass('d-none') )
         });
     </script>
     <div class="hs-dummy-scrollbar-size">
