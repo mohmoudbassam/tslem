@@ -254,7 +254,7 @@ class LoginController extends Controller
     public function ex_boxes_users()
     {
         $raft_company = RaftCompanyBox::query()
-            ->select('raft_company_location.name as raft_company_name', 'users.email as email', 'users.phone as phone', 'users.camp_number', 'raft_company_box.camp', 'users.box_number', 'raft_company_box.box', 'users.company_name')
+            ->select('raft_company_location.name as raft_company_name', 'users.email as email', 'users.phone as phone', 'users.camp_number', 'raft_company_box.camp', 'users.box_number', 'raft_company_box.box', 'users.company_name','users.license_number','raft_company_box.seen_notes')
             ->LeftJoin('users', function ($join) {
                 $join->on(function ($query) {
                     $query->on('users.camp_number', '=', 'raft_company_box.camp')
