@@ -38,9 +38,9 @@ class OrdersExport implements FromCollection, WithEvents, WithHeadings, WithColu
             optional($order->contractor)->company_name ?? '',
             optional($order->consulting)->company_name,
             $order->waste_contractor ?? '',
-            $order->service_provider->camp_number ?? '',
-            $order->service_provider->box_number ?? '',
-            $order->service_provider->license_number ?? '',
+            $order->camp ?? '',
+            $order->box ?? '',
+            $order->license_number ?? '',
 
         ];
     }
