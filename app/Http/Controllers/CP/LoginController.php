@@ -270,6 +270,5 @@ class LoginController extends Controller
 
     public function exportRaftCompanyLocationBar(){
 
-        dd(2);
     }
 }
