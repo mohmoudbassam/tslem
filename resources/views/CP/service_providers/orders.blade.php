@@ -17,15 +17,13 @@
                                    <i class="fa fa-clipboard-check me-1"></i> انشاء الطلب
                                 </a>
                             </div>
-                            @if(auth()->user()->getFirstAppointmentUrl())
                             <div class="btn-group" role="group">
                                 <a href="{{auth()->user()->getFirstAppointmentUrl()}}" target="_blank"
-                                   class="btn btn-success">
+                                   class="btn {{auth()->user()->hasFirstAppointmentUrl() ? 'btn-success' :'btn-primary'}}">
                                    <i class="fa fa-download me-1"></i>
                                     عرض محضر اعادة تسليم صيانة
                                 </a>
                             </div>
-                            @endif
                             @if(isset($box->file_first) or isset($box->file_second) or isset($box->file_third))
                                 <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="filesDropdown" data-bs-toggle="dropdown" aria-expanded="false">

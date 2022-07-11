@@ -7,6 +7,7 @@ use App\Models\Appointment as Model;
 use App\Models\RaftCompanyBox;
 use App\Models\User;
 use App\Notifications\TasleemMaintenanceNotification;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Carbon\Carbon;
 use Error;
 use Exception;
@@ -289,7 +290,7 @@ class AppointmentController extends Controller
     public function export()
     {
         $rows = Model::query()->whereDate('start_at', '=', now())->get();
-        $pdf = PDF::loadView('CP.taslem_maintenance.Appointment.pdf', compact('rows'));
+        $pdf = PDF::loadView('CP.taslem_maintenance.Appointment.pdf_list', compact('rows'));
         return $pdf->download('Today-List.pdf');
     }
 
@@ -319,4 +320,9 @@ class AppointmentController extends Controller
         ]);
     }
 
+    public function generatePdf(User $user){
+        //d(3);
+        $pdf = SnappyPdf::loadView('CP.taslem_maintenance.Appointment.generate_pdf', compact('user'));
+        return $pdf->inline('Pdf.pdf');
+    }
 }
