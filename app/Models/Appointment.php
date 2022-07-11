@@ -145,8 +145,7 @@ class Appointment extends Model implements HasMedia
 
         if (!($user = static::serviceProviderByBoxes($box, $camp)->first())) {
             //d($raftCompanyBox);
-            $license = License::query()->where('box_raft_company_box_id', $this->raft_company_box_id)->first();
-            if ($license->box) {
+            if (($license = License::query()->where('box_raft_company_box_id', $this->raft_company_box_id)->first()) && $license->box) {
                 $box = $license->box->box;
                 $camp = $license->box->camp;
                 $user = static::serviceProviderByBoxes($box, $camp)->first();
