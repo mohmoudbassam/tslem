@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'main-font';
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+    src: url("Changa/subset-Changa-Regular.woff") format('woff'),
+    url('Changa/subset-Changa-Regular.ttf') format('truetype'),
+    url("Changa/subset-Changa-Regular.eot") format("eot");
+}

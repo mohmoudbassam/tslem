@@ -176,4 +176,18 @@ class Appointment extends Model implements HasMedia
         $media = $this->getFirstMedia(static::MEDIA_COLLECTION_NAME);
         return $media ? $media->getFullUrl() : '';
     }
+
+    /**
+     * @param int $length
+     * @param bool $hashTag
+     * @param null $value
+     *
+     * @return string
+     */
+    public function getIdString(int $length = 4, bool $hashTag = !0, $value = null): string
+    {
+        $value = is_null($value) ? $this->getKey() : $value;
+        $id = str_pad($value, $length, '0', STR_PAD_LEFT);
+        return ($hashTag ? '#' : '').$id;
+    }
 }

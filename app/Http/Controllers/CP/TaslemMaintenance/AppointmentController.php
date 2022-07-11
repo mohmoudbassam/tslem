@@ -4,7 +4,6 @@ namespace App\Http\Controllers\CP\TaslemMaintenance;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment as Model;
-use App\Models\License;
 use App\Models\RaftCompanyBox;
 use App\Models\User;
 use App\Notifications\TasleemMaintenanceNotification;
@@ -339,12 +338,21 @@ class AppointmentController extends Controller
         ]);
     }
 
+    /**
+     * @param  \App\Models\User  $user
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     */
     public function generatePdf(User $user)
     {
-        $data = ['user' => $user];
         $view = 'CP.taslem_maintenance.Appointment.generate_pdf';
+        $model = null;
+        if (($box = $user->getRaftCompanyBox())) {
+            $model = Model::query()->where('raft_company_box_id', $box->id)->first();
+        }
+        $data = ['user' => $user, 'model' => $model];
         //return view($view, $data);
-        //d(3);
+        //d($data,$user->getRaftCompanyBox());
         try {
             $pdf = SnappyPdf::loadView($view, $data);
             return $pdf->inline('Pdf.pdf');

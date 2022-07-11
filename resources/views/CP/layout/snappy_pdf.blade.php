@@ -22,7 +22,7 @@
     >
     <style>
         body{
-            font-family: 'Tajawal', sans-serif !important;
+            font-family: 'main-font', sans-serif !important;
         }
     </style>
 </head>
