@@ -103,6 +103,21 @@
                     </li>
                 @endif
 
+                @if(auth()->user()->type=='taslem_maintenance' )
+                    <li>
+                        <a href="{{route('taslem_maintenance.index')}}">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">مواعيد التسليم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('taslem_maintenance.Appointment.index')}}">
+                            <i data-feather="list"></i>
+                            <span data-key="t-authentication">{{ trans_choice('choice.Appointments',2) }}</span>
+                        </a>
+                    </li>
+                @endif
+
                 @if(auth()->user()->type == "multi_media")
                         <li>
                             <a
@@ -214,7 +229,6 @@
                         </a>
                     </li>
                 @endif
-
 
                 @if(auth()->user()->type=='contractor')
                     <li>

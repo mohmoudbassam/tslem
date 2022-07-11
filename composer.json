@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0|^8.1",
+        "4myth/laravel-helpers": "^1.4",
         "alexusmai/laravel-file-manager": "2.5.4",
         "alkoumi/laravel-hijri-date": "^1.0",
         "barryvdh/laravel-dompdf": "^1.0",
@@ -32,6 +33,7 @@
         "phpoffice/phpword": "^0.18.3",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-backup": "^6.16",
+        "spatie/laravel-medialibrary": "^9.0.0",
         "unisharp/laravel-filemanager": "^2.4",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
         "yajra/laravel-datatables-oracle": "~9.0"

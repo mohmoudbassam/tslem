@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Appointment;
 use App\Models\Order;
 use App\Models\OrderLogs;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -38,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
         Route::model('Order', Order::class);
         Route::model('order_logs', OrderLogs::class);
+        Route::model('Appointment', Appointment::class);
         $this->routes(function () {
             Route::prefix('api')
                 ->middleware('api')

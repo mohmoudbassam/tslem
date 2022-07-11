@@ -71,8 +71,9 @@ class User extends Authenticatable
 
         if ($file) {
 
-            return asset('storage/' . $file);
-        } else {
+            return asset('storage/'.$file);
+        }
+        else {
             return asset('storage/profiles/profile_placeholder.jpg');
         }
     }
@@ -99,15 +100,15 @@ class User extends Authenticatable
 
         return [
 
-            'admin' => 'مدير النظام',
-            'service_provider' => 'شركات حجاج الداخل',
-            'design_office' => 'مكتب هندسي',
-            'Sharer' => 'جهة مشاركة',
-            'consulting_office' => 'مشرف',
-            'contractor' => 'مقاول',
-            'Delivery' => 'تسليم',
-            'Kdana' => 'كدانة',
-            'raft_company' => "raft_company",
+            'admin'              => 'مدير النظام',
+            'service_provider'   => 'شركات حجاج الداخل',
+            'design_office'      => 'مكتب هندسي',
+            'Sharer'             => 'جهة مشاركة',
+            'consulting_office'  => 'مشرف',
+            'contractor'         => 'مقاول',
+            'Delivery'           => 'تسليم',
+            'Kdana'              => 'كدانة',
+            'raft_company'       => "raft_company",
             'taslem_maintenance' => 'تسليم صيانه',
 
         ][$this->type];
@@ -127,7 +128,7 @@ class User extends Authenticatable
         if ($this->company_type) {
             return [
                 'organization' => 'مؤسسة',
-                'office' => 'مكتب',
+                'office'       => 'مكتب',
             ][$this->company_type];
         }
 
@@ -139,9 +140,11 @@ class User extends Authenticatable
     {
         if ($this->verified == 0) {
             return 'غير معتمد';
-        } elseif ($this->verified == 1) {
+        }
+        elseif ($this->verified == 1) {
             return 'تم الإعتماد';
-        } elseif ($this->verified == 2) {
+        }
+        elseif ($this->verified == 2) {
             return 'تم الرفض';
         }
 
@@ -224,10 +227,10 @@ class User extends Authenticatable
         if ($this->type == 'raft_center') {
             return route('raft_center');
         }
-        if ($this->type == 'Kdana'){
+        if ($this->type == 'Kdana') {
             return route('kdana');
         }
-        if ($this->type == 'multi_media'){
+        if ($this->type == 'multi_media') {
             return route('news_articles');
         }
     }
@@ -253,6 +256,7 @@ class User extends Authenticatable
 
     /**
      * $this->raft_company_name
+     *
      * @return string
      */
     public function getRaftCompanyNameAttribute()
@@ -263,19 +267,26 @@ class User extends Authenticatable
 
     /**
      * $this->raft_name_only
+     *
      * @return string
      */
     public function getRaftNameOnlyAttribute()
     {
         if (!$this->parent_id) {
             $raft_company_location_name = License::trans("no_parent_name");
-        } else {
+        }
+        else {
             $raft_company_location_name = License::trans('raft_company_name', [
                 'name' => optional($this->raft_company_location)->name,
             ]);
         }
 
-        return $raft_company_location_name ?:'';
+        return $raft_company_location_name ?: '';
+    }
+
+    public function raft_company_location()
+    {
+        return optional($this->getRaftCompanyBox())->raft_company_location();
     }
 
     public function getRaftCompanyBox($default = null)
@@ -284,18 +295,11 @@ class User extends Authenticatable
         $user = optional($user ?? currentUser());
         $where = ($license_number = $user->license_number) ?
             compact('license_number') : [
-                'box' => $user->box_number,
+                'box'  => $user->box_number,
                 'camp' => $user->camp_number,
             ];
 
         return \App\Models\RaftCompanyBox::where($where)->first() ?: value($default);
-    }
-
-
-
-    public function raft_company_location()
-    {
-        return optional($this->getRaftCompanyBox())->raft_company_location();
     }
 
     public function hasRaftCompanyBox(): bool
@@ -303,7 +307,7 @@ class User extends Authenticatable
         $user = $this;
         $where = ($license_number = $user->license_number) ?
             compact('license_number') : [
-                'box' => $user->box_number,
+                'box'  => $user->box_number,
                 'camp' => $user->camp_number,
             ];
 
@@ -315,14 +319,30 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'parent_id');
     }
 
-    public function raft_company(){
-       return $this->belongsTo(User::class,'parent_id','id');
+    public function raft_company()
+    {
+        return $this->belongsTo(User::class, 'parent_id', 'id');
     }
-    public function raft_company_service_providers(){
-       return $this->hasMany(User::class,'parent_id','id');
+
+    public function raft_company_service_providers()
+    {
+        return $this->hasMany(User::class, 'parent_id', 'id');
     }
+
     public function raft_location()
     {
         return $this->belongsTo(RaftCompanyLocation::class, 'raft_company_type', 'id');
+    }
+
+    public function getFirstAppointmentUrl(): ?string
+    {
+        if (($raft = $this->getRaftCompanyBox())) {
+            //$user = Appointment::serviceProviderByBoxes($raft->box,$raft->camp)->first();
+            /** @var Appointment $appointment */
+            if(($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
+                return  $appointment->getFirstFileUrl();
+            }
+        }
+        return null;
     }
 }
