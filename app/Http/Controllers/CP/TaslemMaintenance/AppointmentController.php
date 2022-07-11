@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CP\TaslemMaintenance;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment as Model;
+use App\Models\License;
 use App\Models\RaftCompanyBox;
 use App\Models\User;
 use App\Notifications\TasleemMaintenanceNotification;
@@ -26,7 +27,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $boxes = RaftCompanyBox::query()->select('box')->groupBy('box')->get()->toArray();
+        $boxes = RaftCompanyBox::query()->has('licenses')->select('box')->groupBy('box')->get()->toArray();
         $data = [
             'isToday' => request()->input('today'),
             'boxes'   => $boxes,
@@ -95,12 +96,16 @@ class AppointmentController extends Controller
      */
     public function create()
     {
+        $l = License::query();#->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
+        $l = License::query()->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
+        //d($l->get());
         $users = User::query()->where('type', User::SERVICE_PROVIDER_TYPE)
             ->has('orders')
             ->where(fn(Builder $builder) => $builder->whereNotNull(['box_number', 'camp_number'])->orWhereNotNull('license_number'))
             ->get();
         //dd($users->toArray());
-        $boxes = RaftCompanyBox::query()->select('box')->groupBy('box')->get()->toArray();
+        $boxes = RaftCompanyBox::query()->has('licenses')->select('box')->groupBy('box')->get()->toArray();
+        //d($boxes);
         return view('CP.taslem_maintenance.Appointment.create', compact('users', 'boxes'));
     }
 
@@ -115,6 +120,9 @@ class AppointmentController extends Controller
         //if (!($id = $request->input('service_provider_id'))) {
         $camp = $request->input('camp_number');
         $box = $request->input('box_number');
+        $q = RaftCompanyBox::query()->where('box',$box);
+        d($q->get());
+        d($request->all());
         $user = Model::findServiceProviderByBoxes($box, $camp)->first();
         //}
         //else {

@@ -258,12 +258,12 @@
     <script>
         $.fn.dataTable.ext.errMode = 'none'
         $(function () {
-            $('#service_provider_id').change(function (e){
-                const self = $(this)
-                const div = $('.service-provider')
-                const c = 'd-none'
-                self.val() && div.addClass(c) || div.removeClass(c)
-            })
+            // $('#service_provider_id').change(function (e){
+            //     const self = $(this)
+            //     const div = $('.service-provider')
+            //     const c = 'd-none'
+            //     self.val() && div.addClass(c) || div.removeClass(c)
+            // })
             $('#items_table').DataTable({
                 'dom': 'tp',
                 'searching': false,
@@ -357,7 +357,7 @@
             formData.append('start_at', $('#start_at').val())
             formData.append('box_number', $('#box_number').val())
             formData.append('camp_number', $('#camp_number').val())
-            formData.append('service_provider_id', $('#service_provider_id').val())
+            // formData.append('service_provider_id', $('#service_provider_id').val())
             formData.append('_token', '{{ csrf_token() }}')
 
             postData(formData, '{{route('taslem_maintenance.Appointment.store')}}')
@@ -376,7 +376,6 @@
         })
 
         $('#box_number').on('change', function (e) {
-            // $('#service_provider_id').val(null).change();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
