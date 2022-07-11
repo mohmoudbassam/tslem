@@ -2,6 +2,14 @@
 
 @section('title', trans_choice('choice.Appointments', 2) )
 
+@section('style')
+    <link
+        href="{{url('/assets/libs/choices.js/public/assets/styles/choices.min.css')}}"
+        rel="stylesheet"
+        type="text/css"
+    />
+@stop
+
 @section('content')
     <style>
         .modal-backdrop.show {
@@ -68,11 +76,12 @@
                     </h4>
 
                     <h4 class="mb-sm-0 font-size-18 m-lg-2">
-                        <a class="btn btn-primary"
-                           href="{{ route('taslem_maintenance.Appointment.export') }}"
+                        <a
+                            class="btn btn-primary"
+                            href="{{ route('taslem_maintenance.Appointment.export') }}"
                         >
-                        <i class="fa fa-file-pdf pe-2"></i>
-                        تصدير
+                            <i class="fa fa-file-pdf pe-2"></i>
+                            تصدير
                         </a>
                     </h4>
                 @endif
@@ -81,13 +90,13 @@
         </div>
         <div class="card">
             @if(!$isToday)
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <form
-                            class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 "
-                            id="form_data"
-                        >
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form
+                                class="row gx-3 gy-2 mb-4 mb-lg-0 "
+                                id="form_data"
+                            >
                                 <div class="col-lg-3 col-xxl-2">
                                     <label for="">من</label>
                                     <input
@@ -106,34 +115,79 @@
                                         placeholder=""
                                     >
                                 </div>
-                            <div
-                                class="col-sm-auto ms-auto"
-                                style="margin-top:1.9rem;"
-                            >
-                                <button
-                                    type="button"
-                                    class="btn btn-primary search_btn px-4 me-2"
+                                <div class="col-lg-3 col-xxl-2 service-provider">
+                                    <label
+                                        class="form-label"
+                                        for="box_number"
+                                    >رقم المربع
+                                    </label>
+                                    <select
+                                        class="form-control"
+                                        data-trigger
+                                        id="box_number"
+                                        name="box_number"
+                                    >
+                                        <option
+                                            value=""
+                                            selected
+                                        >أختر
+                                        </option>
+                                        @foreach($boxes as $box)
+                                            <option value="{{ $box['box'] }}">{{$box['box']}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div
+                                        class="col-12 text-danger"
+                                        id="box_number_error"
+                                    ></div>
+                                </div>
+                                <div class="col-lg-3 col-xxl-2 service-provider">
+                                    <label
+                                        class="form-label"
+                                        for="camp_number"
+                                    >رقم المخيم
+                                    </label>
+                                    <select
+                                        class="form-control"
+                                        disabled
+                                        id="camp_number"
+                                        name="camp_number"
+                                    >
+                                        <option value=""></option>
+                                    </select>
+                                    <div
+                                        class="col-12 text-danger"
+                                        id="camp_number_error"
+                                    ></div>
+                                </div>
+                                <div
+                                    class="col-sm-auto ms-auto"
+                                    style="margin-top:1.9rem;"
                                 >
-                                    <i
-                                        class="fa fa-search me-1"
-                                    ></i>
-                                    بحث
-                                </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary search_btn px-4 me-2"
+                                    >
+                                        <i
+                                            class="fa fa-search me-1"
+                                        ></i>
+                                        بحث
+                                    </button>
 
-                                <button
-                                    type="button"
-                                    class="btn btn-secondary reset_btn px-4"
-                                >
-                                    <i
-                                        class="far fa-times me-1"
-                                    ></i>
-                                    إلغاء
-                                </button>
-                            </div>
-                        </form>
+                                    <button
+                                        type="button"
+                                        class="btn btn-secondary reset_btn px-4"
+                                    >
+                                        <i
+                                            class="far fa-times me-1"
+                                        ></i>
+                                        إلغاء
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endif
 
             <div class="card-body">
@@ -196,6 +250,8 @@
 @endsection
 
 @section('scripts')
+    <script src="{{url('/assets/libs/choices.js/public/assets/scripts/choices.min.js')}}"></script>
+
     <script>
         $.fn.dataTable.ext.errMode = 'none'
         $(function () {
@@ -211,6 +267,8 @@
                     data: function (d) {
                         d.from_date = $('#from_date').val()
                         d.to_date = $('#to_date').val()
+                        d.camp_number = $('#camp_number').val()
+                        d.box_number = $('#box_number').val()
                     }
                 },
                 language: {
@@ -221,8 +279,8 @@
                         className: 'text-right',
                         data: 'name',
                         name: 'name',
-                        sortable:!1,
-                        searchable:!1,
+                        sortable: !1,
+                        searchable: !1,
                         orderable: !1
                     },
                     {
@@ -255,17 +313,49 @@
                 ]
 
             })
-
         })
         $('.search_btn').click(function (ev) {
             $('#items_table').DataTable().ajax.reload(null, false)
         })
+
+        $('#box_number').on('change', function (e) {
+            $('#camp_number').find('option').remove()
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            var url = '{{route('raft_company.get_camp_by_box',':box')}}'
+
+            url = url.replace(':box', $('#box_number').val())
+
+            $.ajax({
+                url: url,
+                data: {},
+                type: 'GET',
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.success) {
+                        $('#camp_number').find('option').remove()
+                        $('#camp_number').html(data.page)
+                        $('#camp_number').removeAttr('disabled')
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                    KTApp.unblock('#page_modal')
+                    KTApp.unblockPage()
+                }
+            })
+        })
+
         $('.reset_btn').click(function (ev) {
+            $('#camp_number').find('option').remove()
             $('#form_data').trigger('reset')
             $('#items_table').DataTable().ajax.reload(null, false)
         })
         flatpickr('.datepicker')
-
         function send_sms (id) {
             $.ajaxSetup({
                 headers: {
@@ -301,6 +391,14 @@
                     showAlertMessage('error', 'حدث خطأ في النظام')
                     KTApp.unblockPage()
                 }
+            })
+        }
+        var e = document.querySelectorAll('[data-trigger]')
+        for (i = 0; i < e.length; ++i) {
+            var a = e[i]
+            new Choices(a, {
+                placeholderValue: 'This is a placeholder set in the config', searchPlaceholderValue:
+                    'بحث'
             })
         }
     </script>

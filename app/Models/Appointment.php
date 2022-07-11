@@ -58,6 +58,23 @@ class Appointment extends Model implements HasMedia
     ];
 
     /**
+     * @param $box
+     * @param $camp
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function findServiceProviderByBoxes($box, $camp): Builder
+    {
+        $q = User::query()
+            ->where('type', User::SERVICE_PROVIDER_TYPE)
+            ->where('box_number', 'LIKE', $box)
+            ->where('camp_number', 'LIKE', $camp);
+            //->first();
+        //d($camp);
+        return $q;
+    }
+
+    /**
      * @return void
      */
     public function registerMediaCollections(): void
@@ -144,6 +161,7 @@ class Appointment extends Model implements HasMedia
         $camp = $raftCompanyBox->camp;
 
         if (!($user = static::serviceProviderByBoxes($box, $camp)->first())) {
+            d($raftCompanyBox);
             $license = License::query()->where('box_raft_company_box_id', $this->raft_company_box_id)->first();
             if ($license->box) {
                 $box = $license->box->box;
@@ -174,6 +192,6 @@ class Appointment extends Model implements HasMedia
     public function getFirstFileUrl(): string
     {
         $media = $this->getFirstMedia(static::MEDIA_COLLECTION_NAME);
-        return  $media ? $media->getFullUrl() : '';
+        return $media ? $media->getFullUrl() : '';
     }
 }

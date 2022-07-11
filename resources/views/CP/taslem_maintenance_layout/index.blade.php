@@ -73,6 +73,51 @@
                                     <label for="">الى </label>
                                     <input type="text" class="form-control datepicker" id="to_date" placeholder="">
                                 </div>
+                                <div class="col-lg-3 col-xxl-2 service-provider">
+                                    <label
+                                        class="form-label"
+                                        for="box_number"
+                                    >رقم المربع
+                                    </label>
+                                    <select
+                                        class="form-control"
+                                        data-trigger
+                                        id="box_number"
+                                        name="box_number"
+                                    >
+                                        <option
+                                            value=""
+                                            selected
+                                        >أختر
+                                        </option>
+                                        @foreach($boxes as $box)
+                                            <option value="{{ $box['box'] }}">{{$box['box']}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div
+                                        class="col-12 text-danger"
+                                        id="box_number_error"
+                                    ></div>
+                                </div>
+                                <div class="col-lg-3 col-xxl-2 service-provider">
+                                    <label
+                                        class="form-label"
+                                        for="camp_number"
+                                    >رقم المخيم
+                                    </label>
+                                    <select
+                                        class="form-control"
+                                        disabled
+                                        id="camp_number"
+                                        name="camp_number"
+                                    >
+                                        <option value=""></option>
+                                    </select>
+                                    <div
+                                        class="col-12 text-danger"
+                                        id="camp_number_error"
+                                    ></div>
+                                </div>
                             @endif
 
                             <div class="col-sm-auto ms-auto" style="margin-top:1.9rem;">
@@ -158,6 +203,8 @@
                             "data": function (d) {
                                 d.from_date = $('#from_date').val();
                                 d.to_date = $('#to_date').val();
+                                d.camp_number = $('#camp_number').val()
+                                d.box_number = $('#box_number').val()
                             }
                         },
                         language: {
@@ -201,8 +248,9 @@
                     $('#items_table').DataTable().ajax.reload(null, false);
                 });
                 $('.reset_btn').click(function (ev) {
-                    $("#form_data").trigger('reset');
-                    $('#items_table').DataTable().ajax.reload(null, false);
+                    $('#camp_number').find('option').remove()
+                    $('#form_data').trigger('reset')
+                    $('#items_table').DataTable().ajax.reload(null, false)
                 });
                 flatpickr(".datepicker");
 
@@ -248,6 +296,46 @@
                             KTApp.unblockPage();
                         },
                     });
+                }
+
+                $('#box_number').on('change', function (e) {
+                    $('#camp_number').find('option').remove()
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
+                    var url = '{{route('raft_company.get_camp_by_box',':box')}}'
+
+                    url = url.replace(':box', $('#box_number').val())
+
+                    $.ajax({
+                        url: url,
+                        data: {},
+                        type: 'GET',
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data.success) {
+                                $('#camp_number').find('option').remove()
+                                $('#camp_number').html(data.page)
+                                $('#camp_number').removeAttr('disabled')
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data)
+                            KTApp.unblock('#page_modal')
+                            KTApp.unblockPage()
+                        }
+                    })
+                })
+                var e = document.querySelectorAll('[data-trigger]')
+                for (i = 0; i < e.length; ++i) {
+                    var a = e[i]
+                    new Choices(a, {
+                        placeholderValue: 'This is a placeholder set in the config', searchPlaceholderValue:
+                            'بحث'
+                    })
                 }
             </script>
 

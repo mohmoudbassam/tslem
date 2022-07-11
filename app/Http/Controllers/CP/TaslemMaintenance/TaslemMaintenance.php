@@ -9,6 +9,7 @@ use App\Models\Session;
 use App\Models\User;
 use App\Notifications\TasleemMaintenanceNotification;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +28,7 @@ class TaslemMaintenance extends Controller
         } else {
             $data['isToday'] = false;
         }
+        $data['boxes'] = RaftCompanyBox::query()->select('box')->groupBy('box')->get()->toArray();
         return view('CP.taslem_maintenance_layout.index', $data);
     }
 
@@ -48,6 +50,13 @@ class TaslemMaintenance extends Controller
         });
 
 
+
+        if (($i = $request->input('camp_number'))) {
+            $sessions->whereHas('raftCompanyBox', fn(Builder $builder) => $builder->where('camp', $i));
+        }
+        if (($i = $request->input('box_number'))) {
+            $sessions->whereHas('raftCompanyBox', fn(Builder $builder) => $builder->where('box', $i));
+        }
         return DataTables::of($sessions)
             ->addColumn('actions', function ($session) {
 

@@ -2,23 +2,32 @@
 
 @section('content')
     <div class="container">
-        <table style="width: 100%">
-            <tbody>
-            <tr>
-                <td>
-                    {{--<img src="{{ url('appointment/ksa.png') }}" style="width: 200px " alt="">--}}
-                     {!! nl2br(__("print.appointment.header_right")) !!}
-                </td>
-                <td>
-                    {{--<img src="{{ url('appointment/ksa.png') }}" alt="">--}}
-                </td>
-                <td>
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <h3 style="text-align:center;"> مواعيد يوم: {{now()->format('Y-m-d')}}</h3>
+        <div class="row text-center align-items-center">
+            <div class="col-4">
+                <img src="{{ asset('appointment/ksa.png') }}" alt="" width="250">
+                <p>{!! nl2br(__("print.appointment.header_right")) !!}</p>
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('appointment/kidana.png') }}" alt="" width="250">
+            </div>
+            <div class="col-4">
+                <table class="table border mx-auto" style="width: 200px">
+                    <tbody>
+                    <tr>
+                        <td>رقم المحضر</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p class="text-justify">{!! nl2br(__("print.appointment.content")) !!}</p>
+            </div>
+        </div>
         <br>
         <br>
         <div class="row">

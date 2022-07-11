@@ -44,33 +44,33 @@
                         enctype="multipart/form-data"
                     >
                         <div class="row">
-                            <div class="col-lg col-xxl">
-                                <label
-                                    class="form-label"
-                                    for="service_provider_id"
-                                >
-                                    مركز الخدمة
-                                </label>
-                                <select
-                                    class="form-control"
-                                    data-trigger
-                                    id="service_provider_id"
-                                    name="service_provider_id"
-                                >
-                                    <option
-                                        value=""
-                                        selected
-                                    >أختر
-                                    </option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{$user->company_name}}</option>
-                                    @endforeach
-                                </select>
-                                <div
-                                    class="col-12 text-danger"
-                                    id="box_number_error"
-                                ></div>
-                            </div>
+                            {{--<div class="col-lg col-xxl">--}}
+                            {{--    <label--}}
+                            {{--        class="form-label"--}}
+                            {{--        for="service_provider_id"--}}
+                            {{--    >--}}
+                            {{--        مركز الخدمة--}}
+                            {{--    </label>--}}
+                            {{--    <select--}}
+                            {{--        class="form-control"--}}
+                            {{--        data-trigger--}}
+                            {{--        id="service_provider_id"--}}
+                            {{--        name="service_provider_id"--}}
+                            {{--    >--}}
+                            {{--        <option--}}
+                            {{--            value=""--}}
+                            {{--            selected--}}
+                            {{--        >أختر--}}
+                            {{--        </option>--}}
+                            {{--        @foreach($users as $user)--}}
+                            {{--            <option value="{{ $user->id }}">{{$user->company_name}}</option>--}}
+                            {{--        @endforeach--}}
+                            {{--    </select>--}}
+                            {{--    <div--}}
+                            {{--        class="col-12 text-danger"--}}
+                            {{--        id="service_provider_id_error"--}}
+                            {{--    ></div>--}}
+                            {{--</div>--}}
                             <div class="col-lg col-xxl service-provider">
                                 <label
                                     class="form-label"
