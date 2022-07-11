@@ -37,7 +37,11 @@ return [
         'enabled' => true,
         'binary'  => base_path(env('WKHTML_PDF_BINARY', 'vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64')),
         'timeout' => false,
-        'options' => [],
+        'options' => [
+            'encoding'                 => 'utf-8',
+            'print-media-type'         => !0,
+            'enable-local-file-access' => !0,
+        ],
         'env'     => [],
     ],
 
@@ -46,7 +50,11 @@ return [
         'binary'  => base_path(env('WKHTML_IMG_BINARY', 'vendor/h4cc/wkhtmltoimage-amd64/bin/wkhtmltoimage-amd64')),
         'timeout' => false,
         'options' => [],
-        'env'     => [],
+        'env'     => [
+            'encoding'                 => 'utf-8',
+            'print-media-type'         => !0,
+            'enable-local-file-access' => !0,
+        ],
     ],
 
 ];

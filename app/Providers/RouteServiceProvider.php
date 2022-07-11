@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Appointment;
 use App\Models\Order;
 use App\Models\OrderLogs;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('Order', Order::class);
         Route::model('order_logs', OrderLogs::class);
         Route::model('Appointment', Appointment::class);
+        Route::model('User', User::class);
         $this->routes(function () {
             Route::prefix('api')
                 ->middleware('api')

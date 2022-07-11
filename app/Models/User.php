@@ -334,6 +334,17 @@ class User extends Authenticatable
         return $this->belongsTo(RaftCompanyLocation::class, 'raft_company_type', 'id');
     }
 
+    public function hasFirstAppointmentUrl(): bool
+    {
+        if (($raft = $this->getRaftCompanyBox())) {
+            /** @var Appointment $appointment */
+            if(($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
+                return (bool) $appointment->getFirstFileUrl();
+            }
+        }
+        return false;
+    }
+
     public function getFirstAppointmentUrl(): ?string
     {
         if (($raft = $this->getRaftCompanyBox())) {
@@ -343,6 +354,6 @@ class User extends Authenticatable
                 return  $appointment->getFirstFileUrl();
             }
         }
-        return null;
+        return route('.Appointment.generatePdf', auth()->id());
     }
 }

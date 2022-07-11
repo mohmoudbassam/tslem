@@ -29,5 +29,11 @@ class AppServiceProvider extends ServiceProvider
                           'dir' => $dir = (currentLocale() == 'ar' ? 'rtl' : 'ltr'),
                           'dir2' => $dir === 'ltr' ? 'rtl' : 'ltr',
                       ]);
+        if(strtolower(PHP_OS_FAMILY) == 'windows'){
+            config([
+                'snappy.pdf.binary' => base_path(trim(env('WKHTML_PDF_BINARY_WINDOWS'), '/\\')),
+                'snappy.pdf.image'  => base_path(trim(env('WKHTML_IMG_BINARY_WINDOWS'), '/\\')),
+            ]);
+        }
     }
 }

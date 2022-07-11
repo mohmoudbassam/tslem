@@ -660,6 +660,12 @@ Route::prefix('obligation')->name('obligation')->group(function () {
 Route::prefix('order_speciality_file')->name('order_speciality_file')->group(function () {
     Route::get('download/{id}', [DeliveryController::class, 'download_speciality_file'])->name('.download');
 });
+Route::group([
+    'prefix' => 'Appointment',
+    'as'     => '.Appointment.',
+], function () {
+    Route::get('GeneratePdf/{User}', [AppointmentController::class, 'generatePdf'])->name('generatePdf');
+});
 Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['auth'])->group(function () {
     Route::get('', [TaslemMaintenance::class, 'index'])->name('.index');
     Route::prefix('sessions')->name(".sessions")->group(function () {
@@ -699,7 +705,6 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::post('{Appointment}/update', [AppointmentController::class, 'update'])->name('update');
         Route::post('{Appointment}/upload', [AppointmentController::class, 'upload'])->name('upload');
     });
-
 });
 Route::prefix('kdana')->name('kdana')->middleware(['kdana'])->group(function () {
     Route::get('', [KdanaController::class, 'index']);
