@@ -26,7 +26,11 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $data = ['isToday' => request()->input('today')];
+        $boxes = RaftCompanyBox::query()->select('box')->groupBy('box')->get()->toArray();
+        $data = [
+            'isToday' => request()->input('today'),
+            'boxes'   => $boxes,
+        ];
         return view('CP.taslem_maintenance.Appointment.index', $data);
     }
 
@@ -56,6 +60,13 @@ class AppointmentController extends Controller
         }
         if (($i = $request->input('to_date'))) {
             $query->whereDate('start_at', '<=', $i);
+        }
+
+        if (($i = $request->input('camp_number'))) {
+            $query->whereHas('raftCompanyBox', fn(Builder $builder) => $builder->where('camp', $i));
+        }
+        if (($i = $request->input('box_number'))) {
+            $query->whereHas('raftCompanyBox', fn(Builder $builder) => $builder->where('box', $i));
         }
         $query->latest('start_at');
 
@@ -101,17 +112,17 @@ class AppointmentController extends Controller
     public function store(Request $request): JsonResponse
     {
         /** @var User $user */
-        if (!($id = $request->input('service_provider_id'))) {
-            $camp = $request->input('camp_number');
-            $box = $request->input('box_number');
-            $user = Model::serviceProviderByBoxes($box, $camp)->first();
-        }
-        else {
-            $user = User::query()->where([
-                'type' => User::SERVICE_PROVIDER_TYPE,
-                'id'   => $id,
-            ])->first();
-        }
+        //if (!($id = $request->input('service_provider_id'))) {
+        $camp = $request->input('camp_number');
+        $box = $request->input('box_number');
+        $user = Model::findServiceProviderByBoxes($box, $camp)->first();
+        //}
+        //else {
+        //    $user = User::query()->where([
+        //        'type' => User::SERVICE_PROVIDER_TYPE,
+        //        'id'   => $id,
+        //    ])->first();
+        //}
 
         if (!$user || !$user->getRaftCompanyBox()) {
             return response()->json([
@@ -320,9 +331,19 @@ class AppointmentController extends Controller
         ]);
     }
 
-    public function generatePdf(User $user){
+    public function generatePdf(User $user)
+    {
+        $data = ['user' => $user];
+        $view = 'CP.taslem_maintenance.Appointment.generate_pdf';
+        //return view($view, $data);
         //d(3);
-        $pdf = SnappyPdf::loadView('CP.taslem_maintenance.Appointment.generate_pdf', compact('user'));
-        return $pdf->inline('Pdf.pdf');
+        try {
+            $pdf = SnappyPdf::loadView($view, $data);
+            return $pdf->inline('Pdf.pdf');
+        }
+        catch (\Exception $exception) {
+            d($exception);
+        }
+        return view($view, $data);
     }
 }

@@ -40,6 +40,7 @@ return [
         'options' => [
             'encoding'                 => 'utf-8',
             'print-media-type'         => !0,
+            'enable-external-links'    => !0,
             'enable-local-file-access' => !0,
         ],
         'env'     => [],
@@ -53,6 +54,7 @@ return [
         'env'     => [
             'encoding'                 => 'utf-8',
             'print-media-type'         => !0,
+            'enable-external-links'    => !0,
             'enable-local-file-access' => !0,
         ],
     ],

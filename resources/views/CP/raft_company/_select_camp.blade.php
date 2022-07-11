@@ -1,3 +1,3 @@
 @foreach($camps as $camp)
-   <option value="{{$camp}}">{{$camp}}</option>
+   <option value="{!! $camp !!}">{{$camp}}</option>
 @endforeach

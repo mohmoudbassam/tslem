@@ -338,7 +338,7 @@ class User extends Authenticatable
     {
         if (($raft = $this->getRaftCompanyBox())) {
             /** @var Appointment $appointment */
-            if(($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
+            if (($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
                 return (bool) $appointment->getFirstFileUrl();
             }
         }
@@ -350,10 +350,11 @@ class User extends Authenticatable
         if (($raft = $this->getRaftCompanyBox())) {
             //$user = Appointment::serviceProviderByBoxes($raft->box,$raft->camp)->first();
             /** @var Appointment $appointment */
-            if(($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
-                return  $appointment->getFirstFileUrl();
+            if (($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
+                return $appointment->getFirstFileUrl();
             }
         }
-        return route('.Appointment.generatePdf', auth()->id());
+        return null;
+        //return route('.Appointment.generatePdf', auth()->id());
     }
 }

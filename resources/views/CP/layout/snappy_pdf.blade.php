@@ -10,7 +10,6 @@
     <meta name="csrf-token" content="{!! csrf_token() !!}">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" name="viewport">
     <title>@hasSection("title") @yield("title")@endif</title>
-
     <link
         href="{{ asset("assets/pdf-style/app.css") }}"
         rel="stylesheet"
@@ -21,6 +20,11 @@
         rel="stylesheet"
         type="text/css"
     >
+    <style>
+        body{
+            font-family: 'Tajawal', sans-serif !important;
+        }
+    </style>
 </head>
 <body>
 @yield('content')

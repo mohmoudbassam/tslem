@@ -10,13 +10,14 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     @if($can_create_order)
-                        <div class="col-6 d-flex flex-row justify-content-between">
+                        <div class="col-6 d-flex flex-row justify-content-evenly">
                             <div class="btn-group" role="group">
                                 <a href="{{route('services_providers.create_order')}}"
                                    class="btn btn-primary dropdown-toggle">
                                    <i class="fa fa-clipboard-check me-1"></i> انشاء الطلب
                                 </a>
                             </div>
+                            @if(auth()->user()->hasFirstAppointmentUrl())
                             <div class="btn-group" role="group">
                                 <a href="{{auth()->user()->getFirstAppointmentUrl()}}" target="_blank"
                                    class="btn {{auth()->user()->hasFirstAppointmentUrl() ? 'btn-success' :'btn-primary'}}">
@@ -24,6 +25,7 @@
                                     عرض محضر اعادة تسليم صيانة
                                 </a>
                             </div>
+                            @endif
                             @if(isset($box->file_first) or isset($box->file_second) or isset($box->file_third))
                                 <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="filesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
