@@ -123,7 +123,7 @@ class AppointmentController extends Controller
         //$q = RaftCompanyBox::query()->where('box',$box);
         //d($q->get());
         //d($request->all());
-        $user = Model::findServiceProviderByBoxes($box, $camp)->first();
+        $user = Model::serviceProviderByBoxes($box, $camp)->first();
         //}
         //else {
         //    $user = User::query()->where([

@@ -58,23 +58,6 @@ class Appointment extends Model implements HasMedia
     ];
 
     /**
-     * @param $box
-     * @param $camp
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public static function findServiceProviderByBoxes($box, $camp): Builder
-    {
-        $q = User::query()
-            ->where('type', User::SERVICE_PROVIDER_TYPE)
-            ->where('box_number', 'LIKE', $box)
-            ->where('camp_number', 'LIKE', $camp);
-            //->first();
-        //d($camp);
-        return $q;
-    }
-
-    /**
      * @return void
      */
     public function registerMediaCollections(): void
@@ -180,10 +163,10 @@ class Appointment extends Model implements HasMedia
      */
     public static function serviceProviderByBoxes($box, $camp): Builder
     {
-        return User::query()->where('type', User::SERVICE_PROVIDER_TYPE)->where([
-            'box_number'  => $box,
-            'camp_number' => $camp,
-        ]);
+        return User::query()
+            ->where('type', User::SERVICE_PROVIDER_TYPE)
+            ->where('box_number', 'LIKE', $box)
+            ->where('camp_number', 'LIKE', $camp);
     }
 
     /**
