@@ -44,4 +44,8 @@ class RaftCompanyBox extends Model
     {
         return $this->belongsTo(RaftCompanyLocation::class);
     }
+
+    public function licenses(){
+        return $this->hasMany(License::class,'box_raft_company_box_id');
+    }
 }
