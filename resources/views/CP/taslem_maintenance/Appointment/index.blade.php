@@ -80,6 +80,7 @@
             </div>
         </div>
         <div class="card">
+            @if(!$isToday)
             <div class="card-header">
                 <div class="row">
                     <div class="col-lg-12">
@@ -87,7 +88,6 @@
                             class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 "
                             id="form_data"
                         >
-                            @if(!$isToday)
                                 <div class="col-lg-3 col-xxl-2">
                                     <label for="">من</label>
                                     <input
@@ -106,8 +106,6 @@
                                         placeholder=""
                                     >
                                 </div>
-                            @endif
-
                             <div
                                 class="col-sm-auto ms-auto"
                                 style="margin-top:1.9rem;"
@@ -134,9 +132,10 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
+            @endif
+
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
