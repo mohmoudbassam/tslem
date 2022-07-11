@@ -1,33 +1,33 @@
 <header id="page-topbar">
     <div class="navbar-header">
-{{--        <div class="d-flex">--}}
-{{--            <!-- LOGO -->--}}
-{{--            <div class="navbar-brand-box">--}}
-{{--                <a href="{{ url('/'.auth()->user()->type) }}/orders" class="logo logo-dark">--}}
-{{--                                <span class="logo-sm">--}}
-{{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24">--}}
-{{--                                </span>--}}
-{{--                    <span class="logo-lg">--}}
-{{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>--}}
-{{--                                </span>--}}
-{{--                </a>--}}
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="{{ url('/'.auth()->user()->type) }}/orders" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.svg" alt="" height="24">
+                                </span>
+                    <span class="logo-lg">
+                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>
+                                </span>
+                </a>
 
-{{--                <a href="{{ url('/'.auth()->user()->type) }}" class="logo logo-light">--}}
-{{--                                <span class="logo-sm">--}}
-{{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24">--}}
-{{--                                </span>--}}
-{{--                    <span class="logo-lg">--}}
-{{--                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>--}}
-{{--                                </span>--}}
-{{--                </a>--}}
-{{--            </div>--}}
+                <a href="{{ url('/'.auth()->user()->type) }}" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="assets/images/logo-sm.svg" alt="" height="24">
+                                </span>
+                    <span class="logo-lg">
+                                    <img src="assets/images/logo-sm.svg" alt="" height="24"> <span class="logo-txt">منصة تسليم</span>
+                                </span>
+                </a>
+            </div>
 
-{{--            <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">--}}
-{{--                <i class="fa fa-fw fa-bars"></i>--}}
-{{--            </button>--}}
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
 
 
-{{--        </div>--}}
+        </div>
 
         <a href="{{ url('/'.auth()->user()->type) }}/orders" class="logo ps-4">
             <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" height="30">

@@ -1,4 +1,4 @@
-@extends('CP.sharer_layout')
+@extends('CP.master')
 @section('title')
     المواعيد
 @endsection

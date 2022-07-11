@@ -165,6 +165,12 @@
 <script>
     $(function () {
         feather.replace();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     });
 
     function read_message() {

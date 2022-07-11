@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{route('taslem_maintenance.save_note')}}" id="add_edit_form" method="post" enctype="multipart/form-">
+            <form action="{{route('taslem_maintenance.save_note')}}" id="add_edit_form" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-4">
