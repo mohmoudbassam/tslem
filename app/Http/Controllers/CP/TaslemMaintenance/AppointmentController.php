@@ -96,8 +96,8 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $l = License::query();#->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
-        $l = License::query()->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
+        //$l = License::query();#->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
+        //$l = License::query()->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
         //d($l->get());
         $users = User::query()->where('type', User::SERVICE_PROVIDER_TYPE)
             ->has('orders')
@@ -120,9 +120,9 @@ class AppointmentController extends Controller
         //if (!($id = $request->input('service_provider_id'))) {
         $camp = $request->input('camp_number');
         $box = $request->input('box_number');
-        $q = RaftCompanyBox::query()->where('box',$box);
-        d($q->get());
-        d($request->all());
+        //$q = RaftCompanyBox::query()->where('box',$box);
+        //d($q->get());
+        //d($request->all());
         $user = Model::findServiceProviderByBoxes($box, $camp)->first();
         //}
         //else {
