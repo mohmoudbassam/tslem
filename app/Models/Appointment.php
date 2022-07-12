@@ -31,6 +31,7 @@ class Appointment extends Model implements HasMedia
         'start_at',
         'is_published',
         'notes',
+        'service_provider_id',
     ];
 
     /**
@@ -55,6 +56,7 @@ class Appointment extends Model implements HasMedia
         'start_at'                 => null,
         'notes'                    => null,
         'is_published'             => !1,
+        'service_provider_id'      => null,
     ];
 
     /**
@@ -141,41 +143,7 @@ class Appointment extends Model implements HasMedia
      */
     public function getServiceProviderNameAttribute(): string
     {
-        return ($s = $this->getServiceProvider()) ? $s->company_name : '';
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
-     */
-    public function getServiceProvider()
-    {
-        $raftCompanyBox = $this->raftCompanyBox;
-        $box = $raftCompanyBox->box;
-        $camp = $raftCompanyBox->camp;
-
-        if (!($user = static::serviceProviderByBoxes($box, $camp)->first())) {
-            //d($raftCompanyBox);
-            if (($license = License::query()->where('box_raft_company_box_id', $this->raft_company_box_id)->first()) && $license->box) {
-                $box = $license->box->box;
-                $camp = $license->box->camp;
-                $user = static::serviceProviderByBoxes($box, $camp)->first();
-            }
-        }
-        return $user;
-    }
-
-    /**
-     * @param $box
-     * @param $camp
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public static function serviceProviderByBoxes($box, $camp): Builder
-    {
-        return User::query()
-            ->where('type', User::SERVICE_PROVIDER_TYPE)
-            ->where('box_number', 'LIKE', $box)
-            ->where('camp_number', 'LIKE', $camp);
+        return $this->serviceProvider->company_name ?: '';
     }
 
     /**
@@ -199,5 +167,10 @@ class Appointment extends Model implements HasMedia
         $value = is_null($value) ? $this->getKey() : $value;
         $id = str_pad($value, $length, '0', STR_PAD_LEFT);
         return ($hashTag ? '#' : '').$id;
+    }
+
+    public function serviceProvider(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'service_provider_id')->withDefault();
     }
 }

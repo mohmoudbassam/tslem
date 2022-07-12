@@ -210,7 +210,7 @@ class AppointmentController extends Controller
             /** @var Model $model */
             foreach ($models as $model) {
                 //$user = User::where('type', 'raft_company')->where('raft_company_type', $model->raft_company_location_id)->first();
-                $user = $model->getServiceProvider()->first();
+                $user = $model->serviceProvider;
                 if ($user && $user->phone) {
                     //$box = RaftCompanyBox::query()->where('id', $model->raft_company_box_id)->first();
                     $user->phone && sms($user->phone, __('message.appointment_sms', [
@@ -331,9 +331,9 @@ class AppointmentController extends Controller
         $model = Model::query()->where('id', $request->id)->first();
         //$user = User::query()->where('type', 'raft_company')->where('raft_company_type', $model->raft_company_location_id)->first();
         //$box = RaftCompanyBox::query()->where('id', $model->raft_company_box_id)->first();
-        $user = $model->getServiceProvider()->first();
-        $box = $model->raftCompanyBox();
+        $user = $model->serviceProvider;
         if ($user && $user->phone) {
+            $box = $model->raftCompanyBox();
             sms($user->phone, __('message.appointment_sms', [
                 'camp'         => optional($box)->camp,
                 'box'          => optional($box)->box,
