@@ -358,7 +358,19 @@
             formData.append('camp_id', $('#camp_number').val())
             formData.append('_token', '{{ csrf_token() }}')
 
-            postData(formData, '{{route('taslem_maintenance.Appointment.store')}}')
+            postData(formData, '{{route('taslem_maintenance.Appointment.store')}}', (data) => {
+                if (data.success) {
+                    const id = data?.service_provider_id
+                    $('#page_modal').modal('hide')
+                    $('#items_table').DataTable().ajax.reload(null, false)
+                    data.message && showAlertMessage('success', data.message)
+                    !id && alertWarning('تم إضافة الموعد بدون مركز خدمة')
+                } else {
+                    showAlertMessage('error', data.message || 'حدث خطأ في النظام')
+                }
+                KTApp.unblock('#page_modal')
+                KTApp.unblockPage()
+            })
         })
 
         $('.publish_btn').click(function (e) {
@@ -408,7 +420,7 @@
                     KTApp.unblock('#page_modal')
                     KTApp.unblockPage()
                 },
-                complete(){
+                complete () {
                     KTApp.unblockPage()
                 }
             })

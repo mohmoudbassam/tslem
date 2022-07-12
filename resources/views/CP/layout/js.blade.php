@@ -436,6 +436,9 @@
     window.alertSuccess = function (title, text) {
         return alertMessage({ title, text, icon: 'success' })
     }
+    window.alertWarning = function (title, text) {
+        return alertMessage({ title, text, icon: 'warning' })
+    }
     $('.reset_btn').click(function (ev) {
         const self = $(this)
         const formId = self.data('form-id') || 'form_data'

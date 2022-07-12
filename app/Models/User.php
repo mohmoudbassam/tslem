@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -299,7 +300,7 @@ class User extends Authenticatable
                 'camp' => $user->camp_number,
             ];
 
-        return \App\Models\RaftCompanyBox::where($where)->first() ?: value($default);
+        return RaftCompanyBox::where($where)->first() ?: value($default);
     }
 
     public function hasRaftCompanyBox(): bool
@@ -311,7 +312,7 @@ class User extends Authenticatable
                 'camp' => $user->camp_number,
             ];
 
-        return \App\Models\RaftCompanyBox::where($where)->count();
+        return RaftCompanyBox::where($where)->count();
     }
 
     public function parent()
@@ -336,25 +337,20 @@ class User extends Authenticatable
 
     public function hasFirstAppointmentUrl(): bool
     {
-        if (($raft = $this->getRaftCompanyBox())) {
-            /** @var Appointment $appointment */
-            if (($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
-                return (bool) $appointment->getFirstFileUrl();
-            }
-        }
-        return false;
+        return $this->appointment->getFirstFileUrl();
     }
 
     public function getFirstAppointmentUrl(): ?string
     {
-        if (($raft = $this->getRaftCompanyBox())) {
-            //$user = Appointment::serviceProviderByBoxes($raft->box,$raft->camp)->first();
-            /** @var Appointment $appointment */
-            if (($appointment = Appointment::query()->where('raft_company_box_id', $raft->id)->first())) {
-                return $appointment->getFirstFileUrl();
-            }
-        }
-        return null;
+        return $this->appointment->getFirstFileUrl();
         //return route('.Appointment.generatePdf', auth()->id());
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function appointment(): HasOne
+    {
+        return $this->hasOne(Appointment::class, 'service_provider_id')->withDefault();
     }
 }

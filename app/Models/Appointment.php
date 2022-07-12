@@ -149,10 +149,10 @@ class Appointment extends Model implements HasMedia
     /**
      * @return string
      */
-    public function getFirstFileUrl(): string
+    public function getFirstFileUrl(): ?string
     {
         $media = $this->getFirstMedia(static::MEDIA_COLLECTION_NAME);
-        return $media ? $media->getFullUrl() : '';
+        return $media ? $media->getFullUrl() : null;
     }
 
     /**
@@ -169,8 +169,44 @@ class Appointment extends Model implements HasMedia
         return ($hashTag ? '#' : '').$id;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function serviceProvider(): BelongsTo
     {
         return $this->belongsTo(User::class, 'service_provider_id')->withDefault();
+    }
+
+    /**
+     * Check if raft Company Box has a license by "License > camp_raft_company_box_id > Order > owner_id"
+     * Check if raft Company Box has a license by "RaftCompanyBox > license_number"
+     * Check if raft Company Box has a user by "User > box_number & camp_number & parent_id not NULL"
+     *
+     * @return int|null
+     */
+    public function searchOnServiceProviderId(): ?int
+    {
+        /** @var \App\Models\RaftCompanyBox $raftCompany */
+        if (!($raftCompany = $this->raftCompanyBox)) {
+            return null;
+        }
+
+        /** @var \App\Models\License|null $license */
+
+        // # "License > camp_raft_company_box_id > Order > owner_id"
+        if (($license = $raftCompany->licenses()->first())) {
+            $user = $license->order ? $license->order->owner_id : null;
+        }
+        // # Check if raft Company Box has a license by "RaftCompanyBox > license_number"
+        elseif ($raftCompany->license_number && ($license = License::find($raftCompany->license_number))) {
+            $user = $license->order ? $license->order->owner_id : null;
+        }
+        else {
+            // # Check if raft Company Box has a user by "User > box_number & camp_number & parent_id not NULL"
+            $q = User::query()->whereNotNull('parent_id')->where('box_number', 'LIKE', $raftCompany->box)->where('camp_number', 'LIKE', $raftCompany->camp)->first();
+            $user = $q ? $q->id : null;
+        }
+
+        return $user;
     }
 }

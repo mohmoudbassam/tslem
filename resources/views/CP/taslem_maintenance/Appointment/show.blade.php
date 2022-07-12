@@ -1,6 +1,6 @@
 @extends('CP.master')
 
-@section('title', "عرض التفاصيل" )
+@section('title', __('appointment.show'))
 
 @section('style')
     <link
@@ -29,11 +29,11 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{route('taslem_maintenance.Appointment.index')}}">
-                            {{ trans_choice('choice.Appointments', 2) }}
+                            {!! __('appointment.index') !!}
                         </a>
                     </li>
                     <li class="breadcrumb-item active">
-                        عرض تفاصيل الموعد
+                        {!! __('appointment.show') !!}
                     </li>
                 </ol>
             </div>
@@ -41,7 +41,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h4 class="mb-sm-0 font-size-18 text-center">عرض تفاصيل الموعد</h4>
+            <h4 class="mb-sm-0 font-size-18 text-center">{!! __('appointment.show') !!}</h4>
         </div>
         <div class="card-body">
             <div class="border p-5 py-4 pb-3 mb-3">

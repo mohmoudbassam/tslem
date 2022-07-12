@@ -10,19 +10,19 @@
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     @if($can_create_order)
-                        <div class="col-6 d-flex flex-row justify-content-evenly">
+                        <div class="col-6 d-flex flex-row justify-content-between">
                             <div class="btn-group" role="group">
                                 <a href="{{route('services_providers.create_order')}}"
                                    class="btn btn-primary dropdown-toggle">
                                    <i class="fa fa-clipboard-check me-1"></i> انشاء الطلب
                                 </a>
                             </div>
-                            @if(auth()->user()->hasFirstAppointmentUrl())
+                            @if(auth()->user()->getFirstAppointmentUrl())
                             <div class="btn-group" role="group">
                                 <a href="{{auth()->user()->getFirstAppointmentUrl()}}" target="_blank"
-                                   class="btn {{auth()->user()->hasFirstAppointmentUrl() ? 'btn-success' :'btn-primary'}}">
+                                   class="btn btn-success">
                                    <i class="fa fa-download me-1"></i>
-                                    عرض محضر اعادة تسليم صيانة
+                                    {!! __('appointment.download_file') !!}
                                 </a>
                             </div>
                             @endif

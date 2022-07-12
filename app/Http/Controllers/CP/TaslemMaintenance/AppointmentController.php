@@ -68,7 +68,7 @@ class AppointmentController extends Controller
         if (($i = $request->input('box_number'))) {
             $query->whereHas('raftCompanyBox', fn(Builder $builder) => $builder->where('box', $i));
         }
-        $query->latest('start_at');
+        $query->latest();
 
         return DataTables::of($query)
             ->editColumn('name', fn(Model $model) => $model->service_provider_name)
@@ -114,6 +114,7 @@ class AppointmentController extends Controller
         //if (!($id = $request->input('service_provider_id'))) {
         //$camp = $request->input('camp_number');
         //$box = $request->input('box_number');
+        /** @var RaftCompanyBox $raftCompanyBox */
         if (!($raftCompanyBox = RaftCompanyBox::query()->find($request->input('camp_id')))) {
             return response()->json([
                 'message' => 'لم يتم العثور على رقم المربع والمخيم في قاعدة البيانات',
@@ -156,18 +157,22 @@ class AppointmentController extends Controller
         //    }
         //}
 
-        if(!($model = Model::where(['raft_company_box_id' => $raftCompanyBox->id])->notPublished()->first())) {
+        if (!($model = Model::where(['raft_company_box_id' => $raftCompanyBox->id])->notPublished()->first())) {
+            //d(2);
             $model = new Model;
             $model->raft_company_box_id = $raftCompanyBox->id;
             $model->raft_company_location_id = $raftCompanyBox->raft_company_location_id;
             $model->support_id = auth()->id();
         }
+        $model->service_provider_id = $model->searchOnServiceProviderId();
         $model->start_at = Carbon::parse($request->input('start_at'))->format("Y-m-d h:i");
+        //d($model);
         $model->save();
 
         return response()->json([
-            'message' => 'تمت عملية الإضافة  بنجاح',
-            'success' => !0,
+            'message'             => 'تمت عملية الإضافة  بنجاح',
+            'service_provider_id' => $model->service_provider_id,
+            'success'             => !0,
         ]);
     }
 
@@ -178,7 +183,7 @@ class AppointmentController extends Controller
     public function notPublished()
     {
         $q = Model::where('support_id', auth()->user()->id)->notPublished()->with('raftCompanyLocation', 'raftCompanyLocation.user', 'raftCompanyBox');
-        $q->latest('start_at');
+        $q->latest();
         return DataTables::of($q)
             ->editColumn('name', fn(Model $model) => $model->service_provider_name)
             ->editColumn('start_at', fn(Model $model) => $model->start_at_to_string)
@@ -213,12 +218,12 @@ class AppointmentController extends Controller
                 $user = $model->serviceProvider;
                 if ($user && $user->phone) {
                     //$box = RaftCompanyBox::query()->where('id', $model->raft_company_box_id)->first();
-                    $user->phone && sms($user->phone, __('message.appointment_sms', [
-                        'camp'         => optional($model->raftCompanyBox)->camp,
-                        'box'          => optional($model->raftCompanyBox)->box,
-                        'company_name' => $user->company_name,
-                    ]));
-                    $user->notify(new TasleemMaintenanceNotification('لديك مواعيد إعادة تسليم جديدة يرجى منك متابعتها', auth()->id()));
+                    //$user->phone && sms($user->phone, __('message.appointment_sms', [
+                    //    'camp'         => optional($model->raftCompanyBox)->camp,
+                    //    'box'          => optional($model->raftCompanyBox)->box,
+                    //    'company_name' => $user->company_name,
+                    //]));
+                    //$user->notify(new TasleemMaintenanceNotification('لديك مواعيد إعادة تسليم جديدة يرجى منك متابعتها', auth()->id()));
                 }
             }
 
