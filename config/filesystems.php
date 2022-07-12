@@ -79,8 +79,8 @@ return [
 
         'media' => [
             'driver'     => 'local',
-            'root'       => public_path('media'),
-            'url'        => rtrim(env('APP_URL'), '/').'/media',
+            'root'       => storage_path('app/public/media-attachments'),
+            'url'        => rtrim(env('APP_URL'), '/').'/storage/media-attachments',
             'visibility' => 'public',
         ],
     ],
