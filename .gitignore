@@ -16,3 +16,4 @@ yarn-error.log
 /.vscode
 .env.local
 .run/Serve.run.xml
+public/media
