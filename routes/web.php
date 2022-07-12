@@ -27,6 +27,7 @@ use App\Http\Controllers\CP\TaslemMaintenance\TaslemMaintenance;
 use App\Http\Controllers\CP\Users\UserController;
 use App\Http\Controllers\CP\Users\UserRequestController;
 use App\Http\Controllers\CP\VerificationController;
+use App\Http\Controllers\DevelopmentController;
 use App\Http\Controllers\ImportExcelController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SiteController;
@@ -694,13 +695,13 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
     ], function () {
         Route::get('', [AppointmentController::class, 'index'])->name('index');
         Route::get('data-tables', [AppointmentController::class, 'list'])->name('list');
-        Route::get('export', [ AppointmentController::class, 'export' ])->name('export');
-        Route::get('create', [ AppointmentController::class, 'create' ])->name('create');
-        Route::post('store', [ AppointmentController::class, 'store' ])->name('store');
-        Route::post('send_sms', [ AppointmentController::class, 'send_sms' ])->name('send_sms');
-        Route::get('NotPublished', [ AppointmentController::class, 'notPublished' ])->name('notPublished');
-        Route::post('publish', [ AppointmentController::class, 'publish' ])->name('publish');
-        Route::post('delete', [ AppointmentController::class, 'delete' ])->name('delete');
+        Route::get('export', [AppointmentController::class, 'export'])->name('export');
+        Route::get('create', [AppointmentController::class, 'create'])->name('create');
+        Route::post('store', [AppointmentController::class, 'store'])->name('store');
+        Route::post('send_sms', [AppointmentController::class, 'send_sms'])->name('send_sms');
+        Route::get('NotPublished', [AppointmentController::class, 'notPublished'])->name('notPublished');
+        Route::post('publish', [AppointmentController::class, 'publish'])->name('publish');
+        Route::post('delete', [AppointmentController::class, 'delete'])->name('delete');
         Route::get('{Appointment}/show', [AppointmentController::class, 'show'])->name('show');
         Route::post('{Appointment}/update', [AppointmentController::class, 'update'])->name('update');
         Route::post('{Appointment}/upload', [AppointmentController::class, 'upload'])->name('upload');
@@ -738,3 +739,5 @@ Route::get('west_list', [LoginController::class, 'west_list'])->name('west_list'
 Route::get('ex', [LoginController::class, 'ex'])->name('ex');
 Route::get('ex_boxes_users', [LoginController::class, 'ex_boxes_users'])->name('ex_boxes_users');
 Route::get('download_file/{model}/{id}/{attribute}', [GeneralController::class, 'download_file'])->name('download_file');
+
+Route::group(['prefix' => 'Development'], fn() => Route::any('', [DevelopmentController::class, 'dev'])->name('development'));
