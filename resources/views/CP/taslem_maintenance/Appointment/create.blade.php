@@ -1,6 +1,6 @@
 @extends('CP.master')
 
-@section('title', trans_choice('choice.Appointments', 2) )
+@section('title', __('appointment.create'))
 
 @section('style')
     <link
@@ -23,11 +23,11 @@
                             </li>
                             <li class="breadcrumb-item">
                                 <a href="{{route('taslem_maintenance.Appointment.index')}}">
-                                    {{ trans_choice('choice.Appointments', 2) }}
+                                    {!! __('appointment.index') !!}
                                 </a>
                             </li>
                             <li class="breadcrumb-item active">
-                                إضافة موعد
+                                {!! __('appointment.create') !!}
                             </li>
                         </ol>
                     </div>
@@ -151,8 +151,7 @@
                                 ></div>
                             </div>
                         </div>
-                        <div class="row">
-                        </div>
+                        <div class="row"></div>
                         <div class="row">
                             <div
                                 class="col-auto ms-auto"
@@ -288,8 +287,8 @@
                         className: 'text-center',
                         data: 'name',
                         name: 'name',
-                        sortable:!1,
-                        searchable:!1,
+                        sortable: !1,
+                        searchable: !1,
                         orderable: !1
                     },
                     {
@@ -310,7 +309,7 @@
                     {
                         className: 'text-center',
                         data: 'raft_company_location.user.phone',
-                        name: 'raft_company_location.user.phone',
+                        name: 'raft_company_location.user.phone'
                     },
 
                     { className: 'text-center', data: 'start_at', name: 'start_at' },
@@ -356,8 +355,7 @@
             const formData = new FormData()
             formData.append('start_at', $('#start_at').val())
             formData.append('box_number', $('#box_number').val())
-            formData.append('camp_number', $('#camp_number').val())
-            // formData.append('service_provider_id', $('#service_provider_id').val())
+            formData.append('camp_id', $('#camp_number').val())
             formData.append('_token', '{{ csrf_token() }}')
 
             postData(formData, '{{route('taslem_maintenance.Appointment.store')}}')
@@ -381,26 +379,36 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             })
-            var url = '{{route('raft_company.get_camp_by_box',':box')}}'
-
-            url = url.replace(':box', $('#box_number').val())
+            const url = '{{route('RaftCompany.campsByBoxNumber',':box')}}'.replace(':box', $('#box_number').val())
 
             $.ajax({
-                url: url,
+                url,
                 data: {},
                 type: 'GET',
-                processData: false,
-                contentType: false,
+                processData: !1,
+                contentType: !1,
+                beforeSend () {
+                    KTApp.blockPage({
+                        overlayColor: '#000000',
+                        type: 'v2',
+                        state: 'success',
+                        message: 'الرجاء الانتظار'
+                    })
+                },
                 success: function (data) {
                     if (data.success) {
-                        $('#camp_number').find('option').remove()
-                        $('#camp_number').html(data.page)
-                        $('#camp_number').removeAttr('disabled')
+                        const campsSelect = $('#camp_number')
+                        campsSelect.find('option').remove()
+                        campsSelect.html(data.page)
+                        campsSelect.removeAttr('disabled')
                     }
                 },
                 error: function (data) {
                     console.log(data)
                     KTApp.unblock('#page_modal')
+                    KTApp.unblockPage()
+                },
+                complete(){
                     KTApp.unblockPage()
                 }
             })

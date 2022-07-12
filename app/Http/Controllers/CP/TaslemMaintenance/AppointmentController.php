@@ -95,16 +95,11 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //$l = License::query();#->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
-        //$l = License::query()->groupBy('box_raft_company_box_id')->select('box_raft_company_box_id');
-        //d($l->get());
         $users = User::query()->where('type', User::SERVICE_PROVIDER_TYPE)
             ->has('orders')
             ->where(fn(Builder $builder) => $builder->whereNotNull(['box_number', 'camp_number'])->orWhereNotNull('license_number'))
             ->get();
-        //dd($users->toArray());
-        $boxes = RaftCompanyBox::query()->has('licenses')->select('box')->groupBy('box')->get()->toArray();
-        //d($boxes);
+        [$boxes] = Model::getCampsOfCreate();
         return view('CP.taslem_maintenance.Appointment.create', compact('users', 'boxes'));
     }
 
@@ -115,14 +110,19 @@ class AppointmentController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        /** @var User $user */
+        ///** @var User $user */
         //if (!($id = $request->input('service_provider_id'))) {
-        $camp = $request->input('camp_number');
-        $box = $request->input('box_number');
-        //$q = RaftCompanyBox::query()->where('box',$box);
-        //d($q->get());
+        //$camp = $request->input('camp_number');
+        //$box = $request->input('box_number');
+        if (!($raftCompanyBox = RaftCompanyBox::query()->find($request->input('camp_id')))) {
+            return response()->json([
+                'message' => 'لم يتم العثور على رقم المربع والمخيم في قاعدة البيانات',
+                'success' => !1,
+            ]);
+        }
+        //d($raftCompanyBox);
         //d($request->all());
-        $user = Model::serviceProviderByBoxes($box, $camp)->first();
+        //$user = Model::serviceProviderByBoxes($box, $camp)->first();
         //}
         //else {
         //    $user = User::query()->where([
@@ -131,35 +131,43 @@ class AppointmentController extends Controller
         //    ])->first();
         //}
 
-        if (!$user || !$user->getRaftCompanyBox()) {
-            return response()->json([
-                'message' => 'لم يتم العثور على مركز خدمة في البيانات',
-                'success' => false,
-            ]);
-        }
-        $raftCompany = $user->getRaftCompanyBox();
-        $camp = $raftCompany->camp;
-        $box = $raftCompany->box;
-        if (!($raftCompanyBox = RaftCompanyBox::where([['camp', $camp], ['box', $box]])->first())) {
-            return response()->json([
-                'message' => 'لم يتم العثور على رقم المربع والمخيم في قاعدة البيانات',
-                'success' => false,
-            ]);
-        }
+        //if (!$user || !$user->getRaftCompanyBox()) {
+        //    return response()->json([
+        //        'message' => 'لم يتم العثور على مركز خدمة في البيانات',
+        //        'success' => false,
+        //    ]);
+        //}
+        //$raftCompany = $user->getRaftCompanyBox();
+        //$camp = $raftCompanyBox->camp;
+        //$box = $raftCompanyBox->box;
+        //if (!($raftCompanyBox = RaftCompanyBox::where([['camp', $camp], ['box', $box]])->first())) {
+        //    return response()->json([
+        //        'message' => 'لم يتم العثور على رقم المربع والمخيم في قاعدة البيانات',
+        //        'success' => false,
+        //    ]);
+        //}
 
-        $model = Model::where(['support_id' => auth()->user()->id, 'raft_company_box_id' => $raftCompanyBox->id])->notPublished()->first();
-        if (!$model) {
+        //if (($model = Model::where(['raft_company_box_id' => $raftCompanyBox->id])->first())) {
+        //    if ($model->is_published) {
+        //        return response()->json([
+        //            'message' => 'تم حجز موعد مسبقاً لهذا المخيم',
+        //            'success' => !1,
+        //        ]);
+        //    }
+        //}
+
+        if(!($model = Model::where(['raft_company_box_id' => $raftCompanyBox->id])->notPublished()->first())) {
             $model = new Model;
             $model->raft_company_box_id = $raftCompanyBox->id;
             $model->raft_company_location_id = $raftCompanyBox->raft_company_location_id;
-            $model->support_id = auth()->user()->id;
+            $model->support_id = auth()->id();
         }
         $model->start_at = Carbon::parse($request->input('start_at'))->format("Y-m-d h:i");
         $model->save();
 
         return response()->json([
-            'message' => 'تمت عمليه الاضافة  بنجاح',
-            'success' => true,
+            'message' => 'تمت عملية الإضافة  بنجاح',
+            'success' => !0,
         ]);
     }
 

@@ -58,6 +58,16 @@ class Appointment extends Model implements HasMedia
     ];
 
     /**
+     * @return array[[\Illuminate\Database\Eloquent\Collection,'Illuminate\Database\Eloquent\Collection]]
+     */
+    public static function getCampsOfCreate(): array
+    {
+        $camps = RaftCompanyBox::query()->where('seen_notes', !0)->get();
+        $boxes = $camps->unique('box')->sortBy('id')->values();
+        return [$boxes, $camps];
+    }
+
+    /**
      * @return void
      */
     public function registerMediaCollections(): void
@@ -178,9 +188,9 @@ class Appointment extends Model implements HasMedia
     }
 
     /**
-     * @param int $length
-     * @param bool $hashTag
-     * @param null $value
+     * @param  int  $length
+     * @param  bool  $hashTag
+     * @param  null  $value
      *
      * @return string
      */

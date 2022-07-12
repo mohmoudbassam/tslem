@@ -634,9 +634,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
                 '.seen_maintain_file'
             );
         });
-        Route::get('get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name(
-            '.get_camp_by_box'
-        );
+        Route::get('get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name('.get_camp_by_box');
     });
     Route::prefix('session')->name('session')->group(function () {
         Route::middleware(['raft_company'])->group(function () {
@@ -645,10 +643,7 @@ Route::middleware(['auth', 'is-file-uploaded'])->group(function () {
             Route::get('add', [SessionController::class, 'add'])->name('.add');
             Route::post('save', [SessionController::class, 'save'])->name('.save');
         });
-        Route::get(
-            'get_camp_by_box/{box}',
-            [SessionController::class, 'get_camp_by_box']
-        )->name('.get_camp_by_box');
+        Route::get('get_camp_by_box/{box}',[SessionController::class, 'get_camp_by_box'])->name('.get_camp_by_box');
     });
     Route::post('read_message', [NotificationController::class, 'read_message'])->name('read_message');
 });
@@ -728,9 +723,8 @@ Route::get('import-excel', function () {
 });
 Route::post('import', [ImportExcelController::class, 'import'])->name('import');
 
-Route::get('raft_company/get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name(
-    'raft_company.get_camp_by_box'
-);
+Route::get('raft_company/get_camp_by_box/{box}', [RaftCompanyController::class, 'get_camp_by_box'])->name('raft_company.get_camp_by_box');
+Route::get('RaftCompany/{box}/Camps', [RaftCompanyController::class, 'campsByBoxNumber'])->name('RaftCompany.campsByBoxNumber');
 
 Route::get('qr_download_files/{order}', [LicenseController::class, 'qr_download_files'])->name('qr_download_files');
 Route::get('download_raft_company_file/{rf_id}/{file_type}', [LicenseController::class, 'download_raft_company_file'])->name('download_raft_company_file');
