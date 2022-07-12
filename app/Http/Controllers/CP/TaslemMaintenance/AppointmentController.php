@@ -218,12 +218,12 @@ class AppointmentController extends Controller
                 $user = $model->serviceProvider;
                 if ($user && $user->phone) {
                     //$box = RaftCompanyBox::query()->where('id', $model->raft_company_box_id)->first();
-                    //$user->phone && sms($user->phone, __('message.appointment_sms', [
-                    //    'camp'         => optional($model->raftCompanyBox)->camp,
-                    //    'box'          => optional($model->raftCompanyBox)->box,
-                    //    'company_name' => $user->company_name,
-                    //]));
-                    //$user->notify(new TasleemMaintenanceNotification('لديك مواعيد إعادة تسليم جديدة يرجى منك متابعتها', auth()->id()));
+                    $user->phone && sms($user->phone, __('message.appointment_sms', [
+                        'camp'         => optional($model->raftCompanyBox)->camp,
+                        'box'          => optional($model->raftCompanyBox)->box,
+                        'company_name' => $user->company_name,
+                    ]));
+                    $user->notify(new TasleemMaintenanceNotification('لديك مواعيد إعادة تسليم جديدة يرجى منك متابعتها', auth()->id()));
                 }
             }
 
