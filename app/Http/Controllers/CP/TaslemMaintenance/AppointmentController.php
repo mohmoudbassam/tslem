@@ -355,10 +355,10 @@ class AppointmentController extends Controller
         //d($data,$user->getRaftCompanyBox());
         try {
             $pdf = SnappyPdf::loadView($view, $data);
-            return $pdf->inline('Pdf.pdf');
+            return $pdf->inline(trans_choice('choice.Appointments', 1).'.pdf');
         }
         catch (\Exception $exception) {
-            d($exception);
+            config('app.debug') && d($exception);
         }
         return view($view, $data);
     }

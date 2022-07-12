@@ -1,5 +1,7 @@
 @extends('CP.layout.snappy_pdf')
 
+@section('title', trans_choice("choice.Appointments",1) )
+
 @section('content')
     <div class="container">
         <div class="row text-center align-items-center">
