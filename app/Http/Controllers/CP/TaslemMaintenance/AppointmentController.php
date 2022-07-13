@@ -26,7 +26,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $boxes = RaftCompanyBox::query()->has('licenses')->select('box')->groupBy('box')->get()->toArray();
+        //$boxes = RaftCompanyBox::query()->has('licenses')->select('box')->groupBy('box')->get()->toArray();
+        [$boxes] = Model::getCampsOfCreate();
         $data = [
             'isToday' => request()->input('today'),
             'boxes'   => $boxes,
