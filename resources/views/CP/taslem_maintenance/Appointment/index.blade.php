@@ -16,7 +16,7 @@
             height: 38px !important;
             min-height: 38px !important;
             padding: 0.47rem 0.75rem !important;
-            line-height: 16px;
+            line-height: 14px;
         }
 
         .modal-backdrop.show {
