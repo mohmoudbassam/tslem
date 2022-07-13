@@ -77,7 +77,6 @@
                     <a
                         class="btn btn-primary"
                         href="{{route('taslem_maintenance.sessions.excel',['today' => request()->route()->getName() == 'taslem_maintenance.sessions.toDaySessions'])}}"
-                        target="_blank"
                     >
                         <i class="fa fa-file-pdf pe-2"></i>
                         تصدير
