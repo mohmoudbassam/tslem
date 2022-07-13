@@ -12,6 +12,13 @@
 
 @section('content')
     <style>
+        .choices__inner {
+            height: 38px !important;
+            min-height: 38px !important;
+            padding: 0.47rem 0.75rem !important;
+            line-height: 16px;
+        }
+
         .modal-backdrop.show {
             display: initial !important;
         }
@@ -91,7 +98,7 @@
         <div class="card">
             @if(!$isToday)
                 <div class="card-header">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-lg-12">
                             <form
                                 class="row gx-3 gy-2 mb-4 mb-lg-0 "
@@ -356,6 +363,7 @@
             $('#items_table').DataTable().ajax.reload(null, false)
         })
         flatpickr('.datepicker')
+
         function send_sms (id) {
             $.ajaxSetup({
                 headers: {
@@ -393,6 +401,7 @@
                 }
             })
         }
+
         var e = document.querySelectorAll('[data-trigger]')
         for (i = 0; i < e.length; ++i) {
             var a = e[i]

@@ -5,6 +5,12 @@
 @section('content')
 
     <style>
+        .choices__inner {
+            height: 38px !important;
+            min-height: 38px !important;
+            padding: 0.47rem 0.75rem !important;
+            line-height: 16px;
+        }
         .modal-backdrop.show {
             display: initial !important;
         }
@@ -90,7 +96,6 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-lg-12">
-
                         <form
                             class="row gx-3 gy-2 align-items-center mb-4 mb-lg-0 "
                             id="form_data"
@@ -135,10 +140,6 @@
                                             <option value="{{ $box['box'] }}">{{$box['box']}}</option>
                                         @endforeach
                                     </select>
-                                    <div
-                                        class="col-12 text-danger"
-                                        id="box_number_error"
-                                    ></div>
                                 </div>
                                 <div class="col-lg-3 col-xxl-2 service-provider">
                                     <label
