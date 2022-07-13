@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\CP\TaslemMaintenance;
 
+use App\Exports\AppointmentExport;
+use App\Exports\SessionExport;
 use App\Http\Controllers\Controller;
+use App\Models\Appointment as Model;
 use App\Models\ContractorReportFile;
 
 use App\Models\Session;
@@ -15,7 +18,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 
+use Maatwebsite\Excel\Facades\Excel;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Yajra\DataTables\DataTables;
 use App\Models\RaftCompanyBox;
 
@@ -250,7 +255,7 @@ class TaslemMaintenance extends Controller
         ]);
     }
 
-    function export()
+    public function export()
     {
         $sessions = Session::query()->whereDate('start_at', '=', now()->format('Y-m-d'))->get();
 
@@ -278,6 +283,20 @@ class TaslemMaintenance extends Controller
             'message' => 'تم ارسال الرسالة بنجاح',
             'success' => true
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function excel(Request $request)
+    {
+        $q = Session::query();
+        if ($request->input('today')) {
+            $q->whereDate('start_at', '=', now())->get();
+        }
+        $data = $q->get();
+        $fileName = 'Sessions.xlsx';
+        return Excel::download(new SessionExport($data), $fileName)->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
     }
 
 }

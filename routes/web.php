@@ -677,6 +677,7 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::post('/publish', [TaslemMaintenance::class, 'publish_session'])->name('.publish');
         Route::get('/toDaySessions', [TaslemMaintenance::class, 'index'])->name('.toDaySessions');
         Route::get('/export', [TaslemMaintenance::class, 'export'])->name('.export');
+        Route::get('/excel', [TaslemMaintenance::class, 'excel'])->name('.excel');
         Route::post('send_sms', [TaslemMaintenance::class, 'send_sms'])->name('.send_sms');
     });
     Route::get('/add_files/{session_id}', [TaslemMaintenance::class, 'add_files'])->name('.add_files');

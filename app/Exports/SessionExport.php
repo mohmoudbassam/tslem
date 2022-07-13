@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class AppointmentExport implements FromCollection, WithEvents, WithHeadings, WithColumnWidths, WithTitle, WithMapping
+class SessionExport implements FromCollection, WithEvents, WithHeadings, WithColumnWidths, WithTitle, WithMapping
 {
     public $data;
 
@@ -28,19 +28,17 @@ class AppointmentExport implements FromCollection, WithEvents, WithHeadings, Wit
     public function map($row): array
     {
         return [
-            (string) $row->service_provider_name,
-            (string) $row->raftCompanyLocation->name,
-            (string) $row->raftCompanyBox->box,
-            (string) $row->raftCompanyBox->camp,
-            (string) ($row->raftCompanyLocation->user->phone ?? ''),
-            (string) $row->start_at_to_string,
+            optional($row->RaftCompanyLocation)->name,
+            optional($row->RaftCompanyBox)->box,
+            optional($row->RaftCompanyBox)->camp,
+            optional($row->RaftCompanyLocation)->user->phone ?? '',
+            $row->start_at,
         ];
     }
 
     public function headings(): array
     {
         return [
-            'مركز الخدمة',
             'اسم شركة الطوافة',
             'رقم المربع',
             'رقم المخيم',
@@ -57,13 +55,12 @@ class AppointmentExport implements FromCollection, WithEvents, WithHeadings, Wit
             'C' => 40,
             'D' => 40,
             'E' => 40,
-            'F' => 40,
         ];
     }
 
     public function title(): string
     {
-        return 'Appointments';
+        return 'Sessions';
     }
 
     public function registerEvents(): array
@@ -71,7 +68,7 @@ class AppointmentExport implements FromCollection, WithEvents, WithHeadings, Wit
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->getDelegate()->setRightToLeft(true);
-                $cellRange = 'A1:F1';
+                $cellRange = 'A1:E1';
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
                 $event->sheet->getDelegate()->getRowDimension(1)->setRowHeight(20);
                 $event->sheet->getDelegate()->getStyle($cellRange)->getAlignment()->setWrapText(true);
