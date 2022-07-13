@@ -691,6 +691,7 @@ Route::prefix('taslem_maintenance')->name('taslem_maintenance')->middleware(['au
         Route::get('', [AppointmentController::class, 'index'])->name('index');
         Route::get('data-tables', [AppointmentController::class, 'list'])->name('list');
         Route::get('export', [AppointmentController::class, 'export'])->name('export');
+        Route::get('excel', [AppointmentController::class, 'excel'])->name('excel');
         Route::get('create', [AppointmentController::class, 'create'])->name('create');
         Route::post('store', [AppointmentController::class, 'store'])->name('store');
         Route::post('send_sms', [AppointmentController::class, 'send_sms'])->name('send_sms');

@@ -74,17 +74,17 @@
                             جميع المواعيد
                         </a>
                     </h4>
-
-                    <h4 class="mb-sm-0 font-size-18 m-lg-2">
-                        <a
-                            class="btn btn-primary"
-                            href="{{ route('taslem_maintenance.Appointment.export') }}"
-                        >
-                            <i class="fa fa-file-pdf pe-2"></i>
-                            تصدير
-                        </a>
-                    </h4>
                 @endif
+                <h4 class="mb-sm-0 font-size-18 m-lg-2">
+                    <a
+                        class="btn btn-primary"
+                        href="{{ route('taslem_maintenance.Appointment.excel', ['today' => request('today')]) }}"
+                    >
+                        <i class="fa fa-file-pdf pe-2"></i>
+                        تصدير
+                    </a>
+                </h4>
+
                 <div class="page-title-box d-sm-flex align-items-center justify-content-end"></div>
             </div>
         </div>

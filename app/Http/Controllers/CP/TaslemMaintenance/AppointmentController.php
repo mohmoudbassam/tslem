@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CP\TaslemMaintenance;
 
+use App\Exports\AppointmentExport;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment as Model;
 use App\Models\RaftCompanyBox;
@@ -14,9 +15,11 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Yajra\DataTables\DataTables;
 
 class AppointmentController extends Controller
@@ -324,6 +327,21 @@ class AppointmentController extends Controller
         $rows = Model::query()->whereDate('start_at', '=', now())->get();
         $pdf = PDF::loadView('CP.taslem_maintenance.Appointment.pdf_list', compact('rows'));
         return $pdf->download('Today-List.pdf');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function excel(Request $request)
+    {
+        //d($request->all());
+        $q = Model::query();
+        if ($request->input('today')) {
+            $q->whereDate('start_at', '=', now())->get();
+        }
+        $data = $q->get();
+        $fileName = 'Appointments.xlsx';
+        return Excel::download(new AppointmentExport($data), $fileName)->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
     }
 
     /**
